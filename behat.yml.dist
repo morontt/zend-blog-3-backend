@@ -1,0 +1,16 @@
+default:
+    formatter:
+        name: progress
+    extensions:
+        Behat\Symfony2Extension\Extension:
+            mink_driver: true
+            kernel:
+                env: test
+                debug: true
+                bootstrap: 'app/autoload.php'
+        Behat\MinkExtension\Extension:
+            base_url:  'http://zendblog-2.loc/'
+            default_session: sahi
+            #browser_name: firefox
+            goutte: ~
+            sahi: ~
