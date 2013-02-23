@@ -18,12 +18,12 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $salt = md5(uniqid());
 
         $user = new User();
-        $user->setUsername('admin');
-        $user->setMail('admin@example.org');
-        $user->setSalt($salt);
-        $user->setPassword(md5('admin' . $salt));
-        $user->setUserType('admin');
-        $user->setTimeCreated(new \DateTime('now'));
+        $user->setUsername('admin')
+            ->setMail('admin@example.org')
+            ->setSalt($salt)
+            ->setPassword(md5('admin' . $salt))
+            ->setUserType('admin')
+            ->setTimeCreated(new \DateTime('now'));
 
         $manager->persist($user);
         $manager->flush();
