@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="users")
- * @ORM\Entity(repositoryClass="Goodlooks\UserBundle\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="Mtt\BlogBundle\Entity\Repository\UserRepository")
  */
 class User
 {
@@ -193,14 +193,14 @@ class User
     public function setUserType($userType)
     {
         $this->userType = $userType;
-    
+
         return $this;
     }
 
     /**
      * Get userType
      *
-     * @return string 
+     * @return string
      */
     public function getUserType()
     {
@@ -216,14 +216,14 @@ class User
     public function setTimeCreated($timeCreated)
     {
         $this->timeCreated = $timeCreated;
-    
+
         return $this;
     }
 
     /**
      * Get timeCreated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getTimeCreated()
     {
@@ -239,14 +239,14 @@ class User
     public function setTimeLast($timeLast)
     {
         $this->timeLast = $timeLast;
-    
+
         return $this;
     }
 
     /**
      * Get timeLast
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getTimeLast()
     {
@@ -262,14 +262,14 @@ class User
     public function setIpAddress($ipAddress)
     {
         $this->ipAddress = $ipAddress;
-    
+
         return $this;
     }
 
     /**
      * Get ipAddress
      *
-     * @return string 
+     * @return string
      */
     public function getIpAddress()
     {
@@ -285,14 +285,14 @@ class User
     public function setIpAddressLast($ipAddressLast)
     {
         $this->ipAddressLast = $ipAddressLast;
-    
+
         return $this;
     }
 
     /**
      * Get ipAddressLast
      *
-     * @return string 
+     * @return string
      */
     public function getIpAddressLast()
     {
