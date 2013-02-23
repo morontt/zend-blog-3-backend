@@ -1,6 +1,6 @@
 <?php
 
-namespace Acme\DemoBundle\Features\Context;
+namespace Mtt\BlogBundle\Features\Context;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
