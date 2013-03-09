@@ -20,6 +20,14 @@ class Tracking
     protected $id;
 
     /**
+     * @var \Mtt\BlogBundle\Entity\Post
+     *
+     * @ORM\ManyToOne(targetEntity="Post")
+     * @ORM\JoinColumn(name="post_id", referencedColumnName="id")
+     */
+    protected $post;
+
+    /**
      * @var \Mtt\BlogBundle\Entity\TrackingAgent
      *
      * @ORM\ManyToOne(targetEntity="TrackingAgent", inversedBy="trackings")
@@ -44,7 +52,7 @@ class Tracking
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -60,14 +68,14 @@ class Tracking
     public function setIpAddress($ipAddress)
     {
         $this->ipAddress = $ipAddress;
-    
+
         return $this;
     }
 
     /**
      * Get ipAddress
      *
-     * @return string 
+     * @return string
      */
     public function getIpAddress()
     {
@@ -83,14 +91,14 @@ class Tracking
     public function setTimeCreated($timeCreated)
     {
         $this->timeCreated = $timeCreated;
-    
+
         return $this;
     }
 
     /**
      * Get timeCreated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getTimeCreated()
     {
@@ -106,17 +114,40 @@ class Tracking
     public function setTrackingAgent(\Mtt\BlogBundle\Entity\TrackingAgent $trackingAgent = null)
     {
         $this->trackingAgent = $trackingAgent;
-    
+
         return $this;
     }
 
     /**
      * Get trackingAgent
      *
-     * @return \Mtt\BlogBundle\Entity\TrackingAgent 
+     * @return \Mtt\BlogBundle\Entity\TrackingAgent
      */
     public function getTrackingAgent()
     {
         return $this->trackingAgent;
+    }
+
+    /**
+     * Set post
+     *
+     * @param \Mtt\BlogBundle\Entity\Post $post
+     * @return Tracking
+     */
+    public function setPost(\Mtt\BlogBundle\Entity\Post $post = null)
+    {
+        $this->post = $post;
+    
+        return $this;
+    }
+
+    /**
+     * Get post
+     *
+     * @return \Mtt\BlogBundle\Entity\Post 
+     */
+    public function getPost()
+    {
+        return $this->post;
     }
 }

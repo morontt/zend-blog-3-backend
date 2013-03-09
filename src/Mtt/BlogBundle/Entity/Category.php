@@ -45,8 +45,16 @@ class Category
      */
     protected $url;
 
+    /**
+     * @var \Mtt\BlogBundle\Entity\Post
+     *
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="category")
+     */
+    protected $posts;
+
     public function __construct() {
         $this->children = new ArrayCollection();
+        $this->posts = new ArrayCollection();
     }
 
 
@@ -160,5 +168,38 @@ class Category
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * Add posts
+     *
+     * @param \Mtt\BlogBundle\Entity\Post $posts
+     * @return Category
+     */
+    public function addPost(\Mtt\BlogBundle\Entity\Post $posts)
+    {
+        $this->posts[] = $posts;
+    
+        return $this;
+    }
+
+    /**
+     * Remove posts
+     *
+     * @param \Mtt\BlogBundle\Entity\Post $posts
+     */
+    public function removePost(\Mtt\BlogBundle\Entity\Post $posts)
+    {
+        $this->posts->removeElement($posts);
+    }
+
+    /**
+     * Get posts
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPosts()
+    {
+        return $this->posts;
     }
 }
