@@ -49,6 +49,15 @@ class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterfac
         $manager->flush();
 
         $this->addReference('category-php', $category4);
+
+        $category5 = new Category();
+        $category5->setName('jQuery')
+            ->setUrl(RuTransform::ruTransform('jQuery'))
+            ->setParent($category3);
+        $manager->persist($category5);
+        $manager->flush();
+
+        $this->addReference('category-jquery', $category5);
     }
 
     /**
