@@ -6,6 +6,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Mtt\BlogBundle\Entity\Tag;
+use Mtt\BlogBundle\Services\RuTransform;
 
 class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
 {
@@ -17,7 +18,7 @@ class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
     {
         $tag = new Tag();
         $tag->setName('php')
-            ->setUrl('php');
+            ->setUrl(RuTransform::ruTransform('php'));
         $manager->persist($tag);
         $manager->flush();
 
@@ -25,7 +26,7 @@ class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
 
         $tag2 = new Tag();
         $tag2->setName('тест')
-            ->setUrl('test');
+            ->setUrl(RuTransform::ruTransform('тест'));
         $manager->persist($tag2);
         $manager->flush();
 
@@ -33,7 +34,7 @@ class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
 
         $tag3 = new Tag();
         $tag3->setName('литература')
-            ->setUrl('literatura');
+            ->setUrl(RuTransform::ruTransform('литература'));
         $manager->persist($tag3);
         $manager->flush();
 
@@ -45,6 +46,6 @@ class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function getOrder()
 	{
-		return 6;
+		return 4;
 	}
 }

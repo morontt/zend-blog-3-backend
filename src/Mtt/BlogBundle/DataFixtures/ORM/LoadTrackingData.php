@@ -18,6 +18,7 @@ class LoadTrackingData extends AbstractFixture implements OrderedFixtureInterfac
         $tracking = new Tracking();
         $tracking->setTrackingAgent($manager->merge($this->getReference('safari')))
             ->setIpAddress('127.0.0.1')
+            ->setPost($manager->merge($this->getReference('post-1')))
             ->setTimeCreated(new \DateTime('now'));
 
         $manager->persist($tracking);
@@ -26,6 +27,7 @@ class LoadTrackingData extends AbstractFixture implements OrderedFixtureInterfac
         $tracking2 = new Tracking();
         $tracking2->setTrackingAgent($manager->merge($this->getReference('twitterbot')))
             ->setIpAddress('173.199.116.91')
+            ->setPost($manager->merge($this->getReference('post-1')))
             ->setTimeCreated(new \DateTime('now'));
 
         $manager->persist($tracking2);
@@ -37,6 +39,6 @@ class LoadTrackingData extends AbstractFixture implements OrderedFixtureInterfac
      */
     public function getOrder()
 	{
-		return 4;
+		return 8;
 	}
 }

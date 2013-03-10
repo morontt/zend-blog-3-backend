@@ -3,6 +3,7 @@
 namespace Mtt\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Table(name="users")
@@ -81,6 +82,17 @@ class User
      * @ORM\Column(name="ip_last", type="string", length=15, nullable=true)
      */
     protected $ipAddressLast;
+
+    /**
+     * @var \Mtt\BlogBundle\Entity\Post
+     *
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="user")
+     */
+    protected $posts;
+
+    public function __construct() {
+        $this->posts = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -297,5 +309,38 @@ class User
     public function getIpAddressLast()
     {
         return $this->ipAddressLast;
+    }
+
+    /**
+     * Add posts
+     *
+     * @param \Mtt\BlogBundle\Entity\Post $posts
+     * @return User
+     */
+    public function addPost(\Mtt\BlogBundle\Entity\Post $posts)
+    {
+        $this->posts[] = $posts;
+    
+        return $this;
+    }
+
+    /**
+     * Remove posts
+     *
+     * @param \Mtt\BlogBundle\Entity\Post $posts
+     */
+    public function removePost(\Mtt\BlogBundle\Entity\Post $posts)
+    {
+        $this->posts->removeElement($posts);
+    }
+
+    /**
+     * Get posts
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getPosts()
+    {
+        return $this->posts;
     }
 }

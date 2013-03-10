@@ -39,7 +39,7 @@ class Post
      *
      * @ORM\Column(type="boolean")
      */
-    protected $hide;
+    protected $hide = false;
 
     /**
      * @var string
@@ -51,7 +51,7 @@ class Post
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $description;
 
@@ -84,6 +84,21 @@ class Post
      * @ORM\JoinTable(name="relation_topictag")
      */
     protected $tags;
+
+    /**
+     * @var \Mtt\BlogBundle\Entity\User
+     *
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="posts")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $user;
+
+    /**
+     * @var \Mtt\BlogBundle\Entity\PostCount
+     *
+     * @ORM\OneToOne(targetEntity="PostCount", mappedBy="post")
+     */
+    protected $postCount;
 
     public function __construct() {
         $this->tags = new ArrayCollection();
@@ -292,7 +307,7 @@ class Post
     public function addTag(\Mtt\BlogBundle\Entity\Tag $tags)
     {
         $this->tags[] = $tags;
-    
+
         return $this;
     }
 
@@ -309,10 +324,56 @@ class Post
     /**
      * Get tags
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * Set postCount
+     *
+     * @param \Mtt\BlogBundle\Entity\PostCount $postCount
+     * @return Post
+     */
+    public function setPostCount(\Mtt\BlogBundle\Entity\PostCount $postCount = null)
+    {
+        $this->postCount = $postCount;
+
+        return $this;
+    }
+
+    /**
+     * Get postCount
+     *
+     * @return \Mtt\BlogBundle\Entity\PostCount
+     */
+    public function getPostCount()
+    {
+        return $this->postCount;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \Mtt\BlogBundle\Entity\User $user
+     * @return Post
+     */
+    public function setUser(\Mtt\BlogBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \Mtt\BlogBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

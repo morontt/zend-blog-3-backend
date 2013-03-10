@@ -6,6 +6,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Mtt\BlogBundle\Entity\Category;
+use Mtt\BlogBundle\Services\RuTransform;
 
 class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterface
 {
@@ -17,7 +18,7 @@ class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterfac
     {
         $category = new Category();
         $category->setName('Программирование')
-            ->setUrl('programmirovanie');
+            ->setUrl(RuTransform::ruTransform('Программирование'));
         $manager->persist($category);
         $manager->flush();
 
@@ -25,7 +26,7 @@ class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterfac
 
         $category2 = new Category();
         $category2->setName('Новости')
-            ->setUrl('news');
+            ->setUrl(RuTransform::ruTransform('Новости'));
         $manager->persist($category2);
         $manager->flush();
 
@@ -33,7 +34,7 @@ class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterfac
 
         $category3 = new Category();
         $category3->setName('JavaScript')
-            ->setUrl('javascript')
+            ->setUrl(RuTransform::ruTransform('JavaScript'))
             ->setParent($category);
         $manager->persist($category3);
         $manager->flush();
@@ -42,7 +43,7 @@ class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterfac
 
         $category4 = new Category();
         $category4->setName('PHP')
-            ->setUrl('php')
+            ->setUrl(RuTransform::ruTransform('PHP'))
             ->setParent($category);
         $manager->persist($category4);
         $manager->flush();
@@ -55,6 +56,6 @@ class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterfac
      */
     public function getOrder()
 	{
-		return 5;
+		return 3;
 	}
 }
