@@ -19,7 +19,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
 
         $user = new User();
         $user->setUsername('admin')
-            ->setMail('admin@example.org')
+            ->setMail('morontt@gmail.com')
             ->setSalt($salt)
             ->setPassword(md5('admin' . $salt))
             ->setUserType('admin')

@@ -22,13 +22,41 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
             ->setCategory($manager->merge($this->getReference('category-news')))
             ->setUser($manager->merge($this->getReference('admin-user')))
             ->setDescription('метатег description тестовй записи')
-            ->setText('Тестовая запись, собственно...')
+            ->setText('<p>Тестовая запись, собственно...</p>')
             ->addTag($manager->merge($this->getReference('tag-test')))
             ->setTimeCreated(new \DateTime('now'));
         $manager->persist($post);
         $manager->flush();
 
         $this->addReference('post-1', $post);
+
+        $post2 = new Post();
+        $post2->setTitle('запись про PHP')
+            ->setUrl(RuTransform::ruTransform('запись про PHP'))
+            ->setCategory($manager->merge($this->getReference('category-php')))
+            ->setUser($manager->merge($this->getReference('admin-user')))
+            ->setDescription('метатег description тестовой записи про ПХП')
+            ->setText('<p>PHP (рекурсивный акроним словосочетания PHP: Hypertext Preprocessor) - это распространенный язык программирования общего назначения с открытым исходным кодом. PHP сконструирован специально для ведения Web-разработок и его код может внедряться непосредственно в HTML.</p>')
+            ->addTag($manager->merge($this->getReference('tag-php')))
+            ->setTimeCreated(new \DateTime('now'));
+        $manager->persist($post2);
+        $manager->flush();
+
+        $this->addReference('post-2', $post2);
+
+        $post3 = new Post();
+        $post3->setTitle('ещё о PHP')
+            ->setUrl(RuTransform::ruTransform('ещё о PHP'))
+            ->setCategory($manager->merge($this->getReference('category-php')))
+            ->setUser($manager->merge($this->getReference('admin-user')))
+            ->setDescription('description PHP')
+            ->setText('<p>Ещё одна запись о PHP</p>')
+            ->addTag($manager->merge($this->getReference('tag-php')))
+            ->setTimeCreated(new \DateTime('now'));
+        $manager->persist($post3);
+        $manager->flush();
+
+        $this->addReference('post-3', $post3);
     }
 
     /**
