@@ -39,6 +39,14 @@ class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
         $manager->flush();
 
         $this->addReference('tag-literatura', $tag3);
+
+        $tag4 = new Tag();
+        $tag4->setName('javascript')
+            ->setUrl(RuTransform::ruTransform('javascript'));
+        $manager->persist($tag4);
+        $manager->flush();
+
+        $this->addReference('tag-javascript', $tag4);
     }
 
     /**

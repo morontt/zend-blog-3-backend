@@ -30,6 +30,11 @@ class LoadPostCountData extends AbstractFixture implements OrderedFixtureInterfa
         $postCount3->setPost($manager->merge($this->getReference('post-3')));
         $manager->persist($postCount3);
         $manager->flush();
+
+        $postCount4 = new PostCount();
+        $postCount4->setPost($manager->merge($this->getReference('post-4')));
+        $manager->persist($postCount4);
+        $manager->flush();
     }
 
     /**
