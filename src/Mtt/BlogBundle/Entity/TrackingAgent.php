@@ -35,7 +35,7 @@ class TrackingAgent
     protected $botFilter;
 
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection
+     * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\OneToMany(targetEntity="Tracking", mappedBy="trackingAgent", cascade={"persist"})
      */
@@ -111,7 +111,7 @@ class TrackingAgent
     public function addTracking(\Mtt\BlogBundle\Entity\Tracking $trackings)
     {
         $this->trackings[] = $trackings;
-    
+
         return $this;
     }
 
@@ -128,7 +128,7 @@ class TrackingAgent
     /**
      * Get trackings
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTrackings()
     {

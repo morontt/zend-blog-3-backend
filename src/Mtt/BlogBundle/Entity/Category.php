@@ -21,6 +21,8 @@ class Category
     protected $id;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
      * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
      **/
     protected $children;
@@ -46,7 +48,7 @@ class Category
     protected $url;
 
     /**
-     * @var \Mtt\BlogBundle\Entity\Post
+     * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\OneToMany(targetEntity="Post", mappedBy="category")
      */
@@ -179,7 +181,7 @@ class Category
     public function addPost(\Mtt\BlogBundle\Entity\Post $posts)
     {
         $this->posts[] = $posts;
-    
+
         return $this;
     }
 
@@ -196,7 +198,7 @@ class Category
     /**
      * Get posts
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPosts()
     {

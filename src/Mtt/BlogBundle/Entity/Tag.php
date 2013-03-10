@@ -35,7 +35,7 @@ class Tag
     protected $url;
 
     /**
-     * @var \Mtt\BlogBundle\Entity\Post
+     * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Post", mappedBy="tags")
      */
@@ -110,7 +110,7 @@ class Tag
     public function addPost(\Mtt\BlogBundle\Entity\Post $posts)
     {
         $this->posts[] = $posts;
-    
+
         return $this;
     }
 
@@ -127,7 +127,7 @@ class Tag
     /**
      * Get posts
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPosts()
     {

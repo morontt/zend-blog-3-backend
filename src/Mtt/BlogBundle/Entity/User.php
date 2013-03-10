@@ -84,14 +84,22 @@ class User
     protected $ipAddressLast;
 
     /**
-     * @var \Mtt\BlogBundle\Entity\Post
+     * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\OneToMany(targetEntity="Post", mappedBy="user")
      */
     protected $posts;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="user")
+     */
+    protected $comments;
+
     public function __construct() {
         $this->posts = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     /**
@@ -320,7 +328,7 @@ class User
     public function addPost(\Mtt\BlogBundle\Entity\Post $posts)
     {
         $this->posts[] = $posts;
-    
+
         return $this;
     }
 
@@ -337,10 +345,43 @@ class User
     /**
      * Get posts
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getPosts()
     {
         return $this->posts;
+    }
+
+    /**
+     * Add comments
+     *
+     * @param \Mtt\BlogBundle\Entity\Comment $comments
+     * @return User
+     */
+    public function addComment(\Mtt\BlogBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+    
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \Mtt\BlogBundle\Entity\Comment $comments
+     */
+    public function removeComment(\Mtt\BlogBundle\Entity\Comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }

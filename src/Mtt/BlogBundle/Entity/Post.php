@@ -78,7 +78,7 @@ class Post
     protected $category;
 
     /**
-     * @var \Mtt\BlogBundle\Entity\Tag
+     * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="posts")
      * @ORM\JoinTable(name="relation_topictag")
@@ -100,8 +100,16 @@ class Post
      */
     protected $postCount;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="post")
+     */
+    protected $comments;
+
     public function __construct() {
         $this->tags = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     /**
@@ -363,17 +371,50 @@ class Post
     public function setUser(\Mtt\BlogBundle\Entity\User $user = null)
     {
         $this->user = $user;
-    
+
         return $this;
     }
 
     /**
      * Get user
      *
-     * @return \Mtt\BlogBundle\Entity\User 
+     * @return \Mtt\BlogBundle\Entity\User
      */
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Add comments
+     *
+     * @param \Mtt\BlogBundle\Entity\Comment $comments
+     * @return Post
+     */
+    public function addComment(\Mtt\BlogBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+    
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \Mtt\BlogBundle\Entity\Comment $comments
+     */
+    public function removeComment(\Mtt\BlogBundle\Entity\Comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }
