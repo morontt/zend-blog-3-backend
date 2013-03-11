@@ -64,7 +64,7 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
             ->setCategory($manager->merge($this->getReference('category-jquery')))
             ->setUser($manager->merge($this->getReference('admin-user')))
             ->setDescription('description-JavaScript')
-            ->setText('<p>JavaScript - прототипно-ориентированный сценарный язык программирования. Является диалектом языка ECMAScript</p>')
+            ->setText('<p>JavaScript - прототипно-ориентированный сценарный язык программирования. Является диалектом языка ECMAScript</p><!-- cut --><p>Параграф под катом</p>')
             ->addTag($manager->merge($this->getReference('tag-javascript')))
             ->setTimeCreated(new \DateTime('now'));
         $manager->persist($post4);

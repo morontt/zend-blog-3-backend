@@ -10,7 +10,8 @@ default:
                 bootstrap: 'app/autoload.php'
         Behat\MinkExtension\Extension:
             base_url:  'http://zendblog-2.loc/'
-            default_session: sahi
+            default_session: goutte
+            javascript_session: sahi
             #browser_name: firefox
             goutte: ~
             sahi: ~

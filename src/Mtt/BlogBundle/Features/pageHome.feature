@@ -1,17 +1,16 @@
 Feature: pageHome
   Start page opening
 
-  Scenario: Successfully opening start page
+  Scenario: Просмотр стартовой страницы
     Given I am on "/"
-     Then I should see "Zend-blog-2"
+     Then I should see "Test-Blog-2"
+      And I should see "Читать далее"
+      And I should see "Тестовая запись, собственно..."
+      And I should not see "Параграф под катом"
 
-  Scenario: Add comment
+  Scenario: Просмотр страницы записи
     Given I am on "/"
-      And I follow "Установка Sahi"
-     Then I should see "Адрес электронной почты нигде не отображается"
-     When I fill in "Имя:" with "testname"
-      And I fill in "E-mail:" with "test@example.org"
-      And I fill in "Website:" with "http://example.org"
-      And I fill in "Текст комментария:" with "TEST MESSAGE"
-      And I press "Добавить комментарий"
-     Then I should see "TEST MESSAGE" in the "div#all-comments" element
+      And I follow "JavaScript, хоть и jQuery"
+      And I should not see "Читать далее"
+      And I should not see "Тестовая запись, собственно..."
+      And I should see "Параграф под катом"
