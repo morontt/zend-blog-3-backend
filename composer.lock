@@ -335,12 +335,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "143c251041e6fed511b666ba865019f4e697e603"
+                "reference": "45bdac964a628b889a1c1eaff6e88e45874232de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/143c251041e6fed511b666ba865019f4e697e603",
-                "reference": "143c251041e6fed511b666ba865019f4e697e603",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/45bdac964a628b889a1c1eaff6e88e45874232de",
+                "reference": "45bdac964a628b889a1c1eaff6e88e45874232de",
                 "shasum": ""
             },
             "require": {
@@ -397,7 +397,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2013-03-12 20:11:25"
+            "time": "2013-03-14 21:54:31"
         },
         {
             "name": "doctrine/doctrine-bundle",
@@ -766,12 +766,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "dba63c5a6189de8826bd35dccf60149debc60237"
+                "reference": "6ee9e2284ad12769b94e3554ae2832de62a4645f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/dba63c5a6189de8826bd35dccf60149debc60237",
-                "reference": "dba63c5a6189de8826bd35dccf60149debc60237",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/6ee9e2284ad12769b94e3554ae2832de62a4645f",
+                "reference": "6ee9e2284ad12769b94e3554ae2832de62a4645f",
                 "shasum": ""
             },
             "require": {
@@ -829,7 +829,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2013-03-12 19:00:47"
+            "time": "2013-03-14 22:41:40"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -837,12 +837,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jdorn/sql-formatter.git",
-                "reference": "999f8125a66f44da7ee53db64e7aee3be8fa91ec"
+                "reference": "46ec57eb77c2aaf6e685ecb9864ac01a5878cc77"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jdorn/sql-formatter/zipball/999f8125a66f44da7ee53db64e7aee3be8fa91ec",
-                "reference": "999f8125a66f44da7ee53db64e7aee3be8fa91ec",
+                "url": "https://api.github.com/repos/jdorn/sql-formatter/zipball/46ec57eb77c2aaf6e685ecb9864ac01a5878cc77",
+                "reference": "46ec57eb77c2aaf6e685ecb9864ac01a5878cc77",
                 "shasum": ""
             },
             "require": {
@@ -879,7 +879,7 @@
                 "highlight",
                 "sql"
             ],
-            "time": "2013-03-11 18:41:07"
+            "time": "2013-03-15 20:25:42"
         },
         {
             "name": "jms/aop-bundle",
@@ -1793,12 +1793,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "02da7da5a6ee0e00d4f7cde0544125f459b440aa"
+                "reference": "801a7f887bbf679de61b404677dfea8ba8716279"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/02da7da5a6ee0e00d4f7cde0544125f459b440aa",
-                "reference": "02da7da5a6ee0e00d4f7cde0544125f459b440aa",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/801a7f887bbf679de61b404677dfea8ba8716279",
+                "reference": "801a7f887bbf679de61b404677dfea8ba8716279",
                 "shasum": ""
             },
             "require": {
@@ -1884,7 +1884,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2013-03-11 22:11:53"
+            "time": "2013-03-15 10:54:52"
         },
         {
             "name": "twig/extensions",
@@ -2170,12 +2170,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/MinkBrowserKitDriver.git",
-                "reference": "v1.0.4"
+                "reference": "2c89051d35f39d80f0f51c72cdc536b32015f278"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/MinkBrowserKitDriver/zipball/v1.0.4",
-                "reference": "v1.0.4",
+                "url": "https://api.github.com/repos/Behat/MinkBrowserKitDriver/zipball/2c89051d35f39d80f0f51c72cdc536b32015f278",
+                "reference": "2c89051d35f39d80f0f51c72cdc536b32015f278",
                 "shasum": ""
             },
             "require": {
@@ -2217,7 +2217,7 @@
                 "browser",
                 "testing"
             ],
-            "time": "2013-03-08 09:50:41"
+            "time": "2013-03-13 10:34:15"
         },
         {
             "name": "behat/mink-extension",
@@ -2331,12 +2331,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Behat/MinkSahiDriver.git",
-                "reference": "744ba96503f8aed2c691aa92c0abca492aadc603"
+                "reference": "d6214a01ef12fd2109d0d4f7064753a2ca130a6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Behat/MinkSahiDriver/zipball/744ba96503f8aed2c691aa92c0abca492aadc603",
-                "reference": "744ba96503f8aed2c691aa92c0abca492aadc603",
+                "url": "https://api.github.com/repos/Behat/MinkSahiDriver/zipball/d6214a01ef12fd2109d0d4f7064753a2ca130a6b",
+                "reference": "d6214a01ef12fd2109d0d4f7064753a2ca130a6b",
                 "shasum": ""
             },
             "require": {
@@ -2375,7 +2375,7 @@
                 "sahi",
                 "testing"
             ],
-            "time": "2013-03-08 10:16:59"
+            "time": "2013-03-13 10:35:29"
         },
         {
             "name": "behat/mink-selenium2-driver",
@@ -2546,12 +2546,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Goutte.git",
-                "reference": "v1.0.1"
+                "reference": "3ebd52cee0c997d4e4c5e2fb5f10ee9de0e3fc46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Goutte/zipball/v1.0.1",
-                "reference": "v1.0.1",
+                "url": "https://api.github.com/repos/fabpot/Goutte/zipball/3ebd52cee0c997d4e4c5e2fb5f10ee9de0e3fc46",
+                "reference": "3ebd52cee0c997d4e4c5e2fb5f10ee9de0e3fc46",
                 "shasum": ""
             },
             "require": {
@@ -2590,7 +2590,7 @@
             "keywords": [
                 "scraper"
             ],
-            "time": "2013-03-08 08:00:58"
+            "time": "2013-03-15 10:18:26"
         },
         {
             "name": "guzzle/guzzle",
@@ -2598,12 +2598,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "f2fd4bd43bbdf0bda02f0db6458b7e93fe2d8236"
+                "reference": "feaae5dc97c07c55bb4d43932c5ba06156d102f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/f2fd4bd43bbdf0bda02f0db6458b7e93fe2d8236",
-                "reference": "f2fd4bd43bbdf0bda02f0db6458b7e93fe2d8236",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/feaae5dc97c07c55bb4d43932c5ba06156d102f4",
+                "reference": "feaae5dc97c07c55bb4d43932c5ba06156d102f4",
                 "shasum": ""
             },
             "require": {
@@ -2683,7 +2683,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2013-03-11 22:42:27"
+            "time": "2013-03-15 20:26:03"
         },
         {
             "name": "instaclick/php-webdriver",
