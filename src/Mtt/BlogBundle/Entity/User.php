@@ -97,7 +97,8 @@ class User
      */
     protected $comments;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->posts = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
@@ -361,7 +362,7 @@ class User
     public function addComment(\Mtt\BlogBundle\Entity\Comment $comments)
     {
         $this->comments[] = $comments;
-    
+
         return $this;
     }
 
@@ -378,7 +379,7 @@ class User
     /**
      * Get comments
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getComments()
     {

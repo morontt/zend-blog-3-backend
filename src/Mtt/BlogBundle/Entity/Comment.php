@@ -85,7 +85,8 @@ class Comment
      */
     protected $timeCreated;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->children = new ArrayCollection();
     }
 
@@ -302,14 +303,14 @@ class Comment
     public function setPost(\Mtt\BlogBundle\Entity\Post $post = null)
     {
         $this->post = $post;
-    
+
         return $this;
     }
 
     /**
      * Get post
      *
-     * @return \Mtt\BlogBundle\Entity\Post 
+     * @return \Mtt\BlogBundle\Entity\Post
      */
     public function getPost()
     {
