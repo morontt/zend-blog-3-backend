@@ -7,7 +7,8 @@ use Behat\Symfony2Extension\Context\KernelAwareInterface;
 use Behat\MinkExtension\Context\MinkContext;
 
 use Behat\Behat\Context\BehatContext,
-    Behat\Behat\Exception\PendingException;
+    Behat\Behat\Exception\PendingException,
+    Behat\Behat\Context\Step;
 use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 
@@ -46,6 +47,27 @@ class FeatureContext extends MinkContext //if you want to test web
     public function setKernel(KernelInterface $kernel)
     {
         $this->kernel = $kernel;
+    }
+
+    /**
+     * @Given /^I am logged in as Admin$/
+     */
+    public function iAmLoggedInAsAdmin()
+    {
+        return array(
+            new Step\Given('I am on "/login"'),
+            new Step\When('fill in "username" with "admin"'),
+            new Step\When('fill in "password" with "admin"'),
+            new Step\When('I press "submit"'),
+        );
+    }
+
+    /**
+     * @Given /^pause "([^"]*)"$/
+     */
+    public function pause($pause)
+    {
+        $this->getMink()->getSession()->wait($pause);
     }
 
 //

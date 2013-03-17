@@ -11,4 +11,5 @@ Feature: comment
       And I fill in "Website:" with "http://example.org"
       And I fill in "Текст комментария:" with "TEST MESSAGE"
       And I press "Добавить комментарий"
+      And pause "2000"
      Then I should see "TEST MESSAGE" in the "div#all-comments" element
