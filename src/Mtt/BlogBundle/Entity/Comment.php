@@ -72,6 +72,14 @@ class Comment
     protected $deleted = false;
 
     /**
+     * @var \Mtt\BlogBundle\Entity\TrackingAgent
+     *
+     * @ORM\ManyToOne(targetEntity="TrackingAgent")
+     * @ORM\JoinColumn(name="user_agent_id", referencedColumnName="id", onDelete="SET NULL", nullable=true)
+     */
+    protected $trackingAgent;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="ip_addr", type="string", length=15, nullable=true)
@@ -315,5 +323,28 @@ class Comment
     public function getPost()
     {
         return $this->post;
+    }
+
+    /**
+     * Set trackingAgent
+     *
+     * @param \Mtt\BlogBundle\Entity\TrackingAgent $trackingAgent
+     * @return Comment
+     */
+    public function setTrackingAgent(\Mtt\BlogBundle\Entity\TrackingAgent $trackingAgent = null)
+    {
+        $this->trackingAgent = $trackingAgent;
+
+        return $this;
+    }
+
+    /**
+     * Get trackingAgent
+     *
+     * @return \Mtt\BlogBundle\Entity\TrackingAgent
+     */
+    public function getTrackingAgent()
+    {
+        return $this->trackingAgent;
     }
 }
