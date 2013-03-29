@@ -13,3 +13,4 @@ Feature: backendPost
       And I fill in "Теги:" with "new_post_tag, new_post_tag_2"
       And I press "Создать запись"
      Then I should see "Запись создана"
+      And restore database

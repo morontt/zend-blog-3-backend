@@ -5,8 +5,9 @@ namespace Mtt\BlogBundle\Command;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Output\NullOutput;
 
 class DatabasePrepareCommand extends ContainerAwareCommand
 {
@@ -19,7 +20,8 @@ class DatabasePrepareCommand extends ContainerAwareCommand
     {
         $this->setName('mtt:database:prepare')
             ->setDescription('Preparation DB from testing')
-            ->addOption('without-fixtures', null, InputOption::VALUE_NONE, 'If set, fixtures is not loaded');
+            ->addOption('without-fixtures', null, InputOption::VALUE_NONE, 'If set, fixtures is not loaded')
+            ->addOption('no-output', null, InputOption::VALUE_NONE, 'display information');
     }
 
     /**
@@ -48,7 +50,12 @@ class DatabasePrepareCommand extends ContainerAwareCommand
             $output->writeln("<error>This operation cannot be executed in a test environment.</error>");
         } else {
             $this->getApplication()->setAutoExit(false);
-            $this->setOutput($output);
+
+            if ($input->getOption('no-output')) {
+                $this->setOutput(new NullOutput());
+            } else {
+                $this->setOutput($output);
+            }
 
             $this->dropDb();
 

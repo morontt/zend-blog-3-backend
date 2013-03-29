@@ -27,7 +27,7 @@ class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
 
         $comment2 = new Comment();
         $comment2->setText('Ответ на тестовый комментарий')
-            ->setIpAddress('192.168.0.1')
+            ->setIpAddress('62.72.188.111')
             ->setPost($manager->merge($this->getReference('post-1')))
             ->setUser($manager->merge($this->getReference('admin-user')))
             ->setParent($comment)
