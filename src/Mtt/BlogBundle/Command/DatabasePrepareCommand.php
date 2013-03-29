@@ -59,6 +59,7 @@ class DatabasePrepareCommand extends ContainerAwareCommand
 
             $this->createDb();
             $this->schemaDb();
+            $this->addRoutines();
 
             if (!$input->getOption('without-fixtures')) {
                 $this->fixturesDb();
@@ -124,6 +125,36 @@ class DatabasePrepareCommand extends ContainerAwareCommand
         $input = new ArrayInput($arguments);
         $input->setInteractive(false);
         $command->run($input, $this->getOutput());
+    }
+
+    /**
+     * add routines
+     */
+    protected function addRoutines()
+    {
+        $connection = $this->getContainer()->get('doctrine')->getConnection();
+
+        $rawSql = <<<RAWSQL
+CREATE PROCEDURE `update_comments_count`(IN topicID INT UNSIGNED)
+BEGIN
+    DECLARE count_comments INT DEFAULT 0;
+
+    SELECT COUNT( id ) INTO count_comments
+        FROM `comments`
+        WHERE (`post_id` = topicID) AND (`deleted` = 0);
+
+    UPDATE `posts_counts`
+        SET `comments` = count_comments
+        WHERE `posts_counts`.`post_id` = topicID;
+
+    SELECT count_comments;
+END;
+
+RAWSQL;
+
+        $connection->exec($rawSql);
+
+        $this->getOutput()->writeln("Create update_comments_count routine");
     }
 
 }
