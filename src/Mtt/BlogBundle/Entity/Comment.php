@@ -93,6 +93,14 @@ class Comment
      */
     protected $timeCreated;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="disqus_id", type="integer", nullable=true)
+     */
+    protected $disqusId;
+
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
@@ -346,5 +354,28 @@ class Comment
     public function getTrackingAgent()
     {
         return $this->trackingAgent;
+    }
+
+    /**
+     * Set disqusId
+     *
+     * @param integer $disqusId
+     * @return Comment
+     */
+    public function setDisqusId($disqusId)
+    {
+        $this->disqusId = $disqusId;
+
+        return $this;
+    }
+
+    /**
+     * Get disqusId
+     *
+     * @return integer 
+     */
+    public function getDisqusId()
+    {
+        return $this->disqusId;
     }
 }
