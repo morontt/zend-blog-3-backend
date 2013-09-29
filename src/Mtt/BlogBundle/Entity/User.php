@@ -97,6 +97,14 @@ class User
      */
     protected $comments;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email_hash", type="string", length=32, nullable=true)
+     */
+    protected $emailHash;
+
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -384,5 +392,28 @@ class User
     public function getComments()
     {
         return $this->comments;
+    }
+
+    /**
+     * Set emailHash
+     *
+     * @param string $emailHash
+     * @return User
+     */
+    public function setEmailHash($emailHash)
+    {
+        $this->emailHash = $emailHash;
+
+        return $this;
+    }
+
+    /**
+     * Get emailHash
+     *
+     * @return string 
+     */
+    public function getEmailHash()
+    {
+        return $this->emailHash;
     }
 }

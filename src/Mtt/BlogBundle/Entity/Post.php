@@ -107,6 +107,14 @@ class Post
      */
     protected $comments;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="disqus_thread", type="integer", nullable=true)
+     */
+    protected $disqusThread;
+
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -417,5 +425,28 @@ class Post
     public function getComments()
     {
         return $this->comments;
+    }
+
+    /**
+     * Set disqusThread
+     *
+     * @param integer $disqusThread
+     * @return Post
+     */
+    public function setDisqusThread($disqusThread)
+    {
+        $this->disqusThread = $disqusThread;
+
+        return $this;
+    }
+
+    /**
+     * Get disqusThread
+     *
+     * @return integer 
+     */
+    public function getDisqusThread()
+    {
+        return $this->disqusThread;
     }
 }

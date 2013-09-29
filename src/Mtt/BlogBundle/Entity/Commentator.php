@@ -50,6 +50,21 @@ class Commentator
      */
     protected $comments;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="disqus_id", type="integer", nullable=true)
+     */
+    protected $disqusId;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email_hash", type="string", length=32, nullable=true)
+     */
+    protected $emailHash;
+
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -165,5 +180,51 @@ class Commentator
     public function getComments()
     {
         return $this->comments;
+    }
+
+    /**
+     * Set disqusId
+     *
+     * @param integer $disqusId
+     * @return Commentator
+     */
+    public function setDisqusId($disqusId)
+    {
+        $this->disqusId = $disqusId;
+
+        return $this;
+    }
+
+    /**
+     * Get disqusId
+     *
+     * @return integer 
+     */
+    public function getDisqusId()
+    {
+        return $this->disqusId;
+    }
+
+    /**
+     * Set emailHash
+     *
+     * @param string $emailHash
+     * @return Commentator
+     */
+    public function setEmailHash($emailHash)
+    {
+        $this->emailHash = $emailHash;
+
+        return $this;
+    }
+
+    /**
+     * Get emailHash
+     *
+     * @return string 
+     */
+    public function getEmailHash()
+    {
+        return $this->emailHash;
     }
 }
