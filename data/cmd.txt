@@ -1,3 +1,0 @@
-php app/console doctrine:migrations:diff
-
-php app/console doctrine:generate:entities Mtt/BlogBundle/Entity
