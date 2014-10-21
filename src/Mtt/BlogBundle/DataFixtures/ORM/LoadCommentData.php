@@ -10,7 +10,6 @@ use Mtt\BlogBundle\Entity\Comment;
 class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
-     *
      * @param \Doctrine\Common\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
@@ -41,7 +40,7 @@ class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
      * @return integer
      */
     public function getOrder()
-	{
-		return 10;
-	}
+    {
+        return 10;
+    }
 }

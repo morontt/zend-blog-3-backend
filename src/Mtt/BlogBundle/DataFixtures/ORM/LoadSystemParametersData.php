@@ -10,7 +10,6 @@ use Mtt\BlogBundle\Entity\SystemParameters;
 class LoadSystemParametersData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
-     *
      * @param \Doctrine\Common\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
@@ -27,7 +26,7 @@ class LoadSystemParametersData extends AbstractFixture implements OrderedFixture
      * @return integer
      */
     public function getOrder()
-	{
-		return 2;
-	}
+    {
+        return 2;
+    }
 }

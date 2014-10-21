@@ -10,7 +10,6 @@ use Mtt\BlogBundle\Entity\TrackingAgent;
 class LoadTrackingAgentData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
-     *
      * @param \Doctrine\Common\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
@@ -38,7 +37,7 @@ class LoadTrackingAgentData extends AbstractFixture implements OrderedFixtureInt
      * @return integer
      */
     public function getOrder()
-	{
-		return 7;
-	}
+    {
+        return 7;
+    }
 }

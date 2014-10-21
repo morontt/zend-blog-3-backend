@@ -6,12 +6,11 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Mtt\BlogBundle\Entity\Tag;
-use Mtt\BlogBundle\Services\RuTransform;
+use Mtt\BlogBundle\Utils\RuTransform;
 
 class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
-     *
      * @param \Doctrine\Common\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
@@ -53,7 +52,7 @@ class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
      * @return integer
      */
     public function getOrder()
-	{
-		return 4;
-	}
+    {
+        return 4;
+    }
 }

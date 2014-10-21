@@ -10,7 +10,6 @@ use Mtt\BlogBundle\Entity\Commentator;
 class LoadCommentatorData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
-     *
      * @param \Doctrine\Common\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
@@ -30,7 +29,7 @@ class LoadCommentatorData extends AbstractFixture implements OrderedFixtureInter
      * @return integer
      */
     public function getOrder()
-	{
-		return 9;
-	}
+    {
+        return 9;
+    }
 }

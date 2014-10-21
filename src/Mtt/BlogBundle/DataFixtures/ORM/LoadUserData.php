@@ -10,7 +10,6 @@ use Mtt\BlogBundle\Entity\User;
 class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
-     *
      * @param \Doctrine\Common\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
@@ -35,7 +34,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
      * @return integer
      */
     public function getOrder()
-	{
-		return 1;
-	}
+    {
+        return 1;
+    }
 }

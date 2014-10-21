@@ -1,6 +1,6 @@
 <?php
 
-namespace Mtt\BlogBundle\Services;
+namespace Mtt\BlogBundle\Utils;
 
 class RuTransform
 {

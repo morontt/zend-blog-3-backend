@@ -6,12 +6,11 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Mtt\BlogBundle\Entity\Category;
-use Mtt\BlogBundle\Services\RuTransform;
+use Mtt\BlogBundle\Utils\RuTransform;
 
 class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
-     *
      * @param \Doctrine\Common\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
@@ -64,7 +63,7 @@ class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterfac
      * @return integer
      */
     public function getOrder()
-	{
-		return 3;
-	}
+    {
+        return 3;
+    }
 }

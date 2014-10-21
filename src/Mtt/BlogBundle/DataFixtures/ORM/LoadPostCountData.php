@@ -10,7 +10,6 @@ use Mtt\BlogBundle\Entity\PostCount;
 class LoadPostCountData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
-     *
      * @param \Doctrine\Common\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
@@ -41,7 +40,7 @@ class LoadPostCountData extends AbstractFixture implements OrderedFixtureInterfa
      * @return integer
      */
     public function getOrder()
-	{
-		return 6;
-	}
+    {
+        return 6;
+    }
 }

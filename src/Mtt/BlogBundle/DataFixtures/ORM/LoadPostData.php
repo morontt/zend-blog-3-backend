@@ -6,12 +6,11 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Mtt\BlogBundle\Entity\Post;
-use Mtt\BlogBundle\Services\RuTransform;
+use Mtt\BlogBundle\Utils\RuTransform;
 
 class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
 {
     /**
-     *
      * @param \Doctrine\Common\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
@@ -77,7 +76,7 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
      * @return integer
      */
     public function getOrder()
-	{
-		return 5;
-	}
+    {
+        return 5;
+    }
 }
