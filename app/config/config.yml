@@ -42,6 +42,11 @@ assetic:
         #yui_css:
         #    jar: "%kernel.root_dir%/Resources/java/yuicompressor-2.4.7.jar"
 
+sp_bower:
+    assetic: false
+    bundles:
+        MttBlogBundle: ~
+
 # Doctrine Configuration
 doctrine:
     dbal:
