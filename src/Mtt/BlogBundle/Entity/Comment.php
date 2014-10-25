@@ -96,7 +96,7 @@ class Comment
     /**
      * @var integer
      *
-     * @ORM\Column(name="disqus_id", type="integer", nullable=true)
+     * @ORM\Column(name="disqus_id", type="bigint", nullable=true)
      */
     protected $disqusId;
 
