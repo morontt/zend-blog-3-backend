@@ -1,1 +1,9 @@
 {% extends "::base.html.twig" %}
+
+{% block stylesheets %}
+    {% stylesheets filter='cssrewrite'
+        'bundles/mttblog/components/bootstrap/dist/css/bootstrap.css'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
