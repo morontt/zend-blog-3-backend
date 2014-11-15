@@ -1,4 +1,4 @@
 mtt_blog:
-    resource: "@MttBlogBundle/Resources/config/routing.yml"
+    resource: "@MttBlogBundle/Controller/"
+    type:     annotation
     prefix:   /
-

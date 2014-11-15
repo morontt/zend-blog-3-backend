@@ -2,12 +2,20 @@
 
 namespace Mtt\BlogBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
-    public function indexAction($name)
+    /**
+     * @Route("/")
+     * @Template()
+     *
+     * @return array
+     */
+    public function indexAction()
     {
-        return $this->render('MttBlogBundle:Default:index.html.twig', array('name' => $name));
+        return [];
     }
 }

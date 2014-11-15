@@ -1,3 +1,0 @@
-mtt_blog_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: MttBlogBundle:Default:index }
