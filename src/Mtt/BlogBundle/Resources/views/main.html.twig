@@ -7,3 +7,34 @@
     <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 {% endblock %}
+
+{% block body %}
+<div id="navbar" class="navbar navbar-inverse">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+            <img src="/bundles/mttblog/img/logo.png" class="pull-left" />
+            <span class="hidden-xs hidden-sm pull-left">{{ 'navigation.dashboard'|trans }}</span>
+        </a>
+    </div>
+    <div class="visible-xs visible-sm"></div>
+    <div class="hidden-xs hidden-sm pull-right">
+        <p class="navbar-text">{{ 'navigation.hello'|trans({ '%user%': 'USER' }) }}</p>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="#">
+                    <i class="glyphicon glyphicon-off"></i> {{ 'navigation.logout'|trans }}
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="row main-container" id="main-application">
+    {% block content %}{% endblock %}
+</div>
+{% endblock %}
