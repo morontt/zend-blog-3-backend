@@ -1,6 +1,7 @@
 /**
  * Created by morontt on 16.11.14.
  */
+
 window.MttBlog = Ember.Application.create({
     rootElement: '#main-application'
     , LOG_TRANSITIONS: true
