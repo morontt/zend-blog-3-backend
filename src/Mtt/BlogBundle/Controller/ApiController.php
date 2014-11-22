@@ -43,4 +43,18 @@ class ApiController extends BaseController
 
         return new JsonResponse($result);
     }
+
+    /**
+     * @Route("/tags")
+     * @Method("GET")
+     *
+     * @return JsonResponse
+     */
+    public function tagFindAllAction()
+    {
+        $result = $this->getDataConverter()
+            ->getTagsArray($this->getTagRepository()->findAll());
+
+        return new JsonResponse($result);
+    }
 }

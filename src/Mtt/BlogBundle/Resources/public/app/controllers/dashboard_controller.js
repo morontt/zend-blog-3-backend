@@ -5,3 +5,5 @@
  */
 
 MttBlog.DashboardController = Ember.Controller.extend({});
+
+MttBlog.DashboardIndexController = Ember.Controller.extend({});

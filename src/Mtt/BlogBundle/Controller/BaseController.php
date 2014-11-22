@@ -29,6 +29,14 @@ class BaseController extends Controller
     }
 
     /**
+     * @return \Mtt\BlogBundle\Entity\Repository\TagRepository
+     */
+    public function getTagRepository()
+    {
+        return $this->getEm()->getRepository('MttBlogBundle:Tag');
+    }
+
+    /**
      * @return \Mtt\BlogBundle\API\DataConverter
      */
     public function getDataConverter()

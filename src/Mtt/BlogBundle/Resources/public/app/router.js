@@ -7,4 +7,5 @@
 MttBlog.Router.map(function () {
     this.resource('dashboard', { path: '/' }, function () {});
     this.resource('category', { path: '/category' }, function () {});
+    this.resource('tag', { path: '/tag' }, function () {});
 });

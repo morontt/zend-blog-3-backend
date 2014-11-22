@@ -5,3 +5,5 @@
  */
 
 MttBlog.CategoryController = Ember.ArrayController.extend({});
+
+MttBlog.CategoryIndexController = Ember.ArrayController.extend({});
