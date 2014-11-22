@@ -17,17 +17,26 @@ use Mtt\BlogBundle\API\Transformers\TagTransformer;
 class DataConverter
 {
     /**
+     * @var Manager
+     */
+    protected $fractal;
+
+
+    public function __construct()
+    {
+        $this->fractal = new Manager();
+        $this->fractal->setSerializer(new JsonApiSerializer());
+    }
+
+    /**
      * @param array $categories
      * @return array
      */
     public function getCategoryArray(array $categories)
     {
-        $fractal = new Manager();
-        $fractal->setSerializer(new JsonApiSerializer());
-
         $resource = new Collection($categories, new CategoryTransformer(), 'categories');
 
-        return $fractal->createData($resource)->toArray();
+        return $this->fractal->createData($resource)->toArray();
     }
 
     /**
@@ -36,11 +45,8 @@ class DataConverter
      */
     public function getTagsArray(array $tags)
     {
-        $fractal = new Manager();
-        $fractal->setSerializer(new JsonApiSerializer());
-
         $resource = new Collection($tags, new TagTransformer(), 'tags');
 
-        return $fractal->createData($resource)->toArray();
+        return $this->fractal->createData($resource)->toArray();
     }
 }
