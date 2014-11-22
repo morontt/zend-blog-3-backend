@@ -5,4 +5,44 @@
     <h1><i class="glyphicon glyphicon-th-list"></i> Управление категориями.</h1>
 </div>
 
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th class="center-text">#id</th>
+        <th>Категория</th>
+        <th>Родитель</th>
+        <th>slug</th>
+        <th class="text-right">Количество записей</th>
+        <th>&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+        {{#each}}
+            <tr>
+                <td class="center-text">{{id}}</td>
+                <td>{{name}}</td>
+                <td>
+                    {{#if parent}}
+                        {{parent.name}}
+                    {{else}}
+                        -
+                    {{/if}}
+                </td>
+                <td>{{url}}</td>
+                <td class="text-right">-</td>
+                <td class="center-text">
+                    <a class="btn btn-primary" href="#">
+                        <i class="glyphicon glyphicon-pencil"></i>
+                        <span>edit</span>
+                    </a>
+                    <button class="btn btn-danger btn-confirm">
+                        <i class="glyphicon glyphicon-trash"></i>
+                        <span>delete</span>
+                    </button>
+                </td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>
+
 {{partial 'footer'}}
