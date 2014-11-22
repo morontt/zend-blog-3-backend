@@ -3,3 +3,6 @@ services:
         class: Mtt\BlogBundle\EventListener\JsonBodyListener
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 10 }
+
+    mtt_blog.api.data_converter:
+        class: Mtt\BlogBundle\API\DataConverter

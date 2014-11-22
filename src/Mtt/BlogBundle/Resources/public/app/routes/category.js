@@ -6,7 +6,7 @@
 
 MttBlog.CategoryRoute = Ember.Route.extend({
     model: function () {
-        return [];
+        return this.store.find('category');
     }
 });
 
