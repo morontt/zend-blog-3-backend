@@ -8,28 +8,20 @@
 
 namespace Mtt\BlogBundle\API;
 
+use League\Fractal\Manager;
+use League\Fractal\Resource\Collection;
+use League\Fractal\Serializer\JsonApiSerializer;
+use Mtt\BlogBundle\API\Transformers\CategoryTransformer;
 
 class DataConverter
 {
     public function getCategoryArray(array $categories)
     {
-        $data = ['categories' => []];
+        $fractal = new Manager();
+        $fractal->setSerializer(new JsonApiSerializer());
 
-        foreach ($categories as $item) {
-            $parentId = null;
-            $parent = $item->getParent();
-            if ($parent) {
-                $parentId = $parent->getId();
-            }
+        $resource = new Collection($categories, new CategoryTransformer(), 'categories');
 
-            $data['categories'][] = [
-                'id' => $item->getId(),
-                'name' => $item->getName(),
-                'url' => $item->getUrl(),
-                'parent_id' => $parentId,
-            ];
-        }
-
-        return $data;
+        return $fractal->createData($resource)->toArray();
     }
 }
