@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Table(name="commentators", uniqueConstraints={
- * @ORM\UniqueConstraint(columns={"name", "mail", "website"})
+ *   @ORM\UniqueConstraint(columns={"name", "mail", "website"})
  * })
  * @ORM\Entity(repositoryClass="Mtt\BlogBundle\Entity\Repository\CommentatorRepository")
  */

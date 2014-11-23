@@ -57,4 +57,18 @@ class ApiController extends BaseController
 
         return new JsonResponse($result);
     }
+
+    /**
+     * @Route("/commentators")
+     * @Method("GET")
+     *
+     * @return JsonResponse
+     */
+    public function commentatorFindAllAction()
+    {
+        $result = $this->getDataConverter()
+            ->getCommentatorsArray($this->getCommentatorRepository()->findAll());
+
+        return new JsonResponse($result);
+    }
 }

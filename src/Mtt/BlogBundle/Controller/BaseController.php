@@ -37,6 +37,14 @@ class BaseController extends Controller
     }
 
     /**
+     * @return \Mtt\BlogBundle\Entity\Repository\CommentatorRepository
+     */
+    public function getCommentatorRepository()
+    {
+        return $this->getEm()->getRepository('MttBlogBundle:Commentator');
+    }
+
+    /**
      * @return \Mtt\BlogBundle\API\DataConverter
      */
     public function getDataConverter()
