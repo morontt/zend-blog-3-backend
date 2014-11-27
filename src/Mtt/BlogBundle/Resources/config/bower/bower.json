@@ -4,8 +4,8 @@
     "private": true,
     "dependencies": {
         "jquery": "~1.11",
-        "ember": "~1.7.0",
-        "ember-data": "1.0.0-beta.9",
+        "ember": "1.8.1",
+        "ember-data": "1.0.0-beta.12",
         "blueimp-file-upload": "9.7.0",
         "moment": "2.8.1",
         "es5-shim": "4.0.3",
