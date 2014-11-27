@@ -11,6 +11,9 @@ MttBlog.Commentator = DS.Model.extend({
     disqusId: DS.attr('number'),
     emailHash: DS.attr('string'),
     gravatarUrl: function () {
-        return '//www.gravatar.com/avatar/' + this.get('emailHash') + '?d=monsterid';
-    }.property('emailHash')
+        var defaults = ['wavatar', 'monsterid'];
+        var idx = (this.get('id')) % 2;
+
+        return '//www.gravatar.com/avatar/' + this.get('emailHash') + '?d=' + defaults[idx];
+    }.property('id', 'emailHash')
 });
