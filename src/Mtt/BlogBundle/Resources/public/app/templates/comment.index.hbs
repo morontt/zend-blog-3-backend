@@ -1,0 +1,52 @@
+<div id="flashes">
+</div>
+
+<div class="page-header">
+    <h1><i class="glyphicon glyphicon-comment"></i> Управление комментариями.</h1>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th class="center-text">#id</th>
+        <th>Комментатор</th>
+        <th>Комментарий</th>
+        <th>IP</th>
+        <th>Отправлен</th>
+        <th class="text-right">Disqus ID</th>
+        <th>&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each}}
+        <tr>
+            <td class="center-text">{{id}}</td>
+            <td>
+                <strong>{{commentator.name}}</strong>
+            </td>
+            <td>{{text}}</td>
+            <td>{{ipAddr}}</td>
+            <td>{{createdAt}}</td>
+            <td class="text-right">
+                {{#if disqusId}}
+                    {{disqusId}}
+                {{else}}
+                    -
+                {{/if}}
+            </td>
+            <td class="center-text">
+                <a class="btn btn-primary" href="#">
+                    <i class="glyphicon glyphicon-pencil"></i>
+                    <span>edit</span>
+                </a>
+                <button class="btn btn-danger btn-confirm">
+                    <i class="glyphicon glyphicon-trash"></i>
+                    <span>delete</span>
+                </button>
+            </td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>
+
+{{partial 'footer'}}

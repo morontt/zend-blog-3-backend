@@ -9,4 +9,5 @@ MttBlog.Router.map(function () {
     this.resource('category', { path: '/category' }, function () {});
     this.resource('tag', { path: '/tag' }, function () {});
     this.resource('commentator', { path: '/commentator' }, function () {});
+    this.resource('comment', { path: '/comment' }, function () {});
 });
