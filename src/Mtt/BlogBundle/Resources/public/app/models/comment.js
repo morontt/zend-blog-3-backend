@@ -6,7 +6,7 @@
 
 MttBlog.Comment = DS.Model.extend({
     text: DS.attr('string'),
-    commentator: DS.belongsTo('commentator'),
+    commentator: DS.belongsTo('commentator', { async: true }),
     ipAddr: DS.attr('string'),
     disqusId: DS.attr('number'),
     createdAt: DS.attr('date')
