@@ -10,11 +10,13 @@ namespace Mtt\BlogBundle\API;
 
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
+use League\Fractal\Resource\Item;
 use League\Fractal\Serializer\JsonApiSerializer;
 use Mtt\BlogBundle\API\Transformers\CategoryTransformer;
 use Mtt\BlogBundle\API\Transformers\CommentTransformer;
 use Mtt\BlogBundle\API\Transformers\CommentatorTransformer;
 use Mtt\BlogBundle\API\Transformers\TagTransformer;
+use Mtt\BlogBundle\Entity\Commentator;
 
 class DataConverter
 {
@@ -59,6 +61,17 @@ class DataConverter
     public function getCommentatorsArray(array $commentators)
     {
         $resource = new Collection($commentators, new CommentatorTransformer(), 'commentators');
+
+        return $this->fractal->createData($resource)->toArray();
+    }
+
+    /**
+     * @param Commentator $entity
+     * @return array
+     */
+    public function getCommentator(Commentator $entity)
+    {
+        $resource = new Item($entity, new CommentatorTransformer(), 'commentators');
 
         return $this->fractal->createData($resource)->toArray();
     }
