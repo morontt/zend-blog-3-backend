@@ -119,6 +119,8 @@ class Post
     {
         $this->tags = new ArrayCollection();
         $this->comments = new ArrayCollection();
+
+        $this->timeCreated = new \DateTime('now');
     }
 
     /**
@@ -195,7 +197,7 @@ class Post
      *
      * @return boolean
      */
-    public function getHide()
+    public function isHide()
     {
         return $this->hide;
     }

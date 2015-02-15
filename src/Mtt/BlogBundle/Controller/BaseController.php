@@ -53,6 +53,14 @@ class BaseController extends Controller
     }
 
     /**
+     * @return \Mtt\BlogBundle\Entity\Repository\PostRepository
+     */
+    public function getPostRepository()
+    {
+        return $this->getEm()->getRepository('MttBlogBundle:Post');
+    }
+
+    /**
      * @return \Mtt\BlogBundle\API\DataConverter
      */
     public function getDataConverter()

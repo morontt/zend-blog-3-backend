@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: morontt
- * Date: 16.11.14
- * Time: 17:43
+ * Date: 15.02.15
+ * Time: 20:03
  */
 
 namespace Mtt\BlogBundle\Controller;
@@ -13,47 +13,43 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * @Route("/api")
+ * @Route("/api/categories")
  *
- * Class ApiController
+ * Class CategoryController
  * @package Mtt\BlogBundle\Controller
  */
-class ApiController extends BaseController
+class CategoryController extends BaseController
 {
     /**
-     * @Route("/")
-     *
-     * @return array
-     */
-    public function infoAction()
-    {
-        return [];
-    }
-
-    /**
-     * @Route("/tags")
+     * @Route("")
      * @Method("GET")
      *
      * @return JsonResponse
      */
-    public function tagFindAllAction()
+    public function findAllAction()
     {
         $result = $this->getDataConverter()
-            ->getTagsArray($this->getTagRepository()->findAll());
+            ->getCategoryArray($this->getCategoryRepository()->findAll());
 
         return new JsonResponse($result);
     }
 
     /**
-     * @Route("/comments")
+     * @Route("/{id}", requirements={"id": "\d+"})
      * @Method("GET")
      *
+     * @param $id
      * @return JsonResponse
      */
-    public function commentFindAllAction()
+    public function findAction($id)
     {
+        /**
+         * @var \Mtt\BlogBundle\Entity\Category $entity
+         */
+        $entity = $this->getCategoryRepository()->find((int)$id);
+
         $result = $this->getDataConverter()
-            ->getCommentsArray($this->getCommentRepository()->findAll());
+            ->getCategory($entity);
 
         return new JsonResponse($result);
     }
