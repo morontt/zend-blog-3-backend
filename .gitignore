@@ -12,3 +12,4 @@
 /bin/
 /composer.phar
 src/Mtt/BlogBundle/Resources/public/components/
+node_modules/
