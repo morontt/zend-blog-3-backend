@@ -4,11 +4,12 @@
     "private": true,
     "dependencies": {
         "jquery": "~1.11",
-        "ember": "1.8.1",
-        "ember-data": "1.0.0-beta.12",
-        "blueimp-file-upload": "9.7.0",
-        "moment": "2.8.1",
-        "es5-shim": "4.0.3",
+        "handlebars": "2.0.0",
+        "ember": "1.10.0",
+        "ember-data": "1.0.0-beta.15",
+        "blueimp-file-upload": "9.9.3",
+        "moment": "2.9.0",
+        "es5-shim": "4.1.0",
         "bootstrap": "3.3.0"
     }
 }
