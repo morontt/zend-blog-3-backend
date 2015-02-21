@@ -16,11 +16,11 @@
     </tr>
     </thead>
     <tbody>
-    {{#each}}
+    {{#each tag in model}}
         <tr>
-            <td class="center-text">{{id}}</td>
-            <td>{{name}}</td>
-            <td>{{url}}</td>
+            <td class="center-text">{{tag.id}}</td>
+            <td>{{tag.name}}</td>
+            <td>{{tag.url}}</td>
             <td class="text-right">-</td>
             <td class="center-text">
                 <a class="btn btn-primary" href="#">

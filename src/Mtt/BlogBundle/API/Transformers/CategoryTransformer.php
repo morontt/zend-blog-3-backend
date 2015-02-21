@@ -8,10 +8,9 @@
 
 namespace Mtt\BlogBundle\API\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use Mtt\BlogBundle\Entity\Category;
 
-class CategoryTransformer extends TransformerAbstract
+class CategoryTransformer extends BaseTransformer
 {
     /**
      * @param Category $item

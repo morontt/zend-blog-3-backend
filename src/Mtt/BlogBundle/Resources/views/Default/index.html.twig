@@ -5,17 +5,31 @@
     <script type="text/javascript" src="/bundles/mttblog/components/es5-shim/es5-shim.min.js"></script>
     <![endif]-->
 
-    {% javascripts
-        '@MttBlogBundle/Resources/public/components/jquery/dist/jquery.js'
-        '@MttBlogBundle/Resources/public/components/handlebars/handlebars.js'
-        '@MttBlogBundle/Resources/public/components/ember/ember.js'
-        '@MttBlogBundle/Resources/public/components/ember-data/ember-data.js'
-        '@MttBlogBundle/Resources/public/components/bootstrap/dist/js/bootstrap.js'
-        '@MttBlogBundle/Resources/public/components/moment/moment.js'
-        '@MttBlogBundle/Resources/public/components/moment/locale/ru.js'
-    %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+    {% if app.environment == 'dev' %}
+        {% javascripts
+            '@MttBlogBundle/Resources/public/components/jquery/dist/jquery.js'
+            '@MttBlogBundle/Resources/public/components/ember/ember-template-compiler.js'
+            '@MttBlogBundle/Resources/public/components/ember/ember.debug.js'
+            '@MttBlogBundle/Resources/public/components/ember-data/ember-data.js'
+            '@MttBlogBundle/Resources/public/components/bootstrap/dist/js/bootstrap.js'
+            '@MttBlogBundle/Resources/public/components/moment/moment.js'
+            '@MttBlogBundle/Resources/public/components/moment/locale/ru.js'
+        %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% else %}
+        {% javascripts
+            '@MttBlogBundle/Resources/public/components/jquery/dist/jquery.js'
+            '@MttBlogBundle/Resources/public/components/ember/ember-template-compiler.js'
+            '@MttBlogBundle/Resources/public/components/ember/ember.prod.js'
+            '@MttBlogBundle/Resources/public/components/ember-data/ember-data.js'
+            '@MttBlogBundle/Resources/public/components/bootstrap/dist/js/bootstrap.js'
+            '@MttBlogBundle/Resources/public/components/moment/moment.js'
+            '@MttBlogBundle/Resources/public/components/moment/locale/ru.js'
+        %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+    {% endif %}
 
     <script type="text/javascript">
         rest_url = '{{ path('mtt_blog_api_info') }}';
@@ -34,7 +48,7 @@
         '@MttBlogBundle/Resources/public/app/helpers/*.js'
         '@MttBlogBundle/Resources/public/app/models/*.js'
         '@MttBlogBundle/Resources/public/app/controllers/*.js'
-        '@MttBlogBundle/Resources/public/app/templates/*.hbs'
+        '@MttBlogBundle/Resources/public/app/templates.js'
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}

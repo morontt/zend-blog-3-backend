@@ -8,10 +8,9 @@
 
 namespace Mtt\BlogBundle\API\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use Mtt\BlogBundle\Entity\Tag;
 
-class TagTransformer extends TransformerAbstract
+class TagTransformer extends BaseTransformer
 {
     /**
      * @param Tag $item

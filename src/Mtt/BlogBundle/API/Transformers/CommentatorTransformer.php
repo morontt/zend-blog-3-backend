@@ -8,10 +8,9 @@
 
 namespace Mtt\BlogBundle\API\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use Mtt\BlogBundle\Entity\Commentator;
 
-class CommentatorTransformer extends TransformerAbstract
+class CommentatorTransformer extends BaseTransformer
 {
     /**
      * @param Commentator $item

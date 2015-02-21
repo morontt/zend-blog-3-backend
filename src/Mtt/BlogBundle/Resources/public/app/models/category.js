@@ -7,5 +7,5 @@
 MttBlog.Category = DS.Model.extend({
     name: DS.attr('string'),
     url: DS.attr('string'),
-    parent: DS.belongsTo('category', { async: true })
+    parent: DS.belongsTo('category', { inverse: null, async: true })
 });

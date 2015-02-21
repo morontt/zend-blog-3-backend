@@ -18,18 +18,18 @@
     </tr>
     </thead>
     <tbody>
-    {{#each}}
+    {{#each comment in model}}
         <tr>
-            <td class="center-text">{{id}}</td>
+            <td class="center-text">{{comment.id}}</td>
             <td>
-                <strong>{{commentator.name}}</strong>
+                <strong>{{comment.commentator.name}}</strong>
             </td>
-            <td>{{text}}</td>
-            <td>{{ipAddr}}</td>
-            <td>{{createdAt}}</td>
+            <td>{{comment.text}}</td>
+            <td>{{comment.ipAddr}}</td>
+            <td>{{dateFormat comment.createdAt 'DD MMM YYYY, HH:mm'}}</td>
             <td class="text-right">
-                {{#if disqusId}}
-                    {{disqusId}}
+                {{#if comment.disqusId}}
+                    {{comment.disqusId}}
                 {{else}}
                     -
                 {{/if}}

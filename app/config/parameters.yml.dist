@@ -19,5 +19,3 @@ parameters:
     use_assetic_controller: true
 
     browsertitle: morontt.info
-
-    emberprecompile_bin: /usr/bin/ember-precompile

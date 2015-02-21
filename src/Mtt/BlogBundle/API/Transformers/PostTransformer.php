@@ -8,10 +8,9 @@
 
 namespace Mtt\BlogBundle\API\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use Mtt\BlogBundle\Entity\Post;
 
-class PostTransformer extends TransformerAbstract
+class PostTransformer extends BaseTransformer
 {
     /**
      * @param Post $item
@@ -31,19 +30,5 @@ class PostTransformer extends TransformerAbstract
         ];
 
         return $data;
-    }
-
-    /**
-     * @param \DateTime|null $dateTime
-     * @return string|null
-     */
-    protected function dateTimeToISO(\DateTime $dateTime = null)
-    {
-        $result = null;
-        if ($dateTime) {
-            $result = $dateTime->format(\DateTime::ISO8601);
-        }
-
-        return $result;
     }
 }

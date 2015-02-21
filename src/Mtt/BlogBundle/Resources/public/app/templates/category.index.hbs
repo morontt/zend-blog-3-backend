@@ -17,18 +17,18 @@
     </tr>
     </thead>
     <tbody>
-    {{#each}}
+    {{#each category in model}}
         <tr>
-            <td class="center-text">{{id}}</td>
-            <td>{{name}}</td>
+            <td class="center-text">{{category.id}}</td>
+            <td>{{category.name}}</td>
             <td>
-                {{#if parent}}
-                    {{parent.name}}
+                {{#if category.parent}}
+                    {{category.parent.name}}
                 {{else}}
                     -
                 {{/if}}
             </td>
-            <td>{{url}}</td>
+            <td>{{category.url}}</td>
             <td class="text-right">-</td>
             <td class="center-text">
                 <a class="btn btn-primary" href="#">
