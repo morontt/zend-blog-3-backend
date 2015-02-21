@@ -8,10 +8,9 @@
 
 namespace Mtt\BlogBundle\API\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use Mtt\BlogBundle\Entity\Comment;
 
-class CommentTransformer extends TransformerAbstract
+class CommentTransformer extends BaseTransformer
 {
     /**
      * @param Comment $item
@@ -31,7 +30,7 @@ class CommentTransformer extends TransformerAbstract
             'commentator_id' => $commentatorId,
             'ip_addr' => $item->getIpAddress(),
             'disqus_id' => (int)$item->getDisqusId(),
-            'created_at' => new \DateTime('now'),
+            'created_at' => $this->dateTimeToISO($item->getTimeCreated()),
         ];
 
         return $data;
