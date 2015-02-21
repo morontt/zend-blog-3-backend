@@ -18,21 +18,21 @@
     </tr>
     </thead>
     <tbody>
-    {{#each}}
+    {{#each commentator in model}}
         <tr>
-            <td class="center-text">{{id}}</td>
+            <td class="center-text">{{commentator.id}}</td>
             <td>
-                <img {{bind-attr src=gravatarUrl}}
+                <img {{bind-attr src=commentator.gravatarUrl}}
                      alt="avatar"/>
             </td>
             <td>
-                <strong>{{name}}</strong>
+                <strong>{{commentator.name}}</strong>
             </td>
-            <td>{{email}}</td>
-            <td>{{website}}</td>
+            <td>{{commentator.email}}</td>
+            <td>{{commentator.website}}</td>
             <td class="text-right">
-                {{#if disqusId}}
-                    {{disqusId}}
+                {{#if commentator.disqusId}}
+                    {{commentator.disqusId}}
                 {{else}}
                     -
                 {{/if}}

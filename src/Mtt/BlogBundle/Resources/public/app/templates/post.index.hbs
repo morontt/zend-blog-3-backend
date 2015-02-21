@@ -17,19 +17,19 @@
     </tr>
     </thead>
     <tbody>
-    {{#each}}
+    {{#each post in model}}
         <tr>
-            <td class="center-text">{{id}}</td>
-            <td>{{title}}</td>
-            <td>{{category.name}}</td>
+            <td class="center-text">{{post.id}}</td>
+            <td>{{post.title}}</td>
+            <td>{{post.category.name}}</td>
             <td>
-                {{#if hidden}}
+                {{#if post.hidden}}
                     Да
                 {{else}}
                     -
                 {{/if}}
             </td>
-            <td class="text-right">{{dateFormat timeCreated 'DD MMM YYYY, HH:mm'}}</td>
+            <td class="text-right">{{dateFormat post.timeCreated 'DD MMM YYYY, HH:mm'}}</td>
             <td class="center-text">
                 <a class="btn btn-primary" href="#">
                     <i class="glyphicon glyphicon-pencil"></i>
