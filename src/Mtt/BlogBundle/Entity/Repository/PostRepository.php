@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class PostRepository extends EntityRepository
 {
+    /**
+     * @return \Doctrine\ORM\Query
+     */
+    public function getListQuery()
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->orderBy('p.id', 'DESC');
+
+        return $qb->getQuery();
+    }
 }

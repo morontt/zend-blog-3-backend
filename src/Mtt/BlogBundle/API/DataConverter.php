@@ -38,7 +38,7 @@ class DataConverter
      * @param array $categories
      * @return array
      */
-    public function getCategoryArray(array $categories)
+    public function getCategoryArray($categories)
     {
         $resource = new Collection($categories, new CategoryTransformer(), 'categories');
 
@@ -60,7 +60,7 @@ class DataConverter
      * @param array $tags
      * @return array
      */
-    public function getTagsArray(array $tags)
+    public function getTagsArray($tags)
     {
         $resource = new Collection($tags, new TagTransformer(), 'tags');
 
@@ -71,7 +71,7 @@ class DataConverter
      * @param array $commentators
      * @return array
      */
-    public function getCommentatorsArray(array $commentators)
+    public function getCommentatorsArray($commentators)
     {
         $resource = new Collection($commentators, new CommentatorTransformer(), 'commentators');
 
@@ -93,7 +93,7 @@ class DataConverter
      * @param array $comments
      * @return array
      */
-    public function getCommentsArray(array $comments)
+    public function getCommentsArray($comments)
     {
         $resource = new Collection($comments, new CommentTransformer(), 'comments');
 
@@ -104,7 +104,7 @@ class DataConverter
      * @param array $posts
      * @return array
      */
-    public function getPostsArray(array $posts)
+    public function getPostsArray($posts)
     {
         $resource = new Collection($posts, new PostTransformer(), 'posts');
 

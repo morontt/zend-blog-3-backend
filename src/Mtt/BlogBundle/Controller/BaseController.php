@@ -67,4 +67,23 @@ class BaseController extends Controller
     {
         return $this->get('mtt_blog.api.data_converter');
     }
+
+    /**
+     * @return \Knp\Component\Pager\Paginator
+     */
+    public function getPaginator()
+    {
+        return $this->get('knp_paginator');
+    }
+
+    /**
+     * @param $query
+     * @param $page
+     * @return \Knp\Component\Pager\Pagination\PaginationInterface
+     */
+    public function paginate($query, $page)
+    {
+        return $this->getPaginator()
+            ->paginate($query, (int)$page, 15);
+    }
 }

@@ -4,14 +4,15 @@
  * Time: 18:46
  */
 
-MttBlog.PostRoute = Ember.Route.extend({
-    model: function () {
-        return this.store.find('post');
-    }
-});
+MttBlog.PostRoute = Ember.Route.extend({});
 
 MttBlog.PostIndexRoute = Ember.Route.extend({
-    model: function () {
-        return this.modelFor('post');
+    queryParams: {
+        page: {
+            refreshModel: true
+        }
+    },
+    model: function (params) {
+        return this.store.find('post', params);
     }
 });

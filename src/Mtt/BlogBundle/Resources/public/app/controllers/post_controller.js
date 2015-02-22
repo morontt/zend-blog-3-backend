@@ -4,6 +4,9 @@
  * Time: 18:47
  */
 
-MttBlog.PostController = Ember.ArrayController.extend({});
+MttBlog.PostController = Ember.Controller.extend({});
 
-MttBlog.PostIndexController = Ember.ArrayController.extend({});
+MttBlog.PostIndexController = Ember.ArrayController.extend({
+    queryParams: ['page'],
+    page: 1
+});
