@@ -50,6 +50,13 @@ class Tracking
     protected $timeCreated;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $timestampCreated;
+
+    /**
      * Get id
      *
      * @return integer
@@ -149,5 +156,28 @@ class Tracking
     public function getPost()
     {
         return $this->post;
+    }
+
+    /**
+     * Set timestampCreated
+     *
+     * @param string $timestampCreated
+     * @return Tracking
+     */
+    public function setTimestampCreated($timestampCreated)
+    {
+        $this->timestampCreated = $timestampCreated;
+
+        return $this;
+    }
+
+    /**
+     * Get timestampCreated
+     *
+     * @return string 
+     */
+    public function getTimestampCreated()
+    {
+        return $this->timestampCreated;
     }
 }
