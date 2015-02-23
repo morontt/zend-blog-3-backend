@@ -23,9 +23,16 @@ class TrackingAgent
     /**
      * @var string
      *
-     * @ORM\Column(name="user_agent", type="string", length=255, unique=true)
+     * @ORM\Column(name="user_agent", type="text", length=65000)
      */
     protected $userAgent;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=32, unique=true)
+     */
+    protected $hash;
 
     /**
      * @var boolean
@@ -133,5 +140,28 @@ class TrackingAgent
     public function getTrackings()
     {
         return $this->trackings;
+    }
+
+    /**
+     * Set hash
+     *
+     * @param string $hash
+     * @return TrackingAgent
+     */
+    public function setHash($hash)
+    {
+        $this->hash = $hash;
+
+        return $this;
+    }
+
+    /**
+     * Get hash
+     *
+     * @return string 
+     */
+    public function getHash()
+    {
+        return $this->hash;
     }
 }
