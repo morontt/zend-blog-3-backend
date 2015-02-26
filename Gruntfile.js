@@ -11,12 +11,20 @@ module.exports = function(grunt) {
                     handlebarsPath: 'src/Mtt/BlogBundle/Resources/public/components/handlebars/handlebars.js'
                 },
                 files: {
-                    "src/Mtt/BlogBundle/Resources/public/app/templates.js": "src/Mtt/BlogBundle/Resources/public/app/templates/*.hbs"
+                    'src/Mtt/BlogBundle/Resources/public/app/templates.js': 'src/Mtt/BlogBundle/Resources/public/app/templates/*.hbs'
                 }
+            }
+        },
+        watch: {
+            scripts: {
+                files: 'src/Mtt/BlogBundle/Resources/public/app/templates/*.hbs',
+                tasks: 'emberTemplates'
             }
         }
     });
 
     grunt.loadNpmTasks('grunt-ember-templates');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+
     grunt.registerTask('default', ['emberTemplates']);
 };
