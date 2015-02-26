@@ -79,7 +79,7 @@ class BaseController extends Controller
     /**
      * @param $query
      * @param $page
-     * @return \Knp\Component\Pager\Pagination\PaginationInterface
+     * @return \Knp\Component\Pager\Pagination\SlidingPagination
      */
     public function paginate($query, $page)
     {
