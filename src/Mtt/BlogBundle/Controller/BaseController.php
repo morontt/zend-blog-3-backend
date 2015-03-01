@@ -86,4 +86,20 @@ class BaseController extends Controller
         return $this->getPaginator()
             ->paginate($query, (int)$page, 15);
     }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    public function getPaginationMetadata(array $data)
+    {
+        $result = [
+            'last' => $data['last'],
+            'current' => $data['current'],
+            'previous' => isset($data['previous']) ? $data['previous'] : false,
+            'next' => isset($data['next']) ? $data['next'] : false,
+        ];
+
+        return $result;
+    }
 }
