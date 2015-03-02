@@ -9,15 +9,19 @@
                 <li class="prev disabled"><span>&larr; Назад</span></li>
             {{/if}}
 
-            <li class="active"><span>1</span></li>
-            <li><a href="/item/?page=2">2</a></li>
-            <li><a href="/item/?page=3">3</a></li>
-            <li><a href="/item/?page=4">4</a></li>
-            <li><a href="/item/?page=5">5</a></li>
-            <li><a href="/item/?page=6">6</a></li>
-            <li><a href="/item/?page=7">7</a></li>
-            {{!-- <li class="disabled"><span>&hellip;</span></li> --}}
-            <li><a href="/item/?page=12">12</a></li>
+            {{#each pageLink in pageLinks}}
+                {{#if pageLink.active}}
+                    <li class="active"><span>{{pageLink.page}}</span></li>
+                {{else}}
+                    <li>
+                        {{#link-to routeName (query-params page=pageLink.page)}}
+                            {{pageLink.page}}
+                        {{/link-to}}
+                    </li>
+                {{/if}}
+            {{else}}
+                <li class="disabled"><span>&hellip;</span></li>
+            {{/each}}
 
             {{#if meta.next}}
                 <li class="next">
