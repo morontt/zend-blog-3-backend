@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class CategoryRepository extends EntityRepository
 {
+    /**
+     * @return \Doctrine\ORM\Query
+     */
+    public function getListQuery()
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->orderBy('c.name', 'ASC');
+
+        return $qb->getQuery();
+    }
 }

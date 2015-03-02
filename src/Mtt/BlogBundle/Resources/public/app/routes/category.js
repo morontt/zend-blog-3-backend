@@ -4,14 +4,15 @@
  * Time: 1:41
  */
 
-MttBlog.CategoryRoute = Ember.Route.extend({
-    model: function () {
-        return this.store.find('category');
-    }
-});
+MttBlog.CategoryRoute = Ember.Route.extend({});
 
 MttBlog.CategoryIndexRoute = Ember.Route.extend({
-    model: function () {
-        return this.modelFor('category');
+    queryParams: {
+        page: {
+            refreshModel: true
+        }
+    },
+    model: function (params) {
+        return this.store.find('category', params);
     }
 });

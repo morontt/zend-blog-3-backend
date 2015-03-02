@@ -4,6 +4,9 @@
  * Time: 1:43
  */
 
-MttBlog.CategoryController = Ember.ArrayController.extend({});
+MttBlog.CategoryController = Ember.Controller.extend({});
 
-MttBlog.CategoryIndexController = Ember.ArrayController.extend({});
+MttBlog.CategoryIndexController = Ember.ArrayController.extend({
+    queryParams: ['page'],
+    page: 1
+});
