@@ -4,14 +4,15 @@
  * Time: 12:10
  */
 
-MttBlog.CommentatorRoute = Ember.Route.extend({
-    model: function () {
-        return this.store.find('commentator');
-    }
-});
+MttBlog.CommentatorRoute = Ember.Route.extend({});
 
 MttBlog.CommentatorIndexRoute = Ember.Route.extend({
-    model: function () {
-        return this.modelFor('commentator');
+    queryParams: {
+        page: {
+            refreshModel: true
+        }
+    },
+    model: function (params) {
+        return this.store.find('commentator', params);
     }
 });
