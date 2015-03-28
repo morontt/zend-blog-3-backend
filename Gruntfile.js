@@ -5,7 +5,8 @@ module.exports = function(grunt) {
             compile: {
                 options: {
                     templateName: function(src) {
-                        return src.replace(/src\/Mtt\/BlogBundle\/Resources\/public\/app\/templates\//, '').replace('.', '/');
+                        return src.replace(/src\/Mtt\/BlogBundle\/Resources\/public\/app\/templates\//, '')
+                            .replace(/\./g, '/');
                     },
                     templateCompilerPath: 'src/Mtt/BlogBundle/Resources/public/components/ember/ember-template-compiler.js',
                     handlebarsPath: 'src/Mtt/BlogBundle/Resources/public/components/handlebars/handlebars.js'

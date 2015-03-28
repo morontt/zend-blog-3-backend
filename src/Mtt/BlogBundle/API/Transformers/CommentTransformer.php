@@ -13,6 +13,13 @@ use Mtt\BlogBundle\Entity\Comment;
 class CommentTransformer extends BaseTransformer
 {
     /**
+     * @var array
+     */
+    protected $defaultIncludes = [
+        'Commentator',
+    ];
+
+    /**
      * @param Comment $item
      * @return array
      */
@@ -34,5 +41,20 @@ class CommentTransformer extends BaseTransformer
         ];
 
         return $data;
+    }
+
+    /**
+     * @param Comment $entity
+     * @return \League\Fractal\Resource\Collection
+     */
+    public function includeCommentator(Comment $entity)
+    {
+        $commentator = $entity->getCommentator();
+        $items = [];
+        if ($commentator) {
+            $items = [$commentator];
+        }
+
+        return $this->collection($items, new CommentatorTransformer, 'commentators');
     }
 }

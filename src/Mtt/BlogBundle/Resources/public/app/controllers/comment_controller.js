@@ -4,6 +4,9 @@
  * Time: 12:41
  */
 
-MttBlog.CommentController = Ember.ArrayController.extend({});
+MttBlog.CommentController = Ember.Controller.extend({});
 
-MttBlog.CommentIndexController = Ember.ArrayController.extend({});
+MttBlog.CommentIndexController = Ember.ArrayController.extend({
+    queryParams: ['page'],
+    page: 1
+});

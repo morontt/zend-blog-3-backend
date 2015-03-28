@@ -4,14 +4,15 @@
  * Time: 18:10
  */
 
-MttBlog.TagRoute = Ember.Route.extend({
-    model: function () {
-        return this.store.find('tag');
-    }
-});
+MttBlog.TagRoute = Ember.Route.extend({});
 
 MttBlog.TagIndexRoute = Ember.Route.extend({
-    model: function () {
-        return this.modelFor('tag');
+    queryParams: {
+        page: {
+            refreshModel: true
+        }
+    },
+    model: function (params) {
+        return this.store.find('tag', params);
     }
 });

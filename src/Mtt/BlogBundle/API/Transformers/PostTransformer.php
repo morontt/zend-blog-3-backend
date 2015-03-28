@@ -13,6 +13,13 @@ use Mtt\BlogBundle\Entity\Post;
 class PostTransformer extends BaseTransformer
 {
     /**
+     * @var array
+     */
+    protected $defaultIncludes = [
+        'Category',
+    ];
+
+    /**
      * @param Post $item
      * @return array
      */
@@ -30,5 +37,16 @@ class PostTransformer extends BaseTransformer
         ];
 
         return $data;
+    }
+
+    /**
+     * @param Post $entity
+     * @return \League\Fractal\Resource\Collection
+     */
+    public function includeCategory(Post $entity)
+    {
+        $items = [$entity->getCategory()];
+
+        return $this->collection($items, new CategoryTransformer, 'categories');
     }
 }

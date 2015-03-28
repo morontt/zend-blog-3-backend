@@ -4,14 +4,15 @@
  * Time: 12:39
  */
 
-MttBlog.CommentRoute = Ember.Route.extend({
-    model: function () {
-        return this.store.find('comment');
-    }
-});
+MttBlog.CommentRoute = Ember.Route.extend({});
 
 MttBlog.CommentIndexRoute = Ember.Route.extend({
-    model: function () {
-        return this.modelFor('comment');
+    queryParams: {
+        page: {
+            refreshModel: true
+        }
+    },
+    model: function (params) {
+        return this.store.find('comment', params);
     }
 });

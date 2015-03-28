@@ -12,4 +12,14 @@ use Doctrine\ORM\EntityRepository;
  */
 class TagRepository extends EntityRepository
 {
+    /**
+     * @return \Doctrine\ORM\Query
+     */
+    public function getListQuery()
+    {
+        $qb = $this->createQueryBuilder('t')
+            ->orderBy('t.name', 'ASC');
+
+        return $qb->getQuery();
+    }
 }

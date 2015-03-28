@@ -8,9 +8,7 @@
 
 namespace Mtt\BlogBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/api")
@@ -28,33 +26,5 @@ class ApiController extends BaseController
     public function infoAction()
     {
         return [];
-    }
-
-    /**
-     * @Route("/tags")
-     * @Method("GET")
-     *
-     * @return JsonResponse
-     */
-    public function tagFindAllAction()
-    {
-        $result = $this->getDataConverter()
-            ->getTagsArray($this->getTagRepository()->findAll());
-
-        return new JsonResponse($result);
-    }
-
-    /**
-     * @Route("/comments")
-     * @Method("GET")
-     *
-     * @return JsonResponse
-     */
-    public function commentFindAllAction()
-    {
-        $result = $this->getDataConverter()
-            ->getCommentsArray($this->getCommentRepository()->findAll());
-
-        return new JsonResponse($result);
     }
 }

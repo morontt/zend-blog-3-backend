@@ -4,6 +4,9 @@
  * Time: 18:06
  */
 
-MttBlog.TagController = Ember.ArrayController.extend({});
+MttBlog.TagController = Ember.Controller.extend({});
 
-MttBlog.TagIndexController = Ember.ArrayController.extend({});
+MttBlog.TagIndexController = Ember.ArrayController.extend({
+    queryParams: ['page'],
+    page: 1
+});
