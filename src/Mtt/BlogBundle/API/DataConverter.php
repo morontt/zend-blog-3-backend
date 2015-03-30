@@ -8,6 +8,8 @@
 
 namespace Mtt\BlogBundle\API;
 
+use Doctrine\Bundle\DoctrineBundle\Registry;
+use Doctrine\ORM\EntityManager;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
@@ -18,6 +20,7 @@ use Mtt\BlogBundle\API\Transformers\PostTransformer;
 use Mtt\BlogBundle\API\Transformers\TagTransformer;
 use Mtt\BlogBundle\Entity\Category;
 use Mtt\BlogBundle\Entity\Commentator;
+use Mtt\BlogBundle\Entity\Tag;
 
 class DataConverter
 {
@@ -26,11 +29,21 @@ class DataConverter
      */
     protected $fractal;
 
+    /**
+     * @var EntityManager
+     */
+    protected $em;
 
-    public function __construct()
+
+    /**
+     * @param Registry $doctrine
+     */
+    public function __construct(Registry $doctrine)
     {
         $this->fractal = new Manager();
         $this->fractal->setSerializer(new Serializer());
+
+        $this->em = $doctrine->getManager();
     }
 
     /**
@@ -64,6 +77,33 @@ class DataConverter
         $resource = new Collection($tags, new TagTransformer(), 'tags');
 
         return $this->fractal->createData($resource)->toArray();
+    }
+
+    /**
+     * @param Tag $tag
+     * @return array
+     */
+    public function getTag(Tag $tag)
+    {
+        $resource = new Item($tag, new TagTransformer(), 'tag');
+
+        return $this->fractal->createData($resource)->toArray();
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    public function createTag(array $data)
+    {
+        $tag = new Tag();
+
+        TagTransformer::reverseTransform($tag, $data);
+
+        $this->em->persist($tag);
+        $this->em->flush();
+
+        return $this->getTag($tag);
     }
 
     /**

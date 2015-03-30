@@ -42,4 +42,19 @@ class TagController extends BaseController
 
         return new JsonResponse($result);
     }
+
+    /**
+     * @Route("")
+     * @Method("POST")
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function createTag(Request $request)
+    {
+        $result = $this->getDataConverter()
+            ->createTag($request->request->get('tag'));
+
+        return new JsonResponse($result);
+    }
 }

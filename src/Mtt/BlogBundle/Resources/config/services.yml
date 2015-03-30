@@ -6,3 +6,4 @@ services:
 
     mtt_blog.api.data_converter:
         class: Mtt\BlogBundle\API\DataConverter
+        arguments: [ @doctrine ]

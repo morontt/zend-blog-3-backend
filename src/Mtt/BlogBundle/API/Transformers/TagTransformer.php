@@ -9,6 +9,7 @@
 namespace Mtt\BlogBundle\API\Transformers;
 
 use Mtt\BlogBundle\Entity\Tag;
+use Mtt\BlogBundle\Utils\RuTransform;
 
 class TagTransformer extends BaseTransformer
 {
@@ -25,5 +26,20 @@ class TagTransformer extends BaseTransformer
         ];
 
         return $data;
+    }
+
+    /**
+     * @param Tag $entity
+     * @param array $data
+     */
+    public static function reverseTransform(Tag $entity, array $data)
+    {
+        $entity->setName($data['name']);
+
+        if ($data['url']) {
+            $entity->setUrl($data['url']);
+        } else {
+            $entity->setUrl(RuTransform::ruTransform($data['name']));
+        }
     }
 }
