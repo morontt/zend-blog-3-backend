@@ -13,9 +13,13 @@ MttBlog.TagIndexController = Ember.ArrayController.extend({
         createTag: function () {
             if (this.get('enableNewTagButton')) {
                 var them = this;
-                var onSuccess = function () {
+                var tag_field = $('#tag_field');
+                var onSuccess = function (record) {
                     them.set('enableNewTagButton', true);
+                    them.get('model').addObject(record);
+
                     $('#modal_new_tag').modal('hide');
+                    tag_field.val('');
                 };
                 var onFail = function () {
                     them.set('enableNewTagButton', true);
@@ -24,7 +28,7 @@ MttBlog.TagIndexController = Ember.ArrayController.extend({
                 this.set('enableNewTagButton', false);
 
                 var tag = this.store.createRecord('tag', {
-                    name: $('#tag_field').val()
+                    name: tag_field.val()
                 });
 
                 tag.save().then(onSuccess, onFail);
@@ -37,5 +41,11 @@ MttBlog.TagIndexController = Ember.ArrayController.extend({
             $('#modal_new_tag').modal('hide');
         }
     },
+    sortableTags: (function () {
+        return Ember.ArrayProxy.createWithMixins(Ember.SortableMixin, {
+            sortProperties: ['name'],
+            content: this.get('model')
+        });
+    }).property('model'),
     enableNewTagButton: true
 });
