@@ -6,7 +6,7 @@
     <![endif]-->
 
     {% if app.environment == 'dev' %}
-        {% javascripts
+        {% javascripts filter='?uglifyjs2'
             '@MttBlogBundle/Resources/public/components/jquery/dist/jquery.js'
             '@MttBlogBundle/Resources/public/components/ember/ember-template-compiler.js'
             '@MttBlogBundle/Resources/public/components/ember/ember.debug.js'
@@ -18,7 +18,7 @@
         <script type="text/javascript" src="{{ asset_url }}"></script>
         {% endjavascripts %}
     {% else %}
-        {% javascripts
+        {% javascripts filter='?uglifyjs2'
             '@MttBlogBundle/Resources/public/components/jquery/dist/jquery.js'
             '@MttBlogBundle/Resources/public/components/ember/ember-template-compiler.js'
             '@MttBlogBundle/Resources/public/components/ember/ember.prod.js'
@@ -35,13 +35,14 @@
         rest_url = '{{ path('mtt_blog_api_info') }}';
         var app_parameters = {
             api_url: rest_url.substr(1, rest_url.length - 2),
-            locale: '{{ app.request.locale }}'
+            locale: '{{ app.request.locale }}',
+            environment: '{{ app.environment }}'
         };
 
         moment.locale(app_parameters.locale);
     </script>
 
-    {% javascripts
+    {% javascripts filter='?uglifyjs2'
         '@MttBlogBundle/Resources/public/app/app.js'
         '@MttBlogBundle/Resources/public/app/router.js'
         '@MttBlogBundle/Resources/public/app/routes/*.js'

@@ -1,7 +1,7 @@
 {% extends "::base.html.twig" %}
 
 {% block stylesheets %}
-    {% stylesheets filter='cssrewrite'
+    {% stylesheets filter='?uglifycss' filter='cssrewrite'
         'bundles/mttblog/components/bootstrap/dist/css/bootstrap.css'
         'bundles/mttblog/css/main.css'
     %}
