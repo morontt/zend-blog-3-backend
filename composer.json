@@ -2,7 +2,7 @@
     "name": "zend-blog-3",
     "license": "MIT",
     "type": "project",
-    "description": "zend-blog-3 backend ver.3",
+    "description": "zend-blog ver.3, backend",
     "autoload": {
         "psr-0": { "": "src/" }
     },
