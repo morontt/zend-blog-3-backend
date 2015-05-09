@@ -2,8 +2,17 @@
 </div>
 
 <div class="page-header">
+    <div class="actions-menu">
+        <a class="btn btn-primary" href="#"
+            {{action "openModal"}}>
+            <i class="glyphicon glyphicon-plus-sign"></i>
+            <span>Создать категорию</span>
+        </a>
+    </div>
     <h1><i class="glyphicon glyphicon-th-list"></i> Управление категориями.</h1>
 </div>
+
+{{paginator-list meta=model.meta routeName='category.index'}}
 
 <table class="table table-bordered">
     <thead>
@@ -17,7 +26,7 @@
     </tr>
     </thead>
     <tbody>
-    {{#each category in model}}
+    {{#each category in sortableCategory}}
         <tr>
             <td class="center-text">{{category.id}}</td>
             <td>{{category.name}}</td>
@@ -50,3 +59,39 @@
 {{paginator-list meta=model.meta routeName='category.index'}}
 
 {{partial 'footer'}}
+
+<div class="modal fade" id="modal_new_category" tabindex="-1" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                        class="close"
+                        aria-label="Close"
+                    {{action "closeModal"}}>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Новая категория</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="category_field" class="control-label">Категория:</label>
+                        <input id="category_field" class="form-control" type="text"/>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                {{#if enableNewCategoryButton}}
+                    <button type="button"
+                            class="btn btn-primary"
+                        {{action "createCategory"}}>Создать</button>
+                {{else}}
+                    <button type="button"
+                            class="btn btn-primary"
+                            disabled="disabled">Создать</button>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</div>

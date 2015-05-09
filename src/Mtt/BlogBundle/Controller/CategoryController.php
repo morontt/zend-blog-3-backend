@@ -62,4 +62,19 @@ class CategoryController extends BaseController
 
         return new JsonResponse($result);
     }
+
+    /**
+     * @Route("")
+     * @Method("POST")
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function createCategoryAction(Request $request)
+    {
+        $result = $this->getDataConverter()
+            ->createCategory($request->request->get('category'));
+
+        return new JsonResponse($result);
+    }
 }

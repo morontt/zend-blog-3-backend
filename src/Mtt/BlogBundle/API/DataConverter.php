@@ -106,6 +106,18 @@ class DataConverter
         return $this->getTag($tag);
     }
 
+    public function createCategory(array $data)
+    {
+        $category = new Category();
+
+        CategoryTransformer::reverseTransform($category, $data);
+
+        $this->em->persist($category);
+        $this->em->flush();
+
+        return $this->getCategory($category);
+    }
+
     /**
      * @param array $commentators
      * @return array

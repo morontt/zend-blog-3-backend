@@ -9,6 +9,7 @@
 namespace Mtt\BlogBundle\API\Transformers;
 
 use Mtt\BlogBundle\Entity\Category;
+use Mtt\BlogBundle\Utils\RuTransform;
 
 class CategoryTransformer extends BaseTransformer
 {
@@ -32,5 +33,20 @@ class CategoryTransformer extends BaseTransformer
         ];
 
         return $data;
+    }
+
+    /**
+     * @param Category $entity
+     * @param array $data
+     */
+    public static function reverseTransform(Category $entity, array $data)
+    {
+        $entity->setName($data['name']);
+
+        if ($data['url']) {
+            $entity->setUrl($data['url']);
+        } else {
+            $entity->setUrl(RuTransform::ruTransform($data['name']));
+        }
     }
 }
