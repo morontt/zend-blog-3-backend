@@ -24,7 +24,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "sp/bower-bundle": "~0.12",
         "league/fractal": "0.10.*",
-        "knplabs/knp-paginator-bundle": "~2.4"
+        "knplabs/knp-paginator-bundle": "~2.4",
+        "friendsofsymfony/jsrouting-bundle": "~1.5"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

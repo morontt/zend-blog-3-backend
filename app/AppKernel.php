@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new Mtt\BlogBundle\MttBlogBundle(),
             new Sp\BowerBundle\SpBowerBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
