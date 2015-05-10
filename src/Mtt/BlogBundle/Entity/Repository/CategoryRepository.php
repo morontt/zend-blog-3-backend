@@ -22,4 +22,16 @@ class CategoryRepository extends EntityRepository
 
         return $qb->getQuery();
     }
+
+    /**
+     * @return array
+     */
+    public function getNamesArray()
+    {
+        $qb = $this->createQueryBuilder('c')
+            ->select('c.id', 'c.name')
+            ->orderBy('c.name', 'ASC');
+
+        return $qb->getQuery()->getArrayResult();
+    }
 }

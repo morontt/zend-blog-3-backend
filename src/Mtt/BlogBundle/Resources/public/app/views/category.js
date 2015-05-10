@@ -1,5 +1,23 @@
 /**
  * Created by morontt.
- * Date: 31.03.15
- * Time: 0:20
+ * Date: 10.05.15
+ * Time: 2:50
  */
+
+MttBlog.CategoryIndexView = Ember.View.extend({
+    didInsertElement: function () {
+        this._super();
+
+        $.ajax({
+            url: Routing.generate('mtt_blog_default_ajaxcategory'),
+            success: function (data) {
+                var options = ['<option value="">...</option>'];
+                data.forEach(function (val) {
+                    options.push('<option value="' + val.id + '">' + val.name + '</option>');
+                });
+
+                $('#category_parent').html(options.join(''));
+            }
+        });
+    }
+});

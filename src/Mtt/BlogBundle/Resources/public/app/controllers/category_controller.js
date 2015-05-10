@@ -14,12 +14,14 @@ MttBlog.CategoryIndexController = Ember.ArrayController.extend({
             if (this.get('enableNewCategoryButton')) {
                 var them = this;
                 var category_field = $('#category_field');
+                var category_parent = $('#category_parent');
                 var onSuccess = function (record) {
                     them.set('enableNewCategoryButton', true);
                     them.get('model').addObject(record);
 
                     $('#modal_new_category').modal('hide');
                     category_field.val('');
+                    category_parent.val('');
                 };
                 var onFail = function () {
                     them.set('enableNewCategoryButton', true);
