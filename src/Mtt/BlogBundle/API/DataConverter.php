@@ -112,6 +112,11 @@ class DataConverter
 
         CategoryTransformer::reverseTransform($category, $data);
 
+        if ($data['parent_id']) {
+            $parent = $this->em->getReference('MttBlogBundle:Category', (int)$data['parent_id']);
+            $category->setParent($parent);
+        }
+
         $this->em->persist($category);
         $this->em->flush();
 

@@ -33,7 +33,17 @@ MttBlog.CategoryIndexController = Ember.ArrayController.extend({
                     name: category_field.val()
                 });
 
-                category.save().then(onSuccess, onFail);
+                var parent_id = parseInt(category_parent.val());
+
+                if (!isNaN(parent_id)) {
+                    var parent_category = this.store.find('category', parent_id);
+                    parent_category.then(function () {
+                        category.set('parent', parent_category);
+                        category.save().then(onSuccess, onFail);
+                    }, onFail);
+                } else {
+                    category.save().then(onSuccess, onFail);
+                }
             }
         },
         openModal: function () {
