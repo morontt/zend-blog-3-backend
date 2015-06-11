@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "194facdb4cfd9034baf9a62c64f288ad",
+    "hash": "bdd288cace501bd583d8d613cd239a9a",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -635,7 +635,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineMigrationsBundle/zipball/6a1bd731dbdd4ad952a3b246a8f38c9c12f52e62",
+                "url": "https://api.github.com/repos/doctrine/DoctrineMigrationsBundle/zipball/eaa9eb5ea101dc494d7f57d1a86905e56a211d49",
                 "reference": "6a1bd731dbdd4ad952a3b246a8f38c9c12f52e62",
                 "shasum": ""
             },
@@ -814,7 +814,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/migrations/zipball/a4f14d3a3d397104e557ec65d1a4e43bb86e4ddf",
+                "url": "https://api.github.com/repos/doctrine/migrations/zipball/67f02686c6c779ae50489728b91026bc8199720c",
                 "reference": "f623eff82515f55d18199706851895ced831cba0",
                 "shasum": ""
             },
@@ -1634,12 +1634,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Spea/SpBowerBundle.git",
-                "reference": "d2f51eb9b894896ac53b303359ab18c66c9859ad"
+                "reference": "5c93817"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Spea/SpBowerBundle/zipball/d2f51eb9b894896ac53b303359ab18c66c9859ad",
-                "reference": "d2f51eb9b894896ac53b303359ab18c66c9859ad",
+                "url": "https://api.github.com/repos/Spea/SpBowerBundle/zipball/51de513eac331efb2136777b0345227fbed8e115",
+                "reference": "5c93817",
                 "shasum": ""
             },
             "require": {
@@ -1687,7 +1687,7 @@
                 "bower manager",
                 "dependencies"
             ],
-            "time": "2015-02-19 18:10:24"
+            "time": "2015-05-31 12:30:11"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -1924,16 +1924,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v2.6.6",
+            "version": "v2.6.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "48c9e835a877adfb023b8b6d033d9dd14f342b4b"
+                "reference": "b06539573ccf64dd3a62852685f052553d02c5ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/48c9e835a877adfb023b8b6d033d9dd14f342b4b",
-                "reference": "48c9e835a877adfb023b8b6d033d9dd14f342b4b",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/b06539573ccf64dd3a62852685f052553d02c5ba",
+                "reference": "b06539573ccf64dd3a62852685f052553d02c5ba",
                 "shasum": ""
             },
             "require": {
@@ -2024,20 +2024,20 @@
             ],
             "authors": [
                 {
-                    "name": "Symfony Community",
-                    "homepage": "http://symfony.com/contributors"
-                },
-                {
                     "name": "Fabien Potencier",
                     "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
                 }
             ],
             "description": "The Symfony PHP framework",
-            "homepage": "http://symfony.com",
+            "homepage": "https://symfony.com",
             "keywords": [
                 "framework"
             ],
-            "time": "2015-04-01 16:55:26"
+            "time": "2015-05-29 22:55:07"
         },
         {
             "name": "twig/extensions",
@@ -2244,7 +2244,8 @@
     "stability-flags": {
         "doctrine/doctrine-fixtures-bundle": 20,
         "doctrine/migrations": 20,
-        "doctrine/doctrine-migrations-bundle": 20
+        "doctrine/doctrine-migrations-bundle": 20,
+        "sp/bower-bundle": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
