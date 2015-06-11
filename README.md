@@ -15,13 +15,14 @@ Work in progress
 
 #### Install packages for Ember.js
 
-    sudo npm install -g ember-precompile
+    sudo npm install -g grunt-cli
     sudo npm install -g bower
 
 If npm is not installed (Debian/Ubuntu)
 
     sudo apt-get install nodejs
 
-#### Install PHP-vendors
+#### Install vendors
 
     composer install
+    npm install
