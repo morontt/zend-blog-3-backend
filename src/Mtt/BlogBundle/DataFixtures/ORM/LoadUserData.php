@@ -5,7 +5,7 @@ namespace Mtt\BlogBundle\DataFixtures\ORM;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
-use Mtt\BlogBundle\Entity\User;
+use Mtt\UserBundle\Entity\User;
 
 class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
 {

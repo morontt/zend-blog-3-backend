@@ -152,10 +152,10 @@ class Commentator
     /**
      * Add comments
      *
-     * @param \Mtt\BlogBundle\Entity\Comment $comments
+     * @param Comment $comments
      * @return Commentator
      */
-    public function addComment(\Mtt\BlogBundle\Entity\Comment $comments)
+    public function addComment(Comment $comments)
     {
         $this->comments[] = $comments;
 
@@ -165,9 +165,9 @@ class Commentator
     /**
      * Remove comments
      *
-     * @param \Mtt\BlogBundle\Entity\Comment $comments
+     * @param Comment $comments
      */
-    public function removeComment(\Mtt\BlogBundle\Entity\Comment $comments)
+    public function removeComment(Comment $comments)
     {
         $this->comments->removeElement($comments);
     }

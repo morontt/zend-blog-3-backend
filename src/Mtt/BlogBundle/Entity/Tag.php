@@ -105,10 +105,10 @@ class Tag
     /**
      * Add posts
      *
-     * @param \Mtt\BlogBundle\Entity\Post $posts
+     * @param Post $posts
      * @return Tag
      */
-    public function addPost(\Mtt\BlogBundle\Entity\Post $posts)
+    public function addPost(Post $posts)
     {
         $this->posts[] = $posts;
 
@@ -118,9 +118,9 @@ class Tag
     /**
      * Remove posts
      *
-     * @param \Mtt\BlogBundle\Entity\Post $posts
+     * @param Post $posts
      */
-    public function removePost(\Mtt\BlogBundle\Entity\Post $posts)
+    public function removePost(Post $posts)
     {
         $this->posts->removeElement($posts);
     }

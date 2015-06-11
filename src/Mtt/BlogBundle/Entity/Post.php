@@ -4,6 +4,7 @@ namespace Mtt\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Mtt\UserBundle\Entity\User;
 
 /**
  * @ORM\Table(name="posts")
@@ -86,9 +87,9 @@ class Post
     protected $tags;
 
     /**
-     * @var \Mtt\BlogBundle\Entity\User
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="posts")
+     * @ORM\ManyToOne(targetEntity="Mtt\UserBundle\Entity\User", inversedBy="posts")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
@@ -376,10 +377,10 @@ class Post
     /**
      * Set user
      *
-     * @param \Mtt\BlogBundle\Entity\User $user
+     * @param User $user
      * @return Post
      */
-    public function setUser(\Mtt\BlogBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
@@ -389,7 +390,7 @@ class Post
     /**
      * Get user
      *
-     * @return \Mtt\BlogBundle\Entity\User
+     * @return User
      */
     public function getUser()
     {

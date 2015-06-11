@@ -115,10 +115,10 @@ class Tracking
     /**
      * Set trackingAgent
      *
-     * @param \Mtt\BlogBundle\Entity\TrackingAgent $trackingAgent
+     * @param TrackingAgent $trackingAgent
      * @return Tracking
      */
-    public function setTrackingAgent(\Mtt\BlogBundle\Entity\TrackingAgent $trackingAgent = null)
+    public function setTrackingAgent(TrackingAgent $trackingAgent = null)
     {
         $this->trackingAgent = $trackingAgent;
 
@@ -128,7 +128,7 @@ class Tracking
     /**
      * Get trackingAgent
      *
-     * @return \Mtt\BlogBundle\Entity\TrackingAgent
+     * @return TrackingAgent
      */
     public function getTrackingAgent()
     {
@@ -138,10 +138,10 @@ class Tracking
     /**
      * Set post
      *
-     * @param \Mtt\BlogBundle\Entity\Post $post
+     * @param Post $post
      * @return Tracking
      */
-    public function setPost(\Mtt\BlogBundle\Entity\Post $post = null)
+    public function setPost(Post $post = null)
     {
         $this->post = $post;
     
@@ -151,7 +151,7 @@ class Tracking
     /**
      * Get post
      *
-     * @return \Mtt\BlogBundle\Entity\Post 
+     * @return Post
      */
     public function getPost()
     {

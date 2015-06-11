@@ -120,10 +120,10 @@ class Category
     /**
      * Add children
      *
-     * @param \Mtt\BlogBundle\Entity\Category $children
+     * @param Category $children
      * @return Category
      */
-    public function addChild(\Mtt\BlogBundle\Entity\Category $children)
+    public function addChild(Category $children)
     {
         $this->children[] = $children;
 
@@ -133,9 +133,9 @@ class Category
     /**
      * Remove children
      *
-     * @param \Mtt\BlogBundle\Entity\Category $children
+     * @param Category $children
      */
-    public function removeChild(\Mtt\BlogBundle\Entity\Category $children)
+    public function removeChild(Category $children)
     {
         $this->children->removeElement($children);
     }
@@ -153,10 +153,10 @@ class Category
     /**
      * Set parent
      *
-     * @param \Mtt\BlogBundle\Entity\Category $parent
+     * @param Category $parent
      * @return Category
      */
-    public function setParent(\Mtt\BlogBundle\Entity\Category $parent = null)
+    public function setParent(Category $parent = null)
     {
         $this->parent = $parent;
 
@@ -176,10 +176,10 @@ class Category
     /**
      * Add posts
      *
-     * @param \Mtt\BlogBundle\Entity\Post $posts
+     * @param Post $posts
      * @return Category
      */
-    public function addPost(\Mtt\BlogBundle\Entity\Post $posts)
+    public function addPost(Post $posts)
     {
         $this->posts[] = $posts;
 
@@ -189,9 +189,9 @@ class Category
     /**
      * Remove posts
      *
-     * @param \Mtt\BlogBundle\Entity\Post $posts
+     * @param Post $posts
      */
-    public function removePost(\Mtt\BlogBundle\Entity\Post $posts)
+    public function removePost(Post $posts)
     {
         $this->posts->removeElement($posts);
     }

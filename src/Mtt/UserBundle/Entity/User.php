@@ -1,13 +1,15 @@
 <?php
 
-namespace Mtt\BlogBundle\Entity;
+namespace Mtt\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Mtt\BlogBundle\Entity\Comment;
+use Mtt\BlogBundle\Entity\Post;
 
 /**
  * @ORM\Table(name="users")
- * @ORM\Entity(repositoryClass="Mtt\BlogBundle\Entity\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="Mtt\UserBundle\Entity\Repository\UserRepository")
  */
 class User
 {
@@ -86,14 +88,14 @@ class User
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="Post", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Mtt\BlogBundle\Entity\Post", mappedBy="user")
      */
     protected $posts;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Mtt\BlogBundle\Entity\Comment", mappedBy="user")
      */
     protected $comments;
 
@@ -331,10 +333,10 @@ class User
     /**
      * Add posts
      *
-     * @param \Mtt\BlogBundle\Entity\Post $posts
+     * @param Post $posts
      * @return User
      */
-    public function addPost(\Mtt\BlogBundle\Entity\Post $posts)
+    public function addPost(Post $posts)
     {
         $this->posts[] = $posts;
 
@@ -344,9 +346,9 @@ class User
     /**
      * Remove posts
      *
-     * @param \Mtt\BlogBundle\Entity\Post $posts
+     * @param Post $posts
      */
-    public function removePost(\Mtt\BlogBundle\Entity\Post $posts)
+    public function removePost(Post $posts)
     {
         $this->posts->removeElement($posts);
     }
@@ -364,10 +366,10 @@ class User
     /**
      * Add comments
      *
-     * @param \Mtt\BlogBundle\Entity\Comment $comments
+     * @param Comment $comments
      * @return User
      */
-    public function addComment(\Mtt\BlogBundle\Entity\Comment $comments)
+    public function addComment(Comment $comments)
     {
         $this->comments[] = $comments;
 
@@ -377,9 +379,9 @@ class User
     /**
      * Remove comments
      *
-     * @param \Mtt\BlogBundle\Entity\Comment $comments
+     * @param Comment $comments
      */
-    public function removeComment(\Mtt\BlogBundle\Entity\Comment $comments)
+    public function removeComment(Comment $comments)
     {
         $this->comments->removeElement($comments);
     }

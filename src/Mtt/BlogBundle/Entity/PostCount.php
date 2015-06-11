@@ -101,10 +101,10 @@ class PostCount
     /**
      * Set post
      *
-     * @param \Mtt\BlogBundle\Entity\Post $post
+     * @param Post $post
      * @return PostCount
      */
-    public function setPost(\Mtt\BlogBundle\Entity\Post $post = null)
+    public function setPost(Post $post = null)
     {
         $this->post = $post;
 
@@ -114,7 +114,7 @@ class PostCount
     /**
      * Get post
      *
-     * @return \Mtt\BlogBundle\Entity\Post
+     * @return Post
      */
     public function getPost()
     {
