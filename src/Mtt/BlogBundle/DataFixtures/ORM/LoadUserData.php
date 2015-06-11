@@ -21,8 +21,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
             ->setMail('morontt@gmail.com')
             ->setSalt($salt)
             ->setPassword(md5('admin' . $salt))
-            ->setUserType('admin')
-            ->setTimeCreated(new \DateTime('now'));
+            ->setUserType('admin');
 
         $manager->persist($user);
         $manager->flush();

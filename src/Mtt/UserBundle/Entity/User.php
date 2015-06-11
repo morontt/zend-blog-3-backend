@@ -111,6 +111,8 @@ class User
     {
         $this->posts = new ArrayCollection();
         $this->comments = new ArrayCollection();
+
+        $this->timeCreated = new \DateTime('now');
     }
 
     /**

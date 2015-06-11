@@ -105,6 +105,8 @@ class Comment
     public function __construct()
     {
         $this->children = new ArrayCollection();
+
+        $this->timeCreated = new \DateTime('now');
     }
 
     /**

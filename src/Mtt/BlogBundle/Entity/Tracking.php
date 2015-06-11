@@ -56,6 +56,12 @@ class Tracking
      */
     protected $timestampCreated;
 
+
+    public function __construct()
+    {
+        $this->setTimeCreated(new \DateTime('now'));
+    }
+
     /**
      * Get id
      *
@@ -95,9 +101,10 @@ class Tracking
      * @param \DateTime $timeCreated
      * @return Tracking
      */
-    public function setTimeCreated($timeCreated)
+    public function setTimeCreated(\DateTime $timeCreated)
     {
         $this->timeCreated = $timeCreated;
+        $this->timestampCreated = (int)$timeCreated->format('U');
 
         return $this;
     }

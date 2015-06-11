@@ -18,8 +18,7 @@ class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
         $comment->setText('Тестовый комментарий')
             ->setIpAddress('94.231.112.91')
             ->setPost($manager->merge($this->getReference('post-1')))
-            ->setCommentator($manager->merge($this->getReference('commentator-1')))
-            ->setTimeCreated(new \DateTime('now'));
+            ->setCommentator($manager->merge($this->getReference('commentator-1')));
 
         $manager->persist($comment);
         $manager->flush();
@@ -29,8 +28,7 @@ class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
             ->setIpAddress('62.72.188.111')
             ->setPost($manager->merge($this->getReference('post-1')))
             ->setUser($manager->merge($this->getReference('admin-user')))
-            ->setParent($comment)
-            ->setTimeCreated(new \DateTime('now'));
+            ->setParent($comment);
 
         $manager->persist($comment2);
         $manager->flush();

@@ -41,6 +41,7 @@ class Tag
      */
     protected $posts;
 
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();

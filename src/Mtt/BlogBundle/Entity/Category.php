@@ -54,12 +54,12 @@ class Category
      */
     protected $posts;
 
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
         $this->posts = new ArrayCollection();
     }
-
 
     /**
      * Get id

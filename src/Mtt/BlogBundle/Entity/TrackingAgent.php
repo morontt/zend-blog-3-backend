@@ -72,6 +72,7 @@ class TrackingAgent
     public function setUserAgent($userAgent)
     {
         $this->userAgent = $userAgent;
+        $this->hash = md5($userAgent);
 
         return $this;
     }

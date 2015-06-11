@@ -22,8 +22,7 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
             ->setUser($manager->merge($this->getReference('admin-user')))
             ->setDescription('метатег description тестовй записи')
             ->setText('<p>Тестовая запись, собственно...</p>')
-            ->addTag($manager->merge($this->getReference('tag-test')))
-            ->setTimeCreated(new \DateTime('now'));
+            ->addTag($manager->merge($this->getReference('tag-test')));
         $manager->persist($post);
         $manager->flush();
 
@@ -36,8 +35,7 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
             ->setUser($manager->merge($this->getReference('admin-user')))
             ->setDescription('метатег description тестовой записи про ПХП')
             ->setText('<p>PHP (рекурсивный акроним словосочетания PHP: Hypertext Preprocessor) - это распространенный язык программирования общего назначения с открытым исходным кодом. PHP сконструирован специально для ведения Web-разработок и его код может внедряться непосредственно в HTML.</p>')
-            ->addTag($manager->merge($this->getReference('tag-php')))
-            ->setTimeCreated(new \DateTime('now'));
+            ->addTag($manager->merge($this->getReference('tag-php')));
         $manager->persist($post2);
         $manager->flush();
 
@@ -50,8 +48,7 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
             ->setUser($manager->merge($this->getReference('admin-user')))
             ->setDescription('description PHP')
             ->setText('<p>Ещё одна запись о PHP</p>')
-            ->addTag($manager->merge($this->getReference('tag-php')))
-            ->setTimeCreated(new \DateTime('now'));
+            ->addTag($manager->merge($this->getReference('tag-php')));
         $manager->persist($post3);
         $manager->flush();
 
@@ -64,8 +61,7 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
             ->setUser($manager->merge($this->getReference('admin-user')))
             ->setDescription('description-JavaScript')
             ->setText('<p>JavaScript - прототипно-ориентированный сценарный язык программирования. Является диалектом языка ECMAScript</p><!-- cut --><p>Параграф под катом</p>')
-            ->addTag($manager->merge($this->getReference('tag-javascript')))
-            ->setTimeCreated(new \DateTime('now'));
+            ->addTag($manager->merge($this->getReference('tag-javascript')));
         $manager->persist($post4);
         $manager->flush();
 
