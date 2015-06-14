@@ -35,7 +35,7 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ MttBlogBundle ]
+    bundles:        [ MttBlogBundle, MttUserBundle ]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~

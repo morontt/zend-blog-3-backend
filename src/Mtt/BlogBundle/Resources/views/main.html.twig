@@ -24,11 +24,11 @@
     </div>
     <div class="visible-xs visible-sm"></div>
     <div class="hidden-xs hidden-sm pull-right">
-        <p class="navbar-text">Превед, USER</p>
+        <p class="navbar-text">Превед{% if app.user %}, {{ app.user.username }}{% endif %}</p>
 
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a href="#">
+                <a href="{{ path('mtt_user_security_logout') }}">
                     <i class="glyphicon glyphicon-off"></i> Выход
                 </a>
             </li>
