@@ -72,6 +72,7 @@ class TrackingAgent
     public function setUserAgent($userAgent)
     {
         $this->userAgent = $userAgent;
+        $this->hash = md5($userAgent);
 
         return $this;
     }
@@ -112,10 +113,10 @@ class TrackingAgent
     /**
      * Add trackings
      *
-     * @param \Mtt\BlogBundle\Entity\Tracking $trackings
+     * @param Tracking $trackings
      * @return TrackingAgent
      */
-    public function addTracking(\Mtt\BlogBundle\Entity\Tracking $trackings)
+    public function addTracking(Tracking $trackings)
     {
         $this->trackings[] = $trackings;
 
@@ -125,9 +126,9 @@ class TrackingAgent
     /**
      * Remove trackings
      *
-     * @param \Mtt\BlogBundle\Entity\Tracking $trackings
+     * @param Tracking $trackings
      */
-    public function removeTracking(\Mtt\BlogBundle\Entity\Tracking $trackings)
+    public function removeTracking(Tracking $trackings)
     {
         $this->trackings->removeElement($trackings);
     }

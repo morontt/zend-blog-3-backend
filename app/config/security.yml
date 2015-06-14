@@ -1,12 +1,37 @@
 security:
+    encoders:
+        Mtt\UserBundle\Entity\User:
+            algorithm: sha384
+            iterations: 1
+            encode_as_base64: false
+
     providers:
-        in_memory:
-            memory: ~
+        user_db:
+            entity:
+                class: Mtt\UserBundle\Entity\User
+                property: username
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        default:
+        login_firewall:
+            pattern:   ^/login$
             anonymous: ~
+
+        default:
+            pattern: ^/
+            anonymous: ~
+            form_login:
+                provider:   user_db
+                login_path: /login
+                check_path: /login_check
+                csrf_provider: security.csrf.token_manager
+            logout:
+                path:   /logout
+                target: /login
+
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_USER }

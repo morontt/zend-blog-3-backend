@@ -3,5 +3,10 @@ mtt_blog:
     type:     annotation
     prefix:   /
 
+mtt_user:
+    resource: "@MttUserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>
+        Login
+    </title>
+    <meta charset="UTF-8">
+
+    <!--[if lt IE 9]>
+    <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <![endif]-->
+
+    {% block stylesheets %}
+        {% stylesheets filter='?uglifycss' filter='cssrewrite'
+            'bundles/mttblog/components/bootstrap/dist/css/bootstrap.css'
+            'bundles/mttblog/css/main.css'
+        %}
+        <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+        {% endstylesheets %}
+    {% endblock %}
+</head>
+<body class="signin">
+<form method="post" action="{{ path('mtt_user_security_logincheck') }}" class="form-signin">
+    {% if error %}
+        <div class="alert alert-danger">
+            {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+    {% endif %}
+
+    <input type="hidden" name="_csrf_token"
+           value="{{ csrf_token('authenticate') }}">
+
+    <input type="text"
+           name="_username"
+           class="form-control input-lg"
+           value="{{ lastUsername }}"
+           placeholder="username">
+    <br>
+    <input type="password"
+           name="_password"
+           class="form-control input-lg"
+           placeholder="password">
+    <br>
+    <button class="btn btn-block btn-lg btn-success"
+            type="submit">LOGIN</button>
+</form>
+</body>
+</html>

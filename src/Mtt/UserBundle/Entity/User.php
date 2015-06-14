@@ -1,15 +1,28 @@
 <?php
 
-namespace Mtt\BlogBundle\Entity;
+namespace Mtt\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Mtt\BlogBundle\Entity\Comment;
+use Mtt\BlogBundle\Entity\Post;
+use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="users")
- * @ORM\Entity(repositoryClass="Mtt\BlogBundle\Entity\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="Mtt\UserBundle\Entity\Repository\UserRepository")
+ * @DoctrineAssert\UniqueEntity(
+ *   fields={"username"},
+ *   message="This username is already used"
+ * )
+ * @DoctrineAssert\UniqueEntity(
+ *   fields={"mail"},
+ *   message="This email is already used"
+ * )
  */
-class User
+class User implements UserInterface, \Serializable
 {
     /**
      * @var integer
@@ -31,13 +44,14 @@ class User
      * @var string
      *
      * @ORM\Column(name="mail", type="string", length=64, unique=true)
+     * @Assert\Email()
      */
     protected $mail;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string", length=32)
+     * @ORM\Column(name="password", type="string", length=96)
      */
     protected $password;
 
@@ -86,14 +100,14 @@ class User
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="Post", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Mtt\BlogBundle\Entity\Post", mappedBy="user")
      */
     protected $posts;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
      *
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Mtt\BlogBundle\Entity\Comment", mappedBy="user")
      */
     protected $comments;
 
@@ -109,6 +123,51 @@ class User
     {
         $this->posts = new ArrayCollection();
         $this->comments = new ArrayCollection();
+
+        $this->salt = md5(uniqid('', true));
+        $this->timeCreated = new \DateTime('now');
+        $this->userType = 'admin'; //TODO remove fake field
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function serialize()
+    {
+        return serialize([
+            $this->id,
+            $this->username,
+            $this->password,
+            $this->salt,
+        ]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            $this->salt
+            ) = unserialize($serialized);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRoles()
+    {
+        return ['ROLE_USER'];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function eraseCredentials()
+    {
     }
 
     /**
@@ -153,6 +212,7 @@ class User
     public function setMail($mail)
     {
         $this->mail = $mail;
+        $this->emailHash = md5($mail);
 
         return $this;
     }
@@ -331,10 +391,10 @@ class User
     /**
      * Add posts
      *
-     * @param \Mtt\BlogBundle\Entity\Post $posts
+     * @param Post $posts
      * @return User
      */
-    public function addPost(\Mtt\BlogBundle\Entity\Post $posts)
+    public function addPost(Post $posts)
     {
         $this->posts[] = $posts;
 
@@ -344,9 +404,9 @@ class User
     /**
      * Remove posts
      *
-     * @param \Mtt\BlogBundle\Entity\Post $posts
+     * @param Post $posts
      */
-    public function removePost(\Mtt\BlogBundle\Entity\Post $posts)
+    public function removePost(Post $posts)
     {
         $this->posts->removeElement($posts);
     }
@@ -364,10 +424,10 @@ class User
     /**
      * Add comments
      *
-     * @param \Mtt\BlogBundle\Entity\Comment $comments
+     * @param Comment $comments
      * @return User
      */
-    public function addComment(\Mtt\BlogBundle\Entity\Comment $comments)
+    public function addComment(Comment $comments)
     {
         $this->comments[] = $comments;
 
@@ -377,9 +437,9 @@ class User
     /**
      * Remove comments
      *
-     * @param \Mtt\BlogBundle\Entity\Comment $comments
+     * @param Comment $comments
      */
-    public function removeComment(\Mtt\BlogBundle\Entity\Comment $comments)
+    public function removeComment(Comment $comments)
     {
         $this->comments->removeElement($comments);
     }

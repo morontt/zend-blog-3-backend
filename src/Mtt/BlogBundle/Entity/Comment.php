@@ -4,6 +4,7 @@ namespace Mtt\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Mtt\UserBundle\Entity\User;
 
 /**
  * @ORM\Table(name="comments")
@@ -50,9 +51,9 @@ class Comment
     protected $commentator;
 
     /**
-     * @var \Mtt\BlogBundle\Entity\User
+     * @var User
      *
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity="Mtt\UserBundle\Entity\User", inversedBy="comments")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
      */
     protected $user;
@@ -104,6 +105,8 @@ class Comment
     public function __construct()
     {
         $this->children = new ArrayCollection();
+
+        $this->timeCreated = new \DateTime('now');
     }
 
     /**
@@ -119,10 +122,10 @@ class Comment
     /**
      * Add children
      *
-     * @param \Mtt\BlogBundle\Entity\Comment $children
+     * @param Comment $children
      * @return Comment
      */
-    public function addChild(\Mtt\BlogBundle\Entity\Comment $children)
+    public function addChild(Comment $children)
     {
         $this->children[] = $children;
 
@@ -132,9 +135,9 @@ class Comment
     /**
      * Remove children
      *
-     * @param \Mtt\BlogBundle\Entity\Comment $children
+     * @param Comment $children
      */
-    public function removeChild(\Mtt\BlogBundle\Entity\Comment $children)
+    public function removeChild(Comment $children)
     {
         $this->children->removeElement($children);
     }
@@ -152,10 +155,10 @@ class Comment
     /**
      * Set parent
      *
-     * @param \Mtt\BlogBundle\Entity\Comment $parent
+     * @param Comment $parent
      * @return Comment
      */
-    public function setParent(\Mtt\BlogBundle\Entity\Comment $parent = null)
+    public function setParent(Comment $parent = null)
     {
         $this->parent = $parent;
 
@@ -175,10 +178,10 @@ class Comment
     /**
      * Set commentator
      *
-     * @param \Mtt\BlogBundle\Entity\Commentator $commentator
+     * @param Commentator $commentator
      * @return Comment
      */
-    public function setCommentator(\Mtt\BlogBundle\Entity\Commentator $commentator = null)
+    public function setCommentator(Commentator $commentator = null)
     {
         $this->commentator = $commentator;
 
@@ -198,10 +201,10 @@ class Comment
     /**
      * Set user
      *
-     * @param \Mtt\BlogBundle\Entity\User $user
+     * @param User $user
      * @return Comment
      */
-    public function setUser(\Mtt\BlogBundle\Entity\User $user = null)
+    public function setUser(User $user = null)
     {
         $this->user = $user;
 
@@ -211,7 +214,7 @@ class Comment
     /**
      * Get user
      *
-     * @return \Mtt\BlogBundle\Entity\User
+     * @return User
      */
     public function getUser()
     {
@@ -313,10 +316,10 @@ class Comment
     /**
      * Set post
      *
-     * @param \Mtt\BlogBundle\Entity\Post $post
+     * @param Post $post
      * @return Comment
      */
-    public function setPost(\Mtt\BlogBundle\Entity\Post $post = null)
+    public function setPost(Post $post = null)
     {
         $this->post = $post;
 
@@ -336,10 +339,10 @@ class Comment
     /**
      * Set trackingAgent
      *
-     * @param \Mtt\BlogBundle\Entity\TrackingAgent $trackingAgent
+     * @param TrackingAgent $trackingAgent
      * @return Comment
      */
-    public function setTrackingAgent(\Mtt\BlogBundle\Entity\TrackingAgent $trackingAgent = null)
+    public function setTrackingAgent(TrackingAgent $trackingAgent = null)
     {
         $this->trackingAgent = $trackingAgent;
 
@@ -349,7 +352,7 @@ class Comment
     /**
      * Get trackingAgent
      *
-     * @return \Mtt\BlogBundle\Entity\TrackingAgent
+     * @return TrackingAgent
      */
     public function getTrackingAgent()
     {
