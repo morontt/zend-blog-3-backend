@@ -6,11 +6,21 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Entity\Post;
+use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="Mtt\UserBundle\Entity\Repository\UserRepository")
+ * @DoctrineAssert\UniqueEntity(
+ *   fields={"username"},
+ *   message="This username is already used"
+ * )
+ * @DoctrineAssert\UniqueEntity(
+ *   fields={"mail"},
+ *   message="This email is already used"
+ * )
  */
 class User implements UserInterface, \Serializable
 {
@@ -34,6 +44,7 @@ class User implements UserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="mail", type="string", length=64, unique=true)
+     * @Assert\Email()
      */
     protected $mail;
 
@@ -115,6 +126,7 @@ class User implements UserInterface, \Serializable
 
         $this->salt = md5(uniqid('', true));
         $this->timeCreated = new \DateTime('now');
+        $this->userType = 'admin'; //TODO remove fake field
     }
 
     /**
@@ -200,6 +212,7 @@ class User implements UserInterface, \Serializable
     public function setMail($mail)
     {
         $this->mail = $mail;
+        $this->emailHash = md5($mail);
 
         return $this;
     }
