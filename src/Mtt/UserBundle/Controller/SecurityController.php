@@ -16,7 +16,12 @@ class SecurityController extends Controller
      */
     public function loginAction()
     {
-        return [];
+        $authenticationUtils = $this->get('security.authentication_utils');
+
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $authenticationUtils->getLastUsername();
+
+        return compact('error', 'lastUsername');
     }
 
     /**
