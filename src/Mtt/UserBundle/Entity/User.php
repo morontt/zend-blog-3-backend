@@ -6,12 +6,13 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Entity\Post;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="Mtt\UserBundle\Entity\Repository\UserRepository")
  */
-class User
+class User implements UserInterface, \Serializable
 {
     /**
      * @var integer
@@ -39,7 +40,7 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string", length=32)
+     * @ORM\Column(name="password", type="string", length=96)
      */
     protected $password;
 
@@ -112,7 +113,49 @@ class User
         $this->posts = new ArrayCollection();
         $this->comments = new ArrayCollection();
 
+        $this->salt = md5(uniqid('', true));
         $this->timeCreated = new \DateTime('now');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function serialize()
+    {
+        return serialize([
+            $this->id,
+            $this->username,
+            $this->password,
+            $this->salt,
+        ]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            $this->salt
+            ) = unserialize($serialized);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRoles()
+    {
+        return ['ROLE_USER'];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function eraseCredentials()
+    {
     }
 
     /**
