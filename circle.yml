@@ -20,6 +20,7 @@ dependencies:
     - npm install -g uglifycss
     - npm install -g uglify-js
     - composer install --prefer-source --no-interaction
+    - npm install
     - grunt
     - app/console assetic:dump -e test --no-debug
   post:
