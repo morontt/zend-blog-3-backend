@@ -16,4 +16,5 @@ parameters:
     debug_toolbar: false
     debug_redirects: false
     use_assetic_controller: false
+    nodemodules_bin_path: /home/ubuntu/nvm/v0.10.34/bin
     browsertitle: zendblog-3.loc

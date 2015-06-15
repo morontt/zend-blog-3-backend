@@ -18,4 +18,5 @@ parameters:
     debug_redirects:        false
     use_assetic_controller: true
 
-    browsertitle: morontt.info
+    nodemodules_bin_path: /usr/bin
+    browsertitle:         morontt.info
