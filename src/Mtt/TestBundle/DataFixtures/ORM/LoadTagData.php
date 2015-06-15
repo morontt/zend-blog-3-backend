@@ -1,6 +1,6 @@
 <?php
 
-namespace Mtt\BlogBundle\DataFixtures\ORM;
+namespace Mtt\TestBundle\DataFixtures\ORM;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;

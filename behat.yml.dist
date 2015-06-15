@@ -1,0 +1,27 @@
+default:
+#    autoload:
+#        '': %paths.base%/src
+
+    formatters:
+        progress: true
+
+    extensions:
+        Behat\Symfony2Extension: ~
+        Behat\MinkExtension:
+            base_url: 'http://example.org/app_test.php/'
+            sessions:
+                goutte:
+                    goutte: ~
+        VIPSoft\DoctrineDataFixturesExtension\Extension:
+            lifetime:    feature
+            autoload:    true
+            directories: ~
+            fixtures:    ~
+
+    suites:
+        test_suite:
+            type: symfony_bundle
+            bundle: MttTestBundle
+            mink_session: goutte
+            contexts:
+                - Mtt\TestBundle\Features\Context\FeatureContext: ~

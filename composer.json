@@ -12,7 +12,6 @@
         "doctrine/orm": "~2.2,>=2.2.3,<2.5",
         "doctrine/dbal": "<2.5",
         "doctrine/doctrine-bundle": "~1.2",
-        "doctrine/doctrine-fixtures-bundle": "2.2.*@dev",
         "doctrine/migrations": "dev-master",
         "doctrine/doctrine-migrations-bundle": "2.1.*@dev",
         "twig/extensions": "~1.0",
@@ -27,7 +26,12 @@
         "friendsofsymfony/jsrouting-bundle": "~1.5"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~2.3"
+        "sensio/generator-bundle": "~2.3",
+        "doctrine/doctrine-fixtures-bundle": "2.2.*@dev",
+        "behat/symfony2-extension": "~2.0@dev",
+        "behat/mink-extension": "2.0.*",
+        "behat/mink-goutte-driver": "1.1.*",
+        "vipsoft/doctrine-data-fixtures-extension": "dev-master"
     },
     "scripts": {
         "post-root-package-install": [
