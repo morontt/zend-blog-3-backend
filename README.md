@@ -15,10 +15,12 @@ Work in progress
 - nodejs
 - npm
 
-#### Install packages for Ember.js
+#### Install packages for Node.js
 
     sudo npm install -g grunt-cli
     sudo npm install -g bower
+    sudo npm install -g uglifycss
+    sudo npm install -g uglify-js
 
 If npm is not installed (Debian/Ubuntu)
 
@@ -28,3 +30,11 @@ If npm is not installed (Debian/Ubuntu)
 
     composer install
     npm install
+
+#### Compiling Ember.js template
+
+    grunt
+
+#### Install assets
+
+    app/console assetic:dump -e prod --no-debug
