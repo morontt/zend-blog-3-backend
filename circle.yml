@@ -1,0 +1,42 @@
+machine:
+  timezone:
+    Europe/Zaporozhye
+  hosts:
+    zendblog-3.loc: 127.0.0.1
+  php:
+    version: 5.5.9
+  node:
+    version: 0.10.34
+
+checkout:
+  post:
+    - cp ./ci/parameters.ci.yml ./app/config/parameters.yml
+    - cp ./ci/behat.ci.yml ./behat.yml
+
+dependencies:
+  override:
+    - npm install -g grunt-cli
+    - npm install -g bower
+    - npm install -g uglifycss
+    - npm install -g uglify-js
+    - composer install --prefer-source --no-interaction
+    - grunt
+    - app/console assetic:dump -e test --no-debug
+  post:
+    - cp ./ci/zendblog-3.loc.conf /etc/apache2/sites-available
+    - a2ensite zendblog-3.loc.conf
+    - sudo service apache2 restart
+
+database:
+  override:
+    - app/console doctrine:database:drop -e test --no-interaction --force
+    - app/console doctrine:database:create -e test --no-interaction
+    - app/console doctrine:migrations:migrate -e test --no-interaction
+    - app/console doctrine:fixtures:load -e test --no-interaction
+
+test:
+  pre:
+    - chmod -R 777 app/cache
+    - chmod -R 777 app/logs
+  override:
+    - bin/behat @MttTestBundle
