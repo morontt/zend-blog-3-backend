@@ -29,7 +29,7 @@ class CronChain
     }
 
     /**
-     * @return array
+     * @return CronServiceInterface[]
      */
     public function getDailyCrons()
     {
