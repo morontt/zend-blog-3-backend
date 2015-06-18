@@ -10,6 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class SystemParameters
 {
+    const DROPBOX_TOKEN = 'dropbox_token';
+
     /**
      * @var integer
      *

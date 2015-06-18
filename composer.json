@@ -23,7 +23,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "league/fractal": "0.10.*",
         "knplabs/knp-paginator-bundle": "~2.4",
-        "friendsofsymfony/jsrouting-bundle": "~1.5"
+        "friendsofsymfony/jsrouting-bundle": "~1.5",
+        "dropbox/dropbox-sdk": "1.1.*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",

@@ -11,6 +11,9 @@ parameters:
     mailer_user:       ~
     mailer_password:   ~
 
+    dropbox_key:       mpramtmajJqM2d2
+    dropbox_secret:    zeWZ5amF4RkYxMn
+
     locale:            en
     secret:            ThisTokenIsNotSoSecretChangeIt
 
