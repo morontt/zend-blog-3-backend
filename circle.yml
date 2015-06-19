@@ -10,8 +10,8 @@ machine:
 
 checkout:
   post:
-    - cp ./ci/parameters.ci.yml ./app/config/parameters.yml
-    - cp ./ci/behat.ci.yml ./behat.yml
+    - cp ./var/ci/parameters.ci.yml ./app/config/parameters.yml
+    - cp ./var/ci/behat.ci.yml ./behat.yml
 
 dependencies:
   override:
@@ -24,7 +24,7 @@ dependencies:
     - grunt
     - app/console assetic:dump -e test --no-debug
   post:
-    - cp ./ci/zendblog-3.loc.conf /etc/apache2/sites-available
+    - cp ./var/ci/zendblog-3.loc.conf /etc/apache2/sites-available
     - a2ensite zendblog-3.loc.conf
     - sudo service apache2 restart
 
