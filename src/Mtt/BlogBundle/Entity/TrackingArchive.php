@@ -5,7 +5,7 @@ namespace Mtt\BlogBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="tracking_archive", options={"engine"="ARCHIVE"})
+ * @ORM\Table(name="tracking_archive")
  * @ORM\Entity(repositoryClass="Mtt\BlogBundle\Entity\Repository\TrackingArchiveRepository")
  */
 class TrackingArchive
