@@ -14,7 +14,7 @@
 
 {{paginator-list meta=model.meta routeName='tag.index'}}
 
-<table class="table table-bordered">
+<table class="table table-bordered table-striped">
     <thead>
     <tr>
         <th class="center-text">#id</th>
@@ -26,24 +26,7 @@
     </thead>
     <tbody>
     {{#each tag in sortableTags}}
-        <tr>
-            <td class="center-text">{{tag.id}}</td>
-            <td>{{tag.name}}</td>
-            <td>{{tag.url}}</td>
-            <td class="text-right">-</td>
-            <td>
-                <div class="pull-right">
-                    <a class="btn btn-primary" href="#">
-                        <i class="glyphicon glyphicon-pencil"></i>
-                        <span>edit</span>
-                    </a>
-                    <button class="btn btn-danger btn-confirm">
-                        <i class="glyphicon glyphicon-trash"></i>
-                        <span>delete</span>
-                    </button>
-                </div>
-            </td>
-        </tr>
+        {{tr-tag tag=tag}}
     {{/each}}
     </tbody>
 </table>

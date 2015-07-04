@@ -193,6 +193,10 @@ form.form-signin .form-control:focus {
     color: #5a5a5a;
 }
 
+.table-striped > tbody > tr:nth-child(2n+1) {
+    background-color: #f7f7f7;
+}
+
 .pagination {
     margin: 0 0 15px 0;
     border-radius: 0;
@@ -583,4 +587,8 @@ input[type="file"] {
 .select2-results img {
     float: left;
     margin-right: 10px;
+}
+
+#content .table .btn {
+    width: 94px;
 }

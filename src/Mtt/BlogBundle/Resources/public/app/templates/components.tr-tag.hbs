@@ -1,0 +1,35 @@
+{{#if isEditing}}
+    <td class="center-text">{{tag.id}}</td>
+    <td>{{input value=tag.newName class="form-control"}}</td>
+    <td>{{input value=tag.newUrl class="form-control"}}</td>
+    <td class="text-right">-</td>
+    <td>
+        <div class="pull-right">
+            <a class="btn btn-success" href="#">
+                <i class="glyphicon glyphicon-ok"></i>
+                <span>save</span>
+            </a>
+            <button class="btn btn-warning btn-confirm">
+                <i class="glyphicon glyphicon-remove"></i>
+                <span>reset</span>
+            </button>
+        </div>
+    </td>
+{{else}}
+    <td class="center-text">{{tag.id}}</td>
+    <td>{{tag.name}}</td>
+    <td>{{tag.url}}</td>
+    <td class="text-right">-</td>
+    <td>
+        <div class="pull-right">
+            <a class="btn btn-primary" href="#" {{action "editTag"}}>
+                <i class="glyphicon glyphicon-pencil"></i>
+                <span>edit</span>
+            </a>
+            <button class="btn btn-danger btn-confirm">
+                <i class="glyphicon glyphicon-trash"></i>
+                <span>delete</span>
+            </button>
+        </div>
+    </td>
+{{/if}}
