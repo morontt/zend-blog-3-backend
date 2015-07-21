@@ -1,4 +1,6 @@
 services:
-#    mtt_user.example:
-#        class: Mtt\UserBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    mtt_user.security.login_listener:
+        class:     Mtt\UserBundle\EventListener\LoginListener
+        arguments: [ "@doctrine.orm.entity_manager" ]
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login, method: onLogin }
