@@ -79,16 +79,16 @@ class User implements UserInterface, \Serializable
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="time_last", type="datetime", nullable=true)
+     * @ORM\Column(name="last_login", type="datetime", nullable=true)
      */
-    protected $timeLast;
+    protected $lastLogin;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="ip_addr", type="string", length=15, nullable=true)
+     * @ORM\Column(type="integer")
      */
-    protected $ipAddress;
+    protected $loginCount = 0;
 
     /**
      * @var string
@@ -320,49 +320,26 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set timeLast
+     * Set lastLogin
      *
-     * @param \DateTime $timeLast
+     * @param \DateTime $lastLogin
      * @return User
      */
-    public function setTimeLast($timeLast)
+    public function setLastLogin($lastLogin)
     {
-        $this->timeLast = $timeLast;
+        $this->lastLogin = $lastLogin;
 
         return $this;
     }
 
     /**
-     * Get timeLast
+     * Get lastLogin
      *
      * @return \DateTime
      */
-    public function getTimeLast()
+    public function getLastLogin()
     {
-        return $this->timeLast;
-    }
-
-    /**
-     * Set ipAddress
-     *
-     * @param string $ipAddress
-     * @return User
-     */
-    public function setIpAddress($ipAddress)
-    {
-        $this->ipAddress = $ipAddress;
-
-        return $this;
-    }
-
-    /**
-     * Get ipAddress
-     *
-     * @return string
-     */
-    public function getIpAddress()
-    {
-        return $this->ipAddress;
+        return $this->lastLogin;
     }
 
     /**
@@ -475,5 +452,28 @@ class User implements UserInterface, \Serializable
     public function getEmailHash()
     {
         return $this->emailHash;
+    }
+
+    /**
+     * Set loginCount
+     *
+     * @param integer $loginCount
+     * @return User
+     */
+    public function setLoginCount($loginCount)
+    {
+        $this->loginCount = $loginCount;
+
+        return $this;
+    }
+
+    /**
+     * Get loginCount
+     *
+     * @return integer 
+     */
+    public function getLoginCount()
+    {
+        return $this->loginCount;
     }
 }
