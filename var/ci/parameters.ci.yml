@@ -5,12 +5,12 @@ parameters:
     database_name: circle
     database_user: ubuntu
     database_password: null
-
     mailer_transport: null
     mailer_host: 127.0.0.1
     mailer_user: user@example.org
     mailer_password: hg44g5kg
-
+    dropbox_key: mpramtmajJqM2d2
+    dropbox_secret: zeWZ5amF4RkYxMn
     locale: ru
     secret: jkh3jh4jk5hk34jh5
     debug_toolbar: false
@@ -18,3 +18,5 @@ parameters:
     use_assetic_controller: false
     nodemodules_bin_path: /home/ubuntu/nvm/v0.10.34/bin
     browsertitle: zendblog-3.loc
+    site_host: zendblog-3.loc
+    site_scheme: http
