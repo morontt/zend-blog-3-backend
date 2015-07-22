@@ -34,10 +34,10 @@ class TagTransformer extends BaseTransformer
      */
     public static function reverseTransform(Tag $entity, array $data)
     {
-        $entity->setName($data['name']);
+        $entity->setName($data['new_name'] ?: $data['name']);
 
-        if ($data['url']) {
-            $entity->setUrl($data['url']);
+        if ($data['new_url']) {
+            $entity->setUrl($data['new_url']);
         } else {
             $entity->setUrl(RuTransform::ruTransform($data['name']));
         }

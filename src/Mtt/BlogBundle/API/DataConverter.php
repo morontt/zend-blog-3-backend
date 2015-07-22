@@ -96,8 +96,16 @@ class DataConverter
      */
     public function createTag(array $data)
     {
-        $tag = new Tag();
+        return $this->saveTag(new Tag(), $data);
+    }
 
+    /**
+     * @param Tag $tag
+     * @param array $data
+     * @return array
+     */
+    public function saveTag(Tag $tag, array $data)
+    {
         TagTransformer::reverseTransform($tag, $data);
 
         $this->em->persist($tag);

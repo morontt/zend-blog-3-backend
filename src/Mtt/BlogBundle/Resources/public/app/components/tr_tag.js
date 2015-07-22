@@ -9,6 +9,12 @@ MttBlog.TrTagComponent = Ember.Component.extend({
     actions: {
         editTag: function () {
             this.set('isEditing', true);
+        },
+        saveTag: function () {
+            var them = this;
+            this.get('tag').save().then(function () {
+                them.set('isEditing', false);
+            });
         }
     }
 });

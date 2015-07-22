@@ -8,6 +8,7 @@
 
 namespace Mtt\BlogBundle\Controller;
 
+use Mtt\BlogBundle\Entity\Category;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -47,16 +48,11 @@ class CategoryController extends BaseController
      * @Route("/{id}", requirements={"id": "\d+"})
      * @Method("GET")
      *
-     * @param $id
+     * @param Category $entity
      * @return JsonResponse
      */
-    public function findAction($id)
+    public function findAction(Category $entity)
     {
-        /**
-         * @var \Mtt\BlogBundle\Entity\Category $entity
-         */
-        $entity = $this->getCategoryRepository()->find((int)$id);
-
         $result = $this->getDataConverter()
             ->getCategory($entity);
 
