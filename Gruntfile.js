@@ -5,6 +5,7 @@ module.exports = function(grunt) {
             compile: {
                 options: {
                     templateName: function(src) {
+                        console.log(src);
                         return src.replace(/src\/Mtt\/BlogBundle\/Resources\/public\/app\/templates\//, '')
                             .replace(/\./g, '/');
                     },
@@ -12,13 +13,13 @@ module.exports = function(grunt) {
                     handlebarsPath: 'src/Mtt/BlogBundle/Resources/public/components/handlebars/handlebars.js'
                 },
                 files: {
-                    'src/Mtt/BlogBundle/Resources/public/app/templates.js': 'src/Mtt/BlogBundle/Resources/public/app/templates/*.hbs'
+                    'src/Mtt/BlogBundle/Resources/public/app/templates.js': 'src/Mtt/BlogBundle/Resources/public/app/templates/**/*.hbs'
                 }
             }
         },
         watch: {
             scripts: {
-                files: 'src/Mtt/BlogBundle/Resources/public/app/templates/*.hbs',
+                files: 'src/Mtt/BlogBundle/Resources/public/app/templates/**/*.hbs',
                 tasks: 'emberTemplates'
             }
         }
