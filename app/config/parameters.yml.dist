@@ -23,3 +23,6 @@ parameters:
 
     nodemodules_bin_path: /usr/bin
     browsertitle:         morontt.info
+
+    site_host: backend-example.loc
+    site_scheme: http

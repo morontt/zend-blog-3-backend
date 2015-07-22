@@ -82,3 +82,7 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+parameters:
+    router.request_context.host:   %site_host%
+    router.request_context.scheme: %site_scheme%

@@ -9,9 +9,6 @@ sudo rm -R ./app/cache/*
 sudo composer self-update
 composer install --optimize-autoloader --prefer-dist
 
-npm install
-bower install
-
 # migrations
 
 php app/console doctrine:migrations:migrate --env=prod --no-interaction
