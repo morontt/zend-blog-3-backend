@@ -15,6 +15,13 @@ MttBlog.TrTagComponent = Ember.Component.extend({
             this.get('tag').save().then(function () {
                 them.set('isEditing', false);
             });
+        },
+        resetChanges: function () {
+            this.get('tag').rollback();
+            this.set('isEditing', false);
+        },
+        removeTag: function () {
+            $('#confirmation-modal').modal('show');
         }
     }
 });

@@ -32,8 +32,6 @@ class DataConverterSpec extends ObjectBehavior
                 'id' => null,
                 'name' => 'test-name',
                 'url' => 'test-url',
-                'new_name' => 'test-name',
-                'new_url' => 'test-url',
             ],
         ]);
 
@@ -49,15 +47,11 @@ class DataConverterSpec extends ObjectBehavior
                     'id' => null,
                     'name' => 'test-name',
                     'url' => 'test-url',
-                    'new_name' => 'test-name',
-                    'new_url' => 'test-url',
                 ],
                 [
                     'id' => null,
                     'name' => 'test2-name',
                     'url' => 'test2-url',
-                    'new_name' => 'test2-name',
-                    'new_url' => 'test2-url',
                 ],
             ]
         ]);
