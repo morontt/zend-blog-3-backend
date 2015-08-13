@@ -23,8 +23,6 @@ class TagTransformer extends BaseTransformer
             'id' => $item->getId(),
             'name' => $item->getName(),
             'url' => $item->getUrl(),
-            'new_name' => $item->getName(),
-            'new_url' => $item->getUrl(),
         ];
 
         return $data;

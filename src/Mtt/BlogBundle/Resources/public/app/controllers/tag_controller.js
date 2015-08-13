@@ -41,11 +41,5 @@ MttBlog.TagIndexController = Ember.ArrayController.extend({
             $('#modal_new_tag').modal('hide');
         }
     },
-    sortableTags: function () {
-        return Ember.ArrayProxy.createWithMixins(Ember.SortableMixin, {
-            sortProperties: ['name'],
-            content: this.get('model')
-        });
-    }.property('model'),
     enableNewTagButton: true
 });

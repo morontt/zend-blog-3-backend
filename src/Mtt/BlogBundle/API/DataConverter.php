@@ -69,7 +69,7 @@ class DataConverter
     }
 
     /**
-     * @param array $tags
+     * @param $tags
      * @return array
      */
     public function getTagsArray($tags)

@@ -53,11 +53,5 @@ MttBlog.CategoryIndexController = Ember.ArrayController.extend({
             $('#modal_new_category').modal('hide');
         }
     },
-    sortableCategory: function () {
-        return Ember.ArrayProxy.createWithMixins(Ember.SortableMixin, {
-            sortProperties: ['name'],
-            content: this.get('model')
-        });
-    }.property('model'),
     enableNewCategoryButton: true
 });
