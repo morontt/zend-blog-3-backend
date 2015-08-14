@@ -1,5 +1,10 @@
 module.exports = function(grunt) {
 
+    var source_path = 'src/Mtt/BlogBundle/Resources/public/';
+    var files = {};
+
+    files[source_path + 'app/templates.js'] = source_path + 'app/templates/**/*.hbs';
+
     grunt.initConfig({
         emberTemplates: {
             compile: {
@@ -9,17 +14,15 @@ module.exports = function(grunt) {
                         return src.replace(/src\/Mtt\/BlogBundle\/Resources\/public\/app\/templates\//, '')
                             .replace(/\./g, '/');
                     },
-                    templateCompilerPath: 'src/Mtt/BlogBundle/Resources/public/components/ember/ember-template-compiler.js',
-                    handlebarsPath: 'src/Mtt/BlogBundle/Resources/public/components/handlebars/handlebars.js'
+                    templateCompilerPath: source_path + 'components/ember/ember-template-compiler.js',
+                    handlebarsPath: source_path + 'components/handlebars/handlebars.js'
                 },
-                files: {
-                    'src/Mtt/BlogBundle/Resources/public/app/templates.js': 'src/Mtt/BlogBundle/Resources/public/app/templates/**/*.hbs'
-                }
+                files: files
             }
         },
         watch: {
             scripts: {
-                files: 'src/Mtt/BlogBundle/Resources/public/app/templates/**/*.hbs',
+                files: source_path + 'app/templates/**/*.hbs',
                 tasks: 'emberTemplates'
             }
         }
