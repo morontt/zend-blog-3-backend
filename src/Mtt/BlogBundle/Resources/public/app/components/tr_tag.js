@@ -21,7 +21,10 @@ MttBlog.TrTagComponent = Ember.Component.extend({
             this.set('isEditing', false);
         },
         removeTag: function () {
-            $('#confirmation-modal').modal('show');
+            var modal = $('#confirmation-modal');
+
+            modal.attr('data-object-id', this.get('tag.id'));
+            modal.modal('show');
         }
     }
 });

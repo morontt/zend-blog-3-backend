@@ -76,6 +76,21 @@ class TagController extends BaseController
     }
 
     /**
+     * @Route("/{id}", requirements={"id": "\d+"})
+     * @Method("DELETE")
+     *
+     * @param Tag $entity
+     * @return JsonResponse
+     */
+    public function deleteAction(Tag $entity)
+    {
+        $this->getEm()->remove($entity);
+        $this->getEm()->flush();
+
+        return new JsonResponse(true);
+    }
+
+    /**
      * @Route("")
      * @Method("POST")
      *
