@@ -24,6 +24,7 @@ MttBlog.TrTagComponent = Ember.Component.extend({
             var modal = $('#confirmation-modal');
 
             modal.attr('data-object-id', this.get('tag.id'));
+            modal.find('#confirmation-object-name').html(this.get('tag.name'));
             modal.modal('show');
         }
     }

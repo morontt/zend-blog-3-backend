@@ -60,6 +60,37 @@ class CategoryController extends BaseController
     }
 
     /**
+     * @Route("/{id}", requirements={"id": "\d+"})
+     * @Method("PUT")
+     *
+     * @param Request $request
+     * @param Category $entity
+     * @return JsonResponse
+     */
+    public function updateAction(Request $request, Category $entity)
+    {
+        $result = $this->getDataConverter()
+            ->saveCategory($entity, $request->request->get('category'));
+
+        return new JsonResponse($result);
+    }
+
+    /**
+     * @Route("/{id}", requirements={"id": "\d+"})
+     * @Method("DELETE")
+     *
+     * @param Category $entity
+     * @return JsonResponse
+     */
+    public function deleteAction(Category $entity)
+    {
+        $this->getEm()->remove($entity);
+        $this->getEm()->flush();
+
+        return new JsonResponse(true);
+    }
+
+    /**
      * @Route("")
      * @Method("POST")
      *
