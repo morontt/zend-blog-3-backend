@@ -40,3 +40,4 @@ test:
     - chmod -R 777 app/logs
   override:
     - bin/behat @MttTestBundle
+    - bin/phpspec run

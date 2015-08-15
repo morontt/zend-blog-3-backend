@@ -6,7 +6,7 @@ services:
 
     mtt_blog.api.data_converter:
         class: Mtt\BlogBundle\API\DataConverter
-        arguments: [ @doctrine ]
+        arguments: [ @doctrine.orm.entity_manager ]
 
     mtt_blog.cron_chain:
         class: Mtt\BlogBundle\Cron\CronChain

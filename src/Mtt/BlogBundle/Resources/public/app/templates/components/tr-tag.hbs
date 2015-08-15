@@ -5,11 +5,11 @@
     <td class="text-right">-</td>
     <td>
         <div class="pull-right">
-            <a class="btn btn-success" href="#">
+            <a class="btn btn-success" href="#" {{action "saveTag"}}>
                 <i class="glyphicon glyphicon-ok"></i>
                 <span>save</span>
             </a>
-            <button class="btn btn-warning btn-confirm">
+            <button class="btn btn-warning btn-confirm" {{action "resetChanges"}}>
                 <i class="glyphicon glyphicon-remove"></i>
                 <span>reset</span>
             </button>
@@ -26,7 +26,7 @@
                 <i class="glyphicon glyphicon-pencil"></i>
                 <span>edit</span>
             </a>
-            <button class="btn btn-danger btn-confirm">
+            <button class="btn btn-danger btn-confirm" {{action "removeTag"}}>
                 <i class="glyphicon glyphicon-trash"></i>
                 <span>delete</span>
             </button>

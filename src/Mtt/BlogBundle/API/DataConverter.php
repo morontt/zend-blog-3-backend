@@ -8,7 +8,6 @@
 
 namespace Mtt\BlogBundle\API;
 
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
@@ -36,14 +35,14 @@ class DataConverter
 
 
     /**
-     * @param Registry $doctrine
+     * @param EntityManager $em
      */
-    public function __construct(Registry $doctrine)
+    public function __construct(EntityManager $em)
     {
         $this->fractal = new Manager();
         $this->fractal->setSerializer(new Serializer());
 
-        $this->em = $doctrine->getManager();
+        $this->em = $em;
     }
 
     /**
@@ -96,8 +95,16 @@ class DataConverter
      */
     public function createTag(array $data)
     {
-        $tag = new Tag();
+        return $this->saveTag(new Tag(), $data);
+    }
 
+    /**
+     * @param Tag $tag
+     * @param array $data
+     * @return array
+     */
+    public function saveTag(Tag $tag, array $data)
+    {
         TagTransformer::reverseTransform($tag, $data);
 
         $this->em->persist($tag);

@@ -32,7 +32,8 @@
         "behat/symfony2-extension": "~2.0@dev",
         "behat/mink-extension": "2.0.*",
         "behat/mink-goutte-driver": "1.1.*",
-        "vipsoft/doctrine-data-fixtures-extension": "dev-master"
+        "vipsoft/doctrine-data-fixtures-extension": "dev-master",
+        "phpspec/phpspec": "~2.2"
     },
     "scripts": {
         "post-install-cmd": [
