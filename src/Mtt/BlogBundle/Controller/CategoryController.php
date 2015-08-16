@@ -31,15 +31,22 @@ class CategoryController extends BaseController
      */
     public function findAllAction(Request $request)
     {
-        $pagination = $this->paginate(
-            $this->getCategoryRepository()->getListQuery(),
-            $request->query->get('page', 1)
-        );
+        if ($request->query->get('scope') == 'all') {
+            $result = $this->getDataConverter()
+                ->getCategoryArray(
+                    $this->getCategoryRepository()->getListQuery()->getResult()
+                );
+        } else {
+            $pagination = $this->paginate(
+                $this->getCategoryRepository()->getListQuery(),
+                $request->query->get('page', 1)
+            );
 
-        $result = $this->getDataConverter()
-            ->getCategoryArray($pagination);
+            $result = $this->getDataConverter()
+                ->getCategoryArray($pagination);
 
-        $result['meta'] = $this->getPaginationMetadata($pagination->getPaginationData());
+            $result['meta'] = $this->getPaginationMetadata($pagination->getPaginationData());
+        }
 
         return new JsonResponse($result);
     }

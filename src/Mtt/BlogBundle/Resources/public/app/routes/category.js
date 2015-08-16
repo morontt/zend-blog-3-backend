@@ -14,5 +14,13 @@ MttBlog.CategoryIndexRoute = Ember.Route.extend({
     },
     model: function (params) {
         return this.store.find('category', params);
+    },
+    setupController: function(controller, model) {
+        this._super(controller, model);
+
+        this.store.find('category', {scope: 'all'}).then(function (types) {
+                controller.set('parentChoices', types);
+            }
+        );
     }
 });
