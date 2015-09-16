@@ -14,6 +14,9 @@ checkout:
     - cp ./var/ci/behat.ci.yml ./behat.yml
 
 dependencies:
+  cache_directories:
+    - vendor
+    - bin
   override:
     - npm install -g grunt-cli
     - npm install -g bower
