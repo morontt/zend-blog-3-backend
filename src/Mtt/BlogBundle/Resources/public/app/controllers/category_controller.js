@@ -53,5 +53,6 @@ MttBlog.CategoryIndexController = Ember.ArrayController.extend({
             $('#modal_new_category').modal('hide');
         }
     },
-    enableNewCategoryButton: true
+    enableNewCategoryButton: true,
+    parentChoices: []
 });

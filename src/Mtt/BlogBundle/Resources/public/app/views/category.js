@@ -4,7 +4,7 @@
  * Time: 2:50
  */
 
-MttBlog.CategoryIndexView = Ember.View.extend({
+MttBlog.CategoryIndexView = MttBlog.BaseView.extend({
     didInsertElement: function () {
         this._super();
 
@@ -19,5 +19,7 @@ MttBlog.CategoryIndexView = Ember.View.extend({
                 $('#category_parent').html(options.join(''));
             }
         });
+
+        this.confirmDelete();
     }
 });

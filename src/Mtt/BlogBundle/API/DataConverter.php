@@ -113,10 +113,25 @@ class DataConverter
         return $this->getTag($tag);
     }
 
+    /**
+     * @param array $data
+     * @return array
+     */
     public function createCategory(array $data)
     {
         $category = new Category();
 
+        return $this->saveCategory($category, $data);
+    }
+
+    /**
+     * @param Category $category
+     * @param array $data
+     * @return array
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function saveCategory(Category $category, array $data)
+    {
         CategoryTransformer::reverseTransform($category, $data);
 
         if ($data['parent_id']) {

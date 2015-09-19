@@ -31,15 +31,22 @@ class CategoryController extends BaseController
      */
     public function findAllAction(Request $request)
     {
-        $pagination = $this->paginate(
-            $this->getCategoryRepository()->getListQuery(),
-            $request->query->get('page', 1)
-        );
+        if ($request->query->get('scope') == 'all') {
+            $result = $this->getDataConverter()
+                ->getCategoryArray(
+                    $this->getCategoryRepository()->getListQuery()->getResult()
+                );
+        } else {
+            $pagination = $this->paginate(
+                $this->getCategoryRepository()->getListQuery(),
+                $request->query->get('page', 1)
+            );
 
-        $result = $this->getDataConverter()
-            ->getCategoryArray($pagination);
+            $result = $this->getDataConverter()
+                ->getCategoryArray($pagination);
 
-        $result['meta'] = $this->getPaginationMetadata($pagination->getPaginationData());
+            $result['meta'] = $this->getPaginationMetadata($pagination->getPaginationData());
+        }
 
         return new JsonResponse($result);
     }
@@ -57,6 +64,37 @@ class CategoryController extends BaseController
             ->getCategory($entity);
 
         return new JsonResponse($result);
+    }
+
+    /**
+     * @Route("/{id}", requirements={"id": "\d+"})
+     * @Method("PUT")
+     *
+     * @param Request $request
+     * @param Category $entity
+     * @return JsonResponse
+     */
+    public function updateAction(Request $request, Category $entity)
+    {
+        $result = $this->getDataConverter()
+            ->saveCategory($entity, $request->request->get('category'));
+
+        return new JsonResponse($result);
+    }
+
+    /**
+     * @Route("/{id}", requirements={"id": "\d+"})
+     * @Method("DELETE")
+     *
+     * @param Category $entity
+     * @return JsonResponse
+     */
+    public function deleteAction(Category $entity)
+    {
+        $this->getEm()->remove($entity);
+        $this->getEm()->flush();
+
+        return new JsonResponse(true);
     }
 
     /**

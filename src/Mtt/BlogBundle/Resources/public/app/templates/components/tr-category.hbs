@@ -1,0 +1,52 @@
+{{#if isEditing}}
+    <td class="center-text">{{category.id}}</td>
+    <td>{{input value=category.name class="form-control"}}</td>
+    <td>
+        {# TODO strange select #}
+        {{view "select"
+            class="form-control"
+            content=parentChoices
+            optionLabelPath="content.name"
+            optionValuePath="content.id"
+            prompt="..."
+            selection=category.parent}}
+    </td>
+    <td>{{input value=category.url class="form-control"}}</td>
+    <td class="text-right">-</td>
+    <td>
+        <div class="pull-right">
+            <a class="btn btn-success" href="#" {{action "saveCategory"}}>
+                <i class="glyphicon glyphicon-ok"></i>
+                <span>save</span>
+            </a>
+            <button class="btn btn-warning btn-confirm" {{action "resetChanges"}}>
+                <i class="glyphicon glyphicon-remove"></i>
+                <span>reset</span>
+            </button>
+        </div>
+    </td>
+{{else}}
+    <td class="center-text">{{category.id}}</td>
+    <td>{{category.name}}</td>
+    <td>
+        {{#if category.parent}}
+            {{category.parent.name}}
+        {{else}}
+            -
+        {{/if}}
+    </td>
+    <td>{{category.url}}</td>
+    <td class="text-right">-</td>
+    <td>
+        <div class="pull-right">
+            <a class="btn btn-primary" href="#" {{action "editCategory"}}>
+                <i class="glyphicon glyphicon-pencil"></i>
+                <span>edit</span>
+            </a>
+            <button class="btn btn-danger btn-confirm" {{action "removeCategory"}}>
+                <i class="glyphicon glyphicon-trash"></i>
+                <span>delete</span>
+            </button>
+        </div>
+    </td>
+{{/if}}

@@ -27,31 +27,7 @@
     </thead>
     <tbody>
     {{#each category in model}}
-        <tr>
-            <td class="center-text">{{category.id}}</td>
-            <td>{{category.name}}</td>
-            <td>
-                {{#if category.parent}}
-                    {{category.parent.name}}
-                {{else}}
-                    -
-                {{/if}}
-            </td>
-            <td>{{category.url}}</td>
-            <td class="text-right">-</td>
-            <td>
-                <div class="pull-right">
-                    <a class="btn btn-primary" href="#">
-                        <i class="glyphicon glyphicon-pencil"></i>
-                        <span>edit</span>
-                    </a>
-                    <button class="btn btn-danger btn-confirm">
-                        <i class="glyphicon glyphicon-trash"></i>
-                        <span>delete</span>
-                    </button>
-                </div>
-            </td>
-        </tr>
+        {{tr-category category=category parentChoices=parentChoices}}
     {{/each}}
     </tbody>
 </table>
