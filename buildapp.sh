@@ -2,13 +2,15 @@
 
 cd ./spa
 
-while getopts ":i" opt; do
+while getopts ":ri" opt; do
   case $opt in
-    i)
+    r)
       rm -rf node_modules
-      npm install
       rm -rf bower_components
+      ;;
+    i)
       bower install
+      npm install
       ;;
   esac
 done

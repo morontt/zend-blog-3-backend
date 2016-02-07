@@ -17,6 +17,8 @@ dependencies:
   cache_directories:
     - vendor
     - bin
+    - spa/bower_components
+    - spa/node_modules
   override:
     - npm install -g grunt-cli
     - npm install -g bower
