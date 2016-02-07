@@ -4,31 +4,29 @@
     "type": "project",
     "description": "zend-blog ver.3, backend",
     "autoload": {
-        "psr-0": { "": "src/" }
+        "psr-4": { "": "src/" },
+        "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
     "require": {
         "php": ">=5.4",
-        "symfony/symfony": "2.7.*",
-        "doctrine/orm": "~2.2,>=2.2.3,<2.5",
-        "doctrine/dbal": "<2.5",
+        "symfony/symfony": "2.8.*",
+        "doctrine/orm": "^2.4.8",
         "doctrine/doctrine-bundle": "~1.4",
-        "doctrine/migrations": "dev-master",
-        "doctrine/doctrine-migrations-bundle": "2.1.*@dev",
-        "twig/extensions": "~1.0",
-        "symfony/assetic-bundle": "~2.3",
         "symfony/swiftmailer-bundle": "~2.3",
         "symfony/monolog-bundle": "~2.4",
-        "sensio/distribution-bundle": "~4.0",
-        "sensio/framework-extra-bundle": "~3.0,>=3.0.2",
+        "sensio/distribution-bundle": "~5.0",
+        "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "~2.0",
-        "league/fractal": "0.10.*",
+        "doctrine/doctrine-migrations-bundle": "^1.0",
+        "symfony/assetic-bundle": "~2.3",
+        "league/fractal": "0.12.0",
         "knplabs/knp-paginator-bundle": "~2.4",
         "friendsofsymfony/jsrouting-bundle": "~1.5",
         "dropbox/dropbox-sdk": "1.1.*"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~2.3",
-        "doctrine/doctrine-fixtures-bundle": "2.2.*@dev",
+        "sensio/generator-bundle": "~3.0",
+        "doctrine/doctrine-fixtures-bundle": "2.3.*",
         "behat/symfony2-extension": "~2.0@dev",
         "behat/mink-extension": "2.0.*",
         "behat/mink-goutte-driver": "1.1.*",
@@ -72,7 +70,7 @@
             "file": "app/config/parameters.yml"
         },
         "branch-alias": {
-            "dev-master": "2.7-dev"
+            "dev-master": "2.8-dev"
         }
     }
 }

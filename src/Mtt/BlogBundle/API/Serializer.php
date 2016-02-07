@@ -8,6 +8,7 @@
 
 namespace Mtt\BlogBundle\API;
 
+use League\Fractal\Resource\ResourceInterface;
 use League\Fractal\Serializer\JsonApiSerializer;
 
 class Serializer extends JsonApiSerializer
@@ -28,14 +29,14 @@ class Serializer extends JsonApiSerializer
     /**
      * Serialize the included data.
      *
-     * @param string $resourceKey
+     * @param ResourceInterface $resource
      * @param array $data
      *
      * @return array
      */
-    public function includedData($resourceKey, array $data)
+    public function includedData(ResourceInterface $resource, array $data)
     {
-        $serializedData = array();
+        $serializedData = [];
 
         foreach ($data as $value) {
             foreach ($value as $includeKey => $includeValue) {
@@ -43,6 +44,6 @@ class Serializer extends JsonApiSerializer
             }
         }
 
-        return empty($serializedData) ? array() : $serializedData;
+        return empty($serializedData) ? [] : $serializedData;
     }
 }
