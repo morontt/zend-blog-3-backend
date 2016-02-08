@@ -1,10 +1,6 @@
-/**
- * Created by morontt.
- * Date: 23.11.14
- * Time: 12:05
- */
+import DS from 'ember-data';
 
-MttBlog.Commentator = DS.Model.extend({
+export default DS.Model.extend({
     name: DS.attr('string'),
     email: DS.attr('string'),
     website: DS.attr('string'),

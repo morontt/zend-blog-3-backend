@@ -1,13 +1,9 @@
-/**
- * Created by morontt.
- * Date: 15.02.15
- * Time: 18:35
- */
+import DS from 'ember-data';
 
-MttBlog.Post = DS.Model.extend({
+export default DS.Model.extend({
     title: DS.attr('string'),
     url: DS.attr('string'),
-    category: DS.belongsTo('category', { async: true }),
+    category: DS.belongsTo('category'),
     hidden: DS.attr('boolean'),
     text: DS.attr('string'),
     description: DS.attr('string'),
