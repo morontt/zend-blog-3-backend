@@ -13,7 +13,6 @@
 /composer.phar
 src/Mtt/BlogBundle/Resources/public/components/
 src/Mtt/BlogBundle/Resources/public/app/templates.js
-node_modules/
 behat.yml
 
 /spa/dist

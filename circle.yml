@@ -19,14 +19,13 @@ dependencies:
     - bin
     - spa/bower_components
     - spa/node_modules
+    - src/Mtt/BlogBundle/Resources/public/components
   override:
-    - npm install -g grunt-cli
     - npm install -g bower
     - npm install -g uglifycss
     - npm install -g uglify-js
     - npm install -g ember-cli@1.13.15
     - composer install --prefer-source --no-interaction
-    - grunt
     - app/console assetic:dump -e test --no-debug
   post:
     - cp ./var/ci/zendblog-3.loc.conf /etc/apache2/sites-available

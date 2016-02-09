@@ -17,7 +17,6 @@ Work in progress
 
 #### Install packages for Node.js
 
-    sudo npm install -g grunt-cli
     sudo npm install -g bower
     sudo npm install -g uglifycss
     sudo npm install -g uglify-js
