@@ -1,10 +1,6 @@
-/**
- * Created by morontt.
- * Date: 27.02.15
- * Time: 1:16
- */
+import Ember from 'ember';
 
-MttBlog.PaginatorListComponent = Ember.Component.extend({
+export default Ember.Component.extend({
     pageLinks: function () {
         var meta = this.get('meta');
         var i, links = [];
@@ -12,7 +8,7 @@ MttBlog.PaginatorListComponent = Ember.Component.extend({
         for (i = 1; i <= meta.last; i++) {
             links.push({
                 page: i,
-                active: (meta.current == i)
+                active: (meta.current === i)
             });
         }
 

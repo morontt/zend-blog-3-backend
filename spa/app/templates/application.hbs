@@ -8,19 +8,19 @@
                             <span>Блог</span>
                         </span>
                         <ul class="nav menu_level_1">
-                            <li class="first">
+                            <li class="first {{is-active currentLink "posts"}}">
                                 {{#link-to "posts"}}
                                     <i class="glyphicon glyphicon-file"></i>
                                     <span>Записи</span>
                                 {{/link-to}}
                             </li>
-                            <li>
+                            <li class="{{is-active currentLink "category"}}">
                                 {{#link-to "category"}}
                                     <i class="glyphicon glyphicon-th-list"></i>
                                     <span>Категории</span>
                                 {{/link-to}}
                             </li>
-                            <li>
+                            <li class="{{is-active currentLink "tags"}}">
                                 {{#link-to "tags"}}
                                     <i class="glyphicon glyphicon-tag"></i>
                                     <span>Теги</span>
@@ -39,13 +39,13 @@
                             <span>Посетители</span>
                         </span>
                         <ul class="nav menu_level_1">
-                            <li class="first">
+                            <li class="first {{is-active currentLink "comments"}}">
                                 {{#link-to "comments"}}
                                     <i class="glyphicon glyphicon-comment"></i>
                                     <span>Комментарии</span>
                                 {{/link-to}}
                             </li>
-                            <li>
+                            <li class="{{is-active currentLink "commentators"}}">
                                 {{#link-to "commentators"}}
                                     <i class="glyphicon glyphicon-user"></i>
                                     <span>Комментаторы</span>

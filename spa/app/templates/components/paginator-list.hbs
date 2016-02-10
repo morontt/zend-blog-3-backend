@@ -9,7 +9,7 @@
                 <li class="prev disabled"><span>&larr; Назад</span></li>
             {{/if}}
 
-            {{#each pageLink in pageLinks}}
+            {{#each pageLinks as |pageLink|}}
                 {{#if pageLink.active}}
                     <li class="active"><span>{{pageLink.page}}</span></li>
                 {{else}}

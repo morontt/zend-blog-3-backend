@@ -29,7 +29,7 @@ class PostTransformer extends BaseTransformer
             'id' => $item->getId(),
             'title' => $item->getTitle(),
             'url' => $item->getUrl(),
-            'category_id' => $item->getCategory()->getId(),
+            'category' => $item->getCategory()->getId(),
             'hidden' => $item->isHide(),
             'text' => $item->getText(),
             'description' => $item->getDescription(),
