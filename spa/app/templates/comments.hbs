@@ -4,5 +4,60 @@
     </ol>
 </div>
 <div id="content">
-    {{outlet}}
+    <div id="flashes">
+    </div>
+
+    <div class="page-header">
+        <h1><i class="glyphicon glyphicon-comment"></i> Управление комментариями.</h1>
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th class="center-text">#id</th>
+            <th>Комментатор</th>
+            <th>Комментарий</th>
+            <th>IP</th>
+            <th>Отправлен</th>
+            <th class="text-right">Disqus ID</th>
+            <th>&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each model as |comment|}}
+            <tr>
+                <td class="center-text">{{comment.id}}</td>
+                <td>
+                    <strong>{{comment.commentator.name}}</strong>
+                </td>
+                <td>{{cut-string comment.text 120}}</td>
+                <td>{{comment.ipAddr}}</td>
+                <td>{{date-format comment.createdAt 'DD MMM YYYY, HH:mm'}}</td>
+                <td class="text-right">
+                    {{#if comment.disqusId}}
+                        {{comment.disqusId}}
+                    {{else}}
+                        -
+                    {{/if}}
+                </td>
+                <td>
+                    <div class="pull-right">
+                        <a class="btn btn-primary" href="#">
+                            <i class="glyphicon glyphicon-pencil"></i>
+                            <span>edit</span>
+                        </a>
+                        <button class="btn btn-danger btn-confirm">
+                            <i class="glyphicon glyphicon-trash"></i>
+                            <span>delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+
+    {{paginator-list meta=model.meta routeName='comment.index'}}
+
+    {{footer-partial}}
 </div>

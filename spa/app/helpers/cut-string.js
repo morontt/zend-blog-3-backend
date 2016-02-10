@@ -1,9 +1,6 @@
-/**
- * Created by morontt
- * on 04.07.15.
- */
+import Ember from 'ember';
 
-Ember.Handlebars.registerBoundHelper('cutString', function(str, length) {
+export function cutString([str, length]) {
     var result = str;
 
     if (str.length > length) {
@@ -11,4 +8,6 @@ Ember.Handlebars.registerBoundHelper('cutString', function(str, length) {
     }
 
     return result;
-});
+}
+
+export default Ember.Helper.helper(cutString);
