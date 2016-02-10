@@ -6,6 +6,9 @@ export default Ember.Route.extend({
             refreshModel: true
         }
     },
+    model(params) {
+        return this.store.query('commentator', params);
+    },
     setupController(controller, model) {
         this._super(controller, model);
 
