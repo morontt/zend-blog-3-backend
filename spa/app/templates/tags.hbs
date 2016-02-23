@@ -4,5 +4,78 @@
     </ol>
 </div>
 <div id="content">
-    {{outlet}}
+    <div id="flashes">
+    </div>
+
+    <div class="page-header">
+        <div class="actions-menu">
+            <a class="btn btn-primary" href="#"
+                {{action "openModal"}}>
+                <i class="glyphicon glyphicon-plus-sign"></i>
+                <span>Создать тег</span>
+            </a>
+        </div>
+        <h1><i class="glyphicon glyphicon-tag"></i> Управление тегами.</h1>
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th class="center-text">#id</th>
+            <th>Тег</th>
+            <th>slug</th>
+            <th class="text-right">Количество записей</th>
+            <th>&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each model as |tag|}}
+            {{tr-tag tag=tag}}
+        {{/each}}
+        </tbody>
+    </table>
+
+    {{paginator-list meta=model.meta routeName="tags"}}
+
+    {{footer-partial}}
+
+    {{delete-confirm action="removeTag"}}
+
+    <div class="modal fade" id="modal_new_tag" tabindex="-1" role="dialog"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                            class="close"
+                            aria-label="Close"
+                        {{action "closeModal"}}>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Новый тег</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label class="control-label">Тег:</label>
+                            {{input type="text"
+                                class="form-control"
+                                value=newTagName}}
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    {{#if enableNewTagButton}}
+                        <button type="button"
+                                class="btn btn-primary"
+                            {{action "createTag"}}>Создать</button>
+                    {{else}}
+                        <button type="button"
+                                class="btn btn-primary"
+                                disabled="disabled">Создать</button>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

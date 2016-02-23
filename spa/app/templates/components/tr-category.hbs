@@ -2,14 +2,9 @@
     <td class="center-text">{{category.id}}</td>
     <td>{{input value=category.name class="form-control"}}</td>
     <td>
-        {# TODO strange select #}
-        {{view "select"
-            class="form-control"
+        {{select-field
             content=parentChoices
-            optionLabelPath="content.name"
-            optionValuePath="content.id"
-            prompt="..."
-            selection=category.parent}}
+            selectedValue=category.parentId}}
     </td>
     <td>{{input value=category.url class="form-control"}}</td>
     <td class="text-right">-</td>

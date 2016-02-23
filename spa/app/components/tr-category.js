@@ -1,27 +1,22 @@
-/**
- * Created by morontt.
- * Date: 15.08.15
- * Time: 21:27
- */
+import Ember from 'ember';
 
-MttBlog.TrCategoryComponent = Ember.Component.extend({
+export default Ember.Component.extend({
     tagName: 'tr',
     isEditing: false,
     actions: {
-        editCategory: function () {
+        editCategory() {
             this.set('isEditing', true);
         },
-        saveCategory: function () {
-            var them = this;
-            this.get('category').save().then(function () {
-                them.set('isEditing', false);
+        saveCategory() {
+            this.get('category').save().then(() => {
+                this.set('isEditing', false);
             });
         },
-        resetChanges: function () {
-            this.get('category').rollback();
+        resetChanges() {
+            this.get('category').rollbackAttributes();
             this.set('isEditing', false);
         },
-        removeCategory: function () {
+        removeCategory() {
             var modal = $('#confirmation-modal');
 
             modal.attr('data-object-id', this.get('category.id'));

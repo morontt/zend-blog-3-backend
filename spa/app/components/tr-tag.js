@@ -1,9 +1,6 @@
-/**
- * Created by morontt
- * on 04.07.15.
- */
+import Ember from 'ember';
 
-MttBlog.TrTagComponent = Ember.Component.extend({
+export default Ember.Component.extend({
     tagName: 'tr',
     isEditing: false,
     actions: {
@@ -11,13 +8,12 @@ MttBlog.TrTagComponent = Ember.Component.extend({
             this.set('isEditing', true);
         },
         saveTag: function () {
-            var them = this;
-            this.get('tag').save().then(function () {
-                them.set('isEditing', false);
+            this.get('tag').save().then(() => {
+                this.set('isEditing', false);
             });
         },
         resetChanges: function () {
-            this.get('tag').rollback();
+            this.get('tag').rollbackAttributes();
             this.set('isEditing', false);
         },
         removeTag: function () {

@@ -15,7 +15,6 @@ php app/console doctrine:migrations:migrate --env=prod --no-interaction
 
 # assetic
 
-grunt
 php app/console assetic:dump --env=prod --no-debug
 
 # cache

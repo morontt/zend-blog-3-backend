@@ -12,7 +12,6 @@
 /bin/
 /composer.phar
 src/Mtt/BlogBundle/Resources/public/components/
-src/Mtt/BlogBundle/Resources/public/app/templates.js
 behat.yml
 
 /spa/dist
