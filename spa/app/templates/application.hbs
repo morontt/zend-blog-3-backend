@@ -1,0 +1,63 @@
+<div class="row main-container">
+    <div class="col-md-1 col-lg-2 hidden-sm hidden-xs">
+        <div id="sidebar">
+            <div class="sidebar-nav">
+                <ul class="nav">
+                    <li class="first">
+                        <span class="nav-header">
+                            <span>Блог</span>
+                        </span>
+                        <ul class="nav menu_level_1">
+                            <li class="first {{is-active currentLink "posts"}}">
+                                {{#link-to "posts"}}
+                                    <i class="glyphicon glyphicon-file"></i>
+                                    <span>Записи</span>
+                                {{/link-to}}
+                            </li>
+                            <li class="{{is-active currentLink "category"}}">
+                                {{#link-to "category"}}
+                                    <i class="glyphicon glyphicon-th-list"></i>
+                                    <span>Категории</span>
+                                {{/link-to}}
+                            </li>
+                            <li class="{{is-active currentLink "tags"}}">
+                                {{#link-to "tags"}}
+                                    <i class="glyphicon glyphicon-tag"></i>
+                                    <span>Теги</span>
+                                {{/link-to}}
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="glyphicon glyphicon-picture"></i>
+                                    <span>Картинки</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span class="nav-header">
+                            <span>Посетители</span>
+                        </span>
+                        <ul class="nav menu_level_1">
+                            <li class="first {{is-active currentLink "comments"}}">
+                                {{#link-to "comments"}}
+                                    <i class="glyphicon glyphicon-comment"></i>
+                                    <span>Комментарии</span>
+                                {{/link-to}}
+                            </li>
+                            <li class="{{is-active currentLink "commentators"}}">
+                                {{#link-to "commentators"}}
+                                    <i class="glyphicon glyphicon-user"></i>
+                                    <span>Комментаторы</span>
+                                {{/link-to}}
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-11 col-lg-10">
+        {{outlet}}
+    </div>
+</div>

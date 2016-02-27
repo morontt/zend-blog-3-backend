@@ -111,4 +111,17 @@ class CategoryController extends BaseController
 
         return new JsonResponse($result);
     }
+
+    /**
+     * @Route("/list", name="category_choices", options={"expose"=true})
+     *
+     * @return JsonResponse
+     */
+    public function ajaxCategoryAction()
+    {
+        $categories = $this->getCategoryRepository()
+            ->getNamesArray();
+
+        return new JsonResponse($categories);
+    }
 }

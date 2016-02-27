@@ -41,9 +41,9 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
-            "npm install",
             "bower install",
-            "php app/console fos:js-routing:dump"
+            "php app/console fos:js-routing:dump",
+            "./buildapp.sh -i"
         ],
         "post-update-cmd": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
@@ -52,9 +52,9 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
-            "npm install",
             "bower install",
-            "php app/console fos:js-routing:dump"
+            "php app/console fos:js-routing:dump",
+            "./buildapp.sh -i"
         ]
     },
     "config": {

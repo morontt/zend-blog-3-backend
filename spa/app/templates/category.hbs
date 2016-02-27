@@ -1,0 +1,87 @@
+<div id="topbar">
+    <ol class="breadcrumb">
+        <li>Категории</li>
+    </ol>
+</div>
+<div id="content">
+    <div id="flashes">
+    </div>
+
+    <div class="page-header">
+        <div class="actions-menu">
+            <a class="btn btn-primary" href="#" {{action "openModal"}}>
+                <i class="glyphicon glyphicon-plus-sign"></i>
+                <span>Создать категорию</span>
+            </a>
+        </div>
+        <h1><i class="glyphicon glyphicon-th-list"></i> Управление категориями.</h1>
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th class="center-text">#id</th>
+            <th>Категория</th>
+            <th>Родитель</th>
+            <th>slug</th>
+            <th class="text-right">Количество записей</th>
+            <th>&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each model as |category|}}
+            {{tr-category category=category parentChoices=parentChoices}}
+        {{/each}}
+        </tbody>
+    </table>
+
+    {{paginator-list meta=model.meta routeName="category"}}
+
+    {{footer-partial}}
+
+    {{delete-confirm action="removeCategory"}}
+
+    <div class="modal fade" id="modal_new_category" tabindex="-1" role="dialog"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button"
+                            class="close"
+                            aria-label="Close"
+                        {{action "closeModal"}}>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Новая категория</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label class="control-label">Категория:</label>
+                            {{input type="text"
+                                class="form-control"
+                                value=newCategoryName}}
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Родительская категория:</label>
+                            {{select-field
+                                content=parentChoices
+                                selectedValue=newCategoryParent}}
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    {{#if enableNewCategoryButton}}
+                        <button type="button"
+                                class="btn btn-primary"
+                            {{action "createCategory"}}>Создать</button>
+                    {{else}}
+                        <button type="button"
+                                class="btn btn-primary"
+                                disabled="disabled">Создать</button>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

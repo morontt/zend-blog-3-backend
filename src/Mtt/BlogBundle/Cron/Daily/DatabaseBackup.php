@@ -79,7 +79,7 @@ class DatabaseBackup implements CronServiceInterface
             $dbxClient = new Dropbox\Client($tokenData['access_token'], 'ZendBlog-Backuper/0.1');
 
             $f = fopen($this->getDumpPath(), 'rb');
-            $result = $dbxClient->uploadFile('/' . $this->getFilename(), Dropbox\WriteMode::add(), $f);
+            $dbxClient->uploadFile('/' . $this->getFilename(), Dropbox\WriteMode::add(), $f);
             fclose($f);
             unlink($this->getDumpPath());
         }

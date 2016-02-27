@@ -1,64 +1,68 @@
-{% extends "MttBlogBundle::main.html.twig" %}
+{% extends "::base.html.twig" %}
+
+{% block meta %}
+    <meta name="mtt-blog/config/environment" content="%7B%22modulePrefix%22%3A%22mtt-blog%22%2C%22environment%22%3A%22development%22%2C%22baseURL%22%3A%22/%22%2C%22locationType%22%3A%22hash%22%2C%22EmberENV%22%3A%7B%22FEATURES%22%3A%7B%7D%7D%2C%22APP%22%3A%7B%22LOG_ACTIVE_GENERATION%22%3Atrue%2C%22LOG_TRANSITIONS%22%3Atrue%2C%22LOG_TRANSITIONS_INTERNAL%22%3Atrue%2C%22LOG_VIEW_LOOKUPS%22%3Atrue%2C%22name%22%3A%22mtt-blog%22%2C%22version%22%3A%220.0.1+a8c1ef27%22%7D%2C%22contentSecurityPolicyHeader%22%3A%22Content-Security-Policy-Report-Only%22%2C%22contentSecurityPolicy%22%3A%7B%22default-src%22%3A%22%27none%27%22%2C%22script-src%22%3A%22%27self%27%20%27unsafe-eval%27%22%2C%22font-src%22%3A%22%27self%27%22%2C%22connect-src%22%3A%22%27self%27%22%2C%22img-src%22%3A%22%27self%27%22%2C%22style-src%22%3A%22%27self%27%22%2C%22media-src%22%3A%22%27self%27%22%7D%2C%22exportApplicationGlobal%22%3Atrue%7D" />
+{% endblock %}
+
+{% block stylesheets %}
+    {% stylesheets filter='?uglifycss' filter='cssrewrite'
+    'bundles/mttblog/components/bootstrap/dist/css/bootstrap.css'
+    'bundles/mttblog/css/main.css'
+    %}
+    <link rel="stylesheet" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+{% endblock %}
+
+{% block body %}
+    <div id="navbar" class="navbar navbar-inverse">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">
+                <img src="/bundles/mttblog/img/logo.png" class="pull-left" />
+                <span class="hidden-xs hidden-sm pull-left">Дашборд</span>
+            </a>
+        </div>
+        <div class="visible-xs visible-sm"></div>
+        <div class="hidden-xs hidden-sm pull-right">
+            <p class="navbar-text">Превед{% if app.user %}, {{ app.user.username }}{% endif %}</p>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="{{ path('mtt_user_security_logout') }}">
+                        <i class="glyphicon glyphicon-off"></i> Выход
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row main-container" id="main-application">
+        {% block content %}{% endblock %}
+    </div>
+{% endblock %}
 
 {% block javascripts %}
-    <!--[if lt IE 9]>
-    <script type="text/javascript" src="/bundles/mttblog/components/es5-shim/es5-shim.min.js"></script>
-    <![endif]-->
-    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
-
-    {% if app.environment == 'dev' %}
-        {% javascripts filter='?uglifyjs2'
-            '@MttBlogBundle/Resources/public/components/jquery/dist/jquery.js'
-            '@MttBlogBundle/Resources/public/components/ember/ember-template-compiler.js'
-            '@MttBlogBundle/Resources/public/components/ember/ember.debug.js'
-            '@MttBlogBundle/Resources/public/components/ember-data/ember-data.js'
-            '@MttBlogBundle/Resources/public/components/bootstrap/dist/js/bootstrap.js'
-            '@MttBlogBundle/Resources/public/components/moment/moment.js'
-            '@MttBlogBundle/Resources/public/components/moment/locale/ru.js'
-            '@FOSJsRoutingBundle/Resources/public/js/router.js'
-            'js/fos_js_routes.js'
-        %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-    {% else %}
-        {% javascripts filter='?uglifyjs2'
-            '@MttBlogBundle/Resources/public/components/jquery/dist/jquery.js'
-            '@MttBlogBundle/Resources/public/components/ember/ember-template-compiler.js'
-            '@MttBlogBundle/Resources/public/components/ember/ember.prod.js'
-            '@MttBlogBundle/Resources/public/components/ember-data/ember-data.js'
-            '@MttBlogBundle/Resources/public/components/bootstrap/dist/js/bootstrap.js'
-            '@MttBlogBundle/Resources/public/components/moment/moment.js'
-            '@MttBlogBundle/Resources/public/components/moment/locale/ru.js'
-            '@FOSJsRoutingBundle/Resources/public/js/router.js'
-            'js/fos_js_routes.js'
-        %}
-        <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-    {% endif %}
-
     <script type="text/javascript">
         var rest_url = '{{ path('mtt_blog_api_info') }}';
         var app_parameters = {
-            api_url: rest_url.substr(1, rest_url.length - 2),
-            locale: '{{ app.request.locale }}',
-            environment: '{{ app.environment }}'
+            api_url: rest_url.substr(1, rest_url.length - 2)
         };
-
-        moment.locale(app_parameters.locale);
     </script>
-
     {% javascripts filter='?uglifyjs2'
-        '@MttBlogBundle/Resources/public/app/app.js'
-        '@MttBlogBundle/Resources/public/app/router.js'
-        '@MttBlogBundle/Resources/public/app/routes/*.js'
-        '@MttBlogBundle/Resources/public/app/helpers/*.js'
-        '@MttBlogBundle/Resources/public/app/models/*.js'
-        '@MttBlogBundle/Resources/public/app/components/*.js'
-        '@MttBlogBundle/Resources/public/app/controllers/*.js'
-        '@MttBlogBundle/Resources/public/app/views/*.js'
-        '@MttBlogBundle/Resources/public/app/templates.js'
+        'spa/assets/vendor.js'
+        '@MttBlogBundle/Resources/public/components/bootstrap/dist/js/bootstrap.js'
+        '@MttBlogBundle/Resources/public/components/moment/moment.js'
+        '@MttBlogBundle/Resources/public/components/moment/locale/ru.js'
+        '@FOSJsRoutingBundle/Resources/public/js/router.js'
+        'js/fos_js_routes.js'
+        'spa/assets/mtt-blog.js'
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
+    <script>
+        moment.locale('{{ app.request.locale }}');
+    </script>
 {% endblock %}
