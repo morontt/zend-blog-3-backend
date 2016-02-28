@@ -23,6 +23,16 @@ use Mtt\BlogBundle\Entity\Commentator;
 use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Entity\Tag;
 
+/**
+ * Class DataConverter
+ * @package Mtt\BlogBundle\API
+ *
+ * @method array getCategory(Category $entity)
+ * @method array getComment(Comment $entity)
+ * @method array getCommentator(Commentator $entity)
+ * @method array getPost(Post $entity)
+ * @method array getTag(Tag $entity)
+ */
 class DataConverter
 {
     /**
@@ -59,17 +69,6 @@ class DataConverter
     }
 
     /**
-     * @param Category $entity
-     * @return array
-     */
-    public function getCategory(Category $entity)
-    {
-        $resource = new Item($entity, new CategoryTransformer(), 'category');
-
-        return $this->fractal->createData($resource)->toArray();
-    }
-
-    /**
      * @param mixed $tags
      * @return array
      */
@@ -78,26 +77,6 @@ class DataConverter
         $resource = new Collection($tags, new TagTransformer(), 'tags');
 
         return $this->fractal->createData($resource)->toArray();
-    }
-
-    /**
-     * @param Tag $tag
-     * @return array
-     */
-    public function getTag(Tag $tag)
-    {
-        $resource = new Item($tag, new TagTransformer(), 'tag');
-
-        return $this->fractal->createData($resource)->toArray();
-    }
-
-    /**
-     * @param array $data
-     * @return array
-     */
-    public function createTag(array $data)
-    {
-        return $this->saveTag(new Tag(), $data);
     }
 
     /**
@@ -113,17 +92,6 @@ class DataConverter
         $this->em->flush();
 
         return $this->getTag($tag);
-    }
-
-    /**
-     * @param array $data
-     * @return array
-     */
-    public function createCategory(array $data)
-    {
-        $category = new Category();
-
-        return $this->saveCategory($category, $data);
     }
 
     /**
@@ -161,45 +129,12 @@ class DataConverter
     }
 
     /**
-     * @param Commentator $entity
-     * @return array
-     */
-    public function getCommentator(Commentator $entity)
-    {
-        $resource = new Item($entity, new CommentatorTransformer(), 'commentator');
-
-        return $this->fractal->createData($resource)->toArray();
-    }
-
-    /**
-     * @param Comment $entity
-     * @return array
-     */
-    public function getComment(Comment $entity)
-    {
-        $resource = new Item($entity, new CommentTransformer(), 'comment');
-
-        return $this->fractal->createData($resource)->toArray();
-    }
-
-    /**
      * @param mixed $comments
      * @return array
      */
     public function getCommentsArray($comments)
     {
         $resource = new Collection($comments, new CommentTransformer(), 'comments');
-
-        return $this->fractal->createData($resource)->toArray();
-    }
-
-    /**
-     * @param Post $entity
-     * @return array
-     */
-    public function getPost(Post $entity)
-    {
-        $resource = new Item($entity, new PostTransformer(), 'post');
 
         return $this->fractal->createData($resource)->toArray();
     }
@@ -213,5 +148,26 @@ class DataConverter
         $resource = new Collection($posts, new PostTransformer(), 'posts');
 
         return $this->fractal->createData($resource)->toArray();
+    }
+
+    /**
+     * @param $method
+     * @param $arguments
+     * @return array|null
+     */
+    public function __call($method, $arguments)
+    {
+        $result = null;
+        $matches = [];
+        if (preg_match('/^get([A-Z]\w+)$/', $method, $matches)) {
+            $class = 'Mtt\\BlogBundle\\API\\Transformers\\' . $matches[1] . 'Transformer';
+            $resource = new Item($arguments[0], new $class, lcfirst($matches[1]));
+
+            $result = $this->fractal->createData($resource)->toArray();
+        } else {
+            throw new \RuntimeException(sprintf('Undefined method: %s', $method));
+        }
+
+        return $result;
     }
 }

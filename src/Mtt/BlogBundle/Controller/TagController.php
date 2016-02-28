@@ -100,7 +100,7 @@ class TagController extends BaseController
     public function createTagAction(Request $request)
     {
         $result = $this->getDataConverter()
-            ->createTag($request->request->get('tag'));
+            ->saveTag(new Tag(), $request->request->get('tag'));
 
         return new JsonResponse($result);
     }

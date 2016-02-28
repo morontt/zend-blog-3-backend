@@ -100,7 +100,7 @@ class CategoryController extends BaseController
     public function createCategoryAction(Request $request)
     {
         $result = $this->getDataConverter()
-            ->createCategory($request->request->get('category'));
+            ->saveCategory(new Category, $request->request->get('category'));
 
         return new JsonResponse($result);
     }
