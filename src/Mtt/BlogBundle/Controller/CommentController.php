@@ -8,6 +8,7 @@
 
 namespace Mtt\BlogBundle\Controller;
 
+use Mtt\BlogBundle\Entity\Comment;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -39,6 +40,21 @@ class CommentController extends BaseController
             ->getCommentsArray($pagination);
 
         $result['meta'] = $this->getPaginationMetadata($pagination->getPaginationData());
+
+        return new JsonResponse($result);
+    }
+
+    /**
+     * @Route("/{id}", requirements={"id": "\d+"})
+     * @Method("GET")
+     *
+     * @param Comment $entity
+     * @return JsonResponse
+     */
+    public function findAction(Comment $entity)
+    {
+        $result = $this->getDataConverter()
+            ->getComment($entity);
 
         return new JsonResponse($result);
     }

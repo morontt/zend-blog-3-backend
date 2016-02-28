@@ -18,7 +18,9 @@ use Mtt\BlogBundle\API\Transformers\CommentatorTransformer;
 use Mtt\BlogBundle\API\Transformers\PostTransformer;
 use Mtt\BlogBundle\API\Transformers\TagTransformer;
 use Mtt\BlogBundle\Entity\Category;
+use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Entity\Commentator;
+use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Entity\Tag;
 
 class DataConverter
@@ -46,7 +48,7 @@ class DataConverter
     }
 
     /**
-     * @param $categories
+     * @param mixed $categories
      * @return array
      */
     public function getCategoryArray($categories)
@@ -68,7 +70,7 @@ class DataConverter
     }
 
     /**
-     * @param $tags
+     * @param mixed $tags
      * @return array
      */
     public function getTagsArray($tags)
@@ -148,7 +150,7 @@ class DataConverter
     }
 
     /**
-     * @param array $commentators
+     * @param mixed $commentators
      * @return array
      */
     public function getCommentatorsArray($commentators)
@@ -170,7 +172,18 @@ class DataConverter
     }
 
     /**
-     * @param array $comments
+     * @param Comment $entity
+     * @return array
+     */
+    public function getComment(Comment $entity)
+    {
+        $resource = new Item($entity, new CommentTransformer(), 'comment');
+
+        return $this->fractal->createData($resource)->toArray();
+    }
+
+    /**
+     * @param mixed $comments
      * @return array
      */
     public function getCommentsArray($comments)
@@ -181,7 +194,18 @@ class DataConverter
     }
 
     /**
-     * @param array $posts
+     * @param Post $entity
+     * @return array
+     */
+    public function getPost(Post $entity)
+    {
+        $resource = new Item($entity, new PostTransformer(), 'post');
+
+        return $this->fractal->createData($resource)->toArray();
+    }
+
+    /**
+     * @param mixed $posts
      * @return array
      */
     public function getPostsArray($posts)

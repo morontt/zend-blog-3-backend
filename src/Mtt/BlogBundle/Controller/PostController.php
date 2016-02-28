@@ -8,6 +8,7 @@
 
 namespace Mtt\BlogBundle\Controller;
 
+use Mtt\BlogBundle\Entity\Post;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -39,6 +40,21 @@ class PostController extends BaseController
             ->getPostsArray($pagination);
 
         $result['meta'] = $this->getPaginationMetadata($pagination->getPaginationData());
+
+        return new JsonResponse($result);
+    }
+
+    /**
+     * @Route("/{id}", requirements={"id": "\d+"})
+     * @Method("GET")
+     *
+     * @param Post $entity
+     * @return JsonResponse
+     */
+    public function findAction(Post $entity)
+    {
+        $result = $this->getDataConverter()
+            ->getPost($entity);
 
         return new JsonResponse($result);
     }
