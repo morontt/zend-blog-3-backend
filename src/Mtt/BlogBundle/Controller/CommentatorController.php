@@ -37,7 +37,7 @@ class CommentatorController extends BaseController
         );
 
         $result = $this->getDataConverter()
-            ->getCommentatorsArray($pagination);
+            ->getCommentatorArray($pagination);
 
         $result['meta'] = $this->getPaginationMetadata($pagination->getPaginationData());
 

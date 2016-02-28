@@ -37,7 +37,7 @@ class PostController extends BaseController
         );
 
         $result = $this->getDataConverter()
-            ->getPostsArray($pagination);
+            ->getPostArray($pagination);
 
         $result['meta'] = $this->getPaginationMetadata($pagination->getPaginationData());
 

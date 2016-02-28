@@ -13,25 +13,28 @@ use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use Mtt\BlogBundle\API\Transformers\CategoryTransformer;
-use Mtt\BlogBundle\API\Transformers\CommentTransformer;
-use Mtt\BlogBundle\API\Transformers\CommentatorTransformer;
-use Mtt\BlogBundle\API\Transformers\PostTransformer;
 use Mtt\BlogBundle\API\Transformers\TagTransformer;
 use Mtt\BlogBundle\Entity\Category;
 use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Entity\Commentator;
 use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Entity\Tag;
+use Mtt\BlogBundle\Utils\Inflector;
 
 /**
  * Class DataConverter
  * @package Mtt\BlogBundle\API
  *
  * @method array getCategory(Category $entity)
+ * @method array getCategoryArray($collection)
  * @method array getComment(Comment $entity)
+ * @method array getCommentArray($collection)
  * @method array getCommentator(Commentator $entity)
+ * @method array getCommentatorArray($collection)
  * @method array getPost(Post $entity)
+ * @method array getPostArray($collection)
  * @method array getTag(Tag $entity)
+ * @method array getTagArray($collection)
  */
 class DataConverter
 {
@@ -55,28 +58,6 @@ class DataConverter
         $this->fractal->setSerializer(new Serializer());
 
         $this->em = $em;
-    }
-
-    /**
-     * @param mixed $categories
-     * @return array
-     */
-    public function getCategoryArray($categories)
-    {
-        $resource = new Collection($categories, new CategoryTransformer(), 'categories');
-
-        return $this->fractal->createData($resource)->toArray();
-    }
-
-    /**
-     * @param mixed $tags
-     * @return array
-     */
-    public function getTagsArray($tags)
-    {
-        $resource = new Collection($tags, new TagTransformer(), 'tags');
-
-        return $this->fractal->createData($resource)->toArray();
     }
 
     /**
@@ -118,39 +99,6 @@ class DataConverter
     }
 
     /**
-     * @param mixed $commentators
-     * @return array
-     */
-    public function getCommentatorsArray($commentators)
-    {
-        $resource = new Collection($commentators, new CommentatorTransformer(), 'commentators');
-
-        return $this->fractal->createData($resource)->toArray();
-    }
-
-    /**
-     * @param mixed $comments
-     * @return array
-     */
-    public function getCommentsArray($comments)
-    {
-        $resource = new Collection($comments, new CommentTransformer(), 'comments');
-
-        return $this->fractal->createData($resource)->toArray();
-    }
-
-    /**
-     * @param mixed $posts
-     * @return array
-     */
-    public function getPostsArray($posts)
-    {
-        $resource = new Collection($posts, new PostTransformer(), 'posts');
-
-        return $this->fractal->createData($resource)->toArray();
-    }
-
-    /**
      * @param $method
      * @param $arguments
      * @return array|null
@@ -159,7 +107,16 @@ class DataConverter
     {
         $result = null;
         $matches = [];
-        if (preg_match('/^get([A-Z]\w+)$/', $method, $matches)) {
+        if (preg_match('/^get([A-Z]\w+)Array$/', $method, $matches)) {
+            $class = 'Mtt\\BlogBundle\\API\\Transformers\\' . $matches[1] . 'Transformer';
+            $resource = new Collection(
+                $arguments[0],
+                new $class,
+                Inflector::pluralize(lcfirst($matches[1]))
+            );
+
+            return $this->fractal->createData($resource)->toArray();
+        } elseif (preg_match('/^get([A-Z]\w+)$/', $method, $matches)) {
             $class = 'Mtt\\BlogBundle\\API\\Transformers\\' . $matches[1] . 'Transformer';
             $resource = new Item($arguments[0], new $class, lcfirst($matches[1]));
 

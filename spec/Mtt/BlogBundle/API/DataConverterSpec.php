@@ -45,7 +45,7 @@ class DataConverterSpec extends ObjectBehavior
             ->setUrl('test2-url')
         ;
 
-        $this->getTagsArray([$tag, $tag2])->shouldReturn([
+        $this->getTagArray([$tag, $tag2])->shouldReturn([
             'tags' => [
                 [
                     'id' => null,
@@ -136,7 +136,7 @@ class DataConverterSpec extends ObjectBehavior
             ->setEmailHash(md5('two@example.org'))
         ;
 
-        $this->getCommentatorsArray([$commentator, $commentator2])->shouldReturn([
+        $this->getCommentatorArray([$commentator, $commentator2])->shouldReturn([
             'commentators' => [
                 [
                     'id' => null,
@@ -199,7 +199,7 @@ class DataConverterSpec extends ObjectBehavior
 
         $comment2->setCommentator($commentator);
 
-        $this->getCommentsArray([$comment, $comment2])->shouldReturn([
+        $this->getCommentArray([$comment, $comment2])->shouldReturn([
             'comments' => [
                 [
                     'id' => null,
@@ -284,7 +284,7 @@ class DataConverterSpec extends ObjectBehavior
         ;
 
         //TODO duplicate categories
-        $this->getPostsArray([$post, $post2])->shouldReturn([
+        $this->getPostArray([$post, $post2])->shouldReturn([
             'posts' => [
                 [
                     'id' => null,
