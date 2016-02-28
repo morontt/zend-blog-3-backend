@@ -29,6 +29,7 @@ dependencies:
     - app/console assetic:dump -e test --no-debug
   post:
     - cp ./var/ci/zendblog-3.loc.conf /etc/apache2/sites-available
+    - echo "date.timezone = Europe/Zaporozhye" >> ~/.phpenv/versions/5.5.9/etc/php.ini
     - a2ensite zendblog-3.loc.conf
     - sudo service apache2 restart
 
