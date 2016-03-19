@@ -20,7 +20,7 @@ Work in progress
     sudo npm install -g bower
     sudo npm install -g uglifycss
     sudo npm install -g uglify-js
-    sudo npm install -g ember-cli@1.13.15
+    sudo npm install -g ember-cli@2.4.2
 
 If npm is not installed (Debian/Ubuntu)
 
