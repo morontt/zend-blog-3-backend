@@ -19,12 +19,13 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
         $post->setTitle('Тестовая запись')
             ->setUrl(RuTransform::ruTransform('Тестовая запись'))
             ->setCategory($manager->merge($this->getReference('category-news')))
-            ->setUser($manager->merge($this->getReference('admin-user')))
             ->setDescription('метатег description тестовй записи')
             ->setText('<p>Тестовая запись, собственно...</p>')
             ->addTag($manager->merge($this->getReference('tag-test')));
         $manager->persist($post);
         $manager->flush();
+
+        $post->getPostCount()->setComments(2);
 
         $this->addReference('post-1', $post);
 
@@ -32,7 +33,6 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
         $post2->setTitle('запись про PHP')
             ->setUrl(RuTransform::ruTransform('запись про PHP'))
             ->setCategory($manager->merge($this->getReference('category-php')))
-            ->setUser($manager->merge($this->getReference('admin-user')))
             ->setDescription('метатег description тестовой записи про ПХП')
             ->setText('<p>PHP (рекурсивный акроним словосочетания PHP: Hypertext Preprocessor) - это распространенный язык программирования общего назначения с открытым исходным кодом. PHP сконструирован специально для ведения Web-разработок и его код может внедряться непосредственно в HTML.</p>')
             ->addTag($manager->merge($this->getReference('tag-php')));
@@ -45,7 +45,6 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
         $post3->setTitle('ещё о PHP')
             ->setUrl(RuTransform::ruTransform('ещё о PHP'))
             ->setCategory($manager->merge($this->getReference('category-php')))
-            ->setUser($manager->merge($this->getReference('admin-user')))
             ->setDescription('description PHP')
             ->setText('<p>Ещё одна запись о PHP</p>')
             ->addTag($manager->merge($this->getReference('tag-php')));
@@ -58,7 +57,6 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
         $post4->setTitle('JavaScript, хоть и jQuery')
             ->setUrl(RuTransform::ruTransform('JavaScript, хоть и jQuery'))
             ->setCategory($manager->merge($this->getReference('category-jquery')))
-            ->setUser($manager->merge($this->getReference('admin-user')))
             ->setDescription('description-JavaScript')
             ->setText('<p>JavaScript - прототипно-ориентированный сценарный язык программирования. Является диалектом языка ECMAScript</p><!-- cut --><p>Параграф под катом</p>')
             ->addTag($manager->merge($this->getReference('tag-javascript')));

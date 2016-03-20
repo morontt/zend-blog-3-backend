@@ -5,7 +5,6 @@ namespace Mtt\UserBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Mtt\BlogBundle\Entity\Comment;
-use Mtt\BlogBundle\Entity\Post;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -96,13 +95,6 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(name="ip_last", type="string", length=15, nullable=true)
      */
     protected $ipAddressLast;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     *
-     * @ORM\OneToMany(targetEntity="Mtt\BlogBundle\Entity\Post", mappedBy="user")
-     */
-    protected $posts;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -366,39 +358,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Add posts
-     *
-     * @param Post $posts
-     * @return User
-     */
-    public function addPost(Post $posts)
-    {
-        $this->posts[] = $posts;
-
-        return $this;
-    }
-
-    /**
-     * Remove posts
-     *
-     * @param Post $posts
-     */
-    public function removePost(Post $posts)
-    {
-        $this->posts->removeElement($posts);
-    }
-
-    /**
-     * Get posts
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPosts()
-    {
-        return $this->posts;
-    }
-
-    /**
      * Add comments
      *
      * @param Comment $comments
@@ -447,7 +406,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get emailHash
      *
-     * @return string 
+     * @return string
      */
     public function getEmailHash()
     {
@@ -470,7 +429,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get loginCount
      *
-     * @return integer 
+     * @return integer
      */
     public function getLoginCount()
     {

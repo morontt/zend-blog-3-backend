@@ -1,0 +1,23 @@
+<td class="center-text">{{post.id}}</td>
+<td>{{post.title}}</td>
+<td>{{post.category.name}}</td>
+<td>
+    {{#if post.hidden}}
+        Да
+    {{else}}
+        -
+    {{/if}}
+</td>
+<td class="text-right">{{date-format post.timeCreated 'DD MMM YYYY, HH:mm'}}</td>
+<td>
+    <div class="pull-right">
+        {{#link-to "postedit" post class="btn btn-primary"}}
+            <i class="glyphicon glyphicon-pencil"></i>
+            <span>edit</span>
+        {{/link-to}}
+        <button class="btn btn-danger btn-confirm" {{action "removePost"}}>
+            <i class="glyphicon glyphicon-trash"></i>
+            <span>delete</span>
+        </button>
+    </div>
+</td>

@@ -60,6 +60,21 @@ class CategoryController extends BaseController
     }
 
     /**
+     * @Route("")
+     * @Method("POST")
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function createAction(Request $request)
+    {
+        $result = $this->getDataConverter()
+            ->saveCategory(new Category, $request->request->get('category'));
+
+        return new JsonResponse($result);
+    }
+
+    /**
      * @Route("/{id}", requirements={"id": "\d+"})
      * @Method("PUT")
      *
@@ -88,21 +103,6 @@ class CategoryController extends BaseController
         $this->getEm()->flush();
 
         return new JsonResponse(true);
-    }
-
-    /**
-     * @Route("")
-     * @Method("POST")
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function createCategoryAction(Request $request)
-    {
-        $result = $this->getDataConverter()
-            ->saveCategory(new Category, $request->request->get('category'));
-
-        return new JsonResponse($result);
     }
 
     /**

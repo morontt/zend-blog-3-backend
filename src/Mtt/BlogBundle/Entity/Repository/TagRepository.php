@@ -3,6 +3,7 @@
 namespace Mtt\BlogBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Mtt\BlogBundle\Entity\Tag;
 
 /**
  * TagRepository
@@ -21,5 +22,28 @@ class TagRepository extends EntityRepository
             ->orderBy('t.name', 'ASC');
 
         return $qb->getQuery();
+    }
+
+    /**
+     * @param $term
+     * @return Tag[]
+     */
+    public function getForAutocomplete($term)
+    {
+        $qb = $this->createQueryBuilder('t');
+
+        if ($term) {
+            $qb
+                ->andWhere($qb->expr()->like('t.name', ':name'))
+                ->setParameter('name', '%' . $term . '%')
+            ;
+        }
+
+        $qb
+            ->orderBy('t.name')
+            ->setMaxResults(10)
+        ;
+
+        return $qb->getQuery()->getResult();
     }
 }

@@ -1,0 +1,25 @@
+<div id="topbar">
+    <ol class="breadcrumb">
+        <li>
+            {{#link-to "posts"}}
+                Записи
+            {{/link-to}}
+        </li>
+        <li>Редактирование</li>
+    </ol>
+</div>
+<div id="content">
+    <div id="flashes">
+    </div>
+    <div class="page-header">
+        <h1>
+            <i class="glyphicon glyphicon-pencil"></i> Редактирование записи
+        </h1>
+    </div>
+    {{form-post model=model
+        back=(action "back")
+        redirect=(action "redirect")
+        categoryChoices=categoryChoices}}
+
+    {{footer-partial}}
+</div>

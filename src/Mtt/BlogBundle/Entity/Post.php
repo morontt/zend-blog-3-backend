@@ -4,7 +4,6 @@ namespace Mtt\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Mtt\UserBundle\Entity\User;
 
 /**
  * @ORM\Table(name="posts")
@@ -87,17 +86,9 @@ class Post
     protected $tags;
 
     /**
-     * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="Mtt\UserBundle\Entity\User", inversedBy="posts")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    protected $user;
-
-    /**
      * @var \Mtt\BlogBundle\Entity\PostCount
      *
-     * @ORM\OneToOne(targetEntity="PostCount", mappedBy="post")
+     * @ORM\OneToOne(targetEntity="PostCount", mappedBy="post", cascade={"persist"})
      */
     protected $postCount;
 
@@ -121,7 +112,13 @@ class Post
         $this->tags = new ArrayCollection();
         $this->comments = new ArrayCollection();
 
-        $this->timeCreated = new \DateTime('now');
+        $now = new \DateTime();
+
+        $this->timeCreated = $now;
+        $this->lastUpdate = $now;
+
+        $this->postCount = new PostCount();
+        $this->postCount->setPost($this);
     }
 
     /**
@@ -298,10 +295,10 @@ class Post
     /**
      * Set category
      *
-     * @param \Mtt\BlogBundle\Entity\Category $category
+     * @param Category $category
      * @return Post
      */
-    public function setCategory(\Mtt\BlogBundle\Entity\Category $category = null)
+    public function setCategory(Category $category = null)
     {
         $this->category = $category;
 
@@ -319,26 +316,29 @@ class Post
     }
 
     /**
-     * Add tags
+     * Add tag
      *
-     * @param \Mtt\BlogBundle\Entity\Tag $tags
+     * @param Tag $tag
+     *
      * @return Post
      */
-    public function addTag(\Mtt\BlogBundle\Entity\Tag $tags)
+    public function addTag(Tag $tag)
     {
-        $this->tags[] = $tags;
+        if (!$this->tags->contains($tag)) {
+            $this->tags->add($tag);
+        }
 
         return $this;
     }
 
     /**
-     * Remove tags
+     * Remove tag
      *
-     * @param \Mtt\BlogBundle\Entity\Tag $tags
+     * @param Tag $tag
      */
-    public function removeTag(\Mtt\BlogBundle\Entity\Tag $tags)
+    public function removeTag(Tag $tag)
     {
-        $this->tags->removeElement($tags);
+        $this->tags->removeElement($tag);
     }
 
     /**
@@ -354,10 +354,10 @@ class Post
     /**
      * Set postCount
      *
-     * @param \Mtt\BlogBundle\Entity\PostCount $postCount
+     * @param PostCount $postCount
      * @return Post
      */
-    public function setPostCount(\Mtt\BlogBundle\Entity\PostCount $postCount = null)
+    public function setPostCount(PostCount $postCount = null)
     {
         $this->postCount = $postCount;
 
@@ -367,7 +367,7 @@ class Post
     /**
      * Get postCount
      *
-     * @return \Mtt\BlogBundle\Entity\PostCount
+     * @return PostCount
      */
     public function getPostCount()
     {
@@ -375,35 +375,12 @@ class Post
     }
 
     /**
-     * Set user
-     *
-     * @param User $user
-     * @return Post
-     */
-    public function setUser(User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
      * Add comments
      *
-     * @param \Mtt\BlogBundle\Entity\Comment $comments
+     * @param Comment $comments
      * @return Post
      */
-    public function addComment(\Mtt\BlogBundle\Entity\Comment $comments)
+    public function addComment(Comment $comments)
     {
         $this->comments[] = $comments;
 
@@ -413,9 +390,9 @@ class Post
     /**
      * Remove comments
      *
-     * @param \Mtt\BlogBundle\Entity\Comment $comments
+     * @param Comment $comments
      */
-    public function removeComment(\Mtt\BlogBundle\Entity\Comment $comments)
+    public function removeComment(Comment $comments)
     {
         $this->comments->removeElement($comments);
     }
@@ -446,7 +423,7 @@ class Post
     /**
      * Get disqusThread
      *
-     * @return integer 
+     * @return integer
      */
     public function getDisqusThread()
     {

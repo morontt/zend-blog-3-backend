@@ -6,8 +6,9 @@
 
 {% block stylesheets %}
     {% stylesheets filter='?uglifycss' filter='cssrewrite'
-    'bundles/mttblog/components/bootstrap/dist/css/bootstrap.css'
-    'bundles/mttblog/css/main.css'
+        'bundles/mttblog/components/jquery-ui/themes/base/all.css'
+        'bundles/mttblog/components/bootstrap/dist/css/bootstrap.css'
+        'bundles/mttblog/css/main.css'
     %}
     <link rel="stylesheet" href="{{ asset_url }}"/>
     {% endstylesheets %}
@@ -45,7 +46,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script type="text/javascript">
+    <script>
         var rest_url = '{{ path('mtt_blog_api_info') }}';
         var app_parameters = {
             api_url: rest_url.substr(1, rest_url.length - 2)
@@ -53,9 +54,14 @@
     </script>
     {% javascripts filter='?uglifyjs2'
         'spa/assets/vendor.js'
-        '@MttBlogBundle/Resources/public/components/bootstrap/dist/js/bootstrap.js'
-        '@MttBlogBundle/Resources/public/components/moment/moment.js'
-        '@MttBlogBundle/Resources/public/components/moment/locale/ru.js'
+        'bundles/mttblog/components/bootstrap/dist/js/bootstrap.js'
+        'bundles/mttblog/components/moment/moment.js'
+        'bundles/mttblog/components/moment/locale/ru.js'
+        'bundles/mttblog/components/jquery-ui/ui/core.js'
+        'bundles/mttblog/components/jquery-ui/ui/widget.js'
+        'bundles/mttblog/components/jquery-ui/ui/position.js'
+        'bundles/mttblog/components/jquery-ui/ui/autocomplete.js'
+        'bundles/mttblog/components/jquery-ui/ui/menu.js'
         '@FOSJsRoutingBundle/Resources/public/js/router.js'
         'js/fos_js_routes.js'
         'spa/assets/mtt-blog.js'

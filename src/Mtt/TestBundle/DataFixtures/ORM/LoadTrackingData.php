@@ -36,6 +36,6 @@ class LoadTrackingData extends AbstractFixture implements OrderedFixtureInterfac
      */
     public function getOrder()
     {
-        return 8;
+        return 7;
     }
 }

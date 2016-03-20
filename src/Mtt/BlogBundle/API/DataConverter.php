@@ -8,11 +8,13 @@
 
 namespace Mtt\BlogBundle\API;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use Mtt\BlogBundle\API\Transformers\CategoryTransformer;
+use Mtt\BlogBundle\API\Transformers\PostTransformer;
 use Mtt\BlogBundle\API\Transformers\TagTransformer;
 use Mtt\BlogBundle\Entity\Category;
 use Mtt\BlogBundle\Entity\Comment;
@@ -20,6 +22,7 @@ use Mtt\BlogBundle\Entity\Commentator;
 use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Entity\Tag;
 use Mtt\BlogBundle\Utils\Inflector;
+use Mtt\BlogBundle\Utils\RuTransform;
 
 /**
  * Class DataConverter
@@ -61,41 +64,90 @@ class DataConverter
     }
 
     /**
-     * @param Tag $tag
+     * @param Tag $entity
      * @param array $data
      * @return array
      */
-    public function saveTag(Tag $tag, array $data)
+    public function saveTag(Tag $entity, array $data)
     {
-        TagTransformer::reverseTransform($tag, $data);
+        TagTransformer::reverseTransform($entity, $data);
 
-        $this->em->persist($tag);
-        $this->em->flush();
+        $this->save($entity);
 
-        return $this->getTag($tag);
+        return $this->getTag($entity);
     }
 
     /**
-     * @param Category $category
+     * @param Category $entity
      * @param array $data
      * @return array
      * @throws \Doctrine\ORM\ORMException
      */
-    public function saveCategory(Category $category, array $data)
+    public function saveCategory(Category $entity, array $data)
     {
-        CategoryTransformer::reverseTransform($category, $data);
+        CategoryTransformer::reverseTransform($entity, $data);
 
         if ($data['parentId']) {
             $parent = $this->em->getReference('MttBlogBundle:Category', (int)$data['parentId']);
-            $category->setParent($parent);
+            $entity->setParent($parent);
         } else {
-            $category->setParent(null);
+            $entity->setParent(null);
         }
 
-        $this->em->persist($category);
-        $this->em->flush();
+        $this->save($entity);
 
-        return $this->getCategory($category);
+        return $this->getCategory($entity);
+    }
+
+    /**
+     * @param Post $entity
+     * @param array $data
+     * @return array
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function savePost(Post $entity, array $data)
+    {
+        PostTransformer::reverseTransform($entity, $data);
+
+        $entity->setCategory($this->em->getReference('MttBlogBundle:Category', (int)$data['categoryId']));
+
+        $now = new \DateTime();
+        $entity->setLastUpdate($now);
+
+        $originalTags = new ArrayCollection();
+        foreach ($entity->getTags() as $tag) {
+            $originalTags->add($tag);
+        }
+
+        $tagsArray = array_map('trim', explode(',', $data['tagsString']));
+        foreach ($tagsArray as $tagName) {
+            if ($tagName) {
+                $tag = $this->em->getRepository('MttBlogBundle:Tag')->findOneBy(['name' => $tagName]);
+                if ($tag) {
+                    if ($originalTags->contains($tag)) {
+                        $originalTags->removeElement($tag);
+                    } else {
+                        $entity->addTag($tag);
+                    }
+                } else {
+                    $tag = new Tag();
+                    $tag
+                        ->setName($tagName)
+                        ->setUrl(RuTransform::ruTransform($tagName))
+                    ;
+                    $entity->addTag($tag);
+                }
+                $this->em->persist($tag);
+            }
+        }
+
+        foreach ($originalTags as $tag) {
+            $entity->removeTag($tag);
+        }
+
+        $this->save($entity);
+
+        return $this->getPost($entity);
     }
 
     /**
@@ -126,5 +178,14 @@ class DataConverter
         }
 
         return $result;
+    }
+
+    /**
+     * @param $entity
+     */
+    protected function save($entity)
+    {
+        $this->em->persist($entity);
+        $this->em->flush();
     }
 }

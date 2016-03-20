@@ -58,4 +58,50 @@ class PostController extends BaseController
 
         return new JsonResponse($result);
     }
+
+    /**
+     * @Route("")
+     * @Method("POST")
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function createAction(Request $request)
+    {
+        $result = $this->getDataConverter()
+            ->savePost(new Post, $request->request->get('post'));
+
+        return new JsonResponse($result);
+    }
+
+    /**
+     * @Route("/{id}", requirements={"id": "\d+"})
+     * @Method("PUT")
+     *
+     * @param Request $request
+     * @param Post $entity
+     * @return JsonResponse
+     */
+    public function updateAction(Request $request, Post $entity)
+    {
+        $result = $this->getDataConverter()
+            ->savePost($entity, $request->request->get('post'));
+
+        return new JsonResponse($result);
+    }
+
+    /**
+     * @Route("/{id}", requirements={"id": "\d+"})
+     * @Method("DELETE")
+     *
+     * @param Post $entity
+     * @return JsonResponse
+     */
+    public function deleteAction(Post $entity)
+    {
+        $this->getEm()->remove($entity);
+        $this->getEm()->flush();
+
+        return new JsonResponse(true);
+    }
 }

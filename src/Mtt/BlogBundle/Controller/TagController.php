@@ -60,6 +60,21 @@ class TagController extends BaseController
     }
 
     /**
+     * @Route("")
+     * @Method("POST")
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function createAction(Request $request)
+    {
+        $result = $this->getDataConverter()
+            ->saveTag(new Tag(), $request->request->get('tag'));
+
+        return new JsonResponse($result);
+    }
+
+    /**
      * @Route("/{id}", requirements={"id": "\d+"})
      * @Method("PUT")
      *
@@ -91,16 +106,22 @@ class TagController extends BaseController
     }
 
     /**
-     * @Route("")
-     * @Method("POST")
+     * @Route("/autocomplete", name="tags_autocomplete", options={"expose"=true})
+     * @Method("GET")
      *
      * @param Request $request
      * @return JsonResponse
      */
-    public function createTagAction(Request $request)
+    public function tagAutocompleteAction(Request $request)
     {
-        $result = $this->getDataConverter()
-            ->saveTag(new Tag(), $request->request->get('tag'));
+        $tags = $this->getTagRepository()->getForAutocomplete($request->query->get('term'));
+
+        $result = array_map(
+            function (Tag $tag) {
+                return ['value' => $tag->getName()];
+            },
+            $tags
+        );
 
         return new JsonResponse($result);
     }
