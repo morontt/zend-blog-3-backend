@@ -21,7 +21,7 @@
     {% endblock %}
 </head>
 <body class="signin">
-<form method="post" action="{{ path('mtt_user_security_logincheck') }}" class="form-signin">
+<form method="post" action="{{ path('logincheck') }}" class="form-signin">
     {% if error %}
         <div class="alert alert-danger">
             {{ error.messageKey|trans(error.messageData, 'security') }}

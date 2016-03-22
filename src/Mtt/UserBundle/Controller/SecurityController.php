@@ -23,20 +23,4 @@ class SecurityController extends Controller
 
         return compact('error', 'lastUsername');
     }
-
-    /**
-     * @Route("/login_check")
-     */
-    public function loginCheckAction()
-    {
-        return null;
-    }
-
-    /**
-     * @Route("/logout")
-     */
-    public function logoutAction()
-    {
-        return null;
-    }
 }
