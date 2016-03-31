@@ -41,7 +41,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
-            "bower install",
+            "bower install --allow-root",
             "php app/console fos:js-routing:dump",
             "./buildapp.sh -i"
         ],
@@ -52,7 +52,7 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles",
-            "bower install",
+            "bower install --allow-root",
             "php app/console fos:js-routing:dump",
             "./buildapp.sh -i"
         ]
