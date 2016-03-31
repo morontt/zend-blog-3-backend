@@ -35,9 +35,9 @@ class CommentTransformer extends BaseTransformer
             'id' => $item->getId(),
             'text' => $item->getText(),
             'commentator' => $commentatorId,
-            'ip_addr' => $item->getIpAddress(),
-            'disqus_id' => (int)$item->getDisqusId(),
-            'created_at' => $this->dateTimeToISO($item->getTimeCreated()),
+            'ipAddr' => $item->getIpAddress(),
+            'disqusId' => (int)$item->getDisqusId(),
+            'createdAt' => $this->dateTimeToISO($item->getTimeCreated()),
         ];
 
         return $data;

@@ -23,8 +23,8 @@ class CommentatorTransformer extends BaseTransformer
             'name' => $item->getName(),
             'email' => $item->getMail(),
             'website' => $item->getWebsite(),
-            'disqus_id' => (int)$item->getDisqusId(),
-            'email_hash' => $item->getEmailHash(),
+            'disqusId' => (int)$item->getDisqusId(),
+            'emailHash' => $item->getEmailHash(),
         ];
 
         return $data;

@@ -122,8 +122,8 @@ class DataConverterSpec extends ObjectBehavior
                 'name' => 'test-name',
                 'email' => 'commentator@example.org',
                 'website' => 'http://example.org',
-                'disqus_id' => 0,
-                'email_hash' => md5('commentator@example.org'),
+                'disqusId' => 0,
+                'emailHash' => md5('commentator@example.org'),
             ],
         ]);
 
@@ -143,16 +143,16 @@ class DataConverterSpec extends ObjectBehavior
                     'name' => 'test-name',
                     'email' => 'commentator@example.org',
                     'website' => 'http://example.org',
-                    'disqus_id' => 0,
-                    'email_hash' => md5('commentator@example.org'),
+                    'disqusId' => 0,
+                    'emailHash' => md5('commentator@example.org'),
                 ],
                 [
                     'id' => null,
                     'name' => 'test2-name',
                     'email' => 'two@example.org',
                     'website' => 'http://example.com',
-                    'disqus_id' => 55,
-                    'email_hash' => md5('two@example.org'),
+                    'disqusId' => 55,
+                    'emailHash' => md5('two@example.org'),
                 ],
             ]
         ]);
@@ -173,9 +173,9 @@ class DataConverterSpec extends ObjectBehavior
                 'id' => null,
                 'text' => 'Тестовый комментарий',
                 'commentator' => null,
-                'ip_addr' => '94.231.112.91',
-                'disqus_id' => 74,
-                'created_at' => '2016-02-28T01:30:49+0200',
+                'ipAddr' => '94.231.112.91',
+                'disqusId' => 74,
+                'createdAt' => '2016-02-28T01:30:49+0200',
             ],
             'commentators' => [],
         ]);
@@ -205,17 +205,17 @@ class DataConverterSpec extends ObjectBehavior
                     'id' => null,
                     'text' => 'Тестовый комментарий',
                     'commentator' => null,
-                    'ip_addr' => '94.231.112.91',
-                    'disqus_id' => 74,
-                    'created_at' => '2016-02-28T01:30:49+0200',
+                    'ipAddr' => '94.231.112.91',
+                    'disqusId' => 74,
+                    'createdAt' => '2016-02-28T01:30:49+0200',
                 ],
                 [
                     'id' => null,
                     'text' => 'йцук фыва олдж',
                     'commentator' => null,
-                    'ip_addr' => '62.72.188.111',
-                    'disqus_id' => 0,
-                    'created_at' => '2016-02-28T01:43:14+0200',
+                    'ipAddr' => '62.72.188.111',
+                    'disqusId' => 0,
+                    'createdAt' => '2016-02-28T01:43:14+0200',
                 ]
             ],
             'commentators' => [
@@ -224,8 +224,8 @@ class DataConverterSpec extends ObjectBehavior
                     'name' => 'test-name',
                     'email' => 'commentator@example.org',
                     'website' => 'http://example.org',
-                    'disqus_id' => 0,
-                    'email_hash' => md5('commentator@example.org'),
+                    'disqusId' => 0,
+                    'emailHash' => md5('commentator@example.org'),
                 ],
             ]
         ]);
@@ -261,7 +261,7 @@ class DataConverterSpec extends ObjectBehavior
                 'text' => '<p>Ещё одна запись о PHP</p>',
                 'description' => 'description PHP',
                 'tagsString' => '',
-                'time_created' => '2016-02-07T22:40:24+0200',
+                'timeCreated' => '2016-02-07T22:40:24+0200',
             ],
             'categories' => [
                 [
@@ -298,7 +298,7 @@ class DataConverterSpec extends ObjectBehavior
                     'text' => '<p>Ещё одна запись о PHP</p>',
                     'description' => 'description PHP',
                     'tagsString' => '',
-                    'time_created' => '2016-02-07T22:40:24+0200',
+                    'timeCreated' => '2016-02-07T22:40:24+0200',
                 ],
                 [
                     'id' => null,
@@ -310,7 +310,7 @@ class DataConverterSpec extends ObjectBehavior
                     'text' => '<p>Тестовая запись, собственно...</p>',
                     'description' => 'метатег description',
                     'tagsString' => '',
-                    'time_created' => '2016-01-11T01:05:33+0200',
+                    'timeCreated' => '2016-01-11T01:05:33+0200',
                 ],
             ],
             'categories' => [
