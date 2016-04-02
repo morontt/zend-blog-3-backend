@@ -11,7 +11,7 @@ Work in progress
 
 #### Requirements
 
-- php 5.4+
+- php 5.5+
 - nodejs
 - npm
 
