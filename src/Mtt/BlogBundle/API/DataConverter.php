@@ -14,6 +14,7 @@ use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use Mtt\BlogBundle\API\Transformers\CategoryTransformer;
+use Mtt\BlogBundle\API\Transformers\CommentatorTransformer;
 use Mtt\BlogBundle\API\Transformers\PostTransformer;
 use Mtt\BlogBundle\API\Transformers\TagTransformer;
 use Mtt\BlogBundle\Entity\Category;
@@ -97,6 +98,20 @@ class DataConverter
         $this->save($entity);
 
         return $this->getCategory($entity);
+    }
+
+    /**
+     * @param Commentator $entity
+     * @param array $data
+     * @return array
+     */
+    public function saveCommentator(Commentator $entity, array $data)
+    {
+        CommentatorTransformer::reverseTransform($entity, $data);
+
+        $this->save($entity);
+
+        return $this->getCommentator($entity);
     }
 
     /**

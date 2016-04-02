@@ -33,7 +33,8 @@ class CommentController extends BaseController
     {
         $pagination = $this->paginate(
             $this->getCommentRepository()->getListQuery(),
-            $request->query->get('page', 1)
+            $request->query->get('page', 1),
+            30
         );
 
         $result = $this->getDataConverter()

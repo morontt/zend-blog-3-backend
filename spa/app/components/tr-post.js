@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
     tagName: 'tr',
     actions: {
-        removePost: function () {
+        remove: function () {
             var modal = $('#confirmation-modal');
 
             modal.attr('data-object-id', this.get('post.id'));

@@ -4,19 +4,19 @@ export default Ember.Component.extend({
     tagName: 'tr',
     isEditing: false,
     actions: {
-        editCategory() {
+        edit() {
             this.set('isEditing', true);
         },
-        saveCategory() {
+        save() {
             this.get('category').save().then(() => {
                 this.set('isEditing', false);
             });
         },
-        resetChanges() {
+        reset() {
             this.get('category').rollbackAttributes();
             this.set('isEditing', false);
         },
-        removeCategory() {
+        remove() {
             var modal = $('#confirmation-modal');
 
             modal.attr('data-object-id', this.get('category.id'));

@@ -79,12 +79,13 @@ class BaseController extends Controller
     /**
      * @param $query
      * @param $page
+     * @param int $limit
      * @return \Knp\Component\Pager\Pagination\SlidingPagination
      */
-    public function paginate($query, $page)
+    public function paginate($query, $page, $limit = 15)
     {
         return $this->getPaginator()
-            ->paginate($query, (int)$page, 15);
+            ->paginate($query, (int)$page, $limit);
     }
 
     /**

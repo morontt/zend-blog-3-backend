@@ -1,0 +1,59 @@
+{{#if isEditing}}
+    <td class="center-text">{{commentator.id}}</td>
+    <td>
+        <img src="{{commentator.gravatarUrl}}" alt="avatar"/>
+    </td>
+    <td>
+        {{input value=commentator.name class="form-control"}}
+    </td>
+    <td>
+        {{input value=commentator.email class="form-control"}}
+    </td>
+    <td>
+        {{input value=commentator.website class="form-control"}}
+    </td>
+    <td class="text-right">
+        {{#if commentator.disqusId}}
+            {{commentator.disqusId}}
+        {{else}}
+            -
+        {{/if}}
+    </td>
+    <td>
+        <div class="pull-right">
+            <a class="btn btn-success" {{action "save"}}>
+                <i class="glyphicon glyphicon-ok"></i>
+                <span>save</span>
+            </a>
+            <button class="btn btn-warning btn-confirm" {{action "reset"}}>
+                <i class="glyphicon glyphicon-remove"></i>
+                <span>reset</span>
+            </button>
+        </div>
+    </td>
+{{else}}
+    <td class="center-text">{{commentator.id}}</td>
+    <td>
+        <img src="{{commentator.gravatarUrl}}" alt="avatar"/>
+    </td>
+    <td>
+        <strong>{{commentator.name}}</strong>
+    </td>
+    <td>{{commentator.email}}</td>
+    <td>{{commentator.website}}</td>
+    <td class="text-right">
+        {{#if commentator.disqusId}}
+            {{commentator.disqusId}}
+        {{else}}
+            -
+        {{/if}}
+    </td>
+    <td>
+        <div class="pull-right">
+            <a class="btn btn-primary" {{action "edit"}}>
+                <i class="glyphicon glyphicon-pencil"></i>
+                <span>edit</span>
+            </a>
+        </div>
+    </td>
+{{/if}}

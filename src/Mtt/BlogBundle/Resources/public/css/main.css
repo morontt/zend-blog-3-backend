@@ -197,6 +197,10 @@ form.form-signin .form-control:focus {
     background-color: #f7f7f7;
 }
 
+th.actions {
+    width: 235px;
+}
+
 .pagination {
     margin: 0 0 15px 0;
     border-radius: 0;

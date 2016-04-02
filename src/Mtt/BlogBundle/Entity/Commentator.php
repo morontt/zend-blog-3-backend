@@ -71,6 +71,26 @@ class Commentator
     }
 
     /**
+     * @param string $name
+     * @param string $mail
+     * @param string $website
+     * @return string
+     */
+    public static function getAvatarHash($name, $mail, $website)
+    {
+        if ($mail) {
+            $hash = md5(strtolower(trim($mail)));
+        } else {
+            $hash = md5(strtolower(trim($name)));
+            if ($website) {
+                $hash = md5($hash . strtolower(trim($website)));
+            }
+        }
+
+        return $hash;
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -198,7 +218,7 @@ class Commentator
     /**
      * Get disqusId
      *
-     * @return integer 
+     * @return integer
      */
     public function getDisqusId()
     {
@@ -221,7 +241,7 @@ class Commentator
     /**
      * Get emailHash
      *
-     * @return string 
+     * @return string
      */
     public function getEmailHash()
     {

@@ -8,20 +8,13 @@ export default Ember.Component.extend({
             this.set('isEditing', true);
         },
         save: function () {
-            this.get('tag').save().then(() => {
+            this.get('commentator').save().then(() => {
                 this.set('isEditing', false);
             });
         },
         reset: function () {
-            this.get('tag').rollbackAttributes();
+            this.get('commentator').rollbackAttributes();
             this.set('isEditing', false);
-        },
-        remove: function () {
-            var modal = $('#confirmation-modal');
-
-            modal.attr('data-object-id', this.get('tag.id'));
-            modal.find('#confirmation-object-name').html(this.get('tag.name'));
-            modal.modal('show');
         }
     }
 });

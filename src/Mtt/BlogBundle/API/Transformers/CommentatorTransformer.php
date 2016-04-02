@@ -29,4 +29,18 @@ class CommentatorTransformer extends BaseTransformer
 
         return $data;
     }
+
+    /**
+     * @param Commentator $entity
+     * @param array $data
+     */
+    public static function reverseTransform(Commentator $entity, array $data)
+    {
+        $entity
+            ->setName($data['name'])
+            ->setMail($data['email'])
+            ->setWebsite($data['website'])
+            ->setEmailHash(Commentator::getAvatarHash($data['name'], $data['email'], $data['website']))
+        ;
+    }
 }

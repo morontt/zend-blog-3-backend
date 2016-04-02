@@ -23,7 +23,7 @@ class Tracking
      * @var \Mtt\BlogBundle\Entity\Post
      *
      * @ORM\ManyToOne(targetEntity="Post")
-     * @ORM\JoinColumn(name="post_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="post_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $post;
 
@@ -59,7 +59,8 @@ class Tracking
 
     public function __construct()
     {
-        $this->setTimeCreated(new \DateTime('now'));
+        $this->setTimeCreated(new \DateTime());
+        $this->timestampCreated = (int)$this->getTimeCreated()->format('U');
     }
 
     /**
@@ -151,7 +152,7 @@ class Tracking
     public function setPost(Post $post = null)
     {
         $this->post = $post;
-    
+
         return $this;
     }
 
@@ -181,7 +182,7 @@ class Tracking
     /**
      * Get timestampCreated
      *
-     * @return string 
+     * @return string
      */
     public function getTimestampCreated()
     {

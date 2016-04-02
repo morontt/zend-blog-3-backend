@@ -58,4 +58,20 @@ class CommentatorController extends BaseController
 
         return new JsonResponse($result);
     }
+
+    /**
+     * @Route("/{id}", requirements={"id": "\d+"})
+     * @Method("PUT")
+     *
+     * @param Request $request
+     * @param Commentator $entity
+     * @return JsonResponse
+     */
+    public function updateAction(Request $request, Commentator $entity)
+    {
+        $result = $this->getDataConverter()
+            ->saveCommentator($entity, $request->request->get('commentator'));
+
+        return new JsonResponse($result);
+    }
 }
