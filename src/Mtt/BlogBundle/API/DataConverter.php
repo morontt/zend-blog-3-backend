@@ -114,6 +114,10 @@ class DataConverter
         $now = new \DateTime();
         $entity->setLastUpdate($now);
 
+        if ($entity->isHide()) {
+            $entity->setTimeCreated($now);
+        }
+
         $originalTags = new ArrayCollection();
         foreach ($entity->getTags() as $tag) {
             $originalTags->add($tag);

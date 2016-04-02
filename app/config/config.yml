@@ -39,9 +39,9 @@ assetic:
     filters:
         cssrewrite: ~
         uglifyjs2:
-            bin: %nodemodules_bin_path%/uglifyjs
+            bin: "%nodemodules_bin_path%/uglifyjs"
         uglifycss:
-            bin: %nodemodules_bin_path%/uglifycss
+            bin: "%nodemodules_bin_path%/uglifycss"
 
 # Doctrine Configuration
 doctrine:
@@ -79,5 +79,5 @@ swiftmailer:
     spool:     { type: memory }
 
 parameters:
-    router.request_context.host:   %site_host%
-    router.request_context.scheme: %site_scheme%
+    router.request_context.host:   "%site_host%"
+    router.request_context.scheme: "%site_scheme%"
