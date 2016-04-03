@@ -2,25 +2,26 @@
 /**
  * Created by PhpStorm.
  * User: morontt
- * Date: 28.03.15
- * Time: 21:19
+ * Date: 04.04.16
+ * Time: 22:34
  */
 
 namespace Mtt\BlogBundle\Controller;
 
-use Mtt\BlogBundle\Entity\Tag;
+use Mtt\BlogBundle\Entity\MediaFile;
+use Mtt\BlogBundle\Form\ImageForm;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @Route("/api/tags")
+ * @Route("/api/mediaFiles")
  *
- * Class TagController
+ * Class MediaFileController
  * @package Mtt\BlogBundle\Controller
  */
-class TagController extends BaseController
+class MediaFileController extends BaseController
 {
     /**
      * @Route("")
@@ -32,12 +33,12 @@ class TagController extends BaseController
     public function findAllAction(Request $request)
     {
         $pagination = $this->paginate(
-            $this->getTagRepository()->getListQuery(true),
+            $this->getMediaFileRepository()->getListQuery(),
             $request->query->get('page', 1)
         );
 
         $result = $this->getDataConverter()
-            ->getTagArray($pagination);
+            ->getMediaFileArray($pagination, 'post');
 
         $result['meta'] = $this->getPaginationMetadata($pagination->getPaginationData());
 
@@ -48,28 +49,13 @@ class TagController extends BaseController
      * @Route("/{id}", requirements={"id": "\d+"})
      * @Method("GET")
      *
-     * @param Tag $entity
+     * @param MediaFile $entity
      * @return JsonResponse
      */
-    public function findAction(Tag $entity)
+    public function findAction(MediaFile $entity)
     {
         $result = $this->getDataConverter()
-            ->getTag($entity);
-
-        return new JsonResponse($result);
-    }
-
-    /**
-     * @Route("")
-     * @Method("POST")
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function createAction(Request $request)
-    {
-        $result = $this->getDataConverter()
-            ->saveTag(new Tag(), $request->request->get('tag'));
+            ->getMediaFile($entity);
 
         return new JsonResponse($result);
     }
@@ -79,13 +65,13 @@ class TagController extends BaseController
      * @Method("PUT")
      *
      * @param Request $request
-     * @param Tag $entity
+     * @param MediaFile $entity
      * @return JsonResponse
      */
-    public function updateAction(Request $request, Tag $entity)
+    public function updateAction(Request $request, MediaFile $entity)
     {
         $result = $this->getDataConverter()
-            ->saveTag($entity, $request->request->get('tag'));
+            ->saveMediaFile($entity, $request->request->get('mediaFile'));
 
         return new JsonResponse($result);
     }
@@ -94,11 +80,12 @@ class TagController extends BaseController
      * @Route("/{id}", requirements={"id": "\d+"})
      * @Method("DELETE")
      *
-     * @param Tag $entity
+     * @param MediaFile $entity
      * @return JsonResponse
      */
-    public function deleteAction(Tag $entity)
+    public function deleteAction(MediaFile $entity)
     {
+        $this->get('mtt_blog.image_manager')->remove($entity);
         $this->getEm()->remove($entity);
         $this->getEm()->flush();
 
@@ -106,22 +93,32 @@ class TagController extends BaseController
     }
 
     /**
-     * @Route("/autocomplete", name="tags_autocomplete", options={"expose"=true})
-     * @Method("GET")
+     * @Route("/upload", name="upload_image", options={"expose"=true})
+     * @Method("POST")
      *
      * @param Request $request
      * @return JsonResponse
      */
-    public function tagAutocompleteAction(Request $request)
+    public function uploadAction(Request $request)
     {
-        $tags = $this->getTagRepository()->getForAutocomplete($request->query->get('term'));
+        $form = $this->createForm(new ImageForm());
+        $form->submit($request);
 
-        $result = array_map(
-            function (Tag $tag) {
-                return ['value' => $tag->getName()];
-            },
-            $tags
-        );
+        $result = null;
+        if ($form->isValid()) {
+            $result = $this->get('mtt_blog.image_manager')->uploadImage(
+                $form->get('description')->getData(),
+                $form->get('post_id')->getData(),
+                $form->get('upload')->getData()
+            );
+        } else {
+            $messages = [];
+            foreach ($form->get('upload')->getErrors() as $error) {
+                $messages[] = $error->getMessage();
+            }
+
+            return new JsonResponse(['errors' => $messages], 422);
+        }
 
         return new JsonResponse($result);
     }

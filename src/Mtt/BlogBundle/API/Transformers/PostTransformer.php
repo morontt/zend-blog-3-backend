@@ -17,8 +17,8 @@ class PostTransformer extends BaseTransformer
     /**
      * @var array
      */
-    protected $defaultIncludes = [
-        'Category',
+    protected $availableIncludes = [
+        'category',
     ];
 
     /**

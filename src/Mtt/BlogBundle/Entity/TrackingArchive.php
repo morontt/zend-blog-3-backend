@@ -43,14 +43,15 @@ class TrackingArchive
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="time_created", type="datetime")
+     * @ORM\Column(type="datetime")
      */
     protected $timeCreated;
+
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -66,14 +67,14 @@ class TrackingArchive
     public function setPost($post)
     {
         $this->post = $post;
-    
+
         return $this;
     }
 
     /**
      * Get post
      *
-     * @return integer 
+     * @return integer
      */
     public function getPost()
     {
@@ -89,14 +90,14 @@ class TrackingArchive
     public function setTrackingAgent($trackingAgent)
     {
         $this->trackingAgent = $trackingAgent;
-    
+
         return $this;
     }
 
     /**
      * Get trackingAgent
      *
-     * @return integer 
+     * @return integer
      */
     public function getTrackingAgent()
     {
@@ -112,14 +113,14 @@ class TrackingArchive
     public function setIpAddress($ipAddress)
     {
         $this->ipAddress = $ipAddress;
-    
+
         return $this;
     }
 
     /**
      * Get ipAddress
      *
-     * @return string 
+     * @return string
      */
     public function getIpAddress()
     {
@@ -135,14 +136,14 @@ class TrackingArchive
     public function setTimeCreated($timeCreated)
     {
         $this->timeCreated = $timeCreated;
-    
+
         return $this;
     }
 
     /**
      * Get timeCreated
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getTimeCreated()
     {

@@ -49,7 +49,8 @@
     <script>
         var rest_url = '{{ path('mtt_blog_api_info') }}';
         var app_parameters = {
-            api_url: rest_url.substr(1, rest_url.length - 2)
+            api_url: rest_url.substr(1, rest_url.length - 2),
+            image_basepath: '{{ image_basepath }}'
         };
     </script>
     {% javascripts filter='?uglifyjs2'
@@ -63,11 +64,11 @@
         'bundles/mttblog/components/jquery-ui/ui/autocomplete.js'
         'bundles/mttblog/components/jquery-ui/ui/menu.js'
         '@FOSJsRoutingBundle/Resources/public/js/router.js'
-        'js/fos_js_routes.js'
         'spa/assets/mtt-blog.js'
     %}
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
     <script>
         moment.locale('{{ app.request.locale }}');
     </script>

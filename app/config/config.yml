@@ -30,6 +30,7 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         browsertitle: "%browsertitle%"
+        image_basepath: "%image_basepath%"
 
 # Assetic Configuration
 assetic:
@@ -79,5 +80,8 @@ swiftmailer:
     spool:     { type: memory }
 
 parameters:
-    router.request_context.host:   "%site_host%"
-    router.request_context.scheme: "%site_scheme%"
+    amazon_s3:
+        key:    "%amazon_key%"
+        secret: "%amazon_secret%"
+        region: "%amazon_region%"
+        bucket: "%amazon_bucket%"

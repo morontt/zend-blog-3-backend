@@ -58,14 +58,14 @@ class Post
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="time_created", type="datetime")
+     * @ORM\Column(type="datetime")
      */
     protected $timeCreated;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="last_update", type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     protected $lastUpdate;
 
@@ -73,7 +73,6 @@ class Post
      * @var \Mtt\BlogBundle\Entity\Category
      *
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="posts")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
     protected $category;
 
@@ -100,9 +99,16 @@ class Post
     protected $comments;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection
+     *
+     * @ORM\OneToMany(targetEntity="MediaFile", mappedBy="post")
+     */
+    protected $mediaFiles;
+
+    /**
      * @var integer
      *
-     * @ORM\Column(name="disqus_thread", type="bigint", nullable=true)
+     * @ORM\Column(type="bigint", nullable=true)
      */
     protected $disqusThread;
 
@@ -111,6 +117,7 @@ class Post
     {
         $this->tags = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->mediaFiles = new ArrayCollection();
 
         $now = new \DateTime();
 
@@ -428,5 +435,39 @@ class Post
     public function getDisqusThread()
     {
         return $this->disqusThread;
+    }
+
+    /**
+     * Add mediaFile
+     *
+     * @param MediaFile $mediaFile
+     *
+     * @return Post
+     */
+    public function addMediaFile(MediaFile $mediaFile)
+    {
+        $this->mediaFiles[] = $mediaFile;
+
+        return $this;
+    }
+
+    /**
+     * Remove mediaFile
+     *
+     * @param MediaFile $mediaFile
+     */
+    public function removeMediaFile(MediaFile $mediaFile)
+    {
+        $this->mediaFiles->removeElement($mediaFile);
+    }
+
+    /**
+     * Get mediaFiles
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMediaFiles()
+    {
+        return $this->mediaFiles;
     }
 }

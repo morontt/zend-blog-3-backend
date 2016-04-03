@@ -1,0 +1,52 @@
+<div class="modal fade" id="modal_new_image" tabindex="-1" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                        class="close"
+                        aria-label="Close"
+                        {{action "closeModal"}}>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Новый файл</h4>
+            </div>
+            <div class="modal-body">
+                <form id="image-form" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="description-image" class="control-label">Описание:</label>
+                        <input type="text"
+                               class="form-control"
+                               id="description-image"
+                               name="description"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="post-image" class="control-label">ID Записи:</label>
+                        <input type="number"
+                               class="form-control"
+                               id="post-image"
+                               name="post_id"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="upload-image">File input</label>
+                        <input type="file" name="upload" id="upload-image"/>
+                    </div>
+                    {{#if hasErrors}}
+                        <div class="alert alert-danger" role="alert">
+                            <ul>
+                                {{#each errors as |error|}}
+                                    {{error}}
+                                {{/each}}
+                            </ul>
+                        </div>
+                    {{/if}}
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        {{action "sendFile"}}
+                        class="btn btn-primary">Создать</button>
+            </div>
+        </div>
+    </div>
+</div>

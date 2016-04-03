@@ -53,14 +53,14 @@ class Commentator
     /**
      * @var integer
      *
-     * @ORM\Column(name="disqus_id", type="bigint", nullable=true)
+     * @ORM\Column(type="bigint", nullable=true)
      */
     protected $disqusId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="email_hash", type="string", length=32, nullable=true)
+     * @ORM\Column(type="string", length=32, nullable=true)
      */
     protected $emailHash;
 

@@ -23,7 +23,7 @@ class PostCount
      * @var \Mtt\BlogBundle\Entity\Post
      *
      * @ORM\OneToOne(targetEntity="Post", inversedBy="postCount")
-     * @ORM\JoinColumn(name="post_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $post;
 

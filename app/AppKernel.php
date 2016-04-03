@@ -29,6 +29,7 @@ class AppKernel extends Kernel
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
             $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
             $bundles[] = new Mtt\TestBundle\MttTestBundle();
+            $bundles[] = new Mtt\Bundle\DoctrineToEmberBundle\MttDoctrineToEmberBundle();
         }
 
         return $bundles;

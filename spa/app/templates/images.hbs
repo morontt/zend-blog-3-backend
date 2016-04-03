@@ -1,0 +1,48 @@
+<div id="topbar">
+    <ol class="breadcrumb">
+        <li>Картинки</li>
+    </ol>
+</div>
+<div id="content">
+    <div id="flashes">
+    </div>
+
+    <div class="page-header">
+        <div class="actions-menu">
+            <a class="btn btn-primary" {{action "openModal"}}>
+                <i class="glyphicon glyphicon-plus-sign"></i>
+                <span>Загрузить</span>
+            </a>
+        </div>
+        <h1><i class="glyphicon glyphicon-picture"></i> Управление картинками.</h1>
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th class="center-text">#id</th>
+            <th>&nbsp;</th>
+            <th>Файл</th>
+            <th>Размер</th>
+            <th>Описание</th>
+            <th>Запись</th>
+            <th class="text-right">Создан</th>
+            <th class="text-right">Изменён</th>
+            <th class="actions">&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each model as |mediaFile|}}
+            {{tr-media mediaFile=mediaFile}}
+        {{/each}}
+        </tbody>
+    </table>
+
+    {{paginator-list meta=model.meta routeName="images"}}
+
+    {{footer-partial}}
+
+    {{delete-confirm action="remove"}}
+
+    {{image-uploader action="refresh"}}
+</div>

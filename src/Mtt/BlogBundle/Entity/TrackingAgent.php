@@ -23,7 +23,7 @@ class TrackingAgent
     /**
      * @var string
      *
-     * @ORM\Column(name="user_agent", type="text", length=65000)
+     * @ORM\Column(type="text", length=65000)
      */
     protected $userAgent;
 
@@ -37,7 +37,7 @@ class TrackingAgent
     /**
      * @var boolean
      *
-     * @ORM\Column(name="bot_filter", type="boolean")
+     * @ORM\Column(type="boolean")
      */
     protected $botFilter;
 
@@ -47,6 +47,7 @@ class TrackingAgent
      * @ORM\OneToMany(targetEntity="Tracking", mappedBy="trackingAgent", cascade={"persist"})
      */
     protected $trackings;
+
 
     public function __construct()
     {
@@ -159,7 +160,7 @@ class TrackingAgent
     /**
      * Get hash
      *
-     * @return string 
+     * @return string
      */
     public function getHash()
     {

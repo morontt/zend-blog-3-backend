@@ -30,7 +30,7 @@ class Comment
 
     /**
      * @ORM\ManyToOne(targetEntity="Comment", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(onDelete="SET NULL")
      **/
     protected $parent;
 
@@ -38,7 +38,6 @@ class Comment
      * @var \Mtt\BlogBundle\Entity\Post
      *
      * @ORM\ManyToOne(targetEntity="Post", inversedBy="comments")
-     * @ORM\JoinColumn(name="post_id", referencedColumnName="id")
      */
     protected $post;
 
@@ -46,7 +45,7 @@ class Comment
      * @var \Mtt\BlogBundle\Entity\Commentator
      *
      * @ORM\ManyToOne(targetEntity="Commentator", inversedBy="comments")
-     * @ORM\JoinColumn(name="commentator_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $commentator;
 
@@ -54,7 +53,7 @@ class Comment
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="Mtt\UserBundle\Entity\User", inversedBy="comments")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(nullable=true)
      */
     protected $user;
 
@@ -90,14 +89,14 @@ class Comment
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="time_created", type="datetime")
+     * @ORM\Column(type="datetime")
      */
     protected $timeCreated;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="disqus_id", type="bigint", nullable=true)
+     * @ORM\Column(type="bigint", nullable=true)
      */
     protected $disqusId;
 
@@ -375,7 +374,7 @@ class Comment
     /**
      * Get disqusId
      *
-     * @return integer 
+     * @return integer
      */
     public function getDisqusId()
     {

@@ -18,5 +18,8 @@ parameters:
     use_assetic_controller: false
     nodemodules_bin_path: /home/ubuntu/nvm/versions/node/v0.12.0/bin
     browsertitle: zendblog-3.loc
-    site_host: zendblog-3.loc
-    site_scheme: http
+    amazon_key: e432d582d9b692d0cf41
+    amazon_secret: 8594ec111a779b47b09b30b8c5d44cd66a5119bf
+    amazon_region: eu-west-1
+    amazon_bucket: testbucket.zendblog-3.loc
+    image_basepath: https://s3-eu-west-1.amazonaws.com/testbucket.zendblog-3.loc

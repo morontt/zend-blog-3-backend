@@ -14,6 +14,7 @@ Router.map(function () {
     this.route('category');
     this.route('comments');
     this.route('commentators');
+    this.route('images');
 });
 
 export default Router;
