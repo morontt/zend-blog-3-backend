@@ -187,6 +187,8 @@ class DataConverter
             if ($post) {
                 $entity->setPost($post);
             }
+        } else {
+            $entity->setPost(null);
         }
 
         $entity->setLastUpdate(new \DateTime());
