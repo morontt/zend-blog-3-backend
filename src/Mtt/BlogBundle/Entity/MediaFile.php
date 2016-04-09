@@ -55,6 +55,20 @@ class MediaFile
     protected $fileSize;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $defaultImage = false;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $backuped = false;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(type="datetime")
@@ -229,5 +243,53 @@ class MediaFile
     public function getFileSize()
     {
         return $this->fileSize;
+    }
+
+    /**
+     * Set defaultImage
+     *
+     * @param boolean $defaultImage
+     *
+     * @return MediaFile
+     */
+    public function setDefaultImage($defaultImage)
+    {
+        $this->defaultImage = $defaultImage;
+
+        return $this;
+    }
+
+    /**
+     * Is defaultImage
+     *
+     * @return boolean
+     */
+    public function isDefaultImage()
+    {
+        return $this->defaultImage;
+    }
+
+    /**
+     * Set backuped
+     *
+     * @param boolean $backuped
+     *
+     * @return MediaFile
+     */
+    public function setBackuped($backuped)
+    {
+        $this->backuped = $backuped;
+
+        return $this;
+    }
+
+    /**
+     * Is backuped
+     *
+     * @return boolean
+     */
+    public function isBackuped()
+    {
+        return $this->backuped;
     }
 }

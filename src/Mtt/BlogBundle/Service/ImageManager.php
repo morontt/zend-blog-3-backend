@@ -50,6 +50,14 @@ class ImageManager
     }
 
     /**
+     * @return Filesystem
+     */
+    public function getRemoteFs()
+    {
+        return $this->remoteFs;
+    }
+
+    /**
      * @param string $description
      * @param string $postId
      * @param UploadedFile $file
