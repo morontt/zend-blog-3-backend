@@ -13,24 +13,22 @@
     </div>
     <div class="page-header">
         <h1>
-            <i class="glyphicon glyphicon-pencil"></i> Редактирование записи
+            <i class="glyphicon glyphicon-pencil"></i> Редактирование картинок к записи
         </h1>
     </div>
     <ul class="nav nav-tabs">
-        <li class="active">
-            <a>Запись</a>
-        </li>
         <li>
-            {{#link-to "postimages" model.id}}
-                Картинки
+            {{#link-to "postedit" postId}}
+                Запись
             {{/link-to}}
+        </li>
+        <li class="active">
+            <a>Картинки</a>
         </li>
     </ul>
     <br>
-    {{form-post model=model
-        back=(action "back")
-        redirect=(action "redirect")
-        categoryChoices=categoryChoices}}
+
+    {{image-batchedit model=model}}
 
     {{footer-partial}}
 </div>

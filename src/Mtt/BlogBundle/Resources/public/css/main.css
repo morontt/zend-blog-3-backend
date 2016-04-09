@@ -396,7 +396,6 @@ th.actions {
 
 .form-control:focus {
     border-color: #37A37E;
-    color: #02805D;
     -webkit-box-shadow: none;
     box-shadow: none;
 }
@@ -587,6 +586,15 @@ th.actions {
     width: 94px;
 }
 
-td.text-date {
+th.text-date {
     width: 155px;
+}
+
+.force-pointer {
+    cursor: pointer;
+}
+
+.input-lg, .form-group-lg .form-control {
+    font-size: 15px;
+    padding: 8px 12px;
 }

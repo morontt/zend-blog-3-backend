@@ -32,15 +32,24 @@ class MediaFileController extends BaseController
      */
     public function findAllAction(Request $request)
     {
-        $pagination = $this->paginate(
-            $this->getMediaFileRepository()->getListQuery(),
-            $request->query->get('page', 1)
-        );
+        $params = $request->query->all();
 
-        $result = $this->getDataConverter()
-            ->getMediaFileArray($pagination, 'post');
+        if (!empty($params['post_id'])) {
+            $result = $this->getDataConverter()
+                ->getMediaFileArray(
+                    $this->getMediaFileRepository()->getFilesByPost((int)$params['post_id'])
+                );
+        } else {
+            $pagination = $this->paginate(
+                $this->getMediaFileRepository()->getListQuery(),
+                $request->query->get('page', 1)
+            );
 
-        $result['meta'] = $this->getPaginationMetadata($pagination->getPaginationData());
+            $result = $this->getDataConverter()
+                ->getMediaFileArray($pagination, 'post');
+
+            $result['meta'] = $this->getPaginationMetadata($pagination->getPaginationData());
+        }
 
         return new JsonResponse($result);
     }

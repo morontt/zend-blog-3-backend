@@ -4,6 +4,9 @@ export default Ember.Component.extend({
     tagName: 'tr',
     isEditing: false,
     actions: {
+        openTarget() {
+            window.open(Routing.generate('post_preview', {slug: this.get('mediaFile.post.url')}), '_blank');
+        },
         edit: function () {
             this.set('isEditing', true);
         },
