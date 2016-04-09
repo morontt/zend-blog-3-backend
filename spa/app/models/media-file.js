@@ -10,6 +10,7 @@ export default DS.Model.extend({
     lastUpdate: DS.attr('date'),
     post: DS.belongsTo('post'),
     postId: DS.attr('number'),
+    defaultImage: DS.attr('boolean'),
     src: Ember.computed('path', function () {
         return app_parameters.image_basepath + '/' + this.get('path');
     }),

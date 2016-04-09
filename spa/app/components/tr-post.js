@@ -3,6 +3,9 @@ import Ember from 'ember';
 export default Ember.Component.extend({
     tagName: 'tr',
     actions: {
+        openTarget() {
+            window.open(Routing.generate('post_preview', {slug: this.get('post.url')}), '_blank');
+        },
         remove: function () {
             var modal = $('#confirmation-modal');
 

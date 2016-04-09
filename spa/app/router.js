@@ -9,6 +9,7 @@ Router.map(function () {
     this.route('dashboard', {path: '/'});
     this.route('posts');
     this.route('postedit', {path: '/post/:post_id'});
+    this.route('postimages', {path: '/post-images/:post_id'});
     this.route('postcreate');
     this.route('tags');
     this.route('category');
