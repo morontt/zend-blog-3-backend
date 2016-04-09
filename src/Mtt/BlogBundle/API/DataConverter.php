@@ -15,11 +15,13 @@ use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use Mtt\BlogBundle\API\Transformers\CategoryTransformer;
 use Mtt\BlogBundle\API\Transformers\CommentatorTransformer;
+use Mtt\BlogBundle\API\Transformers\MediaFileTransformer;
 use Mtt\BlogBundle\API\Transformers\PostTransformer;
 use Mtt\BlogBundle\API\Transformers\TagTransformer;
 use Mtt\BlogBundle\Entity\Category;
 use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Entity\Commentator;
+use Mtt\BlogBundle\Entity\MediaFile;
 use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Entity\Tag;
 use Mtt\BlogBundle\Utils\Inflector;
@@ -29,16 +31,18 @@ use Mtt\BlogBundle\Utils\RuTransform;
  * Class DataConverter
  * @package Mtt\BlogBundle\API
  *
- * @method array getCategory(Category $entity)
- * @method array getCategoryArray($collection)
- * @method array getComment(Comment $entity)
- * @method array getCommentArray($collection)
- * @method array getCommentator(Commentator $entity)
- * @method array getCommentatorArray($collection)
- * @method array getPost(Post $entity)
- * @method array getPostArray($collection)
- * @method array getTag(Tag $entity)
- * @method array getTagArray($collection)
+ * @method array getCategory(Category $entity, $includes = null)
+ * @method array getCategoryArray($collection, $includes = null)
+ * @method array getComment(Comment $entity, $includes = null)
+ * @method array getCommentArray($collection, $includes = null)
+ * @method array getCommentator(Commentator $entity, $includes = null)
+ * @method array getCommentatorArray($collection, $includes = null)
+ * @method array getMediaFile(MediaFile $entity, $includes = null)
+ * @method array getMediaFileArray($collection, $includes = null)
+ * @method array getPost(Post $entity, $includes = null)
+ * @method array getPostArray($collection, $includes = null)
+ * @method array getTag(Tag $entity, $includes = null)
+ * @method array getTagArray($collection, $includes = null)
  */
 class DataConverter
 {
@@ -170,6 +174,28 @@ class DataConverter
     }
 
     /**
+     * @param MediaFile $entity
+     * @param array $data
+     * @return array
+     */
+    public function saveMediaFile(MediaFile $entity, array $data)
+    {
+        MediaFileTransformer::reverseTransform($entity, $data);
+
+        if ($data['postId']) {
+            $post = $this->em->getRepository('MttBlogBundle:Post')->find((int)$data['postId']);
+            if ($post) {
+                $entity->setPost($post);
+            }
+        }
+
+        $entity->setLastUpdate(new \DateTime());
+        $this->save($entity);
+
+        return $this->getMediaFile($entity);
+    }
+
+    /**
      * @param $method
      * @param $arguments
      * @return array|null
@@ -186,10 +212,18 @@ class DataConverter
                 Inflector::pluralize(lcfirst($matches[1]))
             );
 
+            if (!empty($arguments[1])) {
+                $this->fractal->parseIncludes($arguments[1]);
+            }
+
             return $this->fractal->createData($resource)->toArray();
         } elseif (preg_match('/^get([A-Z]\w+)$/', $method, $matches)) {
             $class = 'Mtt\\BlogBundle\\API\\Transformers\\' . $matches[1] . 'Transformer';
             $resource = new Item($arguments[0], new $class, lcfirst($matches[1]));
+
+            if (!empty($arguments[1])) {
+                $this->fractal->parseIncludes($arguments[1]);
+            }
 
             $result = $this->fractal->createData($resource)->toArray();
         } else {

@@ -11,11 +11,11 @@ export default Ember.Controller.extend({
             if (this.get('enableNewTagButton')) {
                 this.set('enableNewTagButton', false);
 
-                var tag_id = this.store.createRecord('tag', {
+                var tag = this.store.createRecord('tag', {
                     name: this.get('newTagName')
                 });
 
-                tag_id.save().then(
+                tag.save().then(
                     () => {
                         this.set('enableNewTagButton', true);
                         this.set('newTagName', '');
@@ -24,7 +24,7 @@ export default Ember.Controller.extend({
                         this.get('target.router').refresh();
                     },
                     () => {
-                        this.set('enableNewCategoryButton', true);
+                        this.set('enableNewTagButton', true);
                     }
                 );
             }

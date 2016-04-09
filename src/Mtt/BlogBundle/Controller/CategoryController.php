@@ -32,7 +32,7 @@ class CategoryController extends BaseController
     public function findAllAction(Request $request)
     {
         $pagination = $this->paginate(
-            $this->getCategoryRepository()->getListQuery(),
+            $this->getCategoryRepository()->getListQuery(true),
             $request->query->get('page', 1)
         );
 

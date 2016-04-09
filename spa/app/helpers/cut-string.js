@@ -1,10 +1,10 @@
 import Ember from 'ember';
 
 export function cutString([str, length]) {
-    var result = str;
+    var result = str || '';
 
-    if (str.length > length) {
-        result = str.substring(0, length) + '...';
+    if (result.length > length - 3) {
+        result = result.substring(0, length - 3) + '...';
     }
 
     return result;

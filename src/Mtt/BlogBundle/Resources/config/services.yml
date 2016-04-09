@@ -6,7 +6,7 @@ services:
 
     mtt_blog.api.data_converter:
         class: Mtt\BlogBundle\API\DataConverter
-        arguments: [ @doctrine.orm.entity_manager ]
+        arguments: [ "@doctrine.orm.entity_manager" ]
 
     mtt_blog.cron_chain:
         class: Mtt\BlogBundle\Cron\CronChain
@@ -14,9 +14,13 @@ services:
     mtt_blog.db_backup:
         class: Mtt\BlogBundle\Cron\Daily\DatabaseBackup
         arguments:
-            - %database_name%
-            - %database_user%
-            - %database_password%
-            - @doctrine
+            - "%database_name%"
+            - "%database_user%"
+            - "%database_password%"
+            - "@doctrine"
         tags:
             - { name: cron-daily }
+
+    mtt_blog.image_manager:
+        class: Mtt\BlogBundle\Service\ImageManager
+        arguments: [ "%amazon_s3%", "@doctrine.orm.entity_manager" ]

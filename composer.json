@@ -8,7 +8,6 @@
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
     "require": {
-        "php": ">=5.4",
         "symfony/symfony": "2.8.*",
         "doctrine/orm": "^2.4.8",
         "doctrine/doctrine-bundle": "~1.4",
@@ -20,6 +19,7 @@
         "doctrine/doctrine-migrations-bundle": "^1.0",
         "symfony/assetic-bundle": "~2.3",
         "league/fractal": "0.12.0",
+        "league/flysystem-aws-s3-v3": "1.0.*",
         "knplabs/knp-paginator-bundle": "~2.4",
         "friendsofsymfony/jsrouting-bundle": "~1.5",
         "dropbox/dropbox-sdk": "1.1.*"
@@ -27,6 +27,7 @@
     "require-dev": {
         "sensio/generator-bundle": "~3.0",
         "doctrine/doctrine-fixtures-bundle": "2.3.*",
+        "morontt/doctrine-to-ember": "dev-master",
         "behat/symfony2-extension": "~2.0@dev",
         "behat/mink-extension": "2.0.*",
         "behat/mink-goutte-driver": "1.1.*",

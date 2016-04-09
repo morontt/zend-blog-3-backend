@@ -61,6 +61,14 @@ class BaseController extends Controller
     }
 
     /**
+     * @return \Mtt\BlogBundle\Entity\Repository\MediaFileRepository
+     */
+    public function getMediaFileRepository()
+    {
+        return $this->getEm()->getRepository('MttBlogBundle:MediaFile');
+    }
+
+    /**
      * @return \Mtt\BlogBundle\API\DataConverter
      */
     public function getDataConverter()

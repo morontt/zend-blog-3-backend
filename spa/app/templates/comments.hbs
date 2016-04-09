@@ -18,7 +18,7 @@
             <th>Комментатор</th>
             <th>Комментарий</th>
             <th>IP</th>
-            <th>Отправлен</th>
+            <th class="text-right text-date">Отправлен</th>
             <th class="text-right">Disqus ID</th>
             {{!-- <th class="actions">&nbsp;</th> --}}
         </tr>
@@ -32,7 +32,7 @@
                 </td>
                 <td>{{cut-string comment.text 120}}</td>
                 <td>{{comment.ipAddr}}</td>
-                <td>{{date-format comment.createdAt 'DD MMM YYYY, HH:mm'}}</td>
+                <td>{{date-format comment.createdAt 'DD.MM.YYYY, HH:mm'}}</td>
                 <td class="text-right">
                     {{#if comment.disqusId}}
                         {{comment.disqusId}}

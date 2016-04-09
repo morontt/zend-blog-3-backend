@@ -3,7 +3,6 @@
     "version": "0.0.1",
     "private": true,
     "dependencies": {
-        "blueimp-file-upload": "9.11.2",
         "moment": "2.11.2",
         "jquery": "2.1.4",
         "jquery-ui": "1.11.4",

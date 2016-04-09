@@ -32,7 +32,7 @@ class TagController extends BaseController
     public function findAllAction(Request $request)
     {
         $pagination = $this->paginate(
-            $this->getTagRepository()->getListQuery(),
+            $this->getTagRepository()->getListQuery(true),
             $request->query->get('page', 1)
         );
 

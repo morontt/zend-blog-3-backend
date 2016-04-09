@@ -35,10 +35,11 @@ class SystemParameters
      */
     protected $value;
 
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -54,14 +55,14 @@ class SystemParameters
     public function setOptionKey($optionKey)
     {
         $this->optionKey = $optionKey;
-    
+
         return $this;
     }
 
     /**
      * Get optionKey
      *
-     * @return string 
+     * @return string
      */
     public function getOptionKey()
     {
@@ -77,14 +78,14 @@ class SystemParameters
     public function setValue($value)
     {
         $this->value = $value;
-    
+
         return $this;
     }
 
     /**
      * Get value
      *
-     * @return string 
+     * @return string
      */
     public function getValue()
     {

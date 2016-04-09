@@ -23,7 +23,7 @@ class Tracking
      * @var \Mtt\BlogBundle\Entity\Post
      *
      * @ORM\ManyToOne(targetEntity="Post")
-     * @ORM\JoinColumn(name="post_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $post;
 
@@ -45,7 +45,7 @@ class Tracking
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="time_created", type="datetime")
+     * @ORM\Column(type="datetime")
      */
     protected $timeCreated;
 

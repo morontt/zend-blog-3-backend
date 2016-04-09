@@ -250,7 +250,7 @@ class DataConverterSpec extends ObjectBehavior
             ->setTimeCreated(\DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-07 22:40:24'))
         ;
 
-        $this->getPost($post)->shouldReturn([
+        $this->getPost($post, 'category')->shouldReturn([
             'post' => [
                 'id' => null,
                 'title' => 'ещё о PHP',
@@ -286,7 +286,7 @@ class DataConverterSpec extends ObjectBehavior
         ;
 
         //TODO duplicate categories
-        $this->getPostArray([$post, $post2])->shouldReturn([
+        $this->getPostArray([$post, $post2], 'category')->shouldReturn([
             'posts' => [
                 [
                     'id' => null,

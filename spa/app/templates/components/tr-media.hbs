@@ -1,0 +1,42 @@
+<td class="center-text">{{mediaFile.id}}</td>
+<td class="center-text">
+    {{media-preview mediaFile.src}}
+</td>
+<td>{{mediaFile.originalFilename}}</td>
+<td>{{mediaFile.size}}</td>
+{{#if isEditing}}
+    <td>{{input value=mediaFile.description class="form-control"}}</td>
+    <td>{{input value=mediaFile.postId class="form-control"}}</td>
+{{else}}
+    <td>{{mediaFile.description}}</td>
+    <td>{{cut-string mediaFile.post.title 28}}</td>
+{{/if}}
+<td class="text-right text-date">{{date-format mediaFile.timeCreated 'DD.MM.YYYY, HH:mm'}}</td>
+<td class="text-right text-date">{{date-format mediaFile.lastUpdate 'DD.MM.YYYY, HH:mm'}}</td>
+{{#if isEditing}}
+    <td>
+        <div class="pull-right">
+            <a class="btn btn-success" {{action "save"}}>
+                <i class="glyphicon glyphicon-ok"></i>
+                <span>save</span>
+            </a>
+            <button class="btn btn-warning btn-confirm" {{action "reset"}}>
+                <i class="glyphicon glyphicon-remove"></i>
+                <span>reset</span>
+            </button>
+        </div>
+    </td>
+{{else}}
+    <td>
+        <div class="pull-right">
+            <a class="btn btn-primary" {{action "edit"}}>
+                <i class="glyphicon glyphicon-pencil"></i>
+                <span>edit</span>
+            </a>
+            <button class="btn btn-danger btn-confirm" {{action "remove"}}>
+                <i class="glyphicon glyphicon-trash"></i>
+                <span>delete</span>
+            </button>
+        </div>
+    </td>
+{{/if}}
