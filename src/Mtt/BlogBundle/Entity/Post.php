@@ -51,6 +51,13 @@ class Post
     /**
      * @var string
      *
+     * @ORM\Column(type="text")
+     */
+    protected $rawText;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $description;
@@ -469,5 +476,29 @@ class Post
     public function getMediaFiles()
     {
         return $this->mediaFiles;
+    }
+
+    /**
+     * Set rawText
+     *
+     * @param string $rawText
+     *
+     * @return Post
+     */
+    public function setRawText($rawText)
+    {
+        $this->rawText = $rawText;
+
+        return $this;
+    }
+
+    /**
+     * Get rawText
+     *
+     * @return string
+     */
+    public function getRawText()
+    {
+        return $this->rawText;
     }
 }

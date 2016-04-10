@@ -38,6 +38,6 @@ class LoadTrackingAgentData extends AbstractFixture implements OrderedFixtureInt
      */
     public function getOrder()
     {
-        return 6;
+        return 7;
     }
 }

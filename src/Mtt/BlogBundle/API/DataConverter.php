@@ -24,6 +24,7 @@ use Mtt\BlogBundle\Entity\Commentator;
 use Mtt\BlogBundle\Entity\MediaFile;
 use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Entity\Tag;
+use Mtt\BlogBundle\Service\TextProcessor;
 use Mtt\BlogBundle\Utils\Inflector;
 use Mtt\BlogBundle\Utils\RuTransform;
 
@@ -56,16 +57,23 @@ class DataConverter
      */
     protected $em;
 
+    /**
+     * @var TextProcessor
+     */
+    protected $textProcessor;
+
 
     /**
      * @param EntityManager $em
+     * @param TextProcessor $textProcessor
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, TextProcessor $textProcessor)
     {
         $this->fractal = new Manager();
         $this->fractal->setSerializer(new Serializer());
 
         $this->em = $em;
+        $this->textProcessor = $textProcessor;
     }
 
     /**
@@ -127,6 +135,8 @@ class DataConverter
     public function savePost(Post $entity, array $data)
     {
         PostTransformer::reverseTransform($entity, $data);
+
+        $entity->setText($this->textProcessor->processing($entity->getRawText()));
 
         $entity->setCategory($this->em->getReference('MttBlogBundle:Category', (int)$data['categoryId']));
 

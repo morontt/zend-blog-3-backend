@@ -30,6 +30,6 @@ class LoadCommentatorData extends AbstractFixture implements OrderedFixtureInter
      */
     public function getOrder()
     {
-        return 8;
+        return 9;
     }
 }

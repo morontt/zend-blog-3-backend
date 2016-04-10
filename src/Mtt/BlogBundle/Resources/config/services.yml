@@ -6,7 +6,7 @@ services:
 
     mtt_blog.api.data_converter:
         class: Mtt\BlogBundle\API\DataConverter
-        arguments: [ "@doctrine.orm.entity_manager" ]
+        arguments: [ "@doctrine.orm.entity_manager", "@mtt_blog.text_processor" ]
 
     mtt_blog.cron_chain:
         class: Mtt\BlogBundle\Cron\CronChain
@@ -24,3 +24,9 @@ services:
     mtt_blog.image_manager:
         class: Mtt\BlogBundle\Service\ImageManager
         arguments: [ "%amazon_s3%", "@doctrine.orm.entity_manager" ]
+
+    mtt_blog.text_processor:
+        class: Mtt\BlogBundle\Service\TextProcessor
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "%image_basepath%"

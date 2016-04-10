@@ -34,7 +34,7 @@ class PostTransformer extends BaseTransformer
             'category' => $item->getCategory()->getId(),
             'categoryId' => $item->getCategory()->getId(),
             'hidden' => $item->isHide(),
-            'text' => $item->getText(),
+            'text' => $item->getRawText(),
             'description' => $item->getDescription(),
             'tagsString' => implode(
                 ', ',
@@ -63,7 +63,7 @@ class PostTransformer extends BaseTransformer
         $entity
             ->setTitle($data['title'])
             ->setHide($data['hidden'])
-            ->setText($data['text'])
+            ->setRawText($data['text'])
             ->setDescription($data['description'])
         ;
 

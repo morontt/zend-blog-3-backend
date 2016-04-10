@@ -245,7 +245,7 @@ class DataConverterSpec extends ObjectBehavior
             ->setUrl('esce-o-php')
             ->setCategory($category)
             ->setHide(false)
-            ->setText('<p>Ещё одна запись о PHP</p>')
+            ->setRawText('<p>Ещё одна запись о PHP</p>')
             ->setDescription('description PHP')
             ->setTimeCreated(\DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-07 22:40:24'))
         ;
@@ -280,7 +280,7 @@ class DataConverterSpec extends ObjectBehavior
             ->setUrl('testovaya-zapis')
             ->setCategory($category)
             ->setHide(false)
-            ->setText('<p>Тестовая запись, собственно...</p>')
+            ->setRawText('<p>Тестовая запись, собственно...</p>')
             ->setDescription('метатег description')
             ->setTimeCreated(\DateTime::createFromFormat('Y-m-d H:i:s', '2016-01-11 01:05:33'))
         ;

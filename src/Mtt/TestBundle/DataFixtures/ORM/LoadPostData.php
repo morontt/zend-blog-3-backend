@@ -7,21 +7,40 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Utils\RuTransform;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
+class LoadPostData extends AbstractFixture implements ContainerAwareInterface, OrderedFixtureInterface
 {
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
+
     /**
      * @param \Doctrine\Common\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
+        /* @var \Mtt\BlogBundle\Service\TextProcessor $textProcessor */
+        $textProcessor = $this->container->get('mtt_blog.text_processor');
+
         $post = new Post();
         $post->setTitle('Тестовая запись')
             ->setUrl(RuTransform::ruTransform('Тестовая запись'))
             ->setCategory($manager->merge($this->getReference('category-news')))
             ->setDescription('метатег description тестовй записи')
-            ->setText('<p>Тестовая запись, собственно...</p>')
+            ->setRawText('<p>Тестовая запись, собственно...</p>')
             ->addTag($manager->merge($this->getReference('tag-test')));
+        $post->setText($textProcessor->processing($post->getRawText()));
         $manager->persist($post);
         $manager->flush();
 
@@ -34,8 +53,9 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
             ->setUrl(RuTransform::ruTransform('запись про PHP'))
             ->setCategory($manager->merge($this->getReference('category-php')))
             ->setDescription('метатег description тестовой записи про ПХП')
-            ->setText('<p>PHP (рекурсивный акроним словосочетания PHP: Hypertext Preprocessor) - это распространенный язык программирования общего назначения с открытым исходным кодом. PHP сконструирован специально для ведения Web-разработок и его код может внедряться непосредственно в HTML.</p>')
+            ->setRawText('<p>PHP (рекурсивный акроним словосочетания PHP: Hypertext Preprocessor) - это распространенный язык программирования общего назначения с открытым исходным кодом. PHP сконструирован специально для ведения Web-разработок и его код может внедряться непосредственно в HTML.</p>')
             ->addTag($manager->merge($this->getReference('tag-php')));
+        $post2->setText($textProcessor->processing($post2->getRawText()));
         $manager->persist($post2);
         $manager->flush();
 
@@ -46,24 +66,32 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
             ->setUrl(RuTransform::ruTransform('ещё о PHP'))
             ->setCategory($manager->merge($this->getReference('category-php')))
             ->setDescription('description PHP')
-            ->setText('<p>Ещё одна запись о PHP</p>')
+            ->setRawText('<p>Ещё одна запись о PHP</p>')
             ->addTag($manager->merge($this->getReference('tag-php')));
+        $post3->setText($textProcessor->processing($post3->getRawText()));
         $manager->persist($post3);
         $manager->flush();
 
         $this->addReference('post-3', $post3);
+
+        $file = $manager->merge($this->getReference('file-1'));
 
         $post4 = new Post();
         $post4->setTitle('JavaScript, хоть и jQuery')
             ->setUrl(RuTransform::ruTransform('JavaScript, хоть и jQuery'))
             ->setCategory($manager->merge($this->getReference('category-jquery')))
             ->setDescription('description-JavaScript')
-            ->setText('<p>JavaScript - прототипно-ориентированный сценарный язык программирования. Является диалектом языка ECMAScript</p><!-- cut --><p>Параграф под катом</p>')
+            ->setRawText('<p>JavaScript - прототипно-ориентированный сценарный язык программирования. Является диалектом языка ECMAScript</p><p>!'
+                . $file->getId() . '!</p><!-- cut --><p>Параграф под катом</p>')
             ->addTag($manager->merge($this->getReference('tag-javascript')));
+        $post4->setText($textProcessor->processing($post4->getRawText()));
         $manager->persist($post4);
         $manager->flush();
 
         $this->addReference('post-4', $post4);
+
+        $file->setPost($post4);
+        $manager->flush();
     }
 
     /**
@@ -71,6 +99,6 @@ class LoadPostData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function getOrder()
     {
-        return 5;
+        return 6;
     }
 }
