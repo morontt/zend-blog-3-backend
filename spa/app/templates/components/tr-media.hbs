@@ -7,12 +7,25 @@
 {{#if isEditing}}
     <td>{{input value=mediaFile.description class="form-control"}}</td>
     <td>{{input value=mediaFile.postId class="form-control"}}</td>
+    <td>{{input type="checkbox" checked=mediaFile.defaultImage}}</td>
 {{else}}
     <td>{{mediaFile.description}}</td>
-    <td>{{cut-string mediaFile.post.title 28}}</td>
+    <td>
+        {{#if mediaFile.postId}}
+            <a {{action "openTarget"}} class="force-pointer">
+                {{cut-string mediaFile.post.title 28}}
+            </a>
+        {{/if}}
+    </td>
+    <td>
+        {{#if mediaFile.defaultImage}}
+            Да
+        {{else}}
+            -
+        {{/if}}
+    </td>
 {{/if}}
-<td class="text-right text-date">{{date-format mediaFile.timeCreated 'DD.MM.YYYY, HH:mm'}}</td>
-<td class="text-right text-date">{{date-format mediaFile.lastUpdate 'DD.MM.YYYY, HH:mm'}}</td>
+<td class="text-right">{{date-format mediaFile.lastUpdate 'DD.MM.YYYY, HH:mm'}}</td>
 {{#if isEditing}}
     <td>
         <div class="pull-right">

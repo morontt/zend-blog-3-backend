@@ -38,6 +38,7 @@ class MediaFileTransformer extends BaseTransformer
             'lastUpdate' => $this->dateTimeToISO($item->getLastUpdate()),
             'post' => $postId,
             'postId' => $postId,
+            'defaultImage' => $item->isDefaultImage(),
         ];
 
         return $data;
@@ -51,6 +52,7 @@ class MediaFileTransformer extends BaseTransformer
     {
         $entity
             ->setDescription($data['description'])
+            ->setDefaultImage($data['defaultImage'])
         ;
     }
 

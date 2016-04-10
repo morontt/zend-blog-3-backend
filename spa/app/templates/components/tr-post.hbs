@@ -1,5 +1,9 @@
 <td class="center-text">{{post.id}}</td>
-<td>{{post.title}}</td>
+<td>
+    <a {{action "openTarget"}} class="force-pointer">
+        {{post.title}}
+    </a>
+</td>
 <td>{{post.category.name}}</td>
 <td>
     {{#if post.hidden}}
@@ -8,7 +12,7 @@
         -
     {{/if}}
 </td>
-<td class="text-right text-date">{{date-format post.timeCreated 'DD.MM.YYYY, HH:mm'}}</td>
+<td class="text-right">{{date-format post.timeCreated 'DD.MM.YYYY, HH:mm'}}</td>
 <td>
     <div class="pull-right">
         {{#link-to "postedit" post class="btn btn-primary"}}

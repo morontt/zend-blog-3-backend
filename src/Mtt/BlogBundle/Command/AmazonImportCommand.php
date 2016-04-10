@@ -28,6 +28,26 @@ class AmazonImportCommand extends ContainerAwareCommand
         ;
     }
 
+    /**
+     * SQL-query after first import
+     *
+     * UPDATE `media_file` AS `mf` SET `mf`.`post_id` = (
+     *   SELECT `p`.`id` FROM `posts` AS `p`
+     *   WHERE `p`.`text_post` LIKE CONCAT('%', `mf`.`path`, '%')
+     * );
+     *
+     * CREATE TEMPORARY TABLE `mf_id` (`id` INT NOT NULL);
+     * INSERT INTO `mf_id` SELECT MIN(`i`.`id`) FROM `media_file` AS `i`
+     *   WHERE `i`.`post_id` IS NOT NULL GROUP BY `i`.`post_id`;
+     * UPDATE `media_file` AS `mf` SET `mf`.`default_image` = 1 WHERE `mf`.`id` IN (
+     *   SELECT `i`.`id` FROM `mf_id` AS `i`
+     * );
+     * DROP TEMPORARY TABLE `mf_id`;
+     *
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return void
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $startTime = microtime(true);

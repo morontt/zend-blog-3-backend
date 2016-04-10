@@ -1,14 +1,3 @@
-<ul class="nav nav-tabs">
-    <li class="active">
-        <a>Запись</a>
-    </li>
-    <li>
-        <a href="#">
-            Картинки
-        </a>
-    </li>
-</ul>
-<br>
 <div class="tab-content">
     <div class="tab-pane active">
         <div class="row">
@@ -50,17 +39,17 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-lg-2 control-label required">Текст записи:</label>
-            <div class="col-lg-10">
-                {{textarea rows="10"
+            <label class="col-lg-1 control-label required">Текст:</label>
+            <div class="col-lg-11">
+                {{textarea rows="25"
                     class="input-lg form-control"
                     value=model.text}}
             </div>
         </div>
         {{tags-autocomplete selectedValue=model.tagsString}}
         <div class="form-group">
-            <label class="col-lg-2 control-label required">Скрытая запись:</label>
-            <div class="col-lg-10">
+            <label class="col-lg-1 control-label required">Скрытие:</label>
+            <div class="col-lg-11">
                 {{input type="checkbox" checked=model.hidden}}
             </div>
         </div>

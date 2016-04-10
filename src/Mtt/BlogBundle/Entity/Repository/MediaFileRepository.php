@@ -10,4 +10,20 @@ namespace Mtt\BlogBundle\Entity\Repository;
  */
 class MediaFileRepository extends BaseRepository
 {
+    /**
+     * @param int $postId
+     * @return \Mtt\BlogBundle\Entity\MediaFile[]
+     */
+    public function getFilesByPost($postId)
+    {
+        $qb = $this->createQueryBuilder('m');
+
+        $qb
+            ->where($qb->expr()->eq('m.post', ':postId'))
+            ->setParameter('postId', $postId)
+            ->orderBy('m.id')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
 }

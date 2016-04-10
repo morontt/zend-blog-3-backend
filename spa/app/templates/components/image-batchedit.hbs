@@ -1,0 +1,43 @@
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th class="center-text">#id</th>
+        <th>&nbsp;</th>
+        <th>Файл</th>
+        <th>Размер</th>
+        <th>Описание</th>
+        <th>Основное</th>
+        <th class="text-right text-date">Изменён</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each model as |mediaFile|}}
+        <tr>
+            <td class="center-text">{{mediaFile.id}}</td>
+            <td class="center-text">
+                {{media-preview mediaFile.src}}
+            </td>
+            <td>{{mediaFile.originalFilename}}</td>
+            <td>{{mediaFile.size}}</td>
+            <td>{{input value=mediaFile.description class="form-control"}}</td>
+            <td>{{input type="checkbox" checked=mediaFile.defaultImage}}</td>
+            <td class="text-right">{{date-format mediaFile.lastUpdate 'DD.MM.YYYY, HH:mm'}}</td>
+        </tr>
+    {{/each}}
+    <tr>
+        <td colspan="5"></td>
+        <td colspan="2">
+            <div class="pull-right">
+                <a class="btn btn-success" {{action "save"}}>
+                    <i class="glyphicon glyphicon-ok"></i>
+                    <span>save</span>
+                </a>
+                <button class="btn btn-warning btn-confirm" {{action "reset"}}>
+                    <i class="glyphicon glyphicon-remove"></i>
+                    <span>reset</span>
+                </button>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
