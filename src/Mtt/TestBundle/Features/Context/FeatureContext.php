@@ -23,4 +23,15 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
     public function __construct()
     {
     }
+
+    /**
+     * @When I logged in as admin
+     */
+    public function iLoggedInAsAdmin()
+    {
+        $this->visit('/login');
+        $this->fillField('_username', 'admin');
+        $this->fillField('_password', 'test');
+        $this->pressButton('login');
+    }
 }

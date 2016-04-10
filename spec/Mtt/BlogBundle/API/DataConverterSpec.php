@@ -8,14 +8,15 @@ use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Entity\Commentator;
 use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Entity\Tag;
+use Mtt\BlogBundle\Service\TextProcessor;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
 class DataConverterSpec extends ObjectBehavior
 {
-    function let(EntityManager $em)
+    function let(EntityManager $em, TextProcessor $tp)
     {
-        $this->beConstructedWith($em);
+        $this->beConstructedWith($em, $tp);
     }
 
     function it_is_initializable()
