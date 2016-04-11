@@ -593,8 +593,3 @@ th.text-date {
 .force-pointer {
     cursor: pointer;
 }
-
-.input-lg, .form-group-lg .form-control {
-    font-size: 15px;
-    padding: 8px 12px;
-}
