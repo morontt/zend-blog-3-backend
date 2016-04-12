@@ -18,7 +18,7 @@
     </div>
     {{form-post model=model
         back=(action "back")
-        redirect=(action "redirect")
+        afterSave=(action "afterSave")
         categoryChoices=categoryChoices}}
 
     {{footer-partial}}

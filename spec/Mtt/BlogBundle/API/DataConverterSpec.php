@@ -249,6 +249,7 @@ class DataConverterSpec extends ObjectBehavior
             ->setRawText('<p>Ещё одна запись о PHP</p>')
             ->setDescription('description PHP')
             ->setTimeCreated(\DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-07 22:40:24'))
+            ->setLastUpdate(\DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-07 22:40:24'))
         ;
 
         $this->getPost($post, 'category')->shouldReturn([
@@ -263,6 +264,7 @@ class DataConverterSpec extends ObjectBehavior
                 'description' => 'description PHP',
                 'tagsString' => '',
                 'timeCreated' => '2016-02-07T22:40:24+0200',
+                'lastUpdate' => '2016-02-07T22:40:24+0200',
             ],
             'categories' => [
                 [
@@ -284,6 +286,7 @@ class DataConverterSpec extends ObjectBehavior
             ->setRawText('<p>Тестовая запись, собственно...</p>')
             ->setDescription('метатег description')
             ->setTimeCreated(\DateTime::createFromFormat('Y-m-d H:i:s', '2016-01-11 01:05:33'))
+            ->setLastUpdate(\DateTime::createFromFormat('Y-m-d H:i:s', '2016-01-11 01:05:33'))
         ;
 
         //TODO duplicate categories
@@ -300,6 +303,7 @@ class DataConverterSpec extends ObjectBehavior
                     'description' => 'description PHP',
                     'tagsString' => '',
                     'timeCreated' => '2016-02-07T22:40:24+0200',
+                    'lastUpdate' => '2016-02-07T22:40:24+0200',
                 ],
                 [
                     'id' => null,
@@ -312,6 +316,7 @@ class DataConverterSpec extends ObjectBehavior
                     'description' => 'метатег description',
                     'tagsString' => '',
                     'timeCreated' => '2016-01-11T01:05:33+0200',
+                    'lastUpdate' => '2016-01-11T01:05:33+0200',
                 ],
             ],
             'categories' => [

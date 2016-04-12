@@ -9,5 +9,6 @@ export default DS.Model.extend({
     text: DS.attr('string'),
     description: DS.attr('string'),
     tagsString: DS.attr('string'),
+    lastUpdate: DS.attr('date'),
     timeCreated: DS.attr('date')
 });

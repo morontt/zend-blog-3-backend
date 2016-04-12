@@ -6,7 +6,7 @@ export default Ember.Component.extend({
     actions: {
         save() {
             this.get('model').save().then(() => {
-                this.sendAction('redirect');
+                this.sendAction('afterSave');
             });
         },
         reset() {

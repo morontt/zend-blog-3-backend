@@ -29,8 +29,11 @@
     <br>
     {{form-post model=model
         back=(action "back")
-        redirect=(action "redirect")
+        afterSave=(action "afterSave")
         categoryChoices=categoryChoices}}
+    <div class="alert alert-success {{alertClass}}" role="alert">
+        Запись успешно сохранена {{date-format model.lastUpdate 'DD MMMM HH:mm:ss'}}
+    </div>
 
     {{footer-partial}}
 </div>

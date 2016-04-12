@@ -45,6 +45,7 @@ class PostTransformer extends BaseTransformer
                 )->toArray()
             ),
             'timeCreated' => $this->dateTimeToISO($item->getTimeCreated()),
+            'lastUpdate' => $this->dateTimeToISO($item->getLastUpdate()),
         ];
 
         return $data;
