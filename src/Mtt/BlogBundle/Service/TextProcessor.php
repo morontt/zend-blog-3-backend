@@ -39,9 +39,12 @@ class TextProcessor
      */
     public function processing($text)
     {
+        $fuse = 0;
+
         do {
             $r = $this->imageSearchAndReplace($text);
-        } while($r);
+            $fuse++;
+        } while($r && $fuse < 100);
 
         return $text;
     }
@@ -54,22 +57,23 @@ class TextProcessor
     {
         $matches = [];
         $result = false;
-        if (preg_match('/!(\d+)!/m', $text, $matches)) {
+        if (preg_match('/!(\d+)(?:\(([^\)]+)\))?!/m', $text, $matches)) {
             $imgId = (int)$matches[1];
             $media = $this->em->getRepository('MttBlogBundle:MediaFile')->find($imgId);
             if ($media) {
+                $alt = isset($matches[2]) ? $matches[2] : $media->getDescription();
                 $replace = sprintf(
                     '<img src="%s" alt="%s" title="%s"/>',
                     $this->imageBasepath . $media->getPath(),
-                    $media->getDescription(),
-                    $media->getDescription()
+                    $alt,
+                    $alt
                 );
             } else {
                 $replace = '<b>UNDEFINED</b>';
             }
 
             $result = true;
-            $text = str_replace('!' . $imgId . '!', $replace, $text);
+            $text = preg_replace('/!' . $imgId . '(?:\([^\)]+\))?!/m', $replace, $text);
         }
 
         return $result;
