@@ -7,6 +7,8 @@ export default Ember.Route.extend({
     setupController(controller, model) {
         this._super(controller, model);
 
+        controller.set('preview', false);
+
         var appController = controller.get('appController');
         appController.set('currentLink', 'posts');
 
