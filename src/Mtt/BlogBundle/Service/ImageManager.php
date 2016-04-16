@@ -90,6 +90,9 @@ class ImageManager
                 $post = $this->em->getRepository('MttBlogBundle:Post')->find((int)$postId);
                 if ($post) {
                     $media->setPost($post);
+                    if ($this->em->getRepository('MttBlogBundle:MediaFile')->getCountByPostId($postId) == 0) {
+                        $media->setDefaultImage(true);
+                    }
                 }
             }
 

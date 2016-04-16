@@ -26,4 +26,21 @@ class MediaFileRepository extends BaseRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * @param int $postId
+     * @return int
+     */
+    public function getCountByPostId($postId)
+    {
+        $qb = $this->createQueryBuilder('m');
+
+        $qb
+            ->select('COUNT(m.id)')
+            ->where($qb->expr()->eq('m.post', ':postId'))
+            ->setParameter('postId', $postId)
+        ;
+
+        return (int)$qb->getQuery()->getSingleScalarResult();
+    }
 }

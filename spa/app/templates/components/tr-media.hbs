@@ -12,8 +12,9 @@
     <td>{{mediaFile.description}}</td>
     <td>
         {{#if mediaFile.postId}}
+            {{mediaFile.postId}}.
             <a {{action "openTarget"}} class="force-pointer">
-                {{cut-string mediaFile.post.title 28}}
+                {{cut-string mediaFile.post.title 24}}
             </a>
         {{/if}}
     </td>

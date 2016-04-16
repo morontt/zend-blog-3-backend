@@ -196,6 +196,9 @@ class DataConverter
             $post = $this->em->getRepository('MttBlogBundle:Post')->find((int)$data['postId']);
             if ($post) {
                 $entity->setPost($post);
+                if ($this->em->getRepository('MttBlogBundle:MediaFile')->getCountByPostId((int)$data['postId']) == 0) {
+                    $entity->setDefaultImage(true);
+                }
             }
         } else {
             $entity->setPost(null);
