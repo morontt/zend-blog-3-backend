@@ -92,11 +92,18 @@ class Post
     protected $tags;
 
     /**
-     * @var \Mtt\BlogBundle\Entity\PostCount
+     * @var integer
      *
-     * @ORM\OneToOne(targetEntity="PostCount", mappedBy="post", cascade={"persist"})
+     * @ORM\Column(type="integer")
      */
-    protected $postCount;
+    protected $commentsCount = 0;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $viewsCount = 0;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -130,9 +137,6 @@ class Post
 
         $this->timeCreated = $now;
         $this->lastUpdate = $now;
-
-        $this->postCount = new PostCount();
-        $this->postCount->setPost($this);
     }
 
     /**
@@ -366,29 +370,6 @@ class Post
     }
 
     /**
-     * Set postCount
-     *
-     * @param PostCount $postCount
-     * @return Post
-     */
-    public function setPostCount(PostCount $postCount = null)
-    {
-        $this->postCount = $postCount;
-
-        return $this;
-    }
-
-    /**
-     * Get postCount
-     *
-     * @return PostCount
-     */
-    public function getPostCount()
-    {
-        return $this->postCount;
-    }
-
-    /**
      * Add comments
      *
      * @param Comment $comments
@@ -500,5 +481,53 @@ class Post
     public function getRawText()
     {
         return $this->rawText;
+    }
+
+    /**
+     * Set commentsCount
+     *
+     * @param integer $commentsCount
+     *
+     * @return Post
+     */
+    public function setCommentsCount($commentsCount)
+    {
+        $this->commentsCount = $commentsCount;
+
+        return $this;
+    }
+
+    /**
+     * Get commentsCount
+     *
+     * @return integer
+     */
+    public function getCommentsCount()
+    {
+        return $this->commentsCount;
+    }
+
+    /**
+     * Set viewsCount
+     *
+     * @param integer $viewsCount
+     *
+     * @return Post
+     */
+    public function setViewsCount($viewsCount)
+    {
+        $this->viewsCount = $viewsCount;
+
+        return $this;
+    }
+
+    /**
+     * Get viewsCount
+     *
+     * @return integer
+     */
+    public function getViewsCount()
+    {
+        return $this->viewsCount;
     }
 }

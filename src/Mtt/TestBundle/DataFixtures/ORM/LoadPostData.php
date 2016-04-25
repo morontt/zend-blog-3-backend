@@ -44,7 +44,7 @@ class LoadPostData extends AbstractFixture implements ContainerAwareInterface, O
         $manager->persist($post);
         $manager->flush();
 
-        $post->getPostCount()->setComments(2);
+        $post->setCommentsCount(2);
 
         $this->addReference('post-1', $post);
 
