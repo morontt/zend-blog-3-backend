@@ -136,7 +136,7 @@ class DataConverter
     {
         PostTransformer::reverseTransform($entity, $data);
 
-        $entity->setText($this->textProcessor->processing($entity->getRawText()));
+        $this->textProcessor->processing($entity);
 
         $entity->setCategory($this->em->getReference('MttBlogBundle:Category', (int)$data['categoryId']));
 

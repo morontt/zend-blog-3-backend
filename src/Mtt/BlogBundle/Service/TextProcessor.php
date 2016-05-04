@@ -9,6 +9,7 @@
 namespace Mtt\BlogBundle\Service;
 
 use Doctrine\ORM\EntityManager;
+use Mtt\BlogBundle\Entity\Post;
 
 class TextProcessor
 {
@@ -34,10 +35,18 @@ class TextProcessor
     }
 
     /**
+     * @param Post $entity
+     */
+    public function processing(Post $entity)
+    {
+        $entity->setText($this->imageProcessing($entity->getRawText()));
+    }
+
+    /**
      * @param $text
      * @return string
      */
-    public function processing($text)
+    public function imageProcessing($text)
     {
         $fuse = 0;
 

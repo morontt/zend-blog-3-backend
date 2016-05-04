@@ -40,7 +40,7 @@ class LoadPostData extends AbstractFixture implements ContainerAwareInterface, O
             ->setDescription('метатег description тестовй записи')
             ->setRawText('<p>Тестовая запись, собственно...</p>')
             ->addTag($manager->merge($this->getReference('tag-test')));
-        $post->setText($textProcessor->processing($post->getRawText()));
+        $textProcessor->processing($post);
         $manager->persist($post);
         $manager->flush();
 
@@ -55,7 +55,7 @@ class LoadPostData extends AbstractFixture implements ContainerAwareInterface, O
             ->setDescription('метатег description тестовой записи про ПХП')
             ->setRawText('<p>PHP (рекурсивный акроним словосочетания PHP: Hypertext Preprocessor) - это распространенный язык программирования общего назначения с открытым исходным кодом. PHP сконструирован специально для ведения Web-разработок и его код может внедряться непосредственно в HTML.</p>')
             ->addTag($manager->merge($this->getReference('tag-php')));
-        $post2->setText($textProcessor->processing($post2->getRawText()));
+        $textProcessor->processing($post2);
         $manager->persist($post2);
         $manager->flush();
 
@@ -68,7 +68,7 @@ class LoadPostData extends AbstractFixture implements ContainerAwareInterface, O
             ->setDescription('description PHP')
             ->setRawText('<p>Ещё одна запись о PHP</p>')
             ->addTag($manager->merge($this->getReference('tag-php')));
-        $post3->setText($textProcessor->processing($post3->getRawText()));
+        $textProcessor->processing($post3);
         $manager->persist($post3);
         $manager->flush();
 
@@ -84,7 +84,7 @@ class LoadPostData extends AbstractFixture implements ContainerAwareInterface, O
             ->setRawText('<p>JavaScript - прототипно-ориентированный сценарный язык программирования. Является диалектом языка ECMAScript</p><p>!'
                 . $file->getId() . '!</p><!-- cut --><p>Параграф под катом</p>')
             ->addTag($manager->merge($this->getReference('tag-javascript')));
-        $post4->setText($textProcessor->processing($post4->getRawText()));
+        $textProcessor->processing($post4);
         $manager->persist($post4);
         $manager->flush();
 

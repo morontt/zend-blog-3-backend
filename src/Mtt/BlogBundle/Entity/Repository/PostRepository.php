@@ -2,6 +2,8 @@
 
 namespace Mtt\BlogBundle\Entity\Repository;
 
+use Mtt\BlogBundle\Entity\Post;
+
 /**
  * PostRepository
  *
@@ -10,4 +12,22 @@ namespace Mtt\BlogBundle\Entity\Repository;
  */
 class PostRepository extends BaseRepository
 {
+    const ITERATION_STEP = 15;
+
+    /**
+     * @param int $i
+     * @return Post[]
+     */
+    public function getPostsByIteration($i)
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        $qb
+            ->orderBy('p.id')
+            ->setFirstResult($i * self::ITERATION_STEP)
+            ->setMaxResults(self::ITERATION_STEP)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
 }
