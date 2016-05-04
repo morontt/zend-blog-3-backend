@@ -90,7 +90,7 @@ class DatabaseBackup implements CronServiceInterface
      */
     protected function getFilename()
     {
-        $datetime = (new \DateTime('now'))->format('Ymd');
+        $datetime = (new \DateTime())->format('Ymd');
 
         return sprintf('%s_%s.sql.gz', $datetime, $this->dbName);
     }

@@ -37,7 +37,7 @@ class LoginListener
 
         if ($user instanceof User) {
             $user
-                ->setLastLogin(new \DateTime('now'))
+                ->setLastLogin(new \DateTime())
                 ->setLoginCount($user->getLoginCount() + 1)
                 ->setIpAddressLast(Http::getClientIp())
             ;

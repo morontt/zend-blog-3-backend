@@ -105,7 +105,7 @@ class Comment
     {
         $this->children = new ArrayCollection();
 
-        $this->timeCreated = new \DateTime('now');
+        $this->timeCreated = new \DateTime();
     }
 
     /**

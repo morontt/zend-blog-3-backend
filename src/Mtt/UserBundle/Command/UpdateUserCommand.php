@@ -10,7 +10,6 @@ namespace Mtt\UserBundle\Command;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class UpdateUserCommand extends ContainerAwareCommand
@@ -21,18 +20,20 @@ class UpdateUserCommand extends ContainerAwareCommand
             ->setName('mtt:user:update')
             ->setDescription('Update user password by username')
             ->addArgument('username', InputArgument::REQUIRED, 'username')
-            ->addOption('password', 'p', InputOption::VALUE_OPTIONAL, 'password', 'admin');
+            ->addArgument('password', InputArgument::REQUIRED, 'password')
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $username = $input->getArgument('username');
-        $password = $input->getOption('password');
+        $password = $input->getArgument('password');
 
         $em = $this->getContainer()
             ->get('doctrine')
             ->getManager();
 
+        /* @var \Mtt\UserBundle\Entity\User $user */
         $user = $em->getRepository('MttUserBundle:User')
             ->findOneByUsername($username);
 
