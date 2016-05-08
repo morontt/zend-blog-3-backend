@@ -7,7 +7,7 @@ class RuTransform
     public static function ruTransform($value = null)
     {
         // replace non letter or digits by -
-        $value = trim(preg_replace('#[^\\pL\d]+#u', '-', $value), '-');
+        $value = trim(preg_replace('/[^\pL\d]+/u', '-', $value), '-');
 
         $transform = array(
             'А' => 'A',    'а' => 'a',

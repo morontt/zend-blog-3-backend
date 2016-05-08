@@ -4,10 +4,13 @@ namespace Mtt\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Table(name="tags")
  * @ORM\Entity(repositoryClass="Mtt\BlogBundle\Entity\Repository\TagRepository")
+ * @UniqueEntity(fields={"name"})
+ * @UniqueEntity(fields={"url"})
  */
 class Tag
 {

@@ -155,7 +155,7 @@ class DataConverter
         $tagsArray = array_map('trim', explode(',', $data['tagsString']));
         foreach ($tagsArray as $tagName) {
             if ($tagName) {
-                $tag = $this->em->getRepository('MttBlogBundle:Tag')->findOneBy(['name' => $tagName]);
+                $tag = $this->em->getRepository('MttBlogBundle:Tag')->getTagForPost($tagName);
                 if ($tag) {
                     if ($originalTags->contains($tag)) {
                         $originalTags->removeElement($tag);

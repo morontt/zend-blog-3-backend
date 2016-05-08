@@ -4,10 +4,12 @@ namespace Mtt\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Table(name="category")
  * @ORM\Entity(repositoryClass="Mtt\BlogBundle\Entity\Repository\CategoryRepository")
+ * @UniqueEntity(fields={"url"})
  */
 class Category
 {

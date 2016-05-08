@@ -3,6 +3,7 @@
 namespace Mtt\BlogBundle\Entity\Repository;
 
 use Mtt\BlogBundle\Entity\Tag;
+use Mtt\BlogBundle\Utils\RuTransform;
 
 /**
  * TagRepository
@@ -33,5 +34,20 @@ class TagRepository extends BaseRepository
         ;
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param string $name
+     * @return Tag|null
+     */
+    public function getTagForPost($name)
+    {
+        $tag = $this->findOneBy(['name' => $name]);
+
+        if (!$tag) {
+            $tag = $this->findOneBy(['url' => RuTransform::ruTransform($name)]);
+        }
+
+        return $tag;
     }
 }
