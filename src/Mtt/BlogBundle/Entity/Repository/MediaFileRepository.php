@@ -43,4 +43,20 @@ class MediaFileRepository extends BaseRepository
 
         return (int)$qb->getQuery()->getSingleScalarResult();
     }
+
+    /**
+     * @return \Mtt\BlogBundle\Entity\MediaFile[]
+     */
+    public function getNotBackuped()
+    {
+        $qb = $this->createQueryBuilder('m');
+
+        $qb
+            ->where($qb->expr()->eq('m.backuped', ':backuped'))
+            ->setParameter('backuped', false)
+            ->setMaxResults(30)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
 }

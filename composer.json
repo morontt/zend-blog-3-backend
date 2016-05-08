@@ -20,6 +20,7 @@
         "symfony/assetic-bundle": "~2.3",
         "league/fractal": "0.12.0",
         "league/flysystem-aws-s3-v3": "1.0.*",
+        "league/flysystem-dropbox": "1.0.*",
         "knplabs/knp-paginator-bundle": "~2.4",
         "friendsofsymfony/jsrouting-bundle": "~1.5",
         "dropbox/dropbox-sdk": "1.1.*"

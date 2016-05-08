@@ -56,7 +56,7 @@ class DatabaseBackup implements CronServiceInterface
     {
         $process = new Process(
             sprintf(
-                'mysqldump -h localhost -u %s --password=%s %s | gzip > %s',
+                'mysqldump -h localhost -u %s --password=%s %s | bzip2 > %s',
                 $this->dbUser,
                 $this->dbPassword,
                 $this->dbName,
@@ -92,7 +92,7 @@ class DatabaseBackup implements CronServiceInterface
     {
         $datetime = (new \DateTime())->format('Ymd');
 
-        return sprintf('%s_%s.sql.gz', $datetime, $this->dbName);
+        return sprintf('%s_%s.sql.bz2', $datetime, $this->dbName);
     }
 
     /**

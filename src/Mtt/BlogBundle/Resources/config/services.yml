@@ -21,6 +21,14 @@ services:
         tags:
             - { name: cron-daily }
 
+    mtt_blog.images_backup:
+        class: Mtt\BlogBundle\Cron\Daily\ImagesBackup
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "%amazon_s3%"
+        tags:
+            - { name: cron-daily }
+
     mtt_blog.image_manager:
         class: Mtt\BlogBundle\Service\ImageManager
         arguments: [ "%amazon_s3%", "@doctrine.orm.entity_manager" ]
