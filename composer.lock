@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d1647281e06fa39850da48826e62d6ee",
-    "content-hash": "cd8c3160d65b223658434efc08af8499",
+    "hash": "0fa7d5455eac371450ef7f25a15d884e",
+    "content-hash": "05333dbe75d16967213e8f24b0a5ff74",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -86,6 +86,22 @@
                 "sdk"
             ],
             "time": "2016-05-05 19:57:48"
+        },
+        {
+            "name": "disqus/disqus-php",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/disqus/disqus-php.git",
+                "reference": "b1149196ec8aaa9d4dac35a4a28c5647c17ef8af"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": {
+                    "": "disqusapi/"
+                }
+            },
+            "time": "2014-04-24 18:25:35"
         },
         {
             "name": "doctrine/annotations",
@@ -4820,6 +4836,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "disqus/disqus-php": 20,
         "morontt/doctrine-to-ember": 20,
         "behat/symfony2-extension": 20,
         "vipsoft/doctrine-data-fixtures-extension": 20
