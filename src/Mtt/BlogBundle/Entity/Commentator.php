@@ -53,7 +53,7 @@ class Commentator
     /**
      * @var integer
      *
-     * @ORM\Column(type="bigint", nullable=true)
+     * @ORM\Column(type="bigint", nullable=true, unique=true)
      */
     protected $disqusId;
 

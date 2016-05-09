@@ -6,6 +6,8 @@ parameters:
     database_user:     root
     database_password: ~
 
+    admin_email:       admin@example.org
+
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
     mailer_user:       ~
@@ -30,3 +32,7 @@ parameters:
     amazon_bucket: testbucket
 
     image_basepath: https://s3-eu-west-1.amazonaws.com/testbucket
+
+    disqus_shortname: yourshortkey
+    disqus_secret_key: TW9uIE1heSAgOSAxNjo1ODo0OCBFRVNUIDIwMTYK
+    disqus_owner_id: 44949832

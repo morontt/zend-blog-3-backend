@@ -122,7 +122,7 @@ class Post
     /**
      * @var integer
      *
-     * @ORM\Column(type="bigint", nullable=true)
+     * @ORM\Column(type="bigint", nullable=true, unique=true)
      */
     protected $disqusThread;
 

@@ -32,7 +32,6 @@ class ImagesBackup implements CronServiceInterface
 
 
     /**
-     * ImagesBackup constructor.
      * @param EntityManager $em
      * @param array $options
      */

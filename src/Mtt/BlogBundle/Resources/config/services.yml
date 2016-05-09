@@ -17,7 +17,7 @@ services:
             - "%database_name%"
             - "%database_user%"
             - "%database_password%"
-            - "@doctrine"
+            - "@doctrine.orm.entity_manager"
         tags:
             - { name: cron-daily }
 
@@ -26,6 +26,15 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
             - "%amazon_s3%"
+        tags:
+            - { name: cron-daily }
+
+    mtt_blog.disqus_grabber:
+        class: Mtt\BlogBundle\Cron\Daily\DisqusGrabber
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "%disqus%"
+            - "%admin_email%"
         tags:
             - { name: cron-daily }
 

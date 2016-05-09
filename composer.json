@@ -23,6 +23,7 @@
         "league/flysystem-dropbox": "1.0.*",
         "knplabs/knp-paginator-bundle": "~2.4",
         "friendsofsymfony/jsrouting-bundle": "~1.5",
+        "zendframework/zend-filter": "2.7.*",
         "disqus/disqus-php": "dev-master",
         "dropbox/dropbox-sdk": "1.1.*"
     },

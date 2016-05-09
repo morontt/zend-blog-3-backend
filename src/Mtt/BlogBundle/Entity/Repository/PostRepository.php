@@ -30,4 +30,20 @@ class PostRepository extends BaseRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * @param array $ids
+     * @return Post[]
+     */
+    public function getPostsByDisqusThreads(array $ids)
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        $qb
+            ->where($qb->expr()->in('p.disqusThread', ':ids'))
+            ->setParameter('ids', $ids)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
 }

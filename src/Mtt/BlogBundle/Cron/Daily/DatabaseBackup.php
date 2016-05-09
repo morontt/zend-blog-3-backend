@@ -8,7 +8,6 @@
 
 namespace Mtt\BlogBundle\Cron\Daily;
 
-use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\EntityManager;
 use Dropbox;
 use Mtt\BlogBundle\Cron\CronServiceInterface;
@@ -41,15 +40,15 @@ class DatabaseBackup implements CronServiceInterface
      * @param string $dbName
      * @param string $dbUser
      * @param string $dbPassword
-     * @param Registry $doctrine
+     * @param EntityManager $em
      */
-    public function __construct($dbName, $dbUser, $dbPassword, Registry $doctrine)
+    public function __construct($dbName, $dbUser, $dbPassword, EntityManager $em)
     {
         $this->dbName = $dbName;
         $this->dbUser = $dbUser;
         $this->dbPassword = $dbPassword;
 
-        $this->em = $doctrine->getManager();
+        $this->em = $em;
     }
 
     public function run()
