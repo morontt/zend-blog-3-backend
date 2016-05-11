@@ -143,6 +143,12 @@ class DisqusGrabber implements CronServiceInterface
                 $this->em->flush();
             }
         }
+
+        foreach ($this->threads as $post) {
+            $this->em->getConnection()
+                ->query("CALL update_comments_count({$post->getId()})")
+                ->fetch();
+        }
     }
 
     /**
