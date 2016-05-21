@@ -80,11 +80,6 @@ swiftmailer:
     spool:     { type: memory }
 
 parameters:
-    amazon_s3:
-        key:    "%amazon_key%"
-        secret: "%amazon_secret%"
-        region: "%amazon_region%"
-        bucket: "%amazon_bucket%"
     disqus:
         shortname: "%disqus_shortname%"
         secret_key: "%disqus_secret_key%"

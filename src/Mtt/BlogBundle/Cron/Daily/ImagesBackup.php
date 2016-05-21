@@ -8,10 +8,9 @@
 
 namespace Mtt\BlogBundle\Cron\Daily;
 
-use Aws\S3\S3Client;
 use Doctrine\ORM\EntityManager;
 use Dropbox\Client;
-use League\Flysystem\AwsS3v3\AwsS3Adapter;
+use League\Flysystem\Adapter\Local;
 use League\Flysystem\Dropbox\DropboxAdapter;
 use League\Flysystem\Filesystem;
 use League\Flysystem\MountManager;
@@ -25,30 +24,13 @@ class ImagesBackup implements CronServiceInterface
      */
     protected $em;
 
-    /**
-     * @var Filesystem
-     */
-    protected $amazonFs;
-
 
     /**
      * @param EntityManager $em
-     * @param array $options
      */
-    public function __construct(EntityManager $em, array $options)
+    public function __construct(EntityManager $em)
     {
         $this->em = $em;
-
-        $amazonClient = new S3Client([
-            'region' => $options['region'],
-            'version' => 'latest',
-            'credentials' => [
-                'key'    => $options['key'],
-                'secret' => $options['secret'],
-            ],
-        ]);
-
-        $this->amazonFs = new Filesystem(new AwsS3Adapter($amazonClient, $options['bucket']));
     }
 
     public function run()
@@ -61,7 +43,7 @@ class ImagesBackup implements CronServiceInterface
                 foreach ($images as $image) {
                     $mountManager->put(
                         'dropbox://blog_images/' . $image->getPath(),
-                        $mountManager->read('amazon://' . $image->getPath())
+                        $mountManager->read('local://' . $image->getPath())
                     );
 
                     $image->setBackuped(true);
@@ -85,13 +67,11 @@ class ImagesBackup implements CronServiceInterface
         }
 
         $tokenData = unserialize($sp->getValue());
-
         $dropboxClient = new Client($tokenData['access_token'], 'ZendBlog-Backuper/0.1');
-        $dropboxFs = new Filesystem(new DropboxAdapter($dropboxClient));
 
         return new MountManager([
-            'amazon' => $this->amazonFs,
-            'dropbox' => $dropboxFs,
+            'local' => new Filesystem(new Local(realpath(__DIR__ . '/../../../../../web/uploads'))),
+            'dropbox' => new Filesystem(new DropboxAdapter($dropboxClient)),
         ]);
     }
 }

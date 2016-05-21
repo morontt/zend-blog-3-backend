@@ -115,7 +115,7 @@ class MediaFileController extends BaseController
 
         $result = null;
         if ($form->isValid()) {
-            $result = $this->get('mtt_blog.image_manager')->uploadImage(
+            $this->get('mtt_blog.image_manager')->uploadImage(
                 $form->get('description')->getData(),
                 $form->get('post_id')->getData(),
                 $form->get('upload')->getData()
@@ -129,6 +129,6 @@ class MediaFileController extends BaseController
             return new JsonResponse(['errors' => $messages], 422);
         }
 
-        return new JsonResponse($result);
+        return new JsonResponse(true);
     }
 }

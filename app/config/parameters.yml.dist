@@ -26,12 +26,7 @@ parameters:
     nodemodules_bin_path: /usr/bin
     browsertitle:         morontt.info
 
-    amazon_key:    xxx
-    amazon_secret: yyy
-    amazon_region: eu-west-1
-    amazon_bucket: testbucket
-
-    image_basepath: https://s3-eu-west-1.amazonaws.com/testbucket
+    image_basepath: /uploads
 
     disqus_shortname: yourshortkey
     disqus_secret_key: TW9uIE1heSAgOSAxNjo1ODo0OCBFRVNUIDIwMTYK
