@@ -26,6 +26,8 @@ dependencies:
     - npm install -g uglify-js
     - npm install -g ember-cli@2.4.2
     - composer install --prefer-source --no-interaction
+    - bower install --allow-root
+    - ./buildapp.sh -i
     - app/console assetic:dump -e test --no-debug
   post:
     - cp ./var/ci/zendblog-3.loc.conf /etc/apache2/sites-available
