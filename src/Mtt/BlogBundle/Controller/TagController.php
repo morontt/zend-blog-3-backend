@@ -71,7 +71,7 @@ class TagController extends BaseController
         $result = $this->getDataConverter()
             ->saveTag(new Tag(), $request->request->get('tag'));
 
-        return new JsonResponse($result);
+        return new JsonResponse($result, 201);
     }
 
     /**

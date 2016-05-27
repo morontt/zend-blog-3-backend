@@ -71,7 +71,7 @@ class PostController extends BaseController
         $result = $this->getDataConverter()
             ->savePost(new Post, $request->request->get('post'));
 
-        return new JsonResponse($result);
+        return new JsonResponse($result, 201);
     }
 
     /**

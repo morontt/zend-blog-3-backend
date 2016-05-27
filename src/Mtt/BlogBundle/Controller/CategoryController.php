@@ -71,7 +71,7 @@ class CategoryController extends BaseController
         $result = $this->getDataConverter()
             ->saveCategory(new Category, $request->request->get('category'));
 
-        return new JsonResponse($result);
+        return new JsonResponse($result, 201);
     }
 
     /**

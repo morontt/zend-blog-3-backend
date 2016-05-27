@@ -16,7 +16,7 @@ export default Ember.Component.extend({
 
             request.onreadystatechange = function () {
                 if (request.readyState === 4) {
-                    if (request.status !== 200) {
+                    if (request.status !== 201) {
                         them.set('hasErrors', true);
                         var error = $.parseJSON(request.responseText);
                         them.set('errors', error.errors);

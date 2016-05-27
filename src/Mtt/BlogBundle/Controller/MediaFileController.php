@@ -129,6 +129,6 @@ class MediaFileController extends BaseController
             return new JsonResponse(['errors' => $messages], 422);
         }
 
-        return new JsonResponse(true);
+        return new JsonResponse(true, 201);
     }
 }
