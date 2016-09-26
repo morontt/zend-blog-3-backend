@@ -113,7 +113,6 @@ class User implements UserInterface, \Serializable
 
     public function __construct()
     {
-        $this->posts = new ArrayCollection();
         $this->comments = new ArrayCollection();
 
         $this->salt = md5(uniqid('', true));
