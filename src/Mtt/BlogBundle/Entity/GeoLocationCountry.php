@@ -41,6 +41,18 @@ class GeoLocationCountry
      */
     protected $name;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime")
+     */
+    protected $timeCreated;
+
+
+    public function __construct()
+    {
+        $this->timeCreated = new \DateTime();
+    }
 
     /**
      * Get id
@@ -98,5 +110,29 @@ class GeoLocationCountry
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set timeCreated
+     *
+     * @param \DateTime $timeCreated
+     *
+     * @return GeoLocationCountry
+     */
+    public function setTimeCreated($timeCreated)
+    {
+        $this->timeCreated = $timeCreated;
+
+        return $this;
+    }
+
+    /**
+     * Get timeCreated
+     *
+     * @return \DateTime
+     */
+    public function getTimeCreated()
+    {
+        return $this->timeCreated;
     }
 }
