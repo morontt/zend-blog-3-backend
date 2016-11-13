@@ -100,6 +100,14 @@ class Comment
      */
     protected $disqusId;
 
+    /**
+     * @var GeoLocation
+     *
+     * @ORM\ManyToOne(targetEntity="GeoLocation")
+     * @ORM\JoinColumn(onDelete="SET NULL")
+     */
+    protected $geoLocation;
+
 
     public function __construct()
     {
@@ -379,5 +387,29 @@ class Comment
     public function getDisqusId()
     {
         return $this->disqusId;
+    }
+
+    /**
+     * Set geoLocation
+     *
+     * @param GeoLocation $geoLocation
+     *
+     * @return Comment
+     */
+    public function setGeoLocation(GeoLocation $geoLocation = null)
+    {
+        $this->geoLocation = $geoLocation;
+
+        return $this;
+    }
+
+    /**
+     * Get geoLocation
+     *
+     * @return GeoLocation
+     */
+    public function getGeoLocation()
+    {
+        return $this->geoLocation;
     }
 }
