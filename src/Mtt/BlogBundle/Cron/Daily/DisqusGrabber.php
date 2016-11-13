@@ -52,6 +52,7 @@ class DisqusGrabber implements CronServiceInterface
     /**
      * @param EntityManager $em
      * @param array $options
+     * @param string $email
      */
     public function __construct(EntityManager $em, array $options, $email)
     {

@@ -6,6 +6,9 @@ use Doctrine\ORM\EntityManager;
 use Mtt\BlogBundle\Entity\Category;
 use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Entity\Commentator;
+use Mtt\BlogBundle\Entity\GeoLocation;
+use Mtt\BlogBundle\Entity\GeoLocationCity;
+use Mtt\BlogBundle\Entity\GeoLocationCountry;
 use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Entity\Tag;
 use Mtt\BlogBundle\Service\TextProcessor;
@@ -176,6 +179,9 @@ class DataConverterSpec extends ObjectBehavior
                 'commentator' => null,
                 'ipAddr' => '94.231.112.91',
                 'disqusId' => 74,
+                'city' => null,
+                'region' => null,
+                'country' => null,
                 'createdAt' => '2016-02-28T01:30:49+0200',
             ],
             'commentators' => [],
@@ -188,6 +194,25 @@ class DataConverterSpec extends ObjectBehavior
             ->setDisqusId(0)
             ->setTimeCreated(\DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-28 01:43:14'))
         ;
+
+        $location = new GeoLocation();
+        $city = new GeoLocationCity();
+        $country = new GeoLocationCountry();
+
+        $country->setName('Germany');
+
+        $city
+            ->setCity('Frankfurt am Main')
+            ->setRegion('Hessen')
+            ->setCountry($country)
+        ;
+
+        $location
+            ->setCity($city)
+            ->setIpAddress('62.72.188.111')
+        ;
+
+        $comment2->setGeoLocation($location);
 
         $commentator = new Commentator();
         $commentator
@@ -208,6 +233,9 @@ class DataConverterSpec extends ObjectBehavior
                     'commentator' => null,
                     'ipAddr' => '94.231.112.91',
                     'disqusId' => 74,
+                    'city' => null,
+                    'region' => null,
+                    'country' => null,
                     'createdAt' => '2016-02-28T01:30:49+0200',
                 ],
                 [
@@ -216,6 +244,9 @@ class DataConverterSpec extends ObjectBehavior
                     'commentator' => null,
                     'ipAddr' => '62.72.188.111',
                     'disqusId' => 0,
+                    'city' => 'Frankfurt am Main',
+                    'region' => 'Hessen',
+                    'country' => 'Germany',
                     'createdAt' => '2016-02-28T01:43:14+0200',
                 ]
             ],

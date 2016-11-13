@@ -8,6 +8,10 @@ services:
         class: Mtt\BlogBundle\API\DataConverter
         arguments: [ "@doctrine.orm.entity_manager", "@mtt_blog.text_processor" ]
 
+    mtt_blog.ip_info:
+        class: Mtt\BlogBundle\Service\IpInfo
+        arguments: [ "@doctrine.orm.entity_manager", "%ipinfodb_key%" ]
+
     mtt_blog.cron_chain:
         class: Mtt\BlogBundle\Cron\CronChain
 
@@ -34,6 +38,14 @@ services:
             - "@doctrine.orm.entity_manager"
             - "%disqus%"
             - "%admin_email%"
+        tags:
+            - { name: cron-daily }
+
+    mtt_blog.geolocation_cron:
+        class: Mtt\BlogBundle\Cron\Daily\CommentGeoLocation
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@mtt_blog.ip_info"
         tags:
             - { name: cron-daily }
 

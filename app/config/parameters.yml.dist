@@ -31,3 +31,5 @@ parameters:
     disqus_shortname: yourshortkey
     disqus_secret_key: TW9uIE1heSAgOSAxNjo1ODo0OCBFRVNUIDIwMTYK
     disqus_owner_id: 44949832
+
+    ipinfodb_key: c02bdf172b2572515c4f39d8ca0999df28960be4
