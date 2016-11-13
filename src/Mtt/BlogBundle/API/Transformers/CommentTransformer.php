@@ -31,14 +31,31 @@ class CommentTransformer extends BaseTransformer
             $commentatorId = $commentator->getId();
         }
 
+        $location = $item->getGeoLocation();
+        if ($location) {
+            $city = $location->getCity();
+            $locationCity = $city->getCity();
+            $locationRegion = $city->getRegion();
+            $locationCountry = $city->getCountry()->getName();
+        } else {
+            $locationCity = null;
+            $locationRegion = null;
+            $locationCountry = null;
+        }
+
         $data = [
             'id' => $item->getId(),
             'text' => $item->getText(),
             'commentator' => $commentatorId,
             'ipAddr' => $item->getIpAddress(),
             'disqusId' => (int)$item->getDisqusId(),
+            'city' => $locationCity,
+            'region' => $locationRegion,
+            'country' => $locationCountry,
             'createdAt' => $this->dateTimeToISO($item->getTimeCreated()),
         ];
+
+        $location = $item->getGeoLocation();
 
         return $data;
     }

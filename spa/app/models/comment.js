@@ -5,5 +5,8 @@ export default DS.Model.extend({
     commentator: DS.belongsTo('commentator'),
     ipAddr: DS.attr('string'),
     disqusId: DS.attr('number'),
+    city: DS.attr('string'),
+    region: DS.attr('string'),
+    country: DS.attr('string'),
     createdAt: DS.attr('date')
 });
