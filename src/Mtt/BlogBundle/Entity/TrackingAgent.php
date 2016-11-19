@@ -2,8 +2,8 @@
 
 namespace Mtt\BlogBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="tracking_agent")
@@ -12,7 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class TrackingAgent
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -35,7 +35,7 @@ class TrackingAgent
     protected $hash;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
@@ -48,7 +48,6 @@ class TrackingAgent
      */
     protected $trackings;
 
-
     public function __construct()
     {
         $this->trackings = new ArrayCollection();
@@ -57,7 +56,7 @@ class TrackingAgent
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -68,6 +67,7 @@ class TrackingAgent
      * Set userAgent
      *
      * @param string $userAgent
+     *
      * @return TrackingAgent
      */
     public function setUserAgent($userAgent)
@@ -91,7 +91,8 @@ class TrackingAgent
     /**
      * Set botFilter
      *
-     * @param boolean $botFilter
+     * @param bool $botFilter
+     *
      * @return TrackingAgent
      */
     public function setBotFilter($botFilter)
@@ -104,7 +105,7 @@ class TrackingAgent
     /**
      * Get botFilter
      *
-     * @return boolean
+     * @return bool
      */
     public function getBotFilter()
     {
@@ -115,6 +116,7 @@ class TrackingAgent
      * Add trackings
      *
      * @param Tracking $trackings
+     *
      * @return TrackingAgent
      */
     public function addTracking(Tracking $trackings)
@@ -148,6 +150,7 @@ class TrackingAgent
      * Set hash
      *
      * @param string $hash
+     *
      * @return TrackingAgent
      */
     public function setHash($hash)

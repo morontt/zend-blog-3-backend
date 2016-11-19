@@ -49,6 +49,7 @@ class CommentRepository extends BaseRepository
     /**
      * @param GeoLocation $location
      * @param string $ip
+     *
      * @return mixed
      */
     public function updateLocation(GeoLocation $location, $ip)

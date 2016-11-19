@@ -2,9 +2,9 @@
 
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Utils\RuTransform;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -18,7 +18,7 @@ class LoadPostData extends AbstractFixture implements ContainerAwareInterface, O
     protected $container;
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setContainer(ContainerInterface $container = null)
     {
@@ -95,7 +95,7 @@ class LoadPostData extends AbstractFixture implements ContainerAwareInterface, O
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getOrder()
     {

@@ -30,7 +30,6 @@ use Mtt\BlogBundle\Utils\RuTransform;
 
 /**
  * Class DataConverter
- * @package Mtt\BlogBundle\API
  *
  * @method array getCategory(Category $entity, $includes = null)
  * @method array getCategoryArray($collection, $includes = null)
@@ -62,7 +61,6 @@ class DataConverter
      */
     protected $textProcessor;
 
-
     /**
      * @param EntityManager $em
      * @param TextProcessor $textProcessor
@@ -79,6 +77,7 @@ class DataConverter
     /**
      * @param Tag $entity
      * @param array $data
+     *
      * @return array
      */
     public function saveTag(Tag $entity, array $data)
@@ -93,7 +92,9 @@ class DataConverter
     /**
      * @param Category $entity
      * @param array $data
+     *
      * @return array
+     *
      * @throws \Doctrine\ORM\ORMException
      */
     public function saveCategory(Category $entity, array $data)
@@ -115,6 +116,7 @@ class DataConverter
     /**
      * @param Commentator $entity
      * @param array $data
+     *
      * @return array
      */
     public function saveCommentator(Commentator $entity, array $data)
@@ -129,7 +131,9 @@ class DataConverter
     /**
      * @param Post $entity
      * @param array $data
+     *
      * @return array
+     *
      * @throws \Doctrine\ORM\ORMException
      */
     public function savePost(Post $entity, array $data)
@@ -186,6 +190,7 @@ class DataConverter
     /**
      * @param MediaFile $entity
      * @param array $data
+     *
      * @return array
      */
     public function saveMediaFile(MediaFile $entity, array $data)
@@ -213,6 +218,7 @@ class DataConverter
     /**
      * @param $method
      * @param $arguments
+     *
      * @return array|null
      */
     public function __call($method, $arguments)
@@ -223,7 +229,7 @@ class DataConverter
             $class = 'Mtt\\BlogBundle\\API\\Transformers\\' . $matches[1] . 'Transformer';
             $resource = new Collection(
                 $arguments[0],
-                new $class,
+                new $class(),
                 Inflector::pluralize(lcfirst($matches[1]))
             );
 
@@ -234,7 +240,7 @@ class DataConverter
             return $this->fractal->createData($resource)->toArray();
         } elseif (preg_match('/^get([A-Z]\w+)$/', $method, $matches)) {
             $class = 'Mtt\\BlogBundle\\API\\Transformers\\' . $matches[1] . 'Transformer';
-            $resource = new Item($arguments[0], new $class, lcfirst($matches[1]));
+            $resource = new Item($arguments[0], new $class(), lcfirst($matches[1]));
 
             if (!empty($arguments[1])) {
                 $this->fractal->parseIncludes($arguments[1]);

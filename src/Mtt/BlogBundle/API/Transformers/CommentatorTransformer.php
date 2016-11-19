@@ -14,6 +14,7 @@ class CommentatorTransformer extends BaseTransformer
 {
     /**
      * @param Commentator $item
+     *
      * @return array
      */
     public function transform(Commentator $item)

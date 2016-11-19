@@ -28,6 +28,7 @@ class Http
 
     /**
      * @param string|null $key
+     *
      * @return mixed
      */
     public static function getServer($key)

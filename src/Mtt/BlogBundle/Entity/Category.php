@@ -2,8 +2,8 @@
 
 namespace Mtt\BlogBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Category
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -56,7 +56,6 @@ class Category
      */
     protected $posts;
 
-
     public function __construct()
     {
         $this->children = new ArrayCollection();
@@ -66,7 +65,7 @@ class Category
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -77,6 +76,7 @@ class Category
      * Set name
      *
      * @param string $name
+     *
      * @return Category
      */
     public function setName($name)
@@ -100,6 +100,7 @@ class Category
      * Set url
      *
      * @param string $url
+     *
      * @return Category
      */
     public function setUrl($url)
@@ -123,6 +124,7 @@ class Category
      * Add children
      *
      * @param Category $children
+     *
      * @return Category
      */
     public function addChild(Category $children)
@@ -156,6 +158,7 @@ class Category
      * Set parent
      *
      * @param Category $parent
+     *
      * @return Category
      */
     public function setParent(Category $parent = null)
@@ -179,6 +182,7 @@ class Category
      * Add posts
      *
      * @param Post $posts
+     *
      * @return Category
      */
     public function addPost(Post $posts)

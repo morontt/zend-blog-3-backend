@@ -16,6 +16,7 @@ class JsonBodyListener
 {
     /**
      * @param GetResponseEvent $event
+     *
      * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
      */
     public function onKernelRequest(GetResponseEvent $event)

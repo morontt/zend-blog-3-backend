@@ -12,6 +12,7 @@ class MediaFileRepository extends BaseRepository
 {
     /**
      * @param int $postId
+     *
      * @return \Mtt\BlogBundle\Entity\MediaFile[]
      */
     public function getFilesByPost($postId)
@@ -29,6 +30,7 @@ class MediaFileRepository extends BaseRepository
 
     /**
      * @param int $postId
+     *
      * @return int
      */
     public function getCountByPostId($postId)

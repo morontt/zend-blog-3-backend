@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  * @Route("/api/categories")
  *
  * Class CategoryController
- * @package Mtt\BlogBundle\Controller
  */
 class CategoryController extends BaseController
 {
@@ -27,6 +26,7 @@ class CategoryController extends BaseController
      * @Method("GET")
      *
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function findAllAction(Request $request)
@@ -49,6 +49,7 @@ class CategoryController extends BaseController
      * @Method("GET")
      *
      * @param Category $entity
+     *
      * @return JsonResponse
      */
     public function findAction(Category $entity)
@@ -64,12 +65,13 @@ class CategoryController extends BaseController
      * @Method("POST")
      *
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function createAction(Request $request)
     {
         $result = $this->getDataConverter()
-            ->saveCategory(new Category, $request->request->get('category'));
+            ->saveCategory(new Category(), $request->request->get('category'));
 
         return new JsonResponse($result, 201);
     }
@@ -80,6 +82,7 @@ class CategoryController extends BaseController
      *
      * @param Request $request
      * @param Category $entity
+     *
      * @return JsonResponse
      */
     public function updateAction(Request $request, Category $entity)
@@ -95,6 +98,7 @@ class CategoryController extends BaseController
      * @Method("DELETE")
      *
      * @param Category $entity
+     *
      * @return JsonResponse
      */
     public function deleteAction(Category $entity)

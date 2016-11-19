@@ -23,6 +23,7 @@ class PostTransformer extends BaseTransformer
 
     /**
      * @param Post $item
+     *
      * @return array
      */
     public function transform(Post $item)
@@ -77,12 +78,13 @@ class PostTransformer extends BaseTransformer
 
     /**
      * @param Post $entity
+     *
      * @return \League\Fractal\Resource\Collection
      */
     public function includeCategory(Post $entity)
     {
         $items = [$entity->getCategory()];
 
-        return $this->collection($items, new CategoryTransformer, 'categories');
+        return $this->collection($items, new CategoryTransformer(), 'categories');
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 use Mtt\BlogBundle\Entity\Category;
 use Mtt\BlogBundle\Utils\RuTransform;
 
@@ -60,7 +60,7 @@ class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterfac
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getOrder()
     {

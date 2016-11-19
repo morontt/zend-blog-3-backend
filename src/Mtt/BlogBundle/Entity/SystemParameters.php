@@ -13,7 +13,7 @@ class SystemParameters
     const DROPBOX_TOKEN = 'dropbox_token';
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -35,11 +35,10 @@ class SystemParameters
      */
     protected $value;
 
-
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -50,6 +49,7 @@ class SystemParameters
      * Set optionKey
      *
      * @param string $optionKey
+     *
      * @return SystemParameters
      */
     public function setOptionKey($optionKey)
@@ -73,6 +73,7 @@ class SystemParameters
      * Set value
      *
      * @param string $value
+     *
      * @return SystemParameters
      */
     public function setValue($value)

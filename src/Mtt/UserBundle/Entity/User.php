@@ -2,8 +2,8 @@
 
 namespace Mtt\UserBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 use Mtt\BlogBundle\Entity\Comment;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -24,7 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class User implements UserInterface, \Serializable
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -83,7 +83,7 @@ class User implements UserInterface, \Serializable
     protected $lastLogin;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
@@ -110,7 +110,6 @@ class User implements UserInterface, \Serializable
      */
     protected $emailHash;
 
-
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -121,7 +120,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function serialize()
     {
@@ -134,11 +133,11 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function unserialize($serialized)
     {
-        list (
+        list(
             $this->id,
             $this->username,
             $this->password,
@@ -147,7 +146,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getRoles()
     {
@@ -155,7 +154,7 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function eraseCredentials()
     {
@@ -164,7 +163,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -175,6 +174,7 @@ class User implements UserInterface, \Serializable
      * Set username
      *
      * @param string $username
+     *
      * @return User
      */
     public function setUsername($username)
@@ -198,6 +198,7 @@ class User implements UserInterface, \Serializable
      * Set mail
      *
      * @param string $mail
+     *
      * @return User
      */
     public function setMail($mail)
@@ -222,6 +223,7 @@ class User implements UserInterface, \Serializable
      * Set password
      *
      * @param string $password
+     *
      * @return User
      */
     public function setPassword($password)
@@ -245,6 +247,7 @@ class User implements UserInterface, \Serializable
      * Set salt
      *
      * @param string $salt
+     *
      * @return User
      */
     public function setSalt($salt)
@@ -268,6 +271,7 @@ class User implements UserInterface, \Serializable
      * Set userType
      *
      * @param string $userType
+     *
      * @return User
      */
     public function setUserType($userType)
@@ -291,6 +295,7 @@ class User implements UserInterface, \Serializable
      * Set timeCreated
      *
      * @param \DateTime $timeCreated
+     *
      * @return User
      */
     public function setTimeCreated($timeCreated)
@@ -314,6 +319,7 @@ class User implements UserInterface, \Serializable
      * Set lastLogin
      *
      * @param \DateTime $lastLogin
+     *
      * @return User
      */
     public function setLastLogin($lastLogin)
@@ -337,6 +343,7 @@ class User implements UserInterface, \Serializable
      * Set ipAddressLast
      *
      * @param string $ipAddressLast
+     *
      * @return User
      */
     public function setIpAddressLast($ipAddressLast)
@@ -360,6 +367,7 @@ class User implements UserInterface, \Serializable
      * Add comments
      *
      * @param Comment $comments
+     *
      * @return User
      */
     public function addComment(Comment $comments)
@@ -393,6 +401,7 @@ class User implements UserInterface, \Serializable
      * Set emailHash
      *
      * @param string $emailHash
+     *
      * @return User
      */
     public function setEmailHash($emailHash)
@@ -415,7 +424,8 @@ class User implements UserInterface, \Serializable
     /**
      * Set loginCount
      *
-     * @param integer $loginCount
+     * @param int $loginCount
+     *
      * @return User
      */
     public function setLoginCount($loginCount)
@@ -428,7 +438,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get loginCount
      *
-     * @return integer
+     * @return int
      */
     public function getLoginCount()
     {

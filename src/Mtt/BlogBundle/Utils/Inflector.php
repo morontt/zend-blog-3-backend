@@ -9,14 +9,12 @@
 namespace Mtt\BlogBundle\Utils;
 
 /**
- *
  * PHP implementation Ember.Inflector.pluralize
  *
  * @see https://github.com/stefanpenner/ember-inflector/blob/1.9.4/addon/lib/system/inflections.js
  * @see https://github.com/stefanpenner/ember-inflector/blob/1.9.4/addon/lib/system/inflector.js
  *
  * Class Inflector
- * @package Mtt\BlogBundle\Utils
  */
 class Inflector
 {
@@ -69,11 +67,12 @@ class Inflector
         'fish',
         'sheep',
         'jeans',
-        'police'
+        'police',
     ];
 
     /**
      * @param string $word
+     *
      * @return string
      */
     public static function pluralize($word)
@@ -121,6 +120,7 @@ class Inflector
                 if ($isCamelized) {
                     $res = ucfirst($res);
                 }
+
                 return $firstPhrase . $res;
             }
         }

@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class TrackingArchive
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -20,14 +20,14 @@ class TrackingArchive
     protected $id;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="post_id", type="integer")
      */
     protected $post;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(name="user_agent_id", type="integer", nullable=true)
      */
@@ -47,11 +47,10 @@ class TrackingArchive
      */
     protected $timeCreated;
 
-
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -61,7 +60,8 @@ class TrackingArchive
     /**
      * Set post
      *
-     * @param integer $post
+     * @param int $post
+     *
      * @return TrackingArchive
      */
     public function setPost($post)
@@ -74,7 +74,7 @@ class TrackingArchive
     /**
      * Get post
      *
-     * @return integer
+     * @return int
      */
     public function getPost()
     {
@@ -84,7 +84,8 @@ class TrackingArchive
     /**
      * Set trackingAgent
      *
-     * @param integer $trackingAgent
+     * @param int $trackingAgent
+     *
      * @return TrackingArchive
      */
     public function setTrackingAgent($trackingAgent)
@@ -97,7 +98,7 @@ class TrackingArchive
     /**
      * Get trackingAgent
      *
-     * @return integer
+     * @return int
      */
     public function getTrackingAgent()
     {
@@ -108,6 +109,7 @@ class TrackingArchive
      * Set ipAddress
      *
      * @param string $ipAddress
+     *
      * @return TrackingArchive
      */
     public function setIpAddress($ipAddress)
@@ -131,6 +133,7 @@ class TrackingArchive
      * Set timeCreated
      *
      * @param \DateTime $timeCreated
+     *
      * @return TrackingArchive
      */
     public function setTimeCreated($timeCreated)

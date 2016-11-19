@@ -23,7 +23,7 @@ class LoginListener
     /**
      * @param ObjectManager $em
      */
-    function __construct(ObjectManager $em)
+    public function __construct(ObjectManager $em)
     {
         $this->em = $em;
     }

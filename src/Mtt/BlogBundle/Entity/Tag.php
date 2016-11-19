@@ -2,8 +2,8 @@
 
 namespace Mtt\BlogBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -15,7 +15,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 class Tag
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -44,7 +44,6 @@ class Tag
      */
     protected $posts;
 
-
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -53,7 +52,7 @@ class Tag
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -64,6 +63,7 @@ class Tag
      * Set name
      *
      * @param string $name
+     *
      * @return Tag
      */
     public function setName($name)
@@ -87,6 +87,7 @@ class Tag
      * Set url
      *
      * @param string $url
+     *
      * @return Tag
      */
     public function setUrl($url)
@@ -110,6 +111,7 @@ class Tag
      * Add posts
      *
      * @param Post $posts
+     *
      * @return Tag
      */
     public function addPost(Post $posts)

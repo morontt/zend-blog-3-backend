@@ -2,8 +2,8 @@
 
 namespace Mtt\BlogBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="posts")
@@ -12,7 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Post
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -35,7 +35,7 @@ class Post
     protected $url;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
@@ -92,14 +92,14 @@ class Post
     protected $tags;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
     protected $commentsCount = 0;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
@@ -120,12 +120,11 @@ class Post
     protected $mediaFiles;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="bigint", nullable=true, unique=true)
      */
     protected $disqusThread;
-
 
     public function __construct()
     {
@@ -142,7 +141,7 @@ class Post
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -153,6 +152,7 @@ class Post
      * Set title
      *
      * @param string $title
+     *
      * @return Post
      */
     public function setTitle($title)
@@ -176,6 +176,7 @@ class Post
      * Set url
      *
      * @param string $url
+     *
      * @return Post
      */
     public function setUrl($url)
@@ -198,7 +199,8 @@ class Post
     /**
      * Set hide
      *
-     * @param boolean $hide
+     * @param bool $hide
+     *
      * @return Post
      */
     public function setHide($hide)
@@ -211,7 +213,7 @@ class Post
     /**
      * Get hide
      *
-     * @return boolean
+     * @return bool
      */
     public function isHide()
     {
@@ -222,6 +224,7 @@ class Post
      * Set text
      *
      * @param string $text
+     *
      * @return Post
      */
     public function setText($text)
@@ -245,6 +248,7 @@ class Post
      * Set description
      *
      * @param string $description
+     *
      * @return Post
      */
     public function setDescription($description)
@@ -268,6 +272,7 @@ class Post
      * Set timeCreated
      *
      * @param \DateTime $timeCreated
+     *
      * @return Post
      */
     public function setTimeCreated($timeCreated)
@@ -291,6 +296,7 @@ class Post
      * Set lastUpdate
      *
      * @param \DateTime $lastUpdate
+     *
      * @return Post
      */
     public function setLastUpdate($lastUpdate)
@@ -314,6 +320,7 @@ class Post
      * Set category
      *
      * @param Category $category
+     *
      * @return Post
      */
     public function setCategory(Category $category = null)
@@ -373,6 +380,7 @@ class Post
      * Add comments
      *
      * @param Comment $comments
+     *
      * @return Post
      */
     public function addComment(Comment $comments)
@@ -405,7 +413,8 @@ class Post
     /**
      * Set disqusThread
      *
-     * @param integer $disqusThread
+     * @param int $disqusThread
+     *
      * @return Post
      */
     public function setDisqusThread($disqusThread)
@@ -418,7 +427,7 @@ class Post
     /**
      * Get disqusThread
      *
-     * @return integer
+     * @return int
      */
     public function getDisqusThread()
     {
@@ -486,7 +495,7 @@ class Post
     /**
      * Set commentsCount
      *
-     * @param integer $commentsCount
+     * @param int $commentsCount
      *
      * @return Post
      */
@@ -500,7 +509,7 @@ class Post
     /**
      * Get commentsCount
      *
-     * @return integer
+     * @return int
      */
     public function getCommentsCount()
     {
@@ -510,7 +519,7 @@ class Post
     /**
      * Set viewsCount
      *
-     * @param integer $viewsCount
+     * @param int $viewsCount
      *
      * @return Post
      */
@@ -524,7 +533,7 @@ class Post
     /**
      * Get viewsCount
      *
-     * @return integer
+     * @return int
      */
     public function getViewsCount()
     {

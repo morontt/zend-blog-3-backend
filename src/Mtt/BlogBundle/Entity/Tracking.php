@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Tracking
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -50,12 +50,11 @@ class Tracking
     protected $timeCreated;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
     protected $timestampCreated;
-
 
     public function __construct()
     {
@@ -66,7 +65,7 @@ class Tracking
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -77,6 +76,7 @@ class Tracking
      * Set ipAddress
      *
      * @param string $ipAddress
+     *
      * @return Tracking
      */
     public function setIpAddress($ipAddress)
@@ -100,6 +100,7 @@ class Tracking
      * Set timeCreated
      *
      * @param \DateTime $timeCreated
+     *
      * @return Tracking
      */
     public function setTimeCreated(\DateTime $timeCreated)
@@ -124,6 +125,7 @@ class Tracking
      * Set trackingAgent
      *
      * @param TrackingAgent $trackingAgent
+     *
      * @return Tracking
      */
     public function setTrackingAgent(TrackingAgent $trackingAgent = null)
@@ -147,6 +149,7 @@ class Tracking
      * Set post
      *
      * @param Post $post
+     *
      * @return Tracking
      */
     public function setPost(Post $post = null)
@@ -170,6 +173,7 @@ class Tracking
      * Set timestampCreated
      *
      * @param string $timestampCreated
+     *
      * @return Tracking
      */
     public function setTimestampCreated($timestampCreated)

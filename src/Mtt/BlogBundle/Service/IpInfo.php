@@ -25,7 +25,6 @@ class IpInfo
      */
     protected $em;
 
-
     /**
      * @param EntityManager $em
      * @param string $key
@@ -38,6 +37,7 @@ class IpInfo
 
     /**
      * @param string $ip
+     *
      * @return GeoLocation|null
      */
     public function getLocationByIp($ip)
@@ -65,6 +65,7 @@ class IpInfo
 
     /**
      * @param array $data
+     *
      * @return GeoLocationCity|null
      */
     protected function getCity(array $data)
@@ -102,6 +103,7 @@ class IpInfo
 
     /**
      * @param array $data
+     *
      * @return GeoLocationCountry|null
      */
     protected function getCountry(array $data)
@@ -129,6 +131,7 @@ class IpInfo
 
     /**
      * @param string $ip
+     *
      * @return array|null
      */
     protected function getCityInfo($ip)

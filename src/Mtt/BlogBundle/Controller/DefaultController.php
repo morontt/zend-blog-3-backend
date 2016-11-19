@@ -9,7 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * Class DefaultController
- * @package Mtt\BlogBundle\Controller
  */
 class DefaultController extends BaseController
 {
@@ -30,6 +29,7 @@ class DefaultController extends BaseController
      * @Template()
      *
      * @param Post $post
+     *
      * @return array
      */
     public function previewAction(Post $post)

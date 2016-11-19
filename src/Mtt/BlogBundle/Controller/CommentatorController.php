@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  * @Route("/api/commentators")
  *
  * Class CommentatorController
- * @package Mtt\BlogBundle\Controller
  */
 class CommentatorController extends BaseController
 {
@@ -27,6 +26,7 @@ class CommentatorController extends BaseController
      * @Method("GET")
      *
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function findAllAction(Request $request)
@@ -49,6 +49,7 @@ class CommentatorController extends BaseController
      * @Method("GET")
      *
      * @param Commentator $entity
+     *
      * @return JsonResponse
      */
     public function findAction(Commentator $entity)
@@ -65,6 +66,7 @@ class CommentatorController extends BaseController
      *
      * @param Request $request
      * @param Commentator $entity
+     *
      * @return JsonResponse
      */
     public function updateAction(Request $request, Commentator $entity)

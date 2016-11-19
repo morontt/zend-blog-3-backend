@@ -16,6 +16,7 @@ class PostRepository extends BaseRepository
 
     /**
      * @param int $i
+     *
      * @return Post[]
      */
     public function getPostsByIteration($i)
@@ -33,6 +34,7 @@ class PostRepository extends BaseRepository
 
     /**
      * @param array $ids
+     *
      * @return Post[]
      */
     public function getPostsByDisqusThreads(array $ids)

@@ -15,6 +15,7 @@ class TagRepository extends BaseRepository
 {
     /**
      * @param $term
+     *
      * @return Tag[]
      */
     public function getForAutocomplete($term)
@@ -38,6 +39,7 @@ class TagRepository extends BaseRepository
 
     /**
      * @param string $name
+     *
      * @return Tag|null
      */
     public function getTagForPost($name)

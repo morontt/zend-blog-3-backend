@@ -14,7 +14,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
  * @Route("/api")
  *
  * Class ApiController
- * @package Mtt\BlogBundle\Controller
  */
 class ApiController extends BaseController
 {

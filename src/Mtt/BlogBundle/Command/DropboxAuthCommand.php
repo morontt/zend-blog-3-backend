@@ -39,11 +39,11 @@ class DropboxAuthCommand extends ContainerAwareCommand
             exit(1);
         }
 
-        $webAuth = new Dropbox\WebAuthNoRedirect($appInfo, "examples-authorize", "en");
+        $webAuth = new Dropbox\WebAuthNoRedirect($appInfo, 'examples-authorize', 'en');
         $authorizeUrl = $webAuth->start();
 
         $output->writeln(sprintf("\n1. Go to: %s", $authorizeUrl));
-        $output->writeln("2. Click <comment>\"Allow\"</comment> (you might have to log in first).");
+        $output->writeln('2. Click <comment>"Allow"</comment> (you might have to log in first).');
         $output->writeln("3. Copy the authorization code.\n");
 
         $dialog = $this->getHelper('question');
@@ -54,6 +54,7 @@ class DropboxAuthCommand extends ContainerAwareCommand
                     'Empty code :('
                 );
             }
+
             return $answer;
         });
         $question->setMaxAttempts(3);
@@ -63,8 +64,8 @@ class DropboxAuthCommand extends ContainerAwareCommand
         list($accessToken, $userId) = $webAuth->finish($authCode);
 
         $output->writeln("\nAuthorization complete.");
-        $output->writeln(sprintf("User ID: <comment>%s</comment>", $userId));
-        $output->writeln(sprintf("Access Token: <comment>%s</comment>", $accessToken));
+        $output->writeln(sprintf('User ID: <comment>%s</comment>', $userId));
+        $output->writeln(sprintf('Access Token: <comment>%s</comment>', $accessToken));
 
         $this->saveAccessToken($userId, $accessToken);
     }

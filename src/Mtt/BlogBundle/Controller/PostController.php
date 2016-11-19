@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  * @Route("/api/posts")
  *
  * Class PostController
- * @package Mtt\BlogBundle\Controller
  */
 class PostController extends BaseController
 {
@@ -27,6 +26,7 @@ class PostController extends BaseController
      * @Method("GET")
      *
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function findAllAction(Request $request)
@@ -49,6 +49,7 @@ class PostController extends BaseController
      * @Method("GET")
      *
      * @param Post $entity
+     *
      * @return JsonResponse
      */
     public function findAction(Post $entity)
@@ -64,12 +65,13 @@ class PostController extends BaseController
      * @Method("POST")
      *
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function createAction(Request $request)
     {
         $result = $this->getDataConverter()
-            ->savePost(new Post, $request->request->get('post'));
+            ->savePost(new Post(), $request->request->get('post'));
 
         return new JsonResponse($result, 201);
     }
@@ -80,6 +82,7 @@ class PostController extends BaseController
      *
      * @param Request $request
      * @param Post $entity
+     *
      * @return JsonResponse
      */
     public function updateAction(Request $request, Post $entity)
@@ -95,6 +98,7 @@ class PostController extends BaseController
      * @Method("DELETE")
      *
      * @param Post $entity
+     *
      * @return JsonResponse
      */
     public function deleteAction(Post $entity)

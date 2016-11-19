@@ -25,6 +25,7 @@ class TextProcessor
 
     /**
      * TextProcessor constructor.
+     *
      * @param EntityManager $em
      * @param $imageBasepath
      */
@@ -44,6 +45,7 @@ class TextProcessor
 
     /**
      * @param $text
+     *
      * @return string
      */
     public function imageProcessing($text)
@@ -53,13 +55,14 @@ class TextProcessor
         do {
             $r = $this->imageSearchAndReplace($text);
             $fuse++;
-        } while($r && $fuse < 100);
+        } while ($r && $fuse < 100);
 
         return $text;
     }
 
     /**
      * @param string $text
+     *
      * @return bool
      */
     protected function imageSearchAndReplace(&$text)

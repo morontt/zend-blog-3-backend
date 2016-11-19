@@ -21,6 +21,7 @@ class MediaFileTransformer extends BaseTransformer
 
     /**
      * @param MediaFile $item
+     *
      * @return array
      */
     public function transform(MediaFile $item)
@@ -58,6 +59,7 @@ class MediaFileTransformer extends BaseTransformer
 
     /**
      * @param MediaFile $item
+     *
      * @return \League\Fractal\Resource\Collection|null
      */
     public function includePost(MediaFile $item)

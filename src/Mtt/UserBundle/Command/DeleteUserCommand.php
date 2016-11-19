@@ -5,6 +5,7 @@
  * Date: 14.06.15
  * Time: 18:39
  */
+
 namespace Mtt\UserBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;

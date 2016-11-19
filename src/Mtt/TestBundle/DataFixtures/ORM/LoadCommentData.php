@@ -2,9 +2,9 @@
 
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 use Mtt\BlogBundle\Entity\Comment;
 
 class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
@@ -35,7 +35,7 @@ class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getOrder()
     {

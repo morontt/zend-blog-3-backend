@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
 class MediaFile
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -48,7 +48,7 @@ class MediaFile
     protected $description;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      */
@@ -82,7 +82,6 @@ class MediaFile
      */
     protected $lastUpdate;
 
-
     public function __construct()
     {
         $now = new \DateTime();
@@ -94,7 +93,7 @@ class MediaFile
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -224,7 +223,7 @@ class MediaFile
     /**
      * Set fileSize
      *
-     * @param integer $fileSize
+     * @param int $fileSize
      *
      * @return MediaFile
      */
@@ -238,7 +237,7 @@ class MediaFile
     /**
      * Get fileSize
      *
-     * @return integer
+     * @return int
      */
     public function getFileSize()
     {
@@ -248,7 +247,7 @@ class MediaFile
     /**
      * Set defaultImage
      *
-     * @param boolean $defaultImage
+     * @param bool $defaultImage
      *
      * @return MediaFile
      */
@@ -262,7 +261,7 @@ class MediaFile
     /**
      * Is defaultImage
      *
-     * @return boolean
+     * @return bool
      */
     public function isDefaultImage()
     {
@@ -272,7 +271,7 @@ class MediaFile
     /**
      * Set backuped
      *
-     * @param boolean $backuped
+     * @param bool $backuped
      *
      * @return MediaFile
      */
@@ -286,7 +285,7 @@ class MediaFile
     /**
      * Is backuped
      *
-     * @return boolean
+     * @return bool
      */
     public function isBackuped()
     {

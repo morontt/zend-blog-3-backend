@@ -39,7 +39,7 @@ class ImageForm extends AbstractType
                     'constraints' => [
                         new Image([
                             'maxSize' => '4M',
-                        ])
+                        ]),
                     ],
                 ]
             )

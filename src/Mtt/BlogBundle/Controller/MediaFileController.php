@@ -19,7 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
  * @Route("/api/mediaFiles")
  *
  * Class MediaFileController
- * @package Mtt\BlogBundle\Controller
  */
 class MediaFileController extends BaseController
 {
@@ -28,6 +27,7 @@ class MediaFileController extends BaseController
      * @Method("GET")
      *
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function findAllAction(Request $request)
@@ -59,6 +59,7 @@ class MediaFileController extends BaseController
      * @Method("GET")
      *
      * @param MediaFile $entity
+     *
      * @return JsonResponse
      */
     public function findAction(MediaFile $entity)
@@ -75,6 +76,7 @@ class MediaFileController extends BaseController
      *
      * @param Request $request
      * @param MediaFile $entity
+     *
      * @return JsonResponse
      */
     public function updateAction(Request $request, MediaFile $entity)
@@ -90,6 +92,7 @@ class MediaFileController extends BaseController
      * @Method("DELETE")
      *
      * @param MediaFile $entity
+     *
      * @return JsonResponse
      */
     public function deleteAction(MediaFile $entity)
@@ -106,6 +109,7 @@ class MediaFileController extends BaseController
      * @Method("POST")
      *
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function uploadAction(Request $request)

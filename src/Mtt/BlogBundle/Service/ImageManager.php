@@ -22,7 +22,6 @@ class ImageManager
      */
     protected $em;
 
-
     /**
      * @param EntityManager $em
      */
@@ -105,6 +104,7 @@ class ImageManager
 
     /**
      * @param string $remotePath
+     *
      * @return MediaFile
      */
     protected function getMediaFile($remotePath)

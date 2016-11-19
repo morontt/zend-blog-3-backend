@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
  * @Route("/api/tags")
  *
  * Class TagController
- * @package Mtt\BlogBundle\Controller
  */
 class TagController extends BaseController
 {
@@ -27,6 +26,7 @@ class TagController extends BaseController
      * @Method("GET")
      *
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function findAllAction(Request $request)
@@ -49,6 +49,7 @@ class TagController extends BaseController
      * @Method("GET")
      *
      * @param Tag $entity
+     *
      * @return JsonResponse
      */
     public function findAction(Tag $entity)
@@ -64,6 +65,7 @@ class TagController extends BaseController
      * @Method("POST")
      *
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function createAction(Request $request)
@@ -80,6 +82,7 @@ class TagController extends BaseController
      *
      * @param Request $request
      * @param Tag $entity
+     *
      * @return JsonResponse
      */
     public function updateAction(Request $request, Tag $entity)
@@ -95,6 +98,7 @@ class TagController extends BaseController
      * @Method("DELETE")
      *
      * @param Tag $entity
+     *
      * @return JsonResponse
      */
     public function deleteAction(Tag $entity)
@@ -110,6 +114,7 @@ class TagController extends BaseController
      * @Method("GET")
      *
      * @param Request $request
+     *
      * @return JsonResponse
      */
     public function tagAutocompleteAction(Request $request)

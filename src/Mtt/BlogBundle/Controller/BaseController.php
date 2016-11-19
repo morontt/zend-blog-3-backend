@@ -88,6 +88,7 @@ class BaseController extends Controller
      * @param $query
      * @param $page
      * @param int $limit
+     *
      * @return \Knp\Component\Pager\Pagination\SlidingPagination
      */
     public function paginate($query, $page, $limit = 15)
@@ -98,6 +99,7 @@ class BaseController extends Controller
 
     /**
      * @param array $data
+     *
      * @return array
      */
     public function getPaginationMetadata(array $data)

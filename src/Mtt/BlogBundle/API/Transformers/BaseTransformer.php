@@ -14,6 +14,7 @@ abstract class BaseTransformer extends TransformerAbstract
 {
     /**
      * @param \DateTime|null $dateTime
+     *
      * @return string|null
      */
     protected function dateTimeToISO(\DateTime $dateTime = null)

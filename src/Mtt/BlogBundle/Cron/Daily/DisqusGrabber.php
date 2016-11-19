@@ -48,7 +48,6 @@ class DisqusGrabber implements CronServiceInterface
      */
     protected $email;
 
-
     /**
      * @param EntityManager $em
      * @param array $options
@@ -154,6 +153,7 @@ class DisqusGrabber implements CronServiceInterface
 
     /**
      * @param array $data
+     *
      * @return Commentator
      */
     protected function getCommentator(array $data)

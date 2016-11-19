@@ -24,7 +24,6 @@ class CommentGeoLocation implements CronServiceInterface
      */
     protected $ipInfo;
 
-
     /**
      * @param EntityManager $em
      * @param IpInfo $ipInfo

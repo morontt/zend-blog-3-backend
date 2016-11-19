@@ -13,21 +13,20 @@ use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Entity\Tag;
 use Mtt\BlogBundle\Service\TextProcessor;
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 
 class DataConverterSpec extends ObjectBehavior
 {
-    function let(EntityManager $em, TextProcessor $tp)
+    public function let(EntityManager $em, TextProcessor $tp)
     {
         $this->beConstructedWith($em, $tp);
     }
 
-    function it_is_initializable()
+    public function it_is_initializable()
     {
         $this->shouldHaveType('Mtt\BlogBundle\API\DataConverter');
     }
 
-    function it_is_get_tag()
+    public function it_is_get_tag()
     {
         $tag = new Tag();
         $tag
@@ -61,11 +60,11 @@ class DataConverterSpec extends ObjectBehavior
                     'name' => 'test2-name',
                     'url' => 'test2-url',
                 ],
-            ]
+            ],
         ]);
     }
 
-    function it_is_get_category()
+    public function it_is_get_category()
     {
         $category = new Category();
         $category
@@ -105,7 +104,7 @@ class DataConverterSpec extends ObjectBehavior
                     'parent' => null,
                     'parentId' => null,
                 ],
-            ]
+            ],
         ]);
     }
 
@@ -158,7 +157,7 @@ class DataConverterSpec extends ObjectBehavior
                     'disqusId' => 55,
                     'emailHash' => md5('two@example.org'),
                 ],
-            ]
+            ],
         ]);
     }
 
@@ -248,7 +247,7 @@ class DataConverterSpec extends ObjectBehavior
                     'region' => 'Hessen',
                     'country' => 'Germany',
                     'createdAt' => '2016-02-28T01:43:14+0200',
-                ]
+                ],
             ],
             'commentators' => [
                 [
@@ -259,7 +258,7 @@ class DataConverterSpec extends ObjectBehavior
                     'disqusId' => 0,
                     'emailHash' => md5('commentator@example.org'),
                 ],
-            ]
+            ],
         ]);
     }
 

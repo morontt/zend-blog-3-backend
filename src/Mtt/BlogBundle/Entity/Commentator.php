@@ -2,8 +2,8 @@
 
 namespace Mtt\BlogBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="commentators", uniqueConstraints={
@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Commentator
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -51,7 +51,7 @@ class Commentator
     protected $comments;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="bigint", nullable=true, unique=true)
      */
@@ -64,7 +64,6 @@ class Commentator
      */
     protected $emailHash;
 
-
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -74,6 +73,7 @@ class Commentator
      * @param string $name
      * @param string $mail
      * @param string $website
+     *
      * @return string
      */
     public static function getAvatarHash($name, $mail, $website)
@@ -93,7 +93,7 @@ class Commentator
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -104,6 +104,7 @@ class Commentator
      * Set name
      *
      * @param string $name
+     *
      * @return Commentator
      */
     public function setName($name)
@@ -127,6 +128,7 @@ class Commentator
      * Set mail
      *
      * @param string $mail
+     *
      * @return Commentator
      */
     public function setMail($mail)
@@ -150,6 +152,7 @@ class Commentator
      * Set website
      *
      * @param string $website
+     *
      * @return Commentator
      */
     public function setWebsite($website)
@@ -173,6 +176,7 @@ class Commentator
      * Add comments
      *
      * @param Comment $comments
+     *
      * @return Commentator
      */
     public function addComment(Comment $comments)
@@ -205,7 +209,8 @@ class Commentator
     /**
      * Set disqusId
      *
-     * @param integer $disqusId
+     * @param int $disqusId
+     *
      * @return Commentator
      */
     public function setDisqusId($disqusId)
@@ -218,7 +223,7 @@ class Commentator
     /**
      * Get disqusId
      *
-     * @return integer
+     * @return int
      */
     public function getDisqusId()
     {
@@ -229,6 +234,7 @@ class Commentator
      * Set emailHash
      *
      * @param string $emailHash
+     *
      * @return Commentator
      */
     public function setEmailHash($emailHash)

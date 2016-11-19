@@ -15,6 +15,7 @@ class CategoryTransformer extends BaseTransformer
 {
     /**
      * @param Category $item
+     *
      * @return array
      */
     public function transform(Category $item)

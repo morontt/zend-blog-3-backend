@@ -2,9 +2,9 @@
 
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 use Mtt\BlogBundle\Entity\Tracking;
 
 class LoadTrackingData extends AbstractFixture implements OrderedFixtureInterface
@@ -32,7 +32,7 @@ class LoadTrackingData extends AbstractFixture implements OrderedFixtureInterfac
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getOrder()
     {

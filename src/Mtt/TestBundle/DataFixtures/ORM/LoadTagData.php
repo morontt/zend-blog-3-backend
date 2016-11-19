@@ -2,9 +2,9 @@
 
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
-use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 use Mtt\BlogBundle\Entity\Tag;
 use Mtt\BlogBundle\Utils\RuTransform;
 
@@ -49,7 +49,7 @@ class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getOrder()
     {

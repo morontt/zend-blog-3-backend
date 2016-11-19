@@ -36,7 +36,7 @@ class LoadMediaFileData extends AbstractFixture implements OrderedFixtureInterfa
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getOrder()
     {

@@ -19,7 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
 class GeoLocationCity
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -42,14 +42,14 @@ class GeoLocationCity
     protected $region;
 
     /**
-     * @var double
+     * @var float
      *
      * @ORM\Column(type="float")
      */
     protected $latitude;
 
     /**
-     * @var double
+     * @var float
      *
      * @ORM\Column(type="float")
      */
@@ -84,7 +84,6 @@ class GeoLocationCity
      */
     protected $timeCreated;
 
-
     public function __construct()
     {
         $this->timeCreated = new \DateTime();
@@ -93,7 +92,7 @@ class GeoLocationCity
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {

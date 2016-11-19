@@ -21,6 +21,7 @@ class CommentTransformer extends BaseTransformer
 
     /**
      * @param Comment $item
+     *
      * @return array
      */
     public function transform(Comment $item)
@@ -60,6 +61,7 @@ class CommentTransformer extends BaseTransformer
 
     /**
      * @param Comment $entity
+     *
      * @return \League\Fractal\Resource\Collection
      */
     public function includeCommentator(Comment $entity)
@@ -70,6 +72,6 @@ class CommentTransformer extends BaseTransformer
             $items = [$commentator];
         }
 
-        return $this->collection($items, new CommentatorTransformer, 'commentators');
+        return $this->collection($items, new CommentatorTransformer(), 'commentators');
     }
 }

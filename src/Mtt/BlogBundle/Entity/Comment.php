@@ -2,8 +2,8 @@
 
 namespace Mtt\BlogBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 use Mtt\UserBundle\Entity\User;
 
 /**
@@ -13,7 +13,7 @@ use Mtt\UserBundle\Entity\User;
 class Comment
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -65,7 +65,7 @@ class Comment
     protected $text;
 
     /**
-     * @var boolean
+     * @var bool
      *
      * @ORM\Column(type="boolean")
      */
@@ -94,7 +94,7 @@ class Comment
     protected $timeCreated;
 
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="bigint", nullable=true, unique=true)
      */
@@ -108,7 +108,6 @@ class Comment
      */
     protected $geoLocation;
 
-
     public function __construct()
     {
         $this->children = new ArrayCollection();
@@ -119,7 +118,7 @@ class Comment
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -130,6 +129,7 @@ class Comment
      * Add children
      *
      * @param Comment $children
+     *
      * @return Comment
      */
     public function addChild(Comment $children)
@@ -163,6 +163,7 @@ class Comment
      * Set parent
      *
      * @param Comment $parent
+     *
      * @return Comment
      */
     public function setParent(Comment $parent = null)
@@ -186,6 +187,7 @@ class Comment
      * Set commentator
      *
      * @param Commentator $commentator
+     *
      * @return Comment
      */
     public function setCommentator(Commentator $commentator = null)
@@ -209,6 +211,7 @@ class Comment
      * Set user
      *
      * @param User $user
+     *
      * @return Comment
      */
     public function setUser(User $user = null)
@@ -232,6 +235,7 @@ class Comment
      * Set text
      *
      * @param string $text
+     *
      * @return Comment
      */
     public function setText($text)
@@ -254,7 +258,8 @@ class Comment
     /**
      * Set deleted
      *
-     * @param boolean $deleted
+     * @param bool $deleted
+     *
      * @return Comment
      */
     public function setDeleted($deleted)
@@ -267,7 +272,7 @@ class Comment
     /**
      * Get deleted
      *
-     * @return boolean
+     * @return bool
      */
     public function getDeleted()
     {
@@ -278,6 +283,7 @@ class Comment
      * Set ipAddress
      *
      * @param string $ipAddress
+     *
      * @return Comment
      */
     public function setIpAddress($ipAddress)
@@ -301,6 +307,7 @@ class Comment
      * Set timeCreated
      *
      * @param \DateTime $timeCreated
+     *
      * @return Comment
      */
     public function setTimeCreated($timeCreated)
@@ -324,6 +331,7 @@ class Comment
      * Set post
      *
      * @param Post $post
+     *
      * @return Comment
      */
     public function setPost(Post $post = null)
@@ -347,6 +355,7 @@ class Comment
      * Set trackingAgent
      *
      * @param TrackingAgent $trackingAgent
+     *
      * @return Comment
      */
     public function setTrackingAgent(TrackingAgent $trackingAgent = null)
@@ -369,7 +378,8 @@ class Comment
     /**
      * Set disqusId
      *
-     * @param integer $disqusId
+     * @param int $disqusId
+     *
      * @return Comment
      */
     public function setDisqusId($disqusId)
@@ -382,7 +392,7 @@ class Comment
     /**
      * Get disqusId
      *
-     * @return integer
+     * @return int
      */
     public function getDisqusId()
     {

@@ -15,6 +15,7 @@ class TagTransformer extends BaseTransformer
 {
     /**
      * @param Tag $item
+     *
      * @return array
      */
     public function transform(Tag $item)

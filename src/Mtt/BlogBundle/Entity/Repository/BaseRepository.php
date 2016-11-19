@@ -14,6 +14,7 @@ class BaseRepository extends EntityRepository
 {
     /**
      * @param bool $nameBased
+     *
      * @return \Doctrine\ORM\Query
      */
     public function getListQuery($nameBased = false)

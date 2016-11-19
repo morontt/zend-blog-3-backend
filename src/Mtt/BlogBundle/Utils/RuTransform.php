@@ -48,7 +48,7 @@ class RuTransform
 
         $result = strtr($konform_temp, array(
             '---' => '-',
-            '--'  => '-',
+            '--' => '-',
         ));
 
         if (empty($result)) {
