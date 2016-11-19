@@ -71,14 +71,15 @@ class IpInfo
     {
         $city = null;
         if (!empty($data['cityName']) && !empty($data['regionName'])) {
-            $city = $this->em->getRepository('MttBlogBundle:GeoLocationCity')->findOneBy([
-                'city' => $data['cityName'],
-                'region' => $data['regionName'],
-            ]);
+            $country = $this->getCountry($data);
+            if ($country) {
+                $city = $this->em->getRepository('MttBlogBundle:GeoLocationCity')->findOneBy([
+                    'city' => $data['cityName'],
+                    'region' => $data['regionName'],
+                    'country' => $country->getId(),
+                ]);
 
-            if (!$city) {
-                $country = $this->getCountry($data);
-                if ($country) {
+                if (!$city) {
                     $city = new GeoLocationCity();
                     $city
                         ->setCity($data['cityName'])

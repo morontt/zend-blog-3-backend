@@ -55,8 +55,6 @@ class CommentTransformer extends BaseTransformer
             'createdAt' => $this->dateTimeToISO($item->getTimeCreated()),
         ];
 
-        $location = $item->getGeoLocation();
-
         return $data;
     }
 

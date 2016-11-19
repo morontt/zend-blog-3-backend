@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(uniqueConstraints={
- *   @ORM\UniqueConstraint(columns={"city", "region"})
+ *   @ORM\UniqueConstraint(columns={"city", "region", "country_id"})
  * })
  * @ORM\Entity(repositoryClass="Mtt\BlogBundle\Entity\Repository\GeoLocationCityRepository")
  */
