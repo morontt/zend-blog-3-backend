@@ -47,5 +47,6 @@ test:
     - chmod -R 777 app/cache
     - chmod -R 777 app/logs
   override:
+    - bin/php-cs-fixer fix --dry-run --diff
     - bin/behat @MttTestBundle
     - bin/phpspec run

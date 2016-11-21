@@ -2,8 +2,8 @@
 
 $finder = Symfony\CS\Finder::create()
     ->in([
-        __DIR__ . '/../spec',
-        __DIR__ . '/../src'
+        __DIR__ . '/spec',
+        __DIR__ . '/src',
     ])
 ;
 
