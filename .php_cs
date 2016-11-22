@@ -13,8 +13,10 @@ $config = Symfony\CS\Config::create()
         '-phpdoc_short_description',
         '-pre_increment',
         '-spaces_cast',
+        '-heredoc_to_nowdoc',
         'concat_with_spaces',
         'ordered_use',
+        'short_array_syntax',
     ])
     ->finder($finder)
 ;

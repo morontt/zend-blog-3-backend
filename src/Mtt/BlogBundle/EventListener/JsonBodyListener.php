@@ -25,7 +25,7 @@ class JsonBodyListener
         $method = $request->getMethod();
 
         if (!count($request->request->all())
-            && in_array($method, array('POST', 'PUT', 'DELETE'))
+            && in_array($method, ['POST', 'PUT', 'DELETE'])
         ) {
             $contentType = $request->headers->get('Content-Type');
 

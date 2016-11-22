@@ -9,7 +9,7 @@ class RuTransform
         // replace non letter or digits by -
         $value = trim(preg_replace('/[^\pL\d]+/u', '-', $value), '-');
 
-        $transform = array(
+        $transform = [
             'А' => 'A',    'а' => 'a',
             'Б' => 'B',    'б' => 'b',
             'В' => 'V',    'в' => 'v',
@@ -43,13 +43,13 @@ class RuTransform
             'Э' => 'E',    'э' => 'e',
             'Ю' => 'Yu',   'ю' => 'yu',
             'Я' => 'Ya',   'я' => 'ya',
-        );
+        ];
         $konform_temp = strtolower(strtr($value, $transform));
 
-        $result = strtr($konform_temp, array(
+        $result = strtr($konform_temp, [
             '---' => '-',
             '--' => '-',
-        ));
+        ]);
 
         if (empty($result)) {
             $result = 'n-a';

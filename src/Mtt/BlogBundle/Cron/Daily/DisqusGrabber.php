@@ -82,18 +82,18 @@ class DisqusGrabber implements CronServiceInterface
         $comments = [];
         $threads = [];
         foreach ($disqusPosts as $item) {
-            $comment = array(
+            $comment = [
                 'id' => (int)$item->id,
                 'parent' => $item->parent,
                 'thread' => (int)$item->thread,
                 'message' => $item->raw_message,
                 'created' => $item->createdAt,
-                'author' => array(
+                'author' => [
                     'name' => $item->author->name,
                     'website' => $item->author->url,
                     'id' => (int)$item->author->id,
-                ),
-            );
+                ],
+            ];
             $comments[] = $comment;
             $threads[] = $comment['thread'];
         }
