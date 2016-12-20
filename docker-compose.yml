@@ -1,0 +1,35 @@
+version: '2'
+services:
+    hedgehog:
+        build: ./var/docker/db
+        volumes:
+            - ./var/db_data:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: docker
+            MYSQL_DATABASE: mttblog
+            MYSQL_USER: mttblog
+            MYSQL_PASSWORD: docker
+
+    rhinoceros:
+        build: ./var/docker/web
+        volumes:
+            - .:/var/www/html
+        ports:
+            - "80:80"
+        links:
+            - hedgehog
+        depends_on:
+            - hedgehog
+
+    ape:
+        build: ./var/docker/dbadmin
+        ports:
+            - "8088:80"
+        links:
+            - hedgehog
+        depends_on:
+            - hedgehog
+        environment:
+            PMA_HOST: hedgehog
+            PMA_USER: root
+            PMA_PASSWORD: docker
