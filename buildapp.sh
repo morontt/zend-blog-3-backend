@@ -9,7 +9,7 @@ while getopts ":ri" opt; do
       rm -rf bower_components
       ;;
     i)
-      bower install --allow-root
+      bower install
       npm install
       ;;
   esac

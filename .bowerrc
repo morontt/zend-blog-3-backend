@@ -1,3 +1,4 @@
 {
-    "directory": "src/Mtt/BlogBundle/Resources/public/components"
+    "directory": "src/Mtt/BlogBundle/Resources/public/components",
+    "allow_root": true
 }

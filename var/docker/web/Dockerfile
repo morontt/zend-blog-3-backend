@@ -9,12 +9,17 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN echo Europe/Kiev > /etc/timezone && \
     dpkg-reconfigure -f noninteractive tzdata
 
+RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
+
 RUN apt-get update && apt-get install -y apt-utils
 RUN apt-get install -y \
     zlib1g-dev libicu-dev \
-    git nano zip mysql-client
+    git nano zip mysql-client \
+    nodejs
 
 RUN docker-php-ext-install intl zip pdo_mysql
+
+RUN npm install -g bower uglifycss uglify-js ember-cli@2.4.2
 
 RUN yes | pecl install xdebug \
     && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" \
