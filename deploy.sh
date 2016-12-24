@@ -22,4 +22,4 @@ php app/console assetic:dump --env=prod --no-debug
 
 # cache
 
-sudo rm -R ./app/cache/*
+rm -R ./app/cache/*

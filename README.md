@@ -11,25 +11,14 @@ Work in progress
 
 #### Requirements
 
-- php 5.5+
-- nodejs
-- npm
+- docker
+- docker-compose
 
-#### Install packages for Node.js
+#### Install
 
-    sudo npm install -g bower
-    sudo npm install -g uglifycss
-    sudo npm install -g uglify-js
-    sudo npm install -g ember-cli@2.4.2
+    docker-compose up --build
 
-If npm is not installed (Debian/Ubuntu)
+#### Install vendors, build app, etc.
 
-    sudo apt-get install nodejs
-
-#### Install vendors
-
-    composer install
-
-#### Install assets
-
-    app/console assetic:dump -e prod --no-debug
+    docker exec -it container_name bash
+    ./deploy.sh
