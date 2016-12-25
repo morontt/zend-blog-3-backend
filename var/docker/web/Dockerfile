@@ -17,7 +17,7 @@ RUN apt-get install -y \
     git nano zip mysql-client \
     nodejs
 
-RUN docker-php-ext-install intl zip pdo_mysql
+RUN docker-php-ext-install intl zip pdo_mysql opcache
 
 RUN npm install -g bower uglifycss uglify-js ember-cli@2.4.2
 
