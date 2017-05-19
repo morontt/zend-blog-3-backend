@@ -25,3 +25,4 @@ behat.yml
 /spa/npm-debug.log
 /spa/testem.log
 /web/spa/
+.env

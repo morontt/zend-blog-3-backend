@@ -4,6 +4,8 @@ MAINTAINER Alexander Harchenko <morontt@gmail.com>
 
 VOLUME ["/var/www/html"]
 
+ARG HOST_UID=1000
+
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN echo Europe/Kiev > /etc/timezone && \
@@ -33,9 +35,10 @@ RUN a2enmod rewrite remoteip
 
 RUN curl -sS -o /root/.bash_aliases https://raw.githubusercontent.com/morontt/dotfiles/master/ubuntu/.bash_aliases
 
-RUN set -x && curl -sS https://getcomposer.org/installer | php \
-    && mv composer.phar /usr/local/bin/composer
+RUN set -x && curl -sSL -o composer.phar https://github.com/composer/composer/releases/download/1.3.3/composer.phar \
+    && chmod a+x composer.phar && mv composer.phar /usr/local/bin/composer
 
-RUN usermod -u 1000 www-data
+RUN usermod -u ${HOST_UID} www-data
+RUN groupmod -g ${HOST_UID} www-data
 
 EXPOSE 80

@@ -1,7 +1,10 @@
 version: '2'
 services:
     hedgehog:
-        build: ./var/docker/db
+        build:
+            context: ./var/docker/db
+            args:
+                HOST_UID: ${HOST_UID}
         volumes:
             - ./var/db_data:/var/lib/mysql
         environment:
@@ -11,7 +14,10 @@ services:
             MYSQL_PASSWORD: docker
 
     rhinoceros:
-        build: ./var/docker/web
+        build:
+            context: ./var/docker/web
+            args:
+                HOST_UID: ${HOST_UID}
         volumes:
             - .:/var/www/html
         ports:
