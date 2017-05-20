@@ -3,14 +3,14 @@
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Utils\RuTransform;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadPostData extends AbstractFixture implements ContainerAwareInterface, OrderedFixtureInterface
+class LoadPostData extends AbstractFixture implements ContainerAwareInterface, DependentFixtureInterface
 {
     /**
      * @var ContainerInterface
@@ -95,10 +95,14 @@ class LoadPostData extends AbstractFixture implements ContainerAwareInterface, O
     }
 
     /**
-     * @return int
+     * @return array
      */
-    public function getOrder()
+    public function getDependencies()
     {
-        return 6;
+        return [
+            LoadCategoryData::class,
+            LoadMediaFileData::class,
+            LoadTagData::class,
+        ];
     }
 }

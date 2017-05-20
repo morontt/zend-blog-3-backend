@@ -3,12 +3,11 @@
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Mtt\BlogBundle\Entity\Category;
 use Mtt\BlogBundle\Utils\RuTransform;
 
-class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterface
+class LoadCategoryData extends AbstractFixture
 {
     /**
      * @param \Doctrine\Common\Persistence\ObjectManager $manager
@@ -57,13 +56,5 @@ class LoadCategoryData extends AbstractFixture implements OrderedFixtureInterfac
         $manager->flush();
 
         $this->addReference('category-jquery', $category5);
-    }
-
-    /**
-     * @return int
-     */
-    public function getOrder()
-    {
-        return 3;
     }
 }

@@ -9,11 +9,10 @@
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Mtt\BlogBundle\Entity\MediaFile;
 
-class LoadMediaFileData extends AbstractFixture implements OrderedFixtureInterface
+class LoadMediaFileData extends AbstractFixture
 {
     /**
      * @param \Doctrine\Common\Persistence\ObjectManager $manager
@@ -33,13 +32,5 @@ class LoadMediaFileData extends AbstractFixture implements OrderedFixtureInterfa
         $manager->flush();
 
         $this->addReference('file-1', $file);
-    }
-
-    /**
-     * @return int
-     */
-    public function getOrder()
-    {
-        return 5;
     }
 }

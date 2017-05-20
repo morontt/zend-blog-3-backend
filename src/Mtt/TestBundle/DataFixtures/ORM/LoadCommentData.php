@@ -3,11 +3,11 @@
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Mtt\BlogBundle\Entity\Comment;
 
-class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
+class LoadCommentData extends AbstractFixture implements DependentFixtureInterface
 {
     /**
      * @param \Doctrine\Common\Persistence\ObjectManager $manager
@@ -35,10 +35,14 @@ class LoadCommentData extends AbstractFixture implements OrderedFixtureInterface
     }
 
     /**
-     * @return int
+     * @return array
      */
-    public function getOrder()
+    public function getDependencies()
     {
-        return 10;
+        return [
+            LoadCommentatorData::class,
+            LoadPostData::class,
+            LoadUserData::class,
+        ];
     }
 }

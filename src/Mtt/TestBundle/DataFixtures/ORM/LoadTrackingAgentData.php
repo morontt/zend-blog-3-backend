@@ -3,11 +3,10 @@
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Mtt\BlogBundle\Entity\TrackingAgent;
 
-class LoadTrackingAgentData extends AbstractFixture implements OrderedFixtureInterface
+class LoadTrackingAgentData extends AbstractFixture
 {
     /**
      * @param \Doctrine\Common\Persistence\ObjectManager $manager
@@ -31,13 +30,5 @@ class LoadTrackingAgentData extends AbstractFixture implements OrderedFixtureInt
         $manager->flush();
 
         $this->addReference('twitterbot', $agent2);
-    }
-
-    /**
-     * @return int
-     */
-    public function getOrder()
-    {
-        return 7;
     }
 }

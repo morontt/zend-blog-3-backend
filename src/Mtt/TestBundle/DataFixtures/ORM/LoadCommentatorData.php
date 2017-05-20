@@ -3,11 +3,10 @@
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Mtt\BlogBundle\Entity\Commentator;
 
-class LoadCommentatorData extends AbstractFixture implements OrderedFixtureInterface
+class LoadCommentatorData extends AbstractFixture
 {
     /**
      * @param \Doctrine\Common\Persistence\ObjectManager $manager
@@ -23,13 +22,5 @@ class LoadCommentatorData extends AbstractFixture implements OrderedFixtureInter
         $manager->flush();
 
         $this->addReference('commentator-1', $commentator);
-    }
-
-    /**
-     * @return int
-     */
-    public function getOrder()
-    {
-        return 9;
     }
 }

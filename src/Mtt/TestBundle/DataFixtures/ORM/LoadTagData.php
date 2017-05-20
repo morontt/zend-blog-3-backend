@@ -3,12 +3,11 @@
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Mtt\BlogBundle\Entity\Tag;
 use Mtt\BlogBundle\Utils\RuTransform;
 
-class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
+class LoadTagData extends AbstractFixture
 {
     /**
      * @param \Doctrine\Common\Persistence\ObjectManager $manager
@@ -46,13 +45,5 @@ class LoadTagData extends AbstractFixture implements OrderedFixtureInterface
         $manager->flush();
 
         $this->addReference('tag-javascript', $tag4);
-    }
-
-    /**
-     * @return int
-     */
-    public function getOrder()
-    {
-        return 4;
     }
 }

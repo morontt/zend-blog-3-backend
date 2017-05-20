@@ -3,11 +3,11 @@
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Mtt\BlogBundle\Entity\Tracking;
 
-class LoadTrackingData extends AbstractFixture implements OrderedFixtureInterface
+class LoadTrackingData extends AbstractFixture implements DependentFixtureInterface
 {
     /**
      * @param \Doctrine\Common\Persistence\ObjectManager $manager
@@ -32,10 +32,12 @@ class LoadTrackingData extends AbstractFixture implements OrderedFixtureInterfac
     }
 
     /**
-     * @return int
+     * @return array
      */
-    public function getOrder()
+    public function getDependencies()
     {
-        return 8;
+        return [
+            LoadTrackingAgentData::class,
+        ];
     }
 }
