@@ -1,5 +1,5 @@
 {
-    "name": "zend-blog-3",
+    "name": "zend-blog-3/backend",
     "license": "MIT",
     "type": "project",
     "description": "zend-blog ver.3, backend",
@@ -10,16 +10,19 @@
     "require": {
         "ext-xml": "*",
         "ext-pdo_mysql": "*",
-        "symfony/symfony": "2.8.*",
-        "doctrine/orm": "^2.4.8",
-        "doctrine/doctrine-bundle": "~1.4",
-        "symfony/swiftmailer-bundle": "~2.3",
-        "symfony/monolog-bundle": "~2.4",
-        "sensio/distribution-bundle": "~5.0",
+        "symfony/symfony": "3.2.*",
+        "doctrine/orm": "^2.5",
+        "doctrine/doctrine-bundle": "^1.6",
+        "symfony/swiftmailer-bundle": "^2.3.10",
+        "symfony/monolog-bundle": "^3.0.2",
+        "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
-        "incenteev/composer-parameter-handler": "~2.0",
+        "incenteev/composer-parameter-handler": "^2.0",
         "doctrine/doctrine-migrations-bundle": "^1.0",
         "symfony/assetic-bundle": "~2.3",
+        "doctrine/doctrine-cache-bundle": "^1.2",
+        "symfony/polyfill-apcu": "^1.0",
+        "twig/twig": "^1.0||^2.0",
         "league/fractal": "0.12.0",
         "league/flysystem-dropbox": "1.0.*",
         "knplabs/knp-paginator-bundle": "~2.4",
@@ -29,13 +32,14 @@
         "dropbox/dropbox-sdk": "1.1.*"
     },
     "require-dev": {
-        "sensio/generator-bundle": "~3.0",
+        "sensio/generator-bundle": "^3.0",
+        "symfony/phpunit-bridge": "^3.0",
         "doctrine/doctrine-fixtures-bundle": "2.3.*",
         "morontt/doctrine-to-ember": "dev-master",
         "friendsofphp/php-cs-fixer": "1.13.1",
         "behat/symfony2-extension": "~2.0@dev",
-        "behat/mink-extension": "2.0.*",
-        "behat/mink-goutte-driver": "1.1.*",
+        "behat/mink-extension": "~2.2",
+        "behat/mink-goutte-driver": "1.2.*",
         "vipsoft/doctrine-data-fixtures-extension": "dev-master",
         "phpspec/phpspec": "~2.2"
     },
@@ -57,21 +61,20 @@
         }
     ],
     "scripts": {
-        "post-install-cmd": [
+        "symfony-scripts": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles"
         ],
+        "post-install-cmd": [
+            "@symfony-scripts"
+        ],
         "post-update-cmd": [
-            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::removeSymfonyStandardFiles"
+            "@symfony-scripts"
         ]
     },
     "config": {
@@ -82,12 +85,14 @@
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",
+        "symfony-bin-dir": "app",
+        "symfony-var-dir": "var",
         "symfony-assets-install": "symlink",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
         },
         "branch-alias": {
-            "dev-master": "2.8-dev"
+            "dev-master": "3.2-dev"
         }
     }
 }
