@@ -16,7 +16,7 @@ parameters:
     debug_toolbar: false
     debug_redirects: false
     use_assetic_controller: false
-    nodemodules_bin_path: /home/ubuntu/nvm/versions/node/v4.5.0/bin
+    nodemodules_bin_path: /opt/circleci/nodejs/v4.5.0/bin
     browsertitle: zendblog-3.loc
     amazon_key: e432d582d9b692d0cf41
     amazon_secret: 8594ec111a779b47b09b30b8c5d44cd66a5119bf

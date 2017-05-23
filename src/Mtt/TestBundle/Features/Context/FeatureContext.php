@@ -4,6 +4,7 @@ namespace Mtt\TestBundle\Features\Context;
 
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Behat\Hook\Scope\AfterStepScope;
 use Behat\MinkExtension\Context\MinkContext;
 
 /**
@@ -31,5 +32,20 @@ class FeatureContext extends MinkContext implements Context, SnippetAcceptingCon
         $this->fillField('_username', 'admin');
         $this->fillField('_password', 'test');
         $this->pressButton('login');
+    }
+
+    /**
+     * @AfterStep
+     *
+     * @param AfterStepScope $event
+     */
+    public function printLastResponseOnError(AfterStepScope $event)
+    {
+        if (!$event->getTestResult()->isPassed() && getenv('CIRCLE_ARTIFACTS')) {
+            file_put_contents(
+                getenv('CIRCLE_ARTIFACTS') . '/' . uniqid() . '.html',
+                $this->getSession()->getDriver()->getContent()
+            );
+        }
     }
 }

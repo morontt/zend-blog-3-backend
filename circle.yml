@@ -4,7 +4,7 @@ machine:
   hosts:
     zendblog-3.loc: 127.0.0.1
   php:
-    version: 5.5.9
+    version: 7.1.3
   node:
     version: v4.5.0
 
@@ -30,9 +30,10 @@ dependencies:
     - ./buildapp.sh -i
     - app/console assetic:dump -e test --no-debug
   post:
-    - cp ./var/ci/zendblog-3.loc.conf /etc/apache2/sites-available
-    - echo "date.timezone = Europe/Zaporozhye" >> ~/.phpenv/versions/5.5.9/etc/php.ini
-    - a2ensite zendblog-3.loc.conf
+    - sudo cp ./var/ci/zendblog-3.loc.conf /etc/apache2/sites-available
+    - echo "date.timezone = Europe/Zaporozhye" >> /opt/circleci/php/$(phpenv global)/etc/php.ini
+    - sudo a2ensite zendblog-3.loc.conf
+    - sudo a2dismod php5
     - sudo service apache2 restart
 
 database:
@@ -44,8 +45,8 @@ database:
 
 test:
   pre:
-    - chmod -R 777 app/cache
-    - chmod -R 777 app/logs
+    - chmod -R 777 var/cache
+    - chmod -R 777 var/logs
   override:
     - bin/php-cs-fixer fix --dry-run --diff
     - bin/behat @MttTestBundle
