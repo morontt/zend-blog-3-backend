@@ -67,7 +67,7 @@ class Comment
     /**
      * @var bool
      *
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", options={"default": false})
      */
     protected $deleted = false;
 
