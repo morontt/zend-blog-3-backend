@@ -15,10 +15,9 @@
         <thead>
         <tr>
             <th class="center-text">#id</th>
-            <th>Комментатор</th>
+            <th colspan="2">Комментатор</th>
             <th>Комментарий</th>
             <th>IP</th>
-            <th></th>
             <th class="text-right text-date">Отправлен</th>
             <th class="text-right">Disqus ID</th>
             {{!-- <th class="actions">&nbsp;</th> --}}
@@ -29,14 +28,24 @@
             <tr>
                 <td class="center-text">{{comment.id}}</td>
                 <td>
-                    <strong>{{comment.commentator.name}}</strong>
+                    <img src="{{comment.gravatarUrl}}" alt="avatar"/>
+                </td>
+                <td>
+                    {{#if comment.website}}
+                        <a href="{{comment.website}}"><strong>{{comment.username}}</strong></a>
+                    {{else}}
+                        <strong>{{comment.username}}</strong>
+                    {{/if}}
+                    {{#if comment.email}}
+                        <br/><small>&lt;{{comment.email}}&gt;</small>
+                    {{/if}}
                 </td>
                 <td>{{cut-string comment.text 120}}</td>
-                <td>{{comment.ipAddr}}</td>
                 <td>
+                    {{comment.ipAddr}}
                     {{#if comment.city}}
-                        {{comment.city}},<br/>
-                        {{comment.country}}
+                        <br/><br/>
+                        <small>{{comment.city}}, {{comment.region}}<br/>{{comment.country}}</small>
                     {{/if}}
                 </td>
                 <td>{{date-format comment.createdAt 'DD.MM.YYYY, HH:mm'}}</td>

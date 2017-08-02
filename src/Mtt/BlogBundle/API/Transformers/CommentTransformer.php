@@ -9,45 +9,79 @@
 namespace Mtt\BlogBundle\API\Transformers;
 
 use Mtt\BlogBundle\Entity\Comment;
+use Mtt\BlogBundle\Entity\ViewComment;
 
 class CommentTransformer extends BaseTransformer
 {
     /**
      * @var array
      */
-    protected $defaultIncludes = [
-        'Commentator',
+    protected $availableIncludes = [
+        'commentator',
     ];
 
     /**
-     * @param Comment $item
+     * @param Comment|ViewComment $item
      *
      * @return array
      */
-    public function transform(Comment $item)
+    public function transform($item): array
     {
-        $commentator = $item->getCommentator();
         $commentatorId = null;
-        if ($commentator) {
-            $commentatorId = $commentator->getId();
-        }
+        $username = null;
+        $email = null;
+        $website = null;
+        $locationCity = null;
+        $locationRegion = null;
+        $locationCountry = null;
+        $emailHash = null;
 
-        $location = $item->getGeoLocation();
-        if ($location) {
-            $city = $location->getCity();
-            $locationCity = $city->getCity();
-            $locationRegion = $city->getRegion();
-            $locationCountry = $city->getCountry()->getName();
-        } else {
-            $locationCity = null;
-            $locationRegion = null;
-            $locationCountry = null;
+        if ($item instanceof Comment) {
+            $commentator = $item->getCommentator();
+            if ($commentator) {
+                $commentatorId = $commentator->getId();
+                $username = $commentator->getName();
+                $email = $commentator->getMail();
+                $website = $commentator->getWebsite();
+                $emailHash = $commentator->getEmailHash();
+            } else {
+                $user = $item->getUser();
+                if ($user) {
+                    $username = $user->getUsername();
+                    $email = $user->getMail();
+                    $emailHash = $user->getEmailHash();
+                }
+            }
+
+            $location = $item->getGeoLocation();
+            if ($location) {
+                $city = $location->getCity();
+                $locationCity = $city->getCity();
+                $locationRegion = $city->getRegion();
+                $locationCountry = $city->getCountry()->getName();
+            }
+        } elseif ($item instanceof ViewComment) {
+            $commentatorId = $item->getVirtualUserId();
+
+            $username = $item->getUsername();
+            $email = $item->getEmail();
+            $website = $item->getWebsite();
+            $emailHash = $item->getEmailHash();
+
+            $locationCity = $item->getCity();
+            $locationRegion = $item->getRegion();
+            $locationCountry = $item->getCountry();
         }
 
         $data = [
             'id' => $item->getId(),
             'text' => $item->getText(),
             'commentator' => $commentatorId,
+            'commentatorId' => $commentatorId,
+            'username' => $username,
+            'email' => $email,
+            'website' => $website,
+            'emailHash' => $emailHash,
             'ipAddr' => $item->getIpAddress(),
             'disqusId' => (int)$item->getDisqusId(),
             'city' => $locationCity,

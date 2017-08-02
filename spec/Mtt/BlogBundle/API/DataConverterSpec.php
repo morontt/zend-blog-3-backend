@@ -34,13 +34,15 @@ class DataConverterSpec extends ObjectBehavior
             ->setUrl('test-url')
         ;
 
-        $this->getTag($tag)->shouldReturn([
-            'tag' => [
-                'id' => null,
-                'name' => 'test-name',
-                'url' => 'test-url',
-            ],
-        ]);
+        $this->getTag($tag)->shouldReturn(
+            [
+                'tag' => [
+                    'id' => null,
+                    'name' => 'test-name',
+                    'url' => 'test-url',
+                ],
+            ]
+        );
 
         $tag2 = new Tag();
         $tag2
@@ -48,20 +50,22 @@ class DataConverterSpec extends ObjectBehavior
             ->setUrl('test2-url')
         ;
 
-        $this->getTagArray([$tag, $tag2])->shouldReturn([
-            'tags' => [
-                [
-                    'id' => null,
-                    'name' => 'test-name',
-                    'url' => 'test-url',
+        $this->getTagArray([$tag, $tag2])->shouldReturn(
+            [
+                'tags' => [
+                    [
+                        'id' => null,
+                        'name' => 'test-name',
+                        'url' => 'test-url',
+                    ],
+                    [
+                        'id' => null,
+                        'name' => 'test2-name',
+                        'url' => 'test2-url',
+                    ],
                 ],
-                [
-                    'id' => null,
-                    'name' => 'test2-name',
-                    'url' => 'test2-url',
-                ],
-            ],
-        ]);
+            ]
+        );
     }
 
     public function it_is_get_category()
@@ -72,15 +76,17 @@ class DataConverterSpec extends ObjectBehavior
             ->setUrl('test-url')
         ;
 
-        $this->getCategory($category)->shouldReturn([
-            'category' => [
-                'id' => null,
-                'name' => 'test-name',
-                'url' => 'test-url',
-                'parent' => null,
-                'parentId' => null,
-            ],
-        ]);
+        $this->getCategory($category)->shouldReturn(
+            [
+                'category' => [
+                    'id' => null,
+                    'name' => 'test-name',
+                    'url' => 'test-url',
+                    'parent' => null,
+                    'parentId' => null,
+                ],
+            ]
+        );
 
         $category2 = new Category();
         $category2
@@ -88,24 +94,26 @@ class DataConverterSpec extends ObjectBehavior
             ->setUrl('test2-url')
         ;
 
-        $this->getCategoryArray([$category, $category2])->shouldReturn([
-            'categories' => [
-                [
-                    'id' => null,
-                    'name' => 'test-name',
-                    'url' => 'test-url',
-                    'parent' => null,
-                    'parentId' => null,
+        $this->getCategoryArray([$category, $category2])->shouldReturn(
+            [
+                'categories' => [
+                    [
+                        'id' => null,
+                        'name' => 'test-name',
+                        'url' => 'test-url',
+                        'parent' => null,
+                        'parentId' => null,
+                    ],
+                    [
+                        'id' => null,
+                        'name' => 'test2-name',
+                        'url' => 'test2-url',
+                        'parent' => null,
+                        'parentId' => null,
+                    ],
                 ],
-                [
-                    'id' => null,
-                    'name' => 'test2-name',
-                    'url' => 'test2-url',
-                    'parent' => null,
-                    'parentId' => null,
-                ],
-            ],
-        ]);
+            ]
+        );
     }
 
     public function it_is_get_commentator()
@@ -119,16 +127,18 @@ class DataConverterSpec extends ObjectBehavior
             ->setEmailHash(md5('commentator@example.org'))
         ;
 
-        $this->getCommentator($commentator)->shouldReturn([
-            'commentator' => [
-                'id' => null,
-                'name' => 'test-name',
-                'email' => 'commentator@example.org',
-                'website' => 'http://example.org',
-                'disqusId' => 0,
-                'emailHash' => md5('commentator@example.org'),
-            ],
-        ]);
+        $this->getCommentator($commentator)->shouldReturn(
+            [
+                'commentator' => [
+                    'id' => null,
+                    'name' => 'test-name',
+                    'email' => 'commentator@example.org',
+                    'website' => 'http://example.org',
+                    'disqusId' => 0,
+                    'emailHash' => md5('commentator@example.org'),
+                ],
+            ]
+        );
 
         $commentator2 = new Commentator();
         $commentator2
@@ -139,26 +149,28 @@ class DataConverterSpec extends ObjectBehavior
             ->setEmailHash(md5('two@example.org'))
         ;
 
-        $this->getCommentatorArray([$commentator, $commentator2])->shouldReturn([
-            'commentators' => [
-                [
-                    'id' => null,
-                    'name' => 'test-name',
-                    'email' => 'commentator@example.org',
-                    'website' => 'http://example.org',
-                    'disqusId' => 0,
-                    'emailHash' => md5('commentator@example.org'),
+        $this->getCommentatorArray([$commentator, $commentator2])->shouldReturn(
+            [
+                'commentators' => [
+                    [
+                        'id' => null,
+                        'name' => 'test-name',
+                        'email' => 'commentator@example.org',
+                        'website' => 'http://example.org',
+                        'disqusId' => 0,
+                        'emailHash' => md5('commentator@example.org'),
+                    ],
+                    [
+                        'id' => null,
+                        'name' => 'test2-name',
+                        'email' => 'two@example.org',
+                        'website' => 'http://example.com',
+                        'disqusId' => 55,
+                        'emailHash' => md5('two@example.org'),
+                    ],
                 ],
-                [
-                    'id' => null,
-                    'name' => 'test2-name',
-                    'email' => 'two@example.org',
-                    'website' => 'http://example.com',
-                    'disqusId' => 55,
-                    'emailHash' => md5('two@example.org'),
-                ],
-            ],
-        ]);
+            ]
+        );
     }
 
     public function it_is_get_comment()
@@ -171,20 +183,26 @@ class DataConverterSpec extends ObjectBehavior
             ->setTimeCreated(\DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-28 01:30:49'))
         ;
 
-        $this->getComment($comment)->shouldReturn([
-            'comment' => [
-                'id' => null,
-                'text' => 'Тестовый комментарий',
-                'commentator' => null,
-                'ipAddr' => '94.231.112.91',
-                'disqusId' => 74,
-                'city' => null,
-                'region' => null,
-                'country' => null,
-                'createdAt' => '2016-02-28T01:30:49+0200',
-            ],
-            'commentators' => [],
-        ]);
+        $this->getComment($comment)->shouldReturn(
+            [
+                'comment' => [
+                    'id' => null,
+                    'text' => 'Тестовый комментарий',
+                    'commentator' => null,
+                    'commentatorId' => null,
+                    'username' => null,
+                    'email' => null,
+                    'website' => null,
+                    'emailHash' => null,
+                    'ipAddr' => '94.231.112.91',
+                    'disqusId' => 74,
+                    'city' => null,
+                    'region' => null,
+                    'country' => null,
+                    'createdAt' => '2016-02-28T01:30:49+0200',
+                ],
+            ]
+        );
 
         $comment2 = new Comment();
         $comment2
@@ -224,42 +242,77 @@ class DataConverterSpec extends ObjectBehavior
 
         $comment2->setCommentator($commentator);
 
-        $this->getCommentArray([$comment, $comment2])->shouldReturn([
-            'comments' => [
-                [
-                    'id' => null,
-                    'text' => 'Тестовый комментарий',
-                    'commentator' => null,
-                    'ipAddr' => '94.231.112.91',
-                    'disqusId' => 74,
-                    'city' => null,
-                    'region' => null,
-                    'country' => null,
-                    'createdAt' => '2016-02-28T01:30:49+0200',
+        $this->getCommentArray([$comment, $comment2])->shouldReturn(
+            [
+                'comments' => [
+                    [
+                        'id' => null,
+                        'text' => 'Тестовый комментарий',
+                        'commentator' => null,
+                        'commentatorId' => null,
+                        'username' => null,
+                        'email' => null,
+                        'website' => null,
+                        'emailHash' => null,
+                        'ipAddr' => '94.231.112.91',
+                        'disqusId' => 74,
+                        'city' => null,
+                        'region' => null,
+                        'country' => null,
+                        'createdAt' => '2016-02-28T01:30:49+0200',
+                    ],
+                    [
+                        'id' => null,
+                        'text' => 'йцук фыва олдж',
+                        'commentator' => null,
+                        'commentatorId' => null,
+                        'username' => 'test-name',
+                        'email' => 'commentator@example.org',
+                        'website' => 'http://example.org',
+                        'emailHash' => '093952cf493f61237fafcc5888f0f631',
+                        'ipAddr' => '62.72.188.111',
+                        'disqusId' => 0,
+                        'city' => 'Frankfurt am Main',
+                        'region' => 'Hessen',
+                        'country' => 'Germany',
+                        'createdAt' => '2016-02-28T01:43:14+0200',
+                    ],
                 ],
-                [
-                    'id' => null,
-                    'text' => 'йцук фыва олдж',
-                    'commentator' => null,
-                    'ipAddr' => '62.72.188.111',
-                    'disqusId' => 0,
-                    'city' => 'Frankfurt am Main',
-                    'region' => 'Hessen',
-                    'country' => 'Germany',
-                    'createdAt' => '2016-02-28T01:43:14+0200',
+            ]
+        );
+
+        $this->getCommentArray([$comment2], 'commentator')->shouldReturn(
+            [
+                'comments' => [
+                    [
+                        'id' => null,
+                        'text' => 'йцук фыва олдж',
+                        'commentator' => null,
+                        'commentatorId' => null,
+                        'username' => 'test-name',
+                        'email' => 'commentator@example.org',
+                        'website' => 'http://example.org',
+                        'emailHash' => '093952cf493f61237fafcc5888f0f631',
+                        'ipAddr' => '62.72.188.111',
+                        'disqusId' => 0,
+                        'city' => 'Frankfurt am Main',
+                        'region' => 'Hessen',
+                        'country' => 'Germany',
+                        'createdAt' => '2016-02-28T01:43:14+0200',
+                    ],
                 ],
-            ],
-            'commentators' => [
-                [
-                    'id' => null,
-                    'name' => 'test-name',
-                    'email' => 'commentator@example.org',
-                    'website' => 'http://example.org',
-                    'disqusId' => 0,
-                    'emailHash' => md5('commentator@example.org'),
+                'commentators' => [
+                    [
+                        'id' => null,
+                        'name' => 'test-name',
+                        'email' => 'commentator@example.org',
+                        'website' => 'http://example.org',
+                        'disqusId' => 0,
+                        'emailHash' => '093952cf493f61237fafcc5888f0f631',
+                    ],
                 ],
-            ],
-        ]);
+            ]
+        );
     }
 
     public function it_is_get_post()
@@ -282,30 +335,32 @@ class DataConverterSpec extends ObjectBehavior
             ->setLastUpdate(\DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-07 22:40:24'))
         ;
 
-        $this->getPost($post, 'category')->shouldReturn([
-            'post' => [
-                'id' => null,
-                'title' => 'ещё о PHP',
-                'url' => 'esce-o-php',
-                'category' => null,
-                'categoryId' => null,
-                'hidden' => false,
-                'text' => '<p>Ещё одна запись о PHP</p>',
-                'description' => 'description PHP',
-                'tagsString' => '',
-                'timeCreated' => '2016-02-07T22:40:24+0200',
-                'lastUpdate' => '2016-02-07T22:40:24+0200',
-            ],
-            'categories' => [
-                [
+        $this->getPost($post, 'category')->shouldReturn(
+            [
+                'post' => [
                     'id' => null,
-                    'name' => 'PHP',
-                    'url' => 'php',
-                    'parent' => null,
-                    'parentId' => null,
+                    'title' => 'ещё о PHP',
+                    'url' => 'esce-o-php',
+                    'category' => null,
+                    'categoryId' => null,
+                    'hidden' => false,
+                    'text' => '<p>Ещё одна запись о PHP</p>',
+                    'description' => 'description PHP',
+                    'tagsString' => '',
+                    'timeCreated' => '2016-02-07T22:40:24+0200',
+                    'lastUpdate' => '2016-02-07T22:40:24+0200',
                 ],
-            ],
-        ]);
+                'categories' => [
+                    [
+                        'id' => null,
+                        'name' => 'PHP',
+                        'url' => 'php',
+                        'parent' => null,
+                        'parentId' => null,
+                    ],
+                ],
+            ]
+        );
 
         $post2 = new Post();
         $post2
@@ -320,51 +375,53 @@ class DataConverterSpec extends ObjectBehavior
         ;
 
         //TODO duplicate categories
-        $this->getPostArray([$post, $post2], 'category')->shouldReturn([
-            'posts' => [
-                [
-                    'id' => null,
-                    'title' => 'ещё о PHP',
-                    'url' => 'esce-o-php',
-                    'category' => null,
-                    'categoryId' => null,
-                    'hidden' => false,
-                    'text' => '<p>Ещё одна запись о PHP</p>',
-                    'description' => 'description PHP',
-                    'tagsString' => '',
-                    'timeCreated' => '2016-02-07T22:40:24+0200',
-                    'lastUpdate' => '2016-02-07T22:40:24+0200',
+        $this->getPostArray([$post, $post2], 'category')->shouldReturn(
+            [
+                'posts' => [
+                    [
+                        'id' => null,
+                        'title' => 'ещё о PHP',
+                        'url' => 'esce-o-php',
+                        'category' => null,
+                        'categoryId' => null,
+                        'hidden' => false,
+                        'text' => '<p>Ещё одна запись о PHP</p>',
+                        'description' => 'description PHP',
+                        'tagsString' => '',
+                        'timeCreated' => '2016-02-07T22:40:24+0200',
+                        'lastUpdate' => '2016-02-07T22:40:24+0200',
+                    ],
+                    [
+                        'id' => null,
+                        'title' => 'Тестовая запись',
+                        'url' => 'testovaya-zapis',
+                        'category' => null,
+                        'categoryId' => null,
+                        'hidden' => false,
+                        'text' => '<p>Тестовая запись, собственно...</p>',
+                        'description' => 'метатег description',
+                        'tagsString' => '',
+                        'timeCreated' => '2016-01-11T01:05:33+0200',
+                        'lastUpdate' => '2016-01-11T01:05:33+0200',
+                    ],
                 ],
-                [
-                    'id' => null,
-                    'title' => 'Тестовая запись',
-                    'url' => 'testovaya-zapis',
-                    'category' => null,
-                    'categoryId' => null,
-                    'hidden' => false,
-                    'text' => '<p>Тестовая запись, собственно...</p>',
-                    'description' => 'метатег description',
-                    'tagsString' => '',
-                    'timeCreated' => '2016-01-11T01:05:33+0200',
-                    'lastUpdate' => '2016-01-11T01:05:33+0200',
+                'categories' => [
+                    [
+                        'id' => null,
+                        'name' => 'PHP',
+                        'url' => 'php',
+                        'parent' => null,
+                        'parentId' => null,
+                    ],
+                    [
+                        'id' => null,
+                        'name' => 'PHP',
+                        'url' => 'php',
+                        'parent' => null,
+                        'parentId' => null,
+                    ],
                 ],
-            ],
-            'categories' => [
-                [
-                    'id' => null,
-                    'name' => 'PHP',
-                    'url' => 'php',
-                    'parent' => null,
-                    'parentId' => null,
-                ],
-                [
-                    'id' => null,
-                    'name' => 'PHP',
-                    'url' => 'php',
-                    'parent' => null,
-                    'parentId' => null,
-                ],
-            ],
-        ]);
+            ]
+        );
     }
 }

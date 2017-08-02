@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * })
  * @ORM\Entity(repositoryClass="Mtt\BlogBundle\Entity\Repository\CommentatorRepository")
  */
-class Commentator
+class Commentator implements CommentatorInterface
 {
     /**
      * @var int
@@ -93,9 +93,9 @@ class Commentator
     /**
      * Get id
      *
-     * @return int
+     * @return null|int
      */
-    public function getId()
+    public function getId(): ? int
     {
         return $this->id;
     }
@@ -119,7 +119,7 @@ class Commentator
      *
      * @return string
      */
-    public function getName()
+    public function getName() : string
     {
         return $this->name;
     }
@@ -141,9 +141,9 @@ class Commentator
     /**
      * Get mail
      *
-     * @return string
+     * @return null|string
      */
-    public function getMail()
+    public function getMail(): ? string
     {
         return $this->mail;
     }
@@ -165,9 +165,9 @@ class Commentator
     /**
      * Get website
      *
-     * @return string
+     * @return null|string
      */
-    public function getWebsite()
+    public function getWebsite() : ? string
     {
         return $this->website;
     }
@@ -223,9 +223,9 @@ class Commentator
     /**
      * Get disqusId
      *
-     * @return int
+     * @return null|int
      */
-    public function getDisqusId()
+    public function getDisqusId() : ? int
     {
         return $this->disqusId;
     }
@@ -247,9 +247,9 @@ class Commentator
     /**
      * Get emailHash
      *
-     * @return string
+     * @return null|string
      */
-    public function getEmailHash()
+    public function getEmailHash() : ? string
     {
         return $this->emailHash;
     }

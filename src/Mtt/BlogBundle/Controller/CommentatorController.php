@@ -9,6 +9,7 @@
 namespace Mtt\BlogBundle\Controller;
 
 use Mtt\BlogBundle\Entity\Commentator;
+use Mtt\BlogBundle\Entity\ViewCommentator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -48,11 +49,11 @@ class CommentatorController extends BaseController
      * @Route("/{id}", requirements={"id": "\d+"})
      * @Method("GET")
      *
-     * @param Commentator $entity
+     * @param ViewCommentator $entity
      *
      * @return JsonResponse
      */
-    public function findAction(Commentator $entity)
+    public function findAction(ViewCommentator $entity)
     {
         $result = $this->getDataConverter()
             ->getCommentator($entity);

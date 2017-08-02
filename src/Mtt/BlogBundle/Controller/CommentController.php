@@ -32,7 +32,7 @@ class CommentController extends BaseController
     public function findAllAction(Request $request)
     {
         $pagination = $this->paginate(
-            $this->getCommentRepository()->getListQuery(),
+            $this->getViewCommentRepository()->getListQuery(),
             $request->query->get('page', 1),
             30
         );

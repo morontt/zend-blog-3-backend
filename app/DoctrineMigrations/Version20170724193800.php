@@ -51,6 +51,7 @@ class Version20170724193800 extends AbstractMigration implements ContainerAwareI
         );
 
         $this->addSql('DROP VIEW `v_comments`');
+        $this->addSql('DROP VIEW `v_commentators`');
     }
 
     /**
@@ -60,7 +61,7 @@ class Version20170724193800 extends AbstractMigration implements ContainerAwareI
     {
         parent::postUp($schema);
 
-        $sql = <<<'SQL'
+        $sql1 = <<<'SQL'
 CREATE VIEW `v_comments` AS
 SELECT
     c.id,
@@ -87,10 +88,36 @@ LEFT JOIN commentators AS t ON c.commentator_id = t.id
 LEFT JOIN users AS u ON c.user_id = u.id
 SQL;
 
+        $sql2 = <<<'SQL'
+CREATE VIEW `v_commentators` AS
+SELECT
+  c.id,
+  c.name,
+  c.mail,
+  c.website,
+  c.disqus_id,
+  c.email_hash
+FROM commentators AS c
+UNION ALL
+SELECT
+  10000000 + u.id AS id,
+  u.username AS name,
+  u.mail,
+  NULL AS website,
+  NULL AS disqus_id,
+  u.email_hash
+FROM users AS u
+SQL;
+
         $em = $this->container->get('doctrine.orm.entity_manager');
-        $stmt = $em->getConnection()->prepare($sql);
+        $stmt = $em->getConnection()->prepare($sql1);
         $stmt->execute();
 
         $this->write('     <comment>-></comment> CREATE VIEW `v_comments`');
+
+        $stmt = $em->getConnection()->prepare($sql2);
+        $stmt->execute();
+
+        $this->write('     <comment>-></comment> CREATE VIEW `v_commentators`');
     }
 }

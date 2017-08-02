@@ -21,6 +21,7 @@ use Mtt\BlogBundle\API\Transformers\TagTransformer;
 use Mtt\BlogBundle\Entity\Category;
 use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Entity\Commentator;
+use Mtt\BlogBundle\Entity\CommentatorInterface;
 use Mtt\BlogBundle\Entity\MediaFile;
 use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Entity\Tag;
@@ -35,7 +36,7 @@ use Mtt\BlogBundle\Utils\RuTransform;
  * @method array getCategoryArray($collection, $includes = null)
  * @method array getComment(Comment $entity, $includes = null)
  * @method array getCommentArray($collection, $includes = null)
- * @method array getCommentator(Commentator $entity, $includes = null)
+ * @method array getCommentator(CommentatorInterface $entity, $includes = null)
  * @method array getCommentatorArray($collection, $includes = null)
  * @method array getMediaFile(MediaFile $entity, $includes = null)
  * @method array getMediaFileArray($collection, $includes = null)

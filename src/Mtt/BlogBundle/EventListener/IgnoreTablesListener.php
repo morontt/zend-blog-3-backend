@@ -7,11 +7,6 @@ use Doctrine\ORM\Tools\Event\GenerateSchemaEventArgs;
 class IgnoreTablesListener
 {
     /**
-     * @var array
-     */
-    protected $ignoredTables = ['v_comments'];
-
-    /**
      * @param GenerateSchemaEventArgs $args
      */
     public function postGenerateSchema(GenerateSchemaEventArgs $args)
@@ -19,13 +14,9 @@ class IgnoreTablesListener
         $schema = $args->getSchema();
 
         $dbName = $args->getEntityManager()->getConnection()->getDatabase();
-        $ignoredTables = array_map(function ($t) use ($dbName) {
-            return $dbName . '.' . $t;
-        }, $this->ignoredTables);
 
-        $tableNames = $schema->getTableNames();
-        foreach ($tableNames as $tableName) {
-            if (in_array($tableName, $ignoredTables)) {
+        foreach ($schema->getTableNames() as $tableName) {
+            if (strpos($tableName, $dbName . '.v_') === 0) {
                 $schema->dropTable($tableName);
             }
         }

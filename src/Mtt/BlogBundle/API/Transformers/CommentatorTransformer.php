@@ -9,22 +9,23 @@
 namespace Mtt\BlogBundle\API\Transformers;
 
 use Mtt\BlogBundle\Entity\Commentator;
+use Mtt\BlogBundle\Entity\CommentatorInterface;
 
 class CommentatorTransformer extends BaseTransformer
 {
     /**
-     * @param Commentator $item
+     * @param CommentatorInterface $item
      *
      * @return array
      */
-    public function transform(Commentator $item)
+    public function transform(CommentatorInterface $item)
     {
         $data = [
             'id' => $item->getId(),
             'name' => $item->getName(),
             'email' => $item->getMail(),
             'website' => $item->getWebsite(),
-            'disqusId' => (int)$item->getDisqusId(),
+            'disqusId' => $item->getDisqusId(),
             'emailHash' => $item->getEmailHash(),
         ];
 

@@ -53,6 +53,14 @@ class BaseController extends Controller
     }
 
     /**
+     * @return \Mtt\BlogBundle\Entity\Repository\ViewCommentRepository
+     */
+    public function getViewCommentRepository()
+    {
+        return $this->getEm()->getRepository('MttBlogBundle:ViewComment');
+    }
+
+    /**
      * @return \Mtt\BlogBundle\Entity\Repository\PostRepository
      */
     public function getPostRepository()
