@@ -87,6 +87,7 @@ class CommentTransformer extends BaseTransformer
             'city' => $locationCity,
             'region' => $locationRegion,
             'country' => $locationCountry,
+            'deleted' => $item->isDeleted(),
             'createdAt' => $this->dateTimeToISO($item->getTimeCreated()),
         ];
 

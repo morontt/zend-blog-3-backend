@@ -20,55 +20,12 @@
             <th>IP</th>
             <th class="text-right text-date">Отправлен</th>
             <th class="text-right">Disqus ID</th>
-            {{!-- <th class="actions">&nbsp;</th> --}}
+            <th class="actions">&nbsp;</th>
         </tr>
         </thead>
         <tbody>
         {{#each model as |comment|}}
-            <tr>
-                <td class="center-text">{{comment.id}}</td>
-                <td>
-                    <img src="{{comment.gravatarUrl}}" alt="avatar"/>
-                </td>
-                <td>
-                    {{#if comment.website}}
-                        <a href="{{comment.website}}"><strong>{{comment.username}}</strong></a>
-                    {{else}}
-                        <strong>{{comment.username}}</strong>
-                    {{/if}}
-                    {{#if comment.email}}
-                        <br/><small>&lt;{{comment.email}}&gt;</small>
-                    {{/if}}
-                </td>
-                <td>{{cut-string comment.text 120}}</td>
-                <td>
-                    {{comment.ipAddr}}
-                    {{#if comment.city}}
-                        <br/><br/>
-                        <small>{{comment.city}}, {{comment.region}}<br/>{{comment.country}}</small>
-                    {{/if}}
-                </td>
-                <td>{{date-format comment.createdAt 'DD.MM.YYYY, HH:mm'}}</td>
-                <td class="text-right">
-                    {{#if comment.disqusId}}
-                        {{comment.disqusId}}
-                    {{else}}
-                        -
-                    {{/if}}
-                </td>
-                {{!-- <td>
-                    <div class="pull-right">
-                        <a class="btn btn-primary" href="#">
-                            <i class="glyphicon glyphicon-pencil"></i>
-                            <span>edit</span>
-                        </a>
-                        <button class="btn btn-danger btn-confirm">
-                            <i class="glyphicon glyphicon-trash"></i>
-                            <span>delete</span>
-                        </button>
-                    </div>
-                </td> --}}
-            </tr>
+            {{tr-comment comment=comment}}
         {{/each}}
         </tbody>
     </table>
@@ -76,4 +33,6 @@
     {{paginator-list meta=model.meta routeName="comments"}}
 
     {{footer-partial}}
+
+    {{delete-confirm action="removeComment"}}
 </div>

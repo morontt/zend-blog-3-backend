@@ -94,6 +94,13 @@ class Comment
     protected $timeCreated;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $lastUpdate;
+
+    /**
      * @var int
      *
      * @ORM\Column(type="bigint", nullable=true, unique=true)
@@ -112,7 +119,10 @@ class Comment
     {
         $this->children = new ArrayCollection();
 
-        $this->timeCreated = new \DateTime();
+        $now = new \DateTime();
+
+        $this->timeCreated = $now;
+        $this->lastUpdate = $now;
     }
 
     /**
@@ -270,11 +280,11 @@ class Comment
     }
 
     /**
-     * Get deleted
+     * Is deleted
      *
      * @return bool
      */
-    public function getDeleted()
+    public function isDeleted()
     {
         return $this->deleted;
     }
@@ -325,6 +335,30 @@ class Comment
     public function getTimeCreated()
     {
         return $this->timeCreated;
+    }
+
+    /**
+     * Set lastUpdate
+     *
+     * @param \DateTime $lastUpdate
+     *
+     * @return Comment
+     */
+    public function setLastUpdate($lastUpdate)
+    {
+        $this->lastUpdate = $lastUpdate;
+
+        return $this;
+    }
+
+    /**
+     * Get lastUpdate
+     *
+     * @return \DateTime
+     */
+    public function getLastUpdate()
+    {
+        return $this->lastUpdate;
     }
 
     /**

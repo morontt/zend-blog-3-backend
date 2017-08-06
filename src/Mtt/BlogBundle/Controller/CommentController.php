@@ -60,4 +60,20 @@ class CommentController extends BaseController
 
         return new JsonResponse($result);
     }
+
+    /**
+     * @Route("/{id}", requirements={"id": "\d+"})
+     * @Method("DELETE")
+     *
+     * @param Comment $entity
+     *
+     * @return JsonResponse
+     */
+    public function deleteAction(Comment $entity)
+    {
+        $entity->setDeleted(true);
+        $this->getEm()->flush();
+
+        return new JsonResponse(true);
+    }
 }

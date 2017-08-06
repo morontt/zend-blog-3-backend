@@ -1,0 +1,94 @@
+{{#if isEditing}}
+    <td class="center-text">{{comment.id}}</td>
+    <td>
+        <img src="{{comment.gravatarUrl}}" alt="avatar"/>
+    </td>
+    <td>
+        {{#if comment.website}}
+            <a href="{{comment.website}}"><strong>{{comment.username}}</strong></a>
+        {{else}}
+            <strong>{{comment.username}}</strong>
+        {{/if}}
+        {{#if comment.email}}
+            <br/><small>&lt;{{comment.email}}&gt;</small>
+        {{/if}}
+    </td>
+    <td>{{cut-string comment.text 120}}</td>
+    <td>
+        {{comment.ipAddr}}
+        {{#if comment.city}}
+            <br/><br/>
+            <small>{{comment.city}}, {{comment.region}}<br/>{{comment.country}}</small>
+        {{/if}}
+    </td>
+    <td>{{date-format comment.createdAt 'DD.MM.YYYY, HH:mm'}}</td>
+    <td class="text-right">
+        {{#if comment.disqusId}}
+            {{comment.disqusId}}
+        {{else}}
+            -
+        {{/if}}
+    </td>
+    <td>
+        <div class="pull-right">
+            <a class="btn btn-success" {{action "save"}}>
+                <i class="glyphicon glyphicon-ok"></i>
+                <span>save</span>
+            </a>
+            <button class="btn btn-warning btn-confirm" {{action "reset"}}>
+                <i class="glyphicon glyphicon-remove"></i>
+                <span>reset</span>
+            </button>
+        </div>
+    </td>
+{{else}}
+    <td class="center-text">{{comment.id}}</td>
+    <td>
+        <img src="{{comment.gravatarUrl}}" alt="avatar"/>
+    </td>
+    <td>
+        {{#if comment.website}}
+            <a href="{{comment.website}}"><strong>{{comment.username}}</strong></a>
+        {{else}}
+            <strong>{{comment.username}}</strong>
+        {{/if}}
+        {{#if comment.email}}
+            <br/><small>&lt;{{comment.email}}&gt;</small>
+        {{/if}}
+    </td>
+    <td>{{cut-string comment.text 120}}</td>
+    <td>
+        {{comment.ipAddr}}
+        {{#if comment.city}}
+            <br/><br/>
+            <small>{{comment.city}}, {{comment.region}}<br/>{{comment.country}}</small>
+        {{/if}}
+    </td>
+    <td>{{date-format comment.createdAt 'DD.MM.YYYY, HH:mm'}}</td>
+    <td class="text-right">
+        {{#if comment.disqusId}}
+            {{comment.disqusId}}
+        {{else}}
+            -
+        {{/if}}
+    </td>
+    <td>
+        <div class="pull-right" >
+            <a class="btn btn-primary" href="#" {{action "edit"}}>
+                <i class="glyphicon glyphicon-pencil"></i>
+                <span>edit</span>
+            </a>
+            {{#unless comment.deleted}}
+                <button class="btn btn-danger btn-confirm" {{action "remove"}}>
+                    <i class="glyphicon glyphicon-trash"></i>
+                    <span>delete</span>
+                </button>
+            {{else}}
+                <button class="btn btn-default" disabled>
+                    <i class="glyphicon glyphicon-trash"></i>
+                    <span>delete</span>
+                </button>
+            {{/unless}}
+        </div>
+    </td>
+{{/if}}

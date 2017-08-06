@@ -199,6 +199,7 @@ class DataConverterSpec extends ObjectBehavior
                     'city' => null,
                     'region' => null,
                     'country' => null,
+                    'deleted' => false,
                     'createdAt' => '2016-02-28T01:30:49+0200',
                 ],
             ]
@@ -259,6 +260,7 @@ class DataConverterSpec extends ObjectBehavior
                         'city' => null,
                         'region' => null,
                         'country' => null,
+                        'deleted' => false,
                         'createdAt' => '2016-02-28T01:30:49+0200',
                     ],
                     [
@@ -275,6 +277,7 @@ class DataConverterSpec extends ObjectBehavior
                         'city' => 'Frankfurt am Main',
                         'region' => 'Hessen',
                         'country' => 'Germany',
+                        'deleted' => false,
                         'createdAt' => '2016-02-28T01:43:14+0200',
                     ],
                 ],
@@ -298,6 +301,7 @@ class DataConverterSpec extends ObjectBehavior
                         'city' => 'Frankfurt am Main',
                         'region' => 'Hessen',
                         'country' => 'Germany',
+                        'deleted' => false,
                         'createdAt' => '2016-02-28T01:43:14+0200',
                     ],
                 ],

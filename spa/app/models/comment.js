@@ -13,6 +13,7 @@ export default DS.Model.extend({
     city: DS.attr('string'),
     region: DS.attr('string'),
     country: DS.attr('string'),
+    deleted: DS.attr('boolean', {defaultValue: false}),
     createdAt: DS.attr('date'),
     gravatarUrl: function () {
         var defaults = ['wavatar', 'monsterid'];
