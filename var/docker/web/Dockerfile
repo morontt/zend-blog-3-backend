@@ -15,7 +15,10 @@ RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
 
 RUN apt-get update && apt-get install -y apt-utils && apt-get install -y \
     zlib1g-dev libicu-dev git nano zip mysql-client \
-    nodejs
+    nodejs autoconf automake libtool
+
+COPY ./watchman-install.sh /tmp/watchman-install.sh
+RUN bash /tmp/watchman-install.sh
 
 RUN docker-php-ext-install intl zip pdo_mysql opcache
 
