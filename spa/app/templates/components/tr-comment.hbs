@@ -13,7 +13,11 @@
             <br/><small>&lt;{{comment.email}}&gt;</small>
         {{/if}}
     </td>
-    <td>{{cut-string comment.text 120}}</td>
+    <td>
+        {{textarea rows="6"
+                   class="form-control"
+                   value=comment.text}}
+    </td>
     <td>
         {{comment.ipAddr}}
         {{#if comment.city}}

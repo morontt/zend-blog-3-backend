@@ -15,6 +15,7 @@ use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 use Mtt\BlogBundle\API\Transformers\CategoryTransformer;
 use Mtt\BlogBundle\API\Transformers\CommentatorTransformer;
+use Mtt\BlogBundle\API\Transformers\CommentTransformer;
 use Mtt\BlogBundle\API\Transformers\MediaFileTransformer;
 use Mtt\BlogBundle\API\Transformers\PostTransformer;
 use Mtt\BlogBundle\API\Transformers\TagTransformer;
@@ -127,6 +128,22 @@ class DataConverter
         $this->save($entity);
 
         return $this->getCommentator($entity);
+    }
+
+    /**
+     * @param Comment $entity
+     * @param array $data
+     *
+     * @return array
+     */
+    public function saveComment(Comment $entity, array $data)
+    {
+        CommentTransformer::reverseTransform($entity, $data);
+
+        $entity->setLastUpdate(new \DateTime());
+        $this->save($entity);
+
+        return $this->getComment($entity);
     }
 
     /**

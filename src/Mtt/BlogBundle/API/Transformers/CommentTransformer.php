@@ -96,6 +96,15 @@ class CommentTransformer extends BaseTransformer
 
     /**
      * @param Comment $entity
+     * @param array $data
+     */
+    public static function reverseTransform(Comment $entity, array $data)
+    {
+        $entity->setText($data['text']);
+    }
+
+    /**
+     * @param Comment $entity
      *
      * @return \League\Fractal\Resource\Collection
      */

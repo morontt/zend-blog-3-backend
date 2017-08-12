@@ -63,6 +63,23 @@ class CommentController extends BaseController
 
     /**
      * @Route("/{id}", requirements={"id": "\d+"})
+     * @Method("PUT")
+     *
+     * @param Request $request
+     * @param Comment $entity
+     *
+     * @return JsonResponse
+     */
+    public function updateAction(Request $request, Comment $entity)
+    {
+        $result = $this->getDataConverter()
+            ->saveComment($entity, $request->request->get('comment'));
+
+        return new JsonResponse($result);
+    }
+
+    /**
+     * @Route("/{id}", requirements={"id": "\d+"})
      * @Method("DELETE")
      *
      * @param Comment $entity
