@@ -2,7 +2,7 @@ version: '2'
 services:
     hedgehog:
         build:
-            context: ./var/docker/db
+            context: ./docker/db
             args:
                 HOST_UID: ${HOST_UID}
         volumes:
@@ -15,7 +15,7 @@ services:
 
     rhinoceros:
         build:
-            context: ./var/docker/web
+            context: ./docker/web
             # dockerfile: prod/Dockerfile
             args:
                 HOST_UID: ${HOST_UID}
@@ -25,11 +25,13 @@ services:
             - "80:80"
         links:
             - hedgehog
+            - mailcatcher
         depends_on:
             - hedgehog
+            - mailcatcher
 
     ape:
-        build: ./var/docker/dbadmin
+        build: ./docker/dbadmin
         ports:
             - "8088:80"
         links:
@@ -40,3 +42,8 @@ services:
             PMA_HOST: hedgehog
             PMA_USER: root
             PMA_PASSWORD: docker
+
+    mailcatcher:
+        image: xelbot/mailcatcher
+        ports:
+            - "1080:1080"

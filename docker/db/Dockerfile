@@ -1,4 +1,4 @@
-FROM mysql:5.7.18
+FROM mysql:5.7.19
 
 MAINTAINER Alexander Harchenko <morontt@gmail.com>
 
