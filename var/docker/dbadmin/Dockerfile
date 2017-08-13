@@ -1,4 +1,4 @@
-FROM phpmyadmin/phpmyadmin:4.6.6-1
+FROM phpmyadmin/phpmyadmin:4.7.3-1
 
 MAINTAINER Alexander Harchenko <morontt@gmail.com>
 

@@ -16,18 +16,11 @@ RUN bash /tmp/custom-apt.sh
 
 RUN apt-get update && apt-get install -y apt-utils && apt-get install -y \
     zlib1g-dev libicu-dev git nano zip mysql-client \
-    nodejs autoconf automake libtool
-
-COPY ./watchman-install.sh /tmp/watchman-install.sh
-RUN bash /tmp/watchman-install.sh
+    nodejs
 
 RUN docker-php-ext-install intl zip pdo_mysql opcache
 
 RUN npm install -g bower uglifycss uglify-js ember-cli@2.4.2
-
-RUN yes | pecl install xdebug \
-    && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" \
-    > /usr/local/etc/php/conf.d/xdebug.ini
 
 COPY ./.bashrc /root/.bashrc
 COPY ./apache.conf /etc/apache2/sites-available/000-default.conf

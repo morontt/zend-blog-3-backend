@@ -16,6 +16,7 @@ services:
     rhinoceros:
         build:
             context: ./var/docker/web
+            # dockerfile: prod/Dockerfile
             args:
                 HOST_UID: ${HOST_UID}
         volumes:
