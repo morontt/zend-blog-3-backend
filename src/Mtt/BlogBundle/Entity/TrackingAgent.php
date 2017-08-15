@@ -39,7 +39,14 @@ class TrackingAgent
      *
      * @ORM\Column(type="boolean")
      */
-    protected $botFilter;
+    protected $botFilter = true;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $createdAt;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -51,6 +58,7 @@ class TrackingAgent
     public function __construct()
     {
         $this->trackings = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     /**
@@ -168,5 +176,29 @@ class TrackingAgent
     public function getHash()
     {
         return $this->hash;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return TrackingAgent
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
     }
 }

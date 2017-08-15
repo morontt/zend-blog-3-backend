@@ -121,7 +121,7 @@ class DataConverterSpec extends ObjectBehavior
         $commentator = new Commentator();
         $commentator
             ->setName('test-name')
-            ->setMail('commentator@example.org')
+            ->setEmail('commentator@example.org')
             ->setWebsite('http://example.org')
             ->setDisqusId(0)
             ->setEmailHash(md5('commentator@example.org'))
@@ -143,7 +143,7 @@ class DataConverterSpec extends ObjectBehavior
         $commentator2 = new Commentator();
         $commentator2
             ->setName('test2-name')
-            ->setMail('two@example.org')
+            ->setEmail('two@example.org')
             ->setWebsite('http://example.com')
             ->setDisqusId(55)
             ->setEmailHash(md5('two@example.org'))
@@ -199,6 +199,7 @@ class DataConverterSpec extends ObjectBehavior
                     'city' => null,
                     'region' => null,
                     'country' => null,
+                    'parent' => null,
                     'deleted' => false,
                     'createdAt' => '2016-02-28T01:30:49+0200',
                 ],
@@ -235,7 +236,7 @@ class DataConverterSpec extends ObjectBehavior
         $commentator = new Commentator();
         $commentator
             ->setName('test-name')
-            ->setMail('commentator@example.org')
+            ->setEmail('commentator@example.org')
             ->setWebsite('http://example.org')
             ->setDisqusId(0)
             ->setEmailHash(md5('commentator@example.org'))
@@ -260,6 +261,7 @@ class DataConverterSpec extends ObjectBehavior
                         'city' => null,
                         'region' => null,
                         'country' => null,
+                        'parent' => null,
                         'deleted' => false,
                         'createdAt' => '2016-02-28T01:30:49+0200',
                     ],
@@ -277,6 +279,7 @@ class DataConverterSpec extends ObjectBehavior
                         'city' => 'Frankfurt am Main',
                         'region' => 'Hessen',
                         'country' => 'Germany',
+                        'parent' => null,
                         'deleted' => false,
                         'createdAt' => '2016-02-28T01:43:14+0200',
                     ],
@@ -301,6 +304,7 @@ class DataConverterSpec extends ObjectBehavior
                         'city' => 'Frankfurt am Main',
                         'region' => 'Hessen',
                         'country' => 'Germany',
+                        'parent' => null,
                         'deleted' => false,
                         'createdAt' => '2016-02-28T01:43:14+0200',
                     ],

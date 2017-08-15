@@ -17,6 +17,10 @@ services:
         class: Mtt\BlogBundle\Service\IpInfo
         arguments: [ "@doctrine.orm.entity_manager", "%ipinfodb_key%" ]
 
+    mtt_blog.tracking:
+        class: Mtt\BlogBundle\Service\Tracking
+        arguments: [ "@doctrine.orm.entity_manager" ]
+
     mtt_blog.cron_chain:
         class: Mtt\BlogBundle\Cron\CronChain
 

@@ -41,14 +41,14 @@ class CommentTransformer extends BaseTransformer
             if ($commentator) {
                 $commentatorId = $commentator->getId();
                 $username = $commentator->getName();
-                $email = $commentator->getMail();
+                $email = $commentator->getEmail();
                 $website = $commentator->getWebsite();
-                $emailHash = $commentator->getEmailHash();
+                $emailHash = $commentator->getAvatarHash();
             } else {
                 $user = $item->getUser();
                 if ($user) {
                     $username = $user->getUsername();
-                    $email = $user->getMail();
+                    $email = $user->getEmail();
                     $emailHash = $user->getEmailHash();
                 }
             }
@@ -66,11 +66,17 @@ class CommentTransformer extends BaseTransformer
             $username = $item->getUsername();
             $email = $item->getEmail();
             $website = $item->getWebsite();
-            $emailHash = $item->getEmailHash();
+            $emailHash = $item->getAvatarHash();
 
             $locationCity = $item->getCity();
             $locationRegion = $item->getRegion();
             $locationCountry = $item->getCountry();
+        }
+
+        $parentId = null;
+        $parent = $item->getParent();
+        if ($parent) {
+            $parentId = $parent->getId();
         }
 
         $data = [
@@ -87,6 +93,7 @@ class CommentTransformer extends BaseTransformer
             'city' => $locationCity,
             'region' => $locationRegion,
             'country' => $locationCountry,
+            'parent' => $parentId,
             'deleted' => $item->isDeleted(),
             'createdAt' => $this->dateTimeToISO($item->getTimeCreated()),
         ];

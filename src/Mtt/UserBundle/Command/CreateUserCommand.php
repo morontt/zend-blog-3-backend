@@ -41,7 +41,7 @@ class CreateUserCommand extends ContainerAwareCommand
         $passwordHash = $encoder->encodePassword($password, $user->getSalt());
         $user
             ->setUsername($username)
-            ->setMail($email)
+            ->setEmail($email)
             ->setPassword($passwordHash);
 
         $errors = $this->getContainer()

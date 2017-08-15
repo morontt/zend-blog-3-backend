@@ -3,6 +3,7 @@
 namespace Mtt\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Mtt\BlogBundle\Entity\Traits\Gravatar;
 
 /**
  * @ORM\Table(name="v_commentators")
@@ -10,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ViewCommentator implements CommentatorInterface
 {
+    use Gravatar;
+
     /**
      * @var int
      *
@@ -28,9 +31,9 @@ class ViewCommentator implements CommentatorInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=80, nullable=true)
+     * @ORM\Column(name="mail", type="string", length=80, nullable=true)
      */
-    protected $mail;
+    protected $email;
 
     /**
      * @var string
@@ -74,13 +77,13 @@ class ViewCommentator implements CommentatorInterface
     }
 
     /**
-     * Get mail
+     * Get email
      *
      * @return null|string
      */
-    public function getMail(): ? string
+    public function getEmail(): ? string
     {
-        return $this->mail;
+        return $this->email;
     }
 
     /**

@@ -45,7 +45,7 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(name="mail", type="string", length=64, unique=true)
      * @Assert\Email()
      */
-    protected $mail;
+    protected $email;
 
     /**
      * @var string
@@ -195,16 +195,16 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set mail
+     * Set email
      *
-     * @param string $mail
+     * @param string $email
      *
      * @return User
      */
-    public function setMail($mail)
+    public function setEmail($email)
     {
-        $this->mail = $mail;
-        $this->emailHash = md5($mail);
+        $this->email = $email;
+        $this->emailHash = md5(strtolower(trim($email)));
 
         return $this;
     }
@@ -214,9 +214,9 @@ class User implements UserInterface, \Serializable
      *
      * @return string
      */
-    public function getMail()
+    public function getEmail()
     {
-        return $this->mail;
+        return $this->email;
     }
 
     /**

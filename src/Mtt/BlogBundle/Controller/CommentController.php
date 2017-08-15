@@ -62,6 +62,42 @@ class CommentController extends BaseController
     }
 
     /**
+     * @Route("")
+     * @Method("POST")
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function createAction(Request $request)
+    {
+        $agent = $this->get('mtt_blog.tracking')->getTrackingAgent($request->server->get('HTTP_USER_AGENT'));
+
+        $comment = new Comment();
+        $comment
+            ->setUser($this->getUser())
+            ->setTrackingAgent($agent)
+            ->setIpAddress($request->getClientIp())
+        ;
+
+        $commentData = $request->request->get('comment');
+        if ($commentData['parent']) {
+            $parent = $this->getEm()->getRepository('MttBlogBundle:Comment')->find((int)$commentData['parent']);
+            if ($parent) {
+                $comment
+                    ->setParent($parent)
+                    ->setPost($parent->getPost())
+                ;
+            }
+        }
+
+        $result = $this->getDataConverter()
+            ->saveComment($comment, $commentData);
+
+        return new JsonResponse($result, 201);
+    }
+
+    /**
      * @Route("/{id}", requirements={"id": "\d+"})
      * @Method("PUT")
      *

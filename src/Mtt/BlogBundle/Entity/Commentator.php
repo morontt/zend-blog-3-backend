@@ -4,6 +4,7 @@ namespace Mtt\BlogBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Mtt\BlogBundle\Entity\Traits\Gravatar;
 
 /**
  * @ORM\Table(name="commentators", uniqueConstraints={
@@ -13,6 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Commentator implements CommentatorInterface
 {
+    use Gravatar;
+
     /**
      * @var int
      *
@@ -32,9 +35,9 @@ class Commentator implements CommentatorInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=80, nullable=true)
+     * @ORM\Column(name="mail", type="string", length=80, nullable=true)
      */
-    protected $mail;
+    protected $email;
 
     /**
      * @var string
@@ -67,27 +70,6 @@ class Commentator implements CommentatorInterface
     public function __construct()
     {
         $this->comments = new ArrayCollection();
-    }
-
-    /**
-     * @param string $name
-     * @param string $mail
-     * @param string $website
-     *
-     * @return string
-     */
-    public static function getAvatarHash($name, $mail, $website)
-    {
-        if ($mail) {
-            $hash = md5(strtolower(trim($mail)));
-        } else {
-            $hash = md5(strtolower(trim($name)));
-            if ($website) {
-                $hash = md5($hash . strtolower(trim($website)));
-            }
-        }
-
-        return $hash;
     }
 
     /**
@@ -125,27 +107,27 @@ class Commentator implements CommentatorInterface
     }
 
     /**
-     * Set mail
+     * Set email
      *
-     * @param string $mail
+     * @param string $email
      *
      * @return Commentator
      */
-    public function setMail($mail)
+    public function setEmail($email)
     {
-        $this->mail = $mail;
+        $this->email = $email;
 
         return $this;
     }
 
     /**
-     * Get mail
+     * Get email
      *
      * @return null|string
      */
-    public function getMail(): ? string
+    public function getEmail(): ? string
     {
-        return $this->mail;
+        return $this->email;
     }
 
     /**

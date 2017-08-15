@@ -13,6 +13,7 @@ export default DS.Model.extend({
     city: DS.attr('string'),
     region: DS.attr('string'),
     country: DS.attr('string'),
+    parent: DS.belongsTo('comment', { inverse: null }),
     deleted: DS.attr('boolean', {defaultValue: false}),
     createdAt: DS.attr('date'),
     gravatarUrl: function () {

@@ -9,6 +9,7 @@
 namespace Mtt\BlogBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/api")
@@ -20,10 +21,10 @@ class ApiController extends BaseController
     /**
      * @Route("/")
      *
-     * @return array
+     * @return Response
      */
     public function infoAction()
     {
-        return [];
+        return new Response('Hi :)');
     }
 }
