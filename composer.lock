@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2b76752c91819ae89fa862bebfec5c80",
+    "content-hash": "9d6d88dadb9bc0abf06d83dd60425bde",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -79,7 +79,7 @@
                     "": "disqusapi/"
                 }
             },
-            "time": "2014-04-24 18:25:35"
+            "time": "2014-04-24T18:25:35+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -4093,7 +4093,7 @@
                 "emberjs",
                 "orm"
             ],
-            "time": "2017-05-22 22:05:08"
+            "time": "2017-05-22T22:05:08+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -4926,7 +4926,7 @@
                 "Data fixtures",
                 "doctrine"
             ],
-            "time": "2017-01-24 16:56:56"
+            "time": "2017-01-24T16:56:56+00:00"
         },
         {
             "name": "webmozart/assert",

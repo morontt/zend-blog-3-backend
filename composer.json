@@ -87,7 +87,7 @@
         "symfony-web-dir": "web",
         "symfony-bin-dir": "app",
         "symfony-var-dir": "var",
-        "symfony-assets-install": "symlink",
+        "symfony-assets-install": "relative",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
         },

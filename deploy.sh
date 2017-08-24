@@ -2,11 +2,11 @@
 
 # cache
 
-sudo rm -R ./app/cache/*
+rm -R ./var/cache/*
 
 # vendors
 
-sudo composer self-update
+composer self-update
 composer install --optimize-autoloader --prefer-dist
 
 bower install --allow-root
@@ -22,4 +22,4 @@ php app/console assetic:dump --env=prod --no-debug
 
 # cache
 
-rm -R ./app/cache/*
+rm -R ./var/cache/*
