@@ -43,6 +43,27 @@ assetic:
             bin: "%nodemodules_bin_path%/uglifyjs"
         uglifycss:
             bin: "%nodemodules_bin_path%/uglifycss"
+    assets:
+        jquery_ui_base:
+            inputs:
+                - 'bundles/mttblog/components/jquery-ui/themes/base/core.css'
+                - 'bundles/mttblog/components/jquery-ui/themes/base/accordion.css'
+                - 'bundles/mttblog/components/jquery-ui/themes/base/autocomplete.css'
+                - 'bundles/mttblog/components/jquery-ui/themes/base/button.css'
+                - 'bundles/mttblog/components/jquery-ui/themes/base/datepicker.css'
+                - 'bundles/mttblog/components/jquery-ui/themes/base/dialog.css'
+                - 'bundles/mttblog/components/jquery-ui/themes/base/draggable.css'
+                - 'bundles/mttblog/components/jquery-ui/themes/base/menu.css'
+                - 'bundles/mttblog/components/jquery-ui/themes/base/progressbar.css'
+                - 'bundles/mttblog/components/jquery-ui/themes/base/resizable.css'
+                - 'bundles/mttblog/components/jquery-ui/themes/base/selectable.css'
+                - 'bundles/mttblog/components/jquery-ui/themes/base/selectmenu.css'
+                - 'bundles/mttblog/components/jquery-ui/themes/base/sortable.css'
+                - 'bundles/mttblog/components/jquery-ui/themes/base/slider.css'
+                - 'bundles/mttblog/components/jquery-ui/themes/base/spinner.css'
+                - 'bundles/mttblog/components/jquery-ui/themes/base/tabs.css'
+                - 'bundles/mttblog/components/jquery-ui/themes/base/tooltip.css'
+                - 'bundles/mttblog/components/jquery-ui/themes/base/theme.css'
 
 # Doctrine Configuration
 doctrine:
