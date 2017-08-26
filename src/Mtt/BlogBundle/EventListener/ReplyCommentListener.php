@@ -26,13 +26,20 @@ class ReplyCommentListener
     protected $twig;
 
     /**
+     * @var string
+     */
+    protected $emailFrom;
+
+    /**
      * @param Swift_Mailer $mailer
      * @param Twig_Environment $twig
+     * @param string $emailFrom
      */
-    public function __construct(Swift_Mailer $mailer, Twig_Environment $twig)
+    public function __construct(Swift_Mailer $mailer, Twig_Environment $twig, string $emailFrom)
     {
         $this->mailer = $mailer;
         $this->twig = $twig;
+        $this->emailFrom = $emailFrom;
     }
 
     /**
@@ -72,7 +79,7 @@ class ReplyCommentListener
 
                 $message = Swift_Message::newInstance()
                     ->setSubject('Ответ на комментарий')
-                    ->setFrom('test@example.org')
+                    ->setFrom($this->emailFrom)
                     ->setTo([$emailTo => $recipient])
                     ->setBody(
                         $template->render($context),
