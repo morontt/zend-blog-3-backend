@@ -8,6 +8,8 @@
 
 namespace Mtt\BlogBundle\EventListener;
 
+use Doctrine\ORM\EntityManager;
+use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Event\ReplyCommentEvent;
 use Swift_Mailer;
 use Swift_Message;
@@ -26,6 +28,11 @@ class ReplyCommentListener
     protected $twig;
 
     /**
+     * @var EntityManager
+     */
+    protected $em;
+
+    /**
      * @var string
      */
     protected $emailFrom;
@@ -33,12 +40,14 @@ class ReplyCommentListener
     /**
      * @param Swift_Mailer $mailer
      * @param Twig_Environment $twig
+     * @param EntityManager $em
      * @param string $emailFrom
      */
-    public function __construct(Swift_Mailer $mailer, Twig_Environment $twig, string $emailFrom)
+    public function __construct(Swift_Mailer $mailer, Twig_Environment $twig, EntityManager $em, string $emailFrom)
     {
         $this->mailer = $mailer;
         $this->twig = $twig;
+        $this->em = $em;
         $this->emailFrom = $emailFrom;
     }
 
@@ -48,6 +57,20 @@ class ReplyCommentListener
     public function onReply(ReplyCommentEvent $event)
     {
         $comment = $event->getComment();
+        $this->sendEmail($comment);
+
+        $conn = $this->em->getConnection();
+
+        $stmt = $conn->prepare("CALL update_comments_count(:postId)");
+        $stmt->bindValue('postId', (int)$comment->getPost()->getId());
+        $stmt->execute();
+    }
+
+    /**
+     * @param Comment $comment
+     */
+    protected function sendEmail(Comment $comment)
+    {
         $parent = $comment->getParent();
         if ($parent) {
             $emailTo = null;

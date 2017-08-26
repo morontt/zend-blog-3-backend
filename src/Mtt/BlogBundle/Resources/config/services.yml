@@ -23,7 +23,7 @@ services:
 
     mtt_blog.reply_comment_listener:
         class: Mtt\BlogBundle\EventListener\ReplyCommentListener
-        arguments: [ "@mailer", "@twig", "%mailer_user%" ]
+        arguments: [ "@mailer", "@twig", "@doctrine.orm.entity_manager", "%mailer_user%" ]
         tags:
             - { name: kernel.event_listener, event: mtt_blog.reply_comment, method: onReply }
 
