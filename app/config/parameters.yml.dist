@@ -9,9 +9,11 @@ parameters:
     admin_email:       admin@example.org
 
     mailer_transport:  smtp
-    mailer_host:       127.0.0.1
+    mailer_host:       mailcatcher
+    mailer_port:       1025
     mailer_user:       ~
     mailer_password:   ~
+    mailer_encryption: null
 
     dropbox_key:       mpramtmajJqM2d2
     dropbox_secret:    zeWZ5amF4RkYxMn
@@ -27,6 +29,7 @@ parameters:
     browsertitle:         morontt.info
 
     image_basepath: /uploads
+    frontend_site: "https://morontt.info"
 
     disqus_shortname: yourshortkey
     disqus_secret_key: TW9uIE1heSAgOSAxNjo1ODo0OCBFRVNUIDIwMTYK

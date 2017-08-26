@@ -9,6 +9,8 @@
 namespace Mtt\BlogBundle\Controller;
 
 use Mtt\BlogBundle\Entity\Comment;
+use Mtt\BlogBundle\Event\ReplyCommentEvent;
+use Mtt\BlogBundle\MttBlogEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -59,6 +61,44 @@ class CommentController extends BaseController
             ->getComment($entity);
 
         return new JsonResponse($result);
+    }
+
+    /**
+     * @Route("")
+     * @Method("POST")
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function createAction(Request $request)
+    {
+        $agent = $this->get('mtt_blog.tracking')->getTrackingAgent($request->server->get('HTTP_USER_AGENT'));
+
+        $comment = new Comment();
+        $comment
+            ->setUser($this->getUser())
+            ->setTrackingAgent($agent)
+            ->setIpAddress($request->getClientIp())
+        ;
+
+        $commentData = $request->request->get('comment');
+        if ($commentData['parent']) {
+            $parent = $this->getEm()->getRepository('MttBlogBundle:Comment')->find((int)$commentData['parent']);
+            if ($parent) {
+                $comment
+                    ->setParent($parent)
+                    ->setPost($parent->getPost())
+                ;
+            }
+        }
+
+        $result = $this->getDataConverter()
+            ->saveComment($comment, $commentData);
+
+        $this->get('event_dispatcher')->dispatch(MttBlogEvents::REPLY_COMMENT, new ReplyCommentEvent($comment));
+
+        return new JsonResponse($result, 201);
     }
 
     /**

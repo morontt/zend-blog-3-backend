@@ -15,7 +15,7 @@ class LoadCommentatorData extends AbstractFixture
     {
         $commentator = new Commentator();
         $commentator->setName('test-name')
-            ->setMail('commentator@example.org')
+            ->setEmail('commentator@example.org')
             ->setWebsite('http://example.org');
 
         $manager->persist($commentator);

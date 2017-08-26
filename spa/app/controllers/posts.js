@@ -5,7 +5,7 @@ export default Ember.Controller.extend({
     queryParams: ['page'],
     page: 1,
     actions: {
-        removePost: function () {
+        removePost() {
             var id = $('#confirmation-modal').attr('data-object-id');
             this.store.peekRecord('post', id).destroyRecord();
         }

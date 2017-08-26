@@ -77,7 +77,7 @@
         {{/if}}
     </td>
     <td>
-        <div class="pull-right" >
+        <div class="pull-right">
             <a class="btn btn-primary" href="#" {{action "edit"}}>
                 <i class="glyphicon glyphicon-pencil"></i>
                 <span>edit</span>
@@ -93,6 +93,12 @@
                     <span>delete</span>
                 </button>
             {{/unless}}
+        </div>
+        <div class="pull-right">
+            {{#link-to "reply-comment" comment.id class="btn btn-info"}}
+                <i class="glyphicon glyphicon-envelope"></i>
+                <span>reply</span>
+            {{/link-to}}
         </div>
     </td>
 {{/if}}

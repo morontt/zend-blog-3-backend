@@ -16,6 +16,7 @@ Router.map(function () {
     this.route('comments');
     this.route('commentators');
     this.route('images');
+    this.route('reply-comment', {path: '/reply-comment/:comment_id'});
 });
 
 export default Router;

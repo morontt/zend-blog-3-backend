@@ -4,6 +4,7 @@ namespace Mtt\BlogBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Mtt\BlogBundle\Entity\Traits\Gravatar;
 
 /**
  * @ORM\Table(name="v_comments")
@@ -11,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ViewComment
 {
+    use Gravatar;
+
     /**
      * @var int
      *
@@ -164,6 +167,14 @@ class ViewComment
      * @return string
      */
     public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
     {
         return $this->username;
     }

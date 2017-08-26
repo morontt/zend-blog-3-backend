@@ -17,7 +17,7 @@ interface CommentatorInterface
     /**
      * @return null|string
      */
-    public function getMail(): ? string;
+    public function getEmail(): ? string;
 
     /**
      * @return null|string
@@ -33,4 +33,9 @@ interface CommentatorInterface
      * @return null|string
      */
     public function getEmailHash() : ? string;
+
+    /**
+     * @return string
+     */
+    public function getAvatarHash() : string;
 }

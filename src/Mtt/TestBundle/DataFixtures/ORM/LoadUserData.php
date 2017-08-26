@@ -34,7 +34,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface
             ->getEncoder($user);
 
         $user->setUsername('admin')
-            ->setMail('morontt@gmail.com')
+            ->setEmail('morontt@gmail.com')
             ->setPassword($encoder->encodePassword('test', $user->getSalt()))
             ->setUserType('admin');
 
