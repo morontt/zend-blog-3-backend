@@ -9,6 +9,8 @@
 namespace Mtt\BlogBundle\Controller;
 
 use Mtt\BlogBundle\Entity\Comment;
+use Mtt\BlogBundle\Event\ReplyCommentEvent;
+use Mtt\BlogBundle\MttBlogEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -93,6 +95,8 @@ class CommentController extends BaseController
 
         $result = $this->getDataConverter()
             ->saveComment($comment, $commentData);
+
+        $this->get('event_dispatcher')->dispatch(MttBlogEvents::REPLY_COMMENT, new ReplyCommentEvent($comment));
 
         return new JsonResponse($result, 201);
     }

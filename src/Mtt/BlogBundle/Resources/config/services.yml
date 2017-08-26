@@ -21,6 +21,12 @@ services:
         class: Mtt\BlogBundle\Service\Tracking
         arguments: [ "@doctrine.orm.entity_manager" ]
 
+    mtt_blog.reply_comment_listener:
+        class: Mtt\BlogBundle\EventListener\ReplyCommentListener
+        arguments: [ "@mailer", "@twig" ]
+        tags:
+            - { name: kernel.event_listener, event: mtt_blog.reply_comment, method: onReply }
+
     mtt_blog.cron_chain:
         class: Mtt\BlogBundle\Cron\CronChain
 
