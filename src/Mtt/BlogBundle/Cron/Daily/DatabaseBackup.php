@@ -32,18 +32,25 @@ class DatabaseBackup implements CronServiceInterface
     protected $dbPassword;
 
     /**
+     * @var string
+     */
+    protected $dbHost;
+
+    /**
      * @var EntityManager
      */
     protected $em;
 
     /**
+     * @param string $dbHost
      * @param string $dbName
      * @param string $dbUser
      * @param string $dbPassword
      * @param EntityManager $em
      */
-    public function __construct($dbName, $dbUser, $dbPassword, EntityManager $em)
+    public function __construct(string $dbHost, string $dbName, string $dbUser, string $dbPassword, EntityManager $em)
     {
+        $this->dbHost = $dbHost;
         $this->dbName = $dbName;
         $this->dbUser = $dbUser;
         $this->dbPassword = $dbPassword;
@@ -55,7 +62,8 @@ class DatabaseBackup implements CronServiceInterface
     {
         $process = new Process(
             sprintf(
-                'mysqldump -h localhost -u %s --password=%s %s | bzip2 > %s',
+                'mysqldump -h %s -u %s --password=%s %s | bzip2 > %s',
+                $this->dbHost,
                 $this->dbUser,
                 $this->dbPassword,
                 $this->dbName,

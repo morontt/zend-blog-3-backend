@@ -33,6 +33,7 @@ services:
     mtt_blog.db_backup:
         class: Mtt\BlogBundle\Cron\Daily\DatabaseBackup
         arguments:
+            - "%database_host%"
             - "%database_name%"
             - "%database_user%"
             - "%database_password%"

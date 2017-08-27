@@ -61,7 +61,7 @@ class ReplyCommentListener
 
         $conn = $this->em->getConnection();
 
-        $stmt = $conn->prepare("CALL update_comments_count(:postId)");
+        $stmt = $conn->prepare('CALL update_comments_count(:postId)');
         $stmt->bindValue('postId', (int)$comment->getPost()->getId());
         $stmt->execute();
     }
