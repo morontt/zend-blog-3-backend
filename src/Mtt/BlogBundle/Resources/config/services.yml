@@ -41,6 +41,13 @@ services:
         tags:
             - { name: cron-daily }
 
+    mtt_blog.tracking_archive:
+        class: Mtt\BlogBundle\Cron\Daily\TrackingArchive
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: cron-daily }
+
     mtt_blog.images_backup:
         class: Mtt\BlogBundle\Cron\Daily\ImagesBackup
         arguments:
