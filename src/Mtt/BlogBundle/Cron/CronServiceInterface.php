@@ -11,4 +11,9 @@ namespace Mtt\BlogBundle\Cron;
 interface CronServiceInterface
 {
     public function run();
+
+    /**
+     * @return string
+     */
+    public function getMessage(): string;
 }

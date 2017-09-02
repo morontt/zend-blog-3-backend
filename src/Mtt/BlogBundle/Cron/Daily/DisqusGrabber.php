@@ -49,6 +49,11 @@ class DisqusGrabber implements CronServiceInterface
     protected $email;
 
     /**
+     * @var int
+     */
+    protected $countImported = 0;
+
+    /**
      * @param EntityManager $em
      * @param array $options
      * @param string $email
@@ -141,6 +146,8 @@ class DisqusGrabber implements CronServiceInterface
 
                 $this->em->persist($comment);
                 $this->em->flush();
+
+                $this->countImported += 1;
             }
         }
 
@@ -149,6 +156,21 @@ class DisqusGrabber implements CronServiceInterface
                 ->query("CALL update_comments_count({$post->getId()})")
                 ->fetch();
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessage(): string
+    {
+        $message = 'Nothing';
+        if ($this->countImported == 1) {
+            $message = '1 new comment';
+        } elseif ($this->countImported > 1) {
+            $message = $this->countImported . ' new comments';
+        }
+
+        return $message;
     }
 
     /**

@@ -25,6 +25,11 @@ class ImagesBackup implements CronServiceInterface
     protected $em;
 
     /**
+     * @var int
+     */
+    protected $countImported = 0;
+
+    /**
      * @param EntityManager $em
      */
     public function __construct(EntityManager $em)
@@ -47,9 +52,26 @@ class ImagesBackup implements CronServiceInterface
 
                     $image->setBackuped(true);
                     $this->em->flush();
+
+                    $this->countImported += 1;
                 }
             }
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessage(): string
+    {
+        $message = 'Nothing';
+        if ($this->countImported == 1) {
+            $message = '1 new image';
+        } elseif ($this->countImported > 1) {
+            $message = $this->countImported . ' new images';
+        }
+
+        return $message;
     }
 
     /**

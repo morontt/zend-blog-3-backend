@@ -25,6 +25,11 @@ class CommentGeoLocation implements CronServiceInterface
     protected $ipInfo;
 
     /**
+     * @var int
+     */
+    protected $countImported = 0;
+
+    /**
      * @param EntityManager $em
      * @param IpInfo $ipInfo
      */
@@ -43,9 +48,25 @@ class CommentGeoLocation implements CronServiceInterface
             $location = $this->ipInfo->getLocationByIp($ip);
             if ($location) {
                 $commentRepo->updateLocation($location, $ip);
+                $this->countImported += 1;
             }
 
             sleep(2);
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessage(): string
+    {
+        $message = 'Nothing';
+        if ($this->countImported == 1) {
+            $message = '1 new location';
+        } elseif ($this->countImported > 1) {
+            $message = $this->countImported . ' new locations';
+        }
+
+        return $message;
     }
 }

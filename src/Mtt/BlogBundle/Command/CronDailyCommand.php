@@ -23,9 +23,30 @@ class CronDailyCommand extends ContainerAwareCommand
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        $messages = [];
         $cronChain = $this->getContainer()->get('mtt_blog.cron_chain');
         foreach ($cronChain->getDailyCrons() as $cronJob) {
-            $cronJob->run();
+            try {
+                $cronJob->run();
+                $messages[] = sprintf('%s: %s', self::getJobName($cronJob), $cronJob->getMessage());
+            } catch (\Exception $e) {
+                $messages[] = sprintf('Error %s: %s', self::getJobName($cronJob), $e->getMessage());
+            }
         }
+
+        $bot = $this->getContainer()->get('mtt_blog.telegram_bot');
+        $bot->sendMessage(implode("\n", $messages));
+    }
+
+    /**
+     * @param $cronJob
+     *
+     * @return string
+     */
+    protected static function getJobName($cronJob): string
+    {
+        $classParts = explode('\\', get_class($cronJob));
+
+        return $classParts[count($classParts) - 1];
     }
 }

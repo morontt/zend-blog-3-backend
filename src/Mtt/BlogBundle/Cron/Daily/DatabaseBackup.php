@@ -42,6 +42,11 @@ class DatabaseBackup implements CronServiceInterface
     protected $em;
 
     /**
+     * @var int
+     */
+    protected $dumpSize = 0;
+
+    /**
      * @param string $dbHost
      * @param string $dbName
      * @param string $dbUser
@@ -72,6 +77,8 @@ class DatabaseBackup implements CronServiceInterface
         );
         $process->run();
 
+        $this->dumpSize = filesize($this->getDumpPath());
+
         if (!$process->isSuccessful()) {
             throw new \RuntimeException($process->getErrorOutput());
         }
@@ -90,6 +97,14 @@ class DatabaseBackup implements CronServiceInterface
             fclose($f);
             unlink($this->getDumpPath());
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessage(): string
+    {
+        return sprintf('%dKB', (int)($this->dumpSize / 1024));
     }
 
     /**

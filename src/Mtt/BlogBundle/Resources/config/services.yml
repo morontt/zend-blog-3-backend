@@ -30,17 +30,6 @@ services:
     mtt_blog.cron_chain:
         class: Mtt\BlogBundle\Cron\CronChain
 
-    mtt_blog.db_backup:
-        class: Mtt\BlogBundle\Cron\Daily\DatabaseBackup
-        arguments:
-            - "%database_host%"
-            - "%database_name%"
-            - "%database_user%"
-            - "%database_password%"
-            - "@doctrine.orm.entity_manager"
-        tags:
-            - { name: cron-daily }
-
     mtt_blog.tracking_archive:
         class: Mtt\BlogBundle\Cron\Daily\TrackingArchive
         arguments:
@@ -72,6 +61,17 @@ services:
         tags:
             - { name: cron-daily }
 
+    mtt_blog.db_backup:
+        class: Mtt\BlogBundle\Cron\Daily\DatabaseBackup
+        arguments:
+            - "%database_host%"
+            - "%database_name%"
+            - "%database_user%"
+            - "%database_password%"
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: cron-daily }
+
     mtt_blog.image_manager:
         class: Mtt\BlogBundle\Service\ImageManager
         arguments: [ "@doctrine.orm.entity_manager" ]
@@ -81,3 +81,10 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
             - "%image_basepath%"
+
+    mtt_blog.telegram_bot:
+        class: Mtt\BlogBundle\Telegram\Bot
+        arguments:
+            - "%telegram_token%"
+            - "%telegram_bot%"
+            - "%telegram_admin_id%"

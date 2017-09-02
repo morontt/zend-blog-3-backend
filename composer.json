@@ -29,6 +29,7 @@
         "friendsofsymfony/jsrouting-bundle": "~1.5",
         "zendframework/zend-filter": "2.7.*",
         "disqus/disqus-php": "dev-master",
+        "longman/telegram-bot": "^0.48",
         "dropbox/dropbox-sdk": "1.1.*"
     },
     "require-dev": {
@@ -55,7 +56,7 @@
                     "reference": "b1149196ec8aaa9d4dac35a4a28c5647c17ef8af"
                 },
                 "autoload": {
-                    "psr-0": { "": "disqusapi/" }
+                    "classmap": [ "disqusapi/" ]
                 }
             }
         }

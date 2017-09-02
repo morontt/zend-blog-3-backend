@@ -19,6 +19,11 @@ class TrackingArchive implements CronServiceInterface
     protected $em;
 
     /**
+     * @var string
+     */
+    protected $message = 'test';
+
+    /**
      * @param EntityManager $em
      */
     public function __construct(EntityManager $em)
@@ -29,5 +34,13 @@ class TrackingArchive implements CronServiceInterface
     public function run()
     {
         $this->em->getConnection()->query('CALL tracking_to_archive()');
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessage(): string
+    {
+        return 'Complete';
     }
 }
