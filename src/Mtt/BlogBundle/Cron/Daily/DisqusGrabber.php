@@ -138,7 +138,7 @@ class DisqusGrabber implements CronServiceInterface
 
                 if ($disqusComment['author']['id'] == $this->options['owner_id']) {
                     $comment->setUser(
-                        $this->em->getRepository('MttUserBundle:User')->findOneBy(['mail' => $this->email])
+                        $this->em->getRepository('MttUserBundle:User')->findOneBy(['email' => $this->email])
                     );
                 } else {
                     $comment->setCommentator($this->getCommentator($disqusComment['author']));
