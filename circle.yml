@@ -31,9 +31,12 @@ dependencies:
     - app/console assetic:dump -e test --no-debug
   post:
     - sudo cp ./var/ci/zendblog-3.loc.conf /etc/apache2/sites-available
+    - sudo cp ./docker/nginx/cert.pem /etc/apache2/cert.pem
+    - sudo cp ./docker/nginx/server.key /etc/apache2/privkey.pem
     - echo "date.timezone = Europe/Zaporozhye" >> /opt/circleci/php/$(phpenv global)/etc/php.ini
     - sudo a2ensite zendblog-3.loc.conf
     - sudo a2dismod php5
+    - sudo a2enmod ssl
     - sudo service apache2 restart
 
 database:

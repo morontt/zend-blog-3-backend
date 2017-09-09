@@ -4,10 +4,12 @@ default:
     extensions:
         Behat\Symfony2Extension: ~
         Behat\MinkExtension:
-            base_url: 'http://zendblog-3.loc:8080/app_test.php/'
+            base_url: 'https://zendblog-3.loc:8080/app_test.php/'
             sessions:
                 goutte:
-                    goutte: ~
+                    goutte:
+                        guzzle_parameters:
+                            verify: false
         VIPSoft\DoctrineDataFixturesExtension\Extension:
             lifetime:    feature
             autoload:    true
