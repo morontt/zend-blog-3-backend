@@ -29,6 +29,8 @@ services:
         depends_on:
             - hedgehog
             - mailcatcher
+        environment:
+            APPLICATION_ENV: development
 
     ape:
         build: ./docker/dbadmin
@@ -47,3 +49,14 @@ services:
         image: xelbot/mailcatcher
         ports:
             - "1080:1080"
+
+    sloth:
+        build: ./docker/nginx
+        volumes:
+            - ./web:/usr/share/nginx/html
+        ports:
+            - "443:443"
+        depends_on:
+            - rhinoceros
+        links:
+            - rhinoceros

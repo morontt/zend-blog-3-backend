@@ -1,8 +1,13 @@
 #!/bin/bash
 
-# cache
+# cache ans static files
 
 rm -R ./var/cache/*
+rm -R ./web/bundles/*
+rm -R ./web/css/*
+rm -R ./web/js/*
+rm -R ./web/spa/*
+rm -R ./web/assetic/*
 
 # vendors
 
@@ -23,3 +28,6 @@ php app/console assetic:dump --env=prod --no-debug
 # cache
 
 rm -R ./var/cache/*
+php app/console cache:warmup --env=prod
+
+chown -R www-data:www-data var/cache var/logs web
