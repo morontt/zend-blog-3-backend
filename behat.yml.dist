@@ -8,10 +8,12 @@ default:
     extensions:
         Behat\Symfony2Extension: ~
         Behat\MinkExtension:
-            base_url: 'http://example.org/app_test.php/'
+            base_url: 'https://example.org/app_test.php/'
             sessions:
                 goutte:
-                    goutte: ~
+                    goutte:
+                        guzzle_parameters:
+                            verify: false
         VIPSoft\DoctrineDataFixturesExtension\Extension:
             lifetime:    feature
             autoload:    true
