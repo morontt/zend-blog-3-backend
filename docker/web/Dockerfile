@@ -16,7 +16,8 @@ RUN bash /tmp/custom-apt.sh
 
 RUN apt-get update && apt-get install -y apt-utils && apt-get install -y \
     zlib1g-dev libicu-dev git nano zip mysql-client \
-    nodejs autoconf automake libtool
+    nodejs autoconf automake libtool \
+    --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
 COPY ./watchman-install.sh /tmp/watchman-install.sh
 RUN bash /tmp/watchman-install.sh
