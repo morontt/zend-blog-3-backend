@@ -8,6 +8,7 @@
 
 namespace Mtt\BlogBundle\Telegram;
 
+use Longman\TelegramBot\Entities\ServerResponse;
 use Longman\TelegramBot\Request;
 use Longman\TelegramBot\Telegram;
 
@@ -32,6 +33,8 @@ class Bot
     {
         $this->telegram = new Telegram($token, $botName);
         $this->telegram->enableAdmin($adminId);
+
+        $this->telegram->addCommandsPath(realpath(__DIR__ . '/../../../Longman/TelegramBot/Commands'));
 
         $this->adminId = $adminId;
     }
@@ -61,5 +64,29 @@ class Bot
                 var_dump($result);
             }
         }
+    }
+
+    /**
+     * @param string $url
+     * @param string|null $certificate
+     *
+     * @return ServerResponse
+     */
+    public function setWebhook(string $url, string $certificate = null): ServerResponse
+    {
+        $data = [];
+        if ($certificate) {
+            $data['certificate'] = $certificate;
+        }
+
+        return $this->telegram->setWebhook($url, $data);
+    }
+
+    /**
+     * @return bool
+     */
+    public function handle()
+    {
+        return $this->telegram->handle();
     }
 }

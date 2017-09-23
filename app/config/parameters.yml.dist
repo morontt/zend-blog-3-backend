@@ -40,3 +40,4 @@ parameters:
     telegram_token: "123456789:y6MEO55PGhWYmT9fMmUrwIMjrRY1QH"
     telegram_bot: test_bot
     telegram_admin_id: 123456789
+    telegram_webhook_token: Cqwa0tvQ111HNZ
