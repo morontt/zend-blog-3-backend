@@ -8,9 +8,12 @@
 
 namespace Mtt\BlogBundle\Telegram;
 
-use Longman\TelegramBot\Entities\ServerResponse;
-use Longman\TelegramBot\Request;
 use Longman\TelegramBot\Telegram;
+use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\RotatingFileHandler;
+use Monolog\Logger;
+use Xelbot\Telegram\Robot;
+use Xelbot\Telegram\TelegramResponse;
 
 class Bot
 {
@@ -25,11 +28,17 @@ class Bot
     protected $adminId;
 
     /**
+     * @var Robot
+     */
+    protected $robot;
+
+    /**
      * @param string $token
      * @param string $botName
      * @param int $adminId
+     * @param string $logsDir
      */
-    public function __construct(string $token, string $botName, int $adminId)
+    public function __construct(string $token, string $botName, int $adminId, string $logsDir)
     {
         $this->telegram = new Telegram($token, $botName);
         $this->telegram->enableAdmin($adminId);
@@ -37,49 +46,36 @@ class Bot
         $this->telegram->addCommandsPath(realpath(__DIR__ . '/../../../Longman/TelegramBot/Commands'));
 
         $this->adminId = $adminId;
+
+        $this->robot = new Robot($token, $botName, $adminId);
+
+        $loggerHandler = new RotatingFileHandler($logsDir . '/telegram.log', 14);
+        $loggerHandler->setFormatter(new LineFormatter(null, 'Y-m-d H:i:s.v'));
+        $logger = new Logger('telegram', [$loggerHandler]);
+
+        $this->robot->setLogger($logger);
     }
 
     /**
      * @param string $message
+     *
+     * @return TelegramResponse
      */
-    public function sendMessage(string $message)
+    public function sendMessage(string $message): TelegramResponse
     {
-        Request::sendMessage([
-            'chat_id' => $this->adminId,
-            'text' => $message,
-        ]);
-    }
-
-    public function getUpdates()
-    {
-        $response = Request::getUpdates([
-            'offset' => null,
-            'limit' => 50,
-            'timeout' => null,
-        ]);
-
-        if ($response->isOk()) {
-            /** @var \Longman\TelegramBot\Entities\Update $result */
-            foreach ($response->getResult() as $result) {
-                var_dump($result);
-            }
-        }
+        return $this->robot->sendMessage($message);
     }
 
     /**
      * @param string $url
      * @param string|null $certificate
      *
-     * @return ServerResponse
+     * @return TelegramResponse
      */
-    public function setWebhook(string $url, string $certificate = null): ServerResponse
+    public function setWebhook(string $url, string $certificate = null): TelegramResponse
     {
-        $data = [];
-        if ($certificate) {
-            $data['certificate'] = $certificate;
-        }
-
-        return $this->telegram->setWebhook($url, $data);
+        return $this->robot->setWebhook($url, $certificate);
+        // return $this->telegram->deleteWebhook();
     }
 
     /**

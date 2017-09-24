@@ -88,3 +88,4 @@ services:
             - "%telegram_token%"
             - "%telegram_bot%"
             - "%telegram_admin_id%"
+            - "%kernel.logs_dir%"
