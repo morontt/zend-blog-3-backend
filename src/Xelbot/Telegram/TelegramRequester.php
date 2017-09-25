@@ -11,9 +11,24 @@ namespace Xelbot\Telegram;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Log\LoggerInterface;
+use Xelbot\Telegram\Exception\TelegramException;
 
+/**
+ * @method TelegramResponse getWebhookInfo()
+ * @method TelegramResponse deleteWebhook()
+ * @method TelegramResponse setWebhook(array $data)
+ */
 class TelegramRequester
 {
+    /**
+     * @var array
+     */
+    public static $availableMethods = [
+        'setWebhook',
+        'getWebhookInfo',
+        'deleteWebhook',
+    ];
+
     /**
      * @var Client
      */
@@ -70,13 +85,22 @@ class TelegramRequester
     }
 
     /**
-     * @param array $data
+     * @param $method
+     * @param $args
      *
-     * @return TelegramResponse
+     * @return mixed
+     *
+     * @throws TelegramException
      */
-    public function setWebhook(array $data): TelegramResponse
+    public function __call($method, $args)
     {
-        return $this->send('setWebhook', $data);
+        if (in_array($method, self::$availableMethods)) {
+            array_unshift($args, $method);
+
+            return call_user_func_array([$this, 'send'], $args);
+        }
+
+        throw new TelegramException('Undefined method: ' . $method);
     }
 
     /**

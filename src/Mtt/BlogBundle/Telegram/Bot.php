@@ -75,7 +75,22 @@ class Bot
     public function setWebhook(string $url, string $certificate = null): TelegramResponse
     {
         return $this->robot->setWebhook($url, $certificate);
-        // return $this->telegram->deleteWebhook();
+    }
+
+    /**
+     * @return TelegramResponse
+     */
+    public function getWebhookInfo(): TelegramResponse
+    {
+        return $this->robot->getWebhookInfo();
+    }
+
+    /**
+     * @return TelegramResponse
+     */
+    public function deleteWebhook(): TelegramResponse
+    {
+        return $this->robot->deleteWebhook();
     }
 
     /**

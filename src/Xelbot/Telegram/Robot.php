@@ -98,7 +98,7 @@ class Robot
      *
      * @return TelegramResponse
      */
-    public function setWebhook(string $url, string $certificate = null)
+    public function setWebhook(string $url, string $certificate = null): TelegramResponse
     {
         $data = [
             'url' => $url,
@@ -109,6 +109,22 @@ class Robot
         }
 
         return $this->requester->setWebhook($data);
+    }
+
+    /**
+     * @return TelegramResponse
+     */
+    public function getWebhookInfo(): TelegramResponse
+    {
+        return $this->requester->getWebhookInfo();
+    }
+
+    /**
+     * @return TelegramResponse
+     */
+    public function deleteWebhook(): TelegramResponse
+    {
+        return $this->requester->deleteWebhook();
     }
 
     /**
