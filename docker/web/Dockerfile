@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y apt-utils && apt-get install -y \
 COPY ./watchman-install.sh /tmp/watchman-install.sh
 RUN bash /tmp/watchman-install.sh
 
-RUN docker-php-ext-install intl zip pdo_mysql opcache
+RUN docker-php-ext-install -j$(nproc) intl zip pdo_mysql opcache
 
 RUN npm install -g bower uglifycss uglify-js ember-cli@2.4.2
 

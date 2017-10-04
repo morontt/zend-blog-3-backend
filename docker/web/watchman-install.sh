@@ -9,7 +9,7 @@ git checkout v4.7.0
 ./autogen.sh
 ./configure --without-python
 
-make
+make -j$(nproc)
 make install
 
 cd ..
