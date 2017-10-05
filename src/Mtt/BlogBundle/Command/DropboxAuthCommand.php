@@ -8,8 +8,8 @@
 
 namespace Mtt\BlogBundle\Command;
 
-use Dropbox;
 use Mtt\BlogBundle\Entity\SystemParameters;
+use Mtt\BlogBundle\OAuth2\DropboxProvider;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -29,20 +29,14 @@ class DropboxAuthCommand extends ContainerAwareCommand
         $key = $this->getContainer()->getParameter('dropbox_key');
         $secret = $this->getContainer()->getParameter('dropbox_secret');
 
-        try {
-            $appInfo = Dropbox\AppInfo::loadFromJson([
-                'key' => $key,
-                'secret' => $secret,
-            ]);
-        } catch (Dropbox\AppInfoLoadException $ex) {
-            $output->writeln('<error>Error: %s</error>', $ex->getMessage());
-            exit(1);
-        }
+        $provider = new DropboxProvider([
+            'clientId' => $key,
+            'clientSecret' => $secret,
+        ]);
 
-        $webAuth = new Dropbox\WebAuthNoRedirect($appInfo, 'examples-authorize', 'en');
-        $authorizeUrl = $webAuth->start();
+        $authorizationUrl = $provider->getAuthorizationUrl();
 
-        $output->writeln(sprintf("\n1. Go to: %s", $authorizeUrl));
+        $output->writeln(sprintf("\n1. Go to: %s", $authorizationUrl));
         $output->writeln('2. Click <comment>"Allow"</comment> (you might have to log in first).');
         $output->writeln("3. Copy the authorization code.\n");
 
@@ -61,13 +55,16 @@ class DropboxAuthCommand extends ContainerAwareCommand
 
         $authCode = trim($dialog->ask($input, $output, $question));
 
-        list($accessToken, $userId) = $webAuth->finish($authCode);
+        $accessToken = $provider->getAccessToken('authorization_code', [
+            'code' => $authCode,
+        ]);
+
+        var_dump($accessToken);
 
         $output->writeln("\nAuthorization complete.");
-        $output->writeln(sprintf('User ID: <comment>%s</comment>', $userId));
-        $output->writeln(sprintf('Access Token: <comment>%s</comment>', $accessToken));
+        $output->writeln(sprintf('Access Token: <comment>%s</comment>', $accessToken->getToken()));
 
-        $this->saveAccessToken($userId, $accessToken);
+        //$this->saveAccessToken($accessToken);
     }
 
     /**
