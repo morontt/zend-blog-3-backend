@@ -59,38 +59,20 @@ class DropboxAuthCommand extends ContainerAwareCommand
             'code' => $authCode,
         ]);
 
-        var_dump($accessToken);
-
         $output->writeln("\nAuthorization complete.");
         $output->writeln(sprintf('Access Token: <comment>%s</comment>', $accessToken->getToken()));
 
-        //$this->saveAccessToken($accessToken);
+        $this->saveAccessToken($accessToken->getToken());
     }
 
     /**
-     * @param $userId
-     * @param $accessToken
+     * @param string $accessToken
      */
-    protected function saveAccessToken($userId, $accessToken)
+    protected function saveAccessToken(string $accessToken)
     {
-        $em = $this->getContainer()
-            ->get('doctrine')
-            ->getManager();
+        $storage = $this->getContainer()
+            ->get('mtt_blog.sys_parameters_storage');
 
-        $sp = $em->getRepository('MttBlogBundle:SystemParameters')
-            ->findOneByOptionKey(SystemParameters::DROPBOX_TOKEN);
-
-        if (!$sp) {
-            $sp = new SystemParameters();
-            $sp->setOptionKey(SystemParameters::DROPBOX_TOKEN);
-            $em->persist($sp);
-        }
-
-        $sp->setValue(serialize([
-            'user_id' => $userId,
-            'access_token' => $accessToken,
-        ]));
-
-        $em->flush();
+        $storage->saveParameter(SystemParameters::DROPBOX_TOKEN, $accessToken, true);
     }
 }

@@ -76,6 +76,10 @@ services:
         class: Mtt\BlogBundle\Service\ImageManager
         arguments: [ "@doctrine.orm.entity_manager" ]
 
+    mtt_blog.sys_parameters_storage:
+        class: Mtt\BlogBundle\Service\SystemParametersStorage
+        arguments: [ "@doctrine.orm.entity_manager", "%secret%" ]
+
     mtt_blog.text_processor:
         class: Mtt\BlogBundle\Service\TextProcessor
         arguments:

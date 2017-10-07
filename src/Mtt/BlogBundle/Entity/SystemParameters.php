@@ -36,6 +36,13 @@ class SystemParameters
     protected $value;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    protected $encrypted = false;
+
+    /**
      * Get id
      *
      * @return int
@@ -91,5 +98,29 @@ class SystemParameters
     public function getValue()
     {
         return $this->value;
+    }
+
+    /**
+     * Set encrypted
+     *
+     * @param bool $encrypted
+     *
+     * @return SystemParameters
+     */
+    public function setEncrypted(bool $encrypted)
+    {
+        $this->encrypted = $encrypted;
+
+        return $this;
+    }
+
+    /**
+     * Is encrypted
+     *
+     * @return bool
+     */
+    public function isEncrypted(): bool
+    {
+        return $this->encrypted;
     }
 }
