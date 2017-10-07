@@ -44,7 +44,7 @@
         "behat/mink-extension": "~2.2",
         "behat/mink-goutte-driver": "1.2.*",
         "vipsoft/doctrine-data-fixtures-extension": "dev-master",
-        "phpspec/phpspec": "~2.2"
+        "phpspec/phpspec": "~4.0"
     },
     "repositories": [
         {
