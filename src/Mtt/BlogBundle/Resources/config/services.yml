@@ -68,7 +68,7 @@ services:
             - "%database_name%"
             - "%database_user%"
             - "%database_password%"
-            - "@doctrine.orm.entity_manager"
+            - "@mtt_blog.dropbox"
         tags:
             - { name: cron-daily }
 
@@ -79,6 +79,13 @@ services:
     mtt_blog.sys_parameters_storage:
         class: Mtt\BlogBundle\Service\SystemParametersStorage
         arguments: [ "@doctrine.orm.entity_manager", "%secret%" ]
+
+    mtt_blog.dropbox:
+        class: Mtt\BlogBundle\Service\DropboxService
+        arguments:
+            - "%dropbox_key%"
+            - "%dropbox_secret%"
+            - "@mtt_blog.sys_parameters_storage"
 
     mtt_blog.text_processor:
         class: Mtt\BlogBundle\Service\TextProcessor

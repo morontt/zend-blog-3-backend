@@ -8,10 +8,8 @@
 
 namespace Mtt\BlogBundle\Cron\Daily;
 
-use Doctrine\ORM\EntityManager;
-use Dropbox;
 use Mtt\BlogBundle\Cron\CronServiceInterface;
-use Mtt\BlogBundle\Entity\SystemParameters;
+use Mtt\BlogBundle\Service\DropboxService;
 use Symfony\Component\Process\Process;
 
 class DatabaseBackup implements CronServiceInterface
@@ -37,34 +35,41 @@ class DatabaseBackup implements CronServiceInterface
     protected $dbHost;
 
     /**
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
      * @var int
      */
     protected $dumpSize = 0;
+
+    /**
+     * @var DropboxService
+     */
+    protected $dropbox;
 
     /**
      * @param string $dbHost
      * @param string $dbName
      * @param string $dbUser
      * @param string $dbPassword
-     * @param EntityManager $em
+     * @param DropboxService $dropbox
      */
-    public function __construct(string $dbHost, string $dbName, string $dbUser, string $dbPassword, EntityManager $em)
-    {
+    public function __construct(
+        string $dbHost,
+        string $dbName,
+        string $dbUser,
+        string $dbPassword,
+        DropboxService $dropbox
+    ) {
         $this->dbHost = $dbHost;
         $this->dbName = $dbName;
         $this->dbUser = $dbUser;
         $this->dbPassword = $dbPassword;
 
-        $this->em = $em;
+        $this->dropbox = $dropbox;
     }
 
     public function run()
     {
+        $dumpPath = $this->getDumpPath();
+
         $process = new Process(
             sprintf(
                 'mysqldump -h %s -u %s --password=%s %s | bzip2 > %s',
@@ -72,31 +77,19 @@ class DatabaseBackup implements CronServiceInterface
                 $this->dbUser,
                 $this->dbPassword,
                 $this->dbName,
-                $this->getDumpPath()
+                $dumpPath
             )
         );
         $process->run();
-
-        $this->dumpSize = filesize($this->getDumpPath());
 
         if (!$process->isSuccessful()) {
             throw new \RuntimeException($process->getErrorOutput());
         }
 
-        /* @var SystemParameters $sp */
-        $sp = $this->em->getRepository('MttBlogBundle:SystemParameters')
-            ->findOneByOptionKey(SystemParameters::DROPBOX_TOKEN);
+        $this->dumpSize = filesize($dumpPath);
 
-        if ($sp) {
-            $tokenData = unserialize($sp->getValue());
-
-            $dbxClient = new Dropbox\Client($tokenData['access_token'], 'ZendBlog-Backuper/0.1');
-
-            $f = fopen($this->getDumpPath(), 'rb');
-            $dbxClient->uploadFile('/' . $this->getFilename(), Dropbox\WriteMode::add(), $f);
-            fclose($f);
-            unlink($this->getDumpPath());
-        }
+        $this->dropbox->uploadChunked($dumpPath, '/db_dumps/' . $this->getFilename());
+        unlink($dumpPath);
     }
 
     /**
