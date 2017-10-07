@@ -114,11 +114,11 @@ class MediaFileController extends BaseController
      */
     public function uploadAction(Request $request)
     {
-        $form = $this->createForm(new ImageForm());
-        $form->submit($request);
+        $form = $this->createForm(ImageForm::class);
+        $form->handleRequest($request);
 
         $result = null;
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->get('mtt_blog.image_manager')->uploadImage(
                 $form->get('description')->getData(),
                 $form->get('post_id')->getData(),

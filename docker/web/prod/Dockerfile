@@ -15,7 +15,7 @@ COPY ./custom-apt.sh /tmp/custom-apt.sh
 RUN bash /tmp/custom-apt.sh
 
 RUN apt-get update && apt-get install -y apt-utils && apt-get install -y \
-    zlib1g-dev libicu-dev git nano zip \
+    zlib1g-dev libicu-dev git nano zip pngquant \
     --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-install -j$(nproc) intl zip pdo_mysql opcache

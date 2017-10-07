@@ -10,6 +10,7 @@ namespace Mtt\BlogBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Image;
@@ -25,11 +26,11 @@ class ImageForm extends AbstractType
         $builder
             ->add(
                 'description',
-                'text'
+                TextType::class
             )
             ->add(
                 'post_id',
-                'text'
+                TextType::class
             )
             ->add(
                 'upload',

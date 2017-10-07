@@ -41,6 +41,7 @@ services:
         class: Mtt\BlogBundle\Cron\Daily\ImagesBackup
         arguments:
             - "@doctrine.orm.entity_manager"
+            - "@mtt_blog.dropbox"
         tags:
             - { name: cron-daily }
 

@@ -9,13 +9,9 @@
 namespace Mtt\BlogBundle\Cron\Daily;
 
 use Doctrine\ORM\EntityManager;
-use Dropbox\Client;
-use League\Flysystem\Adapter\Local;
-use League\Flysystem\Dropbox\DropboxAdapter;
-use League\Flysystem\Filesystem;
-use League\Flysystem\MountManager;
 use Mtt\BlogBundle\Cron\CronServiceInterface;
-use Mtt\BlogBundle\Entity\SystemParameters;
+use Mtt\BlogBundle\Service\DropboxService;
+use Mtt\BlogBundle\Service\SystemParametersStorage;
 
 class ImagesBackup implements CronServiceInterface
 {
@@ -30,11 +26,23 @@ class ImagesBackup implements CronServiceInterface
     protected $countImported = 0;
 
     /**
-     * @param EntityManager $em
+     * @var SystemParametersStorage
      */
-    public function __construct(EntityManager $em)
+    protected $storage;
+
+    /**
+     * @var DropboxService
+     */
+    protected $dropbox;
+
+    /**
+     * @param EntityManager $em
+     * @param DropboxService $dropbox
+     */
+    public function __construct(EntityManager $em, DropboxService $dropbox)
     {
         $this->em = $em;
+        $this->dropbox = $dropbox;
     }
 
     public function run()
@@ -42,19 +50,16 @@ class ImagesBackup implements CronServiceInterface
         $images = $this->em->getRepository('MttBlogBundle:MediaFile')->getNotBackuped();
 
         if (count($images)) {
-            $mountManager = $this->getMountManager();
-            if ($mountManager) {
-                foreach ($images as $image) {
-                    $mountManager->put(
-                        'dropbox://blog_images/' . $image->getPath(),
-                        $mountManager->read('local://' . $image->getPath())
-                    );
+            foreach ($images as $image) {
+                $this->dropbox->upload(
+                    $this->getImagesDir() . '/' . $image->getPath(),
+                    '/blog_images/' . $image->getPath()
+                );
 
-                    $image->setBackuped(true);
-                    $this->em->flush();
+                $image->setBackuped(true);
+                $this->em->flush();
 
-                    $this->countImported += 1;
-                }
+                $this->countImported += 1;
             }
         }
     }
@@ -75,24 +80,10 @@ class ImagesBackup implements CronServiceInterface
     }
 
     /**
-     * @return MountManager|null
+     * @return bool|string
      */
-    protected function getMountManager()
+    protected function getImagesDir()
     {
-        /* @var SystemParameters $sp */
-        $sp = $this->em->getRepository('MttBlogBundle:SystemParameters')
-            ->findOneByOptionKey(SystemParameters::DROPBOX_TOKEN);
-
-        if (!$sp) {
-            return null;
-        }
-
-        $tokenData = unserialize($sp->getValue());
-        $dropboxClient = new Client($tokenData['access_token'], 'ZendBlog-Backuper/0.1');
-
-        return new MountManager([
-            'local' => new Filesystem(new Local(realpath(__DIR__ . '/../../../../../web/uploads'))),
-            'dropbox' => new Filesystem(new DropboxAdapter($dropboxClient)),
-        ]);
+        return realpath(__DIR__ . '/../../../../../web/uploads');
     }
 }

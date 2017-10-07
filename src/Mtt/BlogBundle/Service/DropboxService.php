@@ -40,4 +40,15 @@ class DropboxService
     {
         return $this->dropbox->uploadChunked($dropboxFile, $path, null, 2097152);
     }
+
+    /**
+     * @param string $dropboxFile
+     * @param string $path
+     *
+     * @return \Kunnu\Dropbox\Models\FileMetadata
+     */
+    public function upload(string $dropboxFile, string $path)
+    {
+        return $this->dropbox->upload($dropboxFile, $path);
+    }
 }
