@@ -94,10 +94,14 @@ class Bot
     }
 
     /**
+     * @param array $requestData
+     *
      * @return bool
      */
-    public function handle()
+    public function handle(array $requestData)
     {
+        $this->robot->handle($requestData);
+
         return $this->telegram->handle();
     }
 }

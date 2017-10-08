@@ -10,6 +10,7 @@ namespace Mtt\BlogBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TelegramController extends BaseController
@@ -18,11 +19,12 @@ class TelegramController extends BaseController
      * @Route("/telegram/{token}")
      * @Method("POST")
      *
+     * @param Request $request
      * @param string $token
      *
      * @return Response
      */
-    public function webHookAction(string $token): Response
+    public function webHookAction(Request $request, string $token): Response
     {
         $secretToken = $this->container->getParameter('telegram_webhook_token');
         if (!hash_equals(sha1($secretToken), sha1($token))) {
@@ -30,7 +32,7 @@ class TelegramController extends BaseController
         }
 
         $bot = $this->get('mtt_blog.telegram_bot');
-        $bot->handle();
+        $bot->handle($request->request->all());
 
         return new Response("ok\n");
     }

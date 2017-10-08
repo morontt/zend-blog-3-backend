@@ -9,6 +9,11 @@
 namespace Xelbot\Telegram;
 
 use Psr\Log\LoggerInterface;
+use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
+use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+use Xelbot\Telegram\Entity\Update;
 use Xelbot\Telegram\Exception\TelegramException;
 
 class Robot
@@ -125,6 +130,32 @@ class Robot
     public function deleteWebhook(): TelegramResponse
     {
         return $this->requester->deleteWebhook();
+    }
+
+    /**
+     * @param array $requestData
+     *
+     * @return bool
+     */
+    public function handle(array $requestData)
+    {
+        if ($this->logger) {
+            $this->logger->info('Webhook: ', $requestData);
+        }
+
+        $normalizer = new ObjectNormalizer(
+            null,
+            new CamelCaseToSnakeCaseNameConverter(),
+            null,
+            new ReflectionExtractor()
+        );
+
+        $serializer = new Serializer([$normalizer]);
+        $obj = $serializer->denormalize($requestData, Update::class);
+
+        dump($obj);
+
+        return true;
     }
 
     /**
