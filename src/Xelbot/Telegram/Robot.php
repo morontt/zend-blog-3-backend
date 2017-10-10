@@ -13,6 +13,7 @@ use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Xelbot\Telegram\Command\TelegramCommandInterface;
 use Xelbot\Telegram\Entity\Update;
 use Xelbot\Telegram\Exception\TelegramException;
 
@@ -42,6 +43,11 @@ class Robot
      * @var LoggerInterface|null
      */
     protected $logger = null;
+
+    /**
+     * @var TelegramCommandInterface[]
+     */
+    protected $commands = [];
 
     /**
      * @param string $token
@@ -77,6 +83,14 @@ class Robot
     {
         $this->logger = $logger;
         $this->requester->setLogger($logger);
+    }
+
+    /**
+     * @param TelegramCommandInterface $command
+     */
+    public function addCommand(TelegramCommandInterface $command)
+    {
+        $this->commands[$command->getCommandName()] = $command;
     }
 
     /**
