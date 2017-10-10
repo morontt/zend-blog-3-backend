@@ -9,9 +9,6 @@
 namespace Mtt\BlogBundle\Telegram;
 
 use Longman\TelegramBot\Telegram;
-use Monolog\Formatter\LineFormatter;
-use Monolog\Handler\RotatingFileHandler;
-use Monolog\Logger;
 use Xelbot\Telegram\Robot;
 use Xelbot\Telegram\TelegramResponse;
 
@@ -36,9 +33,9 @@ class Bot
      * @param string $token
      * @param string $botName
      * @param int $adminId
-     * @param string $logsDir
+     * @param Robot $robot
      */
-    public function __construct(string $token, string $botName, int $adminId, string $logsDir)
+    public function __construct(string $token, string $botName, int $adminId, Robot $robot)
     {
         $this->telegram = new Telegram($token, $botName);
         $this->telegram->enableAdmin($adminId);
@@ -47,13 +44,7 @@ class Bot
 
         $this->adminId = $adminId;
 
-        $this->robot = new Robot($token, $botName, $adminId);
-
-        $loggerHandler = new RotatingFileHandler($logsDir . '/telegram.log', 14);
-        $loggerHandler->setFormatter(new LineFormatter(null, 'Y-m-d H:i:s.v'));
-        $logger = new Logger('telegram', [$loggerHandler]);
-
-        $this->robot->setLogger($logger);
+        $this->robot = $robot;
     }
 
     /**
