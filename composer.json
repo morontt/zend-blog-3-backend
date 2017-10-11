@@ -30,7 +30,7 @@
         "friendsofsymfony/jsrouting-bundle": "~1.5",
         "zendframework/zend-filter": "2.7.*",
         "disqus/disqus-php": "dev-master",
-        "longman/telegram-bot": "^0.48",
+        "guzzlehttp/guzzle": "~6.3",
         "kunalvarma05/dropbox-php-sdk": "~0.2"
     },
     "require-dev": {

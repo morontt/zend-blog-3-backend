@@ -94,9 +94,21 @@ services:
             - "@doctrine.orm.entity_manager"
             - "%image_basepath%"
 
+    mtt_blog.telegram_logger:
+        class: Monolog\Logger
+        factory: [ "Mtt\\BlogBundle\\Telegram\\TelegramLoggerFactory", createLogger ]
+        arguments: [ "%kernel.logs_dir%" ]
+
     mtt_blog.telegram_bot:
-        class: Mtt\BlogBundle\Telegram\Bot
+        class: Xelbot\Telegram\Robot
         arguments:
             - "%telegram_token%"
             - "%telegram_bot%"
             - "%telegram_admin_id%"
+        calls:
+            - [ setLogger, [ "@mtt_blog.telegram_logger" ]]
+
+    mtt_blog.telegram_command.uptime:
+        class: Mtt\BlogBundle\Telegram\Command\Uptime
+        tags:
+            - { name: telegram-command }
