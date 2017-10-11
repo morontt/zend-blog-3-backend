@@ -14,6 +14,7 @@ use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Xelbot\Telegram\Command\TelegramCommandInterface;
+use Xelbot\Telegram\Entity\Message;
 use Xelbot\Telegram\Entity\Update;
 use Xelbot\Telegram\Exception\TelegramException;
 
@@ -90,6 +91,8 @@ class Robot
      */
     public function addCommand(TelegramCommandInterface $command)
     {
+        $command->setRequester($this->requester);
+
         $this->commands[$command->getCommandName()] = $command;
     }
 
@@ -148,8 +151,6 @@ class Robot
 
     /**
      * @param array $requestData
-     *
-     * @return bool
      */
     public function handle(array $requestData)
     {
@@ -169,7 +170,14 @@ class Robot
 
         dump($obj);
 
-        return true;
+        /* @var Message $message */
+        if ($message = $obj->getMessage()) {
+            foreach ($message->getEntities() as $entity) {
+                if ($entity['type'] === 'bot_command') {
+                    $this->executeCommand($message, $entity);
+                }
+            }
+        }
     }
 
     /**
@@ -187,5 +195,17 @@ class Robot
         }
 
         return $fp;
+    }
+
+    /**
+     * @param Message $message
+     * @param array $entity
+     */
+    protected function executeCommand(Message $message, array $entity)
+    {
+        $commandName = mb_substr($message->getText(), $entity['offset'] + 1, $entity['length'] - 1);
+        if (isset($this->commands[$commandName])) {
+            $this->commands[$commandName]->execute($message);
+        }
     }
 }

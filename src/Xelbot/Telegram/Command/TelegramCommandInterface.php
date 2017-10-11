@@ -8,11 +8,15 @@
 
 namespace Xelbot\Telegram\Command;
 
+use Xelbot\Telegram\Entity\Message;
 use Xelbot\Telegram\TelegramRequester;
 
 interface TelegramCommandInterface
 {
-    public function execute();
+    /**
+     * @param Message $message
+     */
+    public function execute(Message $message): void;
 
     /**
      * @return string

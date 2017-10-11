@@ -87,7 +87,7 @@ services:
         factory: [ "Mtt\\BlogBundle\\Telegram\\TelegramLoggerFactory", createLogger ]
         arguments: [ "%kernel.logs_dir%" ]
 
-    mtt_blog.telegram_robot:
+    mtt_blog.telegram_bot:
         class: Xelbot\Telegram\Robot
         arguments:
             - "%telegram_token%"
@@ -96,10 +96,7 @@ services:
         calls:
             - [ setLogger, [ "@mtt_blog.telegram_logger" ]]
 
-    mtt_blog.telegram_bot:
-        class: Mtt\BlogBundle\Telegram\Bot
-        arguments:
-            - "%telegram_token%"
-            - "%telegram_bot%"
-            - "%telegram_admin_id%"
-            - "@mtt_blog.telegram_robot"
+    mtt_blog.telegram_command.uptime:
+        class: Mtt\BlogBundle\Telegram\Command\Uptime
+        tags:
+            - { name: telegram-command }

@@ -30,7 +30,6 @@
         "zendframework/zend-filter": "2.7.*",
         "disqus/disqus-php": "dev-master",
         "guzzlehttp/guzzle": "~6.3",
-        "longman/telegram-bot": "^0.48",
         "dropbox/dropbox-sdk": "1.1.*"
     },
     "require-dev": {
