@@ -168,8 +168,6 @@ class Robot
         $serializer = new Serializer([$normalizer]);
         $obj = $serializer->denormalize($requestData, Update::class);
 
-        dump($obj);
-
         /* @var Message $message */
         if ($message = $obj->getMessage()) {
             foreach ($message->getEntities() as $entity) {
