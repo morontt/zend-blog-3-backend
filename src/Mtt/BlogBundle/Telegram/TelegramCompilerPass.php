@@ -16,11 +16,11 @@ class TelegramCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        if (!$container->has('mtt_blog.telegram_robot')) {
+        if (!$container->has('mtt_blog.telegram_bot')) {
             return;
         }
 
-        $definition = $container->findDefinition('mtt_blog.telegram_robot');
+        $definition = $container->findDefinition('mtt_blog.telegram_bot');
 
         foreach ($container->findTaggedServiceIds('telegram-command') as $id => $tags) {
             $definition->addMethodCall(

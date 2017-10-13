@@ -38,7 +38,7 @@ class Message
     /**
      * @var array
      */
-    protected $entities;
+    protected $entities = [];
 
     /**
      * @return int
