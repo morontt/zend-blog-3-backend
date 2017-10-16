@@ -49,7 +49,9 @@ database:
 
 test:
   pre:
-    - chmod -R 777 var/cache
+    - sudo rm -rf var/cache/*
+    - sudo chgrp www-data var/cache
+    - sudo sudo chmod g+s var/cache
     - chmod -R 777 var/logs
   override:
     - bin/php-cs-fixer fix --dry-run --diff
