@@ -21,4 +21,5 @@ default:
             bundle: MttTestBundle
             mink_session: goutte
             contexts:
-                - Mtt\TestBundle\Features\Context\FeatureContext: ~
+                - Mtt\TestBundle\Features\Context\FeatureContext:
+                    profiler: "@profiler"

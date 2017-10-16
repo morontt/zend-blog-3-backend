@@ -34,6 +34,9 @@ class DefaultController extends BaseController
      */
     public function previewAction(Post $post)
     {
-        return compact('post');
+        $repo = $this->getEm()->getRepository('MttBlogBundle:ViewComment');
+        $comments = $repo->getCommentsByPost($post);
+
+        return compact('post', 'comments');
     }
 }

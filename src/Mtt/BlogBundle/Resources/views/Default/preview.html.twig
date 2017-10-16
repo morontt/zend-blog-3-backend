@@ -35,6 +35,17 @@
                 <p class="blog-post-meta">{{ post.timeCreated|date('d M Y, H:i') }}</p>
                 {{ post.text|raw }}
             </div>
+            <div class="comments">
+                <hr>
+                <div id="count-comments">{{ post.commentsCount }} comments</div>
+                <ul>
+                    {% for comment in comments %}
+                    <li>
+                        {{ comment.text }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
 
         <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
