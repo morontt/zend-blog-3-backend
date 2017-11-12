@@ -114,7 +114,7 @@ class User implements UserInterface, \Serializable
     {
         $this->comments = new ArrayCollection();
 
-        $this->salt = md5(uniqid('', true));
+        $this->salt = bin2hex(random_bytes(16));
         $this->timeCreated = new \DateTime();
         $this->userType = 'admin'; //TODO remove fake field
     }

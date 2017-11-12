@@ -4,16 +4,37 @@ namespace Mtt\TestBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Faker\Factory as FakerFactory;
 use Mtt\BlogBundle\Entity\Tag;
 use Mtt\BlogBundle\Utils\RuTransform;
 
 class LoadTagData extends AbstractFixture
 {
+    const COUNT_TAGS = 60;
+
     /**
      * @param \Doctrine\Common\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
+        $faker = FakerFactory::create('ru_RU');
+        $faker->seed(1022);
+
+        for ($i = 0; $i < self::COUNT_TAGS; $i++) {
+            $tag = new Tag();
+
+            $tagName = $faker->unique()->word;
+            $tag
+                ->setName($tagName)
+                ->setUrl(RuTransform::ruTransform($tagName))
+            ;
+
+            $manager->persist($tag);
+            $this->addReference('tag-' . $i, $tag);
+        }
+
+        $manager->flush();
+
         $tag = new Tag();
         $tag->setName('php')
             ->setUrl(RuTransform::ruTransform('php'));

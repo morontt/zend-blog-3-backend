@@ -5,6 +5,7 @@ namespace Mtt\TestBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Faker\Factory as FakerFactory;
 use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Utils\RuTransform;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -12,6 +13,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class LoadPostData extends AbstractFixture implements ContainerAwareInterface, DependentFixtureInterface
 {
+    const COUNT_POSTS = 150;
+
     /**
      * @var ContainerInterface
      */
@@ -36,7 +39,7 @@ class LoadPostData extends AbstractFixture implements ContainerAwareInterface, D
         $post = new Post();
         $post->setTitle('Тестовая запись')
             ->setUrl(RuTransform::ruTransform('Тестовая запись'))
-            ->setCategory($manager->merge($this->getReference('category-news')))
+            ->setCategory($manager->merge($this->getReference('category-2')))
             ->setDescription('метатег description тестовй записи')
             ->setRawText('<p>Тестовая запись, собственно...</p>')
             ->addTag($manager->merge($this->getReference('tag-test')));
@@ -51,7 +54,7 @@ class LoadPostData extends AbstractFixture implements ContainerAwareInterface, D
         $post2 = new Post();
         $post2->setTitle('запись про PHP')
             ->setUrl(RuTransform::ruTransform('запись про PHP'))
-            ->setCategory($manager->merge($this->getReference('category-php')))
+            ->setCategory($manager->merge($this->getReference('category-4')))
             ->setDescription('метатег description тестовой записи про ПХП')
             ->setRawText('<p>PHP (рекурсивный акроним словосочетания PHP: Hypertext Preprocessor) - это распространенный язык программирования общего назначения с открытым исходным кодом. PHP сконструирован специально для ведения Web-разработок и его код может внедряться непосредственно в HTML.</p>')
             ->addTag($manager->merge($this->getReference('tag-php')));
@@ -64,7 +67,7 @@ class LoadPostData extends AbstractFixture implements ContainerAwareInterface, D
         $post3 = new Post();
         $post3->setTitle('ещё о PHP')
             ->setUrl(RuTransform::ruTransform('ещё о PHP'))
-            ->setCategory($manager->merge($this->getReference('category-php')))
+            ->setCategory($manager->merge($this->getReference('category-4')))
             ->setDescription('description PHP')
             ->setRawText('<p>Ещё одна запись о PHP</p>')
             ->addTag($manager->merge($this->getReference('tag-php')));
@@ -79,7 +82,7 @@ class LoadPostData extends AbstractFixture implements ContainerAwareInterface, D
         $post4 = new Post();
         $post4->setTitle('JavaScript, хоть и jQuery')
             ->setUrl(RuTransform::ruTransform('JavaScript, хоть и jQuery'))
-            ->setCategory($manager->merge($this->getReference('category-jquery')))
+            ->setCategory($manager->merge($this->getReference('category-5')))
             ->setDescription('description-JavaScript')
             ->setRawText('<p>JavaScript - прототипно-ориентированный сценарный язык программирования. Является диалектом языка ECMAScript</p><p>!'
                 . $file->getId() . '!</p><!-- cut --><p>Параграф под катом</p>')
@@ -92,6 +95,36 @@ class LoadPostData extends AbstractFixture implements ContainerAwareInterface, D
 
         $file->setPost($post4);
         $manager->flush();
+
+        $faker = FakerFactory::create('ru_RU');
+        $faker->seed(303975);
+
+        for ($i = 0; $i < self::COUNT_POSTS; $i++) {
+            $title = sprintf('%s %s %s', $faker->word, $faker->word, $faker->word);
+
+            $post = new Post();
+            $post
+                ->setTitle($title)
+                ->setUrl(RuTransform::ruTransform($title))
+                ->setCategory($manager->merge($this->getReference('category-' . $faker->numberBetween(1, 9))))
+                ->setDescription($title)
+                ->setRawText($faker->text($faker->numberBetween(100, 300)))
+            ;
+            $textProcessor->processing($post);
+
+            for ($j = 0; $j < $faker->numberBetween(0, 7); $j++) {
+                $post->addTag(
+                    $manager->merge(
+                        $this->getReference('tag-' . $faker->numberBetween(1, LoadTagData::COUNT_TAGS - 1))
+                    )
+                );
+            }
+
+            $manager->persist($post);
+            $manager->flush();
+
+            $this->addReference('post-' . (string)(5 + $i), $post);
+        }
     }
 
     /**

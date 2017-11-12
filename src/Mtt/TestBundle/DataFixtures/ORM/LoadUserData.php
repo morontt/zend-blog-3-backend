@@ -4,12 +4,16 @@ namespace Mtt\TestBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Faker\Factory as FakerFactory;
+use Mtt\BlogBundle\Utils\RuTransform;
 use Mtt\UserBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class LoadUserData extends AbstractFixture implements ContainerAwareInterface
 {
+    const COUNT_USERS = 10;
+
     /**
      * @var ContainerInterface
      */
@@ -33,14 +37,32 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface
             ->get('security.encoder_factory')
             ->getEncoder($user);
 
-        $user->setUsername('admin')
+        $user
+            ->setUsername('admin')
             ->setEmail('morontt@gmail.com')
             ->setPassword($encoder->encodePassword('test', $user->getSalt()))
-            ->setUserType('admin');
+        ;
 
         $manager->persist($user);
         $manager->flush();
 
         $this->addReference('admin-user', $user);
+
+        $faker = FakerFactory::create('ru_RU');
+        $faker->seed(8465);
+
+        for ($i = 0; $i < self::COUNT_USERS; $i++) {
+            $user = new User();
+            $user
+                ->setUsername(RuTransform::ruTransform($faker->lastName))
+                ->setEmail($faker->email)
+                ->setPassword($encoder->encodePassword('test', $user->getSalt()))
+            ;
+
+            $manager->persist($user);
+            $this->addReference('user-' . (string)($i + 1), $user);
+        }
+
+        $manager->flush();
     }
 }

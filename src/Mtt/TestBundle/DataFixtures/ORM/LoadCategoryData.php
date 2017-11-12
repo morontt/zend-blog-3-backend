@@ -20,7 +20,7 @@ class LoadCategoryData extends AbstractFixture
         $manager->persist($category);
         $manager->flush();
 
-        $this->addReference('category-prog', $category);
+        $this->addReference('category-1', $category);
 
         $category2 = new Category();
         $category2->setName('Новости')
@@ -28,7 +28,7 @@ class LoadCategoryData extends AbstractFixture
         $manager->persist($category2);
         $manager->flush();
 
-        $this->addReference('category-news', $category2);
+        $this->addReference('category-2', $category2);
 
         $category3 = new Category();
         $category3->setName('JavaScript')
@@ -37,7 +37,7 @@ class LoadCategoryData extends AbstractFixture
         $manager->persist($category3);
         $manager->flush();
 
-        $this->addReference('category-javascript', $category3);
+        $this->addReference('category-3', $category3);
 
         $category4 = new Category();
         $category4->setName('PHP')
@@ -46,7 +46,7 @@ class LoadCategoryData extends AbstractFixture
         $manager->persist($category4);
         $manager->flush();
 
-        $this->addReference('category-php', $category4);
+        $this->addReference('category-4', $category4);
 
         $category5 = new Category();
         $category5->setName('jQuery')
@@ -55,6 +55,41 @@ class LoadCategoryData extends AbstractFixture
         $manager->persist($category5);
         $manager->flush();
 
-        $this->addReference('category-jquery', $category5);
+        $this->addReference('category-5', $category5);
+
+        $category6 = new Category();
+        $category6->setName('jQuery UI')
+            ->setUrl(RuTransform::ruTransform('jQuery UI'))
+            ->setParent($category5);
+        $manager->persist($category6);
+        $manager->flush();
+
+        $this->addReference('category-6', $category6);
+
+        $category7 = new Category();
+        $category7->setName('Database')
+            ->setUrl(RuTransform::ruTransform('Database'));
+        $manager->persist($category7);
+        $manager->flush();
+
+        $this->addReference('category-7', $category7);
+
+        $category8 = new Category();
+        $category8->setName('MySQL')
+            ->setUrl(RuTransform::ruTransform('MySQL'))
+            ->setParent($category7);
+        $manager->persist($category8);
+        $manager->flush();
+
+        $this->addReference('category-8', $category8);
+
+        $category9 = new Category();
+        $category9->setName('PostgreSQL')
+            ->setUrl(RuTransform::ruTransform('PostgreSQL'))
+            ->setParent($category7);
+        $manager->persist($category9);
+        $manager->flush();
+
+        $this->addReference('category-9', $category9);
     }
 }
