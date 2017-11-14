@@ -127,7 +127,7 @@ class Category
      *
      * @return Category
      */
-    public function addChild(Category $children)
+    public function addChild(self $children)
     {
         $this->children[] = $children;
 
@@ -139,7 +139,7 @@ class Category
      *
      * @param Category $children
      */
-    public function removeChild(Category $children)
+    public function removeChild(self $children)
     {
         $this->children->removeElement($children);
     }
@@ -161,7 +161,7 @@ class Category
      *
      * @return Category
      */
-    public function setParent(Category $parent = null)
+    public function setParent(self $parent = null)
     {
         $this->parent = $parent;
 

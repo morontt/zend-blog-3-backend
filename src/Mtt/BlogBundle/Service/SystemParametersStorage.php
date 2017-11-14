@@ -83,7 +83,7 @@ class SystemParametersStorage
      *
      * @return string
      */
-    public function encrypt(string $value) : string
+    public function encrypt(string $value): string
     {
         return base64_encode(openssl_encrypt($value, self::CIPHER, $this->secret, 0, $this->getVector()));
     }

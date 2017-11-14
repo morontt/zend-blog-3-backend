@@ -88,9 +88,9 @@ class TelegramRequester
      * @param $method
      * @param $args
      *
-     * @return mixed
-     *
      * @throws TelegramException
+     *
+     * @return mixed
      */
     public function __call($method, $args)
     {

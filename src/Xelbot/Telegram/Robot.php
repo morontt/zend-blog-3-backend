@@ -181,9 +181,9 @@ class Robot
     /**
      * @param string $file
      *
-     * @return resource
-     *
      * @throws TelegramException
+     *
+     * @return resource
      */
     protected function getResource(string $file)
     {

@@ -48,7 +48,7 @@ class Update
      *
      * @return Update
      */
-    public function setUpdateId(int $updateId): Update
+    public function setUpdateId(int $updateId): self
     {
         $this->updateId = $updateId;
 
@@ -88,7 +88,7 @@ class Update
      *
      * @return Update
      */
-    public function setEditedMessage(Message $editedMessage): Update
+    public function setEditedMessage(Message $editedMessage): self
     {
         $this->editedMessage = $editedMessage;
 
@@ -108,7 +108,7 @@ class Update
      *
      * @return Update
      */
-    public function setChannelPost(Message $channelPost): Update
+    public function setChannelPost(Message $channelPost): self
     {
         $this->channelPost = $channelPost;
 
@@ -128,7 +128,7 @@ class Update
      *
      * @return Update
      */
-    public function setEditedChannelPost(Message $editedChannelPost): Update
+    public function setEditedChannelPost(Message $editedChannelPost): self
     {
         $this->editedChannelPost = $editedChannelPost;
 

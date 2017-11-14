@@ -71,7 +71,7 @@ class ViewCommentator implements CommentatorInterface
      *
      * @return string
      */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
@@ -91,7 +91,7 @@ class ViewCommentator implements CommentatorInterface
      *
      * @return null|string
      */
-    public function getWebsite() : ? string
+    public function getWebsite(): ? string
     {
         return $this->website;
     }
@@ -101,7 +101,7 @@ class ViewCommentator implements CommentatorInterface
      *
      * @return null|int
      */
-    public function getDisqusId() : ? int
+    public function getDisqusId(): ? int
     {
         return $this->disqusId;
     }
@@ -111,7 +111,7 @@ class ViewCommentator implements CommentatorInterface
      *
      * @return null|string
      */
-    public function getEmailHash() : ? string
+    public function getEmailHash(): ? string
     {
         return $this->emailHash;
     }

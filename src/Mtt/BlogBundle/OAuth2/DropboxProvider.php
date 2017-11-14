@@ -97,10 +97,11 @@ class DropboxProvider extends AbstractProvider
     /**
      * Checks a provider response for errors.
      *
-     * @throws IdentityProviderException
      *
      * @param  ResponseInterface $response
      * @param  array|string $data Parsed response data
+     *
+     * @throws IdentityProviderException
      */
     protected function checkResponse(ResponseInterface $response, $data)
     {

@@ -35,7 +35,7 @@ class TelegramResponse
      */
     public function __construct(array $data)
     {
-        $this->ok = isset($data['ok']) ? (bool) $data['ok'] : false;
+        $this->ok = isset($data['ok']) ? (bool)$data['ok'] : false;
         $this->result = isset($data['result']) ? $data['result'] : null;
 
         $this->responseData = $data;
@@ -61,9 +61,9 @@ class TelegramResponse
      * @param $method
      * @param $args
      *
-     * @return mixed
-     *
      * @throws TelegramException
+     *
+     * @return mixed
      */
     public function __call($method, $args)
     {

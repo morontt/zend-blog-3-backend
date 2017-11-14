@@ -14,6 +14,7 @@ return PhpCsFixer\Config::create()
         'concat_space' => ['spacing' => 'one'],
         'increment_style' => ['style' => 'post'],
         'phpdoc_align' => ['tags' => []],
+        'cast_spaces' => ['space' => 'none'],
         'phpdoc_summary' => false,
         'yoda_style' => false,
         'phpdoc_order' => true,

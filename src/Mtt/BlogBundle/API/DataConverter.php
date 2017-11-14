@@ -95,9 +95,9 @@ class DataConverter
      * @param Category $entity
      * @param array $data
      *
-     * @return array
-     *
      * @throws \Doctrine\ORM\ORMException
+     *
+     * @return array
      */
     public function saveCategory(Category $entity, array $data)
     {
@@ -150,9 +150,9 @@ class DataConverter
      * @param Post $entity
      * @param array $data
      *
-     * @return array
-     *
      * @throws \Doctrine\ORM\ORMException
+     *
+     * @return array
      */
     public function savePost(Post $entity, array $data)
     {

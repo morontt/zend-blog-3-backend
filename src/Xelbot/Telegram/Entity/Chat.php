@@ -48,7 +48,7 @@ class Chat
      *
      * @return Chat
      */
-    public function setId(int $id): Chat
+    public function setId(int $id): self
     {
         $this->id = $id;
 
@@ -68,7 +68,7 @@ class Chat
      *
      * @return Chat
      */
-    public function setFirstName(string $firstName): Chat
+    public function setFirstName(string $firstName): self
     {
         $this->firstName = $firstName;
 
@@ -88,7 +88,7 @@ class Chat
      *
      * @return Chat
      */
-    public function setLastName(string $lastName): Chat
+    public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
 
@@ -108,7 +108,7 @@ class Chat
      *
      * @return Chat
      */
-    public function setUsername(string $username): Chat
+    public function setUsername(string $username): self
     {
         $this->username = $username;
 
@@ -128,7 +128,7 @@ class Chat
      *
      * @return Chat
      */
-    public function setType(string $type): Chat
+    public function setType(string $type): self
     {
         $this->type = $type;
 

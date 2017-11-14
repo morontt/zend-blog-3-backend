@@ -53,7 +53,7 @@ class Message
      *
      * @return Message
      */
-    public function setMessageId(int $messageId): Message
+    public function setMessageId(int $messageId): self
     {
         $this->messageId = $messageId;
 
@@ -73,7 +73,7 @@ class Message
      *
      * @return Message
      */
-    public function setFrom(User $from): Message
+    public function setFrom(User $from): self
     {
         $this->from = $from;
 
@@ -93,7 +93,7 @@ class Message
      *
      * @return Message
      */
-    public function setChat(Chat $chat): Message
+    public function setChat(Chat $chat): self
     {
         $this->chat = $chat;
 
@@ -113,7 +113,7 @@ class Message
      *
      * @return Message
      */
-    public function setDate(int $date): Message
+    public function setDate(int $date): self
     {
         $this->date = $date;
 
@@ -133,7 +133,7 @@ class Message
      *
      * @return Message
      */
-    public function setText(string $text): Message
+    public function setText(string $text): self
     {
         $this->text = $text;
 
@@ -153,7 +153,7 @@ class Message
      *
      * @return Message
      */
-    public function setEntities(array $entities): Message
+    public function setEntities(array $entities): self
     {
         $this->entities = $entities;
 

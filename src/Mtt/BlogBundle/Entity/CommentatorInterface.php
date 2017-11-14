@@ -12,7 +12,7 @@ interface CommentatorInterface
     /**
      * @return string
      */
-    public function getName() : string;
+    public function getName(): string;
 
     /**
      * @return null|string
@@ -22,20 +22,20 @@ interface CommentatorInterface
     /**
      * @return null|string
      */
-    public function getWebsite() : ? string;
+    public function getWebsite(): ? string;
 
     /**
      * @return null|int
      */
-    public function getDisqusId() : ? int;
+    public function getDisqusId(): ? int;
 
     /**
      * @return null|string
      */
-    public function getEmailHash() : ? string;
+    public function getEmailHash(): ? string;
 
     /**
      * @return string
      */
-    public function getAvatarHash() : string;
+    public function getAvatarHash(): string;
 }
