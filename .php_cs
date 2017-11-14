@@ -1,24 +1,23 @@
 <?php
 
-$finder = Symfony\CS\Finder::create()
+$finder = PhpCsFixer\Finder::create()
     ->in([
         __DIR__ . '/spec',
         __DIR__ . '/src',
     ])
 ;
 
-$config = Symfony\CS\Config::create()
-    ->fixers([
-        '-phpdoc_params',
-        '-phpdoc_short_description',
-        '-pre_increment',
-        '-spaces_cast',
-        '-heredoc_to_nowdoc',
-        'concat_with_spaces',
-        'ordered_use',
-        'short_array_syntax',
+return PhpCsFixer\Config::create()
+    ->setRules([
+        '@Symfony' => true,
+        'array_syntax' => ['syntax' => 'short'],
+        'concat_space' => ['spacing' => 'one'],
+        'increment_style' => ['style' => 'post'],
+        'phpdoc_align' => ['tags' => []],
+        'phpdoc_summary' => false,
+        'yoda_style' => false,
+        'phpdoc_order' => true,
     ])
-    ->finder($finder)
+    ->setFinder($finder)
+    ->setCacheFile(__DIR__ . '/var/cache/.php_cs.cache')
 ;
-
-return $config;
