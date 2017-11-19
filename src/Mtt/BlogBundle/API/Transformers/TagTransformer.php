@@ -37,7 +37,7 @@ class TagTransformer extends BaseTransformer
     {
         $entity->setName($data['name']);
 
-        if ($data['url']) {
+        if (!empty($data['url'])) {
             $entity->setUrl($data['url']);
         } else {
             $entity->setUrl(RuTransform::ruTransform($data['name']));
