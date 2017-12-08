@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# cache ans static files
+# cache and static files
 
 rm -R ./var/cache/*
 rm -R ./web/bundles/*
@@ -23,6 +23,7 @@ php app/console doctrine:migrations:migrate --env=prod --no-interaction
 
 # assetic
 
+php app/console assets:install --env=prod
 php app/console assetic:dump --env=prod --no-debug
 
 # cache
