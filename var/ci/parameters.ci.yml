@@ -16,6 +16,6 @@ parameters:
     debug_toolbar: false
     debug_redirects: false
     use_assetic_controller: false
-    nodemodules_bin_path: /opt/circleci/nodejs/v4.5.0/bin
+    nodemodules_bin_path: /opt/circleci/nodejs/v6.11.4/bin
     browsertitle: zendblog-3.loc
     image_basepath: /uploads
