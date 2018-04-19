@@ -2,13 +2,14 @@
 
 namespace spec\Mtt\BlogBundle\Entity;
 
+use Mtt\BlogBundle\Entity\Commentator;
 use PhpSpec\ObjectBehavior;
 
 class CommentatorSpec extends ObjectBehavior
 {
     public function it_is_initializable()
     {
-        $this->shouldHaveType('Mtt\BlogBundle\Entity\Commentator');
+        $this->shouldHaveType(Commentator::class);
     }
 
     public function it_is_get_avatar_hash()

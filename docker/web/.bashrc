@@ -15,6 +15,7 @@ fi
 
 alias ll='ls -ahl'
 alias ownr='chown -R www-data:www-data var src vendor web app bin spa spec'
+alias cs-fix='bin/php-cs-fixer fix'
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases

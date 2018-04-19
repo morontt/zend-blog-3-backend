@@ -3,6 +3,7 @@
 namespace spec\Mtt\BlogBundle\API;
 
 use Doctrine\ORM\EntityManager;
+use Mtt\BlogBundle\API\DataConverter;
 use Mtt\BlogBundle\Entity\Category;
 use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Entity\Commentator;
@@ -23,7 +24,7 @@ class DataConverterSpec extends ObjectBehavior
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType('Mtt\BlogBundle\API\DataConverter');
+        $this->shouldHaveType(DataConverter::class);
     }
 
     public function it_is_get_tag()

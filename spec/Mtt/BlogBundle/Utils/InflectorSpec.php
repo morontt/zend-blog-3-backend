@@ -2,13 +2,14 @@
 
 namespace spec\Mtt\BlogBundle\Utils;
 
+use Mtt\BlogBundle\Utils\Inflector;
 use PhpSpec\ObjectBehavior;
 
 class InflectorSpec extends ObjectBehavior
 {
     public function it_is_initializable()
     {
-        $this->shouldHaveType('Mtt\BlogBundle\Utils\Inflector');
+        $this->shouldHaveType(Inflector::class);
     }
 
     public function it_is_blank_string()
