@@ -7,6 +7,7 @@ VOLUME ["/var/www/html"]
 ARG HOST_UID=1000
 
 ENV DEBIAN_FRONTEND noninteractive
+ENV PHP_CPPFLAGS="$PHP_CPPFLAGS -std=c++11"
 
 RUN echo Europe/Kiev > /etc/timezone && \
     dpkg-reconfigure -f noninteractive tzdata

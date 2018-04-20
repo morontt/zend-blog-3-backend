@@ -12,3 +12,8 @@ apt-get install -y --no-install-recommends nodejs mysql-client zlib1g-dev libicu
 apt-get clean
 
 rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+curl -sS -o /tmp/icu.tar.gz -L http://download.icu-project.org/files/icu4c/59.1/icu4c-59_1-src.tgz \
+    && tar -zxf /tmp/icu.tar.gz -C /tmp && cd /tmp/icu/source && ./configure --prefix=/usr/local \
+    && make -j$(nproc) && make install \
+    && rm -rf /tmp/icu
