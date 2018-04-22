@@ -98,7 +98,7 @@ class ReplyCommentListener
                     'commentText' => $comment->getText(),
                 ]);
 
-                $template = $this->twig->load('MttBlogBundle:Mails:replyComment.html.twig');
+                $template = $this->twig->load('MttBlogBundle:mails:replyComment.html.twig');
 
                 $message = Swift_Message::newInstance()
                     ->setSubject('Ответ на комментарий')

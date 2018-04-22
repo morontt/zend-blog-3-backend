@@ -59,7 +59,7 @@ class ImagesBackup implements CronServiceInterface
                 $image->setBackuped(true);
                 $this->em->flush();
 
-                $this->countImported += 1;
+                $this->countImported++;
             }
         }
     }

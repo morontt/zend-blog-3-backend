@@ -147,7 +147,7 @@ class DisqusGrabber implements CronServiceInterface
                 $this->em->persist($comment);
                 $this->em->flush();
 
-                $this->countImported += 1;
+                $this->countImported++;
             }
         }
 

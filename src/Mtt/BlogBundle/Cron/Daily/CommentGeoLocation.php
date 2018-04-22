@@ -48,7 +48,7 @@ class CommentGeoLocation implements CronServiceInterface
             $location = $this->ipInfo->getLocationByIp($ip);
             if ($location) {
                 $commentRepo->updateLocation($location, $ip);
-                $this->countImported += 1;
+                $this->countImported++;
             }
 
             sleep(2);
