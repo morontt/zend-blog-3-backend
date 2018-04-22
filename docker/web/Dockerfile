@@ -13,6 +13,7 @@ RUN echo Europe/Kiev > /etc/timezone && \
     dpkg-reconfigure -f noninteractive tzdata
 
 COPY ./custom-apt.sh /tmp/custom-apt.sh
+COPY ./mysql_pubkey.asc /tmp/mysql_pubkey.asc
 RUN bash /tmp/custom-apt.sh
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
