@@ -2,7 +2,7 @@ FROM php:7.1-apache
 
 MAINTAINER Alexander Harchenko <morontt@gmail.com>
 
-VOLUME ["/var/www/html"]
+VOLUME ["/var/www/html", "/var/www/resources"]
 
 ARG HOST_UID=1000
 

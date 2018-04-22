@@ -23,8 +23,9 @@ services:
                 HOST_UID: ${HOST_UID}
         volumes:
             - .:/var/www/html
+            - ${UPLOADS_PATH}:/var/www/resources
         ports:
-            - "80:80"
+            - "8033:80"
         links:
             - hedgehog
             - mailcatcher
@@ -56,8 +57,10 @@ services:
         build: ./docker/nginx
         volumes:
             - ./web:/usr/share/nginx/html
+            - ${UPLOADS_PATH}:/var/www/resources
         ports:
             - "443:443"
+            - "80:80"
         depends_on:
             - rhinoceros
         links:
