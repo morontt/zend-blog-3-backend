@@ -1,4 +1,7 @@
 services:
+    _defaults:
+        public: true
+
     mtt_blog.json_body_listener:
         class: Mtt\BlogBundle\EventListener\JsonBodyListener
         tags:
