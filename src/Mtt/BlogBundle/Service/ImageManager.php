@@ -49,7 +49,7 @@ class ImageManager
         $fs = new Filesystem();
         $fs->copy(
             $localPath,
-            $this->getAbsolutePrefix() . $remotePath,
+            static::getUploadsDir() . '/' . $remotePath,
             true
         );
 
@@ -81,10 +81,18 @@ class ImageManager
     public function remove(MediaFile $entity)
     {
         $fs = new Filesystem();
-        $fs->remove($this->getAbsolutePrefix() . $entity->getPath());
+        $fs->remove(static::getUploadsDir() . '/' . $entity->getPath());
 
         $this->em->remove($entity);
         $this->em->flush();
+    }
+
+    /**
+     * @return string
+     */
+    public static function getUploadsDir(): string
+    {
+        return '/var/www/resources/uploads';
     }
 
     /**
@@ -118,14 +126,6 @@ class ImageManager
         }
 
         return $media;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getAbsolutePrefix()
-    {
-        return realpath(__DIR__ . '/../../../../web/uploads') . '/';
     }
 
     /**

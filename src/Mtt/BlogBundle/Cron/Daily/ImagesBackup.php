@@ -11,6 +11,7 @@ namespace Mtt\BlogBundle\Cron\Daily;
 use Doctrine\ORM\EntityManager;
 use Mtt\BlogBundle\Cron\CronServiceInterface;
 use Mtt\BlogBundle\Service\DropboxService;
+use Mtt\BlogBundle\Service\ImageManager;
 use Mtt\BlogBundle\Service\SystemParametersStorage;
 
 class ImagesBackup implements CronServiceInterface
@@ -52,7 +53,7 @@ class ImagesBackup implements CronServiceInterface
         if (count($images)) {
             foreach ($images as $image) {
                 $this->dropbox->upload(
-                    $this->getImagesDir() . '/' . $image->getPath(),
+                    ImageManager::getUploadsDir() . '/' . $image->getPath(),
                     '/blog_images/' . $image->getPath()
                 );
 
