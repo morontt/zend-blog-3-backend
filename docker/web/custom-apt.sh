@@ -6,7 +6,7 @@ apt-key add /tmp/mysql_pubkey.asc \
     && echo "deb http://repo.mysql.com/apt/debian/ jessie mysql-5.7" > /etc/apt/sources.list.d/mysql.list
 
 apt-get update && apt-get install -y apt-utils && apt-get install -y --no-install-recommends \
-    zlib1g-dev libicu-dev git nano zip pngquant nodejs mysql-client
+    zlib1g-dev libicu-dev git nano zip pngquant nodejs mysql-client libmagickwand-dev
 
 apt-get clean
 

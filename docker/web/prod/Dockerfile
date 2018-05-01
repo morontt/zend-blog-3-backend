@@ -16,7 +16,9 @@ COPY ./custom-apt.sh /tmp/custom-apt.sh
 COPY ./mysql_pubkey.asc /tmp/mysql_pubkey.asc
 RUN bash /tmp/custom-apt.sh
 
-RUN docker-php-ext-install -j$(nproc) intl zip pdo_mysql opcache
+RUN docker-php-ext-install -j$(nproc) intl zip pdo_mysql opcache \
+    && pecl install imagick \
+    && docker-php-ext-enable imagick
 
 RUN npm install -g bower uglifycss uglify-js ember-cli@2.4.2
 
