@@ -18,4 +18,4 @@ parameters:
     use_assetic_controller: false
     nodemodules_bin_path: /opt/circleci/nodejs/v6.11.4/bin
     browsertitle: zendblog-3.loc
-    image_basepath: /uploads
+    cdn_url: "https://zendblog-3.loc:8080"
