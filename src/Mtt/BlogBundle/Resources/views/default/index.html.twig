@@ -50,7 +50,7 @@
         var rest_url = '{{ path('mtt_blog_api_info') }}';
         var app_parameters = {
             api_url: rest_url.substr(1, rest_url.length - 2),
-            image_basepath: '{{ image_basepath }}'
+            cdn_url: '{{ cdn_url }}'
         };
     </script>
     {% javascripts filter='?uglifyjs2'

@@ -3,6 +3,7 @@ import Ember from 'ember';
 
 export default DS.Model.extend({
     path: DS.attr('string'),
+    preview: DS.attr('string'),
     originalFilename: DS.attr('string'),
     description: DS.attr('string'),
     fileSize: DS.attr('number'),
@@ -11,8 +12,8 @@ export default DS.Model.extend({
     post: DS.belongsTo('post'),
     postId: DS.attr('number'),
     defaultImage: DS.attr('boolean'),
-    src: Ember.computed('path', function () {
-        return app_parameters.image_basepath + '/' + this.get('path');
+    src: Ember.computed('preview', function () {
+        return app_parameters.cdn_url + this.get('preview');
     }),
     size: Ember.computed('fileSize', function () {
         var size = this.get('fileSize');

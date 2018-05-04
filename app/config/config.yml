@@ -29,7 +29,7 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         browsertitle:   "%browsertitle%"
-        image_basepath: "%image_basepath%"
+        cdn_url:        "%cdn_url%"
         frontend_site:  "%frontend_site%"
 
 # Assetic Configuration

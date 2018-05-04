@@ -10,6 +10,7 @@ namespace Mtt\BlogBundle\Controller;
 
 use Mtt\BlogBundle\Entity\MediaFile;
 use Mtt\BlogBundle\Form\ImageForm;
+use Mtt\BlogBundle\Model\Image;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -37,7 +38,12 @@ class MediaFileController extends BaseController
         if (!empty($params['post_id'])) {
             $result = $this->getDataConverter()
                 ->getMediaFileArray(
-                    $this->getMediaFileRepository()->getFilesByPost((int)$params['post_id'])
+                    array_map(
+                        function (MediaFile $e) {
+                            return new Image($e);
+                        },
+                        $this->getMediaFileRepository()->getFilesByPost((int)$params['post_id'])
+                    )
                 );
         } else {
             $pagination = $this->paginate(
@@ -46,7 +52,15 @@ class MediaFileController extends BaseController
             );
 
             $result = $this->getDataConverter()
-                ->getMediaFileArray($pagination, 'post');
+                ->getMediaFileArray(
+                    array_map(
+                        function (MediaFile $e) {
+                            return new Image($e);
+                        },
+                        $pagination->getItems()
+                    ),
+                    'post'
+                );
 
             $result['meta'] = $this->getPaginationMetadata($pagination->getPaginationData());
         }
@@ -65,7 +79,7 @@ class MediaFileController extends BaseController
     public function findAction(MediaFile $entity)
     {
         $result = $this->getDataConverter()
-            ->getMediaFile($entity);
+            ->getMediaFile(new Image($entity));
 
         return new JsonResponse($result);
     }

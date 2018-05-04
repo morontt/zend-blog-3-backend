@@ -9,6 +9,8 @@
 namespace Mtt\BlogBundle\API\Transformers;
 
 use Mtt\BlogBundle\Entity\MediaFile;
+use Mtt\BlogBundle\Model\Image;
+use Mtt\BlogBundle\Service\ImageManager;
 
 class MediaFileTransformer extends BaseTransformer
 {
@@ -20,19 +22,20 @@ class MediaFileTransformer extends BaseTransformer
     ];
 
     /**
-     * @param MediaFile $item
+     * @param Image $item
      *
      * @return array
      */
-    public function transform(MediaFile $item)
+    public function transform(Image $item)
     {
         $post = $item->getPost();
         $postId = $post ? $post->getId() : null;
 
         $data = [
             'id' => $item->getId(),
-            'path' => $item->getPath(),
-            'originalFilename' => pathinfo($item->getPath(), PATHINFO_BASENAME),
+            'path' => ImageManager::getImageBasePath() . '/' . $item->getPath(),
+            'preview' => ImageManager::getImageBasePath() . '/' . $item->getPreview('admin_list'),
+            'originalFilename' => $item->getOriginalFileName(),
             'fileSize' => $item->getFileSize(),
             'description' => $item->getDescription(),
             'timeCreated' => $this->dateTimeToISO($item->getTimeCreated()),
@@ -58,11 +61,11 @@ class MediaFileTransformer extends BaseTransformer
     }
 
     /**
-     * @param MediaFile $item
+     * @param Image $item
      *
      * @return \League\Fractal\Resource\Collection|null
      */
-    public function includePost(MediaFile $item)
+    public function includePost(Image $item)
     {
         $post = $item->getPost();
 

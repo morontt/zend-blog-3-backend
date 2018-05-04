@@ -39,7 +39,7 @@ use Mtt\BlogBundle\Utils\RuTransform;
  * @method array getCommentArray($collection, $includes = null)
  * @method array getCommentator(CommentatorInterface $entity, $includes = null)
  * @method array getCommentatorArray($collection, $includes = null)
- * @method array getMediaFile(MediaFile $entity, $includes = null)
+ * @method array getMediaFile(\Mtt\BlogBundle\Model\Image $entity, $includes = null)
  * @method array getMediaFileArray($collection, $includes = null)
  * @method array getPost(Post $entity, $includes = null)
  * @method array getPostArray($collection, $includes = null)

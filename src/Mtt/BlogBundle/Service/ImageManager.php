@@ -92,7 +92,15 @@ class ImageManager
      */
     public static function getUploadsDir(): string
     {
-        return '/var/www/resources/uploads';
+        return '/var/www/resources' . static::getImageBasePath();
+    }
+
+    /**
+     * @return string
+     */
+    public static function getImageBasePath(): string
+    {
+        return '/uploads';
     }
 
     /**

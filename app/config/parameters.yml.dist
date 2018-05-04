@@ -28,8 +28,8 @@ parameters:
     nodemodules_bin_path: /usr/bin
     browsertitle:         morontt.info
 
-    image_basepath: /uploads
     frontend_site: "https://morontt.info"
+    cdn_url: "http://cdn.zendblog-3.loc"
 
     disqus_shortname: yourshortkey
     disqus_secret_key: TW9uIE1heSAgOSAxNjo1ODo0OCBFRVNUIDIwMTYK

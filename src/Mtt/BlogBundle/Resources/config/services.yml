@@ -95,7 +95,7 @@ services:
         class: Mtt\BlogBundle\Service\TextProcessor
         arguments:
             - "@doctrine.orm.entity_manager"
-            - "%image_basepath%"
+            - "%cdn_url%"
 
     mtt_blog.telegram_logger:
         class: Monolog\Logger

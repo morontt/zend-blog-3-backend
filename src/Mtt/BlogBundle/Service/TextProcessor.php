@@ -27,12 +27,12 @@ class TextProcessor
      * TextProcessor constructor.
      *
      * @param EntityManager $em
-     * @param $imageBasepath
+     * @param string $cdn
      */
-    public function __construct(EntityManager $em, $imageBasepath)
+    public function __construct(EntityManager $em, string $cdn)
     {
         $this->em = $em;
-        $this->imageBasepath = $imageBasepath . '/';
+        $this->imageBasepath = $cdn . ImageManager::getImageBasePath() . '/';
     }
 
     /**
@@ -71,6 +71,7 @@ class TextProcessor
         $result = false;
         if (preg_match('/!(\d+)(?:\(([^\)]+)\))?!/m', $text, $matches)) {
             $imgId = (int)$matches[1];
+            /* @var \Mtt\BlogBundle\Entity\MediaFile $media */
             $media = $this->em->getRepository('MttBlogBundle:MediaFile')->find($imgId);
             if ($media) {
                 $alt = isset($matches[2]) ? $matches[2] : $media->getDescription();

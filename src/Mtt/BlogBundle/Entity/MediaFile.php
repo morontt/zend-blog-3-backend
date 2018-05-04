@@ -8,6 +8,7 @@
 
 namespace Mtt\BlogBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -69,14 +70,14 @@ class MediaFile
     protected $backuped = false;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(type="datetime")
      */
     protected $timeCreated;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(type="datetime")
      */
@@ -84,7 +85,7 @@ class MediaFile
 
     public function __construct()
     {
-        $now = new \DateTime();
+        $now = new DateTime();
 
         $this->timeCreated = $now;
         $this->lastUpdate = $now;
@@ -95,7 +96,7 @@ class MediaFile
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -107,7 +108,7 @@ class MediaFile
      *
      * @return MediaFile
      */
-    public function setPath($path)
+    public function setPath(string $path): MediaFile
     {
         $this->path = $path;
 
@@ -119,19 +120,27 @@ class MediaFile
      *
      * @return string
      */
-    public function getPath()
+    public function getPath(): string
     {
         return $this->path;
     }
 
     /**
+     * @return string
+     */
+    public function getOriginalFileName(): string
+    {
+        return pathinfo($this->path, PATHINFO_BASENAME);
+    }
+
+    /**
      * Set timeCreated
      *
-     * @param \DateTime $timeCreated
+     * @param DateTime $timeCreated
      *
      * @return MediaFile
      */
-    public function setTimeCreated($timeCreated)
+    public function setTimeCreated(DateTime $timeCreated): MediaFile
     {
         $this->timeCreated = $timeCreated;
 
@@ -141,9 +150,9 @@ class MediaFile
     /**
      * Get timeCreated
      *
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getTimeCreated()
+    public function getTimeCreated(): DateTime
     {
         return $this->timeCreated;
     }
@@ -151,11 +160,11 @@ class MediaFile
     /**
      * Set lastUpdate
      *
-     * @param \DateTime $lastUpdate
+     * @param DateTime $lastUpdate
      *
      * @return MediaFile
      */
-    public function setLastUpdate($lastUpdate)
+    public function setLastUpdate(DateTime $lastUpdate): MediaFile
     {
         $this->lastUpdate = $lastUpdate;
 
@@ -165,9 +174,9 @@ class MediaFile
     /**
      * Get lastUpdate
      *
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getLastUpdate()
+    public function getLastUpdate(): DateTime
     {
         return $this->lastUpdate;
     }
@@ -179,7 +188,7 @@ class MediaFile
      *
      * @return MediaFile
      */
-    public function setPost(Post $post = null)
+    public function setPost(Post $post = null): MediaFile
     {
         $this->post = $post;
 
@@ -191,7 +200,7 @@ class MediaFile
      *
      * @return Post
      */
-    public function getPost()
+    public function getPost(): ?Post
     {
         return $this->post;
     }
@@ -199,11 +208,11 @@ class MediaFile
     /**
      * Set description
      *
-     * @param string $description
+     * @param string|null $description
      *
      * @return MediaFile
      */
-    public function setDescription($description)
+    public function setDescription(string $description = null): MediaFile
     {
         $this->description = $description;
 
@@ -215,7 +224,7 @@ class MediaFile
      *
      * @return string
      */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -227,7 +236,7 @@ class MediaFile
      *
      * @return MediaFile
      */
-    public function setFileSize($fileSize)
+    public function setFileSize(int $fileSize): MediaFile
     {
         $this->fileSize = $fileSize;
 
@@ -239,7 +248,7 @@ class MediaFile
      *
      * @return int
      */
-    public function getFileSize()
+    public function getFileSize(): int
     {
         return $this->fileSize;
     }
@@ -251,7 +260,7 @@ class MediaFile
      *
      * @return MediaFile
      */
-    public function setDefaultImage($defaultImage)
+    public function setDefaultImage(bool $defaultImage): MediaFile
     {
         $this->defaultImage = $defaultImage;
 
@@ -263,7 +272,7 @@ class MediaFile
      *
      * @return bool
      */
-    public function isDefaultImage()
+    public function isDefaultImage(): bool
     {
         return $this->defaultImage;
     }
@@ -275,7 +284,7 @@ class MediaFile
      *
      * @return MediaFile
      */
-    public function setBackuped($backuped)
+    public function setBackuped($backuped): MediaFile
     {
         $this->backuped = $backuped;
 
@@ -287,7 +296,7 @@ class MediaFile
      *
      * @return bool
      */
-    public function isBackuped()
+    public function isBackuped(): bool
     {
         return $this->backuped;
     }
