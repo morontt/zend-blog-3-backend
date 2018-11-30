@@ -11,6 +11,7 @@
         "ext-xml": "*",
         "ext-pdo_mysql": "*",
         "ext-openssl": "*",
+        "ext-json": "*",
         "symfony/symfony": "3.4.*",
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^1.6",

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "95985cc735c81d3b266fd01eae5ce507",
+    "content-hash": "9be2f03170219d936c7dcf853fb5b0b6",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -72,7 +72,7 @@
             },
             "type": "library",
             "autoload": {
-                "psr-0": {
+                "classmap": {
                     "": "disqusapi/"
                 }
             },
@@ -2604,6 +2604,7 @@
                 "compression",
                 "minification"
             ],
+            "abandoned": "symfony/webpack-encore-pack",
             "time": "2017-07-14T07:26:46+00:00"
         },
         {
@@ -5448,7 +5449,8 @@
     "platform": {
         "ext-xml": "*",
         "ext-pdo_mysql": "*",
-        "ext-openssl": "*"
+        "ext-openssl": "*",
+        "ext-json": "*"
     },
     "platform-dev": []
 }
