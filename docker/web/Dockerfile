@@ -8,9 +8,9 @@ ARG HOST_UID=1000
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV PHP_CPPFLAGS="$PHP_CPPFLAGS -std=c++11"
+ENV TZ "Europe/Kiev"
 
-RUN echo Europe/Kiev > /etc/timezone && \
-    dpkg-reconfigure -f noninteractive tzdata
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 COPY ./custom-apt.sh /tmp/custom-apt.sh
 COPY ./mysql_pubkey.asc /tmp/mysql_pubkey.asc
