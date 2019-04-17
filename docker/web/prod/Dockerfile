@@ -13,7 +13,6 @@ ENV TZ "Europe/Kiev"
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 COPY ./custom-apt.sh /tmp/custom-apt.sh
-COPY ./mysql_pubkey.asc /tmp/mysql_pubkey.asc
 RUN bash /tmp/custom-apt.sh
 
 RUN docker-php-ext-install -j$(nproc) intl zip pdo_mysql opcache \

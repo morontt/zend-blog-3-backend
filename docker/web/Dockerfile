@@ -13,13 +13,7 @@ ENV TZ "Europe/Kiev"
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 COPY ./custom-apt.sh /tmp/custom-apt.sh
-COPY ./mysql_pubkey.asc /tmp/mysql_pubkey.asc
 RUN bash /tmp/custom-apt.sh
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    autoconf automake libtool \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 COPY ./watchman-install.sh /tmp/watchman-install.sh
 RUN bash /tmp/watchman-install.sh
@@ -37,6 +31,7 @@ RUN yes | pecl install xdebug \
 COPY ./.bashrc /root/.bashrc
 COPY ./apache.conf /etc/apache2/sites-available/000-default.conf
 COPY ./php.ini /usr/local/etc/php/
+RUN echo "LogFormat \"%a %l %u %t \\\"%r\\\" %>s %O \\\"%{User-Agent}i\\\"\" mainlog" >> /etc/apache2/apache2.conf
 RUN a2enmod rewrite remoteip && a2dismod deflate -f
 
 RUN set -x && curl -sS https://getcomposer.org/installer | php \

@@ -1,11 +1,11 @@
-FROM nginx:1.10.3
+FROM nginx:1.14
 
 MAINTAINER Alexander Harchenko <morontt@gmail.com>
 
 VOLUME ["/var/www/resources"]
 
-COPY ./nginx.conf /etc/nginx/nginx.conf
-COPY ./server.key /etc/nginx/ssl/privkey.pem
-COPY ./cert.pem /etc/nginx/ssl/cert.pem
+COPY ./web.conf /etc/nginx/conf.d
+COPY ./fullchain.pem /etc/nginx/ssl/cert.pem
+COPY ./privkey.pem /etc/nginx/ssl/privkey.pem
 
 EXPOSE 443

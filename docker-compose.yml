@@ -21,6 +21,8 @@ services:
             # dockerfile: prod/Dockerfile
             args:
                 HOST_UID: ${HOST_UID}
+        hostname: "rhinoceros"
+        container_name: "rhinoceros"
         volumes:
             - .:/var/www/html
             - ${UPLOADS_PATH}:/var/www/resources
