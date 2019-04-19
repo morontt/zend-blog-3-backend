@@ -25,8 +25,7 @@ RUN docker-php-ext-install -j$(nproc) intl zip pdo_mysql opcache \
 RUN npm install -g bower uglifycss uglify-js ember-cli@2.4.2
 
 RUN yes | pecl install xdebug \
-    && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" \
-    > /usr/local/etc/php/conf.d/xdebug.ini
+    && docker-php-ext-enable xdebug
 
 COPY ./.bashrc /root/.bashrc
 COPY ./apache.conf /etc/apache2/sites-available/000-default.conf
