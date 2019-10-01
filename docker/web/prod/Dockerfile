@@ -27,6 +27,8 @@ COPY ./php.ini /usr/local/etc/php/
 RUN echo "LogFormat \"%a %l %u %t \\\"%r\\\" %>s %O \\\"%{User-Agent}i\\\"\" mainlog" >> /etc/apache2/apache2.conf
 RUN a2enmod rewrite remoteip && a2dismod deflate -f
 
+ENV COMPOSER_ALLOW_SUPERUSER 1
+
 RUN set -x && curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer \
     && composer global require hirak/prestissimo --prefer-dist --no-interaction \

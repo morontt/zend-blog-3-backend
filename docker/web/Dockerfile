@@ -22,7 +22,8 @@ RUN docker-php-ext-install -j$(nproc) intl zip pdo_mysql opcache \
     && pecl install imagick \
     && docker-php-ext-enable imagick
 
-RUN npm install -g bower uglifycss uglify-js ember-cli@2.4.2
+RUN npm install npm@latest -g \
+    && npm install -g bower uglifycss uglify-js ember-cli@2.4.2
 
 RUN yes | pecl install xdebug \
     && docker-php-ext-enable xdebug
@@ -32,6 +33,8 @@ COPY ./apache.conf /etc/apache2/sites-available/000-default.conf
 COPY ./php.ini /usr/local/etc/php/
 RUN echo "LogFormat \"%a %l %u %t \\\"%r\\\" %>s %O \\\"%{User-Agent}i\\\"\" mainlog" >> /etc/apache2/apache2.conf
 RUN a2enmod rewrite remoteip && a2dismod deflate -f
+
+ENV COMPOSER_ALLOW_SUPERUSER 1
 
 RUN set -x && curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer \
