@@ -23,9 +23,7 @@ parameters:
 
     debug_toolbar:          true
     debug_redirects:        false
-    use_assetic_controller: true
 
-    nodemodules_bin_path: /usr/bin
     browsertitle:         morontt.info
 
     frontend_site: "https://morontt.info"

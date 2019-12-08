@@ -1,5 +1,11 @@
 version: '2'
 services:
+    source:
+        image: alpine:3.6
+        volumes:
+            - .:/var/www/html
+            - ${UPLOADS_PATH}:/var/www/resources
+
     hedgehog:
         build:
             context: ./docker/db
@@ -21,11 +27,13 @@ services:
             # dockerfile: prod/Dockerfile
             args:
                 HOST_UID: ${HOST_UID}
+                APP_ENV: ${APP_ENV}
         hostname: "rhinoceros"
         container_name: "rhinoceros"
+        volumes_from:
+            - source
         volumes:
-            - .:/var/www/html
-            - ${UPLOADS_PATH}:/var/www/resources
+            - ./docker/web/apache_${APP_ENV}.conf:/etc/apache2/sites-available/000-default.conf:ro
         ports:
             - "8033:80"
         links:
@@ -34,6 +42,7 @@ services:
         depends_on:
             - hedgehog
             - mailcatcher
+            - source
         environment:
             APPLICATION_ENV: development
 
@@ -42,11 +51,17 @@ services:
         ports:
             - "1080:1080"
 
+    nodejs:
+        build: ./docker/nodejs
+        volumes_from:
+            - source
+        depends_on:
+            - source
+
     sloth:
         build: ./docker/nginx
-        volumes:
-            - ./web:/usr/share/nginx/html
-            - ${UPLOADS_PATH}:/var/www/resources
+        volumes_from:
+            - source
         ports:
             - "443:443"
             - "80:80"

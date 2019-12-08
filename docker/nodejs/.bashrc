@@ -14,9 +14,6 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 alias ll='ls -ahl'
-alias ownr='chown -R www-data:www-data .'
-alias cs-fix='bin/php-cs-fixer fix'
-alias composer='php -d memory_limit=-1 /usr/local/bin/composer'
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases

@@ -15,7 +15,5 @@ parameters:
     secret: jkh3jh4jk5hk34jh5
     debug_toolbar: false
     debug_redirects: false
-    use_assetic_controller: false
-    nodemodules_bin_path: /opt/circleci/nodejs/v6.11.4/bin
     browsertitle: zendblog-3.loc
     cdn_url: "https://zendblog-3.loc:8080"

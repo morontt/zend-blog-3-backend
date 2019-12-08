@@ -1,4 +1,4 @@
-FROM php:7.1-apache
+FROM php:7.2-apache-stretch
 
 MAINTAINER Alexander Harchenko <morontt@gmail.com>
 
@@ -19,12 +19,9 @@ RUN docker-php-ext-install -j$(nproc) intl zip pdo_mysql opcache \
     && pecl install imagick \
     && docker-php-ext-enable imagick
 
-RUN npm install -g bower uglifycss uglify-js ember-cli@2.4.2
-
 COPY ./.bashrc /root/.bashrc
-COPY ./apache.conf /etc/apache2/sites-available/000-default.conf
-COPY ./php.ini /usr/local/etc/php/
-RUN echo "LogFormat \"%a %l %u %t \\\"%r\\\" %>s %O \\\"%{User-Agent}i\\\"\" mainlog" >> /etc/apache2/apache2.conf
+RUN cp ${PHP_INI_DIR}/php.ini-production /usr/local/etc/php/php.ini \
+    & echo "LogFormat \"%a %l %u %t \\\"%r\\\" %>s %O \\\"%{User-Agent}i\\\"\" mainlog" >> /etc/apache2/apache2.conf
 RUN a2enmod rewrite remoteip && a2dismod deflate -f
 
 ENV COMPOSER_ALLOW_SUPERUSER 1

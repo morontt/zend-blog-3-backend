@@ -5,13 +5,7 @@
 {% endblock %}
 
 {% block stylesheets %}
-    {% stylesheets filter='?uglifycss' filter='cssrewrite'
-        '@jquery_ui_base'
-        'bundles/mttblog/components/bootstrap/dist/css/bootstrap.css'
-        'bundles/mttblog/css/main.css'
-    %}
-    <link rel="stylesheet" href="{{ asset_url }}"/>
-    {% endstylesheets %}
+    <link rel="stylesheet" href="/dist/mttblog_main.min.css"/>
 {% endblock %}
 
 {% block body %}
@@ -53,21 +47,7 @@
             cdn_url: '{{ cdn_url }}'
         };
     </script>
-    {% javascripts filter='?uglifyjs2'
-        'spa/assets/vendor.js'
-        'bundles/mttblog/components/bootstrap/dist/js/bootstrap.js'
-        'bundles/mttblog/components/moment/moment.js'
-        'bundles/mttblog/components/moment/locale/ru.js'
-        'bundles/mttblog/components/jquery-ui/ui/core.js'
-        'bundles/mttblog/components/jquery-ui/ui/widget.js'
-        'bundles/mttblog/components/jquery-ui/ui/position.js'
-        'bundles/mttblog/components/jquery-ui/ui/autocomplete.js'
-        'bundles/mttblog/components/jquery-ui/ui/menu.js'
-        '@FOSJsRoutingBundle/Resources/public/js/router.js'
-        'spa/assets/mtt-blog.js'
-    %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
+    <script type="text/javascript" src="/dist/mttblog.min.js"></script>
     <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
     <script>
         moment.locale('{{ app.request.locale }}');

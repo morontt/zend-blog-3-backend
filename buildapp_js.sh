@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# Run inside nodejs container
+
+bower install --allow-root
+
 cd ./spa
 
 while getopts ":ri" opt; do
@@ -9,10 +13,13 @@ while getopts ":ri" opt; do
       rm -rf bower_components
       ;;
     i)
-      bower install
-      npm install
+      bower install --allow-root
+      yarn install
       ;;
   esac
 done
 
 ember build --output-path ./../web/spa
+
+cd ..
+grunt
