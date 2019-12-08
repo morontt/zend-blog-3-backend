@@ -93,7 +93,7 @@ form.form-signin .form-control:focus {
 
 .navbar-inverse {
     border: 0;
-    background: #333 url('../img/adminbody.gif');
+    background: #333 url('/bundles/mttblog/img/adminbody.gif');
 }
 
 .navbar-inverse .navbar-nav > li.active > a {
@@ -264,7 +264,7 @@ th.actions {
 #sidebar {
     margin-top: -50px;
     padding-top: 50px;
-    background: #333 url('../img/adminbody.gif');
+    background: #333 url('/bundles/mttblog/img/adminbody.gif');
     margin-bottom: -8000px;
     padding-bottom: 8000px;
 }

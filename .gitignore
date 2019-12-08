@@ -14,7 +14,7 @@
 /node_modules/
 /bin/
 /composer.phar
-src/Mtt/BlogBundle/Resources/public/components/
+/bower_components/
 behat.yml
 
 /spa/dist
@@ -28,4 +28,5 @@ behat.yml
 /spa/npm-debug.log
 /spa/testem.log
 /web/spa/
+/web/fonts/
 .env

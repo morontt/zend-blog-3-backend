@@ -3,6 +3,8 @@
 # Run inside nodejs container
 
 bower install --allow-root
+cp -R bower_components/bootstrap/fonts web
+yarn install
 
 cd ./spa
 
@@ -22,4 +24,5 @@ done
 ember build --output-path ./../web/spa
 
 cd ..
+
 grunt

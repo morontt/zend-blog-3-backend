@@ -16,7 +16,7 @@ module.exports = function (grunt) {
                     banner: '/*! <%= pkg.name %> --- <%= grunt.template.today("dd mmm yyyy HH:MM:ss") %> */\n'
                 },
                 src: [
-                    'node_modules/bootstrap/dist/css/bootstrap.css',
+                    'bower_components/bootstrap/dist/css/bootstrap.css',
                     'web/bundles/mttblog/css/main.css'
                 ],
                 dest: 'web/dist/<%= pkg.name %>_login.css'
@@ -29,24 +29,24 @@ module.exports = function (grunt) {
                     banner: '/*! <%= pkg.name %> --- <%= grunt.template.today("dd mmm yyyy HH:MM:ss") %> */\n'
                 },
                 src: [
-                    'node_modules/jquery-ui/themes/base/core.css',
-                    'node_modules/jquery-ui/themes/base/accordion.css',
-                    'node_modules/jquery-ui/themes/base/autocomplete.css',
-                    'node_modules/jquery-ui/themes/base/button.css',
-                    'node_modules/jquery-ui/themes/base/datepicker.css',
-                    'node_modules/jquery-ui/themes/base/dialog.css',
-                    'node_modules/jquery-ui/themes/base/draggable.css',
-                    'node_modules/jquery-ui/themes/base/menu.css',
-                    'node_modules/jquery-ui/themes/base/progressbar.css',
-                    'node_modules/jquery-ui/themes/base/resizable.css',
-                    'node_modules/jquery-ui/themes/base/selectable.css',
-                    'node_modules/jquery-ui/themes/base/selectmenu.css',
-                    'node_modules/jquery-ui/themes/base/sortable.css',
-                    'node_modules/jquery-ui/themes/base/slider.css',
-                    'node_modules/jquery-ui/themes/base/spinner.css',
-                    'node_modules/jquery-ui/themes/base/tabs.css',
-                    'node_modules/jquery-ui/themes/base/tooltip.css',
-                    'node_modules/jquery-ui/themes/base/theme.css'
+                    'bower_components/jquery-ui/themes/base/core.css',
+                    'bower_components/jquery-ui/themes/base/accordion.css',
+                    'bower_components/jquery-ui/themes/base/autocomplete.css',
+                    'bower_components/jquery-ui/themes/base/button.css',
+                    'bower_components/jquery-ui/themes/base/datepicker.css',
+                    'bower_components/jquery-ui/themes/base/dialog.css',
+                    'bower_components/jquery-ui/themes/base/draggable.css',
+                    'bower_components/jquery-ui/themes/base/menu.css',
+                    'bower_components/jquery-ui/themes/base/progressbar.css',
+                    'bower_components/jquery-ui/themes/base/resizable.css',
+                    'bower_components/jquery-ui/themes/base/selectable.css',
+                    'bower_components/jquery-ui/themes/base/selectmenu.css',
+                    'bower_components/jquery-ui/themes/base/sortable.css',
+                    'bower_components/jquery-ui/themes/base/slider.css',
+                    'bower_components/jquery-ui/themes/base/spinner.css',
+                    'bower_components/jquery-ui/themes/base/tabs.css',
+                    'bower_components/jquery-ui/themes/base/tooltip.css',
+                    'bower_components/jquery-ui/themes/base/theme.css'
                 ],
                 dest: 'web/dist/<%= pkg.name %>_jq_ui.css'
             },
@@ -59,7 +59,7 @@ module.exports = function (grunt) {
                 },
                 src: [
                     'web/dist/<%= pkg.name %>_jq_ui.css',
-                    'node_modules/bootstrap/dist/css/bootstrap.css',
+                    'bower_components/bootstrap/dist/css/bootstrap.css',
                     'web/bundles/mttblog/css/blog.css'
                 ],
                 dest: 'web/dist/<%= pkg.name %>_preview.css'
@@ -73,7 +73,7 @@ module.exports = function (grunt) {
                 },
                 src: [
                     'web/dist/<%= pkg.name %>_jq_ui.css',
-                    'node_modules/bootstrap/dist/css/bootstrap.css',
+                    'bower_components/bootstrap/dist/css/bootstrap.css',
                     'web/bundles/mttblog/css/main.css'
                 ],
                 dest: 'web/dist/<%= pkg.name %>_main.css'
@@ -87,14 +87,14 @@ module.exports = function (grunt) {
                 },
                 src: [
                     'web/spa/assets/vendor.js',
-                    'web/bundles/mttblog/components/bootstrap/dist/js/bootstrap.js',
-                    'web/bundles/mttblog/components/moment/moment.js',
-                    'web/bundles/mttblog/components/moment/locale/ru.js',
-                    'web/bundles/mttblog/components/jquery-ui/ui/core.js',
-                    'web/bundles/mttblog/components/jquery-ui/ui/widget.js',
-                    'web/bundles/mttblog/components/jquery-ui/ui/position.js',
-                    'web/bundles/mttblog/components/jquery-ui/ui/autocomplete.js',
-                    'web/bundles/mttblog/components/jquery-ui/ui/menu.js',
+                    'bower_components/bootstrap/dist/js/bootstrap.js',
+                    'bower_components/moment/moment.js',
+                    'bower_components/moment/locale/ru.js',
+                    'bower_components/jquery-ui/ui/core.js',
+                    'bower_components/jquery-ui/ui/widget.js',
+                    'bower_components/jquery-ui/ui/position.js',
+                    'bower_components/jquery-ui/ui/autocomplete.js',
+                    'bower_components/jquery-ui/ui/menu.js',
                     'web/bundles/fosjsrouting/js/router.js',
                     'web/spa/assets/mtt-blog.js'
                 ],
