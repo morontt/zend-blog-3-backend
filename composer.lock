@@ -4,24 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "473ae7ac3a3bf237e00bcc5e699cf8a5",
+    "content-hash": "57b301e783964447746dfd1820e3c999",
     "packages": [
-        {
-            "name": "disqus/disqus-php",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/disqus/disqus-php.git",
-                "reference": "b1149196ec8aaa9d4dac35a4a28c5647c17ef8af"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "": "disqusapi/"
-                }
-            },
-            "time": "2014-04-24T18:25:35+00:00"
-        },
         {
             "name": "doctrine/annotations",
             "version": "v1.8.0",
@@ -4815,6 +4799,7 @@
             ],
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
             "homepage": "https://github.com/container-interop/container-interop",
+            "abandoned": "psr/container",
             "time": "2017-02-14T19:40:03+00:00"
         },
         {
@@ -5177,6 +5162,7 @@
                 "emberjs",
                 "orm"
             ],
+            "abandoned": true,
             "time": "2017-08-26T21:21:50+00:00"
         },
         {
@@ -6034,7 +6020,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "disqus/disqus-php": 20,
         "morontt/doctrine-to-ember": 20,
         "behat/symfony2-extension": 20,
         "vipsoft/doctrine-data-fixtures-extension": 20

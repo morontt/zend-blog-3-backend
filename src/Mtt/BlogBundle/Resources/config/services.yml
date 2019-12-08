@@ -48,15 +48,6 @@ services:
         tags:
             - { name: cron-daily }
 
-    mtt_blog.disqus_grabber:
-        class: Mtt\BlogBundle\Cron\Daily\DisqusGrabber
-        arguments:
-            - "@doctrine.orm.entity_manager"
-            - "%disqus%"
-            - "%admin_email%"
-        tags:
-            - { name: cron-daily }
-
     mtt_blog.geolocation_cron:
         class: Mtt\BlogBundle\Cron\Daily\CommentGeoLocation
         arguments:

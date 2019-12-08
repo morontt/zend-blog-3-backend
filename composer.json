@@ -29,7 +29,6 @@
         "knplabs/knp-paginator-bundle": "~2.4",
         "friendsofsymfony/jsrouting-bundle": "~1.5",
         "zendframework/zend-filter": "2.7.*",
-        "disqus/disqus-php": "dev-master",
         "guzzlehttp/guzzle": "~6.3",
         "kunalvarma05/dropbox-php-sdk": "~0.2"
     },
@@ -46,23 +45,6 @@
         "fzaninotto/faker": "~1.7",
         "phpspec/phpspec": "~4.0"
     },
-    "repositories": [
-        {
-            "type": "package",
-            "package": {
-                "name": "disqus/disqus-php",
-                "version": "dev-master",
-                "source": {
-                    "type": "git",
-                    "url": "https://github.com/disqus/disqus-php.git",
-                    "reference": "b1149196ec8aaa9d4dac35a4a28c5647c17ef8af"
-                },
-                "autoload": {
-                    "classmap": [ "disqusapi/" ]
-                }
-            }
-        }
-    ],
     "scripts": {
         "symfony-scripts": [
             "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",

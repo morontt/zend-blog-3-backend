@@ -70,12 +70,6 @@ swiftmailer:
     encryption: "%mailer_encryption%"
     spool:      { type: memory }
 
-parameters:
-    disqus:
-        shortname: "%disqus_shortname%"
-        secret_key: "%disqus_secret_key%"
-        owner_id: "%disqus_owner_id%"
-
 services:
     _defaults:
         autowire: false

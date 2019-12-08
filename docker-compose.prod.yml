@@ -1,0 +1,30 @@
+version: '2'
+services:
+    source:
+        image: alpine:3.6
+        volumes:
+            - ./httpdocs:/var/www/html
+            - ${UPLOADS_PATH}:/var/www/resources
+
+    rhinoceros:
+        build:
+            context: ./httpdocs/docker/web
+            dockerfile: prod/Dockerfile
+            args:
+                HOST_UID: 33
+        volumes_from:
+            - source
+        volumes:
+            - ./httpdocs/docker/web/apache_prod.conf:/etc/apache2/sites-available/000-default.conf:ro
+        ports:
+            - "8011:80"
+        depends_on:
+            - source
+        restart: always
+
+    nodejs:
+        build: ./httpdocs/docker/nodejs
+        volumes_from:
+            - source
+        depends_on:
+            - source
