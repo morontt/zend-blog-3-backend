@@ -28,7 +28,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface
     }
 
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
@@ -49,7 +49,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface
         $this->addReference('admin-user', $user);
 
         $faker = FakerFactory::create('ru_RU');
-        $faker->seed(8465);
+        $faker->seed(8466);
 
         for ($i = 0; $i < self::COUNT_USERS; $i++) {
             $user = new User();
