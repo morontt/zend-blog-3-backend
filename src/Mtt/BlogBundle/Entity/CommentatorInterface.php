@@ -5,7 +5,7 @@ namespace Mtt\BlogBundle\Entity;
 interface CommentatorInterface
 {
     /**
-     * @return null|int
+     * @return int|null
      */
     public function getId(): ? int;
 
@@ -15,22 +15,22 @@ interface CommentatorInterface
     public function getName(): string;
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getEmail(): ? string;
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getWebsite(): ? string;
 
     /**
-     * @return null|int
+     * @return int|null
      */
     public function getDisqusId(): ? int;
 
     /**
-     * @return null|string
+     * @return string|null
      */
     public function getEmailHash(): ? string;
 

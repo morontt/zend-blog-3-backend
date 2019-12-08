@@ -37,7 +37,7 @@
         "symfony/phpunit-bridge": "^3.0",
         "doctrine/doctrine-fixtures-bundle": "2.3.*",
         "morontt/doctrine-to-ember": "dev-master",
-        "friendsofphp/php-cs-fixer": "^2.8",
+        "friendsofphp/php-cs-fixer": "~2.14.0",
         "behat/symfony2-extension": "~2.0@dev",
         "behat/mink-extension": "~2.2",
         "behat/mink-goutte-driver": "1.2.*",

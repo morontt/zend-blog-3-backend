@@ -75,7 +75,7 @@ class Commentator implements CommentatorInterface
     /**
      * Get id
      *
-     * @return null|int
+     * @return int|null
      */
     public function getId(): ? int
     {
@@ -123,7 +123,7 @@ class Commentator implements CommentatorInterface
     /**
      * Get email
      *
-     * @return null|string
+     * @return string|null
      */
     public function getEmail(): ? string
     {
@@ -147,7 +147,7 @@ class Commentator implements CommentatorInterface
     /**
      * Get website
      *
-     * @return null|string
+     * @return string|null
      */
     public function getWebsite(): ? string
     {
@@ -205,7 +205,7 @@ class Commentator implements CommentatorInterface
     /**
      * Get disqusId
      *
-     * @return null|int
+     * @return int|null
      */
     public function getDisqusId(): ? int
     {
@@ -229,7 +229,7 @@ class Commentator implements CommentatorInterface
     /**
      * Get emailHash
      *
-     * @return null|string
+     * @return string|null
      */
     public function getEmailHash(): ? string
     {
