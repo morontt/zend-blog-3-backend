@@ -16,6 +16,6 @@
         "moment": "2.11.2",
         "jquery": "2.1.4",
         "jquery-ui": "1.12.1",
-        "bootstrap": "3.3.0"
+        "bootstrap": "3.4.1"
     }
 }
