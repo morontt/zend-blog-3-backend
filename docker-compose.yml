@@ -27,7 +27,6 @@ services:
             # dockerfile: prod/Dockerfile
             args:
                 HOST_UID: ${HOST_UID}
-                APP_ENV: ${APP_ENV}
         hostname: "rhinoceros"
         container_name: "rhinoceros"
         volumes_from:
