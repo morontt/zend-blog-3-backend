@@ -12,9 +12,9 @@ use Mtt\BlogBundle\Entity\MediaFile;
 use Mtt\BlogBundle\Form\ImageForm;
 use Mtt\BlogBundle\Model\Image;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/api/mediaFiles")

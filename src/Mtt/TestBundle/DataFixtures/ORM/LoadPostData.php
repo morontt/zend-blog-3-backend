@@ -2,16 +2,17 @@
 
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory as FakerFactory;
 use Mtt\BlogBundle\Entity\Post;
+use Mtt\BlogBundle\Service\TextProcessor;
 use Mtt\BlogBundle\Utils\RuTransform;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadPostData extends AbstractFixture implements ContainerAwareInterface, DependentFixtureInterface
+class LoadPostData extends Fixture implements ContainerAwareInterface, DependentFixtureInterface
 {
     const COUNT_POSTS = 150;
 
@@ -29,11 +30,11 @@ class LoadPostData extends AbstractFixture implements ContainerAwareInterface, D
     }
 
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
-        /* @var \Mtt\BlogBundle\Service\TextProcessor $textProcessor */
+        /* @var TextProcessor $textProcessor */
         $textProcessor = $this->container->get('mtt_blog.text_processor');
 
         $post = new Post();

@@ -69,8 +69,3 @@ swiftmailer:
     password:   "%mailer_password%"
     encryption: "%mailer_encryption%"
     spool:      { type: memory }
-
-services:
-    _defaults:
-        autowire: false
-        autoconfigure: false

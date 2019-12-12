@@ -2,8 +2,8 @@
 
 namespace Application\Migrations;
 
-use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
+use Doctrine\Migrations\AbstractMigration;
 
 /**
  * Auto-generated Migration: Please modify to your needs!
@@ -14,7 +14,7 @@ class Version20141025170346 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-        
+
         $this->addSql('CREATE TABLE avatar (id INT AUTO_INCREMENT NOT NULL, hash VARCHAR(32) NOT NULL, `default` SMALLINT NOT NULL, src VARCHAR(48) NOT NULL, last_modified DATETIME NOT NULL, UNIQUE INDEX UNIQ_1677722FD1B862B8 (hash), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE category (id INT AUTO_INCREMENT NOT NULL, parent_id INT DEFAULT NULL, name VARCHAR(100) NOT NULL, url VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_64C19C1F47645AE (url), INDEX IDX_64C19C1727ACA70 (parent_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE comments (id INT AUTO_INCREMENT NOT NULL, parent_id INT DEFAULT NULL, post_id INT DEFAULT NULL, commentator_id INT DEFAULT NULL, user_id INT DEFAULT NULL, user_agent_id INT DEFAULT NULL, text LONGTEXT NOT NULL, deleted TINYINT(1) NOT NULL, ip_addr VARCHAR(15) DEFAULT NULL, time_created DATETIME NOT NULL, disqus_id INT DEFAULT NULL, INDEX IDX_5F9E962A727ACA70 (parent_id), INDEX IDX_5F9E962A4B89032C (post_id), INDEX IDX_5F9E962A506AFCC0 (commentator_id), INDEX IDX_5F9E962AA76ED395 (user_id), INDEX IDX_5F9E962AD499950B (user_agent_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
@@ -47,7 +47,7 @@ class Version20141025170346 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-        
+
         $this->addSql('ALTER TABLE category DROP FOREIGN KEY FK_64C19C1727ACA70');
         $this->addSql('ALTER TABLE posts DROP FOREIGN KEY FK_885DBAFA12469DE2');
         $this->addSql('ALTER TABLE comments DROP FOREIGN KEY FK_5F9E962A727ACA70');

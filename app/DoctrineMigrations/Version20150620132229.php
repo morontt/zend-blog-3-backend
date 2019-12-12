@@ -2,8 +2,8 @@
 
 namespace Application\Migrations;
 
-use Doctrine\DBAL\Migrations\AbstractMigration;
 use Doctrine\DBAL\Schema\Schema;
+use Doctrine\Migrations\AbstractMigration;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -41,7 +41,7 @@ class Version20150620132229 extends AbstractMigration implements ContainerAwareI
     {
         parent::postUp($schema);
 
-        $sql = "
+        $sql = '
         CREATE PROCEDURE `update_comments_count`(IN topicID INT UNSIGNED)
         BEGIN
             DECLARE count_comments INT DEFAULT 0;
@@ -55,7 +55,7 @@ class Version20150620132229 extends AbstractMigration implements ContainerAwareI
                 WHERE `posts_counts`.`post_id` = topicID;
 
             SELECT count_comments;
-        END";
+        END';
 
         $em = $this->container->get('doctrine.orm.entity_manager');
         $stmt = $em->getConnection()->prepare($sql);

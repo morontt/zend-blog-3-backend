@@ -12,9 +12,9 @@ use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Event\ReplyCommentEvent;
 use Mtt\BlogBundle\MttBlogEvents;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/api/comments")

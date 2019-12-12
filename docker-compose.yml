@@ -11,8 +11,9 @@ services:
             context: ./docker/db
             args:
                 HOST_UID: ${HOST_UID}
+        container_name: "hedgehog_mysql"
         volumes:
-            - ./var/db_data:/var/lib/mysql
+            - ${DB_DATA_PATH}:/var/lib/mysql
         ports:
             - "3306:3306"
         environment:
@@ -45,6 +46,7 @@ services:
             - source
         environment:
             APPLICATION_ENV: development
+            CIRCLE_ARTIFACTS: /var/www/html/var/tests
 
     mailcatcher:
         image: xelbot/mailcatcher

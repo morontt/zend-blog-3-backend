@@ -6,14 +6,14 @@
  * Time: 22:16
  */
 
-namespace Mtt\BlogBundle\Command;
+namespace Mtt\BlogBundle\Command\Telegram;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class TelegramWebhookInfoCommand extends ContainerAwareCommand
+class WebhookInfoCommand extends ContainerAwareCommand
 {
     protected function configure()
     {

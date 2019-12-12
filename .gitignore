@@ -7,8 +7,10 @@
 /var/bootstrap.php.cache
 /var/cache/*
 /var/logs/*
+/var/tests/*
 !var/cache/.gitkeep
 !var/logs/.gitkeep
+!var/tests/.gitkeep
 /build/
 /vendor/
 /node_modules/

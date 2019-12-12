@@ -110,15 +110,13 @@ class BaseController extends Controller
      *
      * @return array
      */
-    public function getPaginationMetadata(array $data)
+    public function getPaginationMetadata(array $data): array
     {
-        $result = [
+        return [
             'last' => $data['last'],
             'current' => $data['current'],
-            'previous' => isset($data['previous']) ? $data['previous'] : false,
-            'next' => isset($data['next']) ? $data['next'] : false,
+            'previous' => $data['previous'] ?? false,
+            'next' => $data['next'] ?? false,
         ];
-
-        return $result;
     }
 }

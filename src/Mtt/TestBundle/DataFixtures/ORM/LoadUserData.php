@@ -2,7 +2,7 @@
 
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory as FakerFactory;
 use Mtt\BlogBundle\Utils\RuTransform;
@@ -10,7 +10,7 @@ use Mtt\UserBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadUserData extends AbstractFixture implements ContainerAwareInterface
+class LoadUserData extends Fixture implements ContainerAwareInterface
 {
     const COUNT_USERS = 10;
 

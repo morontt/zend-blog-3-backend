@@ -2,15 +2,15 @@
 
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Mtt\BlogBundle\Entity\Tracking;
 
-class LoadTrackingData extends AbstractFixture implements DependentFixtureInterface
+class LoadTrackingData extends Fixture implements DependentFixtureInterface
 {
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {

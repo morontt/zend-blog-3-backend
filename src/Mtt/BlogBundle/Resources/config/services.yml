@@ -1,6 +1,12 @@
 services:
     _defaults:
-        public: true
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Mtt\BlogBundle\:
+        resource: '../../*'
+        exclude: '../../{Entity,Model,Event}'
 
     mtt_blog.json_body_listener:
         class: Mtt\BlogBundle\EventListener\JsonBodyListener
@@ -15,6 +21,7 @@ services:
     mtt_blog.api.data_converter:
         class: Mtt\BlogBundle\API\DataConverter
         arguments: [ "@doctrine.orm.entity_manager", "@mtt_blog.text_processor" ]
+        public: true
 
     mtt_blog.ip_info:
         class: Mtt\BlogBundle\Service\IpInfo
@@ -23,6 +30,7 @@ services:
     mtt_blog.tracking:
         class: Mtt\BlogBundle\Service\Tracking
         arguments: [ "@doctrine.orm.entity_manager" ]
+        public: true
 
     mtt_blog.reply_comment_listener:
         class: Mtt\BlogBundle\EventListener\ReplyCommentListener
@@ -87,6 +95,7 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
             - "%cdn_url%"
+        public: true
 
     mtt_blog.telegram_logger:
         class: Monolog\Logger

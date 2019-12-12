@@ -2,17 +2,19 @@
 
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\DBAL\DBALException;
 use Faker\Factory as FakerFactory;
 use Mtt\BlogBundle\Entity\Comment;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadCommentData extends AbstractFixture implements DependentFixtureInterface, ContainerAwareInterface
+class LoadCommentData extends Fixture implements DependentFixtureInterface, ContainerAwareInterface
 {
     const COUNT_COMMENTS = 1200;
+    const BATCH_SIZE = 300;
 
     /**
      * @var array
@@ -33,12 +35,16 @@ class LoadCommentData extends AbstractFixture implements DependentFixtureInterfa
     }
 
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param ObjectManager $manager
+     *
+     * @throws DBALException
      */
     public function load(ObjectManager $manager)
     {
         $faker = FakerFactory::create('ru_RU');
         $faker->seed(618230);
+
+        $insertedRows = 0;
 
         for ($i = 0; $i < self::COUNT_COMMENTS; $i++) {
             $comment = new Comment();
@@ -81,7 +87,11 @@ class LoadCommentData extends AbstractFixture implements DependentFixtureInterfa
             $comment->setPost($manager->merge($this->getReference($postKey)));
 
             $manager->persist($comment);
-            $manager->flush();
+
+            $insertedRows++;
+            if (($insertedRows % self::BATCH_SIZE) === 0) {
+                $manager->flush();
+            }
 
             $this->addReference($commentKey, $comment);
         }
@@ -93,7 +103,6 @@ class LoadCommentData extends AbstractFixture implements DependentFixtureInterfa
             ->setCommentator($manager->merge($this->getReference('commentator-1')));
 
         $manager->persist($comment);
-        $manager->flush();
 
         $comment2 = new Comment();
         $comment2->setText('Ответ на тестовый комментарий')

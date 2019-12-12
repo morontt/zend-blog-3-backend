@@ -2,18 +2,18 @@
 
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory as FakerFactory;
 use Mtt\BlogBundle\Entity\Tag;
 use Mtt\BlogBundle\Utils\RuTransform;
 
-class LoadTagData extends AbstractFixture
+class LoadTagData extends Fixture
 {
     const COUNT_TAGS = 60;
 
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {

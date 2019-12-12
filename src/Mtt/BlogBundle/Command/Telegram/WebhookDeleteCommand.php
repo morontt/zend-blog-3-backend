@@ -6,13 +6,13 @@
  * Time: 0:14
  */
 
-namespace Mtt\BlogBundle\Command;
+namespace Mtt\BlogBundle\Command\Telegram;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class TelegramWebhookDeleteCommand extends ContainerAwareCommand
+class WebhookDeleteCommand extends ContainerAwareCommand
 {
     protected function configure()
     {

@@ -3,6 +3,7 @@
 namespace Mtt\BlogBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -23,7 +24,7 @@ class Category
     protected $id;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      *
      * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
      **/
@@ -50,7 +51,7 @@ class Category
     protected $url;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      *
      * @ORM\OneToMany(targetEntity="Post", mappedBy="category")
      */
@@ -147,7 +148,7 @@ class Category
     /**
      * Get children
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getChildren()
     {
@@ -205,7 +206,7 @@ class Category
     /**
      * Get posts
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getPosts()
     {
