@@ -8,6 +8,11 @@ Work in progress
 
 ### Setup project
 
+```sh
+cp .env{.dist,}
+cp app/config/parameters.yml{.dist,}
+```
+
 #### Requirements
 
 - docker
@@ -15,9 +20,13 @@ Work in progress
 
 #### Install
 
-    docker-compose up --build
+```sh
+docker-compose up --build
+```
 
 #### Install vendors, build app, etc.
 
-    docker exec -it container_name bash
-    ./deploy.sh
+```sh
+docker exec -it container_name bash
+./deploy.sh
+```
