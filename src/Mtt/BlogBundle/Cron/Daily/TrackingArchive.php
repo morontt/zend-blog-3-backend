@@ -8,6 +8,7 @@
 
 namespace Mtt\BlogBundle\Cron\Daily;
 
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManager;
 use Mtt\BlogBundle\Cron\CronServiceInterface;
 
@@ -31,6 +32,9 @@ class TrackingArchive implements CronServiceInterface
         $this->em = $em;
     }
 
+    /**
+     * @throws DBALException
+     */
     public function run()
     {
         $this->em->getConnection()->query('CALL tracking_to_archive()');

@@ -9,8 +9,8 @@
 namespace Mtt\BlogBundle\Controller;
 
 use Mtt\BlogBundle\Entity\Commentator;
+use Mtt\BlogBundle\Entity\Repository\CommentatorRepository;
 use Mtt\BlogBundle\Entity\ViewCommentator;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,17 +23,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class CommentatorController extends BaseController
 {
     /**
-     * @Route("")
-     * @Method("GET")
+     * @Route("", methods={"GET"})
      *
      * @param Request $request
+     * @param CommentatorRepository $repository
      *
      * @return JsonResponse
      */
-    public function findAllAction(Request $request)
+    public function findAllAction(Request $request, CommentatorRepository $repository): JsonResponse
     {
         $pagination = $this->paginate(
-            $this->getCommentatorRepository()->getListQuery(),
+            $repository->getListQuery(),
             $request->query->get('page', 1)
         );
 
@@ -46,14 +46,13 @@ class CommentatorController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"})
-     * @Method("GET")
+     * @Route("/{id}", requirements={"id": "\d+"}, methods={"GET"})
      *
      * @param ViewCommentator $entity
      *
      * @return JsonResponse
      */
-    public function findAction(ViewCommentator $entity)
+    public function findAction(ViewCommentator $entity): JsonResponse
     {
         $result = $this->getDataConverter()
             ->getCommentator($entity);
@@ -62,15 +61,14 @@ class CommentatorController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"})
-     * @Method("PUT")
+     * @Route("/{id}", requirements={"id": "\d+"}, methods={"PUT"})
      *
      * @param Request $request
      * @param Commentator $entity
      *
      * @return JsonResponse
      */
-    public function updateAction(Request $request, Commentator $entity)
+    public function updateAction(Request $request, Commentator $entity): JsonResponse
     {
         $result = $this->getDataConverter()
             ->saveCommentator($entity, $request->request->get('commentator'));

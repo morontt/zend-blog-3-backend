@@ -29,7 +29,7 @@ class IpInfo
      * @param EntityManager $em
      * @param string $key
      */
-    public function __construct(EntityManager $em, $key)
+    public function __construct(EntityManager $em, string $key)
     {
         $this->em = $em;
         $this->key = $key;

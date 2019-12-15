@@ -8,8 +8,9 @@
 
 namespace Mtt\BlogBundle\Controller;
 
+use Doctrine\ORM\ORMException;
 use Mtt\BlogBundle\Entity\Category;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Mtt\BlogBundle\Entity\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,17 +23,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoryController extends BaseController
 {
     /**
-     * @Route("")
-     * @Method("GET")
+     * @Route("", methods={"GET"})
      *
      * @param Request $request
+     * @param CategoryRepository $repository
      *
      * @return JsonResponse
      */
-    public function findAllAction(Request $request)
+    public function findAllAction(Request $request, CategoryRepository $repository): JsonResponse
     {
         $pagination = $this->paginate(
-            $this->getCategoryRepository()->getListQuery(true),
+            $repository->getListQuery(true),
             $request->query->get('page', 1)
         );
 
@@ -45,14 +46,13 @@ class CategoryController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"})
-     * @Method("GET")
+     * @Route("/{id}", requirements={"id": "\d+"}, methods={"GET"})
      *
      * @param Category $entity
      *
      * @return JsonResponse
      */
-    public function findAction(Category $entity)
+    public function findAction(Category $entity): JsonResponse
     {
         $result = $this->getDataConverter()
             ->getCategory($entity);
@@ -61,14 +61,15 @@ class CategoryController extends BaseController
     }
 
     /**
-     * @Route("")
-     * @Method("POST")
+     * @Route("", methods={"POST"})
      *
      * @param Request $request
      *
+     * @throws ORMException
+     *
      * @return JsonResponse
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request): JsonResponse
     {
         $result = $this->getDataConverter()
             ->saveCategory(new Category(), $request->request->get('category'));
@@ -77,15 +78,16 @@ class CategoryController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"})
-     * @Method("PUT")
+     * @Route("/{id}", requirements={"id": "\d+"}, methods={"PUT"})
      *
      * @param Request $request
      * @param Category $entity
      *
+     * @throws ORMException
+     *
      * @return JsonResponse
      */
-    public function updateAction(Request $request, Category $entity)
+    public function updateAction(Request $request, Category $entity): JsonResponse
     {
         $result = $this->getDataConverter()
             ->saveCategory($entity, $request->request->get('category'));
@@ -94,14 +96,15 @@ class CategoryController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"})
-     * @Method("DELETE")
+     * @Route("/{id}", requirements={"id": "\d+"}, methods={"DELETE"})
      *
      * @param Category $entity
      *
+     * @throws ORMException
+     *
      * @return JsonResponse
      */
-    public function deleteAction(Category $entity)
+    public function deleteAction(Category $entity): JsonResponse
     {
         $this->getEm()->remove($entity);
         $this->getEm()->flush();
@@ -110,14 +113,15 @@ class CategoryController extends BaseController
     }
 
     /**
-     * @Route("/list", name="category_choices", options={"expose"=true})
+     * @Route("/list", name="category_choices", options={"expose"=true}, methods={"GET"})
+     *
+     * @param CategoryRepository $repository
      *
      * @return JsonResponse
      */
-    public function ajaxCategoryAction()
+    public function ajaxCategoryAction(CategoryRepository $repository): JsonResponse
     {
-        $categories = $this->getCategoryRepository()
-            ->getNamesArray();
+        $categories = $repository->getNamesArray();
 
         return new JsonResponse($categories);
     }

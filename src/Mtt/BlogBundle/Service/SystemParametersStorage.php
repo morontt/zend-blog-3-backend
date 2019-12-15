@@ -9,6 +9,8 @@
 namespace Mtt\BlogBundle\Service;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\ORMException;
+use Mtt\BlogBundle\Entity\Repository\SystemParametersRepository;
 use Mtt\BlogBundle\Entity\SystemParameters;
 
 class SystemParametersStorage
@@ -16,7 +18,7 @@ class SystemParametersStorage
     const CIPHER = 'DES-EDE3-OFB';
 
     /**
-     * @var \Mtt\BlogBundle\Entity\Repository\SystemParametersRepository
+     * @var SystemParametersRepository
      */
     protected $parametersRepo;
 
@@ -46,6 +48,8 @@ class SystemParametersStorage
      * @param string $key
      * @param string $value
      * @param bool $encrypted
+     *
+     * @throws ORMException
      */
     public function saveParameter(string $key, string $value, bool $encrypted = false)
     {

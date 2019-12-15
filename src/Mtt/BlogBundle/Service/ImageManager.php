@@ -9,6 +9,7 @@
 namespace Mtt\BlogBundle\Service;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\ORMException;
 use Mtt\BlogBundle\Entity\MediaFile;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -31,9 +32,11 @@ class ImageManager
     }
 
     /**
-     * @param string $description
-     * @param string $postId
+     * @param $description
+     * @param $postId
      * @param UploadedFile $file
+     *
+     * @throws ORMException
      */
     public function uploadImage($description, $postId, UploadedFile $file)
     {
@@ -77,6 +80,8 @@ class ImageManager
 
     /**
      * @param MediaFile $entity
+     *
+     * @throws ORMException
      */
     public function remove(MediaFile $entity)
     {

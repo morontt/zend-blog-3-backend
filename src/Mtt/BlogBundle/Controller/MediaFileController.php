@@ -8,10 +8,12 @@
 
 namespace Mtt\BlogBundle\Controller;
 
+use Doctrine\ORM\ORMException;
 use Mtt\BlogBundle\Entity\MediaFile;
+use Mtt\BlogBundle\Entity\Repository\MediaFileRepository;
 use Mtt\BlogBundle\Form\ImageForm;
 use Mtt\BlogBundle\Model\Image;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Mtt\BlogBundle\Service\ImageManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,14 +26,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class MediaFileController extends BaseController
 {
     /**
-     * @Route("")
-     * @Method("GET")
+     * @Route("", methods={"GET"})
      *
      * @param Request $request
+     * @param MediaFileRepository $repository
      *
      * @return JsonResponse
      */
-    public function findAllAction(Request $request)
+    public function findAllAction(Request $request, MediaFileRepository $repository): JsonResponse
     {
         $params = $request->query->all();
 
@@ -42,12 +44,12 @@ class MediaFileController extends BaseController
                         function (MediaFile $e) {
                             return new Image($e);
                         },
-                        $this->getMediaFileRepository()->getFilesByPost((int)$params['post_id'])
+                        $repository->getFilesByPost((int)$params['post_id'])
                     )
                 );
         } else {
             $pagination = $this->paginate(
-                $this->getMediaFileRepository()->getListQuery(),
+                $repository->getListQuery(),
                 $request->query->get('page', 1)
             );
 
@@ -69,14 +71,13 @@ class MediaFileController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"})
-     * @Method("GET")
+     * @Route("/{id}", requirements={"id": "\d+"}, methods={"GET"})
      *
      * @param MediaFile $entity
      *
      * @return JsonResponse
      */
-    public function findAction(MediaFile $entity)
+    public function findAction(MediaFile $entity): JsonResponse
     {
         $result = $this->getDataConverter()
             ->getMediaFile(new Image($entity));
@@ -85,15 +86,14 @@ class MediaFileController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"})
-     * @Method("PUT")
+     * @Route("/{id}", requirements={"id": "\d+"}, methods={"PUT"})
      *
      * @param Request $request
      * @param MediaFile $entity
      *
      * @return JsonResponse
      */
-    public function updateAction(Request $request, MediaFile $entity)
+    public function updateAction(Request $request, MediaFile $entity): JsonResponse
     {
         $result = $this->getDataConverter()
             ->saveMediaFile($entity, $request->request->get('mediaFile'));
@@ -102,38 +102,40 @@ class MediaFileController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"})
-     * @Method("DELETE")
+     * @Route("/{id}", requirements={"id": "\d+"}, methods={"DELETE"})
      *
      * @param MediaFile $entity
+     * @param ImageManager $manager
+     *
+     * @throws ORMException
      *
      * @return JsonResponse
      */
-    public function deleteAction(MediaFile $entity)
+    public function deleteAction(MediaFile $entity, ImageManager $manager): JsonResponse
     {
-        $this->get('mtt_blog.image_manager')->remove($entity);
-        $this->getEm()->remove($entity);
-        $this->getEm()->flush();
+        $manager->remove($entity);
 
         return new JsonResponse(true);
     }
 
     /**
-     * @Route("/upload", name="upload_image", options={"expose"=true})
-     * @Method("POST")
+     * @Route("/upload", name="upload_image", options={"expose"=true}, methods={"POST"})
      *
      * @param Request $request
+     * @param ImageManager $manager
+     *
+     * @throws ORMException
      *
      * @return JsonResponse
      */
-    public function uploadAction(Request $request)
+    public function uploadAction(Request $request, ImageManager $manager): JsonResponse
     {
         $form = $this->createForm(ImageForm::class);
         $form->handleRequest($request);
 
         $result = null;
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->get('mtt_blog.image_manager')->uploadImage(
+            $manager->uploadImage(
                 $form->get('description')->getData(),
                 $form->get('post_id')->getData(),
                 $form->get('upload')->getData()

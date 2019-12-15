@@ -8,8 +8,9 @@
 
 namespace Mtt\BlogBundle\Controller;
 
+use Doctrine\ORM\ORMException;
+use Mtt\BlogBundle\Entity\Repository\TagRepository;
 use Mtt\BlogBundle\Entity\Tag;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,17 +23,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class TagController extends BaseController
 {
     /**
-     * @Route("")
-     * @Method("GET")
+     * @Route("", methods={"GET"})
      *
      * @param Request $request
+     * @param TagRepository $repository
      *
      * @return JsonResponse
      */
-    public function findAllAction(Request $request)
+    public function findAllAction(Request $request, TagRepository $repository): JsonResponse
     {
         $pagination = $this->paginate(
-            $this->getTagRepository()->getListQuery(true),
+            $repository->getListQuery(true),
             $request->query->get('page', 1)
         );
 
@@ -45,14 +46,13 @@ class TagController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"})
-     * @Method("GET")
+     * @Route("/{id}", requirements={"id": "\d+"}, methods={"GET"})
      *
      * @param Tag $entity
      *
      * @return JsonResponse
      */
-    public function findAction(Tag $entity)
+    public function findAction(Tag $entity): JsonResponse
     {
         $result = $this->getDataConverter()
             ->getTag($entity);
@@ -61,14 +61,13 @@ class TagController extends BaseController
     }
 
     /**
-     * @Route("")
-     * @Method("POST")
+     * @Route("", methods={"POST"})
      *
      * @param Request $request
      *
      * @return JsonResponse
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request): JsonResponse
     {
         $result = $this->getDataConverter()
             ->saveTag(new Tag(), $request->request->get('tag'));
@@ -77,15 +76,14 @@ class TagController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"})
-     * @Method("PUT")
+     * @Route("/{id}", requirements={"id": "\d+"}, methods={"PUT"})
      *
      * @param Request $request
      * @param Tag $entity
      *
      * @return JsonResponse
      */
-    public function updateAction(Request $request, Tag $entity)
+    public function updateAction(Request $request, Tag $entity): JsonResponse
     {
         $result = $this->getDataConverter()
             ->saveTag($entity, $request->request->get('tag'));
@@ -94,14 +92,15 @@ class TagController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"})
-     * @Method("DELETE")
+     * @Route("/{id}", requirements={"id": "\d+"}, methods={"DELETE"})
      *
      * @param Tag $entity
      *
+     * @throws ORMException
+     *
      * @return JsonResponse
      */
-    public function deleteAction(Tag $entity)
+    public function deleteAction(Tag $entity): JsonResponse
     {
         $this->getEm()->remove($entity);
         $this->getEm()->flush();
@@ -110,14 +109,13 @@ class TagController extends BaseController
     }
 
     /**
-     * @Route("/autocomplete", name="tags_autocomplete", options={"expose"=true})
-     * @Method("GET")
+     * @Route("/autocomplete", name="tags_autocomplete", options={"expose"=true}, methods={"GET"})
      *
      * @param Request $request
      *
      * @return JsonResponse
      */
-    public function tagAutocompleteAction(Request $request)
+    public function tagAutocompleteAction(Request $request): JsonResponse
     {
         $tags = $this->getTagRepository()->getForAutocomplete($request->query->get('term'));
 

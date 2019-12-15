@@ -32,3 +32,4 @@ behat.yml
 /web/spa/
 /web/fonts/
 .env
+http-client.env.json

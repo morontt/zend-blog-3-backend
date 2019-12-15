@@ -6,95 +6,69 @@ services:
 
     Mtt\BlogBundle\:
         resource: '../../*'
-        exclude: '../../{Entity,Model,Event}'
+        exclude: '../../{Entity,Model,Event,OAuth2}'
 
-    mtt_blog.json_body_listener:
-        class: Mtt\BlogBundle\EventListener\JsonBodyListener
+    Mtt\BlogBundle\Entity\Repository\:
+        resource: '../../Entity/Repository'
+        tags: ['doctrine.repository_service']
+
+    Mtt\BlogBundle\Controller\:
+        resource: '../../Controller'
+        tags: ['controller.service_arguments']
+
+    _instanceof:
+        Mtt\BlogBundle\Cron\CronServiceInterface:
+            tags:
+                - { name: cron-daily }
+        Xelbot\Telegram\Command\TelegramCommandInterface:
+            tags:
+                - { name: telegram-command }
+
+    Mtt\BlogBundle\Controller\TelegramController:
+        arguments:
+            $telegramBot: '@mtt_blog.telegram_bot'
+            $secretToken: '%telegram_webhook_token%'
+
+    Mtt\BlogBundle\EventListener\JsonBodyListener:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 10 }
 
-    mtt_blog.ignore_tables_listener:
-        class: Mtt\BlogBundle\EventListener\IgnoreTablesListener
+    Mtt\BlogBundle\EventListener\IgnoreTablesListener:
         tags:
             - {name: doctrine.event_listener, event: postGenerateSchema }
 
-    mtt_blog.api.data_converter:
-        class: Mtt\BlogBundle\API\DataConverter
-        arguments: [ "@doctrine.orm.entity_manager", "@mtt_blog.text_processor" ]
-        public: true
+    Mtt\BlogBundle\Service\IpInfo:
+        arguments:
+            $key: "%ipinfodb_key%"
 
-    mtt_blog.ip_info:
-        class: Mtt\BlogBundle\Service\IpInfo
-        arguments: [ "@doctrine.orm.entity_manager", "%ipinfodb_key%" ]
-
-    mtt_blog.tracking:
-        class: Mtt\BlogBundle\Service\Tracking
-        arguments: [ "@doctrine.orm.entity_manager" ]
-        public: true
-
-    mtt_blog.reply_comment_listener:
-        class: Mtt\BlogBundle\EventListener\ReplyCommentListener
-        arguments: [ "@mailer", "@twig", "@doctrine.orm.entity_manager", "%mailer_user%" ]
+    Mtt\BlogBundle\EventListener\ReplyCommentListener:
+        arguments:
+            $emailFrom: "%mailer_user%"
         tags:
             - { name: kernel.event_listener, event: mtt_blog.reply_comment, method: onReply }
 
-    mtt_blog.cron_chain:
-        class: Mtt\BlogBundle\Cron\CronChain
-
-    mtt_blog.tracking_archive:
-        class: Mtt\BlogBundle\Cron\Daily\TrackingArchive
-        arguments:
-            - "@doctrine.orm.entity_manager"
-        tags:
-            - { name: cron-daily }
-
-    mtt_blog.images_backup:
-        class: Mtt\BlogBundle\Cron\Daily\ImagesBackup
-        arguments:
-            - "@doctrine.orm.entity_manager"
-            - "@mtt_blog.dropbox"
-        tags:
-            - { name: cron-daily }
-
-    mtt_blog.geolocation_cron:
-        class: Mtt\BlogBundle\Cron\Daily\CommentGeoLocation
-        arguments:
-            - "@doctrine.orm.entity_manager"
-            - "@mtt_blog.ip_info"
-        tags:
-            - { name: cron-daily }
-
-    mtt_blog.db_backup:
-        class: Mtt\BlogBundle\Cron\Daily\DatabaseBackup
+    Mtt\BlogBundle\Cron\Daily\DatabaseBackup:
         arguments:
             - "%database_host%"
             - "%database_name%"
             - "%database_user%"
             - "%database_password%"
-            - "@mtt_blog.dropbox"
-        tags:
-            - { name: cron-daily }
 
-    mtt_blog.image_manager:
-        class: Mtt\BlogBundle\Service\ImageManager
-        arguments: [ "@doctrine.orm.entity_manager" ]
-
-    mtt_blog.sys_parameters_storage:
-        class: Mtt\BlogBundle\Service\SystemParametersStorage
-        arguments: [ "@doctrine.orm.entity_manager", "%secret%" ]
-
-    mtt_blog.dropbox:
-        class: Mtt\BlogBundle\Service\DropboxService
+    Mtt\BlogBundle\Service\SystemParametersStorage:
         arguments:
-            - "%dropbox_key%"
-            - "%dropbox_secret%"
-            - "@mtt_blog.sys_parameters_storage"
+            $secret: "%secret%"
+
+    Mtt\BlogBundle\Service\DropboxService:
+        arguments:
+            $dropboxKey: "%dropbox_key%"
+            $dropboxSecret: "%dropbox_secret%"
+
+    Mtt\BlogBundle\Service\TextProcessor:
+        arguments:
+            $cdn: "%cdn_url%"
 
     mtt_blog.text_processor:
-        class: Mtt\BlogBundle\Service\TextProcessor
-        arguments:
-            - "@doctrine.orm.entity_manager"
-            - "%cdn_url%"
+        alias: Mtt\BlogBundle\Service\TextProcessor
         public: true
 
     mtt_blog.telegram_logger:
@@ -110,8 +84,3 @@ services:
             - "%telegram_admin_id%"
         calls:
             - [ setLogger, [ "@mtt_blog.telegram_logger" ]]
-
-    mtt_blog.telegram_command.uptime:
-        class: Mtt\BlogBundle\Telegram\Command\Uptime
-        tags:
-            - { name: telegram-command }

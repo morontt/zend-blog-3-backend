@@ -8,12 +8,14 @@
 
 namespace Mtt\BlogBundle\EventListener;
 
+use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManager;
 use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Event\ReplyCommentEvent;
 use Swift_Mailer;
 use Swift_Message;
-use Twig_Environment;
+use Twig\Environment as TwigEnvironment;
+use Twig\Error\Error;
 
 class ReplyCommentListener
 {
@@ -23,7 +25,7 @@ class ReplyCommentListener
     protected $mailer;
 
     /**
-     * @var Twig_Environment
+     * @var TwigEnvironment
      */
     protected $twig;
 
@@ -39,11 +41,11 @@ class ReplyCommentListener
 
     /**
      * @param Swift_Mailer $mailer
-     * @param Twig_Environment $twig
+     * @param TwigEnvironment $twig
      * @param EntityManager $em
      * @param string $emailFrom
      */
-    public function __construct(Swift_Mailer $mailer, Twig_Environment $twig, EntityManager $em, string $emailFrom)
+    public function __construct(Swift_Mailer $mailer, TwigEnvironment $twig, EntityManager $em, string $emailFrom)
     {
         $this->mailer = $mailer;
         $this->twig = $twig;
@@ -53,6 +55,9 @@ class ReplyCommentListener
 
     /**
      * @param ReplyCommentEvent $event
+     *
+     * @throws DBALException
+     * @throws Error
      */
     public function onReply(ReplyCommentEvent $event)
     {
@@ -68,6 +73,8 @@ class ReplyCommentListener
 
     /**
      * @param Comment $comment
+     *
+     * @throws Error
      */
     protected function sendEmail(Comment $comment)
     {

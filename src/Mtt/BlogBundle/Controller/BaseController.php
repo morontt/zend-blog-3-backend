@@ -8,88 +8,69 @@
 
 namespace Mtt\BlogBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\Pagination\SlidingPagination;
+use Knp\Component\Pager\Paginator;
+use Knp\Component\Pager\PaginatorInterface;
+use Mtt\BlogBundle\API\DataConverter;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class BaseController extends Controller
+class BaseController extends AbstractController
 {
     /**
-     * @return \Doctrine\ORM\EntityManager
+     * @var EntityManagerInterface
      */
-    public function getEm()
-    {
-        return $this->getDoctrine()->getManager();
+    protected $em;
+
+    /**
+     * @var PaginatorInterface
+     */
+    protected $paginator;
+
+    /**
+     * @var DataConverter
+     */
+    protected $apiDataConverter;
+
+    /**
+     * @param EntityManagerInterface $em
+     * @param PaginatorInterface $paginator
+     * @param DataConverter $apiDataConverter
+     */
+    public function __construct(
+        EntityManagerInterface $em,
+        PaginatorInterface $paginator,
+        DataConverter $apiDataConverter
+    ) {
+        $this->em = $em;
+        $this->paginator = $paginator;
+        $this->apiDataConverter = $apiDataConverter;
     }
 
     /**
-     * @return \Mtt\BlogBundle\Entity\Repository\CategoryRepository
+     * @return EntityManager
      */
-    public function getCategoryRepository()
+    public function getEm(): EntityManagerInterface
     {
-        return $this->getEm()->getRepository('MttBlogBundle:Category');
+        return $this->em;
     }
 
     /**
-     * @return \Mtt\BlogBundle\Entity\Repository\TagRepository
+     * @return DataConverter
      */
-    public function getTagRepository()
+    public function getDataConverter(): DataConverter
     {
-        return $this->getEm()->getRepository('MttBlogBundle:Tag');
+        return $this->apiDataConverter;
     }
 
     /**
-     * @return \Mtt\BlogBundle\Entity\Repository\CommentatorRepository
+     * @return Paginator
      */
-    public function getCommentatorRepository()
+    public function getPaginator(): PaginatorInterface
     {
-        return $this->getEm()->getRepository('MttBlogBundle:Commentator');
-    }
-
-    /**
-     * @return \Mtt\BlogBundle\Entity\Repository\CommentRepository
-     */
-    public function getCommentRepository()
-    {
-        return $this->getEm()->getRepository('MttBlogBundle:Comment');
-    }
-
-    /**
-     * @return \Mtt\BlogBundle\Entity\Repository\ViewCommentRepository
-     */
-    public function getViewCommentRepository()
-    {
-        return $this->getEm()->getRepository('MttBlogBundle:ViewComment');
-    }
-
-    /**
-     * @return \Mtt\BlogBundle\Entity\Repository\PostRepository
-     */
-    public function getPostRepository()
-    {
-        return $this->getEm()->getRepository('MttBlogBundle:Post');
-    }
-
-    /**
-     * @return \Mtt\BlogBundle\Entity\Repository\MediaFileRepository
-     */
-    public function getMediaFileRepository()
-    {
-        return $this->getEm()->getRepository('MttBlogBundle:MediaFile');
-    }
-
-    /**
-     * @return \Mtt\BlogBundle\API\DataConverter
-     */
-    public function getDataConverter()
-    {
-        return $this->get('mtt_blog.api.data_converter');
-    }
-
-    /**
-     * @return \Knp\Component\Pager\Paginator
-     */
-    public function getPaginator()
-    {
-        return $this->get('knp_paginator');
+        return $this->paginator;
     }
 
     /**
@@ -97,9 +78,9 @@ class BaseController extends Controller
      * @param $page
      * @param int $limit
      *
-     * @return \Knp\Component\Pager\Pagination\SlidingPagination
+     * @return SlidingPagination
      */
-    public function paginate($query, $page, $limit = 15)
+    public function paginate($query, $page, $limit = 15): PaginationInterface
     {
         return $this->getPaginator()
             ->paginate($query, (int)$page, $limit);

@@ -9,6 +9,8 @@
 namespace Mtt\BlogBundle\Service;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Mtt\BlogBundle\Entity\MediaFile;
 use Mtt\BlogBundle\Entity\Post;
 
 class TextProcessor
@@ -24,12 +26,10 @@ class TextProcessor
     protected $imageBasepath;
 
     /**
-     * TextProcessor constructor.
-     *
-     * @param EntityManager $em
+     * @param EntityManagerInterface $em
      * @param string $cdn
      */
-    public function __construct(EntityManager $em, string $cdn)
+    public function __construct(EntityManagerInterface $em, string $cdn)
     {
         $this->em = $em;
         $this->imageBasepath = $cdn . ImageManager::getImageBasePath() . '/';
@@ -71,10 +71,10 @@ class TextProcessor
         $result = false;
         if (preg_match('/!(\d+)(?:\(([^\)]+)\))?!/m', $text, $matches)) {
             $imgId = (int)$matches[1];
-            /* @var \Mtt\BlogBundle\Entity\MediaFile $media */
+            /* @var MediaFile $media */
             $media = $this->em->getRepository('MttBlogBundle:MediaFile')->find($imgId);
             if ($media) {
-                $alt = isset($matches[2]) ? $matches[2] : $media->getDescription();
+                $alt = $matches[2] ?? $media->getDescription();
                 $replace = sprintf(
                     '<img src="%s" alt="%s" title="%s"/>',
                     $this->imageBasepath . $media->getPath(),
