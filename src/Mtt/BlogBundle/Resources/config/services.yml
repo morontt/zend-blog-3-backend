@@ -3,6 +3,9 @@ services:
         autowire: true
         autoconfigure: true
         public: false
+        bind:
+            $dropboxKey: "%dropbox_key%"
+            $dropboxSecret: "%dropbox_secret%"
 
     Mtt\BlogBundle\:
         resource: '../../*'
@@ -26,7 +29,6 @@ services:
 
     Mtt\BlogBundle\Controller\TelegramController:
         arguments:
-            $telegramBot: '@mtt_blog.telegram_bot'
             $secretToken: '%telegram_webhook_token%'
 
     Mtt\BlogBundle\EventListener\JsonBodyListener:
@@ -58,11 +60,6 @@ services:
         arguments:
             $secret: "%secret%"
 
-    Mtt\BlogBundle\Service\DropboxService:
-        arguments:
-            $dropboxKey: "%dropbox_key%"
-            $dropboxSecret: "%dropbox_secret%"
-
     Mtt\BlogBundle\Service\TextProcessor:
         arguments:
             $cdn: "%cdn_url%"
@@ -84,3 +81,5 @@ services:
             - "%telegram_admin_id%"
         calls:
             - [ setLogger, [ "@mtt_blog.telegram_logger" ]]
+
+    Xelbot\Telegram\Robot: '@mtt_blog.telegram_bot'

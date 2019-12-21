@@ -21,6 +21,6 @@ class GeoLocationRepository extends ServiceEntityRepository
      */
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, GeoLocationCountry::class);
+        parent::__construct($registry, GeoLocation::class);
     }
 }

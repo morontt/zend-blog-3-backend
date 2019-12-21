@@ -31,7 +31,7 @@ class PostRepository extends ServiceEntityRepository
      *
      * @return Post[]
      */
-    public function getPostsByIteration($i)
+    public function getPostsForIteration($i)
     {
         $qb = $this->createQueryBuilder('p');
 
@@ -39,23 +39,6 @@ class PostRepository extends ServiceEntityRepository
             ->orderBy('p.id')
             ->setFirstResult($i * self::ITERATION_STEP)
             ->setMaxResults(self::ITERATION_STEP)
-        ;
-
-        return $qb->getQuery()->getResult();
-    }
-
-    /**
-     * @param array $ids
-     *
-     * @return Post[]
-     */
-    public function getPostsByDisqusThreads(array $ids)
-    {
-        $qb = $this->createQueryBuilder('p');
-
-        $qb
-            ->where($qb->expr()->in('p.disqusThread', ':ids'))
-            ->setParameter('ids', $ids)
         ;
 
         return $qb->getQuery()->getResult();
