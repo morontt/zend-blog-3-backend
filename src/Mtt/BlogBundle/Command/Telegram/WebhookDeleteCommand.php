@@ -8,11 +8,10 @@
 
 namespace Mtt\BlogBundle\Command\Telegram;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class WebhookDeleteCommand extends ContainerAwareCommand
+class WebhookDeleteCommand extends AbstractTelegramCommand
 {
     protected function configure()
     {
@@ -22,11 +21,13 @@ class WebhookDeleteCommand extends ContainerAwareCommand
         ;
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $bot = $this->getContainer()->get('mtt_blog.telegram_bot');
-
-        $result = $bot->deleteWebhook();
+        $result = $this->bot->deleteWebhook();
         if ($result->isOk()) {
             $output->writeln($result->getDescription());
         }
