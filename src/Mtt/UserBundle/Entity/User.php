@@ -5,6 +5,7 @@ namespace Mtt\UserBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Mtt\BlogBundle\Entity\Comment;
+use Serializable;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -17,11 +18,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  *   message="This username is already used"
  * )
  * @DoctrineAssert\UniqueEntity(
- *   fields={"mail"},
+ *   fields={"email"},
  *   message="This email is already used"
  * )
  */
-class User implements UserInterface, \Serializable
+class User implements UserInterface, Serializable
 {
     /**
      * @var int

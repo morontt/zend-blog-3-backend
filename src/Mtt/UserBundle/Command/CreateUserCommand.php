@@ -8,15 +8,59 @@
 
 namespace Mtt\UserBundle\Command;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Mtt\UserBundle\Entity\Repository\UserRepository;
 use Mtt\UserBundle\Entity\User;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Security\Core\Encoder\EncoderFactory;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class CreateUserCommand extends ContainerAwareCommand
+class CreateUserCommand extends Command
 {
+    /**
+     * @var UserRepository
+     */
+    private $repository;
+
+    /**
+     * @var EncoderFactory
+     */
+    private $encoderFactory;
+
+    /**
+     * @var ValidatorInterface
+     */
+    private $validator;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    /**
+     * @param UserRepository $repository
+     * @param EncoderFactory $encoderFactory
+     * @param ValidatorInterface $validator
+     * @param EntityManagerInterface $em
+     */
+    public function __construct(
+        UserRepository $repository,
+        EncoderFactory $encoderFactory,
+        ValidatorInterface $validator,
+        EntityManagerInterface $em
+    ) {
+        $this->repository = $repository;
+        $this->encoderFactory = $encoderFactory;
+        $this->validator = $validator;
+        $this->em = $em;
+
+        parent::__construct();
+    }
+
     protected function configure()
     {
         $this
@@ -27,6 +71,10 @@ class CreateUserCommand extends ContainerAwareCommand
             ->addOption('password', 'p', InputOption::VALUE_OPTIONAL, 'password', 'admin');
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $username = $input->getArgument('username');
@@ -34,9 +82,7 @@ class CreateUserCommand extends ContainerAwareCommand
         $password = $input->getOption('password');
 
         $user = new User();
-        $encoder = $this->getContainer()
-            ->get('security.encoder_factory')
-            ->getEncoder($user);
+        $encoder = $this->encoderFactory->getEncoder($user);
 
         $passwordHash = $encoder->encodePassword($password, $user->getSalt());
         $user
@@ -44,10 +90,7 @@ class CreateUserCommand extends ContainerAwareCommand
             ->setEmail($email)
             ->setPassword($passwordHash);
 
-        $errors = $this->getContainer()
-            ->get('validator')
-            ->validate($user);
-
+        $errors = $this->validator->validate($user);
         if (count($errors) > 0) {
             $output->writeln('');
             foreach ($errors as $error) {
@@ -55,12 +98,8 @@ class CreateUserCommand extends ContainerAwareCommand
             }
             $output->writeln('');
         } else {
-            $em = $this->getContainer()
-                ->get('doctrine')
-                ->getManager();
-
-            $em->persist($user);
-            $em->flush();
+            $this->em->persist($user);
+            $this->em->flush();
 
             $output->writeln('');
             $output->writeln(sprintf('<info>Create user: <comment>%s</comment></info>', $username));

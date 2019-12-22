@@ -2,6 +2,8 @@
 
 namespace Mtt\BlogBundle\Entity\Repository;
 
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Entity\GeoLocation;
 
@@ -10,8 +12,18 @@ use Mtt\BlogBundle\Entity\GeoLocation;
  *
  * @method Comment|null findOneByDisqusId($id)
  */
-class CommentRepository extends BaseRepository
+class CommentRepository extends ServiceEntityRepository
 {
+    use ListQueryTrait;
+
+    /**
+     * @param ManagerRegistry $registry
+     */
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, Comment::class);
+    }
+
     /**
      * @return Comment|null
      */

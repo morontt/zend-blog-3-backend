@@ -3,14 +3,16 @@
 namespace Mtt\BlogBundle\Controller;
 
 use Mtt\BlogBundle\Entity\Post;
+use Mtt\BlogBundle\Entity\Repository\ViewCommentRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class DefaultController
  */
-class DefaultController extends BaseController
+class DefaultController extends AbstractController
 {
     /**
      * @Route("/")
@@ -29,13 +31,13 @@ class DefaultController extends BaseController
      * @Template()
      *
      * @param Post $post
+     * @param ViewCommentRepository $repository
      *
      * @return array
      */
-    public function previewAction(Post $post)
+    public function previewAction(Post $post, ViewCommentRepository $repository)
     {
-        $repo = $this->getEm()->getRepository('MttBlogBundle:ViewComment');
-        $comments = $repo->getCommentsByPost($post);
+        $comments = $repository->getCommentsByPost($post);
 
         return compact('post', 'comments');
     }

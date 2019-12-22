@@ -32,8 +32,7 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 
 RUN set -x && curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/composer \
-    && composer global require hirak/prestissimo --prefer-dist --no-interaction \
-    && curl -sS -o /root/.bash_aliases https://raw.githubusercontent.com/morontt/dotfiles/master/ubuntu/.bash_aliases
+    && composer global require hirak/prestissimo --prefer-dist --no-interaction
 
 RUN usermod -u ${HOST_UID} www-data && groupmod -g ${HOST_UID} www-data
 

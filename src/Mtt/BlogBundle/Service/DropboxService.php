@@ -10,6 +10,7 @@ namespace Mtt\BlogBundle\Service;
 
 use Kunnu\Dropbox\Dropbox;
 use Kunnu\Dropbox\DropboxApp;
+use Kunnu\Dropbox\Models\FileMetadata;
 use Mtt\BlogBundle\Entity\SystemParameters;
 
 class DropboxService
@@ -34,7 +35,7 @@ class DropboxService
      * @param string $dropboxFile
      * @param string $path
      *
-     * @return \Kunnu\Dropbox\Models\FileMetadata
+     * @return FileMetadata
      */
     public function uploadChunked(string $dropboxFile, string $path)
     {
@@ -45,7 +46,7 @@ class DropboxService
      * @param string $dropboxFile
      * @param string $path
      *
-     * @return \Kunnu\Dropbox\Models\FileMetadata
+     * @return FileMetadata
      */
     public function upload(string $dropboxFile, string $path)
     {

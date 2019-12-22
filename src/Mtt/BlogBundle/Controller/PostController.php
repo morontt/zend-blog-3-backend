@@ -8,11 +8,12 @@
 
 namespace Mtt\BlogBundle\Controller;
 
+use Doctrine\ORM\ORMException;
 use Mtt\BlogBundle\Entity\Post;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Mtt\BlogBundle\Entity\Repository\PostRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/api/posts")
@@ -22,17 +23,17 @@ use Symfony\Component\HttpFoundation\Request;
 class PostController extends BaseController
 {
     /**
-     * @Route("")
-     * @Method("GET")
+     * @Route("", methods={"GET"})
      *
      * @param Request $request
+     * @param PostRepository $repository
      *
      * @return JsonResponse
      */
-    public function findAllAction(Request $request)
+    public function findAllAction(Request $request, PostRepository $repository): JsonResponse
     {
         $pagination = $this->paginate(
-            $this->getPostRepository()->getListQuery(),
+            $repository->getListQuery(),
             $request->query->get('page', 1)
         );
 
@@ -45,14 +46,13 @@ class PostController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"})
-     * @Method("GET")
+     * @Route("/{id}", requirements={"id": "\d+"}, methods={"GET"})
      *
      * @param Post $entity
      *
      * @return JsonResponse
      */
-    public function findAction(Post $entity)
+    public function findAction(Post $entity): JsonResponse
     {
         $result = $this->getDataConverter()
             ->getPost($entity);
@@ -61,14 +61,15 @@ class PostController extends BaseController
     }
 
     /**
-     * @Route("")
-     * @Method("POST")
+     * @Route("", methods={"POST"})
      *
      * @param Request $request
      *
+     * @throws ORMException
+     *
      * @return JsonResponse
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request): JsonResponse
     {
         $result = $this->getDataConverter()
             ->savePost(new Post(), $request->request->get('post'));
@@ -77,15 +78,16 @@ class PostController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"})
-     * @Method("PUT")
+     * @Route("/{id}", requirements={"id": "\d+"}, methods={"PUT"})
      *
      * @param Request $request
      * @param Post $entity
      *
+     * @throws ORMException
+     *
      * @return JsonResponse
      */
-    public function updateAction(Request $request, Post $entity)
+    public function updateAction(Request $request, Post $entity): JsonResponse
     {
         $result = $this->getDataConverter()
             ->savePost($entity, $request->request->get('post'));
@@ -94,14 +96,15 @@ class PostController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"})
-     * @Method("DELETE")
+     * @Route("/{id}", requirements={"id": "\d+"}, methods={"DELETE"})
      *
      * @param Post $entity
      *
+     * @throws ORMException
+     *
      * @return JsonResponse
      */
-    public function deleteAction(Post $entity)
+    public function deleteAction(Post $entity): JsonResponse
     {
         $this->getEm()->remove($entity);
         $this->getEm()->flush();

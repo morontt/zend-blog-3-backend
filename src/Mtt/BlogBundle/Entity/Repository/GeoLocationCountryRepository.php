@@ -2,7 +2,8 @@
 
 namespace Mtt\BlogBundle\Entity\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Mtt\BlogBundle\Entity\GeoLocationCountry;
 
 /**
@@ -13,6 +14,13 @@ use Mtt\BlogBundle\Entity\GeoLocationCountry;
  *
  * @method GeoLocationCountry|null findOneByCode($code)
  */
-class GeoLocationCountryRepository extends EntityRepository
+class GeoLocationCountryRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, GeoLocationCountry::class);
+    }
 }

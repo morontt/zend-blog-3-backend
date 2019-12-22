@@ -2,7 +2,8 @@
 
 namespace Mtt\BlogBundle\Entity\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Mtt\BlogBundle\Entity\GeoLocation;
 
 /**
@@ -13,6 +14,13 @@ use Mtt\BlogBundle\Entity\GeoLocation;
  *
  * @method GeoLocation|null findOneByIpAddress($ip)
  */
-class GeoLocationRepository extends EntityRepository
+class GeoLocationRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, GeoLocation::class);
+    }
 }

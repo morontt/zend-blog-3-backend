@@ -2,17 +2,17 @@
 
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Faker\Factory as FakerFactory;
 use Mtt\BlogBundle\Entity\Commentator;
 
-class LoadCommentatorData extends AbstractFixture
+class LoadCommentatorData extends Fixture
 {
     const COUNT_COMMENTATORS = 24;
 
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {

@@ -8,12 +8,38 @@
 
 namespace Mtt\BlogBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Doctrine\ORM\EntityManager;
+use Mtt\BlogBundle\Service\TextProcessor;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class PostsBatchUpdateCommand extends ContainerAwareCommand
+class PostsBatchUpdateCommand extends Command
 {
+    /**
+     * @var EntityManager
+     */
+    private $em;
+
+    /**
+     * @var TextProcessor
+     */
+    private $textProcessor;
+
+    /**
+     * @param EntityManager $em
+     * @param TextProcessor $textProcessor
+     */
+    public function __construct(EntityManager $em, TextProcessor $textProcessor)
+    {
+        parent::__construct();
+
+        $this->em = $em;
+        $this->textProcessor = $textProcessor;
+
+        $em->getConfiguration()->setSQLLogger(null);
+    }
+
     protected function configure()
     {
         $this
@@ -25,31 +51,30 @@ class PostsBatchUpdateCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $startTime = microtime(true);
+
+        $repo = $this->em->getRepository('MttBlogBundle:Post');
+        $postGenerator = function () use ($repo) {
+            $i = 0;
+            while (true) {
+                $posts = $repo->getPostsForIteration($i);
+
+                $i++;
+                if (!count($posts)) {
+                    return;
+                }
+
+                yield $posts;
+            }
+        };
+
         $cnt = 0;
-
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $em->getConfiguration()->setSQLLogger(null);
-
-        $repo = $em->getRepository('MttBlogBundle:Post');
-        $textProcessor = $this->getContainer()->get('mtt_blog.text_processor');
-
-        $i = 0;
-        do {
-            $updated = false;
-            $posts = $repo->getPostsByIteration($i);
-
+        foreach ($postGenerator() as $posts) {
             foreach ($posts as $post) {
                 $cnt++;
-                $textProcessor->processing($post);
-                $em->flush();
+                $this->textProcessor->processing($post);
+                $this->em->flush();
             }
-
-            if (count($posts)) {
-                $updated = true;
-            }
-
-            $i++;
-        } while ($updated);
+        }
 
         $output->writeln('');
         $output->writeln(sprintf('<info>Update <comment>%d</comment> topics</info>', $cnt));

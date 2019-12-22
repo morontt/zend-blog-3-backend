@@ -8,16 +8,36 @@
 
 namespace Mtt\BlogBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Xelbot\Telegram\Robot;
 
-class TelegramController extends BaseController
+class TelegramController extends AbstractController
 {
     /**
-     * @Route("/telegram/{token}")
-     * @Method("POST")
+     * @var string
+     */
+    private $secretToken;
+
+    /**
+     * @var Robot
+     */
+    private $telegramBot;
+
+    /**
+     * @param Robot $telegramBot
+     * @param string $secretToken
+     */
+    public function __construct(Robot $telegramBot, string $secretToken)
+    {
+        $this->telegramBot = $telegramBot;
+        $this->secretToken = $secretToken;
+    }
+
+    /**
+     * @Route("/telegram/{token}", methods={"POST"})
      *
      * @param Request $request
      * @param string $token
@@ -26,13 +46,11 @@ class TelegramController extends BaseController
      */
     public function webHookAction(Request $request, string $token): Response
     {
-        $secretToken = $this->container->getParameter('telegram_webhook_token');
-        if (!hash_equals(sha1($secretToken), sha1($token))) {
+        if (!hash_equals(sha1($this->secretToken), sha1($token))) {
             return new Response("Get out!\n", 403);
         }
 
-        $bot = $this->get('mtt_blog.telegram_bot');
-        $bot->handle($request->request->all());
+        $this->telegramBot->handle($request->request->all());
 
         return new Response("ok\n");
     }

@@ -16,11 +16,11 @@ class CronCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        if (!$container->has('mtt_blog.cron_chain')) {
+        if (!$container->has('Mtt\BlogBundle\Cron\CronChain')) {
             return;
         }
 
-        $definition = $container->findDefinition('mtt_blog.cron_chain');
+        $definition = $container->findDefinition('Mtt\BlogBundle\Cron\CronChain');
 
         $taggedServices = $container->findTaggedServiceIds('cron-daily');
 

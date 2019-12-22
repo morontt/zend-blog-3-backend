@@ -10,11 +10,12 @@ namespace Mtt\BlogBundle\Model;
 
 use Imagick;
 use Mtt\BlogBundle\Entity\MediaFile;
+use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Service\ImageManager;
 
 /**
  * @method int getId()
- * @method \Mtt\BlogBundle\Entity\Post|null getPost()
+ * @method Post|null getPost()
  * @method string getPath()
  * @method string getOriginalFileName()
  * @method int getFileSize()

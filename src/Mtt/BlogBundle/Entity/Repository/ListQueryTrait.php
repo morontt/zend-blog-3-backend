@@ -1,24 +1,20 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: morontt
- * Date: 04.04.16
- * Time: 22:39
- */
 
 namespace Mtt\BlogBundle\Entity\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 
-class BaseRepository extends EntityRepository
+trait ListQueryTrait
 {
     /**
      * @param bool $nameBased
      *
-     * @return \Doctrine\ORM\Query
+     * @return Query
      */
-    public function getListQuery($nameBased = false)
+    public function getListQuery($nameBased = false): Query
     {
+        /* @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder('e');
 
         if ($nameBased) {

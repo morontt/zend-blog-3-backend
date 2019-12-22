@@ -8,15 +8,47 @@
 
 namespace Mtt\BlogBundle\Command;
 
+use Doctrine\ORM\ORMException;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Mtt\BlogBundle\Entity\SystemParameters;
 use Mtt\BlogBundle\OAuth2\DropboxProvider;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Mtt\BlogBundle\Service\SystemParametersStorage;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 
-class DropboxAuthCommand extends ContainerAwareCommand
+class DropboxAuthCommand extends Command
 {
+    /**
+     * @var string
+     */
+    private $key;
+
+    /**
+     * @var string
+     */
+    private $secret;
+
+    /**
+     * @var SystemParametersStorage
+     */
+    private $storage;
+
+    /**
+     * @param SystemParametersStorage $storage
+     * @param string $dropboxKey
+     * @param string $dropboxSecret
+     */
+    public function __construct(SystemParametersStorage $storage, string $dropboxKey, string $dropboxSecret)
+    {
+        parent::__construct();
+
+        $this->key = $dropboxKey;
+        $this->secret = $dropboxSecret;
+        $this->storage = $storage;
+    }
+
     protected function configure()
     {
         $this
@@ -24,14 +56,18 @@ class DropboxAuthCommand extends ContainerAwareCommand
             ->setDescription('Dropbox command-line authorization');
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     *
+     * @throws ORMException
+     * @throws IdentityProviderException
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $key = $this->getContainer()->getParameter('dropbox_key');
-        $secret = $this->getContainer()->getParameter('dropbox_secret');
-
         $provider = new DropboxProvider([
-            'clientId' => $key,
-            'clientSecret' => $secret,
+            'clientId' => $this->key,
+            'clientSecret' => $this->secret,
         ]);
 
         $authorizationUrl = $provider->getAuthorizationUrl();
@@ -67,12 +103,11 @@ class DropboxAuthCommand extends ContainerAwareCommand
 
     /**
      * @param string $accessToken
+     *
+     * @throws ORMException
      */
     protected function saveAccessToken(string $accessToken)
     {
-        $storage = $this->getContainer()
-            ->get('mtt_blog.sys_parameters_storage');
-
-        $storage->saveParameter(SystemParameters::DROPBOX_TOKEN, $accessToken, true);
+        $this->storage->saveParameter(SystemParameters::DROPBOX_TOKEN, $accessToken, true);
     }
 }

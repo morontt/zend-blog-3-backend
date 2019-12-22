@@ -2,15 +2,15 @@
 
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Mtt\BlogBundle\Entity\Category;
 use Mtt\BlogBundle\Utils\RuTransform;
 
-class LoadCategoryData extends AbstractFixture
+class LoadCategoryData extends Fixture
 {
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {

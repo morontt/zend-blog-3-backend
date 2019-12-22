@@ -33,6 +33,6 @@ class Http
      */
     public static function getServer($key)
     {
-        return (isset($_SERVER[$key])) ? $_SERVER[$key] : null;
+        return $_SERVER[$key] ?? null;
     }
 }

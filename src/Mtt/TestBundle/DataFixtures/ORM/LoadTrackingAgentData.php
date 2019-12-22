@@ -2,14 +2,14 @@
 
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\AbstractFixture;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Mtt\BlogBundle\Entity\TrackingAgent;
 
-class LoadTrackingAgentData extends AbstractFixture
+class LoadTrackingAgentData extends Fixture
 {
     /**
-     * @param \Doctrine\Common\Persistence\ObjectManager $manager
+     * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {

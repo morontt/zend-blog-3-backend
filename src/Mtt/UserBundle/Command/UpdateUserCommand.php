@@ -8,13 +8,48 @@
 
 namespace Mtt\UserBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Doctrine\ORM\EntityManagerInterface;
+use Mtt\UserBundle\Entity\Repository\UserRepository;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Security\Core\Encoder\EncoderFactory;
 
-class UpdateUserCommand extends ContainerAwareCommand
+class UpdateUserCommand extends Command
 {
+    /**
+     * @var UserRepository
+     */
+    private $repository;
+
+    /**
+     * @var EncoderFactory
+     */
+    private $encoderFactory;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    /**
+     * @param UserRepository $repository
+     * @param EncoderFactory $encoderFactory
+     * @param EntityManagerInterface $em
+     */
+    public function __construct(
+        UserRepository $repository,
+        EncoderFactory $encoderFactory,
+        EntityManagerInterface $em
+    ) {
+        $this->repository = $repository;
+        $this->encoderFactory = $encoderFactory;
+        $this->em = $em;
+
+        parent::__construct();
+    }
+
     protected function configure()
     {
         $this
@@ -25,36 +60,31 @@ class UpdateUserCommand extends ContainerAwareCommand
         ;
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $username = $input->getArgument('username');
         $password = $input->getArgument('password');
 
-        $em = $this->getContainer()
-            ->get('doctrine')
-            ->getManager();
-
-        /* @var \Mtt\UserBundle\Entity\User $user */
-        $user = $em->getRepository('MttUserBundle:User')
-            ->findOneByUsername($username);
+        $user = $this->repository->findOneByUsername($username);
 
         if (!$user) {
             $output->writeln('');
             $output->writeln(sprintf('<error>Error: user "%s" not found</error>', $username));
             $output->writeln('');
         } else {
-            $salt = md5(uniqid(null, true));
+            $encoder = $this->encoderFactory->getEncoder($user);
 
-            $encoder = $this->getContainer()
-                ->get('security.encoder_factory')
-                ->getEncoder($user);
-
+            $salt = bin2hex(random_bytes(16));
             $passwordHash = $encoder->encodePassword($password, $salt);
             $user
                 ->setSalt($salt)
                 ->setPassword($passwordHash);
 
-            $em->flush();
+            $this->em->flush();
 
             $output->writeln('');
             $output->writeln(sprintf('<info>Update user: <comment>%s</comment></info>', $username));

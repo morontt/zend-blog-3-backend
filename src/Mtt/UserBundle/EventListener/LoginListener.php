@@ -8,7 +8,8 @@
 
 namespace Mtt\UserBundle\EventListener;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Mtt\BlogBundle\Utils\Http;
 use Mtt\UserBundle\Entity\User;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
@@ -16,14 +17,14 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 class LoginListener
 {
     /**
-     * @var ObjectManager
+     * @var EntityManagerInterface
      */
     protected $em;
 
     /**
-     * @param ObjectManager $em
+     * @param EntityManagerInterface $em
      */
-    public function __construct(ObjectManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }
@@ -37,7 +38,7 @@ class LoginListener
 
         if ($user instanceof User) {
             $user
-                ->setLastLogin(new \DateTime())
+                ->setLastLogin(new DateTime())
                 ->setLoginCount($user->getLoginCount() + 1)
                 ->setIpAddressLast(Http::getClientIp())
             ;

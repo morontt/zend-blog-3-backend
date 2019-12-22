@@ -8,13 +8,31 @@
 
 namespace Mtt\BlogBundle\Command;
 
+use Doctrine\ORM\EntityManager;
+use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Utils\ExternalLinkProcessor;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ExternalLinksCommand extends ContainerAwareCommand
+class ExternalLinksCommand extends Command
 {
+    /**
+     * @var EntityManager
+     */
+    private $em;
+
+    /**
+     * @param EntityManager $em
+     */
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+        $em->getConfiguration()->setSQLLogger(null);
+
+        parent::__construct();
+    }
+
     protected function configure()
     {
         $this
@@ -28,10 +46,7 @@ class ExternalLinksCommand extends ContainerAwareCommand
         $startTime = microtime(true);
         $cnt = 0;
 
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
-        $em->getConfiguration()->setSQLLogger(null);
-
-        $repo = $em->getRepository('MttBlogBundle:Comment');
+        $repo = $this->em->getRepository('MttBlogBundle:Comment');
         $linkProcessor = new ExternalLinkProcessor(['morontt.info']);
 
         $i = 0;
@@ -45,14 +60,15 @@ class ExternalLinksCommand extends ContainerAwareCommand
                 ->setMaxResults(20)
             ;
 
-            /* @var \Mtt\BlogBundle\Entity\Comment[] $comments */
+            /* @var Comment[] $comments */
             $comments = $qb->getQuery()->getResult();
+            $output->writeln(count($comments));
             foreach ($comments as $entity) {
                 $newContent = $linkProcessor->upgradeLinks($entity->getText());
                 if ($newContent) {
                     $cnt++;
                     $entity->setText($newContent);
-                    $em->flush();
+                    $this->em->flush();
                 }
             }
 

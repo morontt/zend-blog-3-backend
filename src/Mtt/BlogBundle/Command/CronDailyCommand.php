@@ -8,12 +8,36 @@
 
 namespace Mtt\BlogBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Mtt\BlogBundle\Cron\CronChain;
+use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Xelbot\Telegram\Robot;
 
-class CronDailyCommand extends ContainerAwareCommand
+class CronDailyCommand extends Command
 {
+    /**
+     * @var CronChain
+     */
+    private $chain;
+
+    /**
+     * @var Robot
+     */
+    private $bot;
+
+    /**
+     * @param CronChain $chain
+     * @param Robot $bot
+     */
+    public function __construct(CronChain $chain, Robot $bot)
+    {
+        parent::__construct();
+
+        $this->chain = $chain;
+        $this->bot = $bot;
+    }
+
     protected function configure()
     {
         $this
@@ -24,8 +48,7 @@ class CronDailyCommand extends ContainerAwareCommand
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $messages = [];
-        $cronChain = $this->getContainer()->get('mtt_blog.cron_chain');
-        foreach ($cronChain->getDailyCrons() as $cronJob) {
+        foreach ($this->chain->getDailyCrons() as $cronJob) {
             try {
                 $cronJob->run();
                 $messages[] = sprintf('%s: %s', self::getJobName($cronJob), $cronJob->getMessage());
@@ -34,8 +57,7 @@ class CronDailyCommand extends ContainerAwareCommand
             }
         }
 
-        $bot = $this->getContainer()->get('mtt_blog.telegram_bot');
-        $bot->sendMessage(implode("\n", $messages));
+        $this->bot->sendMessage(implode("\n", $messages));
     }
 
     /**

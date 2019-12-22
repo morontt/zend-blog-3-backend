@@ -1,6 +1,17 @@
 services:
-    mtt_user.security.login_listener:
-        class:     Mtt\UserBundle\EventListener\LoginListener
-        arguments: [ "@doctrine.orm.entity_manager" ]
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Mtt\UserBundle\:
+        resource: '../../*'
+        exclude: '../../{Entity}'
+
+    Mtt\UserBundle\Entity\Repository\:
+        resource: '../../Entity/Repository'
+        tags: ['doctrine.repository_service']
+
+    Mtt\UserBundle\EventListener\LoginListener:
         tags:
             - { name: kernel.event_listener, event: security.interactive_login, method: onLogin }

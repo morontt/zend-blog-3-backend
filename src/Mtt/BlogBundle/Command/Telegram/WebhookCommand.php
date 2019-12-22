@@ -6,14 +6,13 @@
  * Time: 10:42
  */
 
-namespace Mtt\BlogBundle\Command;
+namespace Mtt\BlogBundle\Command\Telegram;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class TelegramWebhookCommand extends ContainerAwareCommand
+class WebhookCommand extends AbstractTelegramCommand
 {
     protected function configure()
     {
@@ -25,11 +24,13 @@ class TelegramWebhookCommand extends ContainerAwareCommand
         ;
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $bot = $this->getContainer()->get('mtt_blog.telegram_bot');
-
-        $result = $bot->setWebhook($input->getArgument('url'), $input->getArgument('certificate'));
+        $result = $this->bot->setWebhook($input->getArgument('url'), $input->getArgument('certificate'));
         if ($result->isOk()) {
             $output->writeln($result->getDescription());
         }
