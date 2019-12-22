@@ -33,3 +33,5 @@ behat.yml
 /web/fonts/
 .env
 http-client.env.json
+/docker/nginx/fullchain.pem
+/docker/nginx/privkey.pem

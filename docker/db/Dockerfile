@@ -5,6 +5,9 @@ MAINTAINER Alexander Harchenko <morontt@gmail.com>
 VOLUME ["/var/lib/mysql"]
 
 ARG HOST_UID=1000
+ENV TZ "Europe/Kiev"
+
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN usermod -u ${HOST_UID} mysql \
     && groupmod -g ${HOST_UID} mysql

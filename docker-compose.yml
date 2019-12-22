@@ -47,6 +47,24 @@ services:
             APPLICATION_ENV: development
             CIRCLE_ARTIFACTS: /var/www/html/var/tests
 
+    lizard:
+        build:
+            context: ${OLD_BLOG_PATH}/var/docker/web
+            # dockerfile: prod/Dockerfile
+            args:
+                HOST_UID: ${HOST_UID}
+        container_name: "lizard"
+        volumes:
+            - ${OLD_BLOG_PATH}:/var/www/html
+        links:
+            - hedgehog
+            - mailcatcher
+        depends_on:
+            - hedgehog
+            - mailcatcher
+        environment:
+            APPLICATION_ENV: development
+
     mailcatcher:
         image: xelbot/mailcatcher
         ports:
@@ -59,14 +77,27 @@ services:
         depends_on:
             - source
 
+    gopher:
+        build:
+            context: ${GOLANG_BLOG_PATH}
+            dockerfile: "docker/app/Dockerfile"
+        container_name: "gopher"
+        volumes:
+            - ${GOLANG_BLOG_PATH}:/var/www/app
+
     sloth:
         build: ./docker/nginx
         volumes_from:
             - source
+            - gopher
         ports:
             - "443:443"
             - "80:80"
         depends_on:
             - rhinoceros
+            - lizard
+            - gopher
         links:
             - rhinoceros
+            - lizard
+            - gopher
