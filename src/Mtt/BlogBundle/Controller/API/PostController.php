@@ -6,9 +6,10 @@
  * Time: 19:30
  */
 
-namespace Mtt\BlogBundle\Controller;
+namespace Mtt\BlogBundle\Controller\API;
 
 use Doctrine\ORM\ORMException;
+use Mtt\BlogBundle\Controller\BaseController;
 use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Entity\Repository\PostRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;

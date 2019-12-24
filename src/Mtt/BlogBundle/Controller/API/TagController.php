@@ -2,35 +2,36 @@
 /**
  * Created by PhpStorm.
  * User: morontt
- * Date: 15.02.15
- * Time: 20:03
+ * Date: 28.03.15
+ * Time: 21:19
  */
 
-namespace Mtt\BlogBundle\Controller;
+namespace Mtt\BlogBundle\Controller\API;
 
 use Doctrine\ORM\ORMException;
-use Mtt\BlogBundle\Entity\Category;
-use Mtt\BlogBundle\Entity\Repository\CategoryRepository;
+use Mtt\BlogBundle\Controller\BaseController;
+use Mtt\BlogBundle\Entity\Repository\TagRepository;
+use Mtt\BlogBundle\Entity\Tag;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/api/categories")
+ * @Route("/api/tags")
  *
- * Class CategoryController
+ * Class TagController
  */
-class CategoryController extends BaseController
+class TagController extends BaseController
 {
     /**
      * @Route("", methods={"GET"})
      *
      * @param Request $request
-     * @param CategoryRepository $repository
+     * @param TagRepository $repository
      *
      * @return JsonResponse
      */
-    public function findAllAction(Request $request, CategoryRepository $repository): JsonResponse
+    public function findAllAction(Request $request, TagRepository $repository): JsonResponse
     {
         $pagination = $this->paginate(
             $repository->getListQuery(true),
@@ -38,7 +39,7 @@ class CategoryController extends BaseController
         );
 
         $result = $this->getDataConverter()
-            ->getCategoryArray($pagination);
+            ->getTagArray($pagination);
 
         $result['meta'] = $this->getPaginationMetadata($pagination->getPaginationData());
 
@@ -48,14 +49,14 @@ class CategoryController extends BaseController
     /**
      * @Route("/{id}", requirements={"id": "\d+"}, methods={"GET"})
      *
-     * @param Category $entity
+     * @param Tag $entity
      *
      * @return JsonResponse
      */
-    public function findAction(Category $entity): JsonResponse
+    public function findAction(Tag $entity): JsonResponse
     {
         $result = $this->getDataConverter()
-            ->getCategory($entity);
+            ->getTag($entity);
 
         return new JsonResponse($result);
     }
@@ -65,14 +66,12 @@ class CategoryController extends BaseController
      *
      * @param Request $request
      *
-     * @throws ORMException
-     *
      * @return JsonResponse
      */
     public function createAction(Request $request): JsonResponse
     {
         $result = $this->getDataConverter()
-            ->saveCategory(new Category(), $request->request->get('category'));
+            ->saveTag(new Tag(), $request->request->get('tag'));
 
         return new JsonResponse($result, 201);
     }
@@ -81,16 +80,14 @@ class CategoryController extends BaseController
      * @Route("/{id}", requirements={"id": "\d+"}, methods={"PUT"})
      *
      * @param Request $request
-     * @param Category $entity
-     *
-     * @throws ORMException
+     * @param Tag $entity
      *
      * @return JsonResponse
      */
-    public function updateAction(Request $request, Category $entity): JsonResponse
+    public function updateAction(Request $request, Tag $entity): JsonResponse
     {
         $result = $this->getDataConverter()
-            ->saveCategory($entity, $request->request->get('category'));
+            ->saveTag($entity, $request->request->get('tag'));
 
         return new JsonResponse($result);
     }
@@ -98,13 +95,13 @@ class CategoryController extends BaseController
     /**
      * @Route("/{id}", requirements={"id": "\d+"}, methods={"DELETE"})
      *
-     * @param Category $entity
+     * @param Tag $entity
      *
      * @throws ORMException
      *
      * @return JsonResponse
      */
-    public function deleteAction(Category $entity): JsonResponse
+    public function deleteAction(Tag $entity): JsonResponse
     {
         $this->getEm()->remove($entity);
         $this->getEm()->flush();
@@ -113,16 +110,25 @@ class CategoryController extends BaseController
     }
 
     /**
-     * @Route("/list", name="category_choices", options={"expose"=true}, methods={"GET"})
+     * @Route("/autocomplete", name="tags_autocomplete", options={"expose"=true}, methods={"GET"})
      *
-     * @param CategoryRepository $repository
+     * @param Request $request
      *
      * @return JsonResponse
      */
-    public function ajaxCategoryAction(CategoryRepository $repository): JsonResponse
+    public function tagAutocompleteAction(Request $request): JsonResponse
     {
-        $categories = $repository->getNamesArray();
+        $tags = $this->getEm()
+            ->getRepository('MttBlogBundle:Tag')
+            ->getForAutocomplete($request->query->get('term'));
 
-        return new JsonResponse($categories);
+        $result = array_map(
+            function (Tag $tag) {
+                return ['value' => $tag->getName()];
+            },
+            $tags
+        );
+
+        return new JsonResponse($result);
     }
 }
