@@ -6,9 +6,10 @@
  * Time: 21:05
  */
 
-namespace Mtt\BlogBundle\Controller;
+namespace Mtt\BlogBundle\Controller\API;
 
 use Doctrine\ORM\ORMException;
+use Mtt\BlogBundle\Controller\BaseController;
 use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Entity\Repository\ViewCommentRepository;
 use Mtt\BlogBundle\Event\ReplyCommentEvent;

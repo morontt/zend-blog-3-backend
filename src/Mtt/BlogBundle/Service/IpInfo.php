@@ -9,6 +9,7 @@
 namespace Mtt\BlogBundle\Service;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Mtt\BlogBundle\Entity\GeoLocation;
 use Mtt\BlogBundle\Entity\GeoLocationCity;
 use Mtt\BlogBundle\Entity\GeoLocationCountry;
@@ -26,10 +27,10 @@ class IpInfo
     protected $em;
 
     /**
-     * @param EntityManager $em
+     * @param EntityManagerInterface $em
      * @param string $key
      */
-    public function __construct(EntityManager $em, string $key)
+    public function __construct(EntityManagerInterface $em, string $key)
     {
         $this->em = $em;
         $this->key = $key;

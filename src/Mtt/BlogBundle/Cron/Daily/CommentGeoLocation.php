@@ -9,6 +9,7 @@
 namespace Mtt\BlogBundle\Cron\Daily;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Mtt\BlogBundle\Cron\CronServiceInterface;
 use Mtt\BlogBundle\Service\IpInfo;
 
@@ -30,10 +31,10 @@ class CommentGeoLocation implements CronServiceInterface
     protected $countImported = 0;
 
     /**
-     * @param EntityManager $em
+     * @param EntityManagerInterface $em
      * @param IpInfo $ipInfo
      */
-    public function __construct(EntityManager $em, IpInfo $ipInfo)
+    public function __construct(EntityManagerInterface $em, IpInfo $ipInfo)
     {
         $this->em = $em;
         $this->ipInfo = $ipInfo;

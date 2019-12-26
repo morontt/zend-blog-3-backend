@@ -9,6 +9,7 @@
 namespace Mtt\BlogBundle\Service;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMException;
 use Mtt\BlogBundle\Entity\MediaFile;
 use Symfony\Component\Filesystem\Filesystem;
@@ -24,9 +25,9 @@ class ImageManager
     protected $em;
 
     /**
-     * @param EntityManager $em
+     * @param EntityManagerInterface $em
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }

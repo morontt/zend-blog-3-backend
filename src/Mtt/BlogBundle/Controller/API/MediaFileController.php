@@ -6,9 +6,10 @@
  * Time: 22:34
  */
 
-namespace Mtt\BlogBundle\Controller;
+namespace Mtt\BlogBundle\Controller\API;
 
 use Doctrine\ORM\ORMException;
+use Mtt\BlogBundle\Controller\BaseController;
 use Mtt\BlogBundle\Entity\MediaFile;
 use Mtt\BlogBundle\Entity\Repository\MediaFileRepository;
 use Mtt\BlogBundle\Form\ImageForm;

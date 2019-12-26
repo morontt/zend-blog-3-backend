@@ -9,6 +9,7 @@
 namespace Mtt\BlogBundle\Command;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Mtt\BlogBundle\Service\TextProcessor;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -27,10 +28,10 @@ class PostsBatchUpdateCommand extends Command
     private $textProcessor;
 
     /**
-     * @param EntityManager $em
+     * @param EntityManagerInterface $em
      * @param TextProcessor $textProcessor
      */
-    public function __construct(EntityManager $em, TextProcessor $textProcessor)
+    public function __construct(EntityManagerInterface $em, TextProcessor $textProcessor)
     {
         parent::__construct();
 

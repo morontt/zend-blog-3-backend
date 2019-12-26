@@ -6,8 +6,9 @@
  * Time: 0:06
  */
 
-namespace Mtt\BlogBundle\Controller;
+namespace Mtt\BlogBundle\Controller\API;
 
+use Mtt\BlogBundle\Controller\BaseController;
 use Mtt\BlogBundle\Entity\Commentator;
 use Mtt\BlogBundle\Entity\Repository\CommentatorRepository;
 use Mtt\BlogBundle\Entity\ViewCommentator;

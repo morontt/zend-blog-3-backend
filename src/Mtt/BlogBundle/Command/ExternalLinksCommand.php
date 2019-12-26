@@ -9,6 +9,7 @@
 namespace Mtt\BlogBundle\Command;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Utils\ExternalLinkProcessor;
 use Symfony\Component\Console\Command\Command;
@@ -23,9 +24,9 @@ class ExternalLinksCommand extends Command
     private $em;
 
     /**
-     * @param EntityManager $em
+     * @param EntityManagerInterface $em
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
         $em->getConfiguration()->setSQLLogger(null);

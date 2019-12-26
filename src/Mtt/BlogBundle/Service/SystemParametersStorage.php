@@ -9,6 +9,7 @@
 namespace Mtt\BlogBundle\Service;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMException;
 use Mtt\BlogBundle\Entity\Repository\SystemParametersRepository;
 use Mtt\BlogBundle\Entity\SystemParameters;
@@ -33,10 +34,10 @@ class SystemParametersStorage
     protected $em;
 
     /**
-     * @param EntityManager $em
+     * @param EntityManagerInterface $em
      * @param string $secret
      */
-    public function __construct(EntityManager $em, string $secret)
+    public function __construct(EntityManagerInterface $em, string $secret)
     {
         $this->parametersRepo = $em->getRepository('MttBlogBundle:SystemParameters');
         $this->em = $em;
