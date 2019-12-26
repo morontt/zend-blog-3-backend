@@ -10,6 +10,7 @@ namespace Mtt\BlogBundle\Cron\Daily;
 
 use Doctrine\DBAL\DBALException;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Mtt\BlogBundle\Cron\CronServiceInterface;
 
 class TrackingArchive implements CronServiceInterface
@@ -25,9 +26,9 @@ class TrackingArchive implements CronServiceInterface
     protected $message = 'test';
 
     /**
-     * @param EntityManager $em
+     * @param EntityManagerInterface $em
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManagerInterface $em)
     {
         $this->em = $em;
     }

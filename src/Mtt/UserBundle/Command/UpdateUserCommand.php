@@ -15,6 +15,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactory;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class UpdateUserCommand extends Command
 {
@@ -35,12 +36,12 @@ class UpdateUserCommand extends Command
 
     /**
      * @param UserRepository $repository
-     * @param EncoderFactory $encoderFactory
+     * @param EncoderFactoryInterface $encoderFactory
      * @param EntityManagerInterface $em
      */
     public function __construct(
         UserRepository $repository,
-        EncoderFactory $encoderFactory,
+        EncoderFactoryInterface $encoderFactory,
         EntityManagerInterface $em
     ) {
         $this->repository = $repository;

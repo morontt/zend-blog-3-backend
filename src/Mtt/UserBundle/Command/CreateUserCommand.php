@@ -17,6 +17,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactory;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class CreateUserCommand extends Command
@@ -43,13 +44,13 @@ class CreateUserCommand extends Command
 
     /**
      * @param UserRepository $repository
-     * @param EncoderFactory $encoderFactory
+     * @param EncoderFactoryInterface $encoderFactory
      * @param ValidatorInterface $validator
      * @param EntityManagerInterface $em
      */
     public function __construct(
         UserRepository $repository,
-        EncoderFactory $encoderFactory,
+        EncoderFactoryInterface $encoderFactory,
         ValidatorInterface $validator,
         EntityManagerInterface $em
     ) {

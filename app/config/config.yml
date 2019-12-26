@@ -2,6 +2,9 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
 
+parameters:
+    container.autowiring.strict_mode: false
+
 framework:
     #esi:             ~
     #translator:      { fallback: "%locale%" }
@@ -22,6 +25,10 @@ framework:
         handler_id:  ~
     fragments:       ~
     http_method_override: true
+
+sensio_framework_extra:
+    router:
+        annotations: false
 
 # Twig Configuration
 twig:

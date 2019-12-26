@@ -10,6 +10,7 @@ namespace Mtt\BlogBundle\API;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
@@ -64,10 +65,10 @@ class DataConverter
     protected $textProcessor;
 
     /**
-     * @param EntityManager $em
+     * @param EntityManagerInterface $em
      * @param TextProcessor $textProcessor
      */
-    public function __construct(EntityManager $em, TextProcessor $textProcessor)
+    public function __construct(EntityManagerInterface $em, TextProcessor $textProcessor)
     {
         $this->fractal = new Manager();
         $this->fractal->setSerializer(new Serializer());
