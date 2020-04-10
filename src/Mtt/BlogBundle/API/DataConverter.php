@@ -8,6 +8,7 @@
 
 namespace Mtt\BlogBundle\API;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -140,8 +141,6 @@ class DataConverter
     public function saveComment(Comment $entity, array $data)
     {
         CommentTransformer::reverseTransform($entity, $data);
-
-        $entity->setLastUpdate(new \DateTime());
         $this->save($entity);
 
         return $this->getComment($entity);
@@ -163,11 +162,8 @@ class DataConverter
 
         $entity->setCategory($this->em->getReference('MttBlogBundle:Category', (int)$data['categoryId']));
 
-        $now = new \DateTime();
-        $entity->setLastUpdate($now);
-
         if ($entity->isHide()) {
-            $entity->setTimeCreated($now);
+            $entity->setTimeCreated(new DateTime());
         }
 
         $originalTags = new ArrayCollection();
@@ -228,7 +224,6 @@ class DataConverter
             $entity->setPost(null);
         }
 
-        $entity->setLastUpdate(new \DateTime());
         $this->save($entity);
 
         return $this->getMediaFile($entity);

@@ -10,13 +10,17 @@ namespace Mtt\BlogBundle\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Mtt\BlogBundle\Entity\Traits\ModifyEntityTrait;
 
 /**
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Mtt\BlogBundle\Entity\Repository\MediaFileRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class MediaFile
 {
+    use ModifyEntityTrait;
+
     /**
      * @var int
      *
@@ -69,26 +73,9 @@ class MediaFile
      */
     protected $backuped = false;
 
-    /**
-     * @var DateTime
-     *
-     * @ORM\Column(type="datetime")
-     */
-    protected $timeCreated;
-
-    /**
-     * @var DateTime
-     *
-     * @ORM\Column(type="datetime")
-     */
-    protected $lastUpdate;
-
     public function __construct()
     {
-        $now = new DateTime();
-
-        $this->timeCreated = $now;
-        $this->lastUpdate = $now;
+        $this->timeCreated = new DateTime();
     }
 
     /**
@@ -131,54 +118,6 @@ class MediaFile
     public function getOriginalFileName(): string
     {
         return pathinfo($this->path, PATHINFO_BASENAME);
-    }
-
-    /**
-     * Set timeCreated
-     *
-     * @param DateTime $timeCreated
-     *
-     * @return MediaFile
-     */
-    public function setTimeCreated(DateTime $timeCreated): MediaFile
-    {
-        $this->timeCreated = $timeCreated;
-
-        return $this;
-    }
-
-    /**
-     * Get timeCreated
-     *
-     * @return DateTime
-     */
-    public function getTimeCreated(): DateTime
-    {
-        return $this->timeCreated;
-    }
-
-    /**
-     * Set lastUpdate
-     *
-     * @param DateTime $lastUpdate
-     *
-     * @return MediaFile
-     */
-    public function setLastUpdate(DateTime $lastUpdate): MediaFile
-    {
-        $this->lastUpdate = $lastUpdate;
-
-        return $this;
-    }
-
-    /**
-     * Get lastUpdate
-     *
-     * @return DateTime
-     */
-    public function getLastUpdate(): DateTime
-    {
-        return $this->lastUpdate;
     }
 
     /**

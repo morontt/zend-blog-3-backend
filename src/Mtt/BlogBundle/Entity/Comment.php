@@ -2,16 +2,22 @@
 
 namespace Mtt\BlogBundle\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Mtt\BlogBundle\Entity\Traits\ModifyEntityTrait;
 use Mtt\UserBundle\Entity\User;
 
 /**
  * @ORM\Table(name="comments")
  * @ORM\Entity(repositoryClass="Mtt\BlogBundle\Entity\Repository\CommentRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Comment
 {
+    use ModifyEntityTrait;
+
     /**
      * @var int
      *
@@ -22,7 +28,7 @@ class Comment
     protected $id;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      *
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="parent")
      **/
@@ -35,14 +41,14 @@ class Comment
     protected $parent;
 
     /**
-     * @var \Mtt\BlogBundle\Entity\Post
+     * @var Post
      *
      * @ORM\ManyToOne(targetEntity="Post", inversedBy="comments")
      */
     protected $post;
 
     /**
-     * @var \Mtt\BlogBundle\Entity\Commentator
+     * @var Commentator
      *
      * @ORM\ManyToOne(targetEntity="Commentator", inversedBy="comments")
      * @ORM\JoinColumn(nullable=true)
@@ -72,7 +78,7 @@ class Comment
     protected $deleted = false;
 
     /**
-     * @var \Mtt\BlogBundle\Entity\TrackingAgent
+     * @var TrackingAgent
      *
      * @ORM\ManyToOne(targetEntity="TrackingAgent")
      * @ORM\JoinColumn(name="user_agent_id", referencedColumnName="id", onDelete="SET NULL", nullable=true)
@@ -85,20 +91,6 @@ class Comment
      * @ORM\Column(name="ip_addr", type="string", length=15, nullable=true)
      */
     protected $ipAddress;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(type="datetime")
-     */
-    protected $timeCreated;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    protected $lastUpdate;
 
     /**
      * @var int
@@ -118,11 +110,7 @@ class Comment
     public function __construct()
     {
         $this->children = new ArrayCollection();
-
-        $now = new \DateTime();
-
-        $this->timeCreated = $now;
-        $this->lastUpdate = $now;
+        $this->timeCreated = new DateTime();
     }
 
     /**
@@ -162,7 +150,7 @@ class Comment
     /**
      * Get children
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getChildren()
     {
@@ -186,7 +174,7 @@ class Comment
     /**
      * Get parent
      *
-     * @return \Mtt\BlogBundle\Entity\Comment
+     * @return Comment
      */
     public function getParent()
     {
@@ -210,7 +198,7 @@ class Comment
     /**
      * Get commentator
      *
-     * @return \Mtt\BlogBundle\Entity\Commentator
+     * @return Commentator
      */
     public function getCommentator()
     {
@@ -314,54 +302,6 @@ class Comment
     }
 
     /**
-     * Set timeCreated
-     *
-     * @param \DateTime $timeCreated
-     *
-     * @return Comment
-     */
-    public function setTimeCreated($timeCreated)
-    {
-        $this->timeCreated = $timeCreated;
-
-        return $this;
-    }
-
-    /**
-     * Get timeCreated
-     *
-     * @return \DateTime
-     */
-    public function getTimeCreated()
-    {
-        return $this->timeCreated;
-    }
-
-    /**
-     * Set lastUpdate
-     *
-     * @param \DateTime $lastUpdate
-     *
-     * @return Comment
-     */
-    public function setLastUpdate($lastUpdate)
-    {
-        $this->lastUpdate = $lastUpdate;
-
-        return $this;
-    }
-
-    /**
-     * Get lastUpdate
-     *
-     * @return \DateTime
-     */
-    public function getLastUpdate()
-    {
-        return $this->lastUpdate;
-    }
-
-    /**
      * Set post
      *
      * @param Post $post
@@ -378,7 +318,7 @@ class Comment
     /**
      * Get post
      *
-     * @return \Mtt\BlogBundle\Entity\Post
+     * @return Post
      */
     public function getPost()
     {

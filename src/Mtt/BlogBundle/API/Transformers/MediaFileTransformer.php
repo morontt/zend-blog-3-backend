@@ -31,7 +31,7 @@ class MediaFileTransformer extends BaseTransformer
         $post = $item->getPost();
         $postId = $post ? $post->getId() : null;
 
-        $data = [
+        return [
             'id' => $item->getId(),
             'path' => ImageManager::getImageBasePath() . '/' . $item->getPath(),
             'preview' => ImageManager::getImageBasePath() . '/' . $item->getPreview('admin_list'),
@@ -44,8 +44,6 @@ class MediaFileTransformer extends BaseTransformer
             'postId' => $postId,
             'defaultImage' => $item->isDefaultImage(),
         ];
-
-        return $data;
     }
 
     /**

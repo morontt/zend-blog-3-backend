@@ -16,9 +16,19 @@ use Mtt\BlogBundle\Entity\SystemParameters;
 class DropboxService
 {
     /**
-     * @var Dropbox
+     * @var string
      */
-    protected $dropbox;
+    private $dropboxKey;
+
+    /**
+     * @var string
+     */
+    private $dropboxSecret;
+
+    /**
+     * @var SystemParametersStorage
+     */
+    private $storage;
 
     /**
      * @param string $dropboxKey
@@ -27,8 +37,9 @@ class DropboxService
      */
     public function __construct(string $dropboxKey, string $dropboxSecret, SystemParametersStorage $storage)
     {
-        $app = new DropboxApp($dropboxKey, $dropboxSecret, $storage->getParameter(SystemParameters::DROPBOX_TOKEN));
-        $this->dropbox = new Dropbox($app);
+        $this->dropboxKey = $dropboxKey;
+        $this->dropboxSecret = $dropboxSecret;
+        $this->storage = $storage;
     }
 
     /**
@@ -39,7 +50,7 @@ class DropboxService
      */
     public function uploadChunked(string $dropboxFile, string $path)
     {
-        return $this->dropbox->uploadChunked($dropboxFile, $path, null, 2097152);
+        return $this->getDropboxClient()->uploadChunked($dropboxFile, $path, null, 2097152);
     }
 
     /**
@@ -50,6 +61,20 @@ class DropboxService
      */
     public function upload(string $dropboxFile, string $path)
     {
-        return $this->dropbox->upload($dropboxFile, $path);
+        return $this->getDropboxClient()->upload($dropboxFile, $path);
+    }
+
+    /**
+     * @return Dropbox
+     */
+    protected function getDropboxClient(): Dropbox
+    {
+        $app = new DropboxApp(
+            $this->dropboxKey,
+            $this->dropboxSecret,
+            $this->storage->getParameter(SystemParameters::DROPBOX_TOKEN)
+        );
+
+        return new Dropbox($app);
     }
 }

@@ -2,15 +2,20 @@
 
 namespace Mtt\BlogBundle\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Mtt\BlogBundle\Entity\Traits\ModifyEntityTrait;
 
 /**
  * @ORM\Table(name="posts")
  * @ORM\Entity(repositoryClass="Mtt\BlogBundle\Entity\Repository\PostRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Post
 {
+    use ModifyEntityTrait;
+
     /**
      * @var int
      *
@@ -61,20 +66,6 @@ class Post
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $description;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(type="datetime")
-     */
-    protected $timeCreated;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    protected $lastUpdate;
 
     /**
      * @var \Mtt\BlogBundle\Entity\Category
@@ -132,10 +123,7 @@ class Post
         $this->comments = new ArrayCollection();
         $this->mediaFiles = new ArrayCollection();
 
-        $now = new \DateTime();
-
-        $this->timeCreated = $now;
-        $this->lastUpdate = $now;
+        $this->timeCreated = new DateTime();
     }
 
     /**
@@ -266,54 +254,6 @@ class Post
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * Set timeCreated
-     *
-     * @param \DateTime $timeCreated
-     *
-     * @return Post
-     */
-    public function setTimeCreated($timeCreated)
-    {
-        $this->timeCreated = $timeCreated;
-
-        return $this;
-    }
-
-    /**
-     * Get timeCreated
-     *
-     * @return \DateTime
-     */
-    public function getTimeCreated()
-    {
-        return $this->timeCreated;
-    }
-
-    /**
-     * Set lastUpdate
-     *
-     * @param \DateTime $lastUpdate
-     *
-     * @return Post
-     */
-    public function setLastUpdate($lastUpdate)
-    {
-        $this->lastUpdate = $lastUpdate;
-
-        return $this;
-    }
-
-    /**
-     * Get lastUpdate
-     *
-     * @return \DateTime
-     */
-    public function getLastUpdate()
-    {
-        return $this->lastUpdate;
     }
 
     /**
