@@ -12,6 +12,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\ORMException;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
@@ -28,6 +29,7 @@ use Mtt\BlogBundle\Entity\CommentatorInterface;
 use Mtt\BlogBundle\Entity\MediaFile;
 use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Entity\Tag;
+use Mtt\BlogBundle\Model\Image;
 use Mtt\BlogBundle\Service\TextProcessor;
 use Mtt\BlogBundle\Utils\Inflector;
 use Mtt\BlogBundle\Utils\RuTransform;
@@ -41,7 +43,7 @@ use Mtt\BlogBundle\Utils\RuTransform;
  * @method array getCommentArray($collection, $includes = null)
  * @method array getCommentator(CommentatorInterface $entity, $includes = null)
  * @method array getCommentatorArray($collection, $includes = null)
- * @method array getMediaFile(\Mtt\BlogBundle\Model\Image $entity, $includes = null)
+ * @method array getMediaFile(Image $entity, $includes = null)
  * @method array getMediaFileArray($collection, $includes = null)
  * @method array getPost(Post $entity, $includes = null)
  * @method array getPostArray($collection, $includes = null)
@@ -97,7 +99,7 @@ class DataConverter
      * @param Category $entity
      * @param array $data
      *
-     * @throws \Doctrine\ORM\ORMException
+     * @throws ORMException
      *
      * @return array
      */
@@ -150,7 +152,7 @@ class DataConverter
      * @param Post $entity
      * @param array $data
      *
-     * @throws \Doctrine\ORM\ORMException
+     * @throws ORMException
      *
      * @return array
      */
@@ -226,7 +228,7 @@ class DataConverter
 
         $this->save($entity);
 
-        return $this->getMediaFile($entity);
+        return $this->getMediaFile(new Image($entity));
     }
 
     /**

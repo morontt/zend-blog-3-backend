@@ -2,6 +2,7 @@
 
 namespace Mtt\BlogBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -43,9 +44,9 @@ class Tracking
     protected $ipAddress;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="milliseconds_dt")
      */
     protected $timeCreated;
 
@@ -58,8 +59,7 @@ class Tracking
 
     public function __construct()
     {
-        $this->setTimeCreated(new \DateTime());
-        $this->timestampCreated = (int)$this->getTimeCreated()->format('U');
+        $this->setTimeCreated(new DateTime());
     }
 
     /**
@@ -99,11 +99,11 @@ class Tracking
     /**
      * Set timeCreated
      *
-     * @param \DateTime $timeCreated
+     * @param DateTime $timeCreated
      *
      * @return Tracking
      */
-    public function setTimeCreated(\DateTime $timeCreated)
+    public function setTimeCreated(DateTime $timeCreated)
     {
         $this->timeCreated = $timeCreated;
         $this->timestampCreated = (int)$timeCreated->format('U');
@@ -114,7 +114,7 @@ class Tracking
     /**
      * Get timeCreated
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getTimeCreated()
     {

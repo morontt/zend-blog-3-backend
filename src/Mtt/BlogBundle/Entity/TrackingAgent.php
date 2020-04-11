@@ -2,7 +2,9 @@
 
 namespace Mtt\BlogBundle\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,14 +44,14 @@ class TrackingAgent
     protected $botFilter = true;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="milliseconds_dt", nullable=true)
      */
     protected $createdAt;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      *
      * @ORM\OneToMany(targetEntity="Tracking", mappedBy="trackingAgent", cascade={"persist"})
      */
@@ -58,7 +60,7 @@ class TrackingAgent
     public function __construct()
     {
         $this->trackings = new ArrayCollection();
-        $this->createdAt = new \DateTime();
+        $this->createdAt = new DateTime();
     }
 
     /**
@@ -147,7 +149,7 @@ class TrackingAgent
     /**
      * Get trackings
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getTrackings()
     {
@@ -181,7 +183,7 @@ class TrackingAgent
     /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
+     * @param DateTime $createdAt
      *
      * @return TrackingAgent
      */
@@ -195,9 +197,9 @@ class TrackingAgent
     /**
      * Get createdAt
      *
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }

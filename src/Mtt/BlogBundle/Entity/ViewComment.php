@@ -2,7 +2,9 @@
 
 namespace Mtt\BlogBundle\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Mtt\BlogBundle\Entity\Traits\Gravatar;
 
@@ -23,7 +25,7 @@ class ViewComment
     protected $id;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      *
      * @ORM\OneToMany(targetEntity="ViewComment", mappedBy="parent")
      **/
@@ -36,7 +38,7 @@ class ViewComment
     protected $parent;
 
     /**
-     * @var \Mtt\BlogBundle\Entity\Post
+     * @var Post
      *
      * @ORM\ManyToOne(targetEntity="Post")
      */
@@ -129,16 +131,16 @@ class ViewComment
     protected $deleted;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="milliseconds_dt")
      */
     protected $timeCreated;
 
     public function __construct()
     {
         $this->children = new ArrayCollection();
-        $this->timeCreated = new \DateTime();
+        $this->timeCreated = new DateTime();
     }
 
     /**
@@ -282,7 +284,7 @@ class ViewComment
     /**
      * Get timeCreated
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getTimeCreated()
     {
@@ -292,7 +294,7 @@ class ViewComment
     /**
      * Get children
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getChildren()
     {

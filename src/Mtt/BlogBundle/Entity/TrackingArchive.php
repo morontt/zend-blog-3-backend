@@ -2,6 +2,7 @@
 
 namespace Mtt\BlogBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,9 +42,9 @@ class TrackingArchive
     protected $ipAddress;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="milliseconds_dt")
      */
     protected $timeCreated;
 
@@ -132,7 +133,7 @@ class TrackingArchive
     /**
      * Set timeCreated
      *
-     * @param \DateTime $timeCreated
+     * @param DateTime $timeCreated
      *
      * @return TrackingArchive
      */
@@ -146,7 +147,7 @@ class TrackingArchive
     /**
      * Get timeCreated
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getTimeCreated()
     {

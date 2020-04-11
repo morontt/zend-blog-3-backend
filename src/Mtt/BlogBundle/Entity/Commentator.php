@@ -3,6 +3,7 @@
 namespace Mtt\BlogBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Mtt\BlogBundle\Entity\Traits\Gravatar;
 
@@ -47,7 +48,7 @@ class Commentator implements CommentatorInterface
     protected $website;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      *
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="commentator")
      */
@@ -181,7 +182,7 @@ class Commentator implements CommentatorInterface
     /**
      * Get comments
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getComments()
     {

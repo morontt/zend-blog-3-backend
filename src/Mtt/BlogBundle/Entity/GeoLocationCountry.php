@@ -8,6 +8,7 @@
 
 namespace Mtt\BlogBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,15 +43,15 @@ class GeoLocationCountry
     protected $name;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="milliseconds_dt")
      */
     protected $timeCreated;
 
     public function __construct()
     {
-        $this->timeCreated = new \DateTime();
+        $this->timeCreated = new DateTime();
     }
 
     /**
@@ -114,7 +115,7 @@ class GeoLocationCountry
     /**
      * Set timeCreated
      *
-     * @param \DateTime $timeCreated
+     * @param DateTime $timeCreated
      *
      * @return GeoLocationCountry
      */
@@ -128,7 +129,7 @@ class GeoLocationCountry
     /**
      * Get timeCreated
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getTimeCreated()
     {

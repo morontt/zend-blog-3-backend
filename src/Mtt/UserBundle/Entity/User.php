@@ -2,7 +2,9 @@
 
 namespace Mtt\UserBundle\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Mtt\BlogBundle\Entity\Comment;
 use Serializable;
@@ -70,16 +72,16 @@ class User implements UserInterface, Serializable
     protected $userType;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
-     * @ORM\Column(name="time_created", type="datetime")
+     * @ORM\Column(name="time_created", type="milliseconds_dt")
      */
     protected $timeCreated;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
-     * @ORM\Column(name="last_login", type="datetime", nullable=true)
+     * @ORM\Column(name="last_login", type="milliseconds_dt", nullable=true)
      */
     protected $lastLogin;
 
@@ -98,7 +100,7 @@ class User implements UserInterface, Serializable
     protected $ipAddressLast;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      *
      * @ORM\OneToMany(targetEntity="Mtt\BlogBundle\Entity\Comment", mappedBy="user")
      */
@@ -115,8 +117,12 @@ class User implements UserInterface, Serializable
     {
         $this->comments = new ArrayCollection();
 
-        $this->salt = bin2hex(random_bytes(16));
-        $this->timeCreated = new \DateTime();
+        try {
+            $this->salt = bin2hex(random_bytes(16));
+        } catch (\Exception $e) {
+            $this->salt = bin2hex(openssl_random_pseudo_bytes(16));
+        }
+        $this->timeCreated = new DateTime();
         $this->userType = 'admin'; //TODO remove fake field
     }
 
@@ -295,7 +301,7 @@ class User implements UserInterface, Serializable
     /**
      * Set timeCreated
      *
-     * @param \DateTime $timeCreated
+     * @param DateTime $timeCreated
      *
      * @return User
      */
@@ -309,7 +315,7 @@ class User implements UserInterface, Serializable
     /**
      * Get timeCreated
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getTimeCreated()
     {
@@ -319,7 +325,7 @@ class User implements UserInterface, Serializable
     /**
      * Set lastLogin
      *
-     * @param \DateTime $lastLogin
+     * @param DateTime $lastLogin
      *
      * @return User
      */
@@ -333,7 +339,7 @@ class User implements UserInterface, Serializable
     /**
      * Get lastLogin
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getLastLogin()
     {
@@ -391,7 +397,7 @@ class User implements UserInterface, Serializable
     /**
      * Get comments
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getComments()
     {
