@@ -26,15 +26,13 @@ class CategoryTransformer extends BaseTransformer
             $parentId = $parent->getId();
         }
 
-        $data = [
+        return [
             'id' => $item->getId(),
             'name' => $item->getName(),
             'url' => $item->getUrl(),
             'parent' => $parentId,
             'parentId' => $parentId,
         ];
-
-        return $data;
     }
 
     /**

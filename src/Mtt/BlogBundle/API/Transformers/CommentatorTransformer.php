@@ -20,7 +20,7 @@ class CommentatorTransformer extends BaseTransformer
      */
     public function transform(CommentatorInterface $item)
     {
-        $data = [
+        return [
             'id' => $item->getId(),
             'name' => $item->getName(),
             'email' => $item->getEmail(),
@@ -28,8 +28,6 @@ class CommentatorTransformer extends BaseTransformer
             'disqusId' => $item->getDisqusId(),
             'emailHash' => $item->getAvatarHash(),
         ];
-
-        return $data;
     }
 
     /**

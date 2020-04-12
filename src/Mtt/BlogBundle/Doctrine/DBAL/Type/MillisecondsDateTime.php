@@ -67,7 +67,7 @@ class MillisecondsDateTime extends Type
             return $value;
         }
 
-        $val = DateTime::createFromFormat('Y-m-d H:i:s.u', $value);
+        $val = DateTime::createFromFormat(static::FORMAT_TIME, $value);
 
         if (!$val) {
             throw ConversionException::conversionFailedFormat($value, $this->getName(), static::FORMAT_TIME);

@@ -20,13 +20,11 @@ class TagTransformer extends BaseTransformer
      */
     public function transform(Tag $item)
     {
-        $data = [
+        return [
             'id' => $item->getId(),
             'name' => $item->getName(),
             'url' => $item->getUrl(),
         ];
-
-        return $data;
     }
 
     /**

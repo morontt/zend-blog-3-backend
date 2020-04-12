@@ -79,7 +79,7 @@ class CommentTransformer extends BaseTransformer
             $parentId = $parent->getId();
         }
 
-        $data = [
+        return [
             'id' => $item->getId(),
             'text' => $item->getText(),
             'commentator' => $commentatorId,
@@ -97,8 +97,6 @@ class CommentTransformer extends BaseTransformer
             'deleted' => $item->isDeleted(),
             'createdAt' => $this->dateTimeToISO($item->getTimeCreated()),
         ];
-
-        return $data;
     }
 
     /**

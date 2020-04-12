@@ -28,7 +28,7 @@ class PostTransformer extends BaseTransformer
      */
     public function transform(Post $item)
     {
-        $data = [
+        return [
             'id' => $item->getId(),
             'title' => $item->getTitle(),
             'url' => $item->getUrl(),
@@ -48,8 +48,6 @@ class PostTransformer extends BaseTransformer
             'timeCreated' => $this->dateTimeToISO($item->getTimeCreated()),
             'lastUpdate' => $this->dateTimeToISO($item->getLastUpdate()),
         ];
-
-        return $data;
     }
 
     /**

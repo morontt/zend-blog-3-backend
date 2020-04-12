@@ -3,7 +3,8 @@
 apt-get update && apt-get install -y apt-utils gnupg2
 
 apt-get update && apt-get install -y --no-install-recommends \
-    zlib1g-dev libicu-dev git nano zip unzip pngquant default-mysql-client libmagickwand-dev
+    zlib1g-dev libicu-dev git nano zip unzip pngquant default-mysql-client libmagickwand-dev \
+    libzip-dev
 
 apt-get clean
 
