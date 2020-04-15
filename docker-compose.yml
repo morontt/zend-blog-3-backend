@@ -82,6 +82,8 @@ services:
             context: ${GOLANG_BLOG_PATH}
             dockerfile: "docker/app/Dockerfile"
         container_name: "gopher"
+        depends_on:
+            - hedgehog
         volumes:
             - ${GOLANG_BLOG_PATH}:/var/www/app
 
