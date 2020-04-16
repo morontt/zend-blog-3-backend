@@ -9,9 +9,8 @@
 namespace Mtt\BlogBundle\Service;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
-use Mtt\BlogBundle\Entity\MediaFile;
 use Mtt\BlogBundle\Entity\Post;
+use Mtt\BlogBundle\Entity\Repository\MediaFileRepository;
 
 class TextProcessor
 {
@@ -26,12 +25,17 @@ class TextProcessor
     protected $imageBasepath;
 
     /**
-     * @param EntityManagerInterface $em
+     * @var MediaFileRepository
+     */
+    protected $mediaFileRepository;
+
+    /**
+     * @param MediaFileRepository $mediaFileRepository
      * @param string $cdn
      */
-    public function __construct(EntityManagerInterface $em, string $cdn)
+    public function __construct(MediaFileRepository $mediaFileRepository, string $cdn)
     {
-        $this->em = $em;
+        $this->mediaFileRepository = $mediaFileRepository;
         $this->imageBasepath = $cdn . ImageManager::getImageBasePath() . '/';
     }
 
@@ -50,29 +54,8 @@ class TextProcessor
      */
     public function imageProcessing($text)
     {
-        $fuse = 0;
-
-        do {
-            $r = $this->imageSearchAndReplace($text);
-            $fuse++;
-        } while ($r && $fuse < 100);
-
-        return $text;
-    }
-
-    /**
-     * @param string $text
-     *
-     * @return bool
-     */
-    protected function imageSearchAndReplace(&$text)
-    {
-        $matches = [];
-        $result = false;
-        if (preg_match('/!(\d+)(?:\(([^\)]+)\))?!/m', $text, $matches)) {
-            $imgId = (int)$matches[1];
-            /* @var MediaFile $media */
-            $media = $this->em->getRepository('MttBlogBundle:MediaFile')->find($imgId);
+        $func = function (array $matches) {
+            $media = $this->mediaFileRepository->find((int)$matches[1]);
             if ($media) {
                 $alt = $matches[2] ?? $media->getDescription();
                 $replace = sprintf(
@@ -85,10 +68,9 @@ class TextProcessor
                 $replace = '<b>UNDEFINED</b>';
             }
 
-            $result = true;
-            $text = preg_replace('/!' . $imgId . '(?:\([^\)]+\))?!/m', $replace, $text);
-        }
+            return $replace;
+        };
 
-        return $result;
+        return preg_replace_callback('/!(\d+)(?:\(([^\)]+)\))?!/m', $func, $text);
     }
 }
