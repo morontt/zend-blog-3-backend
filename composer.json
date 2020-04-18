@@ -45,7 +45,7 @@
         "behat/mink-goutte-driver": "1.2.*",
         "vipsoft/doctrine-data-fixtures-extension": "dev-master",
         "fzaninotto/faker": "1.7.1",
-        "phpspec/phpspec": "~4.0",
+        "phpspec/phpspec": "~6.0",
         "phpstan/phpstan": "^0.12.3"
     },
     "scripts": {
