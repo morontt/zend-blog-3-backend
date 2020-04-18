@@ -44,6 +44,7 @@ class Comment
      * @var Post
      *
      * @ORM\ManyToOne(targetEntity="Post", inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
      */
     protected $post;
 
@@ -51,7 +52,6 @@ class Comment
      * @var Commentator
      *
      * @ORM\ManyToOne(targetEntity="Commentator", inversedBy="comments")
-     * @ORM\JoinColumn(nullable=true)
      */
     protected $commentator;
 
@@ -59,7 +59,6 @@ class Comment
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="Mtt\UserBundle\Entity\User", inversedBy="comments")
-     * @ORM\JoinColumn(nullable=true)
      */
     protected $user;
 
@@ -81,7 +80,7 @@ class Comment
      * @var TrackingAgent
      *
      * @ORM\ManyToOne(targetEntity="TrackingAgent")
-     * @ORM\JoinColumn(name="user_agent_id", referencedColumnName="id", onDelete="SET NULL", nullable=true)
+     * @ORM\JoinColumn(name="user_agent_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $trackingAgent;
 

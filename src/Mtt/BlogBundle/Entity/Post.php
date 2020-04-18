@@ -4,6 +4,7 @@ namespace Mtt\BlogBundle\Entity;
 
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Mtt\BlogBundle\Entity\Traits\ModifyEntityTrait;
 
@@ -68,14 +69,15 @@ class Post
     protected $description;
 
     /**
-     * @var \Mtt\BlogBundle\Entity\Category
+     * @var Category
      *
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="posts")
+     * @ORM\JoinColumn(nullable=false)
      */
     protected $category;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      *
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="posts")
      * @ORM\JoinTable(name="relation_topictag")
@@ -97,14 +99,14 @@ class Post
     protected $viewsCount = 0;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      *
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="post")
      */
     protected $comments;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var Collection
      *
      * @ORM\OneToMany(targetEntity="MediaFile", mappedBy="post")
      */
@@ -273,7 +275,7 @@ class Post
     /**
      * Get category
      *
-     * @return \Mtt\BlogBundle\Entity\Category
+     * @return Category
      */
     public function getCategory()
     {
@@ -309,7 +311,7 @@ class Post
     /**
      * Get tags
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getTags()
     {
@@ -343,7 +345,7 @@ class Post
     /**
      * Get comments
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getComments()
     {
@@ -401,7 +403,7 @@ class Post
     /**
      * Get mediaFiles
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getMediaFiles()
     {
