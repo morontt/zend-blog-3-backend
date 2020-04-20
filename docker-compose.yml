@@ -65,6 +65,15 @@ services:
         environment:
             APPLICATION_ENV: development
 
+    ghost:
+        build:
+            context: ${GHOST_PATH}/docker
+        container_name: "ghost"
+        volumes:
+            - ${GHOST_PATH}:/var/app
+#        ports:
+#            - 8095:2368
+
     mailcatcher:
         image: xelbot/mailcatcher
         ports:
@@ -98,8 +107,10 @@ services:
         depends_on:
             - rhinoceros
             - lizard
+            - ghost
             - gopher
         links:
             - rhinoceros
             - lizard
+            - ghost
             - gopher
