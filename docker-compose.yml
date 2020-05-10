@@ -14,6 +14,7 @@ services:
         container_name: "hedgehog_mysql"
         volumes:
             - ${DB_DATA_PATH}:/var/lib/mysql
+            - ./mysql.log:/var/log/mysql-general.log
         ports:
             - "3306:3306"
         environment:
@@ -93,6 +94,8 @@ services:
         container_name: "gopher"
         depends_on:
             - hedgehog
+        ports:
+            - "8044:8080"
         volumes:
             - ${GOLANG_BLOG_PATH}:/var/www/app
 
