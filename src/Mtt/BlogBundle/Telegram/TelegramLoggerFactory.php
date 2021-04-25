@@ -21,7 +21,7 @@ class TelegramLoggerFactory
      */
     public static function createLogger(string $logsDir)
     {
-        $loggerHandler = new RotatingFileHandler($logsDir . '/telegram.log', 6, Logger::DEBUG, true, 0664);
+        $loggerHandler = new RotatingFileHandler($logsDir . '/telegram.log', 6, Logger::DEBUG, true, 0666);
         $loggerHandler->setFilenameFormat('{filename}-{date}', 'Y-m');
         $loggerHandler->setFormatter(new LineFormatter(null, 'Y-m-d H:i:s.v'));
 

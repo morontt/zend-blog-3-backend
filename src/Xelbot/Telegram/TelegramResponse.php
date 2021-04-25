@@ -35,8 +35,8 @@ class TelegramResponse
      */
     public function __construct(array $data)
     {
-        $this->ok = isset($data['ok']) ? (bool)$data['ok'] : false;
-        $this->result = isset($data['result']) ? $data['result'] : null;
+        $this->ok = isset($data['ok']) && $data['ok'];
+        $this->result = $data['result'] ?? null;
 
         $this->responseData = $data;
     }
