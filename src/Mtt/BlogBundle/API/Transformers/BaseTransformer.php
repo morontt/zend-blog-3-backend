@@ -21,7 +21,7 @@ abstract class BaseTransformer extends TransformerAbstract
     {
         $result = null;
         if ($dateTime) {
-            $result = $dateTime->format(\DateTime::ISO8601);
+            $result = $dateTime->format(\DateTimeInterface::ISO8601);
         }
 
         return $result;
