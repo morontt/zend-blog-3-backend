@@ -6,6 +6,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Mtt\BlogBundle\Entity\Embedded\NestedSet;
 use Mtt\BlogBundle\Entity\Traits\ModifyEntityTrait;
 use Mtt\UserBundle\Entity\User;
 
@@ -106,10 +107,18 @@ class Comment
      */
     protected $geoLocation;
 
+    /**
+     * @var NestedSet
+     *
+     * @ORM\Embedded(class="Mtt\BlogBundle\Entity\Embedded\NestedSet", columnPrefix = "tree_")
+     */
+    private $nestedSet;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
         $this->timeCreated = new DateTime();
+        $this->nestedSet = new NestedSet();
     }
 
     /**
@@ -394,5 +403,25 @@ class Comment
     public function getGeoLocation()
     {
         return $this->geoLocation;
+    }
+
+    /**
+     * @return NestedSet
+     */
+    public function getNestedSet(): NestedSet
+    {
+        return $this->nestedSet;
+    }
+
+    /**
+     * @param NestedSet $nestedSet
+     *
+     * @return $this
+     */
+    public function setNestedSet(NestedSet $nestedSet): self
+    {
+        $this->nestedSet = $nestedSet;
+
+        return $this;
     }
 }

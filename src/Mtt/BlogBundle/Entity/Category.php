@@ -5,6 +5,7 @@ namespace Mtt\BlogBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Mtt\BlogBundle\Entity\Embedded\NestedSet;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -57,10 +58,18 @@ class Category
      */
     protected $posts;
 
+    /**
+     * @var NestedSet
+     *
+     * @ORM\Embedded(class="Mtt\BlogBundle\Entity\Embedded\NestedSet", columnPrefix = "tree_")
+     */
+    private $nestedSet;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
         $this->posts = new ArrayCollection();
+        $this->nestedSet = new NestedSet();
     }
 
     /**
@@ -211,5 +220,25 @@ class Category
     public function getPosts()
     {
         return $this->posts;
+    }
+
+    /**
+     * @return NestedSet
+     */
+    public function getNestedSet(): NestedSet
+    {
+        return $this->nestedSet;
+    }
+
+    /**
+     * @param NestedSet $nestedSet
+     *
+     * @return $this
+     */
+    public function setNestedSet(NestedSet $nestedSet): self
+    {
+        $this->nestedSet = $nestedSet;
+
+        return $this;
     }
 }
