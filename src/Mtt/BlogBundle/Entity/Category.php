@@ -9,7 +9,10 @@ use Mtt\BlogBundle\Entity\Embedded\NestedSet;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Table(name="category")
+ * @ORM\Table(name="category", indexes={
+ *   @ORM\Index(name="left_key_idx", columns={"tree_left_key"}),
+ *   @ORM\Index(name="right_key_idx", columns={"tree_right_key"})
+ * })
  * @ORM\Entity(repositoryClass="Mtt\BlogBundle\Entity\Repository\CategoryRepository")
  * @UniqueEntity(fields={"url"})
  */
