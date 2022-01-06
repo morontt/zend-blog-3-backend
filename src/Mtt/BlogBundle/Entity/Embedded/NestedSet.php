@@ -12,13 +12,6 @@ class NestedSet
     /**
      * @var int
      *
-     * @ORM\Column(type="integer", options={"unsigned": true, "default": 0})
-     */
-    private $root;
-
-    /**
-     * @var int
-     *
      * @ORM\Column(type="integer", nullable=true, options={"unsigned": true})
      */
     private $leftKey;
@@ -36,26 +29,6 @@ class NestedSet
      * @ORM\Column(type="integer", options={"unsigned": true, "default": 1})
      */
     private $depth;
-
-    /**
-     * @return int
-     */
-    public function getRoot(): int
-    {
-        return $this->root;
-    }
-
-    /**
-     * @param int $root
-     *
-     * @return NestedSet
-     */
-    public function setRoot(int $root): self
-    {
-        $this->root = $root;
-
-        return $this;
-    }
 
     /**
      * @return int
