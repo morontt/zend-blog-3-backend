@@ -46,7 +46,7 @@ class CategoryRepository extends ServiceEntityRepository
         $qb0 = $this->createQueryBuilder('c');
         $qb0->update()
             ->set('c.nestedSet.leftKey', 'c.nestedSet.leftKey + 2')
-            ->where($qb0->expr()->gt('c.nestedSet.leftKey', ':idx'))
+            ->where($qb0->expr()->gte('c.nestedSet.leftKey', ':idx'))
             ->andWhere($qb0->expr()->isNotNull('c.nestedSet.leftKey'))
             ->setParameter('idx', $index)
             ->getQuery()

@@ -4,6 +4,7 @@ namespace Mtt\BlogBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Mtt\BlogBundle\Entity\Category;
+use Mtt\BlogBundle\Entity\Comment;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -43,8 +44,11 @@ class InitNestedSetTreeCommand extends Command
         $output->writeln('');
         $output->writeln('<info>Update category tree</info>');
 
+        $this->handlePosts($output);
+
         $endTime = microtime(true);
 
+        $output->writeln('');
         $output->writeln(
             sprintf('<info>Total time: <comment>%s</comment> sec</info>', round($endTime - $startTime, 3))
         );
@@ -104,5 +108,84 @@ class InitNestedSetTreeCommand extends Command
                 }
             }
         } while ($updateTree);
+    }
+
+    /**
+     * @param OutputInterface $output
+     */
+    private function handlePosts(OutputInterface $output)
+    {
+        $commentsRepo = $this->em->getRepository('MttBlogBundle:Comment');
+
+        $postRepo = $this->em->getRepository('MttBlogBundle:Post');
+        $posts = $postRepo
+            ->createQueryBuilder('p')
+            ->select('p.id', 'p.url')
+            ->innerJoin('p.comments', 'c')
+            ->groupBy('p.id')
+            ->getQuery()
+            ->getArrayResult()
+        ;
+
+        foreach ($posts as $post) {
+            $postId = $post['id'];
+            $handled = [];
+            $qb = $commentsRepo->createQueryBuilder('c');
+            $qb
+                ->where($qb->expr()->eq('c.post', ':postId'))
+                ->setParameter('postId', $postId)
+                ->orderBy('c.id');
+
+            /* @var Comment[] $comments */
+            $comments = $qb->getQuery()->getResult();
+            $idx = 0;
+            foreach ($comments as $comment) {
+                if (!$comment->getParent()) {
+                    $ns = $comment->getNestedSet();
+                    $ns
+                        ->setLeftKey(++$idx)
+                        ->setRightKey(++$idx);
+
+                    $handled[] = $comment->getId();
+                }
+            }
+
+            $this->em->flush();
+
+            do {
+                $updateTree = false;
+                foreach ($comments as $comment) {
+                    if (!in_array($comment->getId(), $handled)
+                        && $parent = $comment->getParent()
+                    ) {
+                        if (in_array($parent->getId(), $handled)) {
+                            $this->em->refresh($parent);
+                            $nsParent = $parent->getNestedSet();
+
+                            $commentsRepo->addToTree($nsParent->getRightKey(), $postId);
+
+                            $ns = $comment->getNestedSet();
+                            $ns
+                                ->setLeftKey($nsParent->getRightKey())
+                                ->setRightKey($nsParent->getRightKey() + 1)
+                                ->setDepth($nsParent->getDepth() + 1)
+                            ;
+
+                            $this->em->flush($comment);
+
+                            $handled[] = $comment->getId();
+                            $updateTree = true;
+
+                            break;
+                        }
+                    }
+                }
+            } while ($updateTree);
+
+            $cnt = count($comments);
+            $output->writeln(
+                "<info>Update <comment>{$cnt}</comment> comments for topic: <comment>{$post['url']}</comment></info>"
+            );
+        }
     }
 }

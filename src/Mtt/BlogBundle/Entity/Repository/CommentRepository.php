@@ -78,4 +78,35 @@ class CommentRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getSingleScalarResult();
     }
+
+    /**
+     * @param int $index
+     * @param int $postId
+     */
+    public function addToTree(int $index, int $postId): void
+    {
+        $qb0 = $this->createQueryBuilder('c');
+        $qb0->update()
+            ->set('c.nestedSet.leftKey', 'c.nestedSet.leftKey + 2')
+            ->where($qb0->expr()->gte('c.nestedSet.leftKey', ':idx'))
+            ->andWhere($qb0->expr()->isNotNull('c.nestedSet.leftKey'))
+            ->andWhere($qb0->expr()->eq('c.post', ':postId'))
+            ->setParameter('postId', $postId)
+            ->setParameter('idx', $index)
+            ->getQuery()
+            ->execute()
+        ;
+
+        $qb1 = $this->createQueryBuilder('c');
+        $qb1->update()
+            ->set('c.nestedSet.rightKey', 'c.nestedSet.rightKey + 2')
+            ->where($qb1->expr()->gte('c.nestedSet.rightKey', ':idx'))
+            ->andWhere($qb1->expr()->isNotNull('c.nestedSet.leftKey'))
+            ->andWhere($qb1->expr()->eq('c.post', ':postId'))
+            ->setParameter('postId', $postId)
+            ->setParameter('idx', $index)
+            ->getQuery()
+            ->execute()
+        ;
+    }
 }
