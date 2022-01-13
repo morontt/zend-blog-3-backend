@@ -33,7 +33,7 @@ services:
             - ${UPLOADS_PATH}:/var/www/resources
         tmpfs:
             - /tmp
-            - /var/www/html/var/cache/dev:uid=${HOST_UID},gid=${HOST_UID}
+            - /var/www/html/var/cache:uid=${HOST_UID},gid=${HOST_UID}
         ports:
             - "8033:80"
         links:
