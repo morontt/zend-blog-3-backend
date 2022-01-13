@@ -1,11 +1,5 @@
-version: '2'
+version: '3.5'
 services:
-    source:
-        image: alpine:3.6
-        volumes:
-            - .:/var/www/html
-            - ${UPLOADS_PATH}:/var/www/resources
-
     hedgehog:
         build:
             context: ./docker/db
@@ -22,6 +16,8 @@ services:
             MYSQL_DATABASE: mttblog
             MYSQL_USER: mttblog
             MYSQL_PASSWORD: docker
+        networks:
+            - blognet
 
     rhinoceros:
         build:
@@ -31,10 +27,13 @@ services:
                 HOST_UID: ${HOST_UID}
         hostname: "rhinoceros"
         container_name: "rhinoceros"
-        volumes_from:
-            - source
         volumes:
+            - .:/var/www/html
             - ./docker/web/apache_${APP_ENV}.conf:/etc/apache2/sites-available/000-default.conf:ro
+            - ${UPLOADS_PATH}:/var/www/resources
+        tmpfs:
+            - /tmp
+            - /var/www/html/var/cache/dev:uid=${HOST_UID},gid=${HOST_UID}
         ports:
             - "8033:80"
         links:
@@ -43,10 +42,11 @@ services:
         depends_on:
             - hedgehog
             - mailcatcher
-            - source
         environment:
             APPLICATION_ENV: development
             CIRCLE_ARTIFACTS: /var/www/html/var/tests
+        networks:
+            - blognet
 
     lizard:
         build:
@@ -65,6 +65,8 @@ services:
             - mailcatcher
         environment:
             APPLICATION_ENV: development
+        networks:
+            - blognet
 
     ghost:
         build:
@@ -74,36 +76,29 @@ services:
             - ${GHOST_PATH}:/var/app
 #        ports:
 #            - 8095:2368
+        networks:
+            - blognet
 
     mailcatcher:
         image: xelbot/mailcatcher
         ports:
             - "1080:1080"
+        networks:
+            - blognet
 
     nodejs:
         build: ./docker/nodejs
-        volumes_from:
-            - source
-        depends_on:
-            - source
-
-    gopher:
-        build:
-            context: ${GOLANG_BLOG_PATH}
-            dockerfile: "docker/app/Dockerfile"
-        container_name: "gopher"
-        depends_on:
-            - hedgehog
-        ports:
-            - "8044:8080"
         volumes:
-            - ${GOLANG_BLOG_PATH}:/var/www/app
+            - .:/var/www/html
+        networks:
+            - blognet
 
     sloth:
         build: ./docker/nginx
-        volumes_from:
-            - source
-            - gopher
+        volumes:
+            - .:/var/www/html
+            - ${UPLOADS_PATH}:/var/www/resources
+            - ${GOLANG_BLOG_PATH}:/var/www/app
         ports:
             - "443:443"
             - "80:80"
@@ -111,9 +106,13 @@ services:
             - rhinoceros
             - lizard
             - ghost
-            - gopher
         links:
             - rhinoceros
             - lizard
             - ghost
-            - gopher
+        networks:
+            - blognet
+
+networks:
+    blognet:
+        external: true
