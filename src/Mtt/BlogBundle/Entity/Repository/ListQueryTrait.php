@@ -12,7 +12,7 @@ trait ListQueryTrait
      *
      * @return Query
      */
-    public function getListQuery($nameBased = false): Query
+    public function getListQuery(bool $nameBased = false): Query
     {
         /* @var QueryBuilder $qb */
         $qb = $this->createQueryBuilder('e');
