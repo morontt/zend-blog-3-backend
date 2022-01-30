@@ -10,14 +10,18 @@ trait ModifyEntityTrait
     /**
      * @var DateTime
      *
-     * @ORM\Column(type="milliseconds_dt")
+     * @ORM\Column(type="milliseconds_dt",
+     *   columnDefinition="DATETIME(3) DEFAULT NOW(3) NOT NULL COMMENT '(DC2Type:milliseconds_dt)'",
+     *   options={"default": "NOW(3)"})
      */
     protected $timeCreated;
 
     /**
      * @var DateTime
      *
-     * @ORM\Column(type="milliseconds_dt", nullable=true)
+     * @ORM\Column(type="milliseconds_dt",
+     *   columnDefinition="DATETIME(3) DEFAULT NOW(3) NOT NULL COMMENT '(DC2Type:milliseconds_dt)'",
+     *   options={"default": "NOW(3)"})
      */
     protected $lastUpdate;
 
@@ -54,9 +58,9 @@ trait ModifyEntityTrait
     }
 
     /**
-     * @return DateTime|null
+     * @return DateTime
      */
-    public function getLastUpdate(): ?DateTime
+    public function getLastUpdate(): DateTime
     {
         return $this->lastUpdate;
     }
