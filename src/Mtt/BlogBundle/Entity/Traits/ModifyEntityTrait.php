@@ -11,8 +11,7 @@ trait ModifyEntityTrait
      * @var DateTime
      *
      * @ORM\Column(type="milliseconds_dt",
-     *   columnDefinition="DATETIME(3) DEFAULT NOW(3) NOT NULL COMMENT '(DC2Type:milliseconds_dt)'",
-     *   options={"default": "NOW(3)"})
+     *   columnDefinition="DATETIME(3) DEFAULT NOW(3) NOT NULL COMMENT '(DC2Type:milliseconds_dt)'")
      */
     protected $timeCreated;
 
@@ -20,8 +19,7 @@ trait ModifyEntityTrait
      * @var DateTime
      *
      * @ORM\Column(type="milliseconds_dt",
-     *   columnDefinition="DATETIME(3) DEFAULT NOW(3) NOT NULL COMMENT '(DC2Type:milliseconds_dt)'",
-     *   options={"default": "NOW(3)"})
+     *   columnDefinition="DATETIME(3) DEFAULT NOW(3) NOT NULL COMMENT '(DC2Type:milliseconds_dt)'")
      */
     protected $lastUpdate;
 
