@@ -67,6 +67,8 @@ class User implements UserInterface, Serializable
     /**
      * @var string
      *
+     * @deprecated
+     *
      * @ORM\Column(name="user_type", type="string", length=16)
      */
     protected $userType;
@@ -108,6 +110,8 @@ class User implements UserInterface, Serializable
 
     /**
      * @var string
+     *
+     * @deprecated
      *
      * @ORM\Column(name="email_hash", type="string", length=32, nullable=true)
      */

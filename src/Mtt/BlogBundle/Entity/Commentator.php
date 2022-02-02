@@ -57,12 +57,16 @@ class Commentator implements CommentatorInterface
     /**
      * @var int
      *
+     * @deprecated
+     *
      * @ORM\Column(type="bigint", nullable=true, unique=true)
      */
     protected $disqusId;
 
     /**
      * @var string
+     *
+     * @deprecated
      *
      * @ORM\Column(type="string", length=32, nullable=true)
      */
