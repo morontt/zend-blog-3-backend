@@ -18,7 +18,7 @@ use Mtt\UserBundle\Entity\User;
  * @ORM\Entity(repositoryClass="Mtt\BlogBundle\Entity\Repository\CommentRepository")
  * @ORM\HasLifecycleCallbacks()
  */
-class Comment
+class Comment implements CommentInterface
 {
     use ModifyEntityTrait;
 
@@ -136,7 +136,7 @@ class Comment
      *
      * @return int
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }

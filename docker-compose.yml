@@ -1,24 +1,5 @@
 version: '3.5'
 services:
-    hedgehog:
-        build:
-            context: ./docker/db
-            args:
-                HOST_UID: ${HOST_UID}
-        container_name: "hedgehog_mysql"
-        volumes:
-            - ${DB_DATA_PATH}:/var/lib/mysql
-            - ./mysql.log:/var/log/mysql-general.log
-        ports:
-            - "3306:3306"
-        environment:
-            MYSQL_ROOT_PASSWORD: docker
-            MYSQL_DATABASE: mttblog
-            MYSQL_USER: mttblog
-            MYSQL_PASSWORD: docker
-        networks:
-            - blognet
-
     rhinoceros:
         build:
             context: ./docker/web
@@ -37,14 +18,14 @@ services:
         ports:
             - "8033:80"
         links:
-            - hedgehog
             - mailcatcher
         depends_on:
-            - hedgehog
             - mailcatcher
         environment:
             APPLICATION_ENV: development
             CIRCLE_ARTIFACTS: /var/www/html/var/tests
+        extra_hosts:
+            - "database.lan:${DATABASE_IP}"
         networks:
             - blognet
 
@@ -58,13 +39,13 @@ services:
         volumes:
             - ${OLD_BLOG_PATH}:/var/www/html
         links:
-            - hedgehog
             - mailcatcher
         depends_on:
-            - hedgehog
             - mailcatcher
         environment:
             APPLICATION_ENV: development
+        extra_hosts:
+            - "database.lan:${DATABASE_IP}"
         networks:
             - blognet
 

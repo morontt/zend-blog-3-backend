@@ -12,7 +12,7 @@ use Mtt\BlogBundle\Entity\Traits\Gravatar;
  * @ORM\Table(name="v_comments")
  * @ORM\Entity(readOnly=true, repositoryClass="Mtt\BlogBundle\Entity\Repository\ViewCommentRepository")
  */
-class ViewComment
+class ViewComment implements CommentInterface
 {
     use Gravatar;
 
@@ -110,6 +110,14 @@ class ViewComment
     protected $country;
 
     /**
+     * Two-character country code based on ISO 3166.
+     *
+     * @var string
+     * @ORM\Column(name="country_code", type="string", length=2, unique=true)
+     */
+    protected $code;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="string", length=32, nullable=true)
@@ -117,11 +125,25 @@ class ViewComment
     protected $emailHash;
 
     /**
-     * @var int
+     * @var float
      *
-     * @ORM\Column(type="bigint", nullable=true)
+     * @ORM\Column(type="float")
      */
-    protected $disqusId;
+    protected $latitude;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(type="float")
+     */
+    protected $longitude;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=8)
+     */
+    protected $timeZone;
 
     /**
      * @var bool
@@ -148,7 +170,7 @@ class ViewComment
      *
      * @return int
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -252,6 +274,16 @@ class ViewComment
     }
 
     /**
+     * Get code
+     *
+     * @return string|null
+     */
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    /**
      * Get emailHash
      *
      * @return string
@@ -259,16 +291,6 @@ class ViewComment
     public function getEmailHash()
     {
         return $this->emailHash;
-    }
-
-    /**
-     * Get disqusId
-     *
-     * @return int
-     */
-    public function getDisqusId()
-    {
-        return $this->disqusId;
     }
 
     /**
@@ -319,5 +341,35 @@ class ViewComment
     public function getPost()
     {
         return $this->post;
+    }
+
+    /**
+     * Get latitude
+     *
+     * @return float
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+    /**
+     * Get longitude
+     *
+     * @return float
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
+    }
+
+    /**
+     * Get timeZone
+     *
+     * @return string
+     */
+    public function getTimeZone()
+    {
+        return $this->timeZone;
     }
 }

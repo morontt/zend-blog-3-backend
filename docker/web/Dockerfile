@@ -25,6 +25,7 @@ RUN yes | pecl install xdebug \
 COPY ./.bashrc /root/.bashrc
 RUN cp ${PHP_INI_DIR}/php.ini-development ${PHP_INI_DIR}/php.ini \
     && sed -i 's/;date.timezone =/date.timezone = Europe\/Kiev/' ${PHP_INI_DIR}/php.ini \
+    && sed -i 's/memory_limit = 128M/memory_limit = 512M/' ${PHP_INI_DIR}/php.ini \
     && echo "LogFormat \"%a %l %u %t \\\"%r\\\" %>s %O \\\"%{User-Agent}i\\\"\" mainlog" >> /etc/apache2/apache2.conf
 RUN a2enmod rewrite remoteip && a2dismod deflate -f
 

@@ -9,7 +9,9 @@
 namespace Mtt\BlogBundle\API\Transformers;
 
 use Mtt\BlogBundle\Entity\Comment;
+use Mtt\BlogBundle\Entity\CommentInterface;
 use Mtt\BlogBundle\Entity\ViewComment;
+use Mtt\BlogBundle\Utils\EmojiFlagSymbol;
 
 class CommentTransformer extends BaseTransformer
 {
@@ -21,11 +23,11 @@ class CommentTransformer extends BaseTransformer
     ];
 
     /**
-     * @param Comment|ViewComment $item
+     * @param CommentInterface $item
      *
      * @return array
      */
-    public function transform($item): array
+    public function transform(CommentInterface $item): array
     {
         $commentatorId = null;
         $username = null;
@@ -35,6 +37,7 @@ class CommentTransformer extends BaseTransformer
         $locationRegion = null;
         $locationCountry = null;
         $emailHash = null;
+        $countryCode = null;
 
         if ($item instanceof Comment) {
             $commentator = $item->getCommentator();
@@ -59,6 +62,7 @@ class CommentTransformer extends BaseTransformer
                 $locationCity = $city->getCity();
                 $locationRegion = $city->getRegion();
                 $locationCountry = $city->getCountry()->getName();
+                $countryCode = $city->getCountry()->getCode();
             }
         } elseif ($item instanceof ViewComment) {
             $commentatorId = $item->getVirtualUserId();
@@ -71,12 +75,19 @@ class CommentTransformer extends BaseTransformer
             $locationCity = $item->getCity();
             $locationRegion = $item->getRegion();
             $locationCountry = $item->getCountry();
+            $countryCode = $item->getCode();
         }
 
         $parentId = null;
         $parent = $item->getParent();
         if ($parent) {
             $parentId = $parent->getId();
+        }
+
+        try {
+            $flag = EmojiFlagSymbol::get($countryCode);
+        } catch (\Exception $e) {
+            $flag = '';
         }
 
         return [
@@ -89,10 +100,10 @@ class CommentTransformer extends BaseTransformer
             'website' => $website,
             'emailHash' => $emailHash,
             'ipAddr' => $item->getIpAddress(),
-            'disqusId' => (int)$item->getDisqusId(),
             'city' => $locationCity,
             'region' => $locationRegion,
             'country' => $locationCountry,
+            'countryCode' => $flag,
             'parent' => $parentId,
             'deleted' => $item->isDeleted(),
             'createdAt' => $this->dateTimeToISO($item->getTimeCreated()),

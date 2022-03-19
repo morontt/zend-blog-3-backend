@@ -22,6 +22,7 @@ RUN docker-php-ext-install -j$(nproc) intl zip pdo_mysql opcache \
 COPY ./.bashrc /root/.bashrc
 RUN cp ${PHP_INI_DIR}/php.ini-production ${PHP_INI_DIR}/php.ini \
     && sed -i 's/;date.timezone =/date.timezone = Europe\/Kiev/' ${PHP_INI_DIR}/php.ini \
+    && sed -i 's/memory_limit = 128M/memory_limit = 512M/' ${PHP_INI_DIR}/php.ini \
     && echo "LogFormat \"%a %l %u %t \\\"%r\\\" %>s %O \\\"%{User-Agent}i\\\"\" mainlog" >> /etc/apache2/apache2.conf
 RUN a2enmod rewrite remoteip && a2dismod deflate -f
 
