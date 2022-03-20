@@ -11,6 +11,7 @@ namespace Mtt\BlogBundle\Controller\API;
 use Doctrine\ORM\ORMException;
 use Mtt\BlogBundle\Controller\BaseController;
 use Mtt\BlogBundle\Entity\Comment;
+use Mtt\BlogBundle\Entity\Repository\CommentRepository;
 use Mtt\BlogBundle\Entity\Repository\ViewCommentRepository;
 use Mtt\BlogBundle\Event\ReplyCommentEvent;
 use Mtt\BlogBundle\MttBlogEvents;
@@ -128,15 +129,15 @@ class CommentController extends BaseController
      * @Route("/{id}", requirements={"id": "\d+"}, methods={"DELETE"})
      *
      * @param Comment $entity
+     * @param CommentRepository $repository
      *
      * @throws ORMException
      *
      * @return JsonResponse
      */
-    public function deleteAction(Comment $entity): JsonResponse
+    public function deleteAction(Comment $entity, CommentRepository $repository): JsonResponse
     {
-        $entity->setDeleted(true);
-        $this->getEm()->flush();
+        $repository->markAsDeleted($entity);
 
         return new JsonResponse(true);
     }

@@ -11,6 +11,7 @@ use Mtt\BlogBundle\Entity\GeoLocation;
  * CommentRepository
  *
  * @method Comment|null findOneByDisqusId($id)
+ * @method Comment|null find($id, $lockMode = null, $lockVersion = null)
  */
 class CommentRepository extends ServiceEntityRepository
 {
@@ -22,22 +23,6 @@ class CommentRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Comment::class);
-    }
-
-    /**
-     * @return Comment|null
-     */
-    public function getLastDisqusComment()
-    {
-        $qb = $this->createQueryBuilder('c');
-
-        $qb
-            ->where($qb->expr()->isNotNull('c.disqusId'))
-            ->orderBy('c.timeCreated', 'DESC')
-            ->setMaxResults(1)
-        ;
-
-        return $qb->getQuery()->getOneOrNullResult();
     }
 
     /**
@@ -108,5 +93,17 @@ class CommentRepository extends ServiceEntityRepository
             ->getQuery()
             ->execute()
         ;
+    }
+
+    /**
+     * @param Comment $entity
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function markAsDeleted(Comment $entity)
+    {
+        $entity->setDeleted(true);
+        $this->_em->flush();
     }
 }

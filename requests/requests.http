@@ -2,3 +2,27 @@ POST {{base_url}}/telegram/{{telegram_webhook_token}}
 Accept: application/json
 
 ###
+
+POST {{base_url}}/telegram/{{telegram_webhook_token}}
+Accept: application/json
+Content-Type: application/json
+
+{
+    "update_id":999373967,
+    "message":{
+        "message_id":1906,
+        "from":{
+            "id":444486199,"is_bot":false,"first_name":"Alexander","last_name":"Harchenko",
+            "username":"morontt","language_code":"ru"
+        },
+        "chat":{
+            "id":444486199,"first_name":"Alexander","last_name":"Harchenko",
+            "username":"morontt","type":"private"
+        },
+        "date":1647771298,
+        "text":"/deletecomment 489",
+        "entities":[
+            {"offset":0,"length":14,"type":"bot_command"}
+        ]
+    }
+}

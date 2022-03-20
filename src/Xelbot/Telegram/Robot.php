@@ -13,13 +13,18 @@ use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Xelbot\Telegram\Command\AbstractAdminCommand;
 use Xelbot\Telegram\Command\TelegramCommandInterface;
 use Xelbot\Telegram\Entity\Message;
 use Xelbot\Telegram\Entity\Update;
+use Xelbot\Telegram\Exception\AccessDeniedTelegramException;
 use Xelbot\Telegram\Exception\TelegramException;
 
 class Robot
 {
+    const EMOJI_ROBOT = '&#x1F916;';
+    const EMOJI_THINKING_FACE = '&#x1F914;';
+
     /**
      * @var string
      */
@@ -70,7 +75,7 @@ class Robot
         $this->token = $token;
         $this->adminId = $adminId;
 
-        if (!$botName) {
+        if ($botName) {
             $this->botName = $botName;
         }
 
@@ -92,6 +97,10 @@ class Robot
     public function addCommand(TelegramCommandInterface $command)
     {
         $command->setRequester($this->requester);
+
+        if ($command instanceof AbstractAdminCommand) {
+            $command->setAdminId($this->adminId);
+        }
 
         $this->commands[$command->getCommandName()] = $command;
     }
@@ -202,8 +211,26 @@ class Robot
     protected function executeCommand(Message $message, array $entity)
     {
         $commandName = mb_substr($message->getText(), $entity['offset'] + 1, $entity['length'] - 1);
-        if (isset($this->commands[$commandName])) {
-            $this->commands[$commandName]->execute($message);
+        try {
+            if (isset($this->commands[$commandName])) {
+                $this->commands[$commandName]->execute($message);
+            } else {
+                $this->requester->sendMessage([
+                    'chat_id' => $message->getChat()->getId(),
+                    'text' => 'Не знаю такую команду, хозяин ' . self::EMOJI_ROBOT,
+                    'parse_mode' => 'HTML',
+                ]);
+            }
+        } catch (AccessDeniedTelegramException $e) {
+            $this->requester->sendMessage([
+                'chat_id' => $message->getChat()->getId(),
+                'text' => 'Кто вы? ' . self::EMOJI_THINKING_FACE,
+                'parse_mode' => 'HTML',
+            ]);
+
+            $this->logger->notice($e->getMessage());
+        } catch (\Throwable $e) {
+            $this->logger->error($e->getMessage());
         }
     }
 }
