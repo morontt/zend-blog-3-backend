@@ -1,0 +1,6 @@
+GET {{base_url}}/api/comments?page=1
+Authorization: WSSE profile="UsernameToken"
+X-WSSE: UsernameToken Username="morontt",PasswordDigest="xHbESRK6vNtl1SIEaJYWZ4UH9g0=",Nonce="aWUez+zZd+tV",Created="2022-03-22T13:33:50+02:00"
+Accept: application/json
+
+###

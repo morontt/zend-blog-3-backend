@@ -67,6 +67,13 @@ class User implements UserInterface, Serializable
     /**
      * @var string
      *
+     * @ORM\Column(type="string", length=24)
+     */
+    protected $wsseKey;
+
+    /**
+     * @var string
+     *
      * @deprecated
      *
      * @ORM\Column(name="user_type", type="string", length=16)
@@ -125,6 +132,11 @@ class User implements UserInterface, Serializable
             $this->salt = bin2hex(random_bytes(16));
         } catch (\Exception $e) {
             $this->salt = bin2hex(openssl_random_pseudo_bytes(16));
+        }
+        try {
+            $this->wsseKey = base64_encode(random_bytes(18));
+        } catch (\Exception $e) {
+            $this->wsseKey = base64_encode(openssl_random_pseudo_bytes(18));
         }
         $this->timeCreated = new DateTime();
         $this->userType = 'admin'; //TODO remove fake field
@@ -276,6 +288,26 @@ class User implements UserInterface, Serializable
     public function getSalt()
     {
         return $this->salt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getWsseKey(): string
+    {
+        return $this->wsseKey;
+    }
+
+    /**
+     * @param string $wsseKey
+     *
+     * @return $this
+     */
+    public function setWsseKey(string $wsseKey): self
+    {
+        $this->wsseKey = $wsseKey;
+
+        return $this;
     }
 
     /**
