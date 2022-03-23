@@ -18,17 +18,18 @@ class WsseFactory implements SecurityFactoryInterface
      * @param $config
      * @param $userProvider
      * @param $defaultEntryPoint
+     *
      * @return array
      */
     public function create(ContainerBuilder $container, $id, $config, $userProvider, $defaultEntryPoint)
     {
-        $providerId = 'security.authentication.provider.wsse.'.$id;
+        $providerId = 'security.authentication.provider.wsse.' . $id;
         $container
             ->setDefinition($providerId, new ChildDefinition(WsseAuthenticationProvider::class))
             ->setArgument(0, new Reference($userProvider))
         ;
 
-        $listenerId = 'security.authentication.listener.wsse.'.$id;
+        $listenerId = 'security.authentication.listener.wsse.' . $id;
         $container->setDefinition($listenerId, new ChildDefinition(WsseAuthenticationListener::class));
 
         return [$providerId, $listenerId, $defaultEntryPoint];

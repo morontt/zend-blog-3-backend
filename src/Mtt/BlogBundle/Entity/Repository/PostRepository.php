@@ -14,9 +14,8 @@ use Mtt\BlogBundle\Entity\Post;
  */
 class PostRepository extends ServiceEntityRepository
 {
-    const ITERATION_STEP = 15;
-
     use ListQueryTrait;
+    const ITERATION_STEP = 15;
 
     /**
      * @param ManagerRegistry $registry

@@ -80,9 +80,7 @@ class DropboxAuthCommand extends Command
         $question = new Question('Enter the authorization code here: ');
         $question->setValidator(function ($answer) {
             if (!trim($answer)) {
-                throw new \RuntimeException(
-                    'Empty code :('
-                );
+                throw new \RuntimeException('Empty code :(');
             }
 
             return $answer;

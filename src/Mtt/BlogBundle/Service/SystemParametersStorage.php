@@ -72,7 +72,7 @@ class SystemParametersStorage
      *
      * @return string|null
      */
-    public function getParameter(string $key): ? string
+    public function getParameter(string $key): ?string
     {
         $sp = $this->parametersRepo->findOneByOptionKey($key);
 

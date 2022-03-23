@@ -7,7 +7,7 @@ interface CommentatorInterface
     /**
      * @return int|null
      */
-    public function getId(): ? int;
+    public function getId(): ?int;
 
     /**
      * @return string
@@ -17,22 +17,22 @@ interface CommentatorInterface
     /**
      * @return string|null
      */
-    public function getEmail(): ? string;
+    public function getEmail(): ?string;
 
     /**
      * @return string|null
      */
-    public function getWebsite(): ? string;
+    public function getWebsite(): ?string;
 
     /**
      * @return int|null
      */
-    public function getDisqusId(): ? int;
+    public function getDisqusId(): ?int;
 
     /**
      * @return string|null
      */
-    public function getEmailHash(): ? string;
+    public function getEmailHash(): ?string;
 
     /**
      * @return string

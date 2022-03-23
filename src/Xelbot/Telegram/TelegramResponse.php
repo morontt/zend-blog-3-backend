@@ -52,7 +52,7 @@ class TelegramResponse
     /**
      * @return array|null
      */
-    public function getResult(): ? array
+    public function getResult(): ?array
     {
         return $this->result;
     }

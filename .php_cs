@@ -21,6 +21,7 @@ return PhpCsFixer\Config::create()
         'phpdoc_order' => true,
         'no_unused_imports' => true,
         'ordered_imports' => true,
+        'no_superfluous_phpdoc_tags' => false,
     ])
     ->setFinder($finder)
     ->setCacheFile(__DIR__ . '/var/cache/.php_cs.cache')

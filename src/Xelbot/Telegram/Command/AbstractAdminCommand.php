@@ -33,9 +33,7 @@ abstract class AbstractAdminCommand
     public function execute(Message $message): void
     {
         if ($message->getFrom()->getId() != $this->adminId) {
-            throw new AccessDeniedTelegramException(
-                "Access Denied for user ID:{$message->getFrom()->getId()}"
-            );
+            throw new AccessDeniedTelegramException("Access Denied for user ID:{$message->getFrom()->getId()}");
         }
 
         $this->executeCommand($message);

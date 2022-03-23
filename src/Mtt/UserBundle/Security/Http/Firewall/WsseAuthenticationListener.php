@@ -39,7 +39,7 @@ class WsseAuthenticationListener implements ListenerInterface
     {
         $request = $event->getRequest();
 
-        if(!$request->headers->has('X-WSSE')) {
+        if (!$request->headers->has('X-WSSE')) {
             return;
         }
 
@@ -60,10 +60,10 @@ class WsseAuthenticationListener implements ListenerInterface
 
             return;
         } catch (AuthenticationException $failed) {
-             $token = $this->tokenStorage->getToken();
-             if ($token instanceof WsseUserToken) {
-                 $this->tokenStorage->setToken(null);
-             }
+            $token = $this->tokenStorage->getToken();
+            if ($token instanceof WsseUserToken) {
+                $this->tokenStorage->setToken(null);
+            }
         }
 
         $response = new Response();
@@ -85,7 +85,7 @@ class WsseAuthenticationListener implements ListenerInterface
             $result['digest'] = $this->parseValue('PasswordDigest', $header);
             $result['nonce'] = $this->parseValue('Nonce', $header);
             $result['created'] = $this->parseValue('Created', $header);
-        } catch(\UnexpectedValueException $e) {
+        } catch (\UnexpectedValueException $e) {
             return null;
         }
 
@@ -100,7 +100,7 @@ class WsseAuthenticationListener implements ListenerInterface
      */
     private function parseValue(string $key, string $header): string
     {
-        if(!preg_match('/' . $key . '="([^"]+)"/', $header, $matches)) {
+        if (!preg_match('/' . $key . '="([^"]+)"/', $header, $matches)) {
             throw new \UnexpectedValueException('The string was not found');
         }
 
