@@ -46,6 +46,7 @@ services:
             APPLICATION_ENV: development
         extra_hosts:
             - "database.lan:${DATABASE_IP}"
+            - "zendblog.xelbot.com:${APPLICATION_IP}"
         networks:
             - blognet
 

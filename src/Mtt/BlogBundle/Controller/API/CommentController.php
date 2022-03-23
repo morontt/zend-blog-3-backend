@@ -10,6 +10,7 @@ namespace Mtt\BlogBundle\Controller\API;
 
 use Doctrine\ORM\ORMException;
 use Mtt\BlogBundle\Controller\BaseController;
+use Mtt\BlogBundle\Cron\Daily\CommentGeoLocation;
 use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Entity\Repository\CommentRepository;
 use Mtt\BlogBundle\Entity\Repository\ViewCommentRepository;
@@ -20,6 +21,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Xelbot\Telegram\Robot;
 
 /**
  * @Route("/api/comments")
@@ -138,6 +140,22 @@ class CommentController extends BaseController
     public function deleteAction(Comment $entity, CommentRepository $repository): JsonResponse
     {
         $repository->markAsDeleted($entity);
+
+        return new JsonResponse(true);
+    }
+
+    /**
+     * @Route("/geo-location", methods={"POST"})
+     *
+     * @param CommentGeoLocation $geoLocation
+     * @param Robot $bot
+     *
+     * @return JsonResponse
+     */
+    public function getLocation(CommentGeoLocation $geoLocation, Robot $bot)
+    {
+        $geoLocation->run();
+        $bot->sendMessage('CommentGeoLocation: ' . $geoLocation->getMessage());
 
         return new JsonResponse(true);
     }
