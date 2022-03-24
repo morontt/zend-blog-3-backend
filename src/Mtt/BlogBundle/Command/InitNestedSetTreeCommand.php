@@ -59,6 +59,17 @@ class InitNestedSetTreeCommand extends Command
         $handled = [];
 
         $categoryRepo = $this->em->getRepository('MttBlogBundle:Category');
+
+        $qb = $categoryRepo->createQueryBuilder('c');
+        $qb->update()
+            ->set('c.nestedSet.leftKey', ':null')
+            ->set('c.nestedSet.rightKey', ':null')
+            ->set('c.nestedSet.depth', 1)
+            ->setParameter('null', null)
+            ->getQuery()
+            ->execute()
+        ;
+
         $qb = $categoryRepo->createQueryBuilder('c');
         $qb->orderBy('c.name');
 
@@ -116,6 +127,16 @@ class InitNestedSetTreeCommand extends Command
     private function handlePosts(OutputInterface $output)
     {
         $commentsRepo = $this->em->getRepository('MttBlogBundle:Comment');
+
+        $qb = $commentsRepo->createQueryBuilder('c');
+        $qb->update()
+            ->set('c.nestedSet.leftKey', ':null')
+            ->set('c.nestedSet.rightKey', ':null')
+            ->set('c.nestedSet.depth', 1)
+            ->setParameter('null', null)
+            ->getQuery()
+            ->execute()
+        ;
 
         $postRepo = $this->em->getRepository('MttBlogBundle:Post');
         $posts = $postRepo
