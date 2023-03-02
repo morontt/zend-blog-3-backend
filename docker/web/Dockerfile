@@ -19,7 +19,7 @@ RUN docker-php-ext-install -j$(nproc) intl zip pdo_mysql opcache \
     && pecl install imagick \
     && docker-php-ext-enable imagick
 
-RUN yes | pecl install xdebug \
+RUN yes | pecl install xdebug-3.1.6 \
     && docker-php-ext-enable xdebug
 
 COPY ./.bashrc /root/.bashrc

@@ -52,6 +52,7 @@ doctrine:
         schema_filter: "~^(?!v_)~"
         types:
             milliseconds_dt: Mtt\BlogBundle\Doctrine\DBAL\Type\MillisecondsDateTime
+        server_version: "8.0"
 
     orm:
         naming_strategy: doctrine.orm.naming_strategy.underscore
