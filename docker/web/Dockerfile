@@ -8,7 +8,7 @@ ARG HOST_UID=1000
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV PHP_CPPFLAGS="$PHP_CPPFLAGS -std=c++11"
-ENV TZ "Europe/Kiev"
+ENV TZ "Europe/Moscow"
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
@@ -24,7 +24,7 @@ RUN yes | pecl install xdebug-3.1.6 \
 
 COPY ./.bashrc /root/.bashrc
 RUN cp ${PHP_INI_DIR}/php.ini-development ${PHP_INI_DIR}/php.ini \
-    && sed -i 's/;date.timezone =/date.timezone = Europe\/Kiev/' ${PHP_INI_DIR}/php.ini \
+    && sed -i 's/;date.timezone =/date.timezone = Europe\/Moscow/' ${PHP_INI_DIR}/php.ini \
     && sed -i 's/memory_limit = 128M/memory_limit = 512M/' ${PHP_INI_DIR}/php.ini \
     && echo "LogFormat \"%a %l %u %t \\\"%r\\\" %>s %O \\\"%{User-Agent}i\\\"\" mainlog" >> /etc/apache2/apache2.conf
 RUN a2enmod rewrite remoteip && a2dismod deflate -f
