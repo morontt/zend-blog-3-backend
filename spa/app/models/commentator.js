@@ -4,7 +4,6 @@ export default DS.Model.extend({
     name: DS.attr('string'),
     email: DS.attr('string'),
     website: DS.attr('string'),
-    disqusId: DS.attr('number'),
     emailHash: DS.attr('string'),
     gravatarUrl: function () {
         var defaults = ['wavatar', 'monsterid'];

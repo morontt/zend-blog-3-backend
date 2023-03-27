@@ -25,7 +25,6 @@ class CommentatorTransformer extends BaseTransformer
             'name' => $item->getName(),
             'email' => $item->getEmail(),
             'website' => $item->getWebsite(),
-            'disqusId' => $item->getDisqusId(),
             'emailHash' => $item->getAvatarHash(),
         ];
     }
