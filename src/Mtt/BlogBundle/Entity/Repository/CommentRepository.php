@@ -68,7 +68,7 @@ class CommentRepository extends ServiceEntityRepository
      * @param int $index
      * @param int $postId
      */
-    public function addToTree(int $index, int $postId): void
+    public function addToTree(Comment $entity, int $index, int $depth, int $postId): void
     {
         $qb0 = $this->createQueryBuilder('c');
         $qb0->update()
@@ -93,6 +93,15 @@ class CommentRepository extends ServiceEntityRepository
             ->getQuery()
             ->execute()
         ;
+
+        $ns = $entity->getNestedSet();
+        $ns
+            ->setLeftKey($index)
+            ->setRightKey($index + 1)
+            ->setDepth($depth)
+        ;
+
+        $this->getEntityManager()->flush();
     }
 
     /**
@@ -105,5 +114,22 @@ class CommentRepository extends ServiceEntityRepository
     {
         $entity->setDeleted(true);
         $this->_em->flush();
+    }
+
+    public function save(Comment $entity)
+    {
+        $new = is_null($entity->getId());
+
+        $this->getEntityManager()->persist($entity);
+        $this->getEntityManager()->flush();
+
+        if ($new && $parent = $entity->getParent()) {
+            $this->addToTree(
+                $entity,
+                $parent->getNestedSet()->getRightKey(),
+                $parent->getNestedSet()->getDepth() + 1,
+                $entity->getPost()->getId()
+            );
+        }
     }
 }

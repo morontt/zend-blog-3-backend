@@ -41,11 +41,11 @@ class CategoryRepository extends ServiceEntityRepository
     /**
      * @param Category $entity
      * @param int $index
-     * @param int|null $depth
+     * @param int $depth
      *
      * @return void
      */
-    public function addToTree(Category $entity, int $index, int $depth = null): void
+    public function addToTree(Category $entity, int $index, int $depth): void
     {
         $qb0 = $this->createQueryBuilder('c');
         $qb0->update()

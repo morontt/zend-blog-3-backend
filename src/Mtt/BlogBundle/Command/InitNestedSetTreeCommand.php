@@ -176,16 +176,12 @@ class InitNestedSetTreeCommand extends Command
                             $this->em->refresh($parent);
                             $nsParent = $parent->getNestedSet();
 
-                            $commentsRepo->addToTree($nsParent->getRightKey(), $postId);
-
-                            $ns = $comment->getNestedSet();
-                            $ns
-                                ->setLeftKey($nsParent->getRightKey())
-                                ->setRightKey($nsParent->getRightKey() + 1)
-                                ->setDepth($nsParent->getDepth() + 1)
-                            ;
-
-                            $this->em->flush($comment);
+                            $commentsRepo->addToTree(
+                                $comment,
+                                $nsParent->getRightKey(),
+                                $nsParent->getDepth() + 1,
+                                $postId
+                            );
 
                             $handled[] = $comment->getId();
                             $updateTree = true;

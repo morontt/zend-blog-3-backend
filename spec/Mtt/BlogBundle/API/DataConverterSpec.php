@@ -12,15 +12,16 @@ use Mtt\BlogBundle\Entity\GeoLocationCity;
 use Mtt\BlogBundle\Entity\GeoLocationCountry;
 use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Entity\Repository\CategoryRepository;
+use Mtt\BlogBundle\Entity\Repository\CommentRepository;
 use Mtt\BlogBundle\Entity\Tag;
 use Mtt\BlogBundle\Service\TextProcessor;
 use PhpSpec\ObjectBehavior;
 
 class DataConverterSpec extends ObjectBehavior
 {
-    public function let(EntityManager $em, TextProcessor $tp, CategoryRepository $cr)
+    public function let(EntityManager $em, TextProcessor $tp, CommentRepository $cmr, CategoryRepository $cr)
     {
-        $this->beConstructedWith($em, $tp, $cr);
+        $this->beConstructedWith($em, $tp, $cmr, $cr);
     }
 
     public function it_is_initializable()

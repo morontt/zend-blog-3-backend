@@ -29,6 +29,7 @@ use Mtt\BlogBundle\Entity\CommentatorInterface;
 use Mtt\BlogBundle\Entity\MediaFile;
 use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Entity\Repository\CategoryRepository;
+use Mtt\BlogBundle\Entity\Repository\CommentRepository;
 use Mtt\BlogBundle\Entity\Tag;
 use Mtt\BlogBundle\Model\Image;
 use Mtt\BlogBundle\Service\TextProcessor;
@@ -81,11 +82,13 @@ class DataConverter
     public function __construct(
         EntityManagerInterface $em,
         TextProcessor $textProcessor,
+        CommentRepository $commentsRepository,
         CategoryRepository $categoryRepository
     ) {
         $this->fractal = new Manager();
         $this->fractal->setSerializer(new Serializer());
         $this->categoryRepository = $categoryRepository;
+        $this->commentsRepository = $commentsRepository;
 
         $this->em = $em;
         $this->textProcessor = $textProcessor;
@@ -154,7 +157,7 @@ class DataConverter
     public function saveComment(Comment $entity, array $data)
     {
         CommentTransformer::reverseTransform($entity, $data);
-        $this->save($entity);
+        $this->commentsRepository->save($entity);
 
         return $this->getComment($entity);
     }
