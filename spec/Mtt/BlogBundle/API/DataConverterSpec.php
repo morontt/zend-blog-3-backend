@@ -11,15 +11,16 @@ use Mtt\BlogBundle\Entity\GeoLocation;
 use Mtt\BlogBundle\Entity\GeoLocationCity;
 use Mtt\BlogBundle\Entity\GeoLocationCountry;
 use Mtt\BlogBundle\Entity\Post;
+use Mtt\BlogBundle\Entity\Repository\CategoryRepository;
 use Mtt\BlogBundle\Entity\Tag;
 use Mtt\BlogBundle\Service\TextProcessor;
 use PhpSpec\ObjectBehavior;
 
 class DataConverterSpec extends ObjectBehavior
 {
-    public function let(EntityManager $em, TextProcessor $tp)
+    public function let(EntityManager $em, TextProcessor $tp, CategoryRepository $cr)
     {
-        $this->beConstructedWith($em, $tp);
+        $this->beConstructedWith($em, $tp, $cr);
     }
 
     public function it_is_initializable()
@@ -135,7 +136,6 @@ class DataConverterSpec extends ObjectBehavior
                     'name' => 'test-name',
                     'email' => 'commentator@example.org',
                     'website' => 'http://example.org',
-                    'disqusId' => 0,
                     'emailHash' => md5('commentator@example.org'),
                 ],
             ]
@@ -158,7 +158,6 @@ class DataConverterSpec extends ObjectBehavior
                         'name' => 'test-name',
                         'email' => 'commentator@example.org',
                         'website' => 'http://example.org',
-                        'disqusId' => 0,
                         'emailHash' => md5('commentator@example.org'),
                     ],
                     [
@@ -166,7 +165,6 @@ class DataConverterSpec extends ObjectBehavior
                         'name' => 'test2-name',
                         'email' => 'two@example.org',
                         'website' => 'http://example.com',
-                        'disqusId' => 55,
                         'emailHash' => md5('two@example.org'),
                     ],
                 ],
@@ -202,7 +200,7 @@ class DataConverterSpec extends ObjectBehavior
                     'countryCode' => '',
                     'parent' => null,
                     'deleted' => false,
-                    'createdAt' => '2016-02-28T01:30:49+0200',
+                    'createdAt' => '2016-02-28T01:30:49+0300',
                 ],
             ]
         );
@@ -264,7 +262,7 @@ class DataConverterSpec extends ObjectBehavior
                         'countryCode' => '',
                         'parent' => null,
                         'deleted' => false,
-                        'createdAt' => '2016-02-28T01:30:49+0200',
+                        'createdAt' => '2016-02-28T01:30:49+0300',
                     ],
                     [
                         'id' => null,
@@ -282,7 +280,7 @@ class DataConverterSpec extends ObjectBehavior
                         'countryCode' => '',
                         'parent' => null,
                         'deleted' => false,
-                        'createdAt' => '2016-02-28T01:43:14+0200',
+                        'createdAt' => '2016-02-28T01:43:14+0300',
                     ],
                 ],
             ]
@@ -307,7 +305,7 @@ class DataConverterSpec extends ObjectBehavior
                         'countryCode' => '',
                         'parent' => null,
                         'deleted' => false,
-                        'createdAt' => '2016-02-28T01:43:14+0200',
+                        'createdAt' => '2016-02-28T01:43:14+0300',
                     ],
                 ],
                 'commentators' => [
@@ -316,7 +314,6 @@ class DataConverterSpec extends ObjectBehavior
                         'name' => 'test-name',
                         'email' => 'commentator@example.org',
                         'website' => 'http://example.org',
-                        'disqusId' => 0,
                         'emailHash' => '093952cf493f61237fafcc5888f0f631',
                     ],
                 ],
@@ -356,8 +353,8 @@ class DataConverterSpec extends ObjectBehavior
                     'text' => '<p>Ещё одна запись о PHP</p>',
                     'description' => 'description PHP',
                     'tagsString' => '',
-                    'timeCreated' => '2016-02-07T22:40:24+0200',
-                    'lastUpdate' => '2016-02-07T22:40:24+0200',
+                    'timeCreated' => '2016-02-07T22:40:24+0300',
+                    'lastUpdate' => '2016-02-07T22:40:24+0300',
                 ],
                 'categories' => [
                     [
@@ -397,8 +394,8 @@ class DataConverterSpec extends ObjectBehavior
                         'text' => '<p>Ещё одна запись о PHP</p>',
                         'description' => 'description PHP',
                         'tagsString' => '',
-                        'timeCreated' => '2016-02-07T22:40:24+0200',
-                        'lastUpdate' => '2016-02-07T22:40:24+0200',
+                        'timeCreated' => '2016-02-07T22:40:24+0300',
+                        'lastUpdate' => '2016-02-07T22:40:24+0300',
                     ],
                     [
                         'id' => null,
@@ -410,8 +407,8 @@ class DataConverterSpec extends ObjectBehavior
                         'text' => '<p>Тестовая запись, собственно...</p>',
                         'description' => 'метатег description',
                         'tagsString' => '',
-                        'timeCreated' => '2016-01-11T01:05:33+0200',
-                        'lastUpdate' => '2016-01-11T01:05:33+0200',
+                        'timeCreated' => '2016-01-11T01:05:33+0300',
+                        'lastUpdate' => '2016-01-11T01:05:33+0300',
                     ],
                 ],
                 'categories' => [
