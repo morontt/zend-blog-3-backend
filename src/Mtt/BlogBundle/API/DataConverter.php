@@ -28,6 +28,7 @@ use Mtt\BlogBundle\Entity\Commentator;
 use Mtt\BlogBundle\Entity\CommentatorInterface;
 use Mtt\BlogBundle\Entity\MediaFile;
 use Mtt\BlogBundle\Entity\Post;
+use Mtt\BlogBundle\Entity\Repository\CategoryRepository;
 use Mtt\BlogBundle\Entity\Tag;
 use Mtt\BlogBundle\Model\Image;
 use Mtt\BlogBundle\Service\TextProcessor;
@@ -68,13 +69,23 @@ class DataConverter
     protected $textProcessor;
 
     /**
+     * @var CategoryRepository
+     */
+    private $categoryRepository;
+
+    /**
      * @param EntityManagerInterface $em
      * @param TextProcessor $textProcessor
+     * @param CategoryRepository $categoryRepository
      */
-    public function __construct(EntityManagerInterface $em, TextProcessor $textProcessor)
-    {
+    public function __construct(
+        EntityManagerInterface $em,
+        TextProcessor $textProcessor,
+        CategoryRepository $categoryRepository
+    ) {
         $this->fractal = new Manager();
         $this->fractal->setSerializer(new Serializer());
+        $this->categoryRepository = $categoryRepository;
 
         $this->em = $em;
         $this->textProcessor = $textProcessor;
@@ -108,13 +119,13 @@ class DataConverter
         CategoryTransformer::reverseTransform($entity, $data);
 
         if ($data['parentId']) {
-            $parent = $this->em->getReference('MttBlogBundle:Category', (int)$data['parentId']);
+            $parent = $this->categoryRepository->find((int)$data['parentId']);
             $entity->setParent($parent);
         } else {
             $entity->setParent(null);
         }
 
-        $this->save($entity);
+        $this->categoryRepository->save($entity);
 
         return $this->getCategory($entity);
     }

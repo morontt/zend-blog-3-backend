@@ -28,7 +28,7 @@ class NestedSet
      *
      * @ORM\Column(type="integer", options={"unsigned": true, "default": 1})
      */
-    private $depth;
+    private $depth = 1;
 
     /**
      * @return int

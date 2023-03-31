@@ -7,6 +7,7 @@ use Mtt\BlogBundle\Entity\Repository\ViewCommentRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -30,13 +31,17 @@ class DefaultController extends AbstractController
      * @ParamConverter("post", options={"mapping": {"slug": "url"}})
      * @Template()
      *
-     * @param Post $post
+     * @param Post|null $post
      * @param ViewCommentRepository $repository
      *
      * @return array
      */
-    public function previewAction(Post $post, ViewCommentRepository $repository)
+    public function previewAction(ViewCommentRepository $repository, Post $post = null): array
     {
+        if (!$post) {
+            throw new NotFoundHttpException();
+        }
+
         $comments = $repository->getCommentsByPost($post);
 
         return compact('post', 'comments');

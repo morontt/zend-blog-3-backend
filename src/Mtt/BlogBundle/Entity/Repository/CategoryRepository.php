@@ -39,9 +39,13 @@ class CategoryRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param Category $entity
      * @param int $index
+     * @param int|null $depth
+     *
+     * @return void
      */
-    public function addToTree(int $index): void
+    public function addToTree(Category $entity, int $index, int $depth = null): void
     {
         $qb0 = $this->createQueryBuilder('c');
         $qb0->update()
@@ -62,5 +66,74 @@ class CategoryRepository extends ServiceEntityRepository
             ->getQuery()
             ->execute()
         ;
+
+        $ns = $entity->getNestedSet();
+        $ns
+            ->setLeftKey($index)
+            ->setRightKey($index + 1)
+            ->setDepth($depth)
+        ;
+
+        $this->getEntityManager()->flush();
+    }
+
+    /**
+     * @param Category $entity
+     *
+     * @return int
+     */
+    public function findNeighbourKey(Category $entity): int
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb
+            ->select('COALESCE(MAX(c.nestedSet.rightKey), 0)')
+            ->where($qb->expr()->lt('c.name', ':name'))
+            ->setParameter('name', $entity->getName())
+        ;
+
+        if ($entity->getParent()) {
+            $qb
+                ->andWhere($qb->expr()->eq('c.parent', ':parent'))
+                ->setParameter('parent', $entity->getParent()->getId())
+            ;
+        } else {
+            $qb
+                ->andWhere($qb->expr()->isNull('c.parent'))
+            ;
+        }
+
+        $key = (int)$qb->getQuery()->getSingleScalarResult();
+        if ($key == 0 && $entity->getParent()) {
+            $key = $entity->getParent()->getNestedSet()->getLeftKey();
+        }
+
+        return $key;
+    }
+
+    public function save(Category $entity)
+    {
+        $new = is_null($entity->getId());
+
+        $this->getEntityManager()->persist($entity);
+        $this->getEntityManager()->flush();
+
+        if ($new) {
+            $parent = $entity->getParent();
+            if ($parent) {
+                $nsParent = $parent->getNestedSet();
+
+                if ($nsParent->getRightKey() - $nsParent->getLeftKey() == 1) {
+                    $index = $nsParent->getRightKey();
+                } else {
+                    $index = 1 + $this->findNeighbourKey($entity);
+                }
+                $depth = $nsParent->getDepth() + 1;
+            } else {
+                $index = 1 + $this->findNeighbourKey($entity);
+                $depth = 1;
+            }
+
+            $this->addToTree($entity, $index, $depth);
+        }
     }
 }

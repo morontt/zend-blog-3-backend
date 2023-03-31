@@ -82,4 +82,8 @@ services:
         calls:
             - [ setLogger, [ "@mtt_blog.telegram_logger" ]]
 
+    Mtt\BlogBundle\ArgumentResolver\PostValueResolver:
+        tags:
+            - { name: controller.argument_value_resolver, priority: 50 }
+
     Xelbot\Telegram\Robot: '@mtt_blog.telegram_bot'
