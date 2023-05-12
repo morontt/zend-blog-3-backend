@@ -15,7 +15,9 @@ use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Entity\Repository\CommentRepository;
 use Mtt\BlogBundle\Entity\Repository\ViewCommentRepository;
 use Mtt\BlogBundle\Event\ReplyCommentEvent;
+use Mtt\BlogBundle\Form\CommentFormType;
 use Mtt\BlogBundle\MttBlogEvents;
+use Mtt\BlogBundle\Service\CommentManager;
 use Mtt\BlogBundle\Service\Tracking;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -158,5 +160,28 @@ class CommentController extends BaseController
         $bot->sendMessage('CommentGeoLocation: ' . $geoLocation->getMessage());
 
         return new JsonResponse(true);
+    }
+
+    /**
+     * @Route("/external", methods={"POST"})
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function createExternalAction(CommentManager $commentManager, Request $request): JsonResponse
+    {
+        $form = $this->createForm(CommentFormType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            dump($data);
+
+            $commentManager->saveComment($data);
+        }
+
+        return new JsonResponse(true, 201);
     }
 }

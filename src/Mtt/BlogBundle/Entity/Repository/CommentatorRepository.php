@@ -4,6 +4,7 @@ namespace Mtt\BlogBundle\Entity\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Mtt\BlogBundle\DTO\CommentatorDTO;
 use Mtt\BlogBundle\Entity\Commentator;
 
 /**
@@ -21,5 +22,51 @@ class CommentatorRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Commentator::class);
+    }
+
+    public function findOrCreate(CommentatorDTO $commentator): Commentator
+    {
+        $result = $this->getByCommentatorData($commentator);
+        if (!$result) {
+            $result = new Commentator();
+            $result
+                ->setName($commentator->name)
+                ->setEmail($commentator->email)
+                ->setWebsite($commentator->website)
+            ;
+
+            $this->getEntityManager()->persist($result);
+        }
+
+        return $result;
+    }
+
+    public function getByCommentatorData(CommentatorDTO $commentator): ?Commentator
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb
+            ->where($qb->expr()->eq('c.name', ':name'))
+            ->setParameter('name', $commentator->name)
+        ;
+
+        if ($commentator->email) {
+            $qb
+                ->andWhere($qb->expr()->eq('c.email', ':email'))
+                ->setParameter('email', $commentator->email)
+            ;
+        } else {
+            $qb->andWhere($qb->expr()->isNull('c.email'));
+        }
+
+        if ($commentator->website) {
+            $qb
+                ->andWhere($qb->expr()->eq('c.website', ':website'))
+                ->setParameter('website', $commentator->website)
+            ;
+        } else {
+            $qb->andWhere($qb->expr()->isNull('c.website'));
+        }
+
+        return $qb->getQuery()->getOneOrNullResult();
     }
 }

@@ -123,13 +123,36 @@ class CommentRepository extends ServiceEntityRepository
         $this->getEntityManager()->persist($entity);
         $this->getEntityManager()->flush();
 
-        if ($new && $parent = $entity->getParent()) {
-            $this->addToTree(
-                $entity,
-                $parent->getNestedSet()->getRightKey(),
-                $parent->getNestedSet()->getDepth() + 1,
-                $entity->getPost()->getId()
-            );
+        if ($new) {
+            if ($parent = $entity->getParent()) {
+                $this->addToTree(
+                    $entity,
+                    $parent->getNestedSet()->getRightKey(),
+                    $parent->getNestedSet()->getDepth() + 1,
+                    $entity->getPost()->getId()
+                );
+            } else {
+                $maxRightKey = $this->getMaxRightKey($entity->getPost()->getId());
+                $entity
+                    ->getNestedSet()
+                    ->setLeftKey($maxRightKey + 1)
+                    ->setRightKey($maxRightKey + 2)
+                ;
+
+                $this->getEntityManager()->flush();
+            }
         }
+    }
+
+    private function getMaxRightKey(int $postId): int
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb
+            ->select('COALESCE(MAX(c.nestedSet.rightKey), 0)')
+            ->where($qb->expr()->eq('c.post', ':postId'))
+            ->setParameter('postId', $postId)
+        ;
+
+        return (int)$qb->getQuery()->getSingleScalarResult();
     }
 }

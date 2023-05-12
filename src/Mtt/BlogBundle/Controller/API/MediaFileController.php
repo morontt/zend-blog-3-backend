@@ -12,7 +12,7 @@ use Doctrine\ORM\ORMException;
 use Mtt\BlogBundle\Controller\BaseController;
 use Mtt\BlogBundle\Entity\MediaFile;
 use Mtt\BlogBundle\Entity\Repository\MediaFileRepository;
-use Mtt\BlogBundle\Form\ImageForm;
+use Mtt\BlogBundle\Form\ImageFormType;
 use Mtt\BlogBundle\Model\Image;
 use Mtt\BlogBundle\Service\ImageManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -131,10 +131,9 @@ class MediaFileController extends BaseController
      */
     public function uploadAction(Request $request, ImageManager $manager): JsonResponse
     {
-        $form = $this->createForm(ImageForm::class);
+        $form = $this->createForm(ImageFormType::class);
         $form->handleRequest($request);
 
-        $result = null;
         if ($form->isSubmitted() && $form->isValid()) {
             $manager->uploadImage(
                 $form->get('description')->getData(),

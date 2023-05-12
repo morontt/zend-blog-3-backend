@@ -8,9 +8,6 @@
 
 namespace Mtt\BlogBundle\EventListener;
 
-use Doctrine\DBAL\DBALException;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Event\ReplyCommentEvent;
 use Swift_Mailer;
@@ -31,11 +28,6 @@ class ReplyCommentListener
     protected $twig;
 
     /**
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
      * @var string
      */
     protected $emailFrom;
@@ -43,33 +35,24 @@ class ReplyCommentListener
     /**
      * @param Swift_Mailer $mailer
      * @param TwigEnvironment $twig
-     * @param EntityManagerInterface $em
      * @param string $emailFrom
      */
-    public function __construct(Swift_Mailer $mailer, TwigEnvironment $twig, EntityManagerInterface $em, string $emailFrom)
+    public function __construct(Swift_Mailer $mailer, TwigEnvironment $twig, string $emailFrom)
     {
         $this->mailer = $mailer;
         $this->twig = $twig;
-        $this->em = $em;
         $this->emailFrom = $emailFrom;
     }
 
     /**
      * @param ReplyCommentEvent $event
      *
-     * @throws DBALException
      * @throws Error
      */
     public function onReply(ReplyCommentEvent $event)
     {
         $comment = $event->getComment();
         $this->sendEmail($comment);
-
-        $conn = $this->em->getConnection();
-
-        $stmt = $conn->prepare('CALL update_comments_count(:postId)');
-        $stmt->bindValue('postId', (int)$comment->getPost()->getId());
-        $stmt->execute();
     }
 
     /**

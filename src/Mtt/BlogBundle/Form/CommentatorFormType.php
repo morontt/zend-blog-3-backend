@@ -1,21 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: morontt
- * Date: 05.04.16
- * Time: 21:47
- */
 
 namespace Mtt\BlogBundle\Form;
 
+use Mtt\BlogBundle\DTO\CommentatorDTO;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Image;
 
-class ImageForm extends AbstractType
+class CommentatorFormType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -25,23 +18,21 @@ class ImageForm extends AbstractType
     {
         $builder
             ->add(
-                'description',
+                'name',
                 TextType::class
             )
             ->add(
-                'post_id',
-                TextType::class
-            )
-            ->add(
-                'upload',
-                FileType::class,
+                'email',
+                TextType::class,
                 [
-                    'required' => true,
-                    'constraints' => [
-                        new Image([
-                            'maxSize' => '4M',
-                        ]),
-                    ],
+                    'required' => false,
+                ]
+            )
+            ->add(
+                'website',
+                TextType::class,
+                [
+                    'required' => false,
                 ]
             )
         ;
@@ -53,7 +44,7 @@ class ImageForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'csrf_protection' => false,
+            'data_class' => CommentatorDTO::class,
         ]);
     }
 
