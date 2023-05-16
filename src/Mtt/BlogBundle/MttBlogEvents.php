@@ -11,4 +11,5 @@ namespace Mtt\BlogBundle;
 final class MttBlogEvents
 {
     const REPLY_COMMENT = 'mtt_blog.reply_comment';
+    const DELETE_COMMENT = 'mtt_blog.delete_comment';
 }

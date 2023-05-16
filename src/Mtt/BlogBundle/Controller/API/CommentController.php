@@ -14,7 +14,7 @@ use Mtt\BlogBundle\Cron\Daily\CommentGeoLocation;
 use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Entity\Repository\CommentRepository;
 use Mtt\BlogBundle\Entity\Repository\ViewCommentRepository;
-use Mtt\BlogBundle\Event\ReplyCommentEvent;
+use Mtt\BlogBundle\Event\CommentEvent;
 use Mtt\BlogBundle\Form\CommentFormType;
 use Mtt\BlogBundle\MttBlogEvents;
 use Mtt\BlogBundle\Service\CommentManager;
@@ -108,7 +108,7 @@ class CommentController extends BaseController
         $result = $this->getDataConverter()
             ->saveComment($comment, $commentData);
 
-        $dispatcher->dispatch(MttBlogEvents::REPLY_COMMENT, new ReplyCommentEvent($comment));
+        $dispatcher->dispatch(MttBlogEvents::REPLY_COMMENT, new CommentEvent($comment));
 
         return new JsonResponse($result, 201);
     }
@@ -134,14 +134,19 @@ class CommentController extends BaseController
      *
      * @param Comment $entity
      * @param CommentRepository $repository
+     * @param EventDispatcherInterface $dispatcher
      *
      * @throws ORMException
      *
      * @return JsonResponse
      */
-    public function deleteAction(Comment $entity, CommentRepository $repository): JsonResponse
-    {
+    public function deleteAction(
+        Comment $entity,
+        CommentRepository $repository,
+        EventDispatcherInterface $dispatcher
+    ): JsonResponse {
         $repository->markAsDeleted($entity);
+        $dispatcher->dispatch(MttBlogEvents::DELETE_COMMENT, new CommentEvent($entity));
 
         return new JsonResponse(true);
     }

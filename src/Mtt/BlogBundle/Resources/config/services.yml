@@ -49,10 +49,6 @@ services:
         tags:
             - { name: kernel.event_listener, event: mtt_blog.reply_comment, method: onReply }
 
-    Mtt\BlogBundle\EventListener\CountCommentsListener:
-        tags:
-            - { name: kernel.event_listener, event: mtt_blog.reply_comment, method: onReply }
-
     Mtt\BlogBundle\Cron\Daily\DatabaseBackup:
         arguments:
             - "%database_host%"

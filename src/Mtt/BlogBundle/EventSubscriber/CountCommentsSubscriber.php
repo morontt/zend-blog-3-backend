@@ -1,15 +1,17 @@
 <?php
 
-namespace Mtt\BlogBundle\EventListener;
+namespace Mtt\BlogBundle\EventSubscriber;
 
 use Doctrine\DBAL\Driver\Exception as DriverException;
 use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\ORM\EntityManagerInterface;
-use Mtt\BlogBundle\Event\ReplyCommentEvent;
+use Mtt\BlogBundle\Event\CommentEvent;
+use Mtt\BlogBundle\MttBlogEvents;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class CountCommentsListener
+class CountCommentsSubscriber implements EventSubscriberInterface
 {
-    /**
+/**
      * @var EntityManagerInterface
      */
     private $em;
@@ -23,9 +25,9 @@ class CountCommentsListener
     }
 
     /**
-     * @param ReplyCommentEvent $event
+     * @param CommentEvent $event
      */
-    public function onReply(ReplyCommentEvent $event)
+    public function updateCount(CommentEvent $event)
     {
         $comment = $event->getComment();
 
@@ -37,5 +39,13 @@ class CountCommentsListener
             $stmt->executeQuery();
         } catch (DriverException|DBALException $e) {
         }
+    }
+
+    public static function getSubscribedEvents()
+    {
+        return [
+            MttBlogEvents::REPLY_COMMENT => ['updateCount', 10],
+            MttBlogEvents::DELETE_COMMENT => ['updateCount', 10],
+        ];
     }
 }

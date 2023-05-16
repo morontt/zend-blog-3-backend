@@ -11,7 +11,7 @@ namespace Mtt\BlogBundle\Event;
 use Mtt\BlogBundle\Entity\Comment;
 use Symfony\Component\EventDispatcher\Event;
 
-class ReplyCommentEvent extends Event
+class CommentEvent extends Event
 {
     /**
      * @var Comment

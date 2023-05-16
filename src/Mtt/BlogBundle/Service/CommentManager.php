@@ -7,7 +7,7 @@ use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Entity\Repository\CommentatorRepository;
 use Mtt\BlogBundle\Entity\Repository\CommentRepository;
 use Mtt\BlogBundle\Entity\Repository\PostRepository;
-use Mtt\BlogBundle\Event\ReplyCommentEvent;
+use Mtt\BlogBundle\Event\CommentEvent;
 use Mtt\BlogBundle\Exception\NotAllowedCommentException;
 use Mtt\BlogBundle\MttBlogEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -87,6 +87,6 @@ class CommentManager
 
         $this->commentRepo->save($comment);
 
-        $this->dispatcher->dispatch(MttBlogEvents::REPLY_COMMENT, new ReplyCommentEvent($comment));
+        $this->dispatcher->dispatch(MttBlogEvents::REPLY_COMMENT, new CommentEvent($comment));
     }
 }

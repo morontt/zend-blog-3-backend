@@ -9,7 +9,7 @@
 namespace Mtt\BlogBundle\EventListener;
 
 use Mtt\BlogBundle\Entity\Comment;
-use Mtt\BlogBundle\Event\ReplyCommentEvent;
+use Mtt\BlogBundle\Event\CommentEvent;
 use Swift_Mailer;
 use Swift_Message;
 use Twig\Environment as TwigEnvironment;
@@ -45,11 +45,11 @@ class ReplyCommentListener
     }
 
     /**
-     * @param ReplyCommentEvent $event
+     * @param CommentEvent $event
      *
      * @throws Error
      */
-    public function onReply(ReplyCommentEvent $event)
+    public function onReply(CommentEvent $event)
     {
         $comment = $event->getComment();
         $this->sendEmail($comment);
