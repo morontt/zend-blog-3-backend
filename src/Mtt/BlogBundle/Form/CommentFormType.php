@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints;
 
 class CommentFormType extends AbstractType
 {
@@ -21,7 +22,13 @@ class CommentFormType extends AbstractType
         $builder
             ->add(
                 'text',
-                TextareaType::class
+                TextareaType::class,
+                [
+                    'constraints' => [
+                        new Constraints\NotBlank(),
+                        new Constraints\Length(['max' => 1 << 17]),
+                    ],
+                ]
             )
             ->add(
                 'userAgent',
@@ -43,9 +50,7 @@ class CommentFormType extends AbstractType
             )
             ->add(
                 'topicId',
-                IntegerType::class,
-                [
-                ]
+                IntegerType::class
             )
             ->add(
                 'parentId',

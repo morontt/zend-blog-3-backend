@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints;
 
 class CommentatorFormType extends AbstractType
 {
@@ -19,13 +20,23 @@ class CommentatorFormType extends AbstractType
         $builder
             ->add(
                 'name',
-                TextType::class
+                TextType::class,
+                [
+                    'constraints' => [
+                        new Constraints\NotBlank(),
+                        new Constraints\Length(['max' => 80]),
+                    ],
+                ]
             )
             ->add(
                 'email',
                 TextType::class,
                 [
                     'required' => false,
+                    'constraints' => [
+                        new Constraints\Email(),
+                        new Constraints\Length(['max' => 80]),
+                    ],
                 ]
             )
             ->add(
@@ -33,6 +44,9 @@ class CommentatorFormType extends AbstractType
                 TextType::class,
                 [
                     'required' => false,
+                    'constraints' => [
+                        new Constraints\Length(['max' => 160]),
+                    ],
                 ]
             )
         ;

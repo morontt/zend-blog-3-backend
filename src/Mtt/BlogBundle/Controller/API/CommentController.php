@@ -22,6 +22,7 @@ use Mtt\BlogBundle\Service\Tracking;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Xelbot\Telegram\Robot;
 
@@ -110,7 +111,7 @@ class CommentController extends BaseController
 
         $dispatcher->dispatch(MttBlogEvents::REPLY_COMMENT, new CommentEvent($comment));
 
-        return new JsonResponse($result, 201);
+        return new JsonResponse($result, Response::HTTP_CREATED);
     }
 
     /**
@@ -179,14 +180,25 @@ class CommentController extends BaseController
         $form = $this->createForm(CommentFormType::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
+        $statusCode = Response::HTTP_OK;
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $commentManager->saveComment($form->getData());
+                $statusCode = Response::HTTP_CREATED;
+            } else {
+                $errors = [];
+                /* @var \Symfony\Component\Form\FormError $formError */
+                foreach ($form->getErrors(true) as $formError) {
+                    $errors[] = [
+                        'message' => $formError->getMessage(),
+                        'path' => $formError->getCause()->getPropertyPath(),
+                    ];
+                }
 
-            dump($data);
-
-            $commentManager->saveComment($data);
+                return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
         }
 
-        return new JsonResponse(true, 201);
+        return new JsonResponse(true, $statusCode);
     }
 }
