@@ -2,6 +2,8 @@
 
 namespace Mtt\BlogBundle\DTO;
 
+use Laminas\Filter\UriNormalize;
+
 class CommentatorDTO
 {
     /**
@@ -18,4 +20,14 @@ class CommentatorDTO
      * @var string|null
      */
     public $website;
+
+    /**
+     * @return string|null
+     */
+    public function getNormalizedURL(): ?string
+    {
+        $filter = new UriNormalize(['enforcedScheme' => 'http']);
+
+        return $filter->filter($this->website);
+    }
 }

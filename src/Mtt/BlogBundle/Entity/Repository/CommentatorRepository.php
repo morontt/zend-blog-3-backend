@@ -32,7 +32,7 @@ class CommentatorRepository extends ServiceEntityRepository
             $result
                 ->setName($commentator->name)
                 ->setEmail($commentator->email)
-                ->setWebsite($commentator->website)
+                ->setWebsite($commentator->getNormalizedURL())
             ;
 
             $this->getEntityManager()->persist($result);
@@ -61,7 +61,7 @@ class CommentatorRepository extends ServiceEntityRepository
         if ($commentator->website) {
             $qb
                 ->andWhere($qb->expr()->eq('c.website', ':website'))
-                ->setParameter('website', $commentator->website)
+                ->setParameter('website', $commentator->getNormalizedURL())
             ;
         } else {
             $qb->andWhere($qb->expr()->isNull('c.website'));

@@ -2,6 +2,7 @@
 
 namespace Mtt\BlogBundle\Service;
 
+use Laminas\Filter\StripTags;
 use Mtt\BlogBundle\DTO\CommentDTO;
 use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Entity\Repository\CommentatorRepository;
@@ -67,11 +68,16 @@ class CommentManager
             throw new NotAllowedCommentException();
         }
 
+        $filter = new StripTags([
+            'allowTags' => ['a', 's', 'b', 'i', 'em', 'strong', 'img', 'p'],
+            'allowAttribs' => ['src', 'href'],
+        ]);
+
         $comment = new Comment();
         $comment
             ->setTrackingAgent($agent)
             ->setIpAddress($commentData->ipAddress)
-            ->setText($commentData->text)
+            ->setText($filter->filter($commentData->text))
             ->setPost($post)
         ;
 
