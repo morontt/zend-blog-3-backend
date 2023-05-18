@@ -11,7 +11,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class CountCommentsSubscriber implements EventSubscriberInterface
 {
-/**
+    /**
      * @var EntityManagerInterface
      */
     private $em;

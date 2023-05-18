@@ -17,17 +17,17 @@ class TextProcessor
     /**
      * @var EntityManager
      */
-    protected $em;
+    private $em;
 
     /**
      * @var string
      */
-    protected $imageBasepath;
+    private $imageBasepath;
 
     /**
      * @var MediaFileRepository
      */
-    protected $mediaFileRepository;
+    private $mediaFileRepository;
 
     /**
      * @param MediaFileRepository $mediaFileRepository
@@ -45,19 +45,55 @@ class TextProcessor
     public function processing(Post $entity)
     {
         $entity->setText($this->imageProcessing($entity->getRawText()));
+        $entity->setPreview($this->preview($entity->getRawText()));
     }
 
     /**
-     * @param $text
+     * @param string $text
      *
      * @return string
      */
-    public function imageProcessing($text)
+    private function imageProcessing(string $text): string
     {
-        $func = function (array $matches) {
-            $media = $this->mediaFileRepository->find((int)$matches[1]);
-            if ($media) {
-                $alt = $matches[2] ?? $media->getDescription();
+        return preg_replace_callback(
+            '/!(?<id>\d+)(?:\((?<alt>[^\)]+)\))?!/m',
+            [$this, 'replaceImagesWithDefault'],
+            $text
+        );
+    }
+
+    /**
+     * @param string $text
+     *
+     * @return string
+     */
+    private function preview(string $text): string
+    {
+        $preview = explode('<!-- cut -->', $text);
+
+        return preg_replace_callback(
+            '/(<p>)?!(?<id>\d+)(\((?<alt>[^)]+)\))?!(<\/p>)?/m',
+            [$this, 'replaceImagesWithoutDefault'],
+            $preview[0]
+        );
+    }
+
+    public function replaceImagesWithDefault(array $matches)
+    {
+        return $this->replaceImages($matches);
+    }
+
+    public function replaceImagesWithoutDefault(array $matches)
+    {
+        return $this->replaceImages($matches, false);
+    }
+
+    private function replaceImages(array $matches, bool $withDefault = true)
+    {
+        $media = $this->mediaFileRepository->find((int)$matches['id']);
+        if ($media) {
+            if ($withDefault || !$media->isDefaultImage()) {
+                $alt = $matches['alt'] ?? $media->getDescription();
                 $replace = sprintf(
                     '<img src="%s" alt="%s" title="%s"/>',
                     $this->imageBasepath . $media->getPath(),
@@ -65,12 +101,12 @@ class TextProcessor
                     $alt
                 );
             } else {
-                $replace = '<b>UNDEFINED</b>';
+                $replace = '';
             }
+        } else {
+            $replace = '<b>UNDEFINED</b>';
+        }
 
-            return $replace;
-        };
-
-        return preg_replace_callback('/!(\d+)(?:\(([^\)]+)\))?!/m', $func, $text);
+        return $replace;
     }
 }

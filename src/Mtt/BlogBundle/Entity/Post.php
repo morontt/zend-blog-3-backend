@@ -59,6 +59,13 @@ class Post
      *
      * @ORM\Column(type="text")
      */
+    protected $preview;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text")
+     */
     protected $rawText;
 
     /**
@@ -480,5 +487,25 @@ class Post
     public function getViewsCount()
     {
         return $this->viewsCount;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPreview()
+    {
+        return $this->preview;
+    }
+
+    /**
+     * @param string $preview
+     *
+     * @return Post
+     */
+    public function setPreview($preview): Post
+    {
+        $this->preview = $preview;
+
+        return $this;
     }
 }
