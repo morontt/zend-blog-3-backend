@@ -38,6 +38,7 @@ use Mtt\BlogBundle\Entity\Tag;
 use Mtt\BlogBundle\Model\Image;
 use Mtt\BlogBundle\Service\TextProcessor;
 use Mtt\BlogBundle\Utils\Inflector;
+use Mtt\BlogBundle\Utils\Pygment;
 use Mtt\BlogBundle\Utils\RuTransform;
 
 /**
@@ -281,6 +282,7 @@ class DataConverter
      */
     public function savePygmentsCode(PygmentsCode $entity, array $data): array
     {
+        $oldHash = $entity->getContentHash();
         PygmentsCodeTransformer::reverseTransform($entity, $data);
 
         if ($data['languageId']) {
@@ -289,6 +291,11 @@ class DataConverter
             );
         } else {
             $entity->setLanguage(null);
+        }
+
+        if ($oldHash != $entity->getContentHash()) {
+            $html = Pygment::highlight($entity->getSourceCode(), $entity->getLexer());
+            $entity->setSourceHtml($html);
         }
 
         $this->save($entity);

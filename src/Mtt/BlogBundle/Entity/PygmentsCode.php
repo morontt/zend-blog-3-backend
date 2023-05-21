@@ -36,7 +36,7 @@ class PygmentsCode
      *
      * @ORM\Column(type="text", length=65535)
      */
-    private $sourceCode;
+    private $sourceCode = '';
 
     /**
      * @var string|null
@@ -51,6 +51,27 @@ class PygmentsCode
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLexer(): string
+    {
+        $result = 'text';
+        if ($this->language) {
+            $result = $this->language->getLexer();
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContentHash(): string
+    {
+        return sha1($this->getSourceCode() . ':' . $this->getLexer());
     }
 
     /**
