@@ -60,6 +60,7 @@ module.exports = function (grunt) {
                 src: [
                     'web/dist/<%= pkg.name %>_jq_ui.css',
                     'bower_components/bootstrap/dist/css/bootstrap.css',
+                    'web/bundles/mttblog/css/pygments.css',
                     'web/bundles/mttblog/css/blog.css'
                 ],
                 dest: 'web/dist/<%= pkg.name %>_preview.css'
@@ -74,6 +75,7 @@ module.exports = function (grunt) {
                 src: [
                     'web/dist/<%= pkg.name %>_jq_ui.css',
                     'bower_components/bootstrap/dist/css/bootstrap.css',
+                    'web/bundles/mttblog/css/pygments.css',
                     'web/bundles/mttblog/css/main.css'
                 ],
                 dest: 'web/dist/<%= pkg.name %>_main.css'

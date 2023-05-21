@@ -294,8 +294,11 @@ class DataConverter
         }
 
         if ($oldHash != $entity->getContentHash()) {
-            $html = Pygment::highlight($entity->getSourceCode(), $entity->getLexer());
-            $entity->setSourceHtml($html);
+            $htmlObj = Pygment::highlight($entity->getSourceCode(), $entity->getLexer());
+            $entity
+                ->setSourceHtml($htmlObj->html())
+                ->setSourceHtmlPreview($htmlObj->htmlPreview())
+            ;
         }
 
         $this->save($entity);

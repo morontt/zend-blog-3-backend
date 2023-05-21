@@ -11,6 +11,7 @@ namespace Mtt\BlogBundle\Service;
 use Doctrine\ORM\EntityManager;
 use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Entity\Repository\MediaFileRepository;
+use Mtt\BlogBundle\Entity\Repository\PygmentsCodeRepository;
 
 class TextProcessor
 {
@@ -30,12 +31,22 @@ class TextProcessor
     private $mediaFileRepository;
 
     /**
+     * @var PygmentsCodeRepository
+     */
+    private $codeRepository;
+
+    /**
      * @param MediaFileRepository $mediaFileRepository
+     * @param PygmentsCodeRepository $codeRepository
      * @param string $cdn
      */
-    public function __construct(MediaFileRepository $mediaFileRepository, string $cdn)
-    {
+    public function __construct(
+        MediaFileRepository $mediaFileRepository,
+        PygmentsCodeRepository $codeRepository,
+        string $cdn
+    ) {
         $this->mediaFileRepository = $mediaFileRepository;
+        $this->codeRepository = $codeRepository;
         $this->imageBasepath = $cdn . ImageManager::getImageBasePath() . '/';
     }
 
@@ -44,8 +55,10 @@ class TextProcessor
      */
     public function processing(Post $entity)
     {
-        $entity->setText($this->imageProcessing($entity->getRawText()));
-        $entity->setPreview($this->preview($entity->getRawText()));
+        $text = $this->codeSnippetProcessing($entity->getRawText());
+
+        $entity->setText($this->imageProcessing($text));
+        $entity->setPreview($this->preview($text));
     }
 
     /**
@@ -75,6 +88,31 @@ class TextProcessor
             '/(<p>)?!(?<id>\d+)(\((?<alt>[^)]+)\))?!(<\/p>)?/m',
             [$this, 'replaceImagesWithoutDefault'],
             $preview[0]
+        );
+    }
+
+    /**
+     * @param string $text
+     *
+     * @return string
+     */
+    private function codeSnippetProcessing(string $text): string
+    {
+        $func = function (array $matches) {
+            $code = $this->codeRepository->find((int)$matches['id']);
+            if ($code) {
+                $replace = $code->getSourceHtml();
+            } else {
+                $replace = '<b>UNDEFINED CODE SNIPPET</b>';
+            }
+
+            return $replace;
+        };
+
+        return preg_replace_callback(
+            '/!<code>(?<id>\d+)!/m',
+            $func,
+            $text
         );
     }
 

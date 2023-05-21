@@ -30,6 +30,7 @@ class PygmentsCodeTransformer extends BaseTransformer
             'id' => $item->getId(),
             'code' => $item->getSourceCode(),
             'html' => $item->getSourceHtml(),
+            'preview' => $item->getSourceHtmlPreview(),
             'language' => $languageId,
             'languageId' => $languageId,
             'createdAt' => $this->dateTimeToISO($item->getTimeCreated()),

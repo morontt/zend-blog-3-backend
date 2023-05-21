@@ -46,6 +46,13 @@ class PygmentsCode
     private $sourceHtml;
 
     /**
+     * @var string|null
+     *
+     * @ORM\Column(type="text", length=65535, nullable=true)
+     */
+    private $sourceHtmlPreview;
+
+    /**
      * @return int
      */
     public function getId()
@@ -130,6 +137,26 @@ class PygmentsCode
     public function setSourceHtml(string $sourceHtml): self
     {
         $this->sourceHtml = $sourceHtml;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSourceHtmlPreview(): ?string
+    {
+        return $this->sourceHtmlPreview;
+    }
+
+    /**
+     * @param string|null $sourceHtmlPreview
+     *
+     * @return PygmentsCode
+     */
+    public function setSourceHtmlPreview(string $sourceHtmlPreview = null): PygmentsCode
+    {
+        $this->sourceHtmlPreview = $sourceHtmlPreview;
 
         return $this;
     }
