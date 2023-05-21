@@ -17,8 +17,10 @@ Router.map(function () {
     this.route('commentators');
     this.route('images');
     this.route('reply-comment', {path: '/reply-comment/:comment_id'});
-    this.route('pygmentsLanguages');
-    this.route('pygmentsCode');
+    this.route('pygmentsLanguages', {path: '/syntaxes'});
+    this.route('pygmentsCode', {path: '/codes'});
+    this.route('pygmentsCodeCreate', {path: '/code-create'});
+    this.route('pygmentsCodeEdit', {path: '/code-edit/:code_id'});
 });
 
 export default Router;

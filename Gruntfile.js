@@ -128,5 +128,6 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('build', ['concat', 'cssmin', 'uglify']);
+    grunt.registerTask('style', ['concat', 'cssmin']);
     grunt.registerTask('default', ['build']);
 };

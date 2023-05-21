@@ -1,6 +1,6 @@
 <div id="topbar">
     <ol class="breadcrumb">
-        <li>Записи</li>
+        <li>Код</li>
     </ol>
 </div>
 <div id="content">
@@ -9,10 +9,10 @@
 
     <div class="page-header">
         <div class="actions-menu">
-            <a href="" class="btn btn-primary">
+            {{#link-to "pygmentsCodeCreate" class="btn btn-primary"}}
                 <i class="glyphicon glyphicon-plus-sign"></i>
                 <span>Создать код</span>
-            </a>
+            {{/link-to}}
         </div>
         <h1><i class="glyphicon glyphicon-duplicate"></i> Управление кодом.</h1>
     </div>

@@ -21,6 +21,7 @@ use Mtt\BlogBundle\API\Transformers\CommentatorTransformer;
 use Mtt\BlogBundle\API\Transformers\CommentTransformer;
 use Mtt\BlogBundle\API\Transformers\MediaFileTransformer;
 use Mtt\BlogBundle\API\Transformers\PostTransformer;
+use Mtt\BlogBundle\API\Transformers\PygmentsCodeTransformer;
 use Mtt\BlogBundle\API\Transformers\PygmentsLanguageTransformer;
 use Mtt\BlogBundle\API\Transformers\TagTransformer;
 use Mtt\BlogBundle\Entity\Category;
@@ -112,7 +113,7 @@ class DataConverter
      *
      * @return array
      */
-    public function saveTag(Tag $entity, array $data)
+    public function saveTag(Tag $entity, array $data): array
     {
         TagTransformer::reverseTransform($entity, $data);
 
@@ -129,7 +130,7 @@ class DataConverter
      *
      * @return array
      */
-    public function saveCategory(Category $entity, array $data)
+    public function saveCategory(Category $entity, array $data): array
     {
         CategoryTransformer::reverseTransform($entity, $data);
 
@@ -151,7 +152,7 @@ class DataConverter
      *
      * @return array
      */
-    public function saveCommentator(Commentator $entity, array $data)
+    public function saveCommentator(Commentator $entity, array $data): array
     {
         CommentatorTransformer::reverseTransform($entity, $data);
 
@@ -166,7 +167,7 @@ class DataConverter
      *
      * @return array
      */
-    public function saveComment(Comment $entity, array $data)
+    public function saveComment(Comment $entity, array $data): array
     {
         CommentTransformer::reverseTransform($entity, $data);
         $this->commentsRepository->save($entity);
@@ -182,7 +183,7 @@ class DataConverter
      *
      * @return array
      */
-    public function savePost(Post $entity, array $data)
+    public function savePost(Post $entity, array $data): array
     {
         PostTransformer::reverseTransform($entity, $data);
 
@@ -236,7 +237,7 @@ class DataConverter
      *
      * @return array
      */
-    public function saveMediaFile(MediaFile $entity, array $data)
+    public function saveMediaFile(MediaFile $entity, array $data): array
     {
         MediaFileTransformer::reverseTransform($entity, $data);
 
@@ -263,13 +264,36 @@ class DataConverter
      *
      * @return array
      */
-    public function savePygmentsLanguage(PygmentsLanguage $entity, array $data)
+    public function savePygmentsLanguage(PygmentsLanguage $entity, array $data): array
     {
         PygmentsLanguageTransformer::reverseTransform($entity, $data);
 
         $this->save($entity);
 
         return $this->getPygmentsLanguage($entity);
+    }
+
+    /**
+     * @param PygmentsCode $entity
+     * @param array $data
+     *
+     * @return array
+     */
+    public function savePygmentsCode(PygmentsCode $entity, array $data): array
+    {
+        PygmentsCodeTransformer::reverseTransform($entity, $data);
+
+        if ($data['languageId']) {
+            $entity->setLanguage(
+                $this->em->getReference('MttBlogBundle:PygmentsLanguage', (int)$data['languageId'])
+            );
+        } else {
+            $entity->setLanguage(null);
+        }
+
+        $this->save($entity);
+
+        return $this->getPygmentsCode($entity);
     }
 
     /**

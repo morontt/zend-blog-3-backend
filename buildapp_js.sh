@@ -4,6 +4,7 @@
 
 bower install --allow-root
 cp -R bower_components/bootstrap/fonts web
+cp -R bower_components/jquery-ui/themes/base/images web/dist
 yarn install
 
 cd ./spa

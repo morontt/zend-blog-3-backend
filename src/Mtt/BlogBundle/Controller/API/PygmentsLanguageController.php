@@ -99,4 +99,16 @@ class PygmentsLanguageController extends BaseController
 
         return new JsonResponse(true);
     }
+
+    /**
+     * @Route("/list", name="language_choices", options={"expose"=true}, methods={"GET"})
+     *
+     * @param PygmentsLanguageRepository $repository
+     *
+     * @return JsonResponse
+     */
+    public function ajaxLanguagesListAction(PygmentsLanguageRepository $repository): JsonResponse
+    {
+        return new JsonResponse($repository->getNamesArray());
+    }
 }

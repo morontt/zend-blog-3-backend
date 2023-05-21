@@ -6,6 +6,10 @@
 <td class="text-right">{{date-format code.createdAt 'DD.MM.YYYY, HH:mm'}}</td>
 <td>
     <div class="pull-right">
+        {{#link-to "pygmentsCodeEdit" code class="btn btn-primary"}}
+            <i class="glyphicon glyphicon-pencil"></i>
+            <span>edit</span>
+        {{/link-to}}
         <button class="btn btn-danger btn-confirm" {{action "remove"}}>
             <i class="glyphicon glyphicon-trash"></i>
             <span>delete</span>

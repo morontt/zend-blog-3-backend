@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class PygmentsCodeController extends BaseController
 {
-/**
+    /**
      * @Route("", methods={"GET"})
      *
      * @param Request $request
@@ -50,5 +50,53 @@ class PygmentsCodeController extends BaseController
             ->getPygmentsCode($entity);
 
         return new JsonResponse($result);
+    }
+
+    /**
+     * @Route("", methods={"POST"})
+     *
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function createAction(Request $request): JsonResponse
+    {
+        $result = $this->getDataConverter()
+            ->savePygmentsCode(new PygmentsCode(), $request->request->get('pygmentsCode'));
+
+        return new JsonResponse($result, 201);
+    }
+
+    /**
+     * @Route("/{id}", requirements={"id": "\d+"}, methods={"PUT"})
+     *
+     * @param Request $request
+     * @param PygmentsCode $entity
+     *
+     * @return JsonResponse
+     */
+    public function updateAction(Request $request, PygmentsCode $entity): JsonResponse
+    {
+        $result = $this->getDataConverter()
+            ->savePygmentsCode($entity, $request->request->get('pygmentsCode'));
+
+        return new JsonResponse($result);
+    }
+
+    /**
+     * @Route("/{id}", requirements={"id": "\d+"}, methods={"DELETE"})
+     *
+     * @param PygmentsCode $entity
+     *
+     * @throws \Doctrine\ORM\ORMException
+     *
+     * @return JsonResponse
+     */
+    public function deleteAction(PygmentsCode $entity): JsonResponse
+    {
+        $this->getEm()->remove($entity);
+        $this->getEm()->flush();
+
+        return new JsonResponse(true);
     }
 }

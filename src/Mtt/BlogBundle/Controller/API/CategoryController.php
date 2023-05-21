@@ -120,10 +120,8 @@ class CategoryController extends BaseController
      *
      * @return JsonResponse
      */
-    public function ajaxCategoryAction(CategoryRepository $repository): JsonResponse
+    public function ajaxCategoryListAction(CategoryRepository $repository): JsonResponse
     {
-        $categories = $repository->getNamesArray();
-
-        return new JsonResponse($categories);
+        return new JsonResponse($repository->getNamesArray());
     }
 }

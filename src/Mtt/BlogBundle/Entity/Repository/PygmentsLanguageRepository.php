@@ -17,4 +17,16 @@ class PygmentsLanguageRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, PygmentsLanguage::class);
     }
+
+    /**
+     * @return array
+     */
+    public function getNamesArray(): array
+    {
+        $qb = $this->createQueryBuilder('lang')
+            ->select('lang.id', 'lang.name')
+            ->orderBy('lang.name', 'ASC');
+
+        return $qb->getQuery()->getArrayResult();
+    }
 }

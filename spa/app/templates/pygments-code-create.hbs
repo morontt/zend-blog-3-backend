@@ -1,0 +1,25 @@
+<div id="topbar">
+    <ol class="breadcrumb">
+        <li>
+            {{#link-to "pygmentsCode"}}
+                Код
+            {{/link-to}}
+        </li>
+        <li>Создание</li>
+    </ol>
+</div>
+<div id="content">
+    <div id="flashes">
+    </div>
+    <div class="page-header">
+        <h1>
+            <i class="glyphicon glyphicon-duplicate"></i> Создание кода
+        </h1>
+    </div>
+    {{form-code model=model
+        back=(action "back")
+        afterSave=(action "afterSave")
+        languageChoices=languageChoices}}
+
+    {{footer-partial}}
+</div>
