@@ -7,7 +7,7 @@ use Mtt\BlogBundle\Entity\Traits\ModifyEntityTrait;
 
 /**
  * @ORM\Table()
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Mtt\BlogBundle\Entity\Repository\PygmentsCodeRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class PygmentsCode
@@ -39,9 +39,9 @@ class PygmentsCode
     private $sourceCode;
 
     /**
-     * @var string
+     * @var string|null
      *
-     * @ORM\Column(type="text", length=65535)
+     * @ORM\Column(type="text", length=65535, nullable=true)
      */
     private $sourceHtml;
 
@@ -54,19 +54,19 @@ class PygmentsCode
     }
 
     /**
-     * @return PygmentsLanguage
+     * @return PygmentsLanguage|null
      */
-    public function getLanguage(): PygmentsLanguage
+    public function getLanguage(): ?PygmentsLanguage
     {
         return $this->language;
     }
 
     /**
-     * @param PygmentsLanguage $language
+     * @param PygmentsLanguage|null $language
      *
      * @return PygmentsCode
      */
-    public function setLanguage(PygmentsLanguage $language): self
+    public function setLanguage(PygmentsLanguage $language = null): self
     {
         $this->language = $language;
 

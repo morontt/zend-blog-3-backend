@@ -29,6 +29,7 @@ use Mtt\BlogBundle\Entity\Commentator;
 use Mtt\BlogBundle\Entity\CommentatorInterface;
 use Mtt\BlogBundle\Entity\MediaFile;
 use Mtt\BlogBundle\Entity\Post;
+use Mtt\BlogBundle\Entity\PygmentsCode;
 use Mtt\BlogBundle\Entity\PygmentsLanguage;
 use Mtt\BlogBundle\Entity\Repository\CategoryRepository;
 use Mtt\BlogBundle\Entity\Repository\CommentRepository;
@@ -55,6 +56,8 @@ use Mtt\BlogBundle\Utils\RuTransform;
  * @method array getTagArray($collection, $includes = null)
  * @method array getPygmentsLanguage(PygmentsLanguage $entity, $includes = null)
  * @method array getPygmentsLanguageArray($collection, $includes = null)
+ * @method array getPygmentsCode(PygmentsCode $entity, $includes = null)
+ * @method array getPygmentsCodeArray($collection, $includes = null)
  */
 class DataConverter
 {

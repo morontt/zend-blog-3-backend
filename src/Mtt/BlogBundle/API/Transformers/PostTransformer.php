@@ -8,6 +8,7 @@
 
 namespace Mtt\BlogBundle\API\Transformers;
 
+use League\Fractal\Resource\Collection;
 use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Entity\Tag;
 use Mtt\BlogBundle\Utils\RuTransform;
@@ -77,9 +78,9 @@ class PostTransformer extends BaseTransformer
     /**
      * @param Post $entity
      *
-     * @return \League\Fractal\Resource\Collection
+     * @return Collection
      */
-    public function includeCategory(Post $entity)
+    public function includeCategory(Post $entity): Collection
     {
         $items = [$entity->getCategory()];
 

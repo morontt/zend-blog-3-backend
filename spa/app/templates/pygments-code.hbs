@@ -1,0 +1,42 @@
+<div id="topbar">
+    <ol class="breadcrumb">
+        <li>Записи</li>
+    </ol>
+</div>
+<div id="content">
+    <div id="flashes">
+    </div>
+
+    <div class="page-header">
+        <div class="actions-menu">
+            <a href="" class="btn btn-primary">
+                <i class="glyphicon glyphicon-plus-sign"></i>
+                <span>Создать код</span>
+            </a>
+        </div>
+        <h1><i class="glyphicon glyphicon-duplicate"></i> Управление кодом.</h1>
+    </div>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th class="center-text">#id</th>
+            <th>Фрагмент</th>
+            <th>Язык</th>
+            <th class="text-right text-date">Дата создания</th>
+            <th class="actions">&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each model as |code|}}
+            {{tr-code code=code}}
+        {{/each}}
+        </tbody>
+    </table>
+
+    {{paginator-list meta=model.meta routeName="pygmentsCode"}}
+
+    {{footer-partial}}
+
+    {{delete-confirm action="removeCode"}}
+</div>

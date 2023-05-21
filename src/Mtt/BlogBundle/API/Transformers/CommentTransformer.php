@@ -8,6 +8,7 @@
 
 namespace Mtt\BlogBundle\API\Transformers;
 
+use League\Fractal\Resource\Collection;
 use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Entity\CommentInterface;
 use Mtt\BlogBundle\Entity\ViewComment;
@@ -122,9 +123,9 @@ class CommentTransformer extends BaseTransformer
     /**
      * @param Comment $entity
      *
-     * @return \League\Fractal\Resource\Collection
+     * @return Collection
      */
-    public function includeCommentator(Comment $entity)
+    public function includeCommentator(Comment $entity): Collection
     {
         $commentator = $entity->getCommentator();
         $items = [];

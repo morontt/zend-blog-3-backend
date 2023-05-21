@@ -1,0 +1,14 @@
+<td class="center-text">{{code.id}}</td>
+<td>
+    {{code.code}}
+</td>
+<td>{{code.language.name}}</td>
+<td class="text-right">{{date-format code.createdAt 'DD.MM.YYYY, HH:mm'}}</td>
+<td>
+    <div class="pull-right">
+        <button class="btn btn-danger btn-confirm" {{action "remove"}}>
+            <i class="glyphicon glyphicon-trash"></i>
+            <span>delete</span>
+        </button>
+    </div>
+</td>

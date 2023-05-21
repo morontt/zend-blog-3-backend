@@ -8,6 +8,7 @@
 
 namespace Mtt\BlogBundle\API\Transformers;
 
+use League\Fractal\Resource\Collection;
 use Mtt\BlogBundle\Entity\MediaFile;
 use Mtt\BlogBundle\Model\Image;
 use Mtt\BlogBundle\Service\ImageManager;
@@ -61,12 +62,16 @@ class MediaFileTransformer extends BaseTransformer
     /**
      * @param Image $item
      *
-     * @return \League\Fractal\Resource\Collection|null
+     * @return Collection
      */
-    public function includePost(Image $item)
+    public function includePost(Image $item): Collection
     {
+        $items = [];
         $post = $item->getPost();
+        if ($post) {
+            $items = [$post];
+        }
 
-        return $post ? $this->collection([$post], new PostTransformer(), 'posts') : null;
+        return $this->collection($items, new PostTransformer(), 'posts');
     }
 }
