@@ -1,4 +1,4 @@
-FROM php:7.3-apache-stretch
+FROM php:7.3-apache-buster
 
 MAINTAINER Alexander Harchenko <morontt@gmail.com>
 
