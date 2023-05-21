@@ -1,0 +1,33 @@
+{{#if isEditing}}
+    <td class="center-text">{{lang.id}}</td>
+    <td>{{input value=lang.name class="form-control"}}</td>
+    <td>{{input value=lang.lexer class="form-control"}}</td>
+    <td>
+        <div class="pull-right">
+            <a class="btn btn-success" {{action "save"}}>
+                <i class="glyphicon glyphicon-ok"></i>
+                <span>save</span>
+            </a>
+            <button class="btn btn-warning btn-confirm" {{action "reset"}}>
+                <i class="glyphicon glyphicon-remove"></i>
+                <span>reset</span>
+            </button>
+        </div>
+    </td>
+{{else}}
+    <td class="center-text">{{lang.id}}</td>
+    <td>{{lang.name}}</td>
+    <td>{{lang.lexer}}</td>
+    <td>
+        <div class="pull-right">
+            <a class="btn btn-primary" {{action "edit"}}>
+                <i class="glyphicon glyphicon-pencil"></i>
+                <span>edit</span>
+            </a>
+            <button class="btn btn-danger btn-confirm" {{action "remove"}}>
+                <i class="glyphicon glyphicon-trash"></i>
+                <span>delete</span>
+            </button>
+        </div>
+    </td>
+{{/if}}

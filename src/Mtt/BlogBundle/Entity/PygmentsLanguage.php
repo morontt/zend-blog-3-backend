@@ -4,11 +4,13 @@ namespace Mtt\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Mtt\BlogBundle\Entity\Traits\ModifyEntityTrait;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Table()
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Mtt\BlogBundle\Entity\Repository\PygmentsLanguageRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity(fields={"name"})
  */
 class PygmentsLanguage
 {

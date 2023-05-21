@@ -21,6 +21,7 @@ use Mtt\BlogBundle\API\Transformers\CommentatorTransformer;
 use Mtt\BlogBundle\API\Transformers\CommentTransformer;
 use Mtt\BlogBundle\API\Transformers\MediaFileTransformer;
 use Mtt\BlogBundle\API\Transformers\PostTransformer;
+use Mtt\BlogBundle\API\Transformers\PygmentsLanguageTransformer;
 use Mtt\BlogBundle\API\Transformers\TagTransformer;
 use Mtt\BlogBundle\Entity\Category;
 use Mtt\BlogBundle\Entity\Comment;
@@ -28,6 +29,7 @@ use Mtt\BlogBundle\Entity\Commentator;
 use Mtt\BlogBundle\Entity\CommentatorInterface;
 use Mtt\BlogBundle\Entity\MediaFile;
 use Mtt\BlogBundle\Entity\Post;
+use Mtt\BlogBundle\Entity\PygmentsLanguage;
 use Mtt\BlogBundle\Entity\Repository\CategoryRepository;
 use Mtt\BlogBundle\Entity\Repository\CommentRepository;
 use Mtt\BlogBundle\Entity\Tag;
@@ -51,6 +53,8 @@ use Mtt\BlogBundle\Utils\RuTransform;
  * @method array getPostArray($collection, $includes = null)
  * @method array getTag(Tag $entity, $includes = null)
  * @method array getTagArray($collection, $includes = null)
+ * @method array getPygmentsLanguage(PygmentsLanguage $entity, $includes = null)
+ * @method array getPygmentsLanguageArray($collection, $includes = null)
  */
 class DataConverter
 {
@@ -73,6 +77,11 @@ class DataConverter
      * @var CategoryRepository
      */
     private $categoryRepository;
+
+    /**
+     * @var CommentRepository
+     */
+    private $commentsRepository;
 
     /**
      * @param EntityManagerInterface $em
@@ -246,6 +255,21 @@ class DataConverter
     }
 
     /**
+     * @param PygmentsLanguage $entity
+     * @param array $data
+     *
+     * @return array
+     */
+    public function savePygmentsLanguage(PygmentsLanguage $entity, array $data)
+    {
+        PygmentsLanguageTransformer::reverseTransform($entity, $data);
+
+        $this->save($entity);
+
+        return $this->getPygmentsLanguage($entity);
+    }
+
+    /**
      * @param $method
      * @param $arguments
      *
@@ -253,7 +277,6 @@ class DataConverter
      */
     public function __call($method, $arguments)
     {
-        $result = null;
         $matches = [];
         if (preg_match('/^get([A-Z]\w+)Array$/', $method, $matches)) {
             $class = 'Mtt\\BlogBundle\\API\\Transformers\\' . $matches[1] . 'Transformer';
@@ -267,7 +290,7 @@ class DataConverter
                 $this->fractal->parseIncludes($arguments[1]);
             }
 
-            return $this->fractal->createData($resource)->toArray();
+            $result = $this->fractal->createData($resource)->toArray();
         } elseif (preg_match('/^get([A-Z]\w+)$/', $method, $matches)) {
             $class = 'Mtt\\BlogBundle\\API\\Transformers\\' . $matches[1] . 'Transformer';
             $resource = new Item($arguments[0], new $class(), lcfirst($matches[1]));

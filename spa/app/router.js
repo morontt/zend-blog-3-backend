@@ -17,6 +17,7 @@ Router.map(function () {
     this.route('commentators');
     this.route('images');
     this.route('reply-comment', {path: '/reply-comment/:comment_id'});
+    this.route('pygmentsLanguages');
 });
 
 export default Router;
