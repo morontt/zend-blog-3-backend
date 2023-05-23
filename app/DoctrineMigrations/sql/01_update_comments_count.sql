@@ -1,4 +1,4 @@
-CREATE PROCEDURE update_comments_count(IN topicID INT(10) UNSIGNED)
+CREATE PROCEDURE update_comments_count(IN topicID INT UNSIGNED)
   BEGIN
     DECLARE count_comments INT DEFAULT 0;
 

@@ -32,7 +32,7 @@ final class Version20230516083348 extends AbstractMigration implements Container
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('DROP PROCEDURE `update_comments_count`');
+        $this->addSql('DROP PROCEDURE IF EXISTS `update_comments_count`');
     }
 
     public function down(Schema $schema): void
