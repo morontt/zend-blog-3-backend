@@ -9,9 +9,15 @@ class Highlighted
      */
     private $strings;
 
-    public function __construct(array $strings)
+    /**
+     * @var array
+     */
+    private $stringsInline;
+
+    public function __construct(array $stringsTable, array $stringsInline)
     {
-        $this->strings = $strings;
+        $this->strings = $stringsTable;
+        $this->stringsInline = $stringsInline;
     }
 
     /**
@@ -27,6 +33,6 @@ class Highlighted
      */
     public function htmlPreview(): string
     {
-        return implode("\n", array_slice($this->strings, 0, 8));
+        return implode("\n", array_slice($this->stringsInline, 0, 8));
     }
 }

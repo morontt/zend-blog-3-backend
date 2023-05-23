@@ -1,0 +1,6 @@
+.highlight pre {
+    line-height: 125%;
+    border-style: none;
+    background: #f8f8f8;
+    font-family: "Consolas", "Lucida Console", monospace;
+}

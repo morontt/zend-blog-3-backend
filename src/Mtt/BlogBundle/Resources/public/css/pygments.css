@@ -2,11 +2,6 @@
  * Generate CSS:
  * pygmentize -S tango -f html -a .highlight > pygments.css
  */
-.highlight pre {
-    line-height: 125%;
-    border-style: none;
-    background: #f8f8f8;
-}
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
 span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
 td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }

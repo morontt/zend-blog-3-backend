@@ -1,0 +1,24 @@
+table.highlighttable {
+    background: #F5F5F5;
+    border: none;
+    display: block;
+    overflow: auto;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+table.highlighttable tr td {
+    padding: 0;
+}
+table.highlighttable tr td.linenos {
+    border-right: 1px dotted #777;
+}
+table.highlighttable tr td.linenos pre {
+    color: #999;
+}
+table.highlighttable tr pre {
+    line-height: 125%;
+    margin: 0;
+    background-color: transparent;
+    border: none;
+    font-family: "Consolas", "Lucida Console", monospace;
+}

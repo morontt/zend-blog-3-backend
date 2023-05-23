@@ -17,10 +17,12 @@ class Pygment
         $file = sys_get_temp_dir() . '/pygments_' . time();
         file_put_contents($file, $content);
 
-        $output = [];
-        exec('pygmentize -f html -l ' . $lexer . ' -O linenos=inline ' . escapeshellarg($file), $output);
+        $outputTable = [];
+        $outputInline = [];
+        exec('pygmentize -f html -l ' . $lexer . ' -O linenos=table ' . escapeshellarg($file), $outputTable);
+        exec('pygmentize -f html -l ' . $lexer . ' ' . escapeshellarg($file), $outputInline);
         unlink($file);
 
-        return new Highlighted($output);
+        return new Highlighted($outputTable, $outputInline);
     }
 }
