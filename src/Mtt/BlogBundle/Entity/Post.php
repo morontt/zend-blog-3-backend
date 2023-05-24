@@ -126,6 +126,13 @@ class Post
      */
     protected $disqusThread;
 
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(type="datetime", options={"default": "NOW()"})
+     */
+    private $updatedAt;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -133,6 +140,7 @@ class Post
         $this->mediaFiles = new ArrayCollection();
 
         $this->timeCreated = new DateTime();
+        $this->updatedAt = new DateTime();
     }
 
     /**
@@ -505,6 +513,26 @@ class Post
     public function setPreview($preview): Post
     {
         $this->preview = $preview;
+
+        return $this;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getUpdatedAt(): DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param DateTime $updatedAt
+     *
+     * @return Post
+     */
+    public function setUpdatedAt(DateTime $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

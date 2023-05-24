@@ -35,7 +35,11 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 10 }
 
-    Mtt\BlogBundle\EventListener\IgnoreTablesListener:
+    Mtt\BlogBundle\EventListener\Doctrine\ArticleUpdatedAtListener:
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate }
+
+    Mtt\BlogBundle\EventListener\Doctrine\IgnoreTablesListener:
         tags:
             - {name: doctrine.event_listener, event: postGenerateSchema }
 

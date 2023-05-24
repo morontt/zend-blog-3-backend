@@ -1,6 +1,6 @@
 <?php
 
-namespace Mtt\BlogBundle\EventListener;
+namespace Mtt\BlogBundle\EventListener\Doctrine;
 
 use Doctrine\ORM\Tools\Event\GenerateSchemaEventArgs;
 
