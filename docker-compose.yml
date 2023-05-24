@@ -50,17 +50,6 @@ services:
         networks:
             - blognet
 
-    ghost:
-        build:
-            context: ${GHOST_PATH}/docker
-        container_name: "ghost"
-        volumes:
-            - ${GHOST_PATH}:/var/app
-#        ports:
-#            - 8095:2368
-        networks:
-            - blognet
-
     mailcatcher:
         image: xelbot/mailcatcher
         ports:
@@ -87,11 +76,9 @@ services:
         depends_on:
             - rhinoceros
             - lizard
-            - ghost
         links:
             - rhinoceros
             - lizard
-            - ghost
         networks:
             - blognet
 
