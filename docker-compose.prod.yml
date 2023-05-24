@@ -12,6 +12,7 @@ services:
             dockerfile: prod/Dockerfile
             args:
                 HOST_UID: 33
+        container_name: "rhinoceros"
         volumes_from:
             - source
         volumes:
