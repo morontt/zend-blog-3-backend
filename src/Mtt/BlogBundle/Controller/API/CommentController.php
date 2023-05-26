@@ -181,15 +181,16 @@ class CommentController extends BaseController
         $form->handleRequest($request);
 
         $statusCode = Response::HTTP_OK;
+        $comment = null;
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $commentManager->saveComment($form->getData());
+                $comment = $commentManager->saveComment($form->getData());
                 $statusCode = Response::HTTP_CREATED;
             } else {
-                $errors = [];
+                $errors = ['errors' => []];
                 /* @var \Symfony\Component\Form\FormError $formError */
                 foreach ($form->getErrors(true) as $formError) {
-                    $errors[] = [
+                    $errors['errors'][] = [
                         'message' => $formError->getMessage(),
                         'path' => $formError->getCause()->getPropertyPath(),
                     ];
@@ -199,6 +200,9 @@ class CommentController extends BaseController
             }
         }
 
-        return new JsonResponse(true, $statusCode);
+        return new JsonResponse(
+            $comment ? $this->getDataConverter()->getComment($comment) : [],
+            $statusCode
+        );
     }
 }

@@ -58,8 +58,10 @@ class CommentManager
      * @param CommentDTO $commentData
      *
      * @throws NotAllowedCommentException
+     *
+     * @return Comment
      */
-    public function saveComment(CommentDTO $commentData)
+    public function saveComment(CommentDTO $commentData): Comment
     {
         $agent = $this->tracking->getTrackingAgent($commentData->userAgent);
 
@@ -94,5 +96,7 @@ class CommentManager
         $this->commentRepo->save($comment);
 
         $this->dispatcher->dispatch(MttBlogEvents::REPLY_COMMENT, new CommentEvent($comment));
+
+        return $comment;
     }
 }
