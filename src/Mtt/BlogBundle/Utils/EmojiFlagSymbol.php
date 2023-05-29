@@ -25,7 +25,7 @@ class EmojiFlagSymbol
      *
      * @return string
      */
-    public static function get($countryCode)
+    public static function get(string $countryCode): string
     {
         if (strlen($countryCode) !== 2) {
             throw new InvalidArgumentException('Please provide a 2 character country code.');
@@ -36,15 +36,21 @@ class EmojiFlagSymbol
         return implode(
             '',
             array_map(
-                function ($char) {
-                    return mb_convert_encoding(
-                        sprintf('&#%d;', ord($char) + self::INDICATOR_OFFSET),
-                        'UTF-8',
-                        'HTML-ENTITIES'
-                    );
-                },
+                [__CLASS__, 'convertChar'],
                 str_split($countryCode)
             )
         );
+    }
+
+    private static function convertChar(string $char): string
+    {
+        $codepoint = self::INDICATOR_OFFSET + ord($char);
+
+        $byte0 = 0b10000000 + ($codepoint & 0b111111);
+        $byte1 = 0b10000000 + (($codepoint >> 6) & 0b111111);
+        $byte2 = 0b10000000 + (($codepoint >> 12) & 0b111111);
+        $byte3 = 0b11110000 + (($codepoint >> 18) & 0b111);
+
+        return chr($byte3) . chr($byte2) . chr($byte1) . chr($byte0);
     }
 }
