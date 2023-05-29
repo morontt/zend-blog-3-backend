@@ -587,9 +587,31 @@ th.actions {
 }
 
 th.text-date {
-    width: 155px;
+    width: 115px;
 }
 
 .force-pointer {
     cursor: pointer;
+}
+
+table.table-pygments-code {
+    table-layout: fixed;
+}
+table.table-comments {
+    table-layout: fixed;
+}
+
+table.table-pygments-code th.column-id,
+table.table-comments th.column-id {
+    width: 60px;
+}
+table.table-pygments-code th.code-lang {
+    width: 100px;
+}
+
+table.table-comments th.column-cmtr {
+    width: 140px;
+}
+table.table-comments th.column-ip {
+    width: 160px;
 }

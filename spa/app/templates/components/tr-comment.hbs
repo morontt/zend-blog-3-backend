@@ -2,8 +2,7 @@
     <td class="center-text">{{comment.id}}</td>
     <td>
         <img src="{{comment.gravatarUrl}}" alt="avatar"/>
-    </td>
-    <td>
+        <br/>
         {{#if comment.website}}
             <a href="{{comment.website}}"><strong>{{comment.username}}</strong></a>
         {{else}}
@@ -42,8 +41,7 @@
     <td class="center-text">{{comment.id}}</td>
     <td>
         <img src="{{comment.gravatarUrl}}" alt="avatar"/>
-    </td>
-    <td>
+        <br/>
         {{#if comment.website}}
             <a href="{{comment.website}}"><strong>{{comment.username}}</strong></a>
         {{else}}
@@ -62,7 +60,7 @@
             <small>{{comment.city}}, {{comment.region}}<br/>{{comment.country}}</small>
         {{/if}}
     </td>
-    <td>{{date-format comment.createdAt 'DD.MM.YYYY, HH:mm'}}</td>
+    <td class="text-right">{{date-format comment.createdAt 'DD.MM.YYYY, HH:mm'}}</td>
     <td>
         <div class="pull-right">
             <a class="btn btn-primary" href="#" {{action "edit"}}>
