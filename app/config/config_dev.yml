@@ -21,9 +21,5 @@ monolog:
             type:   console
             bubble: false
 
-mtt_doctrine_to_ember:
-    application_variable: MySuperApp
-    models_path: "%kernel.root_dir%/../web/js/models"
-
 #swiftmailer:
 #    delivery_address: me@example.com

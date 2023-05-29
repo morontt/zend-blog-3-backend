@@ -39,7 +39,6 @@
         "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^3.0",
         "doctrine/doctrine-fixtures-bundle": "^3.0",
-        "morontt/doctrine-to-ember": "dev-master",
         "friendsofphp/php-cs-fixer": "~2.14",
         "behat/symfony2-extension": "~2.0@dev",
         "behat/mink-extension": "~2.2",
