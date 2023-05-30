@@ -46,6 +46,8 @@ class Tracking
     /**
      * @var DateTime
      *
+     * @deprecated
+     *
      * @ORM\Column(type="milliseconds_dt")
      */
     protected $timeCreated;
@@ -57,8 +59,31 @@ class Tracking
      */
     protected $timestampCreated;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_cdn", type="boolean", options={"default": false})
+     */
+    private $cdn;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=128, nullable=true)
+     */
+    private $requestURI;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    private $statusCode;
+
     public function __construct()
     {
+        $this->cdn = false;
+
         $this->setTimeCreated(new DateTime());
     }
 
@@ -191,5 +216,65 @@ class Tracking
     public function getTimestampCreated()
     {
         return $this->timestampCreated;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCdn(): bool
+    {
+        return $this->cdn;
+    }
+
+    /**
+     * @param bool $cdn
+     *
+     * @return Tracking
+     */
+    public function setCdn(bool $cdn): Tracking
+    {
+        $this->cdn = $cdn;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRequestURI(): ?string
+    {
+        return $this->requestURI;
+    }
+
+    /**
+     * @param string|null $requestURI
+     *
+     * @return Tracking
+     */
+    public function setRequestURI(string $requestURI = null): self
+    {
+        $this->requestURI = $requestURI;
+
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getStatusCode(): ?int
+    {
+        return $this->statusCode;
+    }
+
+    /**
+     * @param int|null $statusCode
+     *
+     * @return Tracking
+     */
+    public function setStatusCode(int $statusCode = null): self
+    {
+        $this->statusCode = $statusCode;
+
+        return $this;
     }
 }
