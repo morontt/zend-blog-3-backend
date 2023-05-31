@@ -25,9 +25,9 @@ class EmojiFlagSymbol
      *
      * @return string
      */
-    public static function get(string $countryCode): string
+    public static function get(string $countryCode = null): string
     {
-        if (strlen($countryCode) !== 2) {
+        if (is_null($countryCode) || strlen($countryCode) !== 2) {
             throw new InvalidArgumentException('Please provide a 2 character country code.');
         }
 
