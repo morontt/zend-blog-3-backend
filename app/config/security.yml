@@ -2,7 +2,7 @@ security:
     encoders:
         Mtt\UserBundle\Entity\User:
             algorithm: sha384
-            iterations: 1
+            iterations: 3600
             encode_as_base64: false
 
     providers:
