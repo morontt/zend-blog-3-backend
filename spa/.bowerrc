@@ -1,3 +1,5 @@
 {
-  "analytics": false
+  "analytics": false,
+  "allow_root": true,
+  "strict-ssl": false
 }
