@@ -28,7 +28,8 @@ trait Gravatar
     }
 }
 
-function forceImageHash(int $id): string {
+function forceImageHash(int $id): string
+{
     $userOffset = 10000000;
     if ($id > $userOffset) {
         $hash = md5('avatar' . ($id - $userOffset));

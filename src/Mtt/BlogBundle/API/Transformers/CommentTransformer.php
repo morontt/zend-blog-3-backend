@@ -11,9 +11,9 @@ namespace Mtt\BlogBundle\API\Transformers;
 use League\Fractal\Resource\Collection;
 use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Entity\CommentInterface;
+use function Mtt\BlogBundle\Entity\Traits\forceImageHash;
 use Mtt\BlogBundle\Entity\ViewComment;
 use Mtt\BlogBundle\Utils\EmojiFlagSymbol;
-use function Mtt\BlogBundle\Entity\Traits\forceImageHash;
 
 class CommentTransformer extends BaseTransformer
 {
