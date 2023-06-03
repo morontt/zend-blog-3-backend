@@ -68,7 +68,7 @@ services:
         build: ./docker/nginx
         volumes:
             - .:/var/www/html
-            - ${UPLOADS_PATH}:/var/www/resources
+            - ${OLD_BLOG_PATH}:/var/www/old_resources
             - ${GOLANG_BLOG_PATH}:/var/www/app
         ports:
             - "443:443"
