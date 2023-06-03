@@ -115,15 +115,6 @@ class User implements UserInterface, Serializable
      */
     protected $comments;
 
-    /**
-     * @var string
-     *
-     * @deprecated
-     *
-     * @ORM\Column(name="email_hash", type="string", length=32, nullable=true)
-     */
-    protected $emailHash;
-
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -227,7 +218,6 @@ class User implements UserInterface, Serializable
     public function setEmail($email)
     {
         $this->email = $email;
-        $this->emailHash = md5(strtolower(trim($email)));
 
         return $this;
     }
@@ -438,30 +428,6 @@ class User implements UserInterface, Serializable
     public function getComments()
     {
         return $this->comments;
-    }
-
-    /**
-     * Set emailHash
-     *
-     * @param string $emailHash
-     *
-     * @return User
-     */
-    public function setEmailHash($emailHash)
-    {
-        $this->emailHash = $emailHash;
-
-        return $this;
-    }
-
-    /**
-     * Get emailHash
-     *
-     * @return string
-     */
-    public function getEmailHash()
-    {
-        return $this->emailHash;
     }
 
     /**

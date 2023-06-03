@@ -25,17 +25,12 @@ interface CommentatorInterface
     public function getWebsite(): ?string;
 
     /**
-     * @return int|null
-     */
-    public function getDisqusId(): ?int;
-
-    /**
-     * @return string|null
-     */
-    public function getEmailHash(): ?string;
-
-    /**
      * @return string
      */
     public function getAvatarHash(): string;
+
+    /**
+     * @return bool
+     */
+    public function isForceImage(): bool;
 }

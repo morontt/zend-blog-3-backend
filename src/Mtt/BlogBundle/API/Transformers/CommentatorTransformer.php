@@ -26,6 +26,7 @@ class CommentatorTransformer extends BaseTransformer
             'email' => $item->getEmail(),
             'website' => $item->getWebsite(),
             'emailHash' => $item->getAvatarHash(),
+            'forceImage' => $item->isForceImage(),
         ];
     }
 

@@ -43,18 +43,11 @@ class ViewCommentator implements CommentatorInterface
     protected $website;
 
     /**
-     * @var int
+     * @var bool
      *
-     * @ORM\Column(type="bigint", nullable=true, unique=true)
+     * @ORM\Column(type="boolean")
      */
-    protected $disqusId;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=32, nullable=true)
-     */
-    protected $emailHash;
+    private $forceImage = false;
 
     /**
      * Get id
@@ -97,22 +90,10 @@ class ViewCommentator implements CommentatorInterface
     }
 
     /**
-     * Get disqusId
-     *
-     * @return int|null
+     * @return bool
      */
-    public function getDisqusId(): ?int
+    public function isForceImage(): bool
     {
-        return $this->disqusId;
-    }
-
-    /**
-     * Get emailHash
-     *
-     * @return string|null
-     */
-    public function getEmailHash(): ?string
-    {
-        return $this->emailHash;
+        return $this->forceImage;
     }
 }

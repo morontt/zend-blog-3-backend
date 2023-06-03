@@ -19,6 +19,9 @@ while getopts ":ri" opt; do
       bower install --allow-root
       yarn install
       ;;
+    *)
+      echo "unknown flag :("
+      exit 1
   esac
 done
 

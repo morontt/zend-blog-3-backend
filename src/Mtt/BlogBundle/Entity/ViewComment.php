@@ -118,13 +118,6 @@ class ViewComment implements CommentInterface
     protected $code;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=32, nullable=true)
-     */
-    protected $emailHash;
-
-    /**
      * @var float
      *
      * @ORM\Column(type="float")
@@ -281,16 +274,6 @@ class ViewComment implements CommentInterface
     public function getCode(): ?string
     {
         return $this->code;
-    }
-
-    /**
-     * Get emailHash
-     *
-     * @return string
-     */
-    public function getEmailHash()
-    {
-        return $this->emailHash;
     }
 
     /**

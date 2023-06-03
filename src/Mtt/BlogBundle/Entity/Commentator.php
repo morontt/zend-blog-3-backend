@@ -55,22 +55,11 @@ class Commentator implements CommentatorInterface
     protected $comments;
 
     /**
-     * @var int
+     * @var bool
      *
-     * @deprecated
-     *
-     * @ORM\Column(type="bigint", nullable=true, unique=true)
+     * @ORM\Column(type="boolean", options={"default": false})
      */
-    protected $disqusId;
-
-    /**
-     * @var string
-     *
-     * @deprecated
-     *
-     * @ORM\Column(type="string", length=32, nullable=true)
-     */
-    protected $emailHash;
+    private $forceImage = false;
 
     public function __construct()
     {
@@ -194,50 +183,22 @@ class Commentator implements CommentatorInterface
     }
 
     /**
-     * Set disqusId
-     *
-     * @param int $disqusId
+     * @return bool
+     */
+    public function isForceImage(): bool
+    {
+        return $this->forceImage;
+    }
+
+    /**
+     * @param bool $forceImage
      *
      * @return Commentator
      */
-    public function setDisqusId($disqusId)
+    public function setForceImage(bool $forceImage): self
     {
-        $this->disqusId = $disqusId;
+        $this->forceImage = $forceImage;
 
         return $this;
-    }
-
-    /**
-     * Get disqusId
-     *
-     * @return int|null
-     */
-    public function getDisqusId(): ?int
-    {
-        return $this->disqusId;
-    }
-
-    /**
-     * Set emailHash
-     *
-     * @param string $emailHash
-     *
-     * @return Commentator
-     */
-    public function setEmailHash($emailHash)
-    {
-        $this->emailHash = $emailHash;
-
-        return $this;
-    }
-
-    /**
-     * Get emailHash
-     *
-     * @return string|null
-     */
-    public function getEmailHash(): ?string
-    {
-        return $this->emailHash;
     }
 }

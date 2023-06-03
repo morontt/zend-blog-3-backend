@@ -12,13 +12,6 @@
     <td>
         {{input value=commentator.website class="form-control"}}
     </td>
-    <td class="text-right">
-        {{#if commentator.disqusId}}
-            {{commentator.disqusId}}
-        {{else}}
-            -
-        {{/if}}
-    </td>
     <td>
         <div class="pull-right">
             <a class="btn btn-success" {{action "save"}}>

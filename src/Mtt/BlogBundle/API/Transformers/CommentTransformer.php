@@ -53,7 +53,7 @@ class CommentTransformer extends BaseTransformer
                 if ($user) {
                     $username = $user->getUsername();
                     $email = $user->getEmail();
-                    $emailHash = $user->getEmailHash();
+                    $emailHash = md5(strtolower(trim($user->getEmail())));
                 }
             }
 
@@ -86,7 +86,7 @@ class CommentTransformer extends BaseTransformer
         }
 
         try {
-            $flag = EmojiFlagSymbol::get($countryCode);
+            $flag = $countryCode ? EmojiFlagSymbol::get($countryCode) : '';
         } catch (\Exception $e) {
             $flag = '';
         }
