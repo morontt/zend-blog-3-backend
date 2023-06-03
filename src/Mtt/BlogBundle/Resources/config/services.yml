@@ -27,6 +27,10 @@ services:
             tags:
                 - { name: telegram-command }
 
+    Mtt\BlogBundle\Controller\DefaultController:
+        arguments:
+            $kernelEnv: '%kernel.environment%'
+
     Mtt\BlogBundle\Controller\TelegramController:
         arguments:
             $secretToken: '%telegram_webhook_token%'
