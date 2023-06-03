@@ -594,9 +594,9 @@ th.text-date {
     cursor: pointer;
 }
 
-table.table-pygments-code {
-    table-layout: fixed;
-}
+table.table-pygments-code,
+table.table-commentators,
+table.table-images,
 table.table-comments {
     table-layout: fixed;
 }

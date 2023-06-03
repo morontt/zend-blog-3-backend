@@ -27,3 +27,14 @@ trait Gravatar
         return $hash;
     }
 }
+
+function forceImageHash(int $id): string {
+    $userOffset = 10000000;
+    if ($id > $userOffset) {
+        $hash = md5('avatar' . ($id - $userOffset));
+    } else {
+        $hash = md5('ratava' . $id);
+    }
+
+    return strtoupper(substr($hash, 2, 6));
+}

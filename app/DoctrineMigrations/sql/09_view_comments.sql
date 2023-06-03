@@ -16,6 +16,7 @@ CREATE VIEW `v_comments` AS
     gci.time_zone,
     gco.country_name,
     gco.country_code,
+    IF (c.user_id IS NULL, t.force_image, 1) AS force_image,
     c.deleted,
     c.time_created
   FROM comments AS c

@@ -152,6 +152,13 @@ class ViewComment implements CommentInterface
      */
     protected $timeCreated;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean")
+     */
+    private $forceImage;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
@@ -354,5 +361,13 @@ class ViewComment implements CommentInterface
     public function getTimeZone()
     {
         return $this->timeZone;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isForceImage(): bool
+    {
+        return $this->forceImage;
     }
 }

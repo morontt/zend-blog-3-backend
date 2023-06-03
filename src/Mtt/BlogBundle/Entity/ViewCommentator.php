@@ -47,7 +47,7 @@ class ViewCommentator implements CommentatorInterface
      *
      * @ORM\Column(type="boolean")
      */
-    private $forceImage = false;
+    private $forceImage;
 
     /**
      * Get id

@@ -13,6 +13,7 @@ use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Entity\CommentInterface;
 use Mtt\BlogBundle\Entity\ViewComment;
 use Mtt\BlogBundle\Utils\EmojiFlagSymbol;
+use function Mtt\BlogBundle\Entity\Traits\forceImageHash;
 
 class CommentTransformer extends BaseTransformer
 {
@@ -38,6 +39,7 @@ class CommentTransformer extends BaseTransformer
         $locationRegion = null;
         $locationCountry = null;
         $emailHash = null;
+        $imageHash = null;
         $countryCode = null;
 
         if ($item instanceof Comment) {
@@ -48,12 +50,14 @@ class CommentTransformer extends BaseTransformer
                 $email = $commentator->getEmail();
                 $website = $commentator->getWebsite();
                 $emailHash = $commentator->getAvatarHash();
+                $imageHash = $commentator->isForceImage() ? forceImageHash($commentator->getId()) : null;
             } else {
                 $user = $item->getUser();
                 if ($user) {
                     $username = $user->getUsername();
                     $email = $user->getEmail();
                     $emailHash = md5(strtolower(trim($user->getEmail())));
+                    $imageHash = forceImageHash(10000000 + $user->getId());
                 }
             }
 
@@ -72,6 +76,7 @@ class CommentTransformer extends BaseTransformer
             $email = $item->getEmail();
             $website = $item->getWebsite();
             $emailHash = $item->getAvatarHash();
+            $imageHash = $item->isForceImage() ? forceImageHash($item->getVirtualUserId()) : null;
 
             $locationCity = $item->getCity();
             $locationRegion = $item->getRegion();
@@ -106,6 +111,7 @@ class CommentTransformer extends BaseTransformer
             'country' => $locationCountry,
             'countryCode' => $flag,
             'parent' => $parentId,
+            'imageHash' => $imageHash,
             'deleted' => $item->isDeleted(),
             'createdAt' => $this->dateTimeToISO($item->getTimeCreated()),
         ];

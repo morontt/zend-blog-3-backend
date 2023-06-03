@@ -12,6 +12,7 @@
     <td>
         {{input value=commentator.website class="form-control"}}
     </td>
+    <td>{{input type="checkbox" checked=commentator.forceImage}}</td>
     <td>
         <div class="pull-right">
             <a class="btn btn-success" {{action "save"}}>
@@ -34,6 +35,11 @@
     </td>
     <td>{{commentator.email}}</td>
     <td>{{commentator.website}}</td>
+    <td>
+        {{#if commentator.forceImage}}
+            Да
+        {{/if}}
+    </td>
     <td>
         <div class="pull-right">
             <a class="btn btn-primary" {{action "edit"}}>
