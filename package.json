@@ -1,6 +1,6 @@
 {
     "name": "mttblog",
-    "version": "0.0.1",
+    "version": "2.0.0",
     "private": true,
     "author": {
         "name": "Alexander Harchenko",
@@ -9,9 +9,9 @@
     },
     "license": "MIT",
     "dependencies": {
-        "grunt": "1.0.2",
-        "grunt-contrib-concat": "1.0.1",
-        "grunt-contrib-cssmin": "2.*",
-        "grunt-contrib-uglify": "3.*"
+        "grunt": "1.0.*",
+        "grunt-contrib-concat": "1.*",
+        "grunt-contrib-cssmin": "3.*",
+        "grunt-contrib-uglify": "4.*"
     }
 }

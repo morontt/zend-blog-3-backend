@@ -7,13 +7,14 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        banner_format: '/* <%= pkg.name %> v<%= pkg.version %> --- <%= grunt.template.today("dd mmm yyyy HH:MM:ss o") %> */\n',
         concat: {
             css_login: {
                 options: {
                     stripBanners: {
                         block: true
                     },
-                    banner: '/*! <%= pkg.name %> --- <%= grunt.template.today("dd mmm yyyy HH:MM:ss") %> */\n'
+                    banner: '<%= banner_format %>'
                 },
                 src: [
                     'bower_components/bootstrap/dist/css/bootstrap.css',
@@ -26,7 +27,7 @@ module.exports = function (grunt) {
                     stripBanners: {
                         block: true
                     },
-                    banner: '/*! <%= pkg.name %> --- <%= grunt.template.today("dd mmm yyyy HH:MM:ss") %> */\n'
+                    banner: '<%= banner_format %>'
                 },
                 src: [
                     'bower_components/jquery-ui/themes/base/core.css',
@@ -55,7 +56,7 @@ module.exports = function (grunt) {
                     stripBanners: {
                         block: true
                     },
-                    banner: '/*! <%= pkg.name %> --- <%= grunt.template.today("dd mmm yyyy HH:MM:ss") %> */\n'
+                    banner: '<%= banner_format %>'
                 },
                 src: [
                     'web/dist/<%= pkg.name %>_jq_ui.css',
@@ -71,7 +72,7 @@ module.exports = function (grunt) {
                     stripBanners: {
                         block: true
                     },
-                    banner: '/*! <%= pkg.name %> --- <%= grunt.template.today("dd mmm yyyy HH:MM:ss") %> */\n'
+                    banner: '<%= banner_format %>'
                 },
                 src: [
                     'web/dist/<%= pkg.name %>_jq_ui.css',
@@ -87,7 +88,7 @@ module.exports = function (grunt) {
                     stripBanners: {
                         block: true
                     },
-                    banner: '/*! <%= pkg.name %> --- <%= grunt.template.today("dd mmm yyyy HH:MM:ss") %> */\n'
+                    banner: '<%= banner_format %>'
                 },
                 src: [
                     'web/spa/assets/vendor.js',
@@ -108,6 +109,7 @@ module.exports = function (grunt) {
         cssmin: {
             options: {
                 shorthandCompacting: false,
+                format: 'keep-breaks',
                 roundingPrecision: -1
             },
             target: {
@@ -120,8 +122,10 @@ module.exports = function (grunt) {
         },
         uglify: {
             options: {
-                banner: '/*! <%= pkg.name %> v<%= pkg.version %> ' +
-                    '--- <%= grunt.template.today("dd mmm yyyy HH:MM:ss") %> */\n'
+                output: {
+                    ascii_only: true,
+                    max_line_len: 160
+                }
             },
             dist: {
                 files: {
