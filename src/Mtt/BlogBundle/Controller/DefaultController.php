@@ -19,9 +19,15 @@ class DefaultController extends AbstractController
      */
     private $kernelEnv;
 
-    public function __construct(string $kernelEnv)
+    /**
+     * @var string
+     */
+    private $cdnUrl;
+
+    public function __construct(string $kernelEnv, string $cdnUrl)
     {
         $this->kernelEnv = $kernelEnv;
+        $this->cdnUrl = $cdnUrl;
     }
 
     /**
@@ -32,6 +38,8 @@ class DefaultController extends AbstractController
      */
     public function indexAction()
     {
+        $isDev = $this->kernelEnv == 'dev';
+
         $environment = [
             'modulePrefix' => 'mtt-blog',
             'environment' => ($this->kernelEnv == 'prod') ? 'production' : 'development',
@@ -41,10 +49,11 @@ class DefaultController extends AbstractController
                 'FEATURES' => [],
             ],
             'APP' => [
-                'LOG_ACTIVE_GENERATION' => true,
-                'LOG_TRANSITIONS' => true,
-                'LOG_TRANSITIONS_INTERNAL' => true,
-                'LOG_VIEW_LOOKUPS' => true,
+                'LOG_ACTIVE_GENERATION' => $isDev,
+                'LOG_TRANSITIONS' => $isDev,
+                'LOG_TRANSITIONS_INTERNAL' => $isDev,
+                'LOG_VIEW_LOOKUPS' => $isDev,
+                'LOG_BINDINGS' => $isDev,
                 'name' => 'mtt-blog',
                 'version' => '0.0.1 a8c1ef27',
             ],
@@ -59,6 +68,10 @@ class DefaultController extends AbstractController
                 'media-src' => "'self'",
             ],
             'exportApplicationGlobal' => true,
+            'appParameters' => [
+                'apiURL' => 'api',
+                'cdnURL' => $this->cdnUrl,
+            ],
         ];
 
         return [

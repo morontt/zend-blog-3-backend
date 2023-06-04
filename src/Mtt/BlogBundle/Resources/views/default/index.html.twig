@@ -40,12 +40,6 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script>
-        var app_parameters = {
-            api_url: 'api',
-            cdn_url: '{{ cdn_url }}'
-        };
-    </script>
     <script type="text/javascript" src="/dist/mttblog.min.js"></script>
     <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
     <script>

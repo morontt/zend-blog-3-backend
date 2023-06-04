@@ -1,4 +1,5 @@
 import DS from 'ember-data';
+import config from 'mtt-blog/config/environment';
 
 export default DS.Model.extend({
     name: DS.attr('string'),
@@ -10,7 +11,7 @@ export default DS.Model.extend({
     gravatarUrl: function () {
         let url;
         if (this.get('imageHash')) {
-            url = `${app_parameters.cdn_url}/images/avatar/${this.get('imageHash')}.png`;
+            url = `${config.appParameters.cdnURL}/images/avatar/${this.get('imageHash')}.png`;
         } else {
             let defaults = ['wavatar', 'monsterid'];
             let idx = (this.get('id')) % 2;

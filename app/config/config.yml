@@ -36,7 +36,6 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         browsertitle:   "%browsertitle%"
-        cdn_url:        "%cdn_url%"
         frontend_site:  "%frontend_site%"
 
 # Doctrine Configuration

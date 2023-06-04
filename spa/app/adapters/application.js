@@ -1,8 +1,9 @@
 import DS from 'ember-data';
 import Ember from 'ember';
+import config from 'mtt-blog/config/environment';
 
 export default DS.RESTAdapter.extend({
-    namespace: app_parameters.api_url,
+    namespace: config.appParameters.apiURL,
     ajaxError: function(jqXHR) {
         var error = this._super(jqXHR);
 

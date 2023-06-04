@@ -30,6 +30,7 @@ services:
     Mtt\BlogBundle\Controller\DefaultController:
         arguments:
             $kernelEnv: '%kernel.environment%'
+            $cdnUrl: '%cdn_url%'
 
     Mtt\BlogBundle\Controller\TelegramController:
         arguments:

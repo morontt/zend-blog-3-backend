@@ -1,5 +1,6 @@
 import DS from 'ember-data';
 import Ember from 'ember';
+import config from 'mtt-blog/config/environment';
 
 export default DS.Model.extend({
     path: DS.attr('string'),
@@ -13,7 +14,7 @@ export default DS.Model.extend({
     postId: DS.attr('number'),
     defaultImage: DS.attr('boolean'),
     src: Ember.computed('preview', function () {
-        return app_parameters.cdn_url + this.get('preview');
+        return config.appParameters.cdnURL + this.get('preview');
     }),
     size: Ember.computed('fileSize', function () {
         var size = this.get('fileSize');
