@@ -601,16 +601,19 @@ table.table-comments {
     table-layout: fixed;
 }
 
-table.table-pygments-code th.column-id,
-table.table-comments th.column-id {
+table th.column-id {
     width: 60px;
 }
+
 table.table-pygments-code th.code-lang {
     width: 100px;
 }
 
 table.table-comments th.column-cmtr {
     width: 140px;
+}
+table.table-commentators th.column-cmtr {
+    width: 98px;
 }
 table.table-comments th.column-ip {
     width: 160px;
