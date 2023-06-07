@@ -16,6 +16,9 @@ use Knp\Component\Pager\Paginator;
 use Knp\Component\Pager\PaginatorInterface;
 use Mtt\BlogBundle\API\DataConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class BaseController extends AbstractController
 {
@@ -80,7 +83,7 @@ class BaseController extends AbstractController
      *
      * @return SlidingPagination
      */
-    public function paginate($query, $page, $limit = 15): PaginationInterface
+    public function paginate($query, $page, int $limit = 15): PaginationInterface
     {
         return $this->getPaginator()
             ->paginate($query, (int)$page, $limit);
@@ -99,5 +102,55 @@ class BaseController extends AbstractController
             'previous' => $data['previous'] ?? false,
             'next' => $data['next'] ?? false,
         ];
+    }
+
+    /**
+     * @param FormInterface $form
+     *
+     * @return array
+     */
+    protected function handleForm(FormInterface $form): array
+    {
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $formData = $form->getData();
+            } else {
+                $errors = ['errors' => []];
+                /* @var \Symfony\Component\Form\FormError $formError */
+                foreach ($form->getErrors(true) as $formError) {
+                    $errors['errors'][] = [
+                        'message' => $formError->getMessage(),
+                        'path' => $formError->getCause()->getPropertyPath(),
+                    ];
+                }
+
+                return [null, $errors];
+            }
+        } else {
+            throw new BadRequestHttpException('Form not submitted');
+        }
+
+        return [$formData, null];
+    }
+
+    /**
+     * @param $child
+     * @param $type
+     * @param bool $put
+     *
+     * @return FormInterface
+     */
+    protected function createObjectForm($child, $type, bool $put = false): FormInterface
+    {
+        $fb = $this->container
+            ->get('form.factory')
+            ->createNamedBuilder('', FormType::class, null, [
+                'csrf_protection' => false,
+                'method' => $put ? 'PUT' : 'POST',
+            ]);
+
+        $fb->add($child, $type);
+
+        return $fb->getForm();
     }
 }

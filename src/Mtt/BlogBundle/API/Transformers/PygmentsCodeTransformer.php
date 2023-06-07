@@ -3,6 +3,7 @@
 namespace Mtt\BlogBundle\API\Transformers;
 
 use League\Fractal\Resource\Collection;
+use Mtt\BlogBundle\DTO\PygmentsCodeDTO;
 use Mtt\BlogBundle\Entity\PygmentsCode;
 
 class PygmentsCodeTransformer extends BaseTransformer
@@ -39,9 +40,9 @@ class PygmentsCodeTransformer extends BaseTransformer
 
     /**
      * @param PygmentsCode $entity
-     * @param array $data
+     * @param PygmentsCodeDTO $data
      */
-    public static function reverseTransform(PygmentsCode $entity, array $data)
+    public static function reverseTransform(PygmentsCode $entity, PygmentsCodeDTO $data)
     {
         $entity->setSourceCode($data['code']);
     }

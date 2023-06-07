@@ -180,29 +180,16 @@ class CommentController extends BaseController
         $form = $this->createForm(CommentFormType::class);
         $form->handleRequest($request);
 
-        $statusCode = Response::HTTP_OK;
-        $comment = null;
-        if ($form->isSubmitted()) {
-            if ($form->isValid()) {
-                $comment = $commentManager->saveComment($form->getData());
-                $statusCode = Response::HTTP_CREATED;
-            } else {
-                $errors = ['errors' => []];
-                /* @var \Symfony\Component\Form\FormError $formError */
-                foreach ($form->getErrors(true) as $formError) {
-                    $errors['errors'][] = [
-                        'message' => $formError->getMessage(),
-                        'path' => $formError->getCause()->getPropertyPath(),
-                    ];
-                }
-
-                return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
-            }
+        [$formData, $errors] = $this->handleForm($form);
+        if ($errors) {
+            return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
+        $comment = $commentManager->saveComment($formData);
+
         return new JsonResponse(
-            $comment ? $this->getDataConverter()->getComment($comment) : [],
-            $statusCode
+            $this->getDataConverter()->getComment($comment),
+            Response::HTTP_CREATED
         );
     }
 }

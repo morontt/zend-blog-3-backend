@@ -5,8 +5,10 @@ namespace Mtt\BlogBundle\Controller\API;
 use Mtt\BlogBundle\Controller\BaseController;
 use Mtt\BlogBundle\Entity\PygmentsCode;
 use Mtt\BlogBundle\Entity\Repository\PygmentsCodeRepository;
+use Mtt\BlogBundle\Form\PygmentsCodeFormType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -61,10 +63,17 @@ class PygmentsCodeController extends BaseController
      */
     public function createAction(Request $request): JsonResponse
     {
-        $result = $this->getDataConverter()
-            ->savePygmentsCode(new PygmentsCode(), $request->request->get('pygmentsCode'));
+        $form = $this->createObjectForm('pygmentsCode', PygmentsCodeFormType::class);
+        $form->handleRequest($request);
 
-        return new JsonResponse($result, 201);
+        [$formData, $errors] = $this->handleForm($form);
+        if ($errors) {
+            return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $result = $this->getDataConverter()->savePygmentsCode(new PygmentsCode(), $formData['pygmentsCode']);
+
+        return new JsonResponse($result, Response::HTTP_CREATED);
     }
 
     /**
@@ -77,8 +86,15 @@ class PygmentsCodeController extends BaseController
      */
     public function updateAction(Request $request, PygmentsCode $entity): JsonResponse
     {
-        $result = $this->getDataConverter()
-            ->savePygmentsCode($entity, $request->request->get('pygmentsCode'));
+        $form = $this->createObjectForm('pygmentsCode', PygmentsCodeFormType::class, true);
+        $form->handleRequest($request);
+
+        [$formData, $errors] = $this->handleForm($form);
+        if ($errors) {
+            return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $result = $this->getDataConverter()->savePygmentsCode($entity, $formData['pygmentsCode']);
 
         return new JsonResponse($result);
     }

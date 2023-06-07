@@ -24,6 +24,7 @@ use Mtt\BlogBundle\API\Transformers\PostTransformer;
 use Mtt\BlogBundle\API\Transformers\PygmentsCodeTransformer;
 use Mtt\BlogBundle\API\Transformers\PygmentsLanguageTransformer;
 use Mtt\BlogBundle\API\Transformers\TagTransformer;
+use Mtt\BlogBundle\DTO\PygmentsCodeDTO;
 use Mtt\BlogBundle\Entity\Category;
 use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Entity\Commentator;
@@ -276,11 +277,11 @@ class DataConverter
 
     /**
      * @param PygmentsCode $entity
-     * @param array $data
+     * @param PygmentsCodeDTO $data
      *
      * @return array
      */
-    public function savePygmentsCode(PygmentsCode $entity, array $data): array
+    public function savePygmentsCode(PygmentsCode $entity, PygmentsCodeDTO $data): array
     {
         $oldHash = $entity->getContentHash();
         PygmentsCodeTransformer::reverseTransform($entity, $data);
