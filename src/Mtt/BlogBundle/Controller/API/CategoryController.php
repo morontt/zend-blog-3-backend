@@ -12,8 +12,10 @@ use Doctrine\ORM\ORMException;
 use Mtt\BlogBundle\Controller\BaseController;
 use Mtt\BlogBundle\Entity\Category;
 use Mtt\BlogBundle\Entity\Repository\CategoryRepository;
+use Mtt\BlogBundle\Form\CategoryFormType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -72,13 +74,22 @@ class CategoryController extends BaseController
      */
     public function createAction(Request $request): JsonResponse
     {
-        $result = $this->getDataConverter()
-            ->saveCategory(new Category(), $request->request->get('category'));
+        $form = $this->createObjectForm('category', CategoryFormType::class);
+        $form->handleRequest($request);
 
-        return new JsonResponse($result, 201);
+        [$formData, $errors] = $this->handleForm($form);
+        if ($errors) {
+            return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $result = $this->getDataConverter()->saveCategory(new Category(), $formData['category']);
+
+        return new JsonResponse($result, Response::HTTP_CREATED);
     }
 
     /**
+     * TODO update nested-set tree
+     *
      * @Route("/{id}", requirements={"id": "\d+"}, methods={"PUT"})
      *
      * @param Request $request
@@ -90,13 +101,22 @@ class CategoryController extends BaseController
      */
     public function updateAction(Request $request, Category $entity): JsonResponse
     {
-        $result = $this->getDataConverter()
-            ->saveCategory($entity, $request->request->get('category'));
+        $form = $this->createObjectForm('category', CategoryFormType::class, true);
+        $form->handleRequest($request);
+
+        [$formData, $errors] = $this->handleForm($form);
+        if ($errors) {
+            return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $result = $this->getDataConverter()->saveCategory($entity, $formData['category']);
 
         return new JsonResponse($result);
     }
 
     /**
+     * TODO update nested-set tree
+     *
      * @Route("/{id}", requirements={"id": "\d+"}, methods={"DELETE"})
      *
      * @param Category $entity

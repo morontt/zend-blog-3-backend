@@ -5,7 +5,7 @@ namespace Mtt\BlogBundle\DTO;
 use ArrayAccess;
 use RuntimeException;
 
-class BaseObject implements ArrayAccess
+abstract class BaseObject implements ArrayAccess
 {
     public function offsetExists($offset): bool
     {

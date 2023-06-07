@@ -24,6 +24,7 @@ use Mtt\BlogBundle\API\Transformers\PostTransformer;
 use Mtt\BlogBundle\API\Transformers\PygmentsCodeTransformer;
 use Mtt\BlogBundle\API\Transformers\PygmentsLanguageTransformer;
 use Mtt\BlogBundle\API\Transformers\TagTransformer;
+use Mtt\BlogBundle\DTO\CategoryDTO;
 use Mtt\BlogBundle\DTO\PygmentsCodeDTO;
 use Mtt\BlogBundle\DTO\PygmentsLanguageDTO;
 use Mtt\BlogBundle\DTO\TagDTO;
@@ -128,13 +129,13 @@ class DataConverter
 
     /**
      * @param Category $entity
-     * @param array $data
+     * @param CategoryDTO $data
      *
      * @throws ORMException
      *
      * @return array
      */
-    public function saveCategory(Category $entity, array $data): array
+    public function saveCategory(Category $entity, CategoryDTO $data): array
     {
         CategoryTransformer::reverseTransform($entity, $data);
 
