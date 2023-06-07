@@ -5,8 +5,10 @@ namespace Mtt\BlogBundle\Controller\API;
 use Mtt\BlogBundle\Controller\BaseController;
 use Mtt\BlogBundle\Entity\PygmentsLanguage;
 use Mtt\BlogBundle\Entity\Repository\PygmentsLanguageRepository;
+use Mtt\BlogBundle\Form\PygmentsLanguageFormType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -61,10 +63,18 @@ class PygmentsLanguageController extends BaseController
      */
     public function createAction(Request $request): JsonResponse
     {
-        $result = $this->getDataConverter()
-            ->savePygmentsLanguage(new PygmentsLanguage(), $request->request->get('pygmentsLanguage'));
+        $form = $this->createObjectForm('pygmentsLanguage', PygmentsLanguageFormType::class);
+        $form->handleRequest($request);
 
-        return new JsonResponse($result, 201);
+        [$formData, $errors] = $this->handleForm($form);
+        if ($errors) {
+            return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $result = $this->getDataConverter()
+            ->savePygmentsLanguage(new PygmentsLanguage(), $formData['pygmentsLanguage']);
+
+        return new JsonResponse($result, Response::HTTP_CREATED);
     }
 
     /**
@@ -77,8 +87,16 @@ class PygmentsLanguageController extends BaseController
      */
     public function updateAction(Request $request, PygmentsLanguage $entity): JsonResponse
     {
+        $form = $this->createObjectForm('pygmentsLanguage', PygmentsLanguageFormType::class, true);
+        $form->handleRequest($request);
+
+        [$formData, $errors] = $this->handleForm($form);
+        if ($errors) {
+            return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
         $result = $this->getDataConverter()
-            ->savePygmentsLanguage($entity, $request->request->get('pygmentsLanguage'));
+            ->savePygmentsLanguage($entity, $formData['pygmentsLanguage']);
 
         return new JsonResponse($result);
     }

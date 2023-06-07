@@ -2,6 +2,7 @@
 
 namespace Mtt\BlogBundle\API\Transformers;
 
+use Mtt\BlogBundle\DTO\PygmentsLanguageDTO;
 use Mtt\BlogBundle\Entity\PygmentsLanguage;
 
 class PygmentsLanguageTransformer extends BaseTransformer
@@ -22,9 +23,9 @@ class PygmentsLanguageTransformer extends BaseTransformer
 
     /**
      * @param PygmentsLanguage $entity
-     * @param array $data
+     * @param PygmentsLanguageDTO $data
      */
-    public static function reverseTransform(PygmentsLanguage $entity, array $data)
+    public static function reverseTransform(PygmentsLanguage $entity, PygmentsLanguageDTO $data)
     {
         $entity
             ->setName($data['name'])
