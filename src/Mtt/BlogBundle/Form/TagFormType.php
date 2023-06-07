@@ -2,7 +2,7 @@
 
 namespace Mtt\BlogBundle\Form;
 
-use Mtt\BlogBundle\DTO\PygmentsLanguageDTO;
+use Mtt\BlogBundle\DTO\TagDTO;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints;
 /**
  * TODO add unique DB field validation
  */
-class PygmentsLanguageFormType extends AbstractType
+class TagFormType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -27,17 +27,17 @@ class PygmentsLanguageFormType extends AbstractType
                 [
                     'constraints' => [
                         new Constraints\NotBlank(),
-                        new Constraints\Length(['max' => 32]),
+                        new Constraints\Length(['max' => 100]),
                     ],
                 ]
             )
             ->add(
-                'lexer',
+                'url',
                  TextType::class,
                 [
                     'required' => false,
                     'constraints' => [
-                        new Constraints\Length(['max' => 16]),
+                        new Constraints\Length(['max' => 200]),
                     ],
                 ]
             )
@@ -51,7 +51,7 @@ class PygmentsLanguageFormType extends AbstractType
     {
         $resolver->setDefaults([
             'csrf_protection' => false,
-            'data_class' => PygmentsLanguageDTO::class,
+            'data_class' => TagDTO::class,
         ]);
     }
 

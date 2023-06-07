@@ -12,8 +12,10 @@ use Doctrine\ORM\ORMException;
 use Mtt\BlogBundle\Controller\BaseController;
 use Mtt\BlogBundle\Entity\Repository\TagRepository;
 use Mtt\BlogBundle\Entity\Tag;
+use Mtt\BlogBundle\Form\TagFormType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -70,10 +72,17 @@ class TagController extends BaseController
      */
     public function createAction(Request $request): JsonResponse
     {
-        $result = $this->getDataConverter()
-            ->saveTag(new Tag(), $request->request->get('tag'));
+        $form = $this->createObjectForm('tag', TagFormType::class);
+        $form->handleRequest($request);
 
-        return new JsonResponse($result, 201);
+        [$formData, $errors] = $this->handleForm($form);
+        if ($errors) {
+            return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $result = $this->getDataConverter()->saveTag(new Tag(), $formData['tag']);
+
+        return new JsonResponse($result, Response::HTTP_CREATED);
     }
 
     /**
@@ -86,8 +95,15 @@ class TagController extends BaseController
      */
     public function updateAction(Request $request, Tag $entity): JsonResponse
     {
-        $result = $this->getDataConverter()
-            ->saveTag($entity, $request->request->get('tag'));
+        $form = $this->createObjectForm('tag', TagFormType::class, true);
+        $form->handleRequest($request);
+
+        [$formData, $errors] = $this->handleForm($form);
+        if ($errors) {
+            return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $result = $this->getDataConverter()->saveTag($entity, $formData['tag']);
 
         return new JsonResponse($result);
     }

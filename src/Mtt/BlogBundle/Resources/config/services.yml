@@ -9,7 +9,7 @@ services:
 
     Mtt\BlogBundle\:
         resource: '../../*'
-        exclude: '../../{Entity,Model,Event,OAuth2,Utils,Doctrine/DBAL,DTO}'
+        exclude: '../../{Entity,Model,Event,OAuth2,Utils,Doctrine/DBAL,DTO,Form}'
 
     Mtt\BlogBundle\Entity\Repository\:
         resource: '../../Entity/Repository'

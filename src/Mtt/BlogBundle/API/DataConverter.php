@@ -26,6 +26,7 @@ use Mtt\BlogBundle\API\Transformers\PygmentsLanguageTransformer;
 use Mtt\BlogBundle\API\Transformers\TagTransformer;
 use Mtt\BlogBundle\DTO\PygmentsCodeDTO;
 use Mtt\BlogBundle\DTO\PygmentsLanguageDTO;
+use Mtt\BlogBundle\DTO\TagDTO;
 use Mtt\BlogBundle\Entity\Category;
 use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Entity\Commentator;
@@ -112,11 +113,11 @@ class DataConverter
 
     /**
      * @param Tag $entity
-     * @param array $data
+     * @param TagDTO $data
      *
      * @return array
      */
-    public function saveTag(Tag $entity, array $data): array
+    public function saveTag(Tag $entity, TagDTO $data): array
     {
         TagTransformer::reverseTransform($entity, $data);
 

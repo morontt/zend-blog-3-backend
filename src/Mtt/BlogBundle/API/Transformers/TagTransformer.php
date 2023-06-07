@@ -8,6 +8,7 @@
 
 namespace Mtt\BlogBundle\API\Transformers;
 
+use Mtt\BlogBundle\DTO\TagDTO;
 use Mtt\BlogBundle\Entity\Tag;
 use Mtt\BlogBundle\Utils\RuTransform;
 
@@ -29,9 +30,9 @@ class TagTransformer extends BaseTransformer
 
     /**
      * @param Tag $entity
-     * @param array $data
+     * @param TagDTO $data
      */
-    public static function reverseTransform(Tag $entity, array $data)
+    public static function reverseTransform(Tag $entity, TagDTO $data)
     {
         $entity->setName($data['name']);
 
