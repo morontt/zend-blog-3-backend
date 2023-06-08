@@ -24,6 +24,7 @@ use Mtt\BlogBundle\API\Transformers\PostTransformer;
 use Mtt\BlogBundle\API\Transformers\PygmentsCodeTransformer;
 use Mtt\BlogBundle\API\Transformers\PygmentsLanguageTransformer;
 use Mtt\BlogBundle\API\Transformers\TagTransformer;
+use Mtt\BlogBundle\DTO\ArticleDTO;
 use Mtt\BlogBundle\DTO\CategoryDTO;
 use Mtt\BlogBundle\DTO\PygmentsCodeDTO;
 use Mtt\BlogBundle\DTO\PygmentsLanguageDTO;
@@ -182,13 +183,13 @@ class DataConverter
 
     /**
      * @param Post $entity
-     * @param array $data
+     * @param ArticleDTO $data
      *
      * @throws ORMException
      *
      * @return array
      */
-    public function savePost(Post $entity, array $data): array
+    public function savePost(Post $entity, ArticleDTO $data): array
     {
         PostTransformer::reverseTransform($entity, $data);
 

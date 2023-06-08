@@ -9,6 +9,7 @@
 namespace Mtt\BlogBundle\API\Transformers;
 
 use League\Fractal\Resource\Collection;
+use Mtt\BlogBundle\DTO\ArticleDTO;
 use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Entity\Tag;
 use Mtt\BlogBundle\Utils\RuTransform;
@@ -53,9 +54,9 @@ class PostTransformer extends BaseTransformer
 
     /**
      * @param Post $entity
-     * @param array $data
+     * @param ArticleDTO $data
      */
-    public static function reverseTransform(Post $entity, array $data)
+    public static function reverseTransform(Post $entity, ArticleDTO $data)
     {
         if (empty($data['title'])) {
             $data['title'] = 'no subject';

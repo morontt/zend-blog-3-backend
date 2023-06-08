@@ -12,8 +12,10 @@ use Doctrine\ORM\ORMException;
 use Mtt\BlogBundle\Controller\BaseController;
 use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Entity\Repository\PostRepository;
+use Mtt\BlogBundle\Form\ArticleFormType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -72,10 +74,17 @@ class PostController extends BaseController
      */
     public function createAction(Request $request): JsonResponse
     {
-        $result = $this->getDataConverter()
-            ->savePost(new Post(), $request->request->get('post'));
+        $form = $this->createObjectForm('post', ArticleFormType::class);
+        $form->handleRequest($request);
 
-        return new JsonResponse($result, 201);
+        [$formData, $errors] = $this->handleForm($form);
+        if ($errors) {
+            return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $result = $this->getDataConverter()->savePost(new Post(), $formData['post']);
+
+        return new JsonResponse($result, Response::HTTP_CREATED);
     }
 
     /**
@@ -90,8 +99,15 @@ class PostController extends BaseController
      */
     public function updateAction(Request $request, Post $entity): JsonResponse
     {
-        $result = $this->getDataConverter()
-            ->savePost($entity, $request->request->get('post'));
+        $form = $this->createObjectForm('post', ArticleFormType::class, true);
+        $form->handleRequest($request);
+
+        [$formData, $errors] = $this->handleForm($form);
+        if ($errors) {
+            return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $result = $this->getDataConverter()->savePost($entity, $formData['post']);
 
         return new JsonResponse($result);
     }
