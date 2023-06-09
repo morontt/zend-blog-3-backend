@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class SystemParameters
 {
     const DROPBOX_TOKEN = 'dropbox_token';
+    const UPDATE_VIEW_COUNTS_FROM = 'upd_view_counts_from';
 
     /**
      * @var int
