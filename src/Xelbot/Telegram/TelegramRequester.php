@@ -115,22 +115,38 @@ class TelegramRequester
             $this->logger->info('Request: ' . $action, $data);
         }
 
+        $responseBody = null;
+        $context = [];
         try {
             $response = $this->client->post(
                 sprintf('/bot%s/%s', $this->token, $action),
                 $this->prepareRequestParams($data)
             );
-            $result = (string)$response->getBody();
+            $responseBody = (string)$response->getBody();
         } catch (RequestException $e) {
-            $result = ($e->getResponse()) ? (string)$e->getResponse()->getBody() : '';
+            if ($e->hasResponse()) {
+                $responseBody = (string)$e->getResponse()->getBody();
+            } else {
+                $context = ['RequestException' => $e->getMessage()];
+            }
+        } catch (\Throwable $e) {
+            $context = ['Error' => $e->getMessage()];
         }
 
-        $responseData = json_decode($result, true);
+        $responseData = null;
+        if ($responseBody) {
+            try {
+                $responseData = json_decode($responseBody, true, 512, JSON_THROW_ON_ERROR);
+            } catch (\JsonException $e) {
+                $context = ['JsonException' => $e->getMessage()];
+            }
+        }
+
         if ($this->logger) {
-            $this->logger->info('Response: ' . $action, $responseData);
+            $this->logger->info('Response: ' . $action, $responseData ?: $context);
         }
 
-        return new TelegramResponse($responseData);
+        return new TelegramResponse($responseData ?: []);
     }
 
     /**

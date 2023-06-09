@@ -38,7 +38,7 @@ class TrackingArchive implements CronServiceInterface
      */
     public function run()
     {
-        $this->em->getConnection()->query('CALL tracking_to_archive()');
+        // $this->em->getConnection()->executeQuery('CALL tracking_to_archive()');
     }
 
     /**
@@ -46,6 +46,6 @@ class TrackingArchive implements CronServiceInterface
      */
     public function getMessage(): string
     {
-        return 'Complete';
+        return 'Temporary disabled';
     }
 }

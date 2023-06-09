@@ -52,8 +52,14 @@ class CronDailyCommand extends Command
             try {
                 $cronJob->run();
                 $messages[] = sprintf('%s: %s', self::getJobName($cronJob), $cronJob->getMessage());
+                $output->writeln(
+                    sprintf('<comment>%s:</comment> %s', self::getJobName($cronJob), $cronJob->getMessage())
+                );
             } catch (\Exception $e) {
                 $messages[] = sprintf('Error %s: %s', self::getJobName($cronJob), $e->getMessage());
+                $output->writeln(
+                    sprintf('<error>%s Error:</error> %s', self::getJobName($cronJob), $e->getMessage())
+                );
             }
         }
 
