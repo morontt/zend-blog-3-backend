@@ -12,7 +12,7 @@ export default Ember.Controller.extend({
             if (this.get('enableLangButton')) {
                 this.set('enableLangButton', false);
 
-                var lang = this.store.createRecord('pygmentsLanguage', {
+                let lang = this.store.createRecord('pygmentsLanguage', {
                     name: this.get('newLangName'),
                     lexer: this.get('newLangLexer')
                 });
@@ -33,7 +33,7 @@ export default Ember.Controller.extend({
             }
         },
         removeLang() {
-            var lang_id = $('#confirmation-modal').attr('data-object-id');
+            let lang_id = $('#confirmation-modal').attr('data-object-id');
             this.store.peekRecord('pygmentsLanguage', lang_id).destroyRecord();
         },
         openModal() {

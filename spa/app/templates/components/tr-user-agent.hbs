@@ -1,0 +1,18 @@
+<td class="center-text">{{agent.id}}</td>
+<td>
+    <strong>{{agent.name}}</strong>
+</td>
+<td class="center-text">
+    {{#if agent.bot}}
+        *
+    {{/if}}
+</td>
+<td class="text-right">{{date-format agent.createdAt 'DD.MM.YYYY, HH:mm:ss'}}</td>
+<td>
+    <div class="pull-right">
+        <a class="btn btn-primary" {{action "edit"}}>
+            <i class="glyphicon glyphicon-pencil"></i>
+            <span>edit</span>
+        </a>
+    </div>
+</td>
