@@ -10,16 +10,14 @@ trait ModifyEntityTrait
     /**
      * @var DateTime
      *
-     * @ORM\Column(type="milliseconds_dt",
-     *   columnDefinition="DATETIME(3) DEFAULT NOW(3) NOT NULL COMMENT '(DC2Type:milliseconds_dt)'")
+     * @ORM\Column(type="milliseconds_dt", options={"default": "CURRENT_TIMESTAMP(3)"})
      */
     protected $timeCreated;
 
     /**
      * @var DateTime
      *
-     * @ORM\Column(type="milliseconds_dt",
-     *   columnDefinition="DATETIME(3) DEFAULT NOW(3) NOT NULL COMMENT '(DC2Type:milliseconds_dt)'")
+     * @ORM\Column(type="milliseconds_dt", options={"default": "CURRENT_TIMESTAMP(3)"})
      */
     protected $lastUpdate;
 

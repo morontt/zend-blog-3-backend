@@ -129,7 +129,7 @@ class Post
     /**
      * @var DateTime
      *
-     * @ORM\Column(type="datetime", options={"default": "NOW()"})
+     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
      */
     private $updatedAt;
 
