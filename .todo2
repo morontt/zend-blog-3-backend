@@ -3,7 +3,7 @@
   "tasks": [
     {
       "text": "Tracking #83",
-      "priority": "medium",
+      "priority": "high",
       "creation": 1686425029,
       "tasks": [
         {
@@ -25,7 +25,7 @@
     },
     {
       "text": "Update JavaScript verdors #82",
-      "priority": "medium",
+      "priority": "low",
       "creation": 1686425155,
       "tasks": [
         {
@@ -75,12 +75,12 @@
     },
     {
       "text": "CI integration restart #79",
-      "priority": "medium",
+      "priority": "verylow",
       "creation": 1686425284
     },
     {
       "text": "Check fake emails in comments before send #78",
-      "priority": "medium",
+      "priority": "low",
       "creation": 1686425301
     },
     {
@@ -148,12 +148,12 @@
     },
     {
       "text": "Move boilerplate code in API controllers to BaseController #69",
-      "priority": "medium",
+      "priority": "verylow",
       "creation": 1686425580
     },
     {
       "text": "Flutter Desktop for UI #68",
-      "priority": "medium",
+      "priority": "verylow",
       "creation": 1686425605,
       "tasks": [
         {
@@ -165,7 +165,7 @@
     },
     {
       "text": "Messages of validation error #67",
-      "priority": "medium",
+      "priority": "veryhigh",
       "creation": 1686425646,
       "tasks": [
         {
@@ -201,12 +201,12 @@
     },
     {
       "text": "Enable/disable comments on post #62",
-      "priority": "medium",
+      "priority": "high",
       "creation": 1686425833
     },
     {
       "text": "Remove deprecated and unused fields from entities #60",
-      "priority": "medium",
+      "priority": "low",
       "creation": 1686425860,
       "tasks": [
         {
