@@ -1,0 +1,235 @@
+{
+  "title": "Zend-blog Backend",
+  "tasks": [
+    {
+      "text": "Tracking #83",
+      "priority": "medium",
+      "creation": 1686425029,
+      "tasks": [
+        {
+          "text": "tracking to archive rework",
+          "priority": "medium",
+          "creation": 1686425094
+        },
+        {
+          "text": "tracking on dashboard",
+          "priority": "medium",
+          "creation": 1686425108
+        },
+        {
+          "text": "update views count in articles",
+          "priority": "medium",
+          "creation": 1686425120
+        }
+      ]
+    },
+    {
+      "text": "Update JavaScript verdors #82",
+      "priority": "medium",
+      "creation": 1686425155,
+      "tasks": [
+        {
+          "text": "vendors for assets build",
+          "priority": "medium",
+          "creation": 1686425179,
+          "completion": 1686425208
+        },
+        {
+          "text": "SPA vendors",
+          "priority": "medium",
+          "creation": 1686425188
+        },
+        {
+          "text": "Node.js",
+          "priority": "medium",
+          "creation": 1686425194
+        }
+      ]
+    },
+    {
+      "text": "Add filters for list of entities #80",
+      "priority": "medium",
+      "creation": 1686425235,
+      "tasks": [
+        {
+          "text": "Articles",
+          "priority": "medium",
+          "creation": 1686425250
+        },
+        {
+          "text": "Comments",
+          "priority": "medium",
+          "creation": 1686425255
+        },
+        {
+          "text": "Commentators",
+          "priority": "medium",
+          "creation": 1686425259
+        },
+        {
+          "text": "User agents",
+          "priority": "medium",
+          "creation": 1686425266
+        }
+      ]
+    },
+    {
+      "text": "CI integration restart #79",
+      "priority": "medium",
+      "creation": 1686425284
+    },
+    {
+      "text": "Check fake emails in comments before send #78",
+      "priority": "medium",
+      "creation": 1686425301
+    },
+    {
+      "text": "Backups in Dropbox #77",
+      "priority": "medium",
+      "creation": 1686425321,
+      "tasks": [
+        {
+          "text": "Remove DB dumps, max 14 items",
+          "priority": "medium",
+          "creation": 1686425348
+        }
+      ]
+    },
+    {
+      "text": "Save article to local storage #76",
+      "priority": "medium",
+      "creation": 1686425375,
+      "tasks": [
+        {
+          "text": "before save on server",
+          "priority": "medium",
+          "creation": 1686425395
+        },
+        {
+          "text": "save with timestamp, clear after success save, replace from local storage, if draft is newer",
+          "priority": "medium",
+          "creation": 1686425409
+        }
+      ]
+    },
+    {
+      "text": "Geolocation rework #74",
+      "priority": "medium",
+      "creation": 1686425442,
+      "tasks": [
+        {
+          "text": "change logic for unchecked IP",
+          "priority": "medium",
+          "creation": 1686425458
+        }
+      ]
+    },
+    {
+      "text": "Clear varnish cache (by button) #72",
+      "priority": "medium",
+      "creation": 1686425497
+    },
+    {
+      "text": "Article and code snippet sync #71",
+      "priority": "medium",
+      "creation": 1686425524,
+      "tasks": [
+        {
+          "text": "update article when code snippet update",
+          "priority": "medium",
+          "creation": 1686425543
+        }
+      ]
+    },
+    {
+      "text": "Use prebuilded docker image #70",
+      "priority": "medium",
+      "creation": 1686425561
+    },
+    {
+      "text": "Move boilerplate code in API controllers to BaseController #69",
+      "priority": "medium",
+      "creation": 1686425580
+    },
+    {
+      "text": "Flutter Desktop for UI #68",
+      "priority": "medium",
+      "creation": 1686425605,
+      "tasks": [
+        {
+          "text": "And remove JavaScript SPA",
+          "priority": "medium",
+          "creation": 1686425621
+        }
+      ]
+    },
+    {
+      "text": "Messages of validation error #67",
+      "priority": "medium",
+      "creation": 1686425646,
+      "tasks": [
+        {
+          "text": "russian language",
+          "priority": "medium",
+          "creation": 1686425673
+        }
+      ]
+    },
+    {
+      "text": "Add more info for comment #66",
+      "priority": "medium",
+      "creation": 1686425699,
+      "tasks": [
+        {
+          "text": "user agent and other",
+          "priority": "medium",
+          "creation": 1686425718
+        }
+      ]
+    },
+    {
+      "text": "Select default image #65",
+      "priority": "medium",
+      "creation": 1686425790,
+      "tasks": [
+        {
+          "text": "and unselect other images",
+          "priority": "medium",
+          "creation": 1686425812
+        }
+      ]
+    },
+    {
+      "text": "Enable/disable comments on post #62",
+      "priority": "medium",
+      "creation": 1686425833
+    },
+    {
+      "text": "Remove deprecated and unused fields from entities #60",
+      "priority": "medium",
+      "creation": 1686425860,
+      "tasks": [
+        {
+          "text": "users table",
+          "priority": "medium",
+          "creation": 1686425887
+        },
+        {
+          "text": "commentators",
+          "priority": "medium",
+          "creation": 1686425893
+        },
+        {
+          "text": "tracking",
+          "priority": "medium",
+          "creation": 1686425899
+        },
+        {
+          "text": "tracking agent",
+          "priority": "medium",
+          "creation": 1686425910
+        }
+      ]
+    }
+  ]
+}
