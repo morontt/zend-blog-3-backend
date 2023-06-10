@@ -617,10 +617,19 @@ table.table-comments th.column-cmtr {
 table.table-commentators th.column-cmtr {
     width: 98px;
 }
+table.table-commentators th.column-force-avatar {
+    width: 68px;
+}
+
 table.table-comments th.column-ip {
     width: 160px;
 }
 
 table.table-user-agent i.robot:before {
     content: '\1F916';
+}
+
+table td.text-break-word,
+table th.text-break-word {
+    overflow-wrap: break-word;
 }

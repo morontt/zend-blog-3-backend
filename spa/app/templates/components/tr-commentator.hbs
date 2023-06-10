@@ -33,11 +33,11 @@
     <td>
         <strong>{{commentator.name}}</strong>
     </td>
-    <td>{{commentator.email}}</td>
-    <td>{{commentator.website}}</td>
-    <td>
+    <td class="text-break-word">{{commentator.email}}</td>
+    <td class="text-break-word">{{commentator.website}}</td>
+    <td class="center-text">
         {{#if commentator.forceImage}}
-            Да
+            <i class="glyphicon glyphicon-ok"></i>
         {{/if}}
     </td>
     <td>
