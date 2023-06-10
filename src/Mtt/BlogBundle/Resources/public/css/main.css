@@ -586,10 +586,6 @@ th.actions {
     width: 94px;
 }
 
-th.text-date {
-    width: 115px;
-}
-
 .force-pointer {
     cursor: pointer;
 }
@@ -597,12 +593,18 @@ th.text-date {
 table.table-pygments-code,
 table.table-commentators,
 table.table-images,
+table.table-user-agent,
 table.table-comments {
     table-layout: fixed;
 }
 
+table th.column-bot,
 table th.column-id {
     width: 60px;
+}
+
+table th.text-date {
+    width: 115px;
 }
 
 table.table-pygments-code th.code-lang {
@@ -617,4 +619,8 @@ table.table-commentators th.column-cmtr {
 }
 table.table-comments th.column-ip {
     width: 160px;
+}
+
+table.table-user-agent i.robot:before {
+    content: '\1F916';
 }

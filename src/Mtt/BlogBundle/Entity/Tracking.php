@@ -46,8 +46,6 @@ class Tracking
     /**
      * @var DateTime
      *
-     * @deprecated
-     *
      * @ORM\Column(type="milliseconds_dt")
      */
     protected $timeCreated;
@@ -55,7 +53,9 @@ class Tracking
     /**
      * @var int
      *
-     * @ORM\Column(type="integer")
+     * @deprecated
+     *
+     * @ORM\Column(type="integer", nullable=true)
      */
     protected $timestampCreated;
 

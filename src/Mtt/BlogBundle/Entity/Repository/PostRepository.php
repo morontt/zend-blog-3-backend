@@ -42,4 +42,18 @@ class PostRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function increaseViewCounter(int $articleId, int $cnt)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb
+            ->update()
+            ->set('p.viewsCount', '(p.viewsCount + :cnt)')
+            ->where($qb->expr()->eq('p.id', ':id'))
+            ->setParameter('id', $articleId)
+            ->setParameter('cnt', $cnt)
+        ;
+
+        $qb->getQuery()->execute();
+    }
 }

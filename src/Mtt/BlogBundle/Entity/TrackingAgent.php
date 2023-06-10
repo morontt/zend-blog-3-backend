@@ -44,9 +44,17 @@ class TrackingAgent
     protected $botFilter = true;
 
     /**
+     * @var bool
+     *
+     * @deprecated
+     * @ORM\Column(type="boolean", name="is_bot", options={"default": false})
+     */
+    protected $bot = false;
+
+    /**
      * @var DateTime
      *
-     * @ORM\Column(type="milliseconds_dt", nullable=true)
+     * @ORM\Column(type="milliseconds_dt", options={"default": "CURRENT_TIMESTAMP(3)"})
      */
     protected $createdAt;
 
@@ -202,5 +210,25 @@ class TrackingAgent
     public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBot(): bool
+    {
+        return $this->bot;
+    }
+
+    /**
+     * @param bool $bot
+     *
+     * @return $this
+     */
+    public function setBot(bool $bot): self
+    {
+        $this->bot = $bot;
+
+        return $this;
     }
 }

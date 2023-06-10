@@ -13,6 +13,8 @@ use Mtt\BlogBundle\Entity\TrackingAgent;
  */
 class TrackingAgentRepository extends ServiceEntityRepository
 {
+    use ListQueryTrait;
+
     /**
      * @param ManagerRegistry $registry
      */

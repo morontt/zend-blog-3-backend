@@ -32,13 +32,6 @@ class Comment implements CommentInterface
     protected $id;
 
     /**
-     * @var DateTime
-     *
-     * @ORM\Column(type="milliseconds_dt", nullable=true)
-     */
-    protected $lastUpdateCopy;
-
-    /**
      * @var Collection
      *
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="parent")

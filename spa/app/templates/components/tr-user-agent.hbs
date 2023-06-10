@@ -1,0 +1,33 @@
+<td class="center-text">{{agent.id}}</td>
+<td>
+    <strong>{{agent.name}}</strong>
+</td>
+<td class="center-text">
+{{#if isEditing}}
+    {{input type="checkbox" checked=agent.bot}}
+{{else}}
+    {{#if agent.bot}}
+        <i class="glyphicon robot"></i>
+    {{/if}}
+{{/if}}
+</td>
+<td class="text-right">{{date-format agent.createdAt 'DD.MM.YYYY, HH:mm:ss'}}</td>
+<td>
+    <div class="pull-right">
+    {{#if isEditing}}
+        <a class="btn btn-success" {{action "save"}}>
+            <i class="glyphicon glyphicon-ok"></i>
+            <span>save</span>
+        </a>
+        <button class="btn btn-warning btn-confirm" {{action "reset"}}>
+            <i class="glyphicon glyphicon-remove"></i>
+            <span>reset</span>
+        </button>
+    {{else}}
+        <a class="btn btn-primary" {{action "edit"}}>
+            <i class="glyphicon glyphicon-pencil"></i>
+            <span>edit</span>
+        </a>
+    {{/if}}
+    </div>
+</td>

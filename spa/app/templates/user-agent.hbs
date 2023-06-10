@@ -1,0 +1,34 @@
+<div id="topbar">
+    <ol class="breadcrumb">
+        <li>User Agent</li>
+    </ol>
+</div>
+<div id="content">
+    <div id="flashes">
+    </div>
+
+    <div class="page-header">
+        <h1><i class="glyphicon glyphicon-link"></i> Управление браузерами и ботами.</h1>
+    </div>
+
+    <table class="table table-bordered table-striped table-user-agent">
+        <thead>
+        <tr>
+            <th class="center-text column-id">#id</th>
+            <th>User Agent</th>
+            <th class="center-text column-bot">Бот</th>
+            <th class="text-right text-date">Создан</th>
+            <th class="actions">&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each model as |agent|}}
+            {{tr-user-agent agent=agent}}
+        {{/each}}
+        </tbody>
+    </table>
+
+    {{paginator-list meta=model.meta routeName="userAgent"}}
+
+    {{footer-partial}}
+</div>

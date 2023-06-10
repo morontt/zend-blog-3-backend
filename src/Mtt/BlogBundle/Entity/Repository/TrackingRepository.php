@@ -21,4 +21,28 @@ class TrackingRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Tracking::class);
     }
+
+    /**
+     * @param string $from
+     * @param string $now
+     *
+     * @return array
+     */
+    public function getViewCountsInfo(string $from, string $now): array
+    {
+        $qb = $this->createQueryBuilder('t');
+        $qb
+            ->select('p.id', 'COUNT(t.id) AS cnt')
+            ->innerJoin('t.post', 'p')
+            ->innerJoin('t.trackingAgent', 'ta')
+            ->andWhere($qb->expr()->gt('t.timeCreated', ':from'))
+            ->andWhere($qb->expr()->lte('t.timeCreated', ':now'))
+            ->andWhere($qb->expr()->eq('ta.bot', $qb->expr()->literal(false)))
+            ->groupBy('p.id')
+            ->setParameter('from', $from)
+            ->setParameter('now', $now)
+        ;
+
+        return $qb->getQuery()->getArrayResult();
+    }
 }
