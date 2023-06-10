@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="/dist/mttblog_main.min.css"/>
+    {{- assets("/dist/mttblog_main.min.css") }}
 {% endblock %}
 
 {% block body %}
@@ -40,7 +40,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script type="text/javascript" src="/dist/mttblog.min.js"></script>
+    {{- assets("/dist/mttblog.min.js") }}
     <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
     <script>
         moment.locale('{{ app.request.locale }}');

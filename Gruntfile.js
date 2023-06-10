@@ -115,8 +115,8 @@ module.exports = function (grunt) {
             target: {
                 files: {
                     'web/dist/<%= pkg.name %>_login.min.css': ['<%= concat.css_login.dest %>'],
-                    'web/dist/<%= pkg.name %>_preview.min.css': ['<%= concat.css_preview.dest %>'],
-                    'web/dist/<%= pkg.name %>_main.min.css': ['<%= concat.css_main.dest %>']
+                    'web/dist/<%= pkg.name %>_tmp_preview.min.css': ['<%= concat.css_preview.dest %>'],
+                    'web/dist/<%= pkg.name %>_tmp_main.min.css': ['<%= concat.css_main.dest %>']
                 }
             }
         },
@@ -129,7 +129,7 @@ module.exports = function (grunt) {
             },
             dist: {
                 files: {
-                    'web/dist/<%= pkg.name %>.min.js': ['<%= concat.js.dest %>']
+                    'web/dist/<%= pkg.name %>_tmp.min.js': ['<%= concat.js.dest %>']
                 }
             }
         }
