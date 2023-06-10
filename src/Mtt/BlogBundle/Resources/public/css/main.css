@@ -620,3 +620,7 @@ table.table-commentators th.column-cmtr {
 table.table-comments th.column-ip {
     width: 160px;
 }
+
+table.table-user-agent i.robot:before {
+    content: '\1F916';
+}
