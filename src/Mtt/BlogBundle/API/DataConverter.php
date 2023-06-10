@@ -24,6 +24,7 @@ use Mtt\BlogBundle\API\Transformers\PostTransformer;
 use Mtt\BlogBundle\API\Transformers\PygmentsCodeTransformer;
 use Mtt\BlogBundle\API\Transformers\PygmentsLanguageTransformer;
 use Mtt\BlogBundle\API\Transformers\TagTransformer;
+use Mtt\BlogBundle\API\Transformers\UserAgentTransformer;
 use Mtt\BlogBundle\DTO\ArticleDTO;
 use Mtt\BlogBundle\DTO\CategoryDTO;
 use Mtt\BlogBundle\DTO\PygmentsCodeDTO;
@@ -40,6 +41,7 @@ use Mtt\BlogBundle\Entity\PygmentsLanguage;
 use Mtt\BlogBundle\Entity\Repository\CategoryRepository;
 use Mtt\BlogBundle\Entity\Repository\CommentRepository;
 use Mtt\BlogBundle\Entity\Tag;
+use Mtt\BlogBundle\Entity\TrackingAgent;
 use Mtt\BlogBundle\Model\Image;
 use Mtt\BlogBundle\Service\TextProcessor;
 use Mtt\BlogBundle\Utils\Inflector;
@@ -65,6 +67,8 @@ use Mtt\BlogBundle\Utils\RuTransform;
  * @method array getPygmentsLanguageArray($collection, $includes = null)
  * @method array getPygmentsCode(PygmentsCode $entity, $includes = null)
  * @method array getPygmentsCodeArray($collection, $includes = null)
+ * @method array getUserAgent(TrackingAgent $entity, $includes = null)
+ * @method array getUserAgentArray($collection, $includes = null)
  */
 class DataConverter
 {
@@ -165,6 +169,21 @@ class DataConverter
         $this->save($entity);
 
         return $this->getCommentator($entity);
+    }
+
+    /**
+     * @param TrackingAgent $entity
+     * @param array $data
+     *
+     * @return array
+     */
+    public function saveTrackingAgent(TrackingAgent $entity, array $data): array
+    {
+        UserAgentTransformer::reverseTransform($entity, $data);
+
+        $this->save($entity);
+
+        return $this->getUserAgent($entity);
     }
 
     /**

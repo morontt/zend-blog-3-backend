@@ -8,12 +8,12 @@ export default Ember.Component.extend({
             this.set('isEditing', true);
         },
         save: function () {
-            this.get('commentator').save().then(() => {
+            this.get('agent').save().then(() => {
                 this.set('isEditing', false);
             });
         },
         reset: function () {
-            this.get('commentator').rollbackAttributes();
+            this.get('agent').rollbackAttributes();
             this.set('isEditing', false);
         }
     }

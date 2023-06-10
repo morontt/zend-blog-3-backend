@@ -20,4 +20,17 @@ class UserAgentTransformer extends BaseTransformer
             'createdAt' => $this->dateTimeToISO($item->getCreatedAt()),
         ];
     }
+
+    /**
+     * @param TrackingAgent $entity
+     * @param array $data
+     *
+     * @return void
+     */
+    public static function reverseTransform(TrackingAgent $entity, array $data)
+    {
+        $entity
+            ->setBot($data['bot'])
+        ;
+    }
 }
