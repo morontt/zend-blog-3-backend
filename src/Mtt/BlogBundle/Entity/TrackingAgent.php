@@ -39,13 +39,6 @@ class TrackingAgent
     /**
      * @var bool
      *
-     * @ORM\Column(type="boolean")
-     */
-    protected $botFilter = true;
-
-    /**
-     * @var bool
-     *
      * @deprecated
      * @ORM\Column(type="boolean", name="is_bot", options={"default": false})
      */
@@ -104,30 +97,6 @@ class TrackingAgent
     public function getUserAgent()
     {
         return $this->userAgent;
-    }
-
-    /**
-     * Set botFilter
-     *
-     * @param bool $botFilter
-     *
-     * @return TrackingAgent
-     */
-    public function setBotFilter($botFilter)
-    {
-        $this->botFilter = $botFilter;
-
-        return $this;
-    }
-
-    /**
-     * Get botFilter
-     *
-     * @return bool
-     */
-    public function getBotFilter()
-    {
-        return $this->botFilter;
     }
 
     /**
