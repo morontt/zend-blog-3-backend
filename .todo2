@@ -231,6 +231,16 @@
           "creation": 1686425910
         }
       ]
+    },
+    {
+      "text": "Limit of links in pagination",
+      "priority": "medium",
+      "creation": 1686463894
+    },
+    {
+      "text": "Change page browsertitle",
+      "priority": "medium",
+      "creation": 1686466586
     }
   ]
 }
