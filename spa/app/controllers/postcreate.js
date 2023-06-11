@@ -7,7 +7,7 @@ export default Ember.Controller.extend({
             this.transitionToRoute('posts');
         },
         afterSave() {
-            var model = this.get('model');
+            let model = this.get('model');
             if (model.get('id')) {
                 this.transitionToRoute('postedit', model);
             }

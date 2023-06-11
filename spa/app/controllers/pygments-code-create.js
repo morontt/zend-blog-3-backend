@@ -7,10 +7,7 @@ export default Ember.Controller.extend({
             this.transitionToRoute('pygmentsCode');
         },
         afterSave() {
-            var model = this.get('model');
-            if (model.get('id')) {
-                this.transitionToRoute('pygmentsCodeEdit', model);
-            }
+            this.transitionToRoute('pygmentsCode');
         }
     },
     languageChoices: []
