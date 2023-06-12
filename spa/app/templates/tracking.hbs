@@ -1,0 +1,62 @@
+<div id="topbar">
+    <ol class="breadcrumb">
+        <li>Tracking</li>
+    </ol>
+</div>
+<div id="content">
+    <div id="flashes">
+    </div>
+
+    <div class="page-header">
+        <h1><i class="glyphicon glyphicon-eye-open"></i> Посещения</h1>
+    </div>
+
+    <table class="table table-bordered table-striped table-tracking">
+        <thead>
+        <tr>
+            <th class="center-text column-id">#code</th>
+            <th>IP</th>
+            <th class="center-text">URL</th>
+            <th>Запись</th>
+            <th class="text-right text-date">Создан</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each model as |track|}}
+            <tr>
+                <td data-status-code="{{track.statusCode}}"
+                    class="center-text column-status-code">
+                    {{track.statusCode}}
+                </td>
+                <td>{{track.ipAddr}}</td>
+                <td>{{#if track.isCDN}}CDN:{{/if}} {{track.requestUri}}</td>
+                <td>
+                    {{#if track.articleSlug}}
+                        <a {{action "openTarget" track}} class="force-pointer">
+                            {{track.articleTitle}}
+                        </a>
+                    {{else}}
+                        -
+                    {{/if}}
+                </td>
+                <td class="text-right">{{date-format track.createdAt 'DD.MM.YYYY, HH:mm:ss'}}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="4" class="column-gray">
+                    {{#if track.userAgent}}
+                        {{#if track.userAgent.bot}}
+                            <i class="glyphicon robot"></i>
+                        {{/if}}
+                        {{track.userAgent.name}}
+                    {{/if}}
+                </td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+
+    {{paginator-list meta=model.meta routeName="tracking"}}
+
+    {{footer-partial}}
+</div>

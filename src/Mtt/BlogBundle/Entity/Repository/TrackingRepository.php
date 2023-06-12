@@ -14,6 +14,8 @@ use Mtt\BlogBundle\Entity\Tracking;
  */
 class TrackingRepository extends ServiceEntityRepository
 {
+    use ListQueryTrait;
+
     /**
      * @param ManagerRegistry $registry
      */

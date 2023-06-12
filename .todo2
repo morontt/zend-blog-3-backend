@@ -20,6 +20,11 @@
           "text": "update views count in articles",
           "priority": "medium",
           "creation": 1686425120
+        },
+        {
+          "text": "Пометить пустой юзер-агент как бот",
+          "priority": "medium",
+          "creation": 1686583149
         }
       ]
     },
@@ -76,7 +81,19 @@
     {
       "text": "CI integration restart #79",
       "priority": "verylow",
-      "creation": 1686425284
+      "creation": 1686425284,
+      "tasks": [
+        {
+          "text": "Восстановить тесты",
+          "priority": "medium",
+          "creation": 1686551269
+        },
+        {
+          "text": "doctrine:schema:validate",
+          "priority": "medium",
+          "creation": 1686551315
+        }
+      ]
     },
     {
       "text": "Check fake emails in comments before send #78",
@@ -121,6 +138,11 @@
           "text": "change logic for unchecked IP",
           "priority": "medium",
           "creation": 1686425458
+        },
+        {
+          "text": "DB refactoring, ip2long as primary key",
+          "priority": "medium",
+          "creation": 1686510089
         }
       ]
     },
@@ -229,6 +251,11 @@
           "text": "tracking agent",
           "priority": "medium",
           "creation": 1686425910
+        },
+        {
+          "text": "Удалить timestamp_created после деплоя",
+          "priority": "medium",
+          "creation": 1686550138
         }
       ]
     },

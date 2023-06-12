@@ -625,11 +625,38 @@ table.table-comments th.column-ip {
     width: 160px;
 }
 
-table.table-user-agent i.robot:before {
+table i.robot:before {
     content: '\1F916';
 }
 
 table td.text-break-word,
 table th.text-break-word {
     overflow-wrap: break-word;
+}
+
+table td.column-gray {
+    color: #bbb;
+}
+
+table td.column-status-code {
+    font-weight: bolder;
+}
+
+table td[data-status-code^="2"] {
+    color: #4e9a06;
+}
+table td[data-status-code^="3"] {
+    color: royalblue;
+}
+table td[data-status-code^="4"] {
+    color: orangered;
+}
+table td[data-status-code^="5"] {
+    color: mediumpurple;
+}
+table td[data-status-code="201"] {
+    color: deepskyblue;
+}
+table td[data-status-code="403"] {
+    color: darkorange;
 }

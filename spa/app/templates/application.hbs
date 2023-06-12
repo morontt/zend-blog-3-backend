@@ -63,11 +63,11 @@
                                     <span>Комментаторы</span>
                                 {{/link-to}}
                             </li>
-                            <li class="">
-                                <a>
+                            <li class="{{is-active currentLink "tracking"}}">
+                                {{#link-to "tracking"}}
                                     <i class="glyphicon glyphicon-eye-open"></i>
                                     <span>Трекинг</span>
-                                </a>
+                                {{/link-to}}
                             </li>
                             <li class="{{is-active currentLink "userAgents"}}">
                                 {{#link-to "userAgent"}}

@@ -16,32 +16,15 @@ use Doctrine\ORM\ORMException;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
-use Mtt\BlogBundle\API\Transformers\CategoryTransformer;
-use Mtt\BlogBundle\API\Transformers\CommentatorTransformer;
-use Mtt\BlogBundle\API\Transformers\CommentTransformer;
-use Mtt\BlogBundle\API\Transformers\MediaFileTransformer;
-use Mtt\BlogBundle\API\Transformers\PostTransformer;
-use Mtt\BlogBundle\API\Transformers\PygmentsCodeTransformer;
-use Mtt\BlogBundle\API\Transformers\PygmentsLanguageTransformer;
-use Mtt\BlogBundle\API\Transformers\TagTransformer;
-use Mtt\BlogBundle\API\Transformers\UserAgentTransformer;
+use Mtt\BlogBundle\API\Transformers;
 use Mtt\BlogBundle\DTO\ArticleDTO;
 use Mtt\BlogBundle\DTO\CategoryDTO;
 use Mtt\BlogBundle\DTO\PygmentsCodeDTO;
 use Mtt\BlogBundle\DTO\PygmentsLanguageDTO;
 use Mtt\BlogBundle\DTO\TagDTO;
-use Mtt\BlogBundle\Entity\Category;
-use Mtt\BlogBundle\Entity\Comment;
-use Mtt\BlogBundle\Entity\Commentator;
-use Mtt\BlogBundle\Entity\CommentatorInterface;
-use Mtt\BlogBundle\Entity\MediaFile;
-use Mtt\BlogBundle\Entity\Post;
-use Mtt\BlogBundle\Entity\PygmentsCode;
-use Mtt\BlogBundle\Entity\PygmentsLanguage;
+use Mtt\BlogBundle\Entity;
 use Mtt\BlogBundle\Entity\Repository\CategoryRepository;
 use Mtt\BlogBundle\Entity\Repository\CommentRepository;
-use Mtt\BlogBundle\Entity\Tag;
-use Mtt\BlogBundle\Entity\TrackingAgent;
 use Mtt\BlogBundle\Model\Image;
 use Mtt\BlogBundle\Service\TextProcessor;
 use Mtt\BlogBundle\Utils\Inflector;
@@ -51,24 +34,26 @@ use Mtt\BlogBundle\Utils\RuTransform;
 /**
  * Class DataConverter
  *
- * @method array getCategory(Category $entity, $includes = null)
+ * @method array getCategory(Entity\Category $entity, $includes = null)
  * @method array getCategoryArray($collection, $includes = null)
- * @method array getComment(Comment $entity, $includes = null)
+ * @method array getComment(Entity\Comment $entity, $includes = null)
  * @method array getCommentArray($collection, $includes = null)
- * @method array getCommentator(CommentatorInterface $entity, $includes = null)
+ * @method array getCommentator(Entity\CommentatorInterface $entity, $includes = null)
  * @method array getCommentatorArray($collection, $includes = null)
  * @method array getMediaFile(Image $entity, $includes = null)
  * @method array getMediaFileArray($collection, $includes = null)
- * @method array getPost(Post $entity, $includes = null)
+ * @method array getPost(Entity\Post $entity, $includes = null)
  * @method array getPostArray($collection, $includes = null)
- * @method array getTag(Tag $entity, $includes = null)
+ * @method array getTag(Entity\Tag $entity, $includes = null)
  * @method array getTagArray($collection, $includes = null)
- * @method array getPygmentsLanguage(PygmentsLanguage $entity, $includes = null)
+ * @method array getPygmentsLanguage(Entity\PygmentsLanguage $entity, $includes = null)
  * @method array getPygmentsLanguageArray($collection, $includes = null)
- * @method array getPygmentsCode(PygmentsCode $entity, $includes = null)
+ * @method array getPygmentsCode(Entity\PygmentsCode $entity, $includes = null)
  * @method array getPygmentsCodeArray($collection, $includes = null)
- * @method array getUserAgent(TrackingAgent $entity, $includes = null)
+ * @method array getUserAgent(Entity\TrackingAgent $entity, $includes = null)
  * @method array getUserAgentArray($collection, $includes = null)
+ * @method array getTracking(Entity\Tracking $entity, $includes = null)
+ * @method array getTrackingArray($collection, $includes = null)
  */
 class DataConverter
 {
@@ -100,6 +85,7 @@ class DataConverter
     /**
      * @param EntityManagerInterface $em
      * @param TextProcessor $textProcessor
+     * @param CommentRepository $commentsRepository
      * @param CategoryRepository $categoryRepository
      */
     public function __construct(
@@ -118,14 +104,14 @@ class DataConverter
     }
 
     /**
-     * @param Tag $entity
+     * @param Entity\Tag $entity
      * @param TagDTO $data
      *
      * @return array
      */
-    public function saveTag(Tag $entity, TagDTO $data): array
+    public function saveTag(Entity\Tag $entity, TagDTO $data): array
     {
-        TagTransformer::reverseTransform($entity, $data);
+        Transformers\TagTransformer::reverseTransform($entity, $data);
 
         $this->save($entity);
 
@@ -133,16 +119,14 @@ class DataConverter
     }
 
     /**
-     * @param Category $entity
+     * @param Entity\Category $entity
      * @param CategoryDTO $data
-     *
-     * @throws ORMException
      *
      * @return array
      */
-    public function saveCategory(Category $entity, CategoryDTO $data): array
+    public function saveCategory(Entity\Category $entity, CategoryDTO $data): array
     {
-        CategoryTransformer::reverseTransform($entity, $data);
+        Transformers\CategoryTransformer::reverseTransform($entity, $data);
 
         if ($data['parentId']) {
             $parent = $this->categoryRepository->find((int)$data['parentId']);
@@ -157,14 +141,14 @@ class DataConverter
     }
 
     /**
-     * @param Commentator $entity
+     * @param Entity\Commentator $entity
      * @param array $data
      *
      * @return array
      */
-    public function saveCommentator(Commentator $entity, array $data): array
+    public function saveCommentator(Entity\Commentator $entity, array $data): array
     {
-        CommentatorTransformer::reverseTransform($entity, $data);
+        Transformers\CommentatorTransformer::reverseTransform($entity, $data);
 
         $this->save($entity);
 
@@ -172,14 +156,14 @@ class DataConverter
     }
 
     /**
-     * @param TrackingAgent $entity
+     * @param Entity\TrackingAgent $entity
      * @param array $data
      *
      * @return array
      */
-    public function saveTrackingAgent(TrackingAgent $entity, array $data): array
+    public function saveTrackingAgent(Entity\TrackingAgent $entity, array $data): array
     {
-        UserAgentTransformer::reverseTransform($entity, $data);
+        Transformers\UserAgentTransformer::reverseTransform($entity, $data);
 
         $this->save($entity);
 
@@ -187,30 +171,30 @@ class DataConverter
     }
 
     /**
-     * @param Comment $entity
+     * @param Entity\Comment $entity
      * @param array $data
      *
      * @return array
      */
-    public function saveComment(Comment $entity, array $data): array
+    public function saveComment(Entity\Comment $entity, array $data): array
     {
-        CommentTransformer::reverseTransform($entity, $data);
+        Transformers\CommentTransformer::reverseTransform($entity, $data);
         $this->commentsRepository->save($entity);
 
         return $this->getComment($entity);
     }
 
     /**
-     * @param Post $entity
+     * @param Entity\Post $entity
      * @param ArticleDTO $data
      *
      * @throws ORMException
      *
      * @return array
      */
-    public function savePost(Post $entity, ArticleDTO $data): array
+    public function savePost(Entity\Post $entity, ArticleDTO $data): array
     {
-        PostTransformer::reverseTransform($entity, $data);
+        Transformers\PostTransformer::reverseTransform($entity, $data);
 
         $this->textProcessor->processing($entity);
 
@@ -236,7 +220,7 @@ class DataConverter
                         $entity->addTag($tag);
                     }
                 } else {
-                    $tag = new Tag();
+                    $tag = new Entity\Tag();
                     $tag
                         ->setName($tagName)
                         ->setUrl(RuTransform::ruTransform($tagName))
@@ -257,14 +241,14 @@ class DataConverter
     }
 
     /**
-     * @param MediaFile $entity
+     * @param Entity\MediaFile $entity
      * @param array $data
      *
      * @return array
      */
-    public function saveMediaFile(MediaFile $entity, array $data): array
+    public function saveMediaFile(Entity\MediaFile $entity, array $data): array
     {
-        MediaFileTransformer::reverseTransform($entity, $data);
+        Transformers\MediaFileTransformer::reverseTransform($entity, $data);
 
         if ($data['postId']) {
             $post = $this->em->getRepository('MttBlogBundle:Post')->find((int)$data['postId']);
@@ -284,14 +268,14 @@ class DataConverter
     }
 
     /**
-     * @param PygmentsLanguage $entity
+     * @param Entity\PygmentsLanguage $entity
      * @param PygmentsLanguageDTO $data
      *
      * @return array
      */
-    public function savePygmentsLanguage(PygmentsLanguage $entity, PygmentsLanguageDTO $data): array
+    public function savePygmentsLanguage(Entity\PygmentsLanguage $entity, PygmentsLanguageDTO $data): array
     {
-        PygmentsLanguageTransformer::reverseTransform($entity, $data);
+        Transformers\PygmentsLanguageTransformer::reverseTransform($entity, $data);
 
         $this->save($entity);
 
@@ -299,15 +283,15 @@ class DataConverter
     }
 
     /**
-     * @param PygmentsCode $entity
+     * @param Entity\PygmentsCode $entity
      * @param PygmentsCodeDTO $data
      *
      * @return array
      */
-    public function savePygmentsCode(PygmentsCode $entity, PygmentsCodeDTO $data): array
+    public function savePygmentsCode(Entity\PygmentsCode $entity, PygmentsCodeDTO $data): array
     {
         $oldHash = $entity->getContentHash();
-        PygmentsCodeTransformer::reverseTransform($entity, $data);
+        Transformers\PygmentsCodeTransformer::reverseTransform($entity, $data);
 
         if ($data['languageId']) {
             $entity->setLanguage(

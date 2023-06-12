@@ -22,6 +22,7 @@ Router.map(function () {
     this.route('pygmentsCodeCreate', {path: '/code-create'});
     this.route('pygmentsCodeEdit', {path: '/code-edit/:code_id'});
     this.route('userAgent', {path: '/user-agent'});
+    this.route('tracking');
 });
 
 export default Router;
