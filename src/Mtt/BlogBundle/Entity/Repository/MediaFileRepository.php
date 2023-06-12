@@ -3,6 +3,7 @@
 namespace Mtt\BlogBundle\Entity\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use Mtt\BlogBundle\Entity\MediaFile;
 
@@ -13,14 +14,28 @@ use Mtt\BlogBundle\Entity\MediaFile;
  */
 class MediaFileRepository extends ServiceEntityRepository
 {
-    use ListQueryTrait;
-
     /**
      * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, MediaFile::class);
+    }
+
+    /**
+     * @return Query
+     */
+    public function getListQuery(): Query
+    {
+        $qb = $this->createQueryBuilder('e');
+        $qb
+            ->select('e', 'p', 't')
+            ->leftJoin('e.post', 'p')
+            ->leftJoin('p.tags', 't')
+            ->orderBy('e.id', 'DESC')
+        ;
+
+        return $qb->getQuery();
     }
 
     /**

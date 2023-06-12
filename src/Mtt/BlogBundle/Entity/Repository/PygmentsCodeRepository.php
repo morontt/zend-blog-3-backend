@@ -3,6 +3,7 @@
 namespace Mtt\BlogBundle\Entity\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use Mtt\BlogBundle\Entity\PygmentsCode;
 
@@ -11,13 +12,23 @@ use Mtt\BlogBundle\Entity\PygmentsCode;
  */
 class PygmentsCodeRepository extends ServiceEntityRepository
 {
-    use ListQueryTrait;
-
     /**
      * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, PygmentsCode::class);
+    }
+
+    public function getListQuery(): Query
+    {
+        $qb = $this->createQueryBuilder('e');
+        $qb
+            ->select('e', 'l')
+            ->leftJoin('e.language', 'l')
+            ->orderBy('e.id', 'DESC')
+        ;
+
+        return $qb->getQuery();
     }
 }

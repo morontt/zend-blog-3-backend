@@ -3,6 +3,7 @@
 namespace Mtt\BlogBundle\Entity\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use Mtt\BlogBundle\Entity\Post;
 
@@ -14,7 +15,6 @@ use Mtt\BlogBundle\Entity\Post;
  */
 class PostRepository extends ServiceEntityRepository
 {
-    use ListQueryTrait;
     const ITERATION_STEP = 15;
 
     /**
@@ -23,6 +23,22 @@ class PostRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Post::class);
+    }
+
+    /**
+     * @return Query
+     */
+    public function getListQuery(): Query
+    {
+        $qb = $this->createQueryBuilder('e');
+        $qb
+            ->select('e', 'c', 't')
+            ->innerJoin('e.category', 'c')
+            ->leftJoin('e.tags', 't')
+            ->orderBy('e.id', 'DESC')
+        ;
+
+        return $qb->getQuery();
     }
 
     /**
