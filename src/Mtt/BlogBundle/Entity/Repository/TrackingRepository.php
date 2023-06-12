@@ -3,6 +3,7 @@
 namespace Mtt\BlogBundle\Entity\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use Mtt\BlogBundle\Entity\Tracking;
 
@@ -14,14 +15,28 @@ use Mtt\BlogBundle\Entity\Tracking;
  */
 class TrackingRepository extends ServiceEntityRepository
 {
-    use ListQueryTrait;
-
     /**
      * @param ManagerRegistry $registry
      */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Tracking::class);
+    }
+
+    /**
+     * @return Query
+     */
+    public function getListQuery(): Query
+    {
+        $qb = $this->createQueryBuilder('e');
+        $qb
+            ->select('e', 'ta', 'ar')
+            ->leftJoin('e.trackingAgent', 'ta')
+            ->leftJoin('e.post', 'ar')
+            ->orderBy('e.id', 'DESC')
+        ;
+
+        return $qb->getQuery();
     }
 
     /**

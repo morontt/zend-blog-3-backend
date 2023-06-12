@@ -16,7 +16,6 @@ use Doctrine\ORM\ORMException;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
-use Mtt\BlogBundle\API\Transformers;
 use Mtt\BlogBundle\DTO\ArticleDTO;
 use Mtt\BlogBundle\DTO\CategoryDTO;
 use Mtt\BlogBundle\DTO\PygmentsCodeDTO;

@@ -30,7 +30,7 @@ class TrackingController extends BaseController
         );
 
         $result = $this->getDataConverter()
-            ->getTrackingArray($pagination);
+            ->getTrackingArray($pagination, 'trackingAgents');
 
         $result['meta'] = $this->getPaginationMetadata($pagination->getPaginationData());
 

@@ -2,10 +2,18 @@
 
 namespace Mtt\BlogBundle\API\Transformers;
 
+use League\Fractal\Resource\Collection;
 use Mtt\BlogBundle\Entity\Tracking;
 
 class TrackingTransformer extends BaseTransformer
 {
+    /**
+     * @var array
+     */
+    protected $availableIncludes = [
+        'trackingAgents',
+    ];
+
     public function transform(Tracking $item)
     {
         return [
@@ -19,5 +27,21 @@ class TrackingTransformer extends BaseTransformer
             'isCDN' => $item->isCdn(),
             'createdAt' => $this->dateTimeToISO($item->getTimeCreated()),
         ];
+    }
+
+    /**
+     * @param Tracking $entity
+     *
+     * @return Collection
+     */
+    public function includeTrackingAgents(Tracking $entity): Collection
+    {
+        $agent = $entity->getTrackingAgent();
+        $items = [];
+        if ($agent) {
+            $items = [$agent];
+        }
+
+        return $this->collection($items, new UserAgentTransformer(), 'userAgents');
     }
 }

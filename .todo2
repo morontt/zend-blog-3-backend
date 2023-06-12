@@ -14,7 +14,8 @@
         {
           "text": "tracking on dashboard",
           "priority": "medium",
-          "creation": 1686425108
+          "creation": 1686425108,
+          "completion": 1686584408
         },
         {
           "text": "update views count in articles",
