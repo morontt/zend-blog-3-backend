@@ -10,13 +10,14 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230613061738 extends AbstractMigration
+final class Version20230613134523 extends AbstractMigration
 {
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
+        $this->addSql('ALTER TABLE tracking DROP timestamp_created');
         $this->addSql('CREATE INDEX IDX_AA3EDCA4D499950B ON tracking_archive (user_agent_id)');
     }
 
@@ -25,6 +26,7 @@ final class Version20230613061738 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
+        $this->addSql('ALTER TABLE tracking ADD timestamp_created INT DEFAULT NULL');
         $this->addSql('DROP INDEX IDX_AA3EDCA4D499950B ON tracking_archive');
     }
 }

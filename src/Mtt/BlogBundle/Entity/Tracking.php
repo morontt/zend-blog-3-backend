@@ -51,15 +51,6 @@ class Tracking
     protected $timeCreated;
 
     /**
-     * @var int
-     *
-     * @deprecated
-     *
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    protected $timestampCreated;
-
-    /**
      * @var bool
      *
      * @ORM\Column(name="is_cdn", type="boolean", options={"default": false})
@@ -131,7 +122,6 @@ class Tracking
     public function setTimeCreated(DateTime $timeCreated)
     {
         $this->timeCreated = $timeCreated;
-        $this->timestampCreated = (int)$timeCreated->format('U');
 
         return $this;
     }
@@ -192,30 +182,6 @@ class Tracking
     public function getPost()
     {
         return $this->post;
-    }
-
-    /**
-     * Set timestampCreated
-     *
-     * @param string $timestampCreated
-     *
-     * @return Tracking
-     */
-    public function setTimestampCreated($timestampCreated)
-    {
-        $this->timestampCreated = $timestampCreated;
-
-        return $this;
-    }
-
-    /**
-     * Get timestampCreated
-     *
-     * @return string
-     */
-    public function getTimestampCreated()
-    {
-        return $this->timestampCreated;
     }
 
     /**

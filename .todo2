@@ -261,7 +261,8 @@
         {
           "text": "Удалить timestamp_created после деплоя",
           "priority": "medium",
-          "creation": 1686550138
+          "creation": 1686550138,
+          "completion": 1686663869
         }
       ]
     },
