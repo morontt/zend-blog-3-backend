@@ -6,7 +6,9 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="tracking_archive")
+ * @ORM\Table(name="tracking_archive", indexes={
+ *   @ORM\Index(columns={"user_agent_id"})
+ * })
  * @ORM\Entity(repositoryClass="Mtt\BlogBundle\Entity\Repository\TrackingArchiveRepository")
  */
 class TrackingArchive

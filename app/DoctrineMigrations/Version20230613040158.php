@@ -33,7 +33,7 @@ final class Version20230613040158 extends AbstractMigration
             FROM tracking_agent AS ta
             LEFT JOIN tracking AS t ON ta.id = t.user_agent_id
             LEFT JOIN tracking_archive AS tt ON ta.id = tt.user_agent_id
-            WHERE user_agent LIKE '%client%'
+            WHERE ta.user_agent LIKE '%client%'
             GROUP BY ta.id) AS src
             ORDER BY cnt DESC
             SQL;
@@ -56,7 +56,54 @@ final class Version20230613040158 extends AbstractMigration
         $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%parser%\'');
         $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%ruby/%\'');
         $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%Go-http-client%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%petalbot%\'');
         $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent = \'ALittle Client\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%dreamwidth.org%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%SemrushBot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%liferea%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%zoominfobot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%tt-rss.org%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%Datanyze%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%DataForSeoBot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%DotBot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%Applebot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%FlipboardRSS%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%crawlson%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%Barkrowler%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%BorneoBot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%seznam%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%SeekportBot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%serpstatbot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%AspiegelBot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%amazonbot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%IndeedBot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%awario.com/bots%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%neevabot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%Googlebot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%LinkpadBot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%Keybot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%Timpibot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%MojeekBot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%SenutoBot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%Cliqzbot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%FlfBaldrBot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%DuckDuckBot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%RedirectBot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%inetdex.com/bot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%WebwikiBot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%PaperLiBot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%Clarabot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%Discordbot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%DuckDuckGo-Favicons-Bot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%Mail.RU_Bot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%BSbot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%Twitterbot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%Pandalytics%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent = \'labjs.pro/bot\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%2ip bot%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%Qwantify%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%bot@linkfluence.com%\'');
+        $this->addSql('UPDATE tracking_agent SET is_bot = 1 WHERE user_agent LIKE \'%BUbiNG%\'');
     }
 
     public function down(Schema $schema): void
