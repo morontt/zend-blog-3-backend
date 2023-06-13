@@ -26,6 +26,11 @@
           "text": "Пометить пустой юзер-агент как бот",
           "priority": "medium",
           "creation": 1686583149
+        },
+        {
+          "text": "Обновить ботов в БД",
+          "priority": "medium",
+          "creation": 1686628730
         }
       ]
     },
@@ -269,6 +274,11 @@
       "text": "Change page browsertitle",
       "priority": "medium",
       "creation": 1686466586
+    },
+    {
+      "text": "Google Auth",
+      "priority": "low",
+      "creation": 1686631591
     }
   ]
 }
