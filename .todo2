@@ -260,12 +260,14 @@
         {
           "text": "tracking",
           "priority": "medium",
-          "creation": 1686425899
+          "creation": 1686425899,
+          "completion": 1686736658
         },
         {
           "text": "tracking agent",
           "priority": "medium",
-          "creation": 1686425910
+          "creation": 1686425910,
+          "completion": 1686736660
         },
         {
           "text": "Удалить timestamp_created после деплоя",
