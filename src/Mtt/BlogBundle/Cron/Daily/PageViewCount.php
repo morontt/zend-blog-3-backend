@@ -9,7 +9,7 @@ use Mtt\BlogBundle\Entity\SystemParameters;
 use Mtt\BlogBundle\Entity\Tracking;
 use Mtt\BlogBundle\Service\SystemParametersStorage;
 
-class PageViewCount //implements CronServiceInterface
+class PageViewCount implements CronServiceInterface
 {
     /**
      * @var EntityManagerInterface

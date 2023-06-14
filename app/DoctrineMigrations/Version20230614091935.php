@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Application\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
@@ -10,7 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20171113212500 extends AbstractMigration implements ContainerAwareInterface
+final class Version20230614091935 extends AbstractMigration implements ContainerAwareInterface
 {
     /**
      * @var ContainerInterface
@@ -18,33 +20,27 @@ class Version20171113212500 extends AbstractMigration implements ContainerAwareI
     protected $container;
 
     /**
-     * @param ContainerInterface $container
+     * @param ContainerInterface|null $container
      */
     public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
     }
 
-    /**
-     * @param Schema $schema
-     */
-    public function up(Schema $schema)
+    public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('SELECT NOW()');
+        $this->addSql('DROP PROCEDURE IF EXISTS `tracking_to_archive`');
     }
 
-    /**
-     * @param Schema $schema
-     */
-    public function down(Schema $schema)
+    public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('DROP PROCEDURE `update_all_comments_count`');
+        $this->addSql('DROP PROCEDURE `tracking_to_archive`');
     }
 
     /**
@@ -54,12 +50,28 @@ class Version20171113212500 extends AbstractMigration implements ContainerAwareI
     {
         parent::postUp($schema);
 
-        $sql = file_get_contents(__DIR__ . '/sql/update_all_comments_count_01.sql');
+        $sql = file_get_contents(__DIR__ . '/sql/tracking_to_archive_02.sql');
 
         $em = $this->container->get('doctrine.orm.entity_manager');
         $stmt = $em->getConnection()->prepare($sql);
         $stmt->execute();
 
-        $this->write('     <comment>-></comment> CREATE PROCEDURE `update_all_comments_count`');
+        $this->write('     <comment>-></comment> CREATE PROCEDURE `tracking_to_archive`');
+    }
+
+    /**
+     * @param Schema $schema
+     */
+    public function postDown(Schema $schema)
+    {
+        parent::postDown($schema);
+
+        $sql = file_get_contents(__DIR__ . '/sql/tracking_to_archive_01.sql');
+
+        $em = $this->container->get('doctrine.orm.entity_manager');
+        $stmt = $em->getConnection()->prepare($sql);
+        $stmt->execute();
+
+        $this->write('     <comment>-></comment> CREATE PROCEDURE `tracking_to_archive`');
     }
 }

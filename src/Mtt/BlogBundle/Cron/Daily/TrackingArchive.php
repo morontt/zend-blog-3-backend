@@ -8,7 +8,7 @@
 
 namespace Mtt\BlogBundle\Cron\Daily;
 
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Mtt\BlogBundle\Cron\CronServiceInterface;
@@ -21,9 +21,9 @@ class TrackingArchive implements CronServiceInterface
     protected $em;
 
     /**
-     * @var string
+     * @var int|string
      */
-    protected $message = 'test';
+    private $rows;
 
     /**
      * @param EntityManagerInterface $em
@@ -38,7 +38,8 @@ class TrackingArchive implements CronServiceInterface
      */
     public function run()
     {
-        // $this->em->getConnection()->executeQuery('CALL tracking_to_archive()');
+        $stmtResult = $this->em->getConnection()->executeQuery('CALL tracking_to_archive()');
+        $this->rows = $stmtResult->rowCount();
     }
 
     /**
@@ -46,6 +47,6 @@ class TrackingArchive implements CronServiceInterface
      */
     public function getMessage(): string
     {
-        return 'Temporary disabled';
+        return 'Complete. ' . $this->rows . ' rows affected';
     }
 }

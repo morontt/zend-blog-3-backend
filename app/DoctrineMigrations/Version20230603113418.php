@@ -50,7 +50,7 @@ final class Version20230603113418 extends AbstractMigration implements Container
     {
         parent::postUp($schema);
 
-        $sql = file_get_contents(__DIR__ . '/sql/08_view_commentators.sql');
+        $sql = file_get_contents(__DIR__ . '/sql/view_commentators_02.sql');
 
         $em = $this->container->get('doctrine.orm.entity_manager');
         $stmt = $em->getConnection()->prepare($sql);
@@ -66,7 +66,7 @@ final class Version20230603113418 extends AbstractMigration implements Container
     {
         parent::postDown($schema);
 
-        $sql = file_get_contents(__DIR__ . '/sql/03_view_commentators.sql');
+        $sql = file_get_contents(__DIR__ . '/sql/view_commentators_01.sql');
 
         $em = $this->container->get('doctrine.orm.entity_manager');
         $stmt = $em->getConnection()->prepare($sql);

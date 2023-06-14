@@ -51,27 +51,34 @@ class TrackingArchive
     protected $timeCreated;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_cdn", type="boolean", options={"default": false})
+     */
+    protected $cdn;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=128, nullable=true)
+     */
+    protected $requestURI;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(type="smallint", nullable=true)
+     */
+    protected $statusCode;
+
+    /**
      * Get id
      *
      * @return int
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * Set post
-     *
-     * @param int $post
-     *
-     * @return TrackingArchive
-     */
-    public function setPost($post)
-    {
-        $this->post = $post;
-
-        return $this;
     }
 
     /**
@@ -79,23 +86,9 @@ class TrackingArchive
      *
      * @return int
      */
-    public function getPost()
+    public function getPost(): ?int
     {
         return $this->post;
-    }
-
-    /**
-     * Set trackingAgent
-     *
-     * @param int $trackingAgent
-     *
-     * @return TrackingArchive
-     */
-    public function setTrackingAgent($trackingAgent)
-    {
-        $this->trackingAgent = $trackingAgent;
-
-        return $this;
     }
 
     /**
@@ -103,23 +96,9 @@ class TrackingArchive
      *
      * @return int
      */
-    public function getTrackingAgent()
+    public function getTrackingAgent(): ?int
     {
         return $this->trackingAgent;
-    }
-
-    /**
-     * Set ipAddress
-     *
-     * @param string $ipAddress
-     *
-     * @return TrackingArchive
-     */
-    public function setIpAddress($ipAddress)
-    {
-        $this->ipAddress = $ipAddress;
-
-        return $this;
     }
 
     /**
@@ -127,23 +106,9 @@ class TrackingArchive
      *
      * @return string
      */
-    public function getIpAddress()
+    public function getIpAddress(): ?string
     {
         return $this->ipAddress;
-    }
-
-    /**
-     * Set timeCreated
-     *
-     * @param DateTime $timeCreated
-     *
-     * @return TrackingArchive
-     */
-    public function setTimeCreated($timeCreated)
-    {
-        $this->timeCreated = $timeCreated;
-
-        return $this;
     }
 
     /**
@@ -151,8 +116,32 @@ class TrackingArchive
      *
      * @return DateTime
      */
-    public function getTimeCreated()
+    public function getTimeCreated(): ?DateTime
     {
         return $this->timeCreated;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCdn(): bool
+    {
+        return $this->cdn;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRequestURI(): ?string
+    {
+        return $this->requestURI;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getStatusCode(): ?int
+    {
+        return $this->statusCode;
     }
 }

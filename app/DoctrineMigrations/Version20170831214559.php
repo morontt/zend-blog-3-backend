@@ -54,7 +54,7 @@ class Version20170831214559 extends AbstractMigration implements ContainerAwareI
     {
         parent::postUp($schema);
 
-        $sql = file_get_contents(__DIR__ . '/sql/04_tracking_to_archive.sql');
+        $sql = file_get_contents(__DIR__ . '/sql/tracking_to_archive_01.sql');
 
         $em = $this->container->get('doctrine.orm.entity_manager');
         $stmt = $em->getConnection()->prepare($sql);

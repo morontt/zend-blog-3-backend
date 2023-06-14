@@ -9,7 +9,8 @@
         {
           "text": "tracking to archive rework",
           "priority": "medium",
-          "creation": 1686425094
+          "creation": 1686425094,
+          "completion": 1686736244
         },
         {
           "text": "tracking on dashboard",
@@ -20,17 +21,25 @@
         {
           "text": "update views count in articles",
           "priority": "medium",
-          "creation": 1686425120
+          "creation": 1686425120,
+          "completion": 1686736246
         },
         {
           "text": "Пометить пустой юзер-агент как бот",
           "priority": "medium",
-          "creation": 1686583149
+          "creation": 1686583149,
+          "completion": 1686731014
         },
         {
           "text": "Обновить ботов в БД",
           "priority": "medium",
-          "creation": 1686628730
+          "creation": 1686628730,
+          "completion": 1686731016
+        },
+        {
+          "text": "Add geolocation and flags",
+          "priority": "medium",
+          "creation": 1686736298
         }
       ]
     },

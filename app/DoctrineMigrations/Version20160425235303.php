@@ -59,7 +59,7 @@ class Version20160425235303 extends AbstractMigration implements ContainerAwareI
     {
         parent::postUp($schema);
 
-        $sql = file_get_contents(__DIR__ . '/sql/01_update_comments_count.sql');
+        $sql = file_get_contents(__DIR__ . '/sql/update_comments_count_01.sql');
 
         $em = $this->container->get('doctrine.orm.entity_manager');
         $stmt = $em->getConnection()->prepare($sql);
