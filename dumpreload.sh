@@ -14,3 +14,4 @@ USE morontt_db;
 EOF
 
 docker exec rhinoceros bash -c "php app/console do:mi:mi"
+docker exec rhinoceros bash -c "chown -R www-data:www-data ."
