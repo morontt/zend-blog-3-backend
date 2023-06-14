@@ -37,6 +37,7 @@ class PostTransformer extends BaseTransformer
             'category' => $item->getCategory()->getId(),
             'categoryId' => $item->getCategory()->getId(),
             'hidden' => $item->isHide(),
+            'disableComments' => $item->isDisableComments(),
             'text' => $item->getRawText(),
             'description' => $item->getDescription(),
             'tagsString' => implode(
@@ -65,6 +66,7 @@ class PostTransformer extends BaseTransformer
         $entity
             ->setTitle($data['title'])
             ->setHide($data['hidden'])
+            ->setDisableComments($data['disableComments'])
             ->setRawText($data['text'])
             ->setDescription($data['description'])
         ;

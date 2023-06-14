@@ -6,6 +6,7 @@ export default DS.Model.extend({
     category: DS.belongsTo('category'),
     categoryId: DS.attr('number'),
     hidden: DS.attr('boolean', {defaultValue: true}),
+    disableComments: DS.attr('boolean'),
     text: DS.attr('string'),
     description: DS.attr('string'),
     tagsString: DS.attr('string'),

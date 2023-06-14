@@ -38,4 +38,9 @@ class ArticleDTO extends BaseObject
      * @var string|null
      */
     public $tagsString;
+
+    /**
+     * @var bool
+     */
+    public $disableComments;
 }

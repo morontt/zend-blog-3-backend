@@ -65,6 +65,10 @@ class ArticleFormType extends AbstractType
                 CheckboxType::class
             )
             ->add(
+                'disableComments',
+                CheckboxType::class
+            )
+            ->add(
                 'description',
                 TextType::class,
                 [

@@ -133,6 +133,13 @@ class Post
      */
     private $updatedAt;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", options={"default": false})
+     */
+    private $disableComments = false;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -533,6 +540,26 @@ class Post
     public function setUpdatedAt(DateTime $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDisableComments(): bool
+    {
+        return $this->disableComments;
+    }
+
+    /**
+     * @param bool $disableComments
+     *
+     * @return Post
+     */
+    public function setDisableComments(bool $disableComments): self
+    {
+        $this->disableComments = $disableComments;
 
         return $this;
     }
