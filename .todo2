@@ -240,7 +240,8 @@
     {
       "text": "Enable/disable comments on post #62",
       "priority": "high",
-      "creation": 1686425833
+      "creation": 1686425833,
+      "completion": 1686743778
     },
     {
       "text": "Remove deprecated and unused fields from entities #60",

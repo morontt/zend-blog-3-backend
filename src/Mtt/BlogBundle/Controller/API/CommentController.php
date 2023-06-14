@@ -15,6 +15,7 @@ use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Entity\Repository\CommentRepository;
 use Mtt\BlogBundle\Entity\Repository\ViewCommentRepository;
 use Mtt\BlogBundle\Event\CommentEvent;
+use Mtt\BlogBundle\Exception\NotAllowedCommentException;
 use Mtt\BlogBundle\Form\CommentFormType;
 use Mtt\BlogBundle\MttBlogEvents;
 use Mtt\BlogBundle\Service\CommentManager;
@@ -185,7 +186,11 @@ class CommentController extends BaseController
             return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $comment = $commentManager->saveComment($formData);
+        try {
+            $comment = $commentManager->saveComment($formData);
+        } catch (NotAllowedCommentException $e) {
+            throw $this->createAccessDeniedException();
+        }
 
         return new JsonResponse(
             $this->getDataConverter()->getComment($comment),

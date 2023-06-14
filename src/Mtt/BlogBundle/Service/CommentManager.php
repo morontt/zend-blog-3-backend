@@ -74,7 +74,7 @@ class CommentManager
         $agent = $this->tracking->getTrackingAgent($commentData->userAgent);
 
         $post = $this->postRepo->find($commentData->topicId);
-        if (!$post) {
+        if (!($post && !$post->isDisableComments())) {
             throw new NotAllowedCommentException();
         }
 
