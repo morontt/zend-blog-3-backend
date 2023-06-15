@@ -16,7 +16,7 @@ class CommentEvent extends Event
     /**
      * @var Comment
      */
-    protected $comment;
+    private $comment;
 
     /**
      * @param Comment $comment

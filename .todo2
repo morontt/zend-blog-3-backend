@@ -168,8 +168,9 @@
     },
     {
       "text": "Article and code snippet sync #71",
-      "priority": "medium",
+      "priority": "high",
       "creation": 1686425524,
+      "completion": 1686839037,
       "tasks": [
         {
           "text": "update article when code snippet update",
@@ -292,6 +293,11 @@
       "text": "Google Auth",
       "priority": "low",
       "creation": 1686631591
+    },
+    {
+      "text": "500-е ошибки блога в телеграм-уведомлениях",
+      "priority": "high",
+      "creation": 1686763595
     }
   ]
 }

@@ -187,7 +187,7 @@ class CommentController extends BaseController
         }
 
         try {
-            $comment = $commentManager->saveComment($formData);
+            $comment = $commentManager->saveExternalComment($formData);
         } catch (NotAllowedCommentException $e) {
             throw $this->createAccessDeniedException();
         }

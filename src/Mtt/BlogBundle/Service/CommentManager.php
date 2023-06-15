@@ -69,7 +69,7 @@ class CommentManager
      *
      * @return Comment
      */
-    public function saveComment(CommentDTO $commentData): Comment
+    public function saveExternalComment(CommentDTO $commentData): Comment
     {
         $agent = $this->tracking->getTrackingAgent($commentData->userAgent);
 

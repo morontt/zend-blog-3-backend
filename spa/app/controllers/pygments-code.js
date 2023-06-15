@@ -6,7 +6,7 @@ export default Ember.Controller.extend({
     page: 1,
     actions: {
         removeCode() {
-            var id = $('#confirmation-modal').attr('data-object-id');
+            let id = $('#confirmation-modal').attr('data-object-id');
             this.store.peekRecord('pygmentsCode', id).destroyRecord();
         }
     }

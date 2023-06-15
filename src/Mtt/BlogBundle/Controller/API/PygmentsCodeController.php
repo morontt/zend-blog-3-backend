@@ -4,8 +4,12 @@ namespace Mtt\BlogBundle\Controller\API;
 
 use Mtt\BlogBundle\Controller\BaseController;
 use Mtt\BlogBundle\Entity\PygmentsCode;
+use Mtt\BlogBundle\Entity\Repository\PostRepository;
 use Mtt\BlogBundle\Entity\Repository\PygmentsCodeRepository;
+use Mtt\BlogBundle\Event\PygmentCodeEvent;
 use Mtt\BlogBundle\Form\PygmentsCodeFormType;
+use Mtt\BlogBundle\MttBlogEvents;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -81,11 +85,15 @@ class PygmentsCodeController extends BaseController
      *
      * @param Request $request
      * @param PygmentsCode $entity
+     * @param EventDispatcherInterface $dispatcher
      *
      * @return JsonResponse
      */
-    public function updateAction(Request $request, PygmentsCode $entity): JsonResponse
-    {
+    public function updateAction(
+        Request $request,
+        PygmentsCode $entity,
+        EventDispatcherInterface $dispatcher
+    ): JsonResponse {
         $form = $this->createObjectForm('pygmentsCode', PygmentsCodeFormType::class, true);
         $form->handleRequest($request);
 
@@ -96,6 +104,8 @@ class PygmentsCodeController extends BaseController
 
         $result = $this->getDataConverter()->savePygmentsCode($entity, $formData['pygmentsCode']);
 
+        $dispatcher->dispatch(MttBlogEvents::CODE_SNIPPET_UPDATED, new PygmentCodeEvent($entity));
+
         return new JsonResponse($result);
     }
 
@@ -103,13 +113,22 @@ class PygmentsCodeController extends BaseController
      * @Route("/{id}", requirements={"id": "\d+"}, methods={"DELETE"})
      *
      * @param PygmentsCode $entity
+     * @param PostRepository $repository
      *
      * @throws \Doctrine\ORM\ORMException
      *
      * @return JsonResponse
      */
-    public function deleteAction(PygmentsCode $entity): JsonResponse
+    public function deleteAction(PygmentsCode $entity, PostRepository $repository): JsonResponse
     {
+        $posts = $repository->getPostsByCodeSnippet($entity->getId());
+        if (count($posts)) {
+            return new JsonResponse(
+                ['error' => 'this code snippet is used snippet'],
+                Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+        }
+
         $this->getEm()->remove($entity);
         $this->getEm()->flush();
 

@@ -48,7 +48,7 @@ class PostRepository extends ServiceEntityRepository
      *
      * @return Post[]
      */
-    public function getPostsForIteration($i)
+    public function getPostsForIteration($i): array
     {
         $qb = $this->createQueryBuilder('p');
 
@@ -73,5 +73,21 @@ class PostRepository extends ServiceEntityRepository
         ;
 
         $qb->getQuery()->execute();
+    }
+
+    /**
+     * @param int $codeId
+     *
+     * @return Post[]
+     */
+    public function getPostsByCodeSnippet(int $codeId): array
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb
+            ->where($qb->expr()->like('p.rawText', ':code'))
+            ->setParameter('code', sprintf('%%!<code>%d!%%', $codeId))
+        ;
+
+        return $qb->getQuery()->getResult();
     }
 }
