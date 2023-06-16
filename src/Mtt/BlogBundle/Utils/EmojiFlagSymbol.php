@@ -27,6 +27,11 @@ class EmojiFlagSymbol
      */
     public static function get(string $countryCode = null): string
     {
+        if ($countryCode === '-') {
+            // Pirate Flag Emoji
+            return hex2bin('F09F8FB4E2808DE298A0EFB88F');
+        }
+
         if (is_null($countryCode) || strlen($countryCode) !== 2) {
             throw new InvalidArgumentException('Please provide a 2 character country code.');
         }
