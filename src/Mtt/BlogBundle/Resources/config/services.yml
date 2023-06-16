@@ -20,9 +20,12 @@ services:
         tags: ['controller.service_arguments']
 
     _instanceof:
-        Mtt\BlogBundle\Cron\CronServiceInterface:
+        Mtt\BlogBundle\Cron\DailyCronServiceInterface:
             tags:
                 - { name: cron-daily }
+        Mtt\BlogBundle\Cron\HourlyCronServiceInterface:
+            tags:
+                - { name: cron-hourly }
         Xelbot\Telegram\Command\TelegramCommandInterface:
             tags:
                 - { name: telegram-command }

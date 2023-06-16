@@ -13,10 +13,16 @@ class CronChain
     /**
      * @var array
      */
-    protected $dailyCrons;
+    private $dailyCrons;
+
+    /**
+     * @var array
+     */
+    private $hourlyCrons;
 
     public function __construct()
     {
+        $this->hourlyCrons = [];
         $this->dailyCrons = [];
     }
 
@@ -29,10 +35,26 @@ class CronChain
     }
 
     /**
+     * @param CronServiceInterface $service
+     */
+    public function addCronHourlyService(CronServiceInterface $service)
+    {
+        $this->hourlyCrons[] = $service;
+    }
+
+    /**
      * @return CronServiceInterface[]
      */
-    public function getDailyCrons()
+    public function getDailyCrons(): array
     {
         return $this->dailyCrons;
+    }
+
+    /**
+     * @return CronServiceInterface[]
+     */
+    public function getHourlyCrons(): array
+    {
+        return $this->hourlyCrons;
     }
 }

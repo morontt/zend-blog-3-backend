@@ -22,11 +22,16 @@ class CronCompilerPass implements CompilerPassInterface
 
         $definition = $container->findDefinition('Mtt\BlogBundle\Cron\CronChain');
 
-        $taggedServices = $container->findTaggedServiceIds('cron-daily');
-
-        foreach ($taggedServices as $id => $tags) {
+        foreach ($container->findTaggedServiceIds('cron-daily') as $id => $tags) {
             $definition->addMethodCall(
                 'addCronDailyService',
+                [new Reference($id)]
+            );
+        }
+
+        foreach ($container->findTaggedServiceIds('cron-hourly') as $id => $tags) {
+            $definition->addMethodCall(
+                'addCronHourlyService',
                 [new Reference($id)]
             );
         }

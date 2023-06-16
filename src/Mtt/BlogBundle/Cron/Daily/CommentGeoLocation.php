@@ -10,10 +10,10 @@ namespace Mtt\BlogBundle\Cron\Daily;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Mtt\BlogBundle\Cron\CronServiceInterface;
+use Mtt\BlogBundle\Cron\DailyCronServiceInterface;
 use Mtt\BlogBundle\Service\IpInfo;
 
-class CommentGeoLocation implements CronServiceInterface
+class CommentGeoLocation implements DailyCronServiceInterface
 {
     /**
      * @var EntityManager
@@ -57,9 +57,9 @@ class CommentGeoLocation implements CronServiceInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMessage(): string
+    public function getMessage(): ?string
     {
         $message = 'Nothing';
         if ($this->countImported == 1) {

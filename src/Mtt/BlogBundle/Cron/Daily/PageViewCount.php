@@ -3,13 +3,13 @@
 namespace Mtt\BlogBundle\Cron\Daily;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Mtt\BlogBundle\Cron\CronServiceInterface;
+use Mtt\BlogBundle\Cron\DailyCronServiceInterface;
 use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Entity\SystemParameters;
 use Mtt\BlogBundle\Entity\Tracking;
 use Mtt\BlogBundle\Service\SystemParametersStorage;
 
-class PageViewCount implements CronServiceInterface
+class PageViewCount implements DailyCronServiceInterface
 {
     /**
      * @var EntityManagerInterface
@@ -65,7 +65,7 @@ class PageViewCount implements CronServiceInterface
         }
     }
 
-    public function getMessage(): string
+    public function getMessage(): ?string
     {
         return sprintf('%d articles was updated, %d views saved', $this->count, $this->views);
     }

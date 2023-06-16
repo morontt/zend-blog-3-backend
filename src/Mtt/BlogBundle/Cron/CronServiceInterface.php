@@ -13,7 +13,7 @@ interface CronServiceInterface
     public function run();
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMessage(): string;
+    public function getMessage(): ?string;
 }

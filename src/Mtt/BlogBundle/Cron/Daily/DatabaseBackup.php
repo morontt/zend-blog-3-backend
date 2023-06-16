@@ -8,11 +8,11 @@
 
 namespace Mtt\BlogBundle\Cron\Daily;
 
-use Mtt\BlogBundle\Cron\CronServiceInterface;
+use Mtt\BlogBundle\Cron\DailyCronServiceInterface;
 use Mtt\BlogBundle\Service\DropboxService;
 use Symfony\Component\Process\Process;
 
-class DatabaseBackup implements CronServiceInterface
+class DatabaseBackup implements DailyCronServiceInterface
 {
     /**
      * @var string
@@ -93,9 +93,9 @@ class DatabaseBackup implements CronServiceInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMessage(): string
+    public function getMessage(): ?string
     {
         return sprintf('%dKB', (int)($this->dumpSize / 1024));
     }

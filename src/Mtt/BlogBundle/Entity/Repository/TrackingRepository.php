@@ -62,4 +62,28 @@ class TrackingRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getArrayResult();
     }
+
+    /**
+     * @param string $from
+     * @param string $now
+     *
+     * @return array
+     */
+    public function getDataAboutServerErrors(string $from, string $now): array
+    {
+        $qb = $this->createQueryBuilder('t');
+        $qb
+            ->select('IDENTITY(t.post) AS postID', 't.requestURI', 'COUNT(t.id) AS cnt')
+            ->andWhere($qb->expr()->gte('t.timeCreated', ':from'))
+            ->andWhere($qb->expr()->lt('t.timeCreated', ':now'))
+            ->andWhere($qb->expr()->gte('t.statusCode', $qb->expr()->literal(500)))
+            ->andWhere($qb->expr()->lt('t.statusCode', $qb->expr()->literal(600)))
+            ->groupBy('postID')
+            ->addGroupBy('t.requestURI')
+            ->setParameter('from', $from)
+            ->setParameter('now', $now)
+        ;
+
+        return $qb->getQuery()->getArrayResult();
+    }
 }

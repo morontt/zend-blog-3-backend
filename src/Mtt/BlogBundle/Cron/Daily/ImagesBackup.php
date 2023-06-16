@@ -10,12 +10,12 @@ namespace Mtt\BlogBundle\Cron\Daily;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Mtt\BlogBundle\Cron\CronServiceInterface;
+use Mtt\BlogBundle\Cron\DailyCronServiceInterface;
 use Mtt\BlogBundle\Service\DropboxService;
 use Mtt\BlogBundle\Service\ImageManager;
 use Mtt\BlogBundle\Service\SystemParametersStorage;
 
-class ImagesBackup implements CronServiceInterface
+class ImagesBackup implements DailyCronServiceInterface
 {
     /**
      * @var EntityManager
@@ -67,9 +67,9 @@ class ImagesBackup implements CronServiceInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMessage(): string
+    public function getMessage(): ?string
     {
         $message = 'Nothing';
         if ($this->countImported == 1) {

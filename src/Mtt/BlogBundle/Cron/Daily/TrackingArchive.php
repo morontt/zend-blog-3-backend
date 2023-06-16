@@ -11,9 +11,9 @@ namespace Mtt\BlogBundle\Cron\Daily;
 use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Mtt\BlogBundle\Cron\CronServiceInterface;
+use Mtt\BlogBundle\Cron\DailyCronServiceInterface;
 
-class TrackingArchive implements CronServiceInterface
+class TrackingArchive implements DailyCronServiceInterface
 {
     /**
      * @var EntityManager
@@ -43,9 +43,9 @@ class TrackingArchive implements CronServiceInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMessage(): string
+    public function getMessage(): ?string
     {
         return 'Complete. ' . $this->rows . ' rows affected';
     }

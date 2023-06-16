@@ -1,22 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: morontt
- * Date: 18.06.15
- * Time: 0:41
- */
 
 namespace Mtt\BlogBundle\Command;
 
 use Mtt\BlogBundle\Cron\CronServiceInterface;
 
-class CronDailyCommand extends CronCommand
+class CronHourlyCommand extends CronCommand
 {
     protected function configure()
     {
         $this
-            ->setName('mtt:cron:daily')
-            ->setDescription('Start daily crons');
+            ->setName('mtt:cron:hourly')
+            ->setDescription('Start hourly crons');
     }
 
     /**
@@ -24,6 +18,6 @@ class CronDailyCommand extends CronCommand
      */
     protected function getCrons(): array
     {
-        return $this->chain->getDailyCrons();
+        return $this->chain->getHourlyCrons();
     }
 }

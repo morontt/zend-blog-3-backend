@@ -12,6 +12,7 @@ class SystemParameters
 {
     const DROPBOX_TOKEN = 'dropbox_token';
     const UPDATE_VIEW_COUNTS_FROM = 'upd_view_counts_from';
+    const ERRORS_5XX_CHECK = 'errors_5xx_check';
 
     /**
      * @var int
