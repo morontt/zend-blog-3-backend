@@ -68,7 +68,7 @@ class GeoLocation
      */
     public function getId()
     {
-        return $this->id;
+        return $this->ipLong;
     }
 
     /**
@@ -98,11 +98,11 @@ class GeoLocation
     /**
      * Set city
      *
-     * @param GeoLocationCity $city
+     * @param GeoLocationCity|null $city
      *
      * @return GeoLocation
      */
-    public function setCity(GeoLocationCity $city)
+    public function setCity(GeoLocationCity $city = null)
     {
         $this->city = $city;
 
@@ -141,5 +141,13 @@ class GeoLocation
     public function getTimeCreated()
     {
         return $this->timeCreated;
+    }
+
+    /**
+     * @return void
+     */
+    public function increaseCountOfCheck()
+    {
+        $this->countOfCheck += 1;
     }
 }

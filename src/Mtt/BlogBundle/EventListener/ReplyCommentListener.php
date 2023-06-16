@@ -14,6 +14,7 @@ use Swift_Mailer;
 use Swift_Message;
 use Twig\Environment as TwigEnvironment;
 use Twig\Error\Error;
+use Xelbot\Telegram\Robot;
 
 class ReplyCommentListener
 {
@@ -33,26 +34,35 @@ class ReplyCommentListener
     protected $emailFrom;
 
     /**
+     * @var Robot
+     */
+    private $bot;
+
+    /**
      * @param Swift_Mailer $mailer
      * @param TwigEnvironment $twig
+     * @param Robot $bot
      * @param string $emailFrom
      */
-    public function __construct(Swift_Mailer $mailer, TwigEnvironment $twig, string $emailFrom)
+    public function __construct(Swift_Mailer $mailer, TwigEnvironment $twig, Robot $bot, string $emailFrom)
     {
         $this->mailer = $mailer;
         $this->twig = $twig;
         $this->emailFrom = $emailFrom;
+        $this->bot = $bot;
     }
 
     /**
      * @param CommentEvent $event
-     *
-     * @throws Error
      */
     public function onReply(CommentEvent $event)
     {
         $comment = $event->getComment();
-        $this->sendEmail($comment);
+        try {
+            $this->sendEmail($comment);
+        } catch (\Throwable $e) {
+            $this->bot->sendMessage('onReply comment error: ' . $e->getMessage());
+        }
     }
 
     /**

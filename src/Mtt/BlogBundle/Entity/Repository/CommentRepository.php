@@ -34,7 +34,11 @@ class CommentRepository extends ServiceEntityRepository
 
         $qb
             ->select('c.ipAddress')
-            ->where($qb->expr()->isNull('c.geoLocation'))
+            ->leftJoin('c.geoLocation', 'g')
+            ->where($qb->expr()->orX(
+                $qb->expr()->isNull('c.geoLocation'),
+                $qb->expr()->isNull('g.city')
+            ))
             ->andWhere($qb->expr()->isNotNull('c.ipAddress'))
             ->groupBy('c.ipAddress')
             ->setMaxResults(20)
@@ -113,7 +117,7 @@ class CommentRepository extends ServiceEntityRepository
     public function markAsDeleted(Comment $entity)
     {
         $entity->setDeleted(true);
-        $this->_em->flush();
+        $this->getEntityManager()->flush();
     }
 
     public function save(Comment $entity)

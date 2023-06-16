@@ -55,6 +55,10 @@ services:
         arguments:
             $key: "%ipinfodb_key%"
 
+    Mtt\BlogBundle\EventListener\CommentGeolocationListener:
+        tags:
+            - { name: kernel.event_listener, event: mtt_blog.reply_comment, method: onReply }
+
     Mtt\BlogBundle\EventListener\ReplyCommentListener:
         arguments:
             $emailFrom: "%mailer_user%"

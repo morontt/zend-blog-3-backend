@@ -107,12 +107,12 @@ class CommentController extends BaseController
             }
         }
 
-        $result = $this->getDataConverter()
+        $this->getDataConverter()
             ->saveComment($comment, $commentData);
 
         $dispatcher->dispatch(MttBlogEvents::REPLY_COMMENT, new CommentEvent($comment));
 
-        return new JsonResponse($result, Response::HTTP_CREATED);
+        return new JsonResponse($this->getDataConverter()->getComment($comment), Response::HTTP_CREATED);
     }
 
     /**

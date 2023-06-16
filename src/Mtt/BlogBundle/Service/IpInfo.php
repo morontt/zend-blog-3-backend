@@ -43,22 +43,15 @@ class IpInfo
      */
     public function getLocationByIp($ip)
     {
-        $location = $this->em->getRepository('MttBlogBundle:GeoLocation')->findOneByIpAddress($ip);
-        if (!$location) {
+        $location = $this->em->getRepository('MttBlogBundle:GeoLocation')->findOrCreateByIpAddress($ip);
+        if ($location && !$location->getCity()) {
+            $location->increaseCountOfCheck();
             $data = $this->getCityInfo($ip);
             if ($data) {
-                $city = $this->getCity($data);
-                if ($city) {
-                    $location = new GeoLocation();
-                    $location
-                        ->setCity($city)
-                        ->setIpAddress($ip)
-                    ;
-
-                    $this->em->persist($location);
-                    $this->em->flush();
-                }
+                $location->setCity($this->getCity($data));
             }
+
+            $this->em->flush();
         }
 
         return $location;
@@ -137,8 +130,6 @@ class IpInfo
      */
     protected function getCityInfo($ip)
     {
-        $result = null;
-
         if (filter_var($ip, FILTER_VALIDATE_IP)) {
             $params = http_build_query([
                 'key' => $this->key,
@@ -148,13 +139,19 @@ class IpInfo
 
             $context = stream_context_create([
                 'http' => [
-                    'timeout' => 4,
+                    'timeout' => 5,
                 ],
             ]);
-            $json = @file_get_contents('https://api.ipinfodb.com/v3/ip-city/?' . $params, false, $context);
-            $result = json_decode($json, true);
+            try {
+                $json = file_get_contents('https://api.ipinfodb.com/v3/ip-city/?' . $params, false, $context);
+
+                return json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+            } catch (\Throwable $e) {
+
+                return null;
+            }
         }
 
-        return $result;
+        return null;
     }
 }

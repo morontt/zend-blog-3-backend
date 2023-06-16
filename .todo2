@@ -152,12 +152,19 @@
         {
           "text": "change logic for unchecked IP",
           "priority": "medium",
-          "creation": 1686425458
+          "creation": 1686425458,
+          "completion": 1686950444
         },
         {
           "text": "DB refactoring, ip2long as primary key",
           "priority": "medium",
-          "creation": 1686510089
+          "creation": 1686510089,
+          "completion": 1686950452
+        },
+        {
+          "text": "detect local IP without https://api.ipinfodb.com/",
+          "priority": "medium",
+          "creation": 1686950425
         }
       ]
     },

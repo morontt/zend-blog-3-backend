@@ -7,7 +7,6 @@ use Mtt\BlogBundle\DTO\CommentDTO;
 use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Entity\Repository\CommentatorRepository;
 use Mtt\BlogBundle\Entity\Repository\CommentRepository;
-use Mtt\BlogBundle\Entity\Repository\GeoLocationRepository;
 use Mtt\BlogBundle\Entity\Repository\PostRepository;
 use Mtt\BlogBundle\Event\CommentEvent;
 use Mtt\BlogBundle\Exception\NotAllowedCommentException;
@@ -41,17 +40,11 @@ class CommentManager
      */
     private $postRepo;
 
-    /**
-     * @var GeoLocationRepository
-     */
-    private $geoRepo;
-
     public function __construct(
         Tracking $tracking,
         EventDispatcherInterface $dispatcher,
         CommentatorRepository $commentatorRepo,
         CommentRepository $commentRepo,
-        GeoLocationRepository $geoRepo,
         PostRepository $postRepo
     ) {
         $this->tracking = $tracking;
@@ -59,7 +52,6 @@ class CommentManager
         $this->commentatorRepo = $commentatorRepo;
         $this->commentRepo = $commentRepo;
         $this->postRepo = $postRepo;
-        $this->geoRepo = $geoRepo;
     }
 
     /**
@@ -96,11 +88,6 @@ class CommentManager
             if ($parent) {
                 $comment->setParent($parent);
             }
-        }
-
-        $location = $this->geoRepo->findOneByIpAddress($commentData->ipAddress);
-        if ($location) {
-            $comment->setGeoLocation($location);
         }
 
         $commentator = $this->commentatorRepo->findOrCreate($commentData->commentator);

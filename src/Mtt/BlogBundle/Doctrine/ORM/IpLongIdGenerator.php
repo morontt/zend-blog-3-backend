@@ -9,7 +9,7 @@ class IpLongIdGenerator extends AbstractIdGenerator
 {
     public function generate(EntityManager $em, $entity)
     {
-        if (method_exists($entity, 'getIpAddress')) {
+        if (!method_exists($entity, 'getIpAddress')) {
             throw new \RuntimeException('IpLongIdGenerator not supported for ' . get_class($entity));
         }
 

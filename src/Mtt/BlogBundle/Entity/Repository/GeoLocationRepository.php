@@ -23,4 +23,28 @@ class GeoLocationRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, GeoLocation::class);
     }
+
+    /**
+     * @param string $ip
+     *
+     * @return GeoLocation|null
+     */
+    public function findOrCreateByIpAddress(string $ip): ?GeoLocation
+    {
+        $location = null;
+        if (filter_var($ip, FILTER_VALIDATE_IP)) {
+            $location = $this->findOneByIpAddress($ip);
+            if (!$location) {
+                $location = new GeoLocation();
+                $location
+                    ->setIpAddress($ip)
+                ;
+
+                $this->getEntityManager()->persist($location);
+                $this->getEntityManager()->flush();
+            }
+        }
+
+        return $location;
+    }
 }

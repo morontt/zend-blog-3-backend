@@ -62,8 +62,7 @@ class CommentTransformer extends BaseTransformer
             }
 
             $location = $item->getGeoLocation();
-            if ($location) {
-                $city = $location->getCity();
+            if ($location && $city = $location->getCity()) {
                 $locationCity = $city->getCity();
                 $locationRegion = $city->getRegion();
                 $locationCountry = $city->getCountry()->getName();
