@@ -13,7 +13,8 @@ use Mtt\UserBundle\Entity\User;
 /**
  * @ORM\Table(name="comments", indexes={
  *   @ORM\Index(name="left_key_idx", columns={"tree_left_key"}),
- *   @ORM\Index(name="right_key_idx", columns={"tree_right_key"})
+ *   @ORM\Index(name="right_key_idx", columns={"tree_right_key"}),
+ *   @ORM\Index(columns={"ip_long"})
  * })
  * @ORM\Entity(repositoryClass="Mtt\BlogBundle\Entity\Repository\CommentRepository")
  * @ORM\HasLifecycleCallbacks()
@@ -96,19 +97,12 @@ class Comment implements CommentInterface
     protected $ipAddress;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(type="bigint", nullable=true, unique=true)
-     */
-    protected $disqusId;
-
-    /**
      * @var GeoLocation
      *
      * @ORM\ManyToOne(targetEntity="GeoLocation")
-     * @ORM\JoinColumn(onDelete="SET NULL")
+     * @ORM\JoinColumn(name="ip_long", referencedColumnName="ip_long", onDelete="SET NULL")
      */
-    protected $geoLocation;
+    private $geoLocation;
 
     /**
      * @var NestedSet
@@ -171,7 +165,7 @@ class Comment implements CommentInterface
     /**
      * Set parent
      *
-     * @param Comment $parent
+     * @param Comment|null $parent
      *
      * @return Comment
      */
@@ -185,9 +179,9 @@ class Comment implements CommentInterface
     /**
      * Get parent
      *
-     * @return Comment
+     * @return Comment|null
      */
-    public function getParent()
+    public function getParent(): ?Comment
     {
         return $this->parent;
     }
@@ -195,7 +189,7 @@ class Comment implements CommentInterface
     /**
      * Set commentator
      *
-     * @param Commentator $commentator
+     * @param Commentator|null $commentator
      *
      * @return Comment
      */
@@ -209,9 +203,9 @@ class Comment implements CommentInterface
     /**
      * Get commentator
      *
-     * @return Commentator
+     * @return Commentator|null
      */
-    public function getCommentator()
+    public function getCommentator(): ?Commentator
     {
         return $this->commentator;
     }
@@ -219,7 +213,7 @@ class Comment implements CommentInterface
     /**
      * Set user
      *
-     * @param User $user
+     * @param User|null $user
      *
      * @return Comment
      */
@@ -233,9 +227,9 @@ class Comment implements CommentInterface
     /**
      * Get user
      *
-     * @return User
+     * @return User|null
      */
-    public function getUser()
+    public function getUser(): ?User
     {
         return $this->user;
     }
@@ -361,44 +355,6 @@ class Comment implements CommentInterface
     }
 
     /**
-     * Set disqusId
-     *
-     * @param int $disqusId
-     *
-     * @return Comment
-     */
-    public function setDisqusId($disqusId)
-    {
-        $this->disqusId = $disqusId;
-
-        return $this;
-    }
-
-    /**
-     * Get disqusId
-     *
-     * @return int
-     */
-    public function getDisqusId()
-    {
-        return $this->disqusId;
-    }
-
-    /**
-     * Set geoLocation
-     *
-     * @param GeoLocation $geoLocation
-     *
-     * @return Comment
-     */
-    public function setGeoLocation(GeoLocation $geoLocation = null)
-    {
-        $this->geoLocation = $geoLocation;
-
-        return $this;
-    }
-
-    /**
      * Get geoLocation
      *
      * @return GeoLocation
@@ -406,6 +362,18 @@ class Comment implements CommentInterface
     public function getGeoLocation()
     {
         return $this->geoLocation;
+    }
+
+    /**
+     * @param GeoLocation|null $location
+     *
+     * @return $this
+     */
+    public function setGeoLocation(GeoLocation $location = null): self
+    {
+        $this->geoLocation = $location;
+
+        return $this;
     }
 
     /**

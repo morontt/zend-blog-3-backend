@@ -21,32 +21,40 @@ class GeoLocation
      * @var int
      *
      * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="Mtt\BlogBundle\Doctrine\ORM\IpLongIdGenerator")
+     * @ORM\Column(type="integer", options={"unsigned": true})
      */
-    protected $id;
+    private $ipLong;
 
     /**
      * @var string
      *
      * @ORM\Column(name="ip_addr", type="string", length=15, unique=true)
      */
-    protected $ipAddress;
+    private $ipAddress;
 
     /**
      * @var GeoLocationCity
      *
      * @ORM\ManyToOne(targetEntity="GeoLocationCity")
-     * @ORM\JoinColumn(nullable=false, onDelete="RESTRICT")
+     * @ORM\JoinColumn(nullable=true, onDelete="RESTRICT")
      */
-    protected $city;
+    private $city;
 
     /**
      * @var DateTime
      *
      * @ORM\Column(type="milliseconds_dt")
      */
-    protected $timeCreated;
+    private $timeCreated;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="smallint", options={"unsigned": true, "default": 0})
+     */
+    private $countOfCheck = 0;
 
     public function __construct()
     {

@@ -151,7 +151,7 @@ class IpInfo
                     'timeout' => 4,
                 ],
             ]);
-            $json = @file_get_contents('http://api.ipinfodb.com/v3/ip-city/?' . $params, false, $context);
+            $json = @file_get_contents('https://api.ipinfodb.com/v3/ip-city/?' . $params, false, $context);
             $result = json_decode($json, true);
         }
 
