@@ -18,6 +18,11 @@ export default DS.Model.extend({
     parent: DS.belongsTo('comment', { inverse: null }),
     deleted: DS.attr('boolean', {defaultValue: false}),
     createdAt: DS.attr('date'),
+    userAgent: DS.attr('string'),
+    bot: DS.attr('boolean'),
+    localIP: function () {
+        return this.get('city') === '-';
+    }.property('city'),
     gravatarUrl: function () {
         let url;
         if (this.get('imageHash')) {

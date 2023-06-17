@@ -42,6 +42,9 @@ class CommentTransformer extends BaseTransformer
         $imageHash = null;
         $countryCode = null;
 
+        $userAgent = null;
+        $bot = false;
+
         if ($item instanceof Comment) {
             $commentator = $item->getCommentator();
             if ($commentator) {
@@ -68,6 +71,12 @@ class CommentTransformer extends BaseTransformer
                 $locationCountry = $city->getCountry()->getName();
                 $countryCode = $city->getCountry()->getCode();
             }
+
+            $trackingAgent = $item->getTrackingAgent();
+            if ($trackingAgent) {
+                $userAgent = $trackingAgent->getUserAgent();
+                $bot = $trackingAgent->isBot();
+            }
         } elseif ($item instanceof ViewComment) {
             $commentatorId = $item->getVirtualUserId();
 
@@ -81,6 +90,9 @@ class CommentTransformer extends BaseTransformer
             $locationRegion = $item->getRegion();
             $locationCountry = $item->getCountry();
             $countryCode = $item->getCode();
+
+            $userAgent = $item->getUserAgent();
+            $bot = $item->isBot();
         }
 
         $parentId = null;
@@ -112,6 +124,8 @@ class CommentTransformer extends BaseTransformer
             'parent' => $parentId,
             'imageHash' => $imageHash,
             'deleted' => $item->isDeleted(),
+            'userAgent' => $userAgent,
+            'bot' => $bot,
             'createdAt' => $this->dateTimeToISO($item->getTimeCreated()),
         ];
     }

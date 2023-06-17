@@ -39,7 +39,6 @@ class TrackingAgent
     /**
      * @var bool
      *
-     * @deprecated
      * @ORM\Column(type="boolean", name="is_bot", options={"default": false})
      */
     protected $bot = false;

@@ -159,6 +159,20 @@ class ViewComment implements CommentInterface
      */
     private $forceImage;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="text", length=65000, nullable=true)
+     */
+    protected $userAgent;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", name="is_bot", nullable=true)
+     */
+    protected $bot;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
@@ -369,5 +383,23 @@ class ViewComment implements CommentInterface
     public function isForceImage(): bool
     {
         return $this->forceImage;
+    }
+
+    /**
+     * Get userAgent
+     *
+     * @return string|null
+     */
+    public function getUserAgent()
+    {
+        return $this->userAgent;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isBot(): bool
+    {
+        return $this->bot;
     }
 }

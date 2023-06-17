@@ -2,15 +2,6 @@
     <td class="center-text">{{comment.id}}</td>
     <td>
         <img src="{{comment.gravatarUrl}}" alt="avatar"/>
-        <br/>
-        {{#if comment.website}}
-            <a href="{{comment.website}}"><strong>{{comment.username}}</strong></a>
-        {{else}}
-            <strong>{{comment.username}}</strong>
-        {{/if}}
-        {{#if comment.email}}
-            <br/><small>&lt;{{comment.email}}&gt;</small>
-        {{/if}}
     </td>
     <td>
         {{textarea rows="6"
@@ -41,23 +32,17 @@
     <td class="center-text">{{comment.id}}</td>
     <td>
         <img src="{{comment.gravatarUrl}}" alt="avatar"/>
-        <br/>
-        {{#if comment.website}}
-            <a href="{{comment.website}}"><strong>{{comment.username}}</strong></a>
-        {{else}}
-            <strong>{{comment.username}}</strong>
-        {{/if}}
-        {{comment.countryCode}}
-        {{#if comment.email}}
-            <br/><small>&lt;{{comment.email}}&gt;</small>
-        {{/if}}
     </td>
     <td>{{cut-string comment.text 120}}</td>
     <td>
         {{comment.ipAddr}}
         {{#if comment.city}}
             <br/><br/>
-            <small>{{comment.city}}, {{comment.region}}<br/>{{comment.country}}</small>
+            {{#if comment.localIP}}
+                <small>Local IP</small>
+            {{else}}
+                <small>{{comment.city}}, {{comment.region}}<br/>{{comment.country}}</small>
+            {{/if}}
         {{/if}}
     </td>
     <td class="text-right">{{date-format comment.createdAt 'DD.MM.YYYY, HH:mm'}}</td>

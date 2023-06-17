@@ -25,6 +25,26 @@
         <tbody>
         {{#each model as |comment|}}
             {{tr-comment comment=comment}}
+            <tr>
+                <td></td>
+                <td>
+                    {{#if comment.website}}
+                        <a href="{{comment.website}}"><strong>{{comment.username}}</strong></a>
+                    {{else}}
+                        <strong>{{comment.username}}</strong>
+                    {{/if}}
+                    {{comment.countryCode}}
+                    {{#if comment.email}}
+                        <br/><small>&lt;{{comment.email}}&gt;</small>
+                    {{/if}}
+                </td>
+                <td colspan="4" class="column-gray">
+                    {{#if comment.bot}}
+                        <i class="glyphicon robot"></i>
+                    {{/if}}
+                    {{comment.userAgent}}
+                </td>
+            </tr>
         {{/each}}
         </tbody>
     </table>
