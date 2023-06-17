@@ -3,6 +3,7 @@ import DS from 'ember-data';
 export default DS.Model.extend({
     statusCode: DS.attr('number'),
     ipAddr: DS.attr('string'),
+    countryFlag: DS.attr('string'),
     requestUri: DS.attr('string'),
     userAgent: DS.belongsTo('userAgent'),
     articleTitle: DS.attr('string'),

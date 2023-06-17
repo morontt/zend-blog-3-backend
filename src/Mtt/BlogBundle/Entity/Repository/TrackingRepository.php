@@ -5,6 +5,7 @@ namespace Mtt\BlogBundle\Entity\Repository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use Mtt\BlogBundle\Entity\GeoLocation;
 use Mtt\BlogBundle\Entity\Tracking;
 
 /**
@@ -30,9 +31,10 @@ class TrackingRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('e');
         $qb
-            ->select('e', 'ta', 'ar')
+            ->select('e', 'ta', 'ar', 'g')
             ->leftJoin('e.trackingAgent', 'ta')
             ->leftJoin('e.post', 'ar')
+            ->leftJoin('e.geoLocation', 'g')
             ->orderBy('e.id', 'DESC')
         ;
 
@@ -85,5 +87,42 @@ class TrackingRepository extends ServiceEntityRepository
         ;
 
         return $qb->getQuery()->getArrayResult();
+    }
+
+    public function getUncheckedIps(): array
+    {
+        $qb = $this->createQueryBuilder('t');
+        $qb
+            ->select('t.ipAddress', 'MAX(t.timeCreated) AS last_access')
+            ->leftJoin('t.geoLocation', 'g')
+            ->where($qb->expr()->orX(
+                $qb->expr()->isNull('t.geoLocation'),
+                $qb->expr()->isNull('g.city')
+            ))
+            ->andWhere($qb->expr()->isNotNull('t.ipAddress'))
+            ->groupBy('t.ipAddress')
+            ->orderBy('last_access', 'DESC')
+            ->setMaxResults(60)
+        ;
+
+        return array_column($qb->getQuery()->getArrayResult(), 'ipAddress');
+    }
+
+    /**
+     * @param GeoLocation $location
+     * @param string $ip
+     */
+    public function updateLocation(GeoLocation $location, string $ip)
+    {
+        $qb = $this->createQueryBuilder('t');
+        $qb
+            ->update()
+            ->set('t.geoLocation', ':location')
+            ->where($qb->expr()->eq('t.ipAddress', ':ip'))
+            ->setParameter('location', $location->getId())
+            ->setParameter('ip', $ip)
+        ;
+
+        $qb->getQuery()->execute();
     }
 }
