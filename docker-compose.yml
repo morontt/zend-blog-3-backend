@@ -58,7 +58,7 @@ services:
             - blognet
 
     nodejs:
-        build: ./docker/nodejs
+        image: xelbot/docker-zendblog-nodejs
         volumes:
             - .:/var/www/html
         networks:

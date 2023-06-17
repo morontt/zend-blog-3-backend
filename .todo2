@@ -191,7 +191,8 @@
     {
       "text": "Use prebuilded docker image #70",
       "priority": "medium",
-      "creation": 1686425561
+      "creation": 1686425561,
+      "completion": 1687013924
     },
     {
       "text": "Move boilerplate code in API controllers to BaseController #69",

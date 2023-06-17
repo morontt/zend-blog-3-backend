@@ -24,7 +24,7 @@ services:
         restart: always
 
     nodejs:
-        build: ./httpdocs/docker/nodejs
+        image: xelbot/docker-zendblog-nodejs
         volumes_from:
             - source
         depends_on:
