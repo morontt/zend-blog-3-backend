@@ -149,6 +149,7 @@
       "text": "Geolocation rework #74",
       "priority": "veryhigh",
       "creation": 1686425442,
+      "completion": 1687005209,
       "tasks": [
         {
           "text": "change logic for unchecked IP",
