@@ -44,6 +44,13 @@ class TrackingArchive
     protected $ipAddress;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", nullable=true, options={"unsigned": true})
+     */
+    private $ipLong;
+
+    /**
      * @var DateTime
      *
      * @ORM\Column(type="milliseconds_dt")

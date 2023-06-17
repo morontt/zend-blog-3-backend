@@ -13,8 +13,7 @@ use Mtt\UserBundle\Entity\User;
 /**
  * @ORM\Table(name="comments", indexes={
  *   @ORM\Index(name="left_key_idx", columns={"tree_left_key"}),
- *   @ORM\Index(name="right_key_idx", columns={"tree_right_key"}),
- *   @ORM\Index(columns={"ip_long"})
+ *   @ORM\Index(name="right_key_idx", columns={"tree_right_key"})
  * })
  * @ORM\Entity(repositoryClass="Mtt\BlogBundle\Entity\Repository\CommentRepository")
  * @ORM\HasLifecycleCallbacks()
@@ -357,9 +356,9 @@ class Comment implements CommentInterface
     /**
      * Get geoLocation
      *
-     * @return GeoLocation
+     * @return GeoLocation|null
      */
-    public function getGeoLocation()
+    public function getGeoLocation(): ?GeoLocation
     {
         return $this->geoLocation;
     }

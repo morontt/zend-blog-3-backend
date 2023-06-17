@@ -41,11 +41,11 @@ class TrackingRepository extends ServiceEntityRepository
 
     /**
      * @param string $from
-     * @param string $now
+     * @param string $to
      *
      * @return array
      */
-    public function getViewCountsInfo(string $from, string $now): array
+    public function getViewCountsInfo(string $from, string $to): array
     {
         $qb = $this->createQueryBuilder('t');
         $qb
@@ -53,11 +53,11 @@ class TrackingRepository extends ServiceEntityRepository
             ->innerJoin('t.post', 'p')
             ->innerJoin('t.trackingAgent', 'ta')
             ->andWhere($qb->expr()->gt('t.timeCreated', ':from'))
-            ->andWhere($qb->expr()->lte('t.timeCreated', ':now'))
+            ->andWhere($qb->expr()->lte('t.timeCreated', ':to'))
             ->andWhere($qb->expr()->eq('ta.bot', $qb->expr()->literal(false)))
             ->groupBy('p.id')
             ->setParameter('from', $from)
-            ->setParameter('now', $now)
+            ->setParameter('to', $to)
         ;
 
         return $qb->getQuery()->getArrayResult();
@@ -65,23 +65,23 @@ class TrackingRepository extends ServiceEntityRepository
 
     /**
      * @param string $from
-     * @param string $now
+     * @param string $to
      *
      * @return array
      */
-    public function getDataAboutServerErrors(string $from, string $now): array
+    public function getDataAboutServerErrors(string $from, string $to): array
     {
         $qb = $this->createQueryBuilder('t');
         $qb
             ->select('IDENTITY(t.post) AS postID', 't.requestURI', 'COUNT(t.id) AS cnt')
             ->andWhere($qb->expr()->gte('t.timeCreated', ':from'))
-            ->andWhere($qb->expr()->lt('t.timeCreated', ':now'))
+            ->andWhere($qb->expr()->lt('t.timeCreated', ':to'))
             ->andWhere($qb->expr()->gte('t.statusCode', $qb->expr()->literal(500)))
             ->andWhere($qb->expr()->lt('t.statusCode', $qb->expr()->literal(600)))
             ->groupBy('postID')
             ->addGroupBy('t.requestURI')
             ->setParameter('from', $from)
-            ->setParameter('now', $now)
+            ->setParameter('to', $to)
         ;
 
         return $qb->getQuery()->getArrayResult();

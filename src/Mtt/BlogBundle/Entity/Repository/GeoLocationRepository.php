@@ -47,4 +47,24 @@ class GeoLocationRepository extends ServiceEntityRepository
 
         return $location;
     }
+
+    /**
+     * @param string $from
+     * @param string $to
+     *
+     * @return int
+     */
+    public function getLocationsCount(string $from, string $to): int
+    {
+        $qb = $this->createQueryBuilder('g');
+        $qb
+            ->select('COUNT(g.id) AS cnt')
+            ->andWhere($qb->expr()->gt('g.timeCreated', ':from'))
+            ->andWhere($qb->expr()->lte('g.timeCreated', ':to'))
+            ->setParameter('from', $from)
+            ->setParameter('to', $to)
+        ;
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
 }
