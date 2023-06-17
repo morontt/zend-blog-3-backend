@@ -5,6 +5,7 @@ namespace Mtt\BlogBundle\Entity\Repository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use Mtt\BlogBundle\Entity\GeoLocation;
 use Mtt\BlogBundle\Entity\Tracking;
 
 /**
@@ -30,9 +31,10 @@ class TrackingRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('e');
         $qb
-            ->select('e', 'ta', 'ar')
+            ->select('e', 'ta', 'ar', 'g')
             ->leftJoin('e.trackingAgent', 'ta')
             ->leftJoin('e.post', 'ar')
+            ->leftJoin('e.geoLocation', 'g')
             ->orderBy('e.id', 'DESC')
         ;
 
@@ -41,11 +43,11 @@ class TrackingRepository extends ServiceEntityRepository
 
     /**
      * @param string $from
-     * @param string $now
+     * @param string $to
      *
      * @return array
      */
-    public function getViewCountsInfo(string $from, string $now): array
+    public function getViewCountsInfo(string $from, string $to): array
     {
         $qb = $this->createQueryBuilder('t');
         $qb
@@ -53,11 +55,11 @@ class TrackingRepository extends ServiceEntityRepository
             ->innerJoin('t.post', 'p')
             ->innerJoin('t.trackingAgent', 'ta')
             ->andWhere($qb->expr()->gt('t.timeCreated', ':from'))
-            ->andWhere($qb->expr()->lte('t.timeCreated', ':now'))
+            ->andWhere($qb->expr()->lte('t.timeCreated', ':to'))
             ->andWhere($qb->expr()->eq('ta.bot', $qb->expr()->literal(false)))
             ->groupBy('p.id')
             ->setParameter('from', $from)
-            ->setParameter('now', $now)
+            ->setParameter('to', $to)
         ;
 
         return $qb->getQuery()->getArrayResult();
@@ -65,25 +67,62 @@ class TrackingRepository extends ServiceEntityRepository
 
     /**
      * @param string $from
-     * @param string $now
+     * @param string $to
      *
      * @return array
      */
-    public function getDataAboutServerErrors(string $from, string $now): array
+    public function getDataAboutServerErrors(string $from, string $to): array
     {
         $qb = $this->createQueryBuilder('t');
         $qb
             ->select('IDENTITY(t.post) AS postID', 't.requestURI', 'COUNT(t.id) AS cnt')
             ->andWhere($qb->expr()->gte('t.timeCreated', ':from'))
-            ->andWhere($qb->expr()->lt('t.timeCreated', ':now'))
+            ->andWhere($qb->expr()->lt('t.timeCreated', ':to'))
             ->andWhere($qb->expr()->gte('t.statusCode', $qb->expr()->literal(500)))
             ->andWhere($qb->expr()->lt('t.statusCode', $qb->expr()->literal(600)))
             ->groupBy('postID')
             ->addGroupBy('t.requestURI')
             ->setParameter('from', $from)
-            ->setParameter('now', $now)
+            ->setParameter('to', $to)
         ;
 
         return $qb->getQuery()->getArrayResult();
+    }
+
+    public function getUncheckedIps(): array
+    {
+        $qb = $this->createQueryBuilder('t');
+        $qb
+            ->select('t.ipAddress', 'MAX(t.timeCreated) AS last_access')
+            ->leftJoin('t.geoLocation', 'g')
+            ->where($qb->expr()->orX(
+                $qb->expr()->isNull('t.geoLocation'),
+                $qb->expr()->isNull('g.city')
+            ))
+            ->andWhere($qb->expr()->isNotNull('t.ipAddress'))
+            ->groupBy('t.ipAddress')
+            ->orderBy('last_access', 'DESC')
+            ->setMaxResults(60)
+        ;
+
+        return array_column($qb->getQuery()->getArrayResult(), 'ipAddress');
+    }
+
+    /**
+     * @param GeoLocation $location
+     * @param string $ip
+     */
+    public function updateLocation(GeoLocation $location, string $ip)
+    {
+        $qb = $this->createQueryBuilder('t');
+        $qb
+            ->update()
+            ->set('t.geoLocation', ':location')
+            ->where($qb->expr()->eq('t.ipAddress', ':ip'))
+            ->setParameter('location', $location->getId())
+            ->setParameter('ip', $ip)
+        ;
+
+        $qb->getQuery()->execute();
     }
 }

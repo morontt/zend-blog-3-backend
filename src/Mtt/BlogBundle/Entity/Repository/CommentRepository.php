@@ -50,13 +50,10 @@ class CommentRepository extends ServiceEntityRepository
     /**
      * @param GeoLocation $location
      * @param string $ip
-     *
-     * @return mixed
      */
-    public function updateLocation(GeoLocation $location, $ip)
+    public function updateLocation(GeoLocation $location, string $ip)
     {
         $qb = $this->createQueryBuilder('c');
-
         $qb
             ->update()
             ->set('c.geoLocation', ':location')
@@ -65,11 +62,13 @@ class CommentRepository extends ServiceEntityRepository
             ->setParameter('ip', $ip)
         ;
 
-        return $qb->getQuery()->getSingleScalarResult();
+        $qb->getQuery()->execute();
     }
 
     /**
+     * @param Comment $entity
      * @param int $index
+     * @param int $depth
      * @param int $postId
      */
     public function addToTree(Comment $entity, int $index, int $depth, int $postId): void

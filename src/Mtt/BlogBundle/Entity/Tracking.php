@@ -44,6 +44,14 @@ class Tracking
     protected $ipAddress;
 
     /**
+     * @var GeoLocation
+     *
+     * @ORM\ManyToOne(targetEntity="GeoLocation")
+     * @ORM\JoinColumn(name="ip_long", referencedColumnName="ip_long", onDelete="SET NULL")
+     */
+    private $geoLocation;
+
+    /**
      * @var DateTime
      *
      * @ORM\Column(type="milliseconds_dt")
@@ -240,6 +248,28 @@ class Tracking
     public function setStatusCode(int $statusCode = null): self
     {
         $this->statusCode = $statusCode;
+
+        return $this;
+    }
+
+    /**
+     * Get geoLocation
+     *
+     * @return GeoLocation|null
+     */
+    public function getGeoLocation(): ?GeoLocation
+    {
+        return $this->geoLocation;
+    }
+
+    /**
+     * @param GeoLocation|null $location
+     *
+     * @return $this
+     */
+    public function setGeoLocation(GeoLocation $location = null): self
+    {
+        $this->geoLocation = $location;
 
         return $this;
     }

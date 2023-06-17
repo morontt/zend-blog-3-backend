@@ -23,9 +23,9 @@ class GeoLocation
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="CUSTOM")
      * @ORM\CustomIdGenerator(class="Mtt\BlogBundle\Doctrine\ORM\IpLongIdGenerator")
-     * @ORM\Column(type="integer", options={"unsigned": true})
+     * @ORM\Column(name="ip_long", type="integer", options={"unsigned": true})
      */
-    private $ipLong;
+    private $id;
 
     /**
      * @var string
@@ -68,7 +68,7 @@ class GeoLocation
      */
     public function getId()
     {
-        return $this->ipLong;
+        return $this->id;
     }
 
     /**
@@ -148,6 +148,6 @@ class GeoLocation
      */
     public function increaseCountOfCheck()
     {
-        $this->countOfCheck += 1;
+        $this->countOfCheck++;
     }
 }

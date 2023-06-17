@@ -120,7 +120,7 @@ class CommentTransformer extends BaseTransformer
             'city' => $locationCity,
             'region' => $locationRegion,
             'country' => $locationCountry,
-            'countryCode' => $flag,
+            'countryFlag' => $flag,
             'parent' => $parentId,
             'imageHash' => $imageHash,
             'deleted' => $item->isDeleted(),

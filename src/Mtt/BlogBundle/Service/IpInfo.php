@@ -147,7 +147,6 @@ class IpInfo
 
                 return json_decode($json, true, 512, JSON_THROW_ON_ERROR);
             } catch (\Throwable $e) {
-
                 return null;
             }
         }
