@@ -20,7 +20,7 @@ export default DS.Model.extend({
     createdAt: DS.attr('date'),
     userAgent: DS.attr('string'),
     bot: DS.attr('boolean'),
-    localIP: function () {
+    privateIP: function () {
         return this.get('city') === '-';
     }.property('city'),
     gravatarUrl: function () {

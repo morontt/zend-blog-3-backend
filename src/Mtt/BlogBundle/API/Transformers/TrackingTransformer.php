@@ -18,8 +18,14 @@ class TrackingTransformer extends BaseTransformer
     public function transform(Tracking $item)
     {
         $countryCode = null;
+        $locationCity = null;
+        $locationRegion = null;
+        $locationCountry = null;
         $location = $item->getGeoLocation();
         if ($location && $city = $location->getCity()) {
+            $locationCity = $city->getCity();
+            $locationRegion = $city->getRegion();
+            $locationCountry = $city->getCountry()->getName();
             $countryCode = $city->getCountry()->getCode();
         }
 
@@ -38,6 +44,9 @@ class TrackingTransformer extends BaseTransformer
             'articleTitle' => $item->getPost() ? $item->getPost()->getTitle() : null,
             'articleSlug' => $item->getPost() ? $item->getPost()->getUrl() : null,
             'isCDN' => $item->isCdn(),
+            'city' => $locationCity,
+            'region' => $locationRegion,
+            'country' => $locationCountry,
             'countryFlag' => $flag,
             'createdAt' => $this->dateTimeToISO($item->getTimeCreated()),
         ];

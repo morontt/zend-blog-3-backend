@@ -16,6 +16,7 @@
         <tr>
             <th class="center-text column-id">#code</th>
             <th>IP</th>
+            <th></th>
             <th class="center-text">URL</th>
             <th>Запись</th>
             <th class="text-right text-date">Создан</th>
@@ -28,7 +29,16 @@
                     class="center-text column-status-code">
                     {{track.statusCode}}
                 </td>
-                <td>{{track.countryFlag}} {{track.ipAddr}}</td>
+                <td><span class="flag">{{track.countryFlag}}</span> {{track.ipAddr}}</td>
+                <td>
+                    {{#if track.city}}
+                        {{#if track.privateIP}}
+                            <small>Private IP</small>
+                        {{else}}
+                            <small>{{track.city}}, {{track.region}}<br/>{{track.country}}</small>
+                        {{/if}}
+                    {{/if}}
+                </td>
                 <td>{{#if track.isCDN}}CDN:{{/if}} {{track.requestUri}}</td>
                 <td>
                     {{#if track.articleSlug}}
@@ -43,7 +53,7 @@
             </tr>
             <tr>
                 <td></td>
-                <td colspan="4" class="column-gray">
+                <td colspan="5" class="column-gray">
                     {{#if track.userAgent}}
                         {{#if track.userAgent.bot}}
                             <i class="glyphicon robot"></i>

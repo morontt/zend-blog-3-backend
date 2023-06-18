@@ -38,8 +38,8 @@
         {{comment.ipAddr}}
         {{#if comment.city}}
             <br/><br/>
-            {{#if comment.localIP}}
-                <small>Local IP</small>
+            {{#if comment.privateIP}}
+                <small>Private IP</small>
             {{else}}
                 <small>{{comment.city}}, {{comment.region}}<br/>{{comment.country}}</small>
             {{/if}}

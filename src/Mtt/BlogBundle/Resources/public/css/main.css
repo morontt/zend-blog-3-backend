@@ -660,3 +660,12 @@ table td[data-status-code="201"] {
 table td[data-status-code="403"] {
     color: darkorange;
 }
+
+table td:has(.flag) {
+    vertical-align: middle;
+}
+
+table .flag {
+    font-size: 1.75em;
+    padding-right: 0.3em;
+}
