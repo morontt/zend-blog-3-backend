@@ -15,6 +15,11 @@ class CommentDTO
     public $commentator;
 
     /**
+     * @var UserDTO|null
+     */
+    public $user;
+
+    /**
      * @var string|null
      */
     public $userAgent;

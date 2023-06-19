@@ -26,3 +26,40 @@ Content-Type: application/json
         ]
     }
 }
+
+###
+
+POST {{base_url}}/telegram/{{telegram_webhook_token}}
+Accept: application/json
+Content-Type: application/json
+
+{
+    "update_id": 999398967,
+    "message": {
+        "message_id": 2655,
+        "from": {
+            "id": 444486199,
+            "is_bot": false,
+            "first_name": "Alexander",
+            "last_name": "Harchenko",
+            "username": "morontt",
+            "language_code": "ru"
+        },
+        "chat": {
+            "id": 444486199,
+            "first_name": "Alexander",
+            "last_name": "Harchenko",
+            "username": "morontt",
+            "type": "private"
+        },
+        "date": 1687204395,
+        "text": "/answer 552\nДа, были времена, приходилось программировать по книжкам\n\nИ не только...\n",
+        "entities": [
+            {
+                "offset": 0,
+                "length": 7,
+                "type": "bot_command"
+            }
+        ]
+    }
+}

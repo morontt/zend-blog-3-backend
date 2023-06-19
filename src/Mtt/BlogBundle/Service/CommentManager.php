@@ -11,6 +11,7 @@ use Mtt\BlogBundle\Entity\Repository\PostRepository;
 use Mtt\BlogBundle\Event\CommentEvent;
 use Mtt\BlogBundle\Exception\NotAllowedCommentException;
 use Mtt\BlogBundle\MttBlogEvents;
+use Mtt\UserBundle\Entity\Repository\UserRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class CommentManager
@@ -40,16 +41,23 @@ class CommentManager
      */
     private $postRepo;
 
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
+
     public function __construct(
         Tracking $tracking,
         EventDispatcherInterface $dispatcher,
         CommentatorRepository $commentatorRepo,
         CommentRepository $commentRepo,
+        UserRepository $userRepository,
         PostRepository $postRepo
     ) {
         $this->tracking = $tracking;
         $this->dispatcher = $dispatcher;
         $this->commentatorRepo = $commentatorRepo;
+        $this->userRepository = $userRepository;
         $this->commentRepo = $commentRepo;
         $this->postRepo = $postRepo;
     }
@@ -90,8 +98,14 @@ class CommentManager
             }
         }
 
-        $commentator = $this->commentatorRepo->findOrCreate($commentData->commentator);
-        $comment->setCommentator($commentator);
+        if ($commentData->commentator) {
+            $commentator = $this->commentatorRepo->findOrCreate($commentData->commentator);
+            $comment->setCommentator($commentator);
+        } elseif ($commentData->user && $user = $this->userRepository->find($commentData->user->id)) {
+            $comment->setUser($user);
+        } else {
+            throw new \LogicException('Comment without sender');
+        }
 
         $this->commentRepo->save($comment);
 

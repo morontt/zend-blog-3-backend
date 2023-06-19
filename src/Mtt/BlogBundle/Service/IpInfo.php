@@ -154,9 +154,9 @@ class IpInfo
             if ($this->isPrivateIP($ip)) {
                 return [
                     'countryCode' => '-',
-                    'countryName' =>  '-',
-                    'regionName' =>  '-',
-                    'cityName' =>  '-',
+                    'countryName' => '-',
+                    'regionName' => '-',
+                    'cityName' => '-',
                 ];
             }
 
