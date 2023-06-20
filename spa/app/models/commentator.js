@@ -8,7 +8,12 @@ export default DS.Model.extend({
     emailHash: DS.attr('string'),
     forceImage: DS.attr('boolean'),
     imageHash: DS.attr('string'),
-    gravatarUrl: function () {
+    avatarTitle: function () {
+        let hash = this.get('imageHash');
+
+        return hash ? hash + '.png' : 'gravatar';
+    }.property('imageHash'),
+    avatarUrl: function () {
         let url;
         if (this.get('imageHash')) {
             url = `${config.appParameters.cdnURL}/images/avatar/${this.get('imageHash')}.png`;
