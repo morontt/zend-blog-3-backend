@@ -310,6 +310,40 @@
       "priority": "high",
       "creation": 1686763595,
       "completion": 1686907878
+    },
+    {
+      "text": "Раздел для Telegram-бота",
+      "priority": "high",
+      "creation": 1687250891,
+      "tasks": [
+        {
+          "text": "запись нового собеседника",
+          "priority": "medium",
+          "creation": 1687250944
+        },
+        {
+          "text": "раздел в админке",
+          "priority": "medium",
+          "creation": 1687250962,
+          "tasks": [
+            {
+              "text": "собеседники",
+              "priority": "medium",
+              "creation": 1687250990
+            },
+            {
+              "text": "сообщения",
+              "priority": "medium",
+              "creation": 1687250998
+            }
+          ]
+        },
+        {
+          "text": "ответ на сообщение из админки",
+          "priority": "medium",
+          "creation": 1687251029
+        }
+      ]
     }
   ]
 }
