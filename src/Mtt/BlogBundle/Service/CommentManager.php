@@ -71,11 +71,7 @@ class CommentManager
      */
     public function saveExternalComment(CommentDTO $commentData): Comment
     {
-        if ($commentData->userAgent) {
-            $agent = $this->tracking->getTrackingAgent($commentData->userAgent);
-        } else {
-            $agent = null;
-        }
+        $agent = $this->tracking->getTrackingAgent($commentData->userAgent);
 
         $post = $this->postRepo->find($commentData->topicId);
         if (!($post && !$post->isDisableComments())) {

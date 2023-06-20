@@ -165,8 +165,6 @@ class Robot
     {
         if ($this->logger) {
             $this->logger->info('Webhook: ', $requestData);
-            $this->logger->info('Server Parameters: ', $_SERVER);
-            $this->logger->info('Request: ', $_REQUEST);
         }
 
         $normalizer = new ObjectNormalizer(
