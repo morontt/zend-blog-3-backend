@@ -7,14 +7,14 @@ use Mtt\BlogBundle\Event\CommentEvent;
 use Mtt\BlogBundle\MttBlogEvents;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Xelbot\Telegram\Command\AbstractAdminCommand;
-use Xelbot\Telegram\Command\RequesterTrait;
 use Xelbot\Telegram\Command\TelegramCommandInterface;
+use Xelbot\Telegram\Command\TelegramCommandTrait;
 use Xelbot\Telegram\Entity\Message;
 use Xelbot\Telegram\Robot;
 
 class DeleteComment extends AbstractAdminCommand implements TelegramCommandInterface
 {
-    use RequesterTrait;
+    use TelegramCommandTrait;
 
     /**
      * @var CommentRepository

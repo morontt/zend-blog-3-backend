@@ -9,21 +9,13 @@
 namespace Mtt\BlogBundle\Telegram\Command;
 
 use Symfony\Component\Process\Process;
-use Xelbot\Telegram\Command\RequesterTrait;
 use Xelbot\Telegram\Command\TelegramCommandInterface;
+use Xelbot\Telegram\Command\TelegramCommandTrait;
 use Xelbot\Telegram\Entity\Message;
 
 class Uptime implements TelegramCommandInterface
 {
-    use RequesterTrait;
-
-    /**
-     * @return string
-     */
-    public function getCommandName(): string
-    {
-        return 'uptime';
-    }
+    use TelegramCommandTrait;
 
     /**
      * @param Message $message

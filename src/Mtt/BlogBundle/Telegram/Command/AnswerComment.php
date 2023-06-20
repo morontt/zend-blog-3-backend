@@ -8,14 +8,14 @@ use Mtt\BlogBundle\Entity\Repository\CommentRepository;
 use Mtt\BlogBundle\Service\CommentManager;
 use Mtt\BlogBundle\Utils\Http;
 use Xelbot\Telegram\Command\AbstractAdminCommand;
-use Xelbot\Telegram\Command\RequesterTrait;
 use Xelbot\Telegram\Command\TelegramCommandInterface;
+use Xelbot\Telegram\Command\TelegramCommandTrait;
 use Xelbot\Telegram\Entity\Message;
 use Xelbot\Telegram\Robot;
 
 class AnswerComment extends AbstractAdminCommand implements TelegramCommandInterface
 {
-    use RequesterTrait;
+    use TelegramCommandTrait;
 
     /**
      * @var CommentRepository
