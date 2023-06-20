@@ -162,14 +162,14 @@ class ViewComment implements CommentInterface
     /**
      * @var string
      *
-     * @ORM\Column(type="text", length=65000, nullable=true)
+     * @ORM\Column(type="text", length=65000)
      */
     protected $userAgent;
 
     /**
      * @var bool
      *
-     * @ORM\Column(type="boolean", name="is_bot", nullable=true)
+     * @ORM\Column(type="boolean", name="is_bot")
      */
     protected $bot;
 
@@ -388,7 +388,7 @@ class ViewComment implements CommentInterface
     /**
      * Get userAgent
      *
-     * @return string|null
+     * @return string
      */
     public function getUserAgent()
     {

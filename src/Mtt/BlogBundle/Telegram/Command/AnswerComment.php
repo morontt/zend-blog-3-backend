@@ -53,7 +53,7 @@ class AnswerComment extends AbstractAdminCommand implements TelegramCommandInter
             $commentData->parentId = $comment->getId();
             $commentData->text = trim($matches[2]);
 
-            $commentData->userAgent = $_SERVER['HTTP_USER_AGENT'];
+            $commentData->userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
             $commentData->ipAddress = Http::getClientIp();
 
             $user = new UserDTO();
