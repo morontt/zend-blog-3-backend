@@ -61,9 +61,9 @@ class Message
     }
 
     /**
-     * @return User
+     * @return User|null
      */
-    public function getFrom(): User
+    public function getFrom(): ?User
     {
         return $this->from;
     }
@@ -81,9 +81,9 @@ class Message
     }
 
     /**
-     * @return Chat
+     * @return Chat|null
      */
-    public function getChat(): Chat
+    public function getChat(): ?Chat
     {
         return $this->chat;
     }

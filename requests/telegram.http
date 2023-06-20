@@ -63,3 +63,23 @@ Content-Type: application/json
         ]
     }
 }
+
+###
+
+POST {{base_url}}/telegram/{{telegram_webhook_token}}
+Accept: application/json
+Content-Type: application/json
+
+{
+    "update_id": 657374014,
+    "message": {
+        "message_id": 2681,
+        "from":{
+            "id": 5465693906,"is_bot":false,"first_name":"Alexander","last_name":"Dublikatov","language_code":"ru"},
+        "chat":{
+            "id": 5465693906,"first_name":"Alexander","last_name":"Dublikatov","type":"private"},
+        "date": 1687246559,
+        "text":"/start",
+        "entities":[{"offset":0,"length":6,"type":"bot_command"}]
+    }
+}

@@ -101,6 +101,7 @@ services:
             - "%telegram_admin_id%"
         calls:
             - [ setLogger, [ "@mtt_blog.telegram_logger" ]]
+            - [ setUpdatesManager, [ '@Mtt\BlogBundle\Telegram\UpdatesManager' ]]
 
     Mtt\BlogBundle\ArgumentResolver\PostValueResolver:
         tags:

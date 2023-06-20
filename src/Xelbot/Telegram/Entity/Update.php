@@ -56,9 +56,9 @@ class Update
     }
 
     /**
-     * @return Message
+     * @return Message|null
      */
-    public function getMessage()
+    public function getMessage(): ?Message
     {
         return $this->message;
     }

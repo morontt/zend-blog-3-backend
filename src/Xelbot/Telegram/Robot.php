@@ -56,6 +56,11 @@ class Robot
     protected $commands = [];
 
     /**
+     * @var UpdatesManagerInterface|null
+     */
+    private $updatesManager;
+
+    /**
      * @param string $token
      * @param string $botName
      * @param int $adminId
@@ -89,6 +94,14 @@ class Robot
     {
         $this->logger = $logger;
         $this->requester->setLogger($logger);
+    }
+
+    /**
+     * @param UpdatesManagerInterface $updatesManager
+     */
+    public function setUpdatesManager(UpdatesManagerInterface $updatesManager)
+    {
+        $this->updatesManager = $updatesManager;
     }
 
     /**
@@ -177,7 +190,10 @@ class Robot
         $serializer = new Serializer([$normalizer]);
         $obj = $serializer->denormalize($requestData, Update::class);
 
-        /* @var Message $message */
+        if ($this->updatesManager) {
+            $this->updatesManager->saveUpdate($obj, $requestData);
+        }
+
         if ($message = $obj->getMessage()) {
             foreach ($message->getEntities() as $entity) {
                 if ($entity['type'] === 'bot_command') {
@@ -210,6 +226,12 @@ class Robot
      */
     protected function executeCommand(Message $message, array $entity)
     {
+        if (!$message->getChat()) {
+            $this->logger->error('message without chat', ['message' => serialize($message)]);
+
+            return;
+        }
+
         $commandName = mb_substr($message->getText(), $entity['offset'] + 1, $entity['length'] - 1);
         try {
             if (isset($this->commands[$commandName])) {
@@ -217,7 +239,11 @@ class Robot
             } else {
                 $this->requester->sendMessage([
                     'chat_id' => $message->getChat()->getId(),
-                    'text' => 'Не знаю такую команду, хозяин ' . self::EMOJI_ROBOT,
+                    'text' => sprintf(
+                        'Не знаю такую команду%s %s ',
+                        $this->appealTo($message->getFrom()->getId()),
+                        self::EMOJI_ROBOT
+                    ),
                     'parse_mode' => 'HTML',
                 ]);
             }
@@ -232,5 +258,20 @@ class Robot
         } catch (\Throwable $e) {
             $this->logger->error($e->getMessage());
         }
+    }
+
+    /**
+     * @param int $idFrom
+     *
+     * @return string
+     */
+    private function appealTo(int $idFrom): string
+    {
+        $text = '';
+        if ($idFrom == $this->adminId) {
+            $text = ', хозяин';
+        }
+
+        return $text;
     }
 }
