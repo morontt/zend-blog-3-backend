@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+echo "Start pre-push hook"
+echo
+
+docker compose run --rm --remove-orphans -T rhinoceros bash -c "bin/php-cs-fixer fix --dry-run --diff"
+retVal=$?
+if [ $retVal -ne 0 ]; then
+    echo -e "\n\e[31mPHP-CS-Fixer error\e[0m\n"
+    exit 1
+else
+    echo -e "\n\e[32mPHP-CS-Fixer OK\e[0m\n"
+fi
+
+docker compose run --rm --remove-orphans -T rhinoceros bash -c "bin/phpspec run"
+retVal=$?
+if [ $retVal -ne 0 ]; then
+    echo -e "\e[31mphpspec error\e[0m\n"
+    exit 1
+else
+    echo -e "\e[32mphpspec OK\e[0m\n"
+fi
+
+exit 0
