@@ -41,6 +41,13 @@ class TelegramUpdate
     /**
      * @var string
      *
+     * @ORM\Column(type="text", length=65535, nullable=true)
+     */
+    private $textMessage;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(type="text", length=65535)
      */
     private $rawMessage;
@@ -109,6 +116,26 @@ class TelegramUpdate
     public function setRawMessage(string $rawMessage): self
     {
         $this->rawMessage = $rawMessage;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTextMessage(): ?string
+    {
+        return $this->textMessage;
+    }
+
+    /**
+     * @param string|null $textMessage
+     *
+     * @return TelegramUpdate
+     */
+    public function setTextMessage(string $textMessage = null): self
+    {
+        $this->textMessage = $textMessage;
 
         return $this;
     }

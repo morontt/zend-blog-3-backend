@@ -16,12 +16,12 @@ class Message
     protected $messageId;
 
     /**
-     * @var User
+     * @var User|null
      */
     protected $from;
 
     /**
-     * @var Chat
+     * @var Chat|null
      */
     protected $chat;
 
@@ -31,7 +31,7 @@ class Message
     protected $date;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $text;
 
@@ -69,11 +69,11 @@ class Message
     }
 
     /**
-     * @param User $from
+     * @param User|null $from
      *
      * @return Message
      */
-    public function setFrom(User $from): self
+    public function setFrom(User $from = null): self
     {
         $this->from = $from;
 
@@ -89,11 +89,11 @@ class Message
     }
 
     /**
-     * @param Chat $chat
+     * @param Chat|null $chat
      *
      * @return Message
      */
-    public function setChat(Chat $chat): self
+    public function setChat(Chat $chat = null): self
     {
         $this->chat = $chat;
 
@@ -121,19 +121,19 @@ class Message
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getText(): string
+    public function getText(): ?string
     {
         return $this->text;
     }
 
     /**
-     * @param string $text
+     * @param string|null $text
      *
      * @return Message
      */
-    public function setText(string $text): self
+    public function setText(string $text = null): self
     {
         $this->text = $text;
 
