@@ -42,6 +42,7 @@ class LoadUserData extends Fixture implements ContainerAwareInterface
             ->setUsername('admin')
             ->setEmail('morontt@gmail.com')
             ->setPassword($encoder->encodePassword('test', $user->getSalt()))
+            ->setWsseKey('WSSE-KEY')
         ;
 
         $manager->persist($user);
