@@ -4,6 +4,7 @@ namespace Mtt\TestBundle\DataFixtures\ORM;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager as ObjectManagerInterface;
 use Faker\Factory as FakerFactory;
 use Mtt\BlogBundle\Entity\Commentator;
 
@@ -14,7 +15,7 @@ class LoadCommentatorData extends Fixture
     /**
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManagerInterface $manager)
     {
         $commentator = new Commentator();
         $commentator

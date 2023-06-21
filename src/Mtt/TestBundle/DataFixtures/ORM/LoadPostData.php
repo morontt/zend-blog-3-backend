@@ -5,6 +5,7 @@ namespace Mtt\TestBundle\DataFixtures\ORM;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager as ObjectManagerInterface;
 use Faker\Factory as FakerFactory;
 use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Service\TextProcessor;
@@ -32,7 +33,7 @@ class LoadPostData extends Fixture implements ContainerAwareInterface, Dependent
     /**
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManagerInterface $manager)
     {
         /* @var TextProcessor $textProcessor */
         $textProcessor = $this->container->get('mtt_blog.text_processor');

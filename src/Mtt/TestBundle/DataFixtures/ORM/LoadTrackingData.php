@@ -5,6 +5,7 @@ namespace Mtt\TestBundle\DataFixtures\ORM;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager as ObjectManagerInterface;
 use Mtt\BlogBundle\Entity\Tracking;
 
 class LoadTrackingData extends Fixture implements DependentFixtureInterface
@@ -12,7 +13,7 @@ class LoadTrackingData extends Fixture implements DependentFixtureInterface
     /**
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManagerInterface $manager)
     {
         $tracking = new Tracking();
         $tracking->setTrackingAgent($manager->merge($this->getReference('safari')))

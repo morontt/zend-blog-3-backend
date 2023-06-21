@@ -4,6 +4,7 @@ namespace Mtt\TestBundle\DataFixtures\ORM;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager as ObjectManagerInterface;
 use Faker\Factory as FakerFactory;
 use Mtt\BlogBundle\Utils\RuTransform;
 use Mtt\UserBundle\Entity\User;
@@ -30,7 +31,7 @@ class LoadUserData extends Fixture implements ContainerAwareInterface
     /**
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManagerInterface $manager)
     {
         $user = new User();
         $encoder = $this->container
