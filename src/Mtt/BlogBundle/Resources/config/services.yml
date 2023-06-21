@@ -9,7 +9,7 @@ services:
 
     Mtt\BlogBundle\:
         resource: '../../*'
-        exclude: '../../{Entity,Model,Event,OAuth2,Utils,Doctrine/DBAL,DTO,Form}'
+        exclude: '../../{Entity,Model,Event,OAuth2,Utils,Service/IpInfo/LocationInfo.php,Doctrine/DBAL,DTO,Form}'
 
     Mtt\BlogBundle\Entity\Repository\:
         resource: '../../Entity/Repository'
@@ -51,9 +51,11 @@ services:
         tags:
             - {name: doctrine.event_listener, event: postGenerateSchema }
 
-    Mtt\BlogBundle\Service\IpInfo:
+    Mtt\BlogBundle\Service\IpInfo\IpInfoDbClient:
         arguments:
             $key: "%ipinfodb_key%"
+
+    Mtt\BlogBundle\Service\IpInfo\IpInfoClientInterface: '@Mtt\BlogBundle\Service\IpInfo\IpInfoDbClient'
 
     Mtt\BlogBundle\EventListener\CommentGeolocationListener:
         tags:

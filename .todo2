@@ -107,7 +107,8 @@
         {
           "text": "doctrine:schema:validate",
           "priority": "medium",
-          "creation": 1686551315
+          "creation": 1686551315,
+          "completion": 1687344354
         }
       ]
     },

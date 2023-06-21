@@ -3,6 +3,7 @@
 namespace Mtt\BlogBundle\Cron\Hourly;
 
 use Mtt\BlogBundle\Cron\HourlyCronServiceInterface;
+use Mtt\BlogBundle\Doctrine\DBAL\Type\MillisecondsDateTime;
 use Mtt\BlogBundle\Entity\Repository\TrackingRepository;
 use Mtt\BlogBundle\Entity\SystemParameters;
 use Mtt\BlogBundle\Service\SystemParametersStorage;
@@ -37,7 +38,7 @@ class BlogServerErrors implements HourlyCronServiceInterface
     public function run()
     {
         $from = $this->paramStorage->getParameter(SystemParameters::ERRORS_5XX_CHECK) ?? '2023-06-01 00:00:00';
-        $now = date('Y-m-d H:i:s');
+        $now = (new \DateTime())->format(MillisecondsDateTime::FORMAT_TIME);
 
         $this->errors = $this->repository->getDataAboutServerErrors($from, $now);
         $this->paramStorage->saveParameter(SystemParameters::ERRORS_5XX_CHECK, $now);

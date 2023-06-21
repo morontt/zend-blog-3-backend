@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-echo "Start pre-push hook"
-echo
+echo -e "\e[36mStart pre-push hook\e[0m\n"
 
 docker compose run --rm --remove-orphans -T rhinoceros bash -c "bin/php-cs-fixer fix --dry-run --diff"
 retVal=$?
@@ -19,6 +18,15 @@ if [ $retVal -ne 0 ]; then
     exit 1
 else
     echo -e "\e[32mphpspec OK\e[0m\n"
+fi
+
+docker compose run --rm --remove-orphans -T rhinoceros bash -c "php app/console doctrine:schema:validate"
+retVal=$?
+if [ $retVal -ne 0 ]; then
+    echo -e "\e[31mdoctrine:schema:validate error\e[0m\n"
+    exit 1
+else
+    echo -e "\e[32mdoctrine:schema:validate OK\e[0m\n"
 fi
 
 exit 0

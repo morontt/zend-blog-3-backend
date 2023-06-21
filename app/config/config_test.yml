@@ -14,7 +14,7 @@ doctrine:
 
 web_profiler:
     toolbar: false
-    intercept_redirects: false
+    intercept_redirects: "%debug_redirects%"
 
 swiftmailer:
     disable_delivery: true

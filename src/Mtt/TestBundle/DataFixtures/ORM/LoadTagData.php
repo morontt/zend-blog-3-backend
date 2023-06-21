@@ -4,6 +4,7 @@ namespace Mtt\TestBundle\DataFixtures\ORM;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager as ObjectManagerInterface;
 use Faker\Factory as FakerFactory;
 use Mtt\BlogBundle\Entity\Tag;
 use Mtt\BlogBundle\Utils\RuTransform;
@@ -15,7 +16,7 @@ class LoadTagData extends Fixture
     /**
      * @param ObjectManager $manager
      */
-    public function load(ObjectManager $manager)
+    public function load(ObjectManagerInterface $manager)
     {
         $faker = FakerFactory::create('ru_RU');
         $faker->seed(1022);

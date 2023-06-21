@@ -11,6 +11,7 @@ namespace Mtt\BlogBundle\Cron\Daily;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Mtt\BlogBundle\Cron\DailyCronServiceInterface;
+use Mtt\BlogBundle\Doctrine\DBAL\Type\MillisecondsDateTime;
 use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Entity\GeoLocation;
 use Mtt\BlogBundle\Entity\SystemParameters;
@@ -61,13 +62,11 @@ class CommentGeoLocation implements DailyCronServiceInterface
             if ($location) {
                 $commentRepo->updateLocation($location, $ip);
             }
-
-            sleep(2);
         }
 
         $from = $this->paramStorage->getParameter(SystemParameters::UPDATE_GEOLOCATION_FROM)
             ?? ((new \DateTime())->sub(new \DateInterval('P1D'))->format('Y-m-d H:i:s'));
-        $now = date('Y-m-d H:i:s');
+        $now = (new \DateTime())->format(MillisecondsDateTime::FORMAT_TIME);
 
         $geolocationRepo = $this->em->getRepository(Geolocation::class);
         $this->countImported = $geolocationRepo->getLocationsCount($from, $now);

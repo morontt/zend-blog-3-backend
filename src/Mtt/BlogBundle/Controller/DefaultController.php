@@ -69,7 +69,7 @@ class DefaultController extends AbstractController
             ],
             'exportApplicationGlobal' => true,
             'appParameters' => [
-                'apiURL' => 'api',
+                'apiURL' => $this->generateUrl('api_root'),
                 'cdnURL' => $this->cdnUrl,
             ],
         ];
