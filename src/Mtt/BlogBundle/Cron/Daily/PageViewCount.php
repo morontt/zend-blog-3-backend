@@ -4,6 +4,7 @@ namespace Mtt\BlogBundle\Cron\Daily;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Mtt\BlogBundle\Cron\DailyCronServiceInterface;
+use Mtt\BlogBundle\Doctrine\DBAL\Type\MillisecondsDateTime;
 use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Entity\SystemParameters;
 use Mtt\BlogBundle\Entity\Tracking;
@@ -40,7 +41,7 @@ class PageViewCount implements DailyCronServiceInterface
     public function run()
     {
         $from = $this->paramStorage->getParameter(SystemParameters::UPDATE_VIEW_COUNTS_FROM) ?? '2023-06-01 00:00:00';
-        $now = date('Y-m-d H:i:s');
+        $now = (new \DateTime())->format(MillisecondsDateTime::FORMAT_TIME);
 
         $trackingRepo = $this->em->getRepository(Tracking::class);
         $info = $trackingRepo->getViewCountsInfo($from, $now);

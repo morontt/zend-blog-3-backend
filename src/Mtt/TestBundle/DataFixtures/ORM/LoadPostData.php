@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class LoadPostData extends Fixture implements ContainerAwareInterface, DependentFixtureInterface
 {
-    const COUNT_POSTS = 150;
+    const COUNT_POSTS = 50;
 
     /**
      * @var ContainerInterface
@@ -125,7 +125,7 @@ class LoadPostData extends Fixture implements ContainerAwareInterface, Dependent
             $manager->persist($post);
             $manager->flush();
 
-            $this->addReference('post-' . (string)(5 + $i), $post);
+            $this->addReference('post-' . (5 + $i), $post);
         }
     }
 

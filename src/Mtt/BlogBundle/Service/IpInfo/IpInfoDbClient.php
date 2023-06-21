@@ -30,6 +30,7 @@ class IpInfoDbClient implements IpInfoClientInterface
             ]);
             try {
                 $json = file_get_contents('https://api.ipinfodb.com/v3/ip-city/?' . $params, false, $context);
+                sleep(2);
 
                 return LocationInfo::createFromArray(json_decode($json, true, 512, JSON_THROW_ON_ERROR));
             } catch (\Throwable $e) {
