@@ -43,30 +43,30 @@ class GeoLocationCity
     protected $region;
 
     /**
-     * @var float
+     * @var float|null
      *
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     protected $latitude;
 
     /**
-     * @var float
+     * @var float|null
      *
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float", nullable=true)
      */
     protected $longitude;
 
     /**
-     * @var string
+     * @var string|null
      *
-     * @ORM\Column(type="string", length=30)
+     * @ORM\Column(type="string", length=30, nullable=true)
      */
     protected $zip;
 
     /**
-     * @var string
+     * @var string|null
      *
-     * @ORM\Column(type="string", length=8)
+     * @ORM\Column(type="string", length=8, nullable=true)
      */
     protected $timeZone;
 
