@@ -7,13 +7,10 @@ export default Ember.Controller.extend({
     alertMessage: '',
     actions: {
         purgeCache() {
-            console.log(config);
             fetch(Routing.generate('purge_cache'), {
                 method: 'POST',
             }).then(
                 (resp) => {
-                    console.log(resp);
-
                     if (resp.ok) {
                         this.set('alertMessage', 'Кеш очищен');
                         this.set('alertClass', 'alert-success');

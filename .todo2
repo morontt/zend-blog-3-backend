@@ -174,7 +174,8 @@
     {
       "text": "Clear varnish cache (by button) #72",
       "priority": "medium",
-      "creation": 1686425497
+      "creation": 1686425497,
+      "completion": 1687468704
     },
     {
       "text": "Article and code snippet sync #71",
