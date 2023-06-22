@@ -4,3 +4,6 @@ X-WSSE: UsernameToken Username="morontt",PasswordDigest="xHbESRK6vNtl1SIEaJYWZ4U
 Accept: application/json
 
 ###
+
+POST https://reprogl.xelbot.com/purge-cache
+X-Ban-Token: 1ED97CD18A244BE9

@@ -2,11 +2,15 @@
 
 namespace Mtt\BlogBundle\Controller;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Entity\Repository\ViewCommentRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -24,10 +28,13 @@ class DefaultController extends AbstractController
      */
     private $cdnUrl;
 
-    public function __construct(string $kernelEnv, string $cdnUrl)
+    private string $blogUrl;
+
+    public function __construct(string $kernelEnv, string $cdnUrl, string $blogUrl)
     {
         $this->kernelEnv = $kernelEnv;
         $this->cdnUrl = $cdnUrl;
+        $this->blogUrl = $blogUrl;
     }
 
     /**
@@ -98,5 +105,29 @@ class DefaultController extends AbstractController
         $comments = $repository->getCommentsByPost($post);
 
         return compact('post', 'comments');
+    }
+
+    /**
+     * @Route("/purge-cache", name="purge_cache", options={"expose"=true})
+     *
+     * @return JsonResponse
+     */
+    public function purgeBlogCacheAction(): JsonResponse
+    {
+        $httpClient = new Client(['base_uri' => $this->blogUrl]);
+        try {
+            $response = $httpClient->request(
+                'POST',
+                '/purge-cache',
+                [
+                    'headers' => ['X-Ban-Token' => getenv('VARNISH_BAN_TOKEN')],
+                ]
+            );
+            $status = $response->getStatusCode();
+        } catch (GuzzleException $e) {
+            $status = Response::HTTP_BAD_REQUEST;
+        }
+
+        return new JsonResponse([], $status);
     }
 }

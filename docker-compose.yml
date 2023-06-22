@@ -24,8 +24,10 @@ services:
         environment:
             APPLICATION_ENV: development
             CIRCLE_ARTIFACTS: /var/www/html/var/tests
+            VARNISH_BAN_TOKEN: ${VARNISH_BAN_TOKEN}
         extra_hosts:
             - "database.lan:${DATABASE_IP}"
+            - "reprogl.xelbot.com:${APPLICATION_IP}"
         networks:
             - blognet
 

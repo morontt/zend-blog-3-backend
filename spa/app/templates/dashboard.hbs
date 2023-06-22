@@ -7,7 +7,16 @@
     <div id="flashes">
     </div>
     <div class="page-header">
+        <div class="actions-menu">
+            <button {{action "purgeCache"}} class="btn btn-warning">
+                <i class="glyphicon glyphicon-refresh"></i>
+                <span>Очистить кеш</span>
+            </button>
+        </div>
         <h1><i class="glyphicon glyphicon-dashboard"></i> Панель управления <small>Для управления всего и всем.</small></h1>
+    </div>
+    <div class="alert {{alertClass}}" role="alert">
+        {{alertMessage}}
     </div>
     {{footer-partial}}
 </div>

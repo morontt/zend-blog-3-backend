@@ -14,7 +14,7 @@ export default Ember.Controller.extend({
                 this.set('alertClass', 'hide');
             }, 4000);
 
-            var preview_window = this.get('preview');
+            let preview_window = this.get('preview');
             if (preview_window) {
                 preview_window.location.reload(true);
             } else {

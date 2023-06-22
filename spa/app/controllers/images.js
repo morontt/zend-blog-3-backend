@@ -9,7 +9,7 @@ export default Ember.Controller.extend({
             $('#modal_new_image').modal();
         },
         remove() {
-            var image_id = $('#confirmation-modal').attr('data-object-id');
+            let image_id = $('#confirmation-modal').attr('data-object-id');
             this.store.peekRecord('mediaFile', image_id).destroyRecord();
         },
         refresh() {
