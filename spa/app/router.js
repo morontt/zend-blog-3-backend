@@ -24,6 +24,7 @@ Router.map(function () {
     this.route('userAgent', {path: '/user-agent'});
     this.route('tracking');
     this.route('telegramUser');
+    this.route('telegramUpdate');
 });
 
 export default Router;

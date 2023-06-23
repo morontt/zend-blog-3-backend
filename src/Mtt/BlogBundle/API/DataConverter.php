@@ -55,6 +55,8 @@ use Mtt\BlogBundle\Utils\RuTransform;
  * @method array getTrackingArray($collection, $includes = null)
  * @method array getTelegramUser(Entity\TelegramUser $entity, $includes = null)
  * @method array getTelegramUserArray($collection, $includes = null)
+ * @method array getTelegramUpdate(Entity\TelegramUpdate $entity, $includes = null)
+ * @method array getTelegramUpdateArray($collection, $includes = null)
  */
 class DataConverter
 {

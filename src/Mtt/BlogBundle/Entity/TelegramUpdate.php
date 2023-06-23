@@ -7,7 +7,7 @@ use Mtt\BlogBundle\Entity\Traits\ModifyEntityTrait;
 
 /**
  * @ORM\Table(name="telegram_updates")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Mtt\BlogBundle\Entity\Repository\TelegramUpdateRepository")
  * @ORM\HasLifecycleCallbacks()
  */
 class TelegramUpdate

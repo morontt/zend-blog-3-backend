@@ -88,6 +88,12 @@
                                     <span>Отправители</span>
                                 {{/link-to}}
                             </li>
+                            <li class="first {{is-active currentLink "telegramUpdates"}}">
+                                {{#link-to "telegramUpdate"}}
+                                    <i class="glyphicon glyphicon-send"></i>
+                                    <span>Сообщения</span>
+                                {{/link-to}}
+                            </li>
                         </ul>
                     </li>
                 </ul>
