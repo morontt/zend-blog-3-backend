@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import config from 'mtt-blog/config/environment';
 
 export default Ember.Controller.extend({
     appController: Ember.inject.controller('application'),
