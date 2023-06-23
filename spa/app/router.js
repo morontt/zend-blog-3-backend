@@ -23,6 +23,9 @@ Router.map(function () {
     this.route('pygmentsCodeEdit', {path: '/code-edit/:code_id'});
     this.route('userAgent', {path: '/user-agent'});
     this.route('tracking');
+    this.route('telegramUser');
+    this.route('telegramUpdate');
+    this.route('replyTelegramUpdate', {path: '/reply-telegram/:update_id'});
 });
 
 export default Router;

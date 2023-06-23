@@ -16,7 +16,7 @@ class Update
     protected $updateId;
 
     /**
-     * @var Message
+     * @var Message|null
      */
     protected $message;
 
@@ -64,11 +64,11 @@ class Update
     }
 
     /**
-     * @param Message $message
+     * @param Message|null $message
      *
      * @return Update
      */
-    public function setMessage(Message $message)
+    public function setMessage(Message $message = null)
     {
         $this->message = $message;
 
@@ -76,19 +76,19 @@ class Update
     }
 
     /**
-     * @return Message
+     * @return Message|null
      */
-    public function getEditedMessage()
+    public function getEditedMessage(): ?Message
     {
         return $this->editedMessage;
     }
 
     /**
-     * @param Message $editedMessage
+     * @param Message|null $editedMessage
      *
      * @return Update
      */
-    public function setEditedMessage(Message $editedMessage): self
+    public function setEditedMessage(Message $editedMessage = null): self
     {
         $this->editedMessage = $editedMessage;
 
@@ -96,19 +96,19 @@ class Update
     }
 
     /**
-     * @return Message
+     * @return Message|null
      */
-    public function getChannelPost(): Message
+    public function getChannelPost(): ?Message
     {
         return $this->channelPost;
     }
 
     /**
-     * @param Message $channelPost
+     * @param Message|null $channelPost
      *
      * @return Update
      */
-    public function setChannelPost(Message $channelPost): self
+    public function setChannelPost(Message $channelPost = null): self
     {
         $this->channelPost = $channelPost;
 
@@ -116,19 +116,19 @@ class Update
     }
 
     /**
-     * @return Message
+     * @return Message|null
      */
-    public function getEditedChannelPost(): Message
+    public function getEditedChannelPost(): ?Message
     {
         return $this->editedChannelPost;
     }
 
     /**
-     * @param Message $editedChannelPost
+     * @param Message|null $editedChannelPost
      *
      * @return Update
      */
-    public function setEditedChannelPost(Message $editedChannelPost): self
+    public function setEditedChannelPost(Message $editedChannelPost = null): self
     {
         $this->editedChannelPost = $editedChannelPost;
 

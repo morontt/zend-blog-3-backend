@@ -16,17 +16,17 @@ class Chat
     protected $id;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $firstName;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $lastName;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $username;
 
@@ -56,19 +56,19 @@ class Chat
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getFirstName(): string
+    public function getFirstName(): ?string
     {
         return $this->firstName;
     }
 
     /**
-     * @param string $firstName
+     * @param string|null $firstName
      *
      * @return Chat
      */
-    public function setFirstName(string $firstName): self
+    public function setFirstName(string $firstName = null): self
     {
         $this->firstName = $firstName;
 
@@ -76,19 +76,19 @@ class Chat
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getLastName(): string
+    public function getLastName(): ?string
     {
         return $this->lastName;
     }
 
     /**
-     * @param string $lastName
+     * @param string|null $lastName
      *
      * @return Chat
      */
-    public function setLastName(string $lastName): self
+    public function setLastName(string $lastName = null): self
     {
         $this->lastName = $lastName;
 
@@ -96,19 +96,19 @@ class Chat
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
         return $this->username;
     }
 
     /**
-     * @param string $username
+     * @param string|null $username
      *
      * @return Chat
      */
-    public function setUsername(string $username): self
+    public function setUsername(string $username = null): self
     {
         $this->username = $username;
 

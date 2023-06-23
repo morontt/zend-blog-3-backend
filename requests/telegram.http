@@ -83,3 +83,24 @@ Content-Type: application/json
         "entities":[{"offset":0,"length":6,"type":"bot_command"}]
     }
 }
+
+###
+
+POST {{base_url}}/telegram/{{telegram_webhook_token}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "update_id":657374024,
+  "message":{
+    "message_id":2715,
+    "from":{"id":5465693906,"is_bot":false,"first_name":"Alexander","last_name":"Dublikatov","language_code":"en"},
+    "chat":{"id":5465693906,"first_name":"Alexander","last_name":"Dublikatov","type":"private"},
+    "date":1687325735,
+    "photo":[
+      {"file_id":"AgACAgIAAxkBAAIKm2SSjCfhXH65UE3Sq_M0sR8mRcLcAALoxzEbMI6YSL_2f9h_WnCUAQADAgADcwADLwQ","file_unique_id":"AQAD6McxGzCOmEh4","file_size":865,"width":90,"height":63},
+      {"file_id":"AgACAgIAAxkBAAIKm2SSjCfhXH65UE3Sq_M0sR8mRcLcAALoxzEbMI6YSL_2f9h_WnCUAQADAgADbQADLwQ","file_unique_id":"AQAD6McxGzCOmEhy","file_size":11238,"width":320,"height":223},
+      {"file_id":"AgACAgIAAxkBAAIKm2SSjCfhXH65UE3Sq_M0sR8mRcLcAALoxzEbMI6YSL_2f9h_WnCUAQADAgADeAADLwQ","file_unique_id":"AQAD6McxGzCOmEh9","file_size":15770,"width":444,"height":309}
+    ]
+  }
+}

@@ -1,0 +1,56 @@
+<div id="topbar">
+    <ol class="breadcrumb">
+        <li>Телеграм</li>
+    </ol>
+</div>
+<div id="content">
+    <div id="flashes">
+    </div>
+
+    <div class="page-header">
+        <h1><i class="glyphicon glyphicon-send"></i> Сообщения</h1>
+    </div>
+
+    <table class="table table-bordered table-striped table-tracking">
+        <thead>
+        <tr>
+            <th class="center-text column-id">#id</th>
+            <th class="text-right">отправитель</th>
+            <th class="center-text">Сообщение</th>
+            <th class="text-right text-date">Отправлено</th>
+            <th class="actions">&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each model as |update|}}
+            <tr>
+                <td class="center-text">
+                    {{update.id}}
+                </td>
+                <td class="text-right">
+                    {{#if update.user.bot}}
+                        <i class="glyphicon robot"></i>
+                    {{/if}}
+                    {{update.user.firstName}}
+                    {{#if update.user.lastName}}{{update.user.lastName}}{{/if}}
+                    {{#if update.user.username}}({{update.user.username}}){{/if}}
+                </td>
+                <td>{{update.message}}</td>
+                <td class="text-right">{{date-format update.createdAt 'DD.MM.YYYY, HH:mm:ss'}}</td>
+                <td>
+                    <div class="pull-right">
+                        {{#link-to "replyTelegramUpdate" update.id class="btn btn-info"}}
+                            <i class="glyphicon glyphicon-envelope"></i>
+                            <span>reply</span>
+                        {{/link-to}}
+                    </div>
+                </td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+
+    {{paginator-list meta=model.meta routeName="telegramUpdate"}}
+
+    {{footer-partial}}
+</div>

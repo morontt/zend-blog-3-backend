@@ -77,6 +77,25 @@
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        <span class="nav-header">
+                            <span>Телеграм</span>
+                        </span>
+                        <ul class="nav menu_level_1">
+                            <li class="first {{is-active currentLink "telegramUsers"}}">
+                                {{#link-to "telegramUser"}}
+                                    <i class="glyphicon glyphicon-user"></i>
+                                    <span>Отправители</span>
+                                {{/link-to}}
+                            </li>
+                            <li class="first {{is-active currentLink "telegramUpdates"}}">
+                                {{#link-to "telegramUpdate"}}
+                                    <i class="glyphicon glyphicon-send"></i>
+                                    <span>Сообщения</span>
+                                {{/link-to}}
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>

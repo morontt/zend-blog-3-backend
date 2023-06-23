@@ -27,7 +27,9 @@ class UpdatesManager implements UpdatesManagerInterface
     {
         $dbUser = null;
         $chatId = null;
+        $textMessage = null;
         if ($message = $obj->getMessage()) {
+            $textMessage = $message->getText();
             if ($user = $message->getFrom()) {
                 $userRepository = $this->em->getRepository(TelegramUser::class);
                 $dbUser = $userRepository->findOneBy(['userId' => $user->getId()]);
@@ -60,6 +62,7 @@ class UpdatesManager implements UpdatesManagerInterface
             ->setRawMessage(json_encode($requestData))
             ->setTelegramUser($dbUser)
             ->setChatId($chatId)
+            ->setTextMessage($textMessage)
         ;
 
         $this->em->persist($update);
