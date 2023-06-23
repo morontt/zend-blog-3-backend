@@ -18,6 +18,7 @@
             <th class="text-right">отправитель</th>
             <th class="center-text">Сообщение</th>
             <th class="text-right text-date">Отправлено</th>
+            <th class="actions">&nbsp;</th>
         </tr>
         </thead>
         <tbody>
@@ -36,6 +37,14 @@
                 </td>
                 <td>{{update.message}}</td>
                 <td class="text-right">{{date-format update.createdAt 'DD.MM.YYYY, HH:mm:ss'}}</td>
+                <td>
+                    <div class="pull-right">
+                        {{#link-to "replyTelegramUpdate" update.id class="btn btn-info"}}
+                            <i class="glyphicon glyphicon-envelope"></i>
+                            <span>reply</span>
+                        {{/link-to}}
+                    </div>
+                </td>
             </tr>
         {{/each}}
         </tbody>

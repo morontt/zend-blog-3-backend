@@ -1,0 +1,55 @@
+<div id="topbar">
+    <ol class="breadcrumb">
+        <li>
+            {{#link-to "telegramUpdate"}}
+                Телеграм
+            {{/link-to}}
+        </li>
+        <li>Ответить</li>
+    </ol>
+</div>
+<div id="content">
+    <div id="flashes">
+        <div class="alert {{alertClass}}" role="alert">
+            {{alertMessage}}
+        </div>
+    </div>
+    <div class="page-header">
+        <h1>
+            <i class="glyphicon glyphicon-send"></i> Ответить на сообщение
+        </h1>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-9">
+            <p>
+                {{#if model.update.user.bot}}
+                    <i class="glyphicon robot"></i>
+                {{/if}}
+                {{model.update.user.firstName}}
+                {{#if model.update.user.lastName}}{{model.update.user.lastName}}{{/if}}
+                {{#if model.update.user.username}}({{model.update.user.username}}){{/if}}
+            </p>
+            <p>{{model.update.message}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <hr/>
+        <div class="col-md-1"></div>
+        <div class="col-md-9">
+            <div class="form-group">
+                {{textarea rows="10"
+                           class="form-control"
+                           value=model.newUpdate.message}}
+            </div>
+        </div>
+    </div>
+    <div class="form-actions">
+        <button {{action "reply"}} class="btn btn-primary btn-lg">
+            <i class="icon-save"></i> Отправить
+        </button>
+    </div>
+    {{footer-partial}}
+</div>

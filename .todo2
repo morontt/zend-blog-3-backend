@@ -344,7 +344,30 @@
         {
           "text": "ответ на сообщение из админки",
           "priority": "medium",
-          "creation": 1687251029
+          "creation": 1687251029,
+          "completion": 1687524818
+        },
+        {
+          "text": "Notification about new mwssages",
+          "priority": "medium",
+          "creation": 1687524844
+        }
+      ]
+    },
+    {
+      "text": "Category page",
+      "priority": "medium",
+      "creation": 1687519031,
+      "tasks": [
+        {
+          "text": "Work counters",
+          "priority": "medium",
+          "creation": 1687519061
+        },
+        {
+          "text": "without pagination, sort by left key",
+          "priority": "medium",
+          "creation": 1687519084
         }
       ]
     }

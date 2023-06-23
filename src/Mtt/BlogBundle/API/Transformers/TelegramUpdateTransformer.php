@@ -21,6 +21,7 @@ class TelegramUpdateTransformer extends BaseTransformer
             'user' => $item->getTelegramUser() ? $item->getTelegramUser()->getId() : null,
             'message' => $item->getTextMessage(),
             'createdAt' => $this->dateTimeToISO($item->getTimeCreated()),
+            'replyId' => 0,
         ];
     }
 

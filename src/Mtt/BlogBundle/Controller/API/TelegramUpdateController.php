@@ -8,6 +8,7 @@ use Mtt\BlogBundle\Entity\TelegramUpdate;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Xelbot\Telegram\Robot;
 
 /**
  * @Route("/api/telegramUpdates")
@@ -50,5 +51,39 @@ class TelegramUpdateController extends BaseController
             ->getTelegramUpdate($entity);
 
         return new JsonResponse($result);
+    }
+
+    /**
+     * @Route("", methods={"POST"})
+     *
+     * @param Request $request
+     * @param TelegramUpdateRepository $repository
+     * @param Robot $bot
+     *
+     * @return JsonResponse
+     */
+    public function createAction(Request $request, TelegramUpdateRepository $repository, Robot $bot)
+    {
+        $now = new \DateTime();
+        $messageData = $request->request->get('telegramUpdate');
+        $message = $messageData['message'];
+        $replyId = $messageData['replyId'];
+
+        if ($tgUpdate = $repository->find($replyId)) {
+            if ($chatId = $tgUpdate->getChatId()) {
+                $bot->sendMessage($message, $chatId);
+            }
+        } else {
+            throw $this->createNotFoundException();
+        }
+
+        /* virtual Telegram update :) */
+        return new JsonResponse([
+            'id' => (int)$now->format('U'),
+            'user' => null,
+            'message' => $message,
+            'createdAt' => $now->format(\DateTimeInterface::ATOM),
+            'replyId' => 0,
+        ]);
     }
 }
