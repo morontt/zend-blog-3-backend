@@ -53,6 +53,8 @@ use Mtt\BlogBundle\Utils\RuTransform;
  * @method array getUserAgentArray($collection, $includes = null)
  * @method array getTracking(Entity\Tracking $entity, $includes = null)
  * @method array getTrackingArray($collection, $includes = null)
+ * @method array getTelegramUser(Entity\TelegramUser $entity, $includes = null)
+ * @method array getTelegramUserArray($collection, $includes = null)
  */
 class DataConverter
 {

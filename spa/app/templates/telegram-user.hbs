@@ -1,0 +1,47 @@
+<div id="topbar">
+    <ol class="breadcrumb">
+        <li>Телеграм</li>
+    </ol>
+</div>
+<div id="content">
+    <div id="flashes">
+    </div>
+
+    <div class="page-header">
+        <h1><i class="glyphicon glyphicon-eye-open"></i> Пользователи</h1>
+    </div>
+
+    <table class="table table-bordered table-striped table-tracking">
+        <thead>
+        <tr>
+            <th class="center-text column-id">#id</th>
+            <th class="text-right">first name</th>
+            <th class="text-right">last name</th>
+            <th class="text-right">username</th>
+            <th class="text-right text-date">Создан</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each model as |user|}}
+            <tr>
+                <td class="center-text">
+                    {{user.id}}
+                </td>
+                <td class="text-right">
+                    {{#if user.bot}}
+                        <i class="glyphicon robot"></i>
+                    {{/if}}
+                    {{user.firstName}}
+                </td>
+                <td class="text-right">{{user.lastName}}</td>
+                <td class="text-right">{{user.username}}</td>
+                <td class="text-right">{{date-format track.createdAt 'DD.MM.YYYY, HH:mm:ss'}}</td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
+
+    {{paginator-list meta=model.meta routeName="telegramUser"}}
+
+    {{footer-partial}}
+</div>
