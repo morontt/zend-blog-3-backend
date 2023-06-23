@@ -14,6 +14,9 @@ use Symfony\Component\Process\Process;
 
 class DatabaseBackup implements DailyCronServiceInterface
 {
+    const DROPBOX_DUMPS_PATH = '/db_dumps';
+    const DROPBOX_DUMPS_COUNT = 14;
+
     /**
      * @var string
      */
@@ -68,8 +71,9 @@ class DatabaseBackup implements DailyCronServiceInterface
 
     public function run()
     {
-        $dumpPath = $this->getDumpPath();
+        $this->clearOldDumps();
 
+        $dumpPath = $this->getDumpPath();
         $process = new Process(
             sprintf(
                 'mysqldump -h %s -u %s --password=%s %s | bzip2 > %s',
@@ -88,7 +92,7 @@ class DatabaseBackup implements DailyCronServiceInterface
 
         $this->dumpSize = filesize($dumpPath);
 
-        $this->dropbox->uploadChunked($dumpPath, '/db_dumps/' . $this->getFilename());
+        $this->dropbox->upload($dumpPath, $this->getDropboxPath());
         unlink($dumpPath);
     }
 
@@ -100,10 +104,31 @@ class DatabaseBackup implements DailyCronServiceInterface
         return sprintf('%dKB', (int)($this->dumpSize / 1024));
     }
 
+    private function clearOldDumps()
+    {
+        $dropboxFiles = $this->dropbox->filesByDir(self::DROPBOX_DUMPS_PATH);
+        rsort($dropboxFiles);
+
+        $cnt = 0;
+        $delete = [];
+        foreach ($dropboxFiles as $file) {
+            if (preg_match('/\/\d+_' . $this->dbName . '\./', $file)) {
+                $cnt++;
+                if ($cnt >= self::DROPBOX_DUMPS_COUNT) {
+                    $delete[] = $file;
+                }
+            }
+        }
+
+        foreach ($delete as $file) {
+            $this->dropbox->delete($file);
+        }
+    }
+
     /**
      * @return string
      */
-    protected function getFilename()
+    private function getFilename(): string
     {
         $datetime = (new \DateTime())->format('Ymd');
 
@@ -113,8 +138,16 @@ class DatabaseBackup implements DailyCronServiceInterface
     /**
      * @return string
      */
-    protected function getDumpPath()
+    private function getDumpPath(): string
     {
-        return realpath(__DIR__ . '/../../../../../var/tmp') . '/' . $this->getFilename();
+        return APP_VAR_DIR . '/tmp/' . $this->getFilename();
+    }
+
+    /**
+     * @return string
+     */
+    private function getDropboxPath(): string
+    {
+        return self::DROPBOX_DUMPS_PATH . '/' . $this->getFilename();
     }
 }

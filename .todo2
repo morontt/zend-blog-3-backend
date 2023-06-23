@@ -121,6 +121,7 @@
       "text": "Backups in Dropbox #77",
       "priority": "medium",
       "creation": 1686425321,
+      "completion": 1687539418,
       "tasks": [
         {
           "text": "Remove DB dumps, max 14 items",

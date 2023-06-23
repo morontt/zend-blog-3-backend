@@ -155,6 +155,6 @@ class ImageManager
      */
     protected function getTempDirectory()
     {
-        return realpath(__DIR__ . '/../../../../var/tmp');
+        return APP_VAR_DIR . '/tmp';
     }
 }

@@ -15,6 +15,8 @@ use Mtt\BlogBundle\Entity\SystemParameters;
 
 class DropboxService
 {
+    private static ?Dropbox $client = null;
+
     /**
      * @var string
      */
@@ -48,20 +50,35 @@ class DropboxService
      *
      * @return FileMetadata
      */
-    public function uploadChunked(string $dropboxFile, string $path)
+    public function upload(string $dropboxFile, string $path)
     {
-        return $this->getDropboxClient()->uploadChunked($dropboxFile, $path, null, 2097152);
+        return $this->getDropboxClient()->uploadChunked($dropboxFile, $path, null, 524288);
     }
 
     /**
-     * @param string $dropboxFile
      * @param string $path
-     *
-     * @return FileMetadata
      */
-    public function upload(string $dropboxFile, string $path)
+    public function delete(string $path)
     {
-        return $this->getDropboxClient()->upload($dropboxFile, $path);
+        $this->getDropboxClient()->delete($path);
+    }
+
+    /**
+     * @param string $dir
+     *
+     * @return array
+     */
+    public function filesByDir(string $dir): array
+    {
+        $files = [];
+        /* @var \Kunnu\Dropbox\Models\FileMetadata $item */
+        foreach ($this->getDropboxClient()->listFolder($dir)->getItems() as $item) {
+            if ($item->getTag() === 'file') {
+                $files[] = $item->getPathDisplay();
+            }
+        }
+
+        return $files;
     }
 
     /**
@@ -69,12 +86,18 @@ class DropboxService
      */
     protected function getDropboxClient(): Dropbox
     {
+        if (static::$client) {
+            return static::$client;
+        }
+
         $app = new DropboxApp(
             $this->dropboxKey,
             $this->dropboxSecret,
             $this->storage->getParameter(SystemParameters::DROPBOX_TOKEN)
         );
+        $client = new Dropbox($app);
+        static::$client = $client;
 
-        return new Dropbox($app);
+        return $client;
     }
 }

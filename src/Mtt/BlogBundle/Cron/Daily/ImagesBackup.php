@@ -86,6 +86,6 @@ class ImagesBackup implements DailyCronServiceInterface
      */
     protected function getImagesDir()
     {
-        return realpath(__DIR__ . '/../../../../../web/uploads');
+        return APP_WEB_DIR . '/uploads';
     }
 }

@@ -43,9 +43,7 @@ class Assets extends AbstractExtension
      */
     private function version(string $path): int
     {
-        $resourceRoot = realpath(__DIR__ . '/../../../../../web');
-        $file = $resourceRoot . $path;
-
+        $file = APP_WEB_DIR . $path;
         if (!is_file($file)) {
             throw new AssetNotExistException('File not exist: ' . $file);
         }

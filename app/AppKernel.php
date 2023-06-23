@@ -5,6 +5,18 @@ use Symfony\Component\Config\Loader\LoaderInterface;
 
 class AppKernel extends Kernel
 {
+    public function __construct($environment, $debug)
+    {
+        parent::__construct($environment, $debug);
+
+        if (!defined('APP_VAR_DIR')) {
+            define('APP_VAR_DIR', realpath(__DIR__ . '/../var'));
+        }
+        if (!defined('APP_WEB_DIR')) {
+            define('APP_WEB_DIR', realpath(__DIR__ . '/../web'));
+        }
+    }
+
     public function registerBundles()
     {
         $bundles = [
