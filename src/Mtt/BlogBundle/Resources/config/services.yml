@@ -76,6 +76,10 @@ services:
             - "%database_user%"
             - "%database_password%"
 
+    Mtt\BlogBundle\Cron\Hourly\TelegramUpdates:
+        arguments:
+            $adminId: "%telegram_admin_id%"
+
     Mtt\BlogBundle\Service\SystemParametersStorage:
         arguments:
             $secret: "%secret%"

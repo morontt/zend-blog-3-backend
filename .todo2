@@ -315,6 +315,7 @@
       "text": "Раздел для Telegram-бота",
       "priority": "high",
       "creation": 1687250891,
+      "completion": 1687526355,
       "tasks": [
         {
           "text": "запись нового собеседника",
@@ -348,7 +349,7 @@
           "completion": 1687524818
         },
         {
-          "text": "Notification about new mwssages",
+          "text": "Notification about new messages",
           "priority": "medium",
           "creation": 1687524844
         }
