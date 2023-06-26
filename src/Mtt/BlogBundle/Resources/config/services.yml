@@ -58,6 +58,10 @@ services:
 
     Mtt\BlogBundle\Service\IpInfo\IpInfoClientInterface: '@Mtt\BlogBundle\Service\IpInfo\IpInfoDbClient'
 
+    Mtt\BlogBundle\EventListener\CommentFakeEmailListener:
+        tags:
+            - { name: kernel.event_listener, event: mtt_blog.reply_comment, method: onReply }
+
     Mtt\BlogBundle\EventListener\CommentGeolocationListener:
         tags:
             - { name: kernel.event_listener, event: mtt_blog.reply_comment, method: onReply }

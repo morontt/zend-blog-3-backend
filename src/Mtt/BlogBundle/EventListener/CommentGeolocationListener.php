@@ -20,6 +20,7 @@ class CommentGeolocationListener
 
     /**
      * @param EntityManagerInterface $em
+     * @param GeoLocationRepository $repository
      */
     public function __construct(EntityManagerInterface $em, GeoLocationRepository $repository)
     {
