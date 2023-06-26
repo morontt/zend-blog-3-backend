@@ -30,6 +30,9 @@ class CommentGeolocationListener
     public function onReply(CommentEvent $event)
     {
         $comment = $event->getComment();
+        if ($comment->getGeoLocation()) {
+            return;
+        }
 
         $location = $this->repository->findOrCreateByIpAddress($comment->getIpAddress());
         if ($location) {

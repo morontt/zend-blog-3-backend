@@ -2,6 +2,7 @@
 
 namespace Mtt\BlogBundle\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -24,35 +25,49 @@ class Commentator implements CommentatorInterface
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=80)
      */
-    protected $name;
+    private $name;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="mail", type="string", length=80, nullable=true)
      */
-    protected $email;
+    private $email;
+
+    /**
+     * @var bool|null
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $fakeEmail;
+
+    /**
+     * @var DateTime|null
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $emailCheck;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=160, nullable=true)
      */
-    protected $website;
+    private $website;
 
     /**
      * @var Collection
      *
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="commentator")
      */
-    protected $comments;
+    private $comments;
 
     /**
      * @var bool
@@ -198,6 +213,46 @@ class Commentator implements CommentatorInterface
     public function setForceImage(bool $forceImage): self
     {
         $this->forceImage = $forceImage;
+
+        return $this;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isFakeEmail(): ?bool
+    {
+        return $this->fakeEmail;
+    }
+
+    /**
+     * @param bool|null $fakeEmail
+     *
+     * @return Commentator
+     */
+    public function setFakeEmail(?bool $fakeEmail): self
+    {
+        $this->fakeEmail = $fakeEmail;
+
+        return $this;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getEmailCheck(): ?DateTime
+    {
+        return $this->emailCheck;
+    }
+
+    /**
+     * @param DateTime|null $emailCheck
+     *
+     * @return Commentator
+     */
+    public function setEmailCheck(?DateTime $emailCheck): self
+    {
+        $this->emailCheck = $emailCheck;
 
         return $this;
     }

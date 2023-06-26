@@ -114,7 +114,7 @@
     },
     {
       "text": "Check fake emails in comments before send #78",
-      "priority": "low",
+      "priority": "high",
       "creation": 1686425301
     },
     {

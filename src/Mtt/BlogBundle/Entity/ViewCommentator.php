@@ -2,6 +2,7 @@
 
 namespace Mtt\BlogBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Mtt\BlogBundle\Entity\Traits\Gravatar;
 
@@ -19,28 +20,42 @@ class ViewCommentator implements CommentatorInterface
      * @ORM\Id
      * @ORM\Column(type="integer")
      */
-    protected $id;
+    private $id;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=80)
      */
-    protected $name;
+    private $name;
 
     /**
      * @var string
      *
      * @ORM\Column(name="mail", type="string", length=80, nullable=true)
      */
-    protected $email;
+    private $email;
+
+    /**
+     * @var bool|null
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $fakeEmail;
+
+    /**
+     * @var DateTime|null
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $emailCheck;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=160, nullable=true)
      */
-    protected $website;
+    private $website;
 
     /**
      * @var bool
@@ -95,5 +110,21 @@ class ViewCommentator implements CommentatorInterface
     public function isForceImage(): bool
     {
         return $this->forceImage;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function isFakeEmail(): ?bool
+    {
+        return $this->fakeEmail;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getEmailCheck(): ?DateTime
+    {
+        return $this->emailCheck;
     }
 }

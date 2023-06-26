@@ -2,6 +2,8 @@
 
 namespace Mtt\BlogBundle\Entity;
 
+use DateTime;
+
 interface CommentatorInterface
 {
     /**
@@ -33,4 +35,14 @@ interface CommentatorInterface
      * @return bool
      */
     public function isForceImage(): bool;
+
+    /**
+     * @return bool|null
+     */
+    public function isFakeEmail(): ?bool;
+
+    /**
+     * @return DateTime|null
+     */
+    public function getEmailCheck(): ?DateTime;
 }
