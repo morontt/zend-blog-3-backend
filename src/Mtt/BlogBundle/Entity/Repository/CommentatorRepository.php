@@ -69,4 +69,19 @@ class CommentatorRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getOneOrNullResult();
     }
+
+    /**
+     * @return Commentator[]
+     */
+    public function getWithUncheckedEmails(): array
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb
+            ->andWhere($qb->expr()->isNotNull('c.email'))
+            ->andWhere($qb->expr()->isNull('c.fakeEmail'))
+            ->setMaxResults(20)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
 }
