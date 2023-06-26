@@ -9,7 +9,7 @@ class VerifyEmail
 {
     private static $domains = [];
 
-    public static function check(string $email): bool
+    public static function isValid(string $email): bool
     {
         $domain = self::getDomain($email);
         if (isset(self::$domains[$domain])) {

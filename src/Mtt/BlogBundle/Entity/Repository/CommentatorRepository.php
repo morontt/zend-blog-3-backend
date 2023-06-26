@@ -78,7 +78,7 @@ class CommentatorRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('c');
         $qb
             ->andWhere($qb->expr()->isNotNull('c.email'))
-            ->andWhere($qb->expr()->isNull('c.fakeEmail'))
+            ->andWhere($qb->expr()->isNull('c.emailCheck'))
             ->setMaxResults(20)
         ;
 

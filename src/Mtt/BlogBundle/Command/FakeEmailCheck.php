@@ -38,10 +38,10 @@ class FakeEmailCheck extends Command
 
         $commentators = $this->repository->getWithUncheckedEmails();
         foreach ($commentators as $entity) {
-            $result = VerifyEmail::check($entity->getEmail());
+            $result = VerifyEmail::isValid($entity->getEmail());
 
             $entity
-                ->setFakeEmail($result)
+                ->setFakeEmail(!$result)
                 ->setEmailCheck(new \DateTime())
             ;
 

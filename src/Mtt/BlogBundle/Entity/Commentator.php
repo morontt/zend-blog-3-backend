@@ -92,6 +92,14 @@ class Commentator implements CommentatorInterface
     }
 
     /**
+     * @return bool
+     */
+    public function isValidEmail(): bool
+    {
+        return $this->getEmail() && !is_null($this->isFakeEmail()) && !$this->isFakeEmail();
+    }
+
+    /**
      * Set name
      *
      * @param string $name

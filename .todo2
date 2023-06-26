@@ -115,7 +115,8 @@
     {
       "text": "Check fake emails in comments before send #78",
       "priority": "high",
-      "creation": 1686425301
+      "creation": 1686425301,
+      "completion": 1687808467
     },
     {
       "text": "Backups in Dropbox #77",

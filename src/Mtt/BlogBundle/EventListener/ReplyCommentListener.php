@@ -80,7 +80,7 @@ class ReplyCommentListener
                 $emailTo = $user->getEmail();
                 $recipient = $user->getUsername();
             } elseif ($commentator = $parent->getCommentator()) {
-                $emailTo = $commentator->getEmail();
+                $emailTo = $commentator->isValidEmail() ? $commentator->getEmail() : null;
                 $recipient = $commentator->getName();
             }
 

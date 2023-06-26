@@ -28,9 +28,9 @@ class CommentFakeEmailListener
             return;
         }
 
-        $result = VerifyEmail::check($commentator->getEmail());
+        $result = VerifyEmail::isValid($commentator->getEmail());
         $commentator
-            ->setFakeEmail($result)
+            ->setFakeEmail(!$result)
             ->setEmailCheck(new \DateTime())
         ;
 
