@@ -14,6 +14,8 @@ class ViewCommentator implements CommentatorInterface
 {
     use Gravatar;
 
+    const USER_ID_OFFSET = 10000000;
+
     /**
      * @var int
      *

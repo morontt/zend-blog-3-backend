@@ -143,7 +143,7 @@ class ViewComment implements CommentInterface
      *
      * @ORM\Column(type="boolean")
      */
-    protected $deleted;
+    protected $deleted = false;
 
     /**
      * @var DateTime
@@ -171,7 +171,7 @@ class ViewComment implements CommentInterface
      *
      * @ORM\Column(type="boolean", name="is_bot")
      */
-    protected $bot;
+    protected $bot = false;
 
     public function __construct()
     {
@@ -204,15 +204,7 @@ class ViewComment implements CommentInterface
      *
      * @return string
      */
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getUsername(): string
     {
         return $this->username;
     }
@@ -242,7 +234,7 @@ class ViewComment implements CommentInterface
      *
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -302,7 +294,7 @@ class ViewComment implements CommentInterface
      *
      * @return bool
      */
-    public function isDeleted()
+    public function isDeleted(): bool
     {
         return $this->deleted;
     }

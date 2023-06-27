@@ -9,6 +9,7 @@
 namespace Mtt\BlogBundle\Entity\Traits;
 
 use Mtt\BlogBundle\Entity\Commentator;
+use Mtt\BlogBundle\Entity\ViewCommentator;
 use Mtt\BlogBundle\Utils\HashId;
 
 trait Gravatar
@@ -26,9 +27,8 @@ trait Gravatar
             $id = $this->getId();
         }
 
-        $userOffset = 10000000;
-        if ($id > $userOffset) {
-            $id = $id - $userOffset;
+        if ($id > ViewCommentator::USER_ID_OFFSET) {
+            $id = $id - ViewCommentator::USER_ID_OFFSET;
             $userType = HashId::TYPE_USER;
         }
 

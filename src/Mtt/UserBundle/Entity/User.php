@@ -212,7 +212,7 @@ class User implements UserInterface, Serializable
      *
      * @return string
      */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
@@ -236,7 +236,7 @@ class User implements UserInterface, Serializable
      *
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }

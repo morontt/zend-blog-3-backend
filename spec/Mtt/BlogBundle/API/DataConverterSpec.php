@@ -16,6 +16,7 @@ use Mtt\BlogBundle\Entity\Repository\CommentRepository;
 use Mtt\BlogBundle\Entity\Tag;
 use Mtt\BlogBundle\Service\TextProcessor;
 use PhpSpec\ObjectBehavior;
+use ReflectionClass;
 
 class DataConverterSpec extends ObjectBehavior
 {
@@ -121,6 +122,10 @@ class DataConverterSpec extends ObjectBehavior
 
     public function it_is_get_commentator()
     {
+        $reflectionClass = new ReflectionClass(Commentator::class);
+        $reflectionProperty = $reflectionClass->getProperty('id');
+        $reflectionProperty->setAccessible(true);
+
         $commentator = new Commentator();
         $commentator
             ->setName('test-name')
@@ -128,16 +133,17 @@ class DataConverterSpec extends ObjectBehavior
             ->setWebsite('http://example.org')
         ;
 
+        $reflectionProperty->setValue($commentator, 13);
+
         $this->getCommentator($commentator)->shouldReturn(
             [
                 'commentator' => [
-                    'id' => null,
+                    'id' => 13,
                     'name' => 'test-name',
                     'email' => 'commentator@example.org',
                     'website' => 'http://example.org',
-                    'emailHash' => '093952cf493f61237fafcc5888f0f631',
-                    'forceImage' => false,
-                    'imageHash' => null,
+                    'imageHash' => 'A9GSDZ',
+                    'isMale' => true,
                 ],
             ]
         );
@@ -147,28 +153,29 @@ class DataConverterSpec extends ObjectBehavior
             ->setName('test2-name')
             ->setEmail('two@example.org')
             ->setWebsite('http://example.com')
+            ->setGender(Commentator::FEMALE)
         ;
+
+        $reflectionProperty->setValue($commentator2, 72);
 
         $this->getCommentatorArray([$commentator, $commentator2])->shouldReturn(
             [
                 'commentators' => [
                     [
-                        'id' => null,
+                        'id' => 13,
                         'name' => 'test-name',
                         'email' => 'commentator@example.org',
                         'website' => 'http://example.org',
-                        'emailHash' => md5('commentator@example.org'),
-                        'forceImage' => false,
-                        'imageHash' => null,
+                        'imageHash' => 'A9GSDZ',
+                        'isMale' => true,
                     ],
                     [
-                        'id' => null,
+                        'id' => 72,
                         'name' => 'test2-name',
                         'email' => 'two@example.org',
                         'website' => 'http://example.com',
-                        'emailHash' => md5('two@example.org'),
-                        'forceImage' => false,
-                        'imageHash' => null,
+                        'imageHash' => '07XXUP',
+                        'isMale' => false,
                     ],
                 ],
             ]
@@ -177,11 +184,25 @@ class DataConverterSpec extends ObjectBehavior
 
     public function it_is_get_comment()
     {
+        $reflectionClass = new ReflectionClass(Commentator::class);
+        $reflectionProperty = $reflectionClass->getProperty('id');
+        $reflectionProperty->setAccessible(true);
+
+        $commentator = new Commentator();
+        $commentator
+            ->setName('test-name')
+            ->setEmail('commentator@example.org')
+            ->setWebsite('http://example.org')
+        ;
+
+        $reflectionProperty->setValue($commentator, 13);
+
         $comment = new Comment();
         $comment
             ->setText('Тестовый комментарий')
             ->setIpAddress('94.231.112.91')
             ->setTimeCreated(\DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-28 01:30:49'))
+            ->setCommentator($commentator)
         ;
 
         $this->getComment($comment)->shouldReturn(
@@ -189,19 +210,18 @@ class DataConverterSpec extends ObjectBehavior
                 'comment' => [
                     'id' => null,
                     'text' => 'Тестовый комментарий',
-                    'commentator' => null,
-                    'commentatorId' => null,
-                    'username' => null,
-                    'email' => null,
-                    'website' => null,
-                    'emailHash' => null,
+                    'commentator' => 13,
+                    'commentatorId' => 13,
+                    'username' => 'test-name',
+                    'email' => 'commentator@example.org',
+                    'website' => 'http://example.org',
                     'ipAddr' => '94.231.112.91',
                     'city' => null,
                     'region' => null,
                     'country' => null,
                     'countryFlag' => '',
                     'parent' => null,
-                    'imageHash' => null,
+                    'imageHash' => 'A9GSDZ',
                     'deleted' => false,
                     'userAgent' => null,
                     'bot' => false,
@@ -243,6 +263,8 @@ class DataConverterSpec extends ObjectBehavior
             ->setWebsite('http://example.org')
         ;
 
+        $reflectionProperty->setValue($commentator, 34);
+
         $comment2->setCommentator($commentator);
 
         $this->getCommentArray([$comment, $comment2])->shouldReturn(
@@ -251,19 +273,18 @@ class DataConverterSpec extends ObjectBehavior
                     [
                         'id' => null,
                         'text' => 'Тестовый комментарий',
-                        'commentator' => null,
-                        'commentatorId' => null,
-                        'username' => null,
-                        'email' => null,
-                        'website' => null,
-                        'emailHash' => null,
+                        'commentator' => 13,
+                        'commentatorId' => 13,
+                        'username' => 'test-name',
+                        'email' => 'commentator@example.org',
+                        'website' => 'http://example.org',
                         'ipAddr' => '94.231.112.91',
                         'city' => null,
                         'region' => null,
                         'country' => null,
                         'countryFlag' => '',
                         'parent' => null,
-                        'imageHash' => null,
+                        'imageHash' => 'A9GSDZ',
                         'deleted' => false,
                         'userAgent' => null,
                         'bot' => false,
@@ -272,19 +293,18 @@ class DataConverterSpec extends ObjectBehavior
                     [
                         'id' => null,
                         'text' => 'йцук фыва олдж',
-                        'commentator' => null,
-                        'commentatorId' => null,
+                        'commentator' => 34,
+                        'commentatorId' => 34,
                         'username' => 'test-name',
                         'email' => 'commentator@example.org',
                         'website' => 'http://example.org',
-                        'emailHash' => '093952cf493f61237fafcc5888f0f631',
                         'ipAddr' => '62.72.188.111',
                         'city' => 'Frankfurt am Main',
                         'region' => 'Hessen',
                         'country' => 'Germany',
                         'countryFlag' => '',
                         'parent' => null,
-                        'imageHash' => null,
+                        'imageHash' => 'ZJQ6CD',
                         'deleted' => false,
                         'userAgent' => null,
                         'bot' => false,
@@ -300,19 +320,18 @@ class DataConverterSpec extends ObjectBehavior
                     [
                         'id' => null,
                         'text' => 'йцук фыва олдж',
-                        'commentator' => null,
-                        'commentatorId' => null,
+                        'commentator' => 34,
+                        'commentatorId' => 34,
                         'username' => 'test-name',
                         'email' => 'commentator@example.org',
                         'website' => 'http://example.org',
-                        'emailHash' => '093952cf493f61237fafcc5888f0f631',
                         'ipAddr' => '62.72.188.111',
                         'city' => 'Frankfurt am Main',
                         'region' => 'Hessen',
                         'country' => 'Germany',
                         'countryFlag' => '',
                         'parent' => null,
-                        'imageHash' => null,
+                        'imageHash' => 'ZJQ6CD',
                         'deleted' => false,
                         'userAgent' => null,
                         'bot' => false,
@@ -321,13 +340,12 @@ class DataConverterSpec extends ObjectBehavior
                 ],
                 'commentators' => [
                     [
-                        'id' => null,
+                        'id' => 34,
                         'name' => 'test-name',
                         'email' => 'commentator@example.org',
                         'website' => 'http://example.org',
-                        'emailHash' => '093952cf493f61237fafcc5888f0f631',
-                        'forceImage' => false,
-                        'imageHash' => null,
+                        'imageHash' => 'ZJQ6CD',
+                        'isMale' => true,
                     ],
                 ],
             ]

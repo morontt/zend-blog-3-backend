@@ -12,6 +12,7 @@ use League\Fractal\Resource\Collection;
 use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Entity\CommentInterface;
 use Mtt\BlogBundle\Entity\ViewComment;
+use Mtt\BlogBundle\Entity\ViewCommentator;
 use Mtt\BlogBundle\Utils\EmojiFlagSymbol;
 
 class CommentTransformer extends BaseTransformer
@@ -54,6 +55,7 @@ class CommentTransformer extends BaseTransformer
             } else {
                 $user = $item->getUser();
                 if ($user) {
+                    $commentatorId = ViewCommentator::USER_ID_OFFSET + $user->getId();
                     $username = $user->getUsername();
                     $email = $user->getEmail();
                     $imageHash = $user->getAvatarHash();

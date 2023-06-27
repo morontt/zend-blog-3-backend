@@ -252,7 +252,7 @@ class Comment implements CommentInterface
      *
      * @return string
      */
-    public function getText()
+    public function getText(): string
     {
         return $this->text;
     }
@@ -276,7 +276,7 @@ class Comment implements CommentInterface
      *
      * @return bool
      */
-    public function isDeleted()
+    public function isDeleted(): bool
     {
         return $this->deleted;
     }
