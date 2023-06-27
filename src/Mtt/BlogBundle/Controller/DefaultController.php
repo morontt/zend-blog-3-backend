@@ -108,7 +108,7 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/purge-cache", name="purge_cache", options={"expose"=true})
+     * @Route("/purge-cache", name="purge_cache", options={"expose"=true}, methods={"POST"})
      *
      * @return JsonResponse
      */
