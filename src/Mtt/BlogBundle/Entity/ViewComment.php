@@ -153,11 +153,11 @@ class ViewComment implements CommentInterface
     protected $timeCreated;
 
     /**
-     * @var bool
+     * @var int
      *
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="smallint")
      */
-    private $forceImage;
+    private $gender = Commentator::MALE;
 
     /**
      * @var string
@@ -378,11 +378,11 @@ class ViewComment implements CommentInterface
     }
 
     /**
-     * @return bool
+     * @return int
      */
-    public function isForceImage(): bool
+    public function getGender(): int
     {
-        return $this->forceImage;
+        return $this->gender;
     }
 
     /**

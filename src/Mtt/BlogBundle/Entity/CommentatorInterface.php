@@ -32,11 +32,6 @@ interface CommentatorInterface
     public function getAvatarHash(): string;
 
     /**
-     * @return bool
-     */
-    public function isForceImage(): bool;
-
-    /**
      * @return bool|null
      */
     public function isFakeEmail(): ?bool;

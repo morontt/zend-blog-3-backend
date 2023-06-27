@@ -12,7 +12,6 @@
     <td>
         {{input value=commentator.website class="form-control"}}
     </td>
-    <td>{{input type="checkbox" checked=commentator.forceImage}}</td>
     <td>
         <div class="pull-right">
             <a class="btn btn-success" {{action "save"}}>
@@ -35,11 +34,6 @@
     </td>
     <td class="text-break-word">{{commentator.email}}</td>
     <td class="text-break-word">{{commentator.website}}</td>
-    <td class="center-text">
-        {{#if commentator.forceImage}}
-            <i class="glyphicon glyphicon-ok"></i>
-        {{/if}}
-    </td>
     <td>
         <div class="pull-right">
             <a class="btn btn-primary" {{action "edit"}}>

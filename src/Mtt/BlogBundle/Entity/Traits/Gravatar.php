@@ -8,6 +8,9 @@
 
 namespace Mtt\BlogBundle\Entity\Traits;
 
+use Mtt\BlogBundle\Entity\Commentator;
+use Mtt\BlogBundle\Utils\HashId;
+
 trait Gravatar
 {
     /**
@@ -15,27 +18,22 @@ trait Gravatar
      */
     public function getAvatarHash(): string
     {
-        if ($this->getEmail()) {
-            $hash = md5(strtolower(trim($this->getEmail())));
+        $userType = HashId::TYPE_COMMENTATOR;
+
+        if (method_exists($this, 'getVirtualUserId')) {
+            $id = $this->getVirtualUserId();
         } else {
-            $hash = md5(strtolower(trim($this->getName())));
-            if ($this->getWebsite()) {
-                $hash = md5($hash . strtolower(trim($this->getWebsite())));
-            }
+            $id = $this->getId();
         }
 
-        return $hash;
-    }
-}
+        $userOffset = 10000000;
+        if ($id > $userOffset) {
+            $id = $id - $userOffset;
+            $userType = HashId::TYPE_USER;
+        }
 
-function forceImageHash(int $id): string
-{
-    $userOffset = 10000000;
-    if ($id > $userOffset) {
-        $hash = md5('avatar' . ($id - $userOffset));
-    } else {
-        $hash = md5('ratava' . $id);
-    }
+        $gender = ($this->getGender() == Commentator::MALE) ? HashId::MALE : HashId::FEMALE;
 
-    return strtoupper(substr($hash, 2, 6));
+        return HashId::hash($id, $userType | $gender);
+    }
 }

@@ -18,6 +18,9 @@ class Commentator implements CommentatorInterface
 {
     use Gravatar;
 
+    const MALE = 1;
+    const FEMALE = 2;
+
     /**
      * @var int
      *
@@ -70,11 +73,11 @@ class Commentator implements CommentatorInterface
     private $comments;
 
     /**
-     * @var bool
+     * @var int
      *
-     * @ORM\Column(type="boolean", options={"default": false})
+     * @ORM\Column(type="smallint", options={"default": 1, "comment":"1: male, 2: female"})
      */
-    private $forceImage = false;
+    private $gender = self::MALE;
 
     public function __construct()
     {
@@ -206,21 +209,21 @@ class Commentator implements CommentatorInterface
     }
 
     /**
-     * @return bool
+     * @return int
      */
-    public function isForceImage(): bool
+    public function getGender(): int
     {
-        return $this->forceImage;
+        return $this->gender;
     }
 
     /**
-     * @param bool $forceImage
+     * @param int $gender
      *
      * @return Commentator
      */
-    public function setForceImage(bool $forceImage): self
+    public function setGender(int $gender): self
     {
-        $this->forceImage = $forceImage;
+        $this->gender = $gender;
 
         return $this;
     }

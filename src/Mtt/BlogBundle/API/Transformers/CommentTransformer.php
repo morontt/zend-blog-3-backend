@@ -11,7 +11,6 @@ namespace Mtt\BlogBundle\API\Transformers;
 use League\Fractal\Resource\Collection;
 use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Entity\CommentInterface;
-use function Mtt\BlogBundle\Entity\Traits\forceImageHash;
 use Mtt\BlogBundle\Entity\ViewComment;
 use Mtt\BlogBundle\Utils\EmojiFlagSymbol;
 
@@ -38,7 +37,6 @@ class CommentTransformer extends BaseTransformer
         $locationCity = null;
         $locationRegion = null;
         $locationCountry = null;
-        $emailHash = null;
         $imageHash = null;
         $countryCode = null;
 
@@ -52,15 +50,13 @@ class CommentTransformer extends BaseTransformer
                 $username = $commentator->getName();
                 $email = $commentator->getEmail();
                 $website = $commentator->getWebsite();
-                $emailHash = $commentator->getAvatarHash();
-                $imageHash = $commentator->isForceImage() ? forceImageHash($commentator->getId()) : null;
+                $imageHash = $commentator->getAvatarHash();
             } else {
                 $user = $item->getUser();
                 if ($user) {
                     $username = $user->getUsername();
                     $email = $user->getEmail();
-                    $emailHash = md5(strtolower(trim($user->getEmail())));
-                    $imageHash = forceImageHash(10000000 + $user->getId());
+                    $imageHash = $user->getAvatarHash();
                 }
             }
 
@@ -83,8 +79,7 @@ class CommentTransformer extends BaseTransformer
             $username = $item->getUsername();
             $email = $item->getEmail();
             $website = $item->getWebsite();
-            $emailHash = $item->getAvatarHash();
-            $imageHash = $item->isForceImage() ? forceImageHash($item->getVirtualUserId()) : null;
+            $imageHash = $item->getAvatarHash();
 
             $locationCity = $item->getCity();
             $locationRegion = $item->getRegion();
@@ -115,7 +110,6 @@ class CommentTransformer extends BaseTransformer
             'username' => $username,
             'email' => $email,
             'website' => $website,
-            'emailHash' => $emailHash,
             'ipAddr' => $item->getIpAddress(),
             'city' => $locationCity,
             'region' => $locationRegion,

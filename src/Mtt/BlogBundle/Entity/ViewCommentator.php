@@ -58,11 +58,11 @@ class ViewCommentator implements CommentatorInterface
     private $website;
 
     /**
-     * @var bool
+     * @var int
      *
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="smallint")
      */
-    private $forceImage;
+    private $gender = Commentator::MALE;
 
     /**
      * Get id
@@ -105,11 +105,11 @@ class ViewCommentator implements CommentatorInterface
     }
 
     /**
-     * @return bool
+     * @return int
      */
-    public function isForceImage(): bool
+    public function getGender(): int
     {
-        return $this->forceImage;
+        return $this->gender;
     }
 
     /**

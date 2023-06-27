@@ -8,7 +8,6 @@ export default DS.Model.extend({
     username: DS.attr('string'),
     email: DS.attr('string'),
     website: DS.attr('string'),
-    emailHash: DS.attr('string'),
     imageHash: DS.attr('string'),
     ipAddr: DS.attr('string'),
     city: DS.attr('string'),
@@ -24,21 +23,9 @@ export default DS.Model.extend({
         return this.get('city') === '-';
     }.property('city'),
     avatarTitle: function () {
-        let hash = this.get('imageHash');
-
-        return hash ? hash + '.png' : 'gravatar';
+        return this.get('imageHash') + '.png';
     }.property('imageHash'),
     avatarUrl: function () {
-        let url;
-        if (this.get('imageHash')) {
-            url = `${config.appParameters.cdnURL}/images/avatar/${this.get('imageHash')}.png`;
-        } else {
-            let defaults = ['wavatar', 'monsterid'];
-            let idx = (this.get('commentatorId')) % 2;
-
-            url = `//www.gravatar.com/avatar/${this.get('emailHash')}?d=${defaults[idx]}`;
-        }
-
-        return url;
-    }.property('commentatorId', 'emailHash', 'imageHash')
+        return `${config.appParameters.cdnURL}/images/avatar/${this.get('imageHash')}.png`;
+    }.property('imageHash')
 });

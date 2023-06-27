@@ -10,7 +10,6 @@ namespace Mtt\BlogBundle\API\Transformers;
 
 use Mtt\BlogBundle\Entity\Commentator;
 use Mtt\BlogBundle\Entity\CommentatorInterface;
-use function Mtt\BlogBundle\Entity\Traits\forceImageHash;
 
 class CommentatorTransformer extends BaseTransformer
 {
@@ -26,9 +25,7 @@ class CommentatorTransformer extends BaseTransformer
             'name' => $item->getName(),
             'email' => $item->getEmail(),
             'website' => $item->getWebsite(),
-            'emailHash' => $item->getAvatarHash(),
-            'forceImage' => $item->isForceImage(),
-            'imageHash' => $item->isForceImage() ? forceImageHash($item->getId()) : null,
+            'imageHash' => $item->getAvatarHash(),
         ];
     }
 
@@ -42,7 +39,6 @@ class CommentatorTransformer extends BaseTransformer
             ->setName($data['name'])
             ->setEmail($data['email'])
             ->setWebsite($data['website'])
-            ->setForceImage($data['forceImage'])
         ;
     }
 }
