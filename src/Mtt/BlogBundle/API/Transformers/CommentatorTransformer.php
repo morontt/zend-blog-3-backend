@@ -26,6 +26,7 @@ class CommentatorTransformer extends BaseTransformer
             'email' => $item->getEmail(),
             'website' => $item->getWebsite(),
             'imageHash' => $item->getAvatarHash(),
+            'isMale' => $item->getGender() === Commentator::MALE,
         ];
     }
 
@@ -39,6 +40,7 @@ class CommentatorTransformer extends BaseTransformer
             ->setName($data['name'])
             ->setEmail($data['email'])
             ->setWebsite($data['website'])
+            ->setGender($data['isMale'] ? Commentator::MALE : Commentator::FEMALE)
         ;
     }
 }

@@ -12,6 +12,7 @@
     <td>
         {{input value=commentator.website class="form-control"}}
     </td>
+    <td>{{input type="checkbox" checked=commentator.isMale}}</td>
     <td>
         <div class="pull-right">
             <a class="btn btn-success" {{action "save"}}>
@@ -34,6 +35,13 @@
     </td>
     <td class="text-break-word">{{commentator.email}}</td>
     <td class="text-break-word">{{commentator.website}}</td>
+    <td class="center-text text-gender">
+        {{#if commentator.isMale}}
+            <i class="glyphicon mars"></i>
+        {{else}}
+            <i class="glyphicon venus"></i>
+        {{/if}}
+    </td>
     <td>
         <div class="pull-right">
             <a class="btn btn-primary" {{action "edit"}}>

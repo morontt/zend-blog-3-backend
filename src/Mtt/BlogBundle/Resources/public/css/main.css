@@ -617,7 +617,7 @@ table.table-comments th.column-cmtr {
 table.table-commentators th.column-cmtr {
     width: 98px;
 }
-table.table-commentators th.column-force-avatar {
+table.table-commentators th.column-gender {
     width: 68px;
 }
 
@@ -627,6 +627,21 @@ table.table-comments th.column-ip {
 
 table i.robot:before {
     content: '\1F916';
+}
+table i.glyphicon.mars:before {
+    content: '\2642';
+    font-family: Symbola;
+    font-weight: normal
+}
+table i.glyphicon.venus:before {
+    content: '\2640';
+    font-family: Symbola;
+    font-weight: normal
+}
+
+table td.text-gender {
+    font-size: 1.8em;
+    vertical-align: middle !important;
 }
 
 table td.text-break-word,

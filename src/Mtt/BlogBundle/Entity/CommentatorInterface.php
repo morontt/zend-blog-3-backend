@@ -40,4 +40,9 @@ interface CommentatorInterface
      * @return DateTime|null
      */
     public function getEmailCheck(): ?DateTime;
+
+    /**
+     * @return int
+     */
+    public function getGender(): int;
 }
