@@ -32,11 +32,6 @@ interface CommentatorInterface
     public function getAvatarHash(): string;
 
     /**
-     * @return bool
-     */
-    public function isForceImage(): bool;
-
-    /**
      * @return bool|null
      */
     public function isFakeEmail(): ?bool;
@@ -45,4 +40,9 @@ interface CommentatorInterface
      * @return DateTime|null
      */
     public function getEmailCheck(): ?DateTime;
+
+    /**
+     * @return int
+     */
+    public function getGender(): int;
 }

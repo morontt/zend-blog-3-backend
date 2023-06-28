@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Mtt\BlogBundle\Entity\Comment;
+use Mtt\BlogBundle\Utils\HashId;
 use Serializable;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -168,6 +169,14 @@ class User implements UserInterface, Serializable
     }
 
     /**
+     * @return string
+     */
+    public function getAvatarHash(): string
+    {
+        return HashId::hash($this->getId(), HashId::TYPE_USER | HashId::MALE);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function eraseCredentials()
@@ -203,7 +212,7 @@ class User implements UserInterface, Serializable
      *
      * @return string
      */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
@@ -227,7 +236,7 @@ class User implements UserInterface, Serializable
      *
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }

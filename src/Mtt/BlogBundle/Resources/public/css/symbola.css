@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'Symbola';
+    src: url('/bundles/mttblog/fonts/symbola.eot');
+    src: url('/bundles/mttblog/fonts/symbola.eot?#iefix') format('embedded-opentype'),
+        url('/bundles/mttblog/fonts/symbola.woff2') format('woff2'),
+        url('/bundles/mttblog/fonts/symbola.woff') format('woff'),
+        url('/bundles/mttblog/fonts/symbola.ttf') format('truetype'),
+        url('/bundles/mttblog/fonts/symbola.svg#Symbola') format('svg');
+    font-weight: normal;
+    font-style: normal
+}

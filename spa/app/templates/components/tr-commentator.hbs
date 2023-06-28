@@ -1,7 +1,7 @@
 {{#if isEditing}}
     <td class="center-text">{{commentator.id}}</td>
     <td>
-        <img src="{{commentator.avatarUrl}}" alt="{{commentator.avatarTitle}}"/>
+        <img src="{{commentator.avatarUrl}}" width="80" height="80" alt="{{commentator.avatarTitle}}"/>
     </td>
     <td>
         {{input value=commentator.name class="form-control"}}
@@ -12,7 +12,7 @@
     <td>
         {{input value=commentator.website class="form-control"}}
     </td>
-    <td>{{input type="checkbox" checked=commentator.forceImage}}</td>
+    <td>{{input type="checkbox" checked=commentator.isMale}}</td>
     <td>
         <div class="pull-right">
             <a class="btn btn-success" {{action "save"}}>
@@ -28,16 +28,18 @@
 {{else}}
     <td class="center-text">{{commentator.id}}</td>
     <td>
-        <img src="{{commentator.avatarUrl}}" alt="{{commentator.avatarTitle}}"/>
+        <img src="{{commentator.avatarUrl}}" width="80" height="80" alt="{{commentator.avatarTitle}}"/>
     </td>
     <td>
         <strong>{{commentator.name}}</strong>
     </td>
     <td class="text-break-word">{{commentator.email}}</td>
     <td class="text-break-word">{{commentator.website}}</td>
-    <td class="center-text">
-        {{#if commentator.forceImage}}
-            <i class="glyphicon glyphicon-ok"></i>
+    <td class="center-text text-gender">
+        {{#if commentator.isMale}}
+            <i class="glyphicon mars"></i>
+        {{else}}
+            <i class="glyphicon venus"></i>
         {{/if}}
     </td>
     <td>

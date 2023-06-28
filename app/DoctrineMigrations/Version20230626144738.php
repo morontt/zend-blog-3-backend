@@ -56,7 +56,7 @@ final class Version20230626144738 extends AbstractMigration implements Container
 
         $em = $this->container->get('doctrine.orm.entity_manager');
         $stmt = $em->getConnection()->prepare($sql);
-        $stmt->execute();
+        $stmt->executeQuery();
 
         $this->write('     <comment>-></comment> CREATE VIEW `v_commentators`');
     }
@@ -72,7 +72,7 @@ final class Version20230626144738 extends AbstractMigration implements Container
 
         $em = $this->container->get('doctrine.orm.entity_manager');
         $stmt = $em->getConnection()->prepare($sql);
-        $stmt->execute();
+        $stmt->executeQuery();
 
         $this->write('     <comment>-></comment> CREATE VIEW `v_commentators`');
     }

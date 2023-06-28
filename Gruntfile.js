@@ -79,6 +79,7 @@ module.exports = function (grunt) {
                     'bower_components/bootstrap/dist/css/bootstrap.css',
                     'web/bundles/mttblog/css/pygments_inline.css',
                     'web/bundles/mttblog/css/pygments.css',
+                    'web/bundles/mttblog/css/symbola.css',
                     'web/bundles/mttblog/css/main.css'
                 ],
                 dest: 'web/dist/<%= pkg.name %>_main.css'
