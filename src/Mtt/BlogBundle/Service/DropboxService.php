@@ -52,7 +52,7 @@ class DropboxService
      */
     public function upload(string $dropboxFile, string $path)
     {
-        return $this->getDropboxClient()->uploadChunked($dropboxFile, $path, null, 524288);
+        return $this->getDropboxClient()->uploadChunked($dropboxFile, $path, null, 2097152);
     }
 
     /**
