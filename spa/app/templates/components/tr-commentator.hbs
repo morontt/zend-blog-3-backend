@@ -1,7 +1,7 @@
 {{#if isEditing}}
     <td class="center-text">{{commentator.id}}</td>
     <td>
-        <img src="{{commentator.avatarUrl}}" alt="{{commentator.avatarTitle}}"/>
+        <img src="{{commentator.avatarUrl}}" width="80" height="80" alt="{{commentator.avatarTitle}}"/>
     </td>
     <td>
         {{input value=commentator.name class="form-control"}}
@@ -28,7 +28,7 @@
 {{else}}
     <td class="center-text">{{commentator.id}}</td>
     <td>
-        <img src="{{commentator.avatarUrl}}" alt="{{commentator.avatarTitle}}"/>
+        <img src="{{commentator.avatarUrl}}" width="80" height="80" alt="{{commentator.avatarTitle}}"/>
     </td>
     <td>
         <strong>{{commentator.name}}</strong>
