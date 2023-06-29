@@ -3,6 +3,7 @@ Backend Zend-blog-3
 
 Work in progress
 
+![license](https://img.shields.io/github/license/morontt/zend-blog-3-backend)
 [![Stack Share](http://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](http://stackshare.io/morontt/zend-blog-3-backend)
 
 ### Setup project
