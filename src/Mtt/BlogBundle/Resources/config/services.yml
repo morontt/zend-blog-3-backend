@@ -67,8 +67,6 @@ services:
             - { name: kernel.event_listener, event: mtt_blog.reply_comment, method: onReply }
 
     Mtt\BlogBundle\EventListener\ReplyCommentListener:
-        arguments:
-            $emailFrom: "%mailer_user%"
         tags:
             - { name: kernel.event_listener, event: mtt_blog.reply_comment, method: onReply }
 
@@ -86,6 +84,10 @@ services:
     Mtt\BlogBundle\Cron\Hourly\TelegramUpdates:
         arguments:
             $adminId: "%telegram_admin_id%"
+
+    Mtt\BlogBundle\Service\Mailer:
+        arguments:
+            $emailFrom: "%mailer_user%"
 
     Mtt\BlogBundle\Service\SystemParametersStorage:
         arguments:

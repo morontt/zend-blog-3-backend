@@ -8,48 +8,19 @@
 
 namespace Mtt\BlogBundle\EventListener;
 
-use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Event\CommentEvent;
-use Swift_Mailer;
-use Swift_Message;
-use Twig\Environment as TwigEnvironment;
-use Twig\Error\Error;
-use Xelbot\Telegram\Robot;
+use Mtt\BlogBundle\Service\Mailer;
 
 class ReplyCommentListener
 {
-    /**
-     * @var Swift_Mailer
-     */
-    protected $mailer;
+    private Mailer $mailer;
 
     /**
-     * @var TwigEnvironment
+     * @param Mailer $mailer
      */
-    protected $twig;
-
-    /**
-     * @var string
-     */
-    protected $emailFrom;
-
-    /**
-     * @var Robot
-     */
-    private $bot;
-
-    /**
-     * @param Swift_Mailer $mailer
-     * @param TwigEnvironment $twig
-     * @param Robot $bot
-     * @param string $emailFrom
-     */
-    public function __construct(Swift_Mailer $mailer, TwigEnvironment $twig, Robot $bot, string $emailFrom)
+    public function __construct(Mailer $mailer)
     {
         $this->mailer = $mailer;
-        $this->twig = $twig;
-        $this->emailFrom = $emailFrom;
-        $this->bot = $bot;
     }
 
     /**
@@ -57,68 +28,6 @@ class ReplyCommentListener
      */
     public function onReply(CommentEvent $event)
     {
-        $comment = $event->getComment();
-        try {
-            $this->sendEmail($comment);
-        } catch (\Throwable $e) {
-            $this->bot->sendMessage('onReply comment error: ' . $e->getMessage());
-        }
-    }
-
-    /**
-     * @param Comment $comment
-     *
-     * @throws Error
-     */
-    protected function sendEmail(Comment $comment)
-    {
-        $parent = $comment->getParent();
-        if ($parent) {
-            $emailTo = null;
-            $recipient = 'undefined';
-            if ($user = $parent->getUser()) {
-                $emailTo = $user->getEmail();
-                $recipient = $user->getUsername();
-            } elseif ($commentator = $parent->getCommentator()) {
-                $emailTo = $commentator->isValidEmail() ? $commentator->getEmail() : null;
-                $recipient = $commentator->getName();
-            }
-
-            if ($emailTo) {
-                $username = 'undefined';
-                if ($user = $comment->getUser()) {
-                    $username = $user->getUsername();
-                } elseif ($commentator = $comment->getCommentator()) {
-                    $username = $commentator->getName();
-                }
-
-                $context = $this->twig->mergeGlobals([
-                    'topicTitle' => $comment->getPost()->getTitle(),
-                    'topicUrl' => '/article/' . $comment->getPost()->getUrl(),
-                    'username' => $username,
-                    'commentText' => $comment->getText(),
-                    'avatar' => $comment->getAvatarHash() . '.png',
-                ]);
-
-                $template = $this->twig->load('MttBlogBundle:mails:replyComment.html.twig');
-                $textTemplate = $this->twig->load('MttBlogBundle:mails:replyComment.txt.twig');
-
-                $message = Swift_Message::newInstance()
-                    ->setSubject('Ответ на комментарий')
-                    ->setFrom($this->emailFrom)
-                    ->setTo([$emailTo => $recipient])
-                    ->addPart(
-                        $template->render($context),
-                        'text/html'
-                    )
-                    ->addPart(
-                        $textTemplate->render($context),
-                        'text/plain'
-                    )
-                ;
-
-                $this->mailer->send($message);
-            }
-        }
+        $this->mailer->replyComment($event->getComment());
     }
 }
