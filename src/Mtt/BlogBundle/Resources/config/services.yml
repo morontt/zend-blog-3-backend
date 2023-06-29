@@ -66,6 +66,10 @@ services:
         tags:
             - { name: kernel.event_listener, event: mtt_blog.reply_comment, method: onReply }
 
+    Mtt\BlogBundle\EventListener\NewCommentEmailListener:
+        tags:
+            - { name: kernel.event_listener, event: mtt_blog.reply_comment, method: onReply }
+
     Mtt\BlogBundle\EventListener\ReplyCommentListener:
         tags:
             - { name: kernel.event_listener, event: mtt_blog.reply_comment, method: onReply }

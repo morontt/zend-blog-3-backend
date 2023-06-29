@@ -54,6 +54,37 @@ class Mailer
         }
     }
 
+    public function newComment(Comment $comment, string $emailTo)
+    {
+        $username = 'undefined';
+        if ($user = $comment->getUser()) {
+            $username = $user->getUsername();
+        } elseif ($commentator = $comment->getCommentator()) {
+            $username = $commentator->getName();
+        }
+
+        $context = $this->twig->mergeGlobals([
+            'topicTitle' => $comment->getPost()->getTitle(),
+            'topicUrl' => '/article/' . $comment->getPost()->getUrl(),
+            'username' => $username,
+            'commentText' => $comment->getText(),
+            'avatar' => $comment->getAvatarHash() . '.png',
+        ]);
+
+        $template = $this->twig->load('MttBlogBundle:mails:newComment.html.twig');
+        $textTemplate = $this->twig->load('MttBlogBundle:mails:newComment.txt.twig');
+
+        $message = new EmailMessageDTO();
+
+        $message->subject = 'Новый комментарий';
+        $message->from = $this->emailFrom;
+        $message->to = $emailTo;
+        $message->messageHtml = $template->render($context);
+        $message->messageText = $textTemplate->render($context);
+
+        $this->queueMessage($message);
+    }
+
     public function send(EmailMessageDTO $messageDTO): void
     {
         try {
