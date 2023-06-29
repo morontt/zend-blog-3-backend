@@ -79,7 +79,7 @@ class DatabaseBackup implements DailyCronServiceInterface
                 'mysqldump -h %s -u %s --password=%s %s | bzip2 > %s',
                 $this->dbHost,
                 $this->dbUser,
-                $this->dbPassword,
+                escapeshellarg($this->dbPassword),
                 $this->dbName,
                 $dumpPath
             )
@@ -130,7 +130,7 @@ class DatabaseBackup implements DailyCronServiceInterface
      */
     private function getFilename(): string
     {
-        $datetime = (new \DateTime())->format('Ymd');
+        $datetime = (new \DateTime())->format('YmdHi');
 
         return sprintf('%s_%s.sql.bz2', $datetime, $this->dbName);
     }
