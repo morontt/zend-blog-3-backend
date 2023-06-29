@@ -2,6 +2,7 @@
 
 namespace Mtt\BlogBundle\Service;
 
+use Mtt\BlogBundle\DTO\EmailMessageDTO;
 use Mtt\BlogBundle\Entity\Comment;
 use Swift_Mailer;
 use Swift_Message;
@@ -53,6 +54,80 @@ class Mailer
         }
     }
 
+    public function send(EmailMessageDTO $messageDTO): void
+    {
+        try {
+            $message = Swift_Message::newInstance()
+                ->setSubject($messageDTO->subject)
+                ->setFrom($messageDTO->from)
+                ->setTo($messageDTO->to)
+            ;
+
+            if ($messageDTO->messageHtml) {
+                $message->addPart($messageDTO->messageHtml, 'text/html');
+            }
+            if ($messageDTO->messageText) {
+                $message->addPart($messageDTO->messageText, 'text/plain');
+            }
+
+            $this->mailer->send($message);
+        } catch (\Throwable $e) {
+            $this->bot->sendMessage('email sent error: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Save message to spool
+     *
+     * @param EmailMessageDTO $messageDTO
+     */
+    public function queueMessage(EmailMessageDTO $messageDTO): void
+    {
+        $fileName = sprintf(
+            '%s/%X%s.message',
+            $this->spoolPath(),
+            (int)date('U'),
+            strtoupper(
+                bin2hex(openssl_random_pseudo_bytes(3))
+            )
+        );
+
+        $fp = fopen($fileName, 'w');
+        fwrite($fp, serialize($messageDTO));
+        fclose($fp);
+    }
+
+    public function spoolSend($messageLimit = null, $timeLimit = null): int
+    {
+        $count = 0;
+        $time = time();
+        foreach (new \DirectoryIterator($this->spoolPath()) as $fileInfo) {
+            $file = $fileInfo->getRealPath();
+            if (substr($file, -8) != '.message') {
+                continue;
+            }
+
+            if (rename($file, $file . '.sending')) {
+                $message = unserialize(file_get_contents($file . '.sending'));
+                $this->send($message);
+                $count++;
+
+                unlink($file . '.sending');
+            } else {
+                continue;
+            }
+
+            if ($messageLimit && $count >= $messageLimit) {
+                break;
+            }
+            if ($timeLimit && (time() - $time) >= $timeLimit) {
+                break;
+            }
+        }
+
+        return $count;
+    }
+
     private function sendEmailOnReply(Comment $comment)
     {
         $parent = $comment->getParent();
@@ -86,22 +161,21 @@ class Mailer
                 $template = $this->twig->load('MttBlogBundle:mails:replyComment.html.twig');
                 $textTemplate = $this->twig->load('MttBlogBundle:mails:replyComment.txt.twig');
 
-                $message = Swift_Message::newInstance()
-                    ->setSubject('Ответ на комментарий')
-                    ->setFrom($this->emailFrom)
-                    ->setTo([$emailTo => $recipient])
-                    ->addPart(
-                        $template->render($context),
-                        'text/html'
-                    )
-                    ->addPart(
-                        $textTemplate->render($context),
-                        'text/plain'
-                    )
-                ;
+                $message = new EmailMessageDTO();
 
-                $this->mailer->send($message);
+                $message->subject = 'Ответ на комментарий';
+                $message->from = $this->emailFrom;
+                $message->to = [$emailTo => $recipient];
+                $message->messageHtml = $template->render($context);
+                $message->messageText = $textTemplate->render($context);
+
+                $this->queueMessage($message);
             }
         }
+    }
+
+    private function spoolPath(): string
+    {
+        return APP_VAR_DIR . '/spool';
     }
 }
