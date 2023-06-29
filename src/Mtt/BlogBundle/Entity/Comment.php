@@ -128,6 +128,21 @@ class Comment implements CommentInterface
     }
 
     /**
+     * @return string
+     */
+    public function getAvatarHash(): string
+    {
+        $hash = '';
+        if ($this->getCommentator()) {
+            $hash = $this->getCommentator()->getAvatarHash();
+        } elseif ($this->getUser()) {
+            $hash = $this->getUser()->getAvatarHash();
+        }
+
+        return $hash;
+    }
+
+    /**
      * Add children
      *
      * @param Comment $children

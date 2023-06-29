@@ -51,17 +51,16 @@ class CommentTransformer extends BaseTransformer
                 $username = $commentator->getName();
                 $email = $commentator->getEmail();
                 $website = $commentator->getWebsite();
-                $imageHash = $commentator->getAvatarHash();
             } else {
                 $user = $item->getUser();
                 if ($user) {
                     $commentatorId = ViewCommentator::USER_ID_OFFSET + $user->getId();
                     $username = $user->getUsername();
                     $email = $user->getEmail();
-                    $imageHash = $user->getAvatarHash();
                 }
             }
 
+            $imageHash = $item->getAvatarHash();
             $location = $item->getGeoLocation();
             if ($location && $city = $location->getCity()) {
                 $locationCity = $city->getCity();

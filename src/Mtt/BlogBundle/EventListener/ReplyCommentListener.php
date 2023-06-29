@@ -97,17 +97,23 @@ class ReplyCommentListener
                     'topicUrl' => '/article/' . $comment->getPost()->getUrl(),
                     'username' => $username,
                     'commentText' => $comment->getText(),
+                    'avatar' => $comment->getAvatarHash() . '.png',
                 ]);
 
                 $template = $this->twig->load('MttBlogBundle:mails:replyComment.html.twig');
+                $textTemplate = $this->twig->load('MttBlogBundle:mails:replyComment.txt.twig');
 
                 $message = Swift_Message::newInstance()
                     ->setSubject('Ответ на комментарий')
                     ->setFrom($this->emailFrom)
                     ->setTo([$emailTo => $recipient])
-                    ->setBody(
+                    ->addPart(
                         $template->render($context),
                         'text/html'
+                    )
+                    ->addPart(
+                        $textTemplate->render($context),
+                        'text/plain'
                     )
                 ;
 

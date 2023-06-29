@@ -11,8 +11,18 @@
     Кто-то ответил на ваш комментарий в записи &rarr; <a style="color: #008CD9;"
                                                          href="{{ frontend_site }}{{ topicUrl }}">{{ topicTitle }}</a>
     <br/><br/>
-    {{ username }}<br/>
-    <q>{{ commentText }}</q>
+    <table width="100%">
+        <tr>
+            <td style="padding: 0 35px 0 0; width: 80px">
+                <img src="{{ frontend_site }}/images/avatar/{{ avatar }}" alt="avatar">
+            </td>
+            <td align="left">
+                {{ username }}<br/>
+                <q>{{ commentText }}</q>
+            </td>
+        </tr>
+    </table>
+
     <hr style="color: #859C40;"/>
     Внимание, письмо отправлено роботом и отвечать на него не нужно, т.к. роботы писем не читают.
 </div>
