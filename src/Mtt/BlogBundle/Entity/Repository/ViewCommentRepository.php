@@ -30,6 +30,7 @@ class ViewCommentRepository extends ServiceEntityRepository
 
         $qb
             ->where($qb->expr()->eq('c.post', ':post'))
+            ->andWhere($qb->expr()->eq('c.deleted', $qb->expr()->literal(false)))
             ->setParameter('post', $post->getId())
             ->orderBy('c.timeCreated')
         ;
