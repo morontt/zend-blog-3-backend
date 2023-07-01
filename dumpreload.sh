@@ -13,5 +13,5 @@ USE morontt_db;
 \. app/DoctrineMigrations/sql/drop_migrations.sql
 EOF
 
-docker exec rhinoceros bash -c "php app/console do:mi:mi"
+docker exec rhinoceros bash -c "php app/console do:mi:mi && php app/console mtt:posts:update"
 docker exec rhinoceros bash -c "chown -R www-data:www-data ."

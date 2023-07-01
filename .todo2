@@ -64,6 +64,11 @@
           "text": "Node.js",
           "priority": "medium",
           "creation": 1686425194
+        },
+        {
+          "text": "Migrate to Ember.js 3.*",
+          "priority": "medium",
+          "creation": 1688211065
         }
       ]
     },
