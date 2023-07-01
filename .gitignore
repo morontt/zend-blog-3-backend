@@ -30,6 +30,7 @@ behat.yml
 /spa/npm-debug.log
 /spa/testem.log
 /web/spa/
+/web/spa3/
 /web/fonts/
 .env
 http-client.env.json

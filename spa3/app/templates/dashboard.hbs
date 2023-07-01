@@ -1,0 +1,23 @@
+{{page-title "Admin - Dashboard"}}
+<div id="topbar">
+    <ol class="breadcrumb">
+        <li>Дашборд</li>
+    </ol>
+</div>
+<div id="content">
+    <div id="flashes">
+    </div>
+    <div class="page-header">
+        <div class="actions-menu">
+            <button class="btn btn-warning" type="button" {{action "purgeCache"}}>
+                <i class="glyphicon glyphicon-refresh"></i>
+                <span>Очистить кеш</span>
+            </button>
+        </div>
+        <h1><i class="glyphicon glyphicon-dashboard"></i> Панель управления <small>Для управления всего и всем.</small></h1>
+    </div>
+    <div class="alert {{this.alertClass}}" role="alert">
+        {{this.alertMessage}}
+    </div>
+    {{footer-partial}}
+</div>

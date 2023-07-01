@@ -92,7 +92,7 @@ module.exports = function (grunt) {
                     banner: '<%= banner_format %>'
                 },
                 src: [
-                    'web/spa/assets/vendor.js',
+                    'bower_components/jquery/dist/jquery.js',
                     'bower_components/bootstrap/dist/js/bootstrap.js',
                     'bower_components/moment/moment.js',
                     'bower_components/moment/locale/ru.js',
@@ -102,7 +102,8 @@ module.exports = function (grunt) {
                     'bower_components/jquery-ui/ui/autocomplete.js',
                     'bower_components/jquery-ui/ui/menu.js',
                     'web/bundles/fosjsrouting/js/router.js',
-                    'web/spa/assets/mtt-blog.js'
+                    'web/spa3/assets/vendor.js',
+                    'web/spa3/assets/mtt-blog.js'
                 ],
                 dest: 'web/dist/<%= pkg.name %>.js'
             }
