@@ -4,6 +4,18 @@ VOLUME ["/var/www/html", "/var/www/resources"]
 
 ARG HOST_UID=1000
 
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - ;\
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
+    nodejs \
+    ; \
+    rm -rf /var/lib/apt/lists/*
+
+RUN npm install -g npm@latest \
+    && npm install -g yarn \
+    && npm install -g ember-cli@3.28.6 \
+    ;
+
 RUN yes | pecl install xdebug-3.1.6 \
     && docker-php-ext-enable xdebug \
     && cp ${PHP_INI_DIR}/php.ini-development ${PHP_INI_DIR}/php.ini \
