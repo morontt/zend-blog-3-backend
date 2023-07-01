@@ -8,6 +8,7 @@
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
     "require": {
+        "php": ">=7.4",
         "ext-iconv": "*",
         "ext-imagick": "*",
         "ext-json": "*",
@@ -37,17 +38,17 @@
         "twig/twig": "^1.0||^2.0"
     },
     "require-dev": {
-        "sensio/generator-bundle": "^3.0",
-        "symfony/phpunit-bridge": "^3.0",
-        "doctrine/doctrine-fixtures-bundle": "^3.0",
-        "friendsofphp/php-cs-fixer": "~2.14",
-        "behat/symfony2-extension": "~2.0@dev",
         "behat/mink-extension": "~2.2",
         "behat/mink-goutte-driver": "1.2.*",
-        "vipsoft/doctrine-data-fixtures-extension": "dev-master",
-        "fzaninotto/faker": "1.7.1",
+        "behat/symfony2-extension": "~2.0@dev",
+        "doctrine/doctrine-fixtures-bundle": "^3.0",
+        "friendsofphp/php-cs-fixer": "~2.14",
+        "fzaninotto/faker": "1.9.x-dev",
         "phpspec/phpspec": "~6.0",
-        "phpstan/phpstan": "^0.12.3"
+        "phpstan/phpstan": "^0.12.3",
+        "sensio/generator-bundle": "^3.0",
+        "symfony/phpunit-bridge": "^3.0",
+        "vipsoft/doctrine-data-fixtures-extension": "dev-master"
     },
     "scripts": {
         "symfony-scripts": [
