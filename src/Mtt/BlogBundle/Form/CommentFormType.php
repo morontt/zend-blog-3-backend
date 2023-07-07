@@ -8,6 +8,8 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
@@ -44,10 +46,7 @@ class CommentFormType extends AbstractType
                     'required' => false,
                 ]
             )
-            ->add(
-                'commentator',
-                CommentatorFormType::class
-            )
+
             ->add(
                 'topicId',
                 IntegerType::class
@@ -60,6 +59,25 @@ class CommentFormType extends AbstractType
                 ]
             )
         ;
+
+        $builder->addEventListener(
+            FormEvents::PRE_SUBMIT,
+            function (FormEvent $event) {
+                $data = $event->getData();
+
+                if (isset($data['user'])) {
+                    $event->getForm()->add(
+                        'user',
+                        CommentUserFormType::class
+                    );
+                } elseif (isset($data['commentator'])) {
+                    $event->getForm()->add(
+                        'commentator',
+                        CommentatorFormType::class
+                    );
+                }
+            }
+        );
     }
 
     /**
