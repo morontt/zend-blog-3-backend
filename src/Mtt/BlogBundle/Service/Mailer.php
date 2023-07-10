@@ -56,20 +56,7 @@ class Mailer
 
     public function newComment(Comment $comment, string $emailTo)
     {
-        $username = 'undefined';
-        if ($user = $comment->getUser()) {
-            $username = $user->getUsername();
-        } elseif ($commentator = $comment->getCommentator()) {
-            $username = $commentator->getName();
-        }
-
-        $context = $this->twig->mergeGlobals([
-            'topicTitle' => $comment->getPost()->getTitle(),
-            'topicUrl' => '/article/' . $comment->getPost()->getUrl(),
-            'username' => $username,
-            'commentText' => $comment->getText(),
-            'avatar' => $comment->getAvatarHash() . '.png',
-        ]);
+        $context = $this->twig->mergeGlobals($this->context($comment));
 
         $template = $this->twig->load('MttBlogBundle:mails:newComment.html.twig');
         $textTemplate = $this->twig->load('MttBlogBundle:mails:newComment.txt.twig');
@@ -174,20 +161,7 @@ class Mailer
             }
 
             if ($emailTo) {
-                $username = 'undefined';
-                if ($user = $comment->getUser()) {
-                    $username = $user->getUsername();
-                } elseif ($commentator = $comment->getCommentator()) {
-                    $username = $commentator->getName();
-                }
-
-                $context = $this->twig->mergeGlobals([
-                    'topicTitle' => $comment->getPost()->getTitle(),
-                    'topicUrl' => '/article/' . $comment->getPost()->getUrl(),
-                    'username' => $username,
-                    'commentText' => $comment->getText(),
-                    'avatar' => $comment->getAvatarHash() . '.png',
-                ]);
+                $context = $this->twig->mergeGlobals($this->context($comment));
 
                 $template = $this->twig->load('MttBlogBundle:mails:replyComment.html.twig');
                 $textTemplate = $this->twig->load('MttBlogBundle:mails:replyComment.txt.twig');
@@ -208,5 +182,23 @@ class Mailer
     private function spoolPath(): string
     {
         return APP_VAR_DIR . '/spool';
+    }
+
+    private function context(Comment $comment): array
+    {
+        $username = 'undefined';
+        if ($user = $comment->getUser()) {
+            $username = $user->getUsername();
+        } elseif ($commentator = $comment->getCommentator()) {
+            $username = $commentator->getName();
+        }
+
+        return [
+            'topicTitle' => $comment->getPost()->getTitle(),
+            'topicUrl' => '/article/' . $comment->getPost()->getUrl(),
+            'username' => $username,
+            'commentText' => $comment->getText(),
+            'avatar' => $comment->getAvatarHash() . '.png',
+        ];
     }
 }
