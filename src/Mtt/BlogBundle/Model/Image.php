@@ -11,6 +11,9 @@ namespace Mtt\BlogBundle\Model;
 use Imagick;
 use Mtt\BlogBundle\Entity\MediaFile;
 use Mtt\BlogBundle\Entity\Post;
+use Mtt\BlogBundle\Model\Resizer\DefaultResizer;
+use Mtt\BlogBundle\Model\Resizer\JpegResizer;
+use Mtt\BlogBundle\Model\Resizer\PngResizer;
 use Mtt\BlogBundle\Service\ImageManager;
 
 /**
@@ -75,7 +78,7 @@ class Image
                     $this->sizes[$size]['width'],
                     $this->sizes[$size]['height']
                 );
-            } catch (\ImagickException $e) {
+            } catch (\Throwable $e) {
                 return null;
             }
         }
@@ -151,6 +154,8 @@ class Image
             case 'jpeg':
             case "jpg":
                 return new JpegResizer();
+            case "png":
+                return new PngResizer();
         }
 
         return new DefaultResizer();

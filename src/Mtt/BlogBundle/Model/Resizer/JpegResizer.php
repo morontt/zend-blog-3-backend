@@ -1,9 +1,10 @@
 <?php
 
-namespace Mtt\BlogBundle\Model;
+namespace Mtt\BlogBundle\Model\Resizer;
 
 use Imagick;
 use ImagickException;
+use Mtt\BlogBundle\Model\ResizerInterface;
 
 class JpegResizer implements ResizerInterface
 {
