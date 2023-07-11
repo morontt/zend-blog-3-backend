@@ -36,12 +36,25 @@ class Image
      */
     protected $sizes = [
         'admin_list' => [
-            'width' => 0,
             'height' => 60,
         ],
         'article_864' => [
             'width' => 864,
-            'height' => 0,
+        ],
+        'article_768' => [
+            'width' => 768,
+        ],
+        'article_624' => [
+            'width' => 624,
+        ],
+        'article_444' => [
+            'width' => 444,
+        ],
+        'article_320' => [
+            'width' => 320,
+        ],
+        'article_240' => [
+            'width' => 240,
         ],
     ];
 
@@ -56,6 +69,49 @@ class Image
     public function __construct(MediaFile $media)
     {
         $this->media = $media;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSrcSet(): array
+    {
+        $width = $this->media->getWidth();
+        $height = $this->media->getHeight();
+
+        $data = [];
+        $addOriginal = false;
+        foreach ($this->sizes as $key => $config) {
+            if ((strpos($key, 'article_') === 0) && isset($config['width'])) {
+                if ($config['width'] < $width) {
+                    $data[] = [
+                        'width' => $config['width'],
+                        'height' => (int)round(1.0 * $height * $config['width'] / $width),
+                        'path' => $this->getPreview($key),
+                    ];
+                } else {
+                    $addOriginal = true;
+                }
+            }
+        }
+
+        if ($addOriginal) {
+            $data[] = [
+                'width' => $width,
+                'height' => $height,
+                'path' => $this->media->getPath(),
+            ];
+        }
+
+        usort($data, function ($a, $b) {
+            if ($a['width'] == $b['width']) {
+                return 0;
+            }
+
+            return ($a['width'] < $b['width']) ? 1 : -1;
+        });
+
+        return $data;
     }
 
     /**
@@ -75,8 +131,8 @@ class Image
                 $resizer->resize(
                     $fsPath,
                     $fsNewPath,
-                    $this->sizes[$size]['width'],
-                    $this->sizes[$size]['height']
+                    $this->sizes[$size]['width'] ?? 0,
+                    $this->sizes[$size]['height'] ?? 0
                 );
             } catch (\Throwable $e) {
                 return null;
@@ -111,8 +167,8 @@ class Image
         $res = sprintf(
             '%s%s%s.%s',
             $pathInfo['filename'],
-            $this->sizes[$size]['width'] ? '_' . $this->sizes[$size]['width'] . 'w' : '',
-            $this->sizes[$size]['height'] ? '_' . $this->sizes[$size]['height'] . 'h' : '',
+            isset($this->sizes[$size]['width']) ? '_' . $this->sizes[$size]['width'] . 'w' : '',
+            isset($this->sizes[$size]['height']) ? '_' . $this->sizes[$size]['height'] . 'h' : '',
             $ext
         );
 
@@ -152,9 +208,9 @@ class Image
     {
         switch ($format ?? pathinfo($fsPath, PATHINFO_EXTENSION)) {
             case 'jpeg':
-            case "jpg":
+            case 'jpg':
                 return new JpegResizer();
-            case "png":
+            case 'png':
                 return new PngResizer();
         }
 

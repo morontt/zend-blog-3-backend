@@ -9,9 +9,11 @@
 namespace Mtt\BlogBundle\Service;
 
 use Doctrine\ORM\EntityManager;
+use Mtt\BlogBundle\Entity\MediaFile;
 use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Entity\Repository\MediaFileRepository;
 use Mtt\BlogBundle\Entity\Repository\PygmentsCodeRepository;
+use Mtt\BlogBundle\Model\Image;
 
 class TextProcessor
 {
@@ -132,12 +134,7 @@ class TextProcessor
         if ($media) {
             if ($withDefault || !$media->isDefaultImage()) {
                 $alt = $matches['alt'] ?? $media->getDescription();
-                $replace = sprintf(
-                    '<img src="%s" alt="%s" title="%s"/>',
-                    $this->imageBasepath . $media->getPath(),
-                    $alt,
-                    $alt
-                );
+                $replace = $this->picture($media, $alt);
             } else {
                 $replace = '';
             }
@@ -146,5 +143,35 @@ class TextProcessor
         }
 
         return $replace;
+    }
+
+    private function picture(MediaFile $media, string $alt): string
+    {
+        $picture = "<picture>\n";
+
+        $image = new Image($media);
+        $srcSet = $image->getSrcSet();
+
+        $srcSetStrings = array_map(
+            function (array $el) {
+                return $this->imageBasepath . $el['path'] . ' ' . $el['width'] . 'w';
+            },
+            $srcSet
+        );
+
+        $first = reset($srcSet);
+
+        $picture .= sprintf(
+            "<img src=\"%s\" alt=\"%s\" title=\"%s\" width=\"%dpx\" height=\"%dpx\"\n     srcset=\"%s\"/>",
+            $this->imageBasepath . $first['path'],
+            $alt,
+            $alt,
+            $first['width'],
+            $first['height'],
+            implode(', ', $srcSetStrings),
+        );
+        $picture .= "\n</picture>";
+
+        return $picture;
     }
 }

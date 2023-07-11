@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Mtt\BlogBundle\Service\TextProcessor;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -46,6 +47,7 @@ class PostsBatchUpdateCommand extends Command
         $this
             ->setName('mtt:posts:update')
             ->setDescription('Batch update all posts')
+            ->addArgument('articleId', InputArgument::OPTIONAL, 'article ID')
         ;
     }
 
@@ -53,20 +55,34 @@ class PostsBatchUpdateCommand extends Command
     {
         $startTime = microtime(true);
 
+        $postId = $input->getArgument('articleId');
         $repo = $this->em->getRepository('MttBlogBundle:Post');
-        $postGenerator = function () use ($repo) {
-            $i = 0;
-            while (true) {
-                $posts = $repo->getPostsForIteration($i);
-
-                $i++;
-                if (!count($posts)) {
+        if ($postId) {
+            $postGenerator = function () use ($repo, $postId) {
+                $post = $repo->find((int)$postId);
+                if (!$post) {
                     return;
                 }
 
-                yield $posts;
-            }
-        };
+                yield [$post];
+
+                return;
+            };
+        } else {
+            $postGenerator = function () use ($repo) {
+                $i = 0;
+                while (true) {
+                    $posts = $repo->getPostsForIteration($i);
+
+                    $i++;
+                    if (!count($posts)) {
+                        return;
+                    }
+
+                    yield $posts;
+                }
+            };
+        }
 
         $cnt = 0;
         foreach ($postGenerator() as $posts) {
