@@ -23,6 +23,8 @@ use Mtt\BlogBundle\Service\ImageManager;
  * @method \DateTime getTimeCreated()
  * @method \DateTime getLastUpdate()
  * @method bool isDefaultImage()
+ * @method int|null getWidth()
+ * @method int|null getHeight()
  */
 class Image
 {
@@ -107,6 +109,24 @@ class Image
         );
 
         return $dirNamePrefix . $res;
+    }
+
+    public function getImageGeometry(): ImageGeometry
+    {
+        $fsPath = ImageManager::getUploadsDir() . '/' . $this->media->getPath();
+        $obj = new ImageGeometry();
+
+        try {
+            $image = new Imagick($fsPath);
+            $geometry = $image->getImageGeometry();
+            $image->clear();
+
+            $obj->width = $geometry['width'];
+            $obj->height = $geometry['height'];
+        } catch (\ImagickException $e) {
+        }
+
+        return $obj;
     }
 
     /**

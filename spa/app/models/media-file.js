@@ -13,6 +13,8 @@ export default DS.Model.extend({
     post: DS.belongsTo('post'),
     postId: DS.attr('number'),
     defaultImage: DS.attr('boolean'),
+    width: DS.attr('number'),
+    height: DS.attr('number'),
     src: Ember.computed('preview', function () {
         return config.appParameters.cdnURL + this.get('preview');
     }),

@@ -36,7 +36,7 @@ class JsonBodyListener
             if ($format == 'json') {
                 $content = $request->getContent();
                 if (!empty($content)) {
-                    $data = json_decode($content, true);
+                    $data = json_decode($content, true, 512, JSON_BIGINT_AS_STRING | JSON_INVALID_UTF8_SUBSTITUTE);
                     if (is_array($data)) {
                         $request->request = new ParameterBag($data);
                     } else {
