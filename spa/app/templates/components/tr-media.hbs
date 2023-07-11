@@ -3,7 +3,10 @@
     {{media-preview mediaFile.src}}
 </td>
 <td>{{mediaFile.originalFilename}}</td>
-<td>{{mediaFile.size}}</td>
+<td>
+    {{mediaFile.size}}<br>
+    <span class="resolution">{{mediaFile.width}}x{{mediaFile.height}}px</span>
+</td>
 {{#if isEditing}}
     <td>{{input value=mediaFile.description class="form-control"}}</td>
     <td>{{input value=mediaFile.postId class="form-control"}}</td>

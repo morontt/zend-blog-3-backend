@@ -684,3 +684,8 @@ table .flag {
     font-size: 1.75em;
     padding-right: 0.3em;
 }
+
+table .resolution {
+    font-size: 80%;
+    color: #bbb;
+}

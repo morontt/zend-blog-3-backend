@@ -12,6 +12,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMException;
 use Mtt\BlogBundle\Entity\MediaFile;
+use Mtt\BlogBundle\Model\Image;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -71,6 +72,16 @@ class ImageManager
                     $media->setDefaultImage(true);
                 }
             }
+        }
+
+        $pathInfo = pathinfo($remotePath);
+        if (in_array(strtolower($pathInfo['extension']), ['png', 'jpeg', 'jpg', 'gif'])) {
+            $image = new Image($media);
+            $geometry = $image->getImageGeometry();
+            $media
+                ->setWidth($geometry->width)
+                ->setHeight($geometry->height)
+            ;
         }
 
         $this->em->persist($media);
