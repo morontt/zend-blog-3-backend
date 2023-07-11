@@ -60,19 +60,21 @@ class Image
      *
      * @return string
      */
-    public function getPreview(string $size): ?string
+    public function getPreview(string $size, string $format = null): ?string
     {
         $newPath = $this->getPathBySize($this->media->getPath(), $size);
         $fsPath = ImageManager::getUploadsDir() . '/' . $this->media->getPath();
         $fsNewPath = ImageManager::getUploadsDir() . '/' . $newPath;
 
         if (!file_exists($fsNewPath) && file_exists($fsPath) && is_file($fsPath)) {
+            $resizer = $this->getResizer($fsPath, $format);
             try {
-                $image = new Imagick($fsPath);
-                $image->thumbnailImage($this->sizes[$size]['width'], $this->sizes[$size]['height']);
-
-                $image->writeImage($fsNewPath);
-                $image->clear();
+                $resizer->resize(
+                    $fsPath,
+                    $fsNewPath,
+                    $this->sizes[$size]['width'],
+                    $this->sizes[$size]['height']
+                );
             } catch (\ImagickException $e) {
                 return null;
             }
@@ -84,10 +86,11 @@ class Image
     /**
      * @param string $currentPath
      * @param string $size
+     * @param string|null $format
      *
      * @return string
      */
-    public function getPathBySize(string $currentPath, string $size): string
+    public function getPathBySize(string $currentPath, string $size, string $format = null): string
     {
         if (!isset($this->sizes[$size])) {
             throw new \RuntimeException('undefined size');
@@ -100,12 +103,14 @@ class Image
             $dirNamePrefix = $pathInfo['dirname'] . '/';
         }
 
+        $ext = $format ?? $pathInfo['extension'];
+
         $res = sprintf(
             '%s%s%s.%s',
             $pathInfo['filename'],
             $this->sizes[$size]['width'] ? '_' . $this->sizes[$size]['width'] . 'w' : '',
             $this->sizes[$size]['height'] ? '_' . $this->sizes[$size]['height'] . 'h' : '',
-            $pathInfo['extension']
+            $ext
         );
 
         return $dirNamePrefix . $res;
@@ -138,5 +143,16 @@ class Image
     public function __call($method, $arguments)
     {
         return call_user_func_array([$this->media, $method], $arguments);
+    }
+
+    private function getResizer(string $fsPath, string $format = null): ResizerInterface
+    {
+        switch ($format ?? pathinfo($fsPath, PATHINFO_EXTENSION)) {
+            case 'jpeg':
+            case "jpg":
+                return new JpegResizer();
+        }
+
+        return new DefaultResizer();
     }
 }
