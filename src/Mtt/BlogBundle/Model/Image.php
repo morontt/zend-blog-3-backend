@@ -34,6 +34,10 @@ class Image
             'width' => 0,
             'height' => 60,
         ],
+        'article_864' => [
+            'width' => 864,
+            'height' => 0,
+        ],
     ];
 
     /**
@@ -87,26 +91,22 @@ class Image
             throw new \RuntimeException('undefined size');
         }
 
-        $pathinfo = pathinfo($currentPath);
-
-        if ($pathinfo['dirname'] === '.') {
-            $res = sprintf(
-                '%d_%d_%s',
-                $this->sizes[$size]['width'] ?: 0,
-                $this->sizes[$size]['height'] ?: 0,
-                $pathinfo['basename']
-            );
+        $pathInfo = pathinfo($currentPath);
+        if ($pathInfo['dirname'] === '.') {
+            $dirNamePrefix = '';
         } else {
-            $res = sprintf(
-                '%s/%d_%d_%s',
-                $pathinfo['dirname'],
-                $this->sizes[$size]['width'] ?: 0,
-                $this->sizes[$size]['height'] ?: 0,
-                $pathinfo['basename']
-            );
+            $dirNamePrefix = $pathInfo['dirname'] . '/';
         }
 
-        return $res;
+        $res = sprintf(
+            '%s%s%s.%s',
+            $pathInfo['filename'],
+            $this->sizes[$size]['width'] ? '_' . $this->sizes[$size]['width'] . 'w' : '',
+            $this->sizes[$size]['height'] ? '_' . $this->sizes[$size]['height'] . 'h' : '',
+            $pathInfo['extension']
+        );
+
+        return $dirNamePrefix . $res;
     }
 
     /**
