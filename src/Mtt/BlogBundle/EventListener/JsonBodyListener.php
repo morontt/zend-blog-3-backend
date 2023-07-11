@@ -36,6 +36,7 @@ class JsonBodyListener
             if ($format == 'json') {
                 $content = $request->getContent();
                 if (!empty($content)) {
+                    $this->telegramRawLog($request->getRequestUri(), $content);
                     $data = json_decode($content, true, 512, JSON_BIGINT_AS_STRING | JSON_INVALID_UTF8_SUBSTITUTE);
                     if (is_array($data)) {
                         $request->request = new ParameterBag($data);
@@ -44,6 +45,15 @@ class JsonBodyListener
                     }
                 }
             }
+        }
+    }
+
+    private function telegramRawLog($uri, $content)
+    {
+        if (strpos($uri, '/telegram/') !== false) {
+            $fp = fopen(APP_VAR_DIR . '/logs/raw-telegram.log', 'a');
+            fwrite($fp, date('Y-m-d H:i:s') . ' : ' . $content . "\n");
+            fclose($fp);
         }
     }
 }
