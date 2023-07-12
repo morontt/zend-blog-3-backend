@@ -14,6 +14,7 @@ use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Model\Resizer\DefaultResizer;
 use Mtt\BlogBundle\Model\Resizer\JpegResizer;
 use Mtt\BlogBundle\Model\Resizer\PngResizer;
+use Mtt\BlogBundle\Model\Resizer\WebpResizer;
 use Mtt\BlogBundle\Service\ImageManager;
 
 /**
@@ -41,20 +42,14 @@ class Image
         'article_864' => [
             'width' => 864,
         ],
-        'article_768' => [
-            'width' => 768,
-        ],
         'article_624' => [
             'width' => 624,
         ],
         'article_444' => [
-            'width' => 444,
+            'width' => 448,
         ],
         'article_320' => [
             'width' => 320,
-        ],
-        'article_240' => [
-            'width' => 240,
         ],
     ];
 
@@ -72,9 +67,11 @@ class Image
     }
 
     /**
+     * @param string|null $format
+     *
      * @return array
      */
-    public function getSrcSet(): array
+    public function getSrcSet(string $format = null): array
     {
         $width = $this->media->getWidth();
         $height = $this->media->getHeight();
@@ -84,11 +81,13 @@ class Image
         foreach ($this->sizes as $key => $config) {
             if ((strpos($key, 'article_') === 0) && isset($config['width'])) {
                 if ($config['width'] < $width) {
-                    $data[] = [
-                        'width' => $config['width'],
-                        'height' => (int)round(1.0 * $height * $config['width'] / $width),
-                        'path' => $this->getPreview($key),
-                    ];
+                    if ($newPath = $this->getPreview($key, $format)) {
+                        $data[] = [
+                            'width' => $config['width'],
+                            'height' => (int)round(1.0 * $height * $config['width'] / $width),
+                            'path' => $newPath,
+                        ];
+                    }
                 } else {
                     $addOriginal = true;
                 }
@@ -96,11 +95,27 @@ class Image
         }
 
         if ($addOriginal) {
-            $data[] = [
-                'width' => $width,
-                'height' => $height,
-                'path' => $this->media->getPath(),
-            ];
+            if ($format) {
+                $ext = pathinfo($this->media->getPath(), PATHINFO_EXTENSION);
+                $resizer = $this->getResizer($this->media->getPath(), $format);
+                if ($ext != $format && method_exists($resizer, 'convert')) {
+                    try {
+                        $newPath = $resizer->convert($this->media->getPath(), ImageManager::getUploadsDir());
+                        $data[] = [
+                            'width' => $width,
+                            'height' => $height,
+                            'path' => $newPath,
+                        ];
+                    } catch (\Throwable $e) {
+                    }
+                }
+            } else {
+                $data[] = [
+                    'width' => $width,
+                    'height' => $height,
+                    'path' => $this->media->getPath(),
+                ];
+            }
         }
 
         usort($data, function ($a, $b) {
@@ -121,7 +136,7 @@ class Image
      */
     public function getPreview(string $size, string $format = null): ?string
     {
-        $newPath = $this->getPathBySize($this->media->getPath(), $size);
+        $newPath = $this->getPathBySize($this->media->getPath(), $size, $format);
         $fsPath = ImageManager::getUploadsDir() . '/' . $this->media->getPath();
         $fsNewPath = ImageManager::getUploadsDir() . '/' . $newPath;
 
@@ -212,6 +227,8 @@ class Image
                 return new JpegResizer();
             case 'png':
                 return new PngResizer();
+            case 'webp':
+                return new WebpResizer();
         }
 
         return new DefaultResizer();

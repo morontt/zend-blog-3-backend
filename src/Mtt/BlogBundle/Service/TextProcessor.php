@@ -150,6 +150,20 @@ class TextProcessor
         $picture = "<picture>\n";
 
         $image = new Image($media);
+
+        $srcSetWebp = $image->getSrcSet('webp');
+
+        $srcSetWebpStrings = array_map(
+            function (array $el) {
+                return $this->imageBasepath . $el['path'] . ' ' . $el['width'] . 'w';
+            },
+            $srcSetWebp
+        );
+        $picture .= sprintf(
+            "<source type=\"image/webp\"\n        srcset=\"%s\"/>\n",
+            implode(', ', $srcSetWebpStrings),
+        );
+
         $srcSet = $image->getSrcSet();
 
         $srcSetStrings = array_map(
@@ -162,7 +176,7 @@ class TextProcessor
         $first = reset($srcSet);
 
         $picture .= sprintf(
-            "<img src=\"%s\" alt=\"%s\" title=\"%s\" width=\"%dpx\" height=\"%dpx\"\n     srcset=\"%s\"/>",
+            "<img src=\"%s\" alt=\"%s\" title=\"%s\" width=\"%d\" height=\"%d\"\n     srcset=\"%s\"/>",
             $this->imageBasepath . $first['path'],
             $alt,
             $alt,
