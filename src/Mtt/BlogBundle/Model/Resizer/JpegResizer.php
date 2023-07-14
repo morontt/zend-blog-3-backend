@@ -8,6 +8,8 @@ use Mtt\BlogBundle\Model\ResizerInterface;
 
 class JpegResizer implements ResizerInterface
 {
+    use DebugAnnotation;
+
     /**
      * @throws ImagickException
      */
@@ -18,16 +20,22 @@ class JpegResizer implements ResizerInterface
 
         $image->resizeImage($width, $height, Imagick::FILTER_LANCZOS, 1);
 
-        $format = 'jpeg';
-        $image->setFormat($format);
-        $image->setImageFormat($format);
+        $image->setFormat($this->getFormat());
+        $image->setImageFormat($this->getFormat());
 
         $image->setCompression(Imagick::COMPRESSION_JPEG);
         $image->setImageCompression(Imagick::COMPRESSION_JPEG);
         $image->setCompressionQuality(75);
         $image->setImageCompressionQuality(75);
 
+        $this->annotate($width, $height, $image);
+
         $image->writeImage($newFilePath);
         $image->clear();
+    }
+
+    protected function getFormat(): string
+    {
+        return 'jpeg';
     }
 }

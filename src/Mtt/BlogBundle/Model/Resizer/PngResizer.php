@@ -10,6 +10,8 @@ use Symfony\Component\Process\Process;
 
 class PngResizer implements ResizerInterface
 {
+    use DebugAnnotation;
+
     /**
      * @throws ImagickException
      * @throws ProcessFailedException
@@ -21,12 +23,13 @@ class PngResizer implements ResizerInterface
 
         $image->scaleImage($width, $height);
 
-        $format = 'png';
-        $image->setFormat($format);
-        $image->setImageFormat($format);
+        $image->setFormat($this->getFormat());
+        $image->setImageFormat($this->getFormat());
 
         $image->setCompression(Imagick::COMPRESSION_ZIP);
         $image->setImageCompression(Imagick::COMPRESSION_ZIP);
+
+        $this->annotate($width, $height, $image);
 
         $image->writeImage($newFilePath);
         $image->clear();
@@ -39,5 +42,10 @@ class PngResizer implements ResizerInterface
         if (!$process->isSuccessful()) {
             throw new ProcessFailedException($process);
         }
+    }
+
+    protected function getFormat(): string
+    {
+        return 'png';
     }
 }
