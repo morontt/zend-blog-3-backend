@@ -100,11 +100,33 @@ class ImageManager
      */
     public function remove(MediaFile $entity)
     {
+        $this->removeAllPreview($entity);
+
         $fs = new Filesystem();
         $fs->remove(static::getUploadsDir() . '/' . $entity->getPath());
 
         $this->em->remove($entity);
         $this->em->flush();
+    }
+
+    public function removeAllPreview(MediaFile $entity)
+    {
+        $pathInfo = pathinfo(static::getUploadsDir() . '/' . $entity->getPath());
+        $directory = $pathInfo['dirname'];
+        $baseName = $pathInfo['basename'];
+
+        $fs = new Filesystem();
+        foreach (scandir($directory) as $file) {
+            if ($file === '.' || $file === '..') {
+                continue;
+            }
+
+            if (preg_match('/(?:^\d+_\d+_)?' . $pathInfo['filename'] . '(?:_\d+(?:w|h))?\./', $file)
+                && $file !== $baseName
+            ) {
+                $fs->remove($directory . '/' . $file);
+            }
+        }
     }
 
     public function pictureTag(MediaFile $entity, ?string $alt, bool $withTitle = true): string
