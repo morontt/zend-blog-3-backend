@@ -405,6 +405,18 @@
       "priority": "high",
       "creation": 1688970428,
       "completion": 1688977645
+    },
+    {
+      "text": "Responsive images",
+      "priority": "high",
+      "creation": 1689348282,
+      "tasks": [
+        {
+          "text": "Удалять картинки вместе с превью",
+          "priority": "medium",
+          "creation": 1689348322
+        }
+      ]
     }
   ]
 }

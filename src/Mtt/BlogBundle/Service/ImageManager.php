@@ -25,12 +25,16 @@ class ImageManager
      */
     protected $em;
 
+    private string $imageBasepath;
+
     /**
      * @param EntityManagerInterface $em
+     * @param string $cdn
      */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, string $cdn)
     {
         $this->em = $em;
+        $this->imageBasepath = $cdn . self::getImageBasePath() . '/';
     }
 
     /**
@@ -74,8 +78,7 @@ class ImageManager
             }
         }
 
-        $pathInfo = pathinfo($remotePath);
-        if (in_array(strtolower($pathInfo['extension']), ['png', 'jpeg', 'jpg', 'gif'])) {
+        if ($media->isImage()) {
             $image = new Image($media);
             $geometry = $image->getImageGeometry();
             $media
@@ -102,6 +105,48 @@ class ImageManager
 
         $this->em->remove($entity);
         $this->em->flush();
+    }
+
+    public function pictureTag(MediaFile $entity, ?string $alt, bool $withTitle = true): string
+    {
+        $image = new Image($entity);
+
+        $srcSetWebp = $image->getSrcSet('webp');
+        $srcSetWebpStrings = array_map(
+            function (array $el) {
+                return $this->imageBasepath . $el['path'] . ' ' . $el['width'] . 'w';
+            },
+            $srcSetWebp
+        );
+
+        $picture = "<picture>\n";
+        $picture .= sprintf(
+            "<source type=\"image/webp\"\n        srcset=\"%s\"/>\n",
+            implode(', ', $srcSetWebpStrings),
+        );
+
+        $srcSet = $image->getSrcSet();
+        $srcSetStrings = array_map(
+            function (array $el) {
+                return $this->imageBasepath . $el['path'] . ' ' . $el['width'] . 'w';
+            },
+            $srcSet
+        );
+
+        $first = reset($srcSet);
+
+        $picture .= sprintf(
+            "<img src=\"%s\"%s%s width=\"%d\" height=\"%d\"\n     srcset=\"%s\"/>",
+            $this->imageBasepath . $first['path'],
+            $alt ? ' alt="' . $alt . '"' : '',
+            $alt && $withTitle ? ' title="' . $alt . '"' : '',
+            $first['width'],
+            $first['height'],
+            implode(', ', $srcSetStrings),
+        );
+        $picture .= "\n</picture>";
+
+        return $picture;
     }
 
     /**

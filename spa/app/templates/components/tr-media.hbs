@@ -1,8 +1,8 @@
 <td class="center-text">{{mediaFile.id}}</td>
-<td class="center-text">
+<td class="center-text media-preview">
     {{media-preview mediaFile.src}}
 </td>
-<td>{{mediaFile.originalFilename}}</td>
+<td class="text-break-word">{{mediaFile.originalFilename}}</td>
 <td>
     {{mediaFile.size}}<br>
     <span class="resolution">{{mediaFile.width}}x{{mediaFile.height}}px</span>
@@ -12,7 +12,7 @@
     <td>{{input value=mediaFile.postId class="form-control"}}</td>
     <td>{{input type="checkbox" checked=mediaFile.defaultImage}}</td>
 {{else}}
-    <td>{{mediaFile.description}}</td>
+    <td class="text-break-word">{{mediaFile.description}}</td>
     <td>
         {{#if mediaFile.postId}}
             {{mediaFile.postId}}.

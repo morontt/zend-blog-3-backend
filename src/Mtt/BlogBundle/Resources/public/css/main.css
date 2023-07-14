@@ -689,3 +689,7 @@ table .resolution {
     font-size: 80%;
     color: #bbb;
 }
+
+table .media-preview {
+    overflow: hidden;
+}

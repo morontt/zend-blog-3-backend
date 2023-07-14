@@ -8,25 +8,12 @@
 
 namespace Mtt\BlogBundle\Service;
 
-use Doctrine\ORM\EntityManager;
-use Mtt\BlogBundle\Entity\MediaFile;
 use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Entity\Repository\MediaFileRepository;
 use Mtt\BlogBundle\Entity\Repository\PygmentsCodeRepository;
-use Mtt\BlogBundle\Model\Image;
 
 class TextProcessor
 {
-    /**
-     * @var EntityManager
-     */
-    private $em;
-
-    /**
-     * @var string
-     */
-    private $imageBasepath;
-
     /**
      * @var MediaFileRepository
      */
@@ -37,19 +24,20 @@ class TextProcessor
      */
     private $codeRepository;
 
+    private ImageManager $im;
+
     /**
      * @param MediaFileRepository $mediaFileRepository
      * @param PygmentsCodeRepository $codeRepository
-     * @param string $cdn
      */
     public function __construct(
         MediaFileRepository $mediaFileRepository,
         PygmentsCodeRepository $codeRepository,
-        string $cdn
+        ImageManager $im
     ) {
         $this->mediaFileRepository = $mediaFileRepository;
         $this->codeRepository = $codeRepository;
-        $this->imageBasepath = $cdn . ImageManager::getImageBasePath() . '/';
+        $this->im = $im;
     }
 
     /**
@@ -72,7 +60,7 @@ class TextProcessor
     {
         return preg_replace_callback(
             '/!(?<id>\d+)(?:\((?<alt>[^\)]+)\))?!/m',
-            [$this, 'replaceImagesWithDefault'],
+            [$this, 'replaceImagesForArticle'],
             $text
         );
     }
@@ -88,7 +76,7 @@ class TextProcessor
 
         return preg_replace_callback(
             '/(<p>)?!(?<id>\d+)(\((?<alt>[^)]+)\))?!(<\/p>)?/m',
-            [$this, 'replaceImagesWithoutDefault'],
+            [$this, 'replaceImagesForPreview'],
             $preview[0]
         );
     }
@@ -118,12 +106,12 @@ class TextProcessor
         );
     }
 
-    public function replaceImagesWithDefault(array $matches)
+    public function replaceImagesForArticle(array $matches)
     {
         return $this->replaceImages($matches);
     }
 
-    public function replaceImagesWithoutDefault(array $matches)
+    public function replaceImagesForPreview(array $matches)
     {
         return $this->replaceImages($matches, false);
     }
@@ -134,7 +122,7 @@ class TextProcessor
         if ($media) {
             if ($withDefault || !$media->isDefaultImage()) {
                 $alt = $matches['alt'] ?? $media->getDescription();
-                $replace = $this->picture($media, $alt);
+                $replace = $this->im->pictureTag($media, $alt);
             } else {
                 $replace = '';
             }
@@ -143,49 +131,5 @@ class TextProcessor
         }
 
         return $replace;
-    }
-
-    private function picture(MediaFile $media, string $alt): string
-    {
-        $picture = "<picture>\n";
-
-        $image = new Image($media);
-
-        $srcSetWebp = $image->getSrcSet('webp');
-
-        $srcSetWebpStrings = array_map(
-            function (array $el) {
-                return $this->imageBasepath . $el['path'] . ' ' . $el['width'] . 'w';
-            },
-            $srcSetWebp
-        );
-        $picture .= sprintf(
-            "<source type=\"image/webp\"\n        srcset=\"%s\"/>\n",
-            implode(', ', $srcSetWebpStrings),
-        );
-
-        $srcSet = $image->getSrcSet();
-
-        $srcSetStrings = array_map(
-            function (array $el) {
-                return $this->imageBasepath . $el['path'] . ' ' . $el['width'] . 'w';
-            },
-            $srcSet
-        );
-
-        $first = reset($srcSet);
-
-        $picture .= sprintf(
-            "<img src=\"%s\" alt=\"%s\" title=\"%s\" width=\"%d\" height=\"%d\"\n     srcset=\"%s\"/>",
-            $this->imageBasepath . $first['path'],
-            $alt,
-            $alt,
-            $first['width'],
-            $first['height'],
-            implode(', ', $srcSetStrings),
-        );
-        $picture .= "\n</picture>";
-
-        return $picture;
     }
 }

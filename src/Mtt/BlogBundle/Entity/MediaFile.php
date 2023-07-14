@@ -87,6 +87,13 @@ class MediaFile
      */
     private $height;
 
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="text", length=65535, nullable=true)
+     */
+    private $pictureTag;
+
     public function __construct()
     {
         $this->timeCreated = new DateTime();
@@ -95,9 +102,9 @@ class MediaFile
     /**
      * Get id
      *
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -132,6 +139,20 @@ class MediaFile
     public function getOriginalFileName(): string
     {
         return pathinfo($this->path, PATHINFO_BASENAME);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isImage(): bool
+    {
+        if (!$this->path) {
+            return false;
+        }
+
+        $extension = pathinfo($this->path, PATHINFO_EXTENSION);
+
+        return in_array(strtolower($extension), ['png', 'jpeg', 'jpg', 'gif']);
     }
 
     /**
@@ -290,6 +311,26 @@ class MediaFile
     public function setHeight(?int $height): MediaFile
     {
         $this->height = $height;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPictureTag(): ?string
+    {
+        return $this->pictureTag;
+    }
+
+    /**
+     * @param string|null $pictureTag
+     *
+     * @return MediaFile
+     */
+    public function setPictureTag(?string $pictureTag): MediaFile
+    {
+        $this->pictureTag = $pictureTag;
 
         return $this;
     }
