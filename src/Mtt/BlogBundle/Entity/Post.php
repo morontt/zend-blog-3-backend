@@ -120,13 +120,6 @@ class Post
     protected $mediaFiles;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(type="bigint", nullable=true, unique=true)
-     */
-    protected $disqusThread;
-
-    /**
      * @var DateTime
      *
      * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
@@ -372,30 +365,6 @@ class Post
     public function getComments()
     {
         return $this->comments;
-    }
-
-    /**
-     * Set disqusThread
-     *
-     * @param int $disqusThread
-     *
-     * @return Post
-     */
-    public function setDisqusThread($disqusThread)
-    {
-        $this->disqusThread = $disqusThread;
-
-        return $this;
-    }
-
-    /**
-     * Get disqusThread
-     *
-     * @return int
-     */
-    public function getDisqusThread()
-    {
-        return $this->disqusThread;
     }
 
     /**
