@@ -5,6 +5,7 @@ namespace Mtt\BlogBundle\Entity;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Mtt\BlogBundle\Entity\Traits\ModifyEntityTrait;
 
@@ -399,6 +400,15 @@ class Post
     public function getMediaFiles()
     {
         return $this->mediaFiles;
+    }
+
+    public function getDefaultImage(): ?MediaFile
+    {
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->eq('defaultImage', true))
+        ;
+
+        return $this->mediaFiles->matching($criteria)->first() ?: null;
     }
 
     /**

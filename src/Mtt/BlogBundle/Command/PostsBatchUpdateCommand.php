@@ -10,6 +10,7 @@ namespace Mtt\BlogBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Mtt\BlogBundle\Service\ImageManager;
 use Mtt\BlogBundle\Service\TextProcessor;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -28,15 +29,19 @@ class PostsBatchUpdateCommand extends Command
      */
     private $textProcessor;
 
+    private ImageManager $im;
+
     /**
      * @param EntityManagerInterface $em
      * @param TextProcessor $textProcessor
+     * @param ImageManager $im
      */
-    public function __construct(EntityManagerInterface $em, TextProcessor $textProcessor)
+    public function __construct(EntityManagerInterface $em, TextProcessor $textProcessor, ImageManager $im)
     {
         parent::__construct();
 
         $this->em = $em;
+        $this->im = $im;
         $this->textProcessor = $textProcessor;
 
         $em->getConfiguration()->setSQLLogger(null);
@@ -86,10 +91,18 @@ class PostsBatchUpdateCommand extends Command
 
         $cnt = 0;
         foreach ($postGenerator() as $posts) {
+            /* @var \Mtt\BlogBundle\Entity\Post $post */
             foreach ($posts as $post) {
                 $cnt++;
                 $this->textProcessor->processing($post);
                 $this->em->flush();
+
+                $media = $post->getDefaultImage();
+                if ($media && $media->isImage()) {
+                    $picture = $this->im->pictureTag($media, $media->getDescription(), false);
+                    $media->setPictureTag($picture);
+                    $this->em->flush();
+                }
             }
         }
 
