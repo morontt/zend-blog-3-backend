@@ -130,58 +130,42 @@ class ImageManager
         }
     }
 
-    public function pictureTag(MediaFile $entity, ?string $alt, bool $withTitle = true): string
+    public function featuredPictureTag(MediaFile $entity): string
     {
-        $image = new Image($entity);
+        $sizes = [
+            '(min-width: 48em) calc(40vw - 2.25rem)',
+            'calc(100vw - 3.75rem)',
+        ];
 
-        $srcSet = $image->getSrcSet();
-        $srcSetWebpStrings = array_map(
-            function (array $el) {
-                return $this->imageBasepath . $el['path'] . ' ' . $el['width'] . 'w';
-            },
-            $srcSet->getWebp()->getItems()
-        );
-
-        $picture = "<picture>\n";
-        $picture .= sprintf(
-            "<source type=\"image/webp\"\n        srcset=\"%s\"/>\n",
-            implode(', ', $srcSetWebpStrings),
-        );
-
-        $srcSetStrings = array_map(
-            function (array $el) {
-                return $this->imageBasepath . $el['path'] . ' ' . $el['width'] . 'w';
-            },
-            $srcSet->getOrigin()->getItems()
-        );
-
-        $files = $srcSet->getOrigin()->getItems();
-        $first = reset($files);
-
-        $picture .= sprintf(
-            "<img src=\"%s\"%s%s width=\"%d\" height=\"%d\"\n     srcset=\"%s\"/>",
-            $this->imageBasepath . $first['path'],
-            $alt ? ' alt="' . $alt . '"' : '',
-            $alt && $withTitle ? ' title="' . $alt . '"' : '',
-            $first['width'],
-            $first['height'],
-            implode(', ', $srcSetStrings),
-        );
-        $picture .= "\n</picture>";
-
-        return $picture;
+        return $this->pictureTag($entity, $sizes, $entity->getDescription());
     }
 
-    public function articlePictureTag(MediaFile $entity, ?string $alt)
+    public function articlePictureTag(MediaFile $entity, ?string $alt): string
+    {
+        $sizes = [
+            '(min-width: 64em) calc(100vw - 280px - 11.25rem)', // sidebar 280px and paddings 7.5rem + 3.75rem
+            '(min-width: 48em) calc(100vw - 11.25rem)',
+            'calc(100vw - 3.75rem)',
+        ];
+
+        return $this->pictureTag($entity, $sizes, $alt);
+    }
+
+    public function previewPictureTag(MediaFile $entity, ?string $alt): string
+    {
+        $sizes = [
+            '(min-width: 48em) calc(60vw - 9.625rem)',
+            '(min-width: 40.063em) calc(100vw - 10rem)',
+            'calc(100vw - 7.5rem)',
+        ];
+
+        return $this->pictureTag($entity, $sizes, $alt);
+    }
+
+    public function pictureTag(MediaFile $entity, array $sizes, ?string $alt): string
     {
         $image = new Image($entity);
         $xml = new SimpleXMLElement('<picture/>');
-
-        $sizes = [
-            '(min-width: 64em) calc(100vw - 280px - 11.25rem)', // sidebar 280px and paddings 7.5rem + 3.75rem
-            '(min-width: 48em) calc(100vw - 7.5rem - 3.75rem)',
-            'calc(100vw - 3.75rem)',
-        ];
 
         $srcSet = $image->getSrcSet();
 

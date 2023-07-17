@@ -99,7 +99,7 @@ class PostsBatchUpdateCommand extends Command
 
                 $media = $post->getDefaultImage();
                 if ($media && $media->isImage()) {
-                    $picture = $this->im->pictureTag($media, $media->getDescription(), false);
+                    $picture = $this->im->featuredPictureTag($media);
                     $media->setPictureTag($picture);
                     $this->em->flush();
                 }

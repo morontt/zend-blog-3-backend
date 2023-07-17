@@ -27,7 +27,7 @@ class MediaFilePictureListener
             && $args->hasChangedField('defaultImage')
             && !$args->hasChangedField('pictureTag')
         ) {
-            $picture = $this->im->pictureTag($entity, $entity->getDescription(), false);
+            $picture = $this->im->featuredPictureTag($entity);
             $entity->setPictureTag($picture);
 
             $em = $args->getEntityManager();

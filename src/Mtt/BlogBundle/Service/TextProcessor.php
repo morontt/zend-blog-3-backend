@@ -125,7 +125,7 @@ class TextProcessor
         if ($media) {
             if (!$media->isDefaultImage()) {
                 $alt = $matches['alt'] ?? $media->getDescription();
-                $replace = $this->im->pictureTag($media, $alt);
+                $replace = $this->im->previewPictureTag($media, $alt);
             } else {
                 $replace = '';
             }
