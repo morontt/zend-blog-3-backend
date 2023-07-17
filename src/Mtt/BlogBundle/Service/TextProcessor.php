@@ -108,19 +108,22 @@ class TextProcessor
 
     public function replaceImagesForArticle(array $matches)
     {
-        return $this->replaceImages($matches);
+        $media = $this->mediaFileRepository->find((int)$matches['id']);
+        if ($media) {
+            $alt = $matches['alt'] ?? $media->getDescription();
+            $replace = $this->im->articlePictureTag($media, $alt);
+        } else {
+            $replace = '<b>UNDEFINED</b>';
+        }
+
+        return $replace;
     }
 
     public function replaceImagesForPreview(array $matches)
     {
-        return $this->replaceImages($matches, false);
-    }
-
-    private function replaceImages(array $matches, bool $withDefault = true)
-    {
         $media = $this->mediaFileRepository->find((int)$matches['id']);
         if ($media) {
-            if ($withDefault || !$media->isDefaultImage()) {
+            if (!$media->isDefaultImage()) {
                 $alt = $matches['alt'] ?? $media->getDescription();
                 $replace = $this->im->pictureTag($media, $alt);
             } else {

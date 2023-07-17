@@ -66,12 +66,23 @@ class Image
         $this->media = $media;
     }
 
+    public function getSrcSet(): SrcSet
+    {
+        $srcSet = new SrcSet();
+        $srcSet
+            ->setOrigin($this->getSrcSetData())
+            ->setWebp($this->getSrcSetData('webp'))
+        ;
+
+        return $srcSet;
+    }
+
     /**
      * @param string|null $format
      *
      * @return array
      */
-    public function getSrcSet(string $format = null): array
+    public function getSrcSetData(string $format = null): array
     {
         $width = $this->media->getWidth();
         $height = $this->media->getHeight();
@@ -221,7 +232,7 @@ class Image
 
     private function getResizer(string $fsPath, string $format = null): ResizerInterface
     {
-        switch ($format ?? pathinfo($fsPath, PATHINFO_EXTENSION)) {
+        switch ($format ?? strtolower(pathinfo($fsPath, PATHINFO_EXTENSION))) {
             case 'jpeg':
             case 'jpg':
                 return new JpegResizer();

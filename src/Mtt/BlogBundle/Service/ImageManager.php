@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMException;
 use Mtt\BlogBundle\Entity\MediaFile;
 use Mtt\BlogBundle\Model\Image;
+use SimpleXMLElement;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -133,12 +134,12 @@ class ImageManager
     {
         $image = new Image($entity);
 
-        $srcSetWebp = $image->getSrcSet('webp');
+        $srcSet = $image->getSrcSet();
         $srcSetWebpStrings = array_map(
             function (array $el) {
                 return $this->imageBasepath . $el['path'] . ' ' . $el['width'] . 'w';
             },
-            $srcSetWebp
+            $srcSet->getWebp()->getItems()
         );
 
         $picture = "<picture>\n";
@@ -147,15 +148,15 @@ class ImageManager
             implode(', ', $srcSetWebpStrings),
         );
 
-        $srcSet = $image->getSrcSet();
         $srcSetStrings = array_map(
             function (array $el) {
                 return $this->imageBasepath . $el['path'] . ' ' . $el['width'] . 'w';
             },
-            $srcSet
+            $srcSet->getOrigin()->getItems()
         );
 
-        $first = reset($srcSet);
+        $files = $srcSet->getOrigin()->getItems();
+        $first = reset($files);
 
         $picture .= sprintf(
             "<img src=\"%s\"%s%s width=\"%d\" height=\"%d\"\n     srcset=\"%s\"/>",
@@ -169,6 +170,59 @@ class ImageManager
         $picture .= "\n</picture>";
 
         return $picture;
+    }
+
+    public function articlePictureTag(MediaFile $entity, ?string $alt)
+    {
+        $image = new Image($entity);
+        $xml = new SimpleXMLElement('<picture/>');
+
+        $sizes = [
+            '(min-width: 64em) calc(100vw - 280px - 11.25rem)', // sidebar 280px and paddings 7.5rem + 3.75rem
+            '(min-width: 48em) calc(100vw - 7.5rem - 3.75rem)',
+            'calc(100vw - 3.75rem)',
+        ];
+
+        $srcSet = $image->getSrcSet();
+
+        if ($webpSet = $srcSet->getWebp()) {
+            $sourceWebp = $xml->addChild('source');
+
+            $srcSetStrings = array_map(
+                function (array $el) {
+                    return $this->imageBasepath . $el['path'] . ' ' . $el['width'] . 'w';
+                },
+                $webpSet->getItems()
+            );
+            $sourceWebp->addAttribute('srcset', implode(', ', $srcSetStrings));
+            $sourceWebp->addAttribute('sizes', implode(', ', $sizes));
+            $sourceWebp->addAttribute('type', $webpSet->getMIMEType());
+        }
+
+        $img = $xml->addChild('img');
+
+        $srcSetStrings = array_map(
+            function (array $el) {
+                return $this->imageBasepath . $el['path'] . ' ' . $el['width'] . 'w';
+            },
+            $srcSet->getOrigin()->getItems()
+        );
+
+        $files = $srcSet->getOrigin()->getItems();
+        $first = reset($files);
+
+        $img->addAttribute('src', $this->imageBasepath . $first['path']);
+        $img->addAttribute('width', $first['width']);
+        $img->addAttribute('height', $first['height']);
+        if ($alt) {
+            $img->addAttribute('alt', $alt);
+            $img->addAttribute('title', $alt);
+        }
+
+        $img->addAttribute('srcset', implode(', ', $srcSetStrings));
+        $img->addAttribute('sizes', implode(', ', $sizes));
+
+        return str_replace("<?xml version=\"1.0\"?>\n", '', $xml->asXML());
     }
 
     /**
