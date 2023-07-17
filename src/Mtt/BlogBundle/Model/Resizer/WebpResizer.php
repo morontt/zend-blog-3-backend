@@ -31,7 +31,7 @@ class WebpResizer implements ResizerInterface
         $image->setImageCompression(Imagick::COMPRESSION_JPEG);
         $image->setImageCompressionQuality(80);
 
-        $this->annotate($width, $height, $image);
+        //$this->annotate($width, $height, $image);
 
         $image->writeImage($newFilePath);
         $image->clear();
@@ -59,7 +59,7 @@ class WebpResizer implements ResizerInterface
         $image->setImageCompression(Imagick::COMPRESSION_JPEG);
         $image->setImageCompressionQuality(80);
 
-        $this->annotate(0, 0, $image);
+        //$this->annotate(0, 0, $image);
 
         $image->writeImage($resourcePath . '/' . $newFilePath);
         $image->clear();
