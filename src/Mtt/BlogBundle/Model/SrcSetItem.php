@@ -27,6 +27,8 @@ class SrcSetItem
                     return 'image/png';
                 case 'webp':
                     return 'image/webp';
+                case 'avif':
+                    return 'image/avif';
             }
         }
 

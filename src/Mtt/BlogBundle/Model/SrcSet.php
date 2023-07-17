@@ -8,6 +8,7 @@ class SrcSet
 {
     private ?SrcSetItem $origin;
     private ?SrcSetItem $webp;
+    private ?SrcSetItem $avif;
 
     /**
      * @return SrcSetItem|null
@@ -47,6 +48,29 @@ class SrcSet
         $this->webp = new SrcSetItem($items);
         if ($this->origin && !$this->isSizeSmaller($items)) {
             $this->webp = null;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return SrcSetItem|null
+     */
+    public function getAvif(): ?SrcSetItem
+    {
+        return $this->avif;
+    }
+
+    /**
+     * @param array $items
+     *
+     * @return SrcSet
+     */
+    public function setAvif(array $items): SrcSet
+    {
+        $this->avif = new SrcSetItem($items);
+        if ($this->origin && !$this->isSizeSmaller($items)) {
+            $this->avif = null;
         }
 
         return $this;

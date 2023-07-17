@@ -169,6 +169,20 @@ class ImageManager
 
         $srcSet = $image->getSrcSet();
 
+        if ($avifSet = $srcSet->getAvif()) {
+            $sourceAvif = $xml->addChild('source');
+
+            $srcSetStrings = array_map(
+                function (array $el) {
+                    return $this->imageBasepath . $el['path'] . ' ' . $el['width'] . 'w';
+                },
+                $avifSet->getItems()
+            );
+            $sourceAvif->addAttribute('srcset', implode(', ', $srcSetStrings));
+            $sourceAvif->addAttribute('sizes', implode(', ', $sizes));
+            $sourceAvif->addAttribute('type', $avifSet->getMIMEType());
+        }
+
         if ($webpSet = $srcSet->getWebp()) {
             $sourceWebp = $xml->addChild('source');
 

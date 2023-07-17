@@ -11,6 +11,7 @@ namespace Mtt\BlogBundle\Model;
 use Imagick;
 use Mtt\BlogBundle\Entity\MediaFile;
 use Mtt\BlogBundle\Entity\Post;
+use Mtt\BlogBundle\Model\Resizer\AvifResizer;
 use Mtt\BlogBundle\Model\Resizer\DefaultResizer;
 use Mtt\BlogBundle\Model\Resizer\JpegResizer;
 use Mtt\BlogBundle\Model\Resizer\PngResizer;
@@ -72,6 +73,7 @@ class Image
         $srcSet
             ->setOrigin($this->getSrcSetData())
             ->setWebp($this->getSrcSetData('webp'))
+            ->setAvif($this->getSrcSetData('avif'))
         ;
 
         return $srcSet;
@@ -240,6 +242,8 @@ class Image
                 return new PngResizer();
             case 'webp':
                 return new WebpResizer();
+            case 'avif':
+                return new AvifResizer();
         }
 
         return new DefaultResizer();
