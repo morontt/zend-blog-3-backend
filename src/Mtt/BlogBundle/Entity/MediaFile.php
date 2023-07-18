@@ -94,6 +94,13 @@ class MediaFile
      */
     private $pictureTag;
 
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="text", length=65535, nullable=true)
+     */
+    private $srcSet;
+
     public function __construct()
     {
         $this->timeCreated = new DateTime();
@@ -331,6 +338,26 @@ class MediaFile
     public function setPictureTag(?string $pictureTag): MediaFile
     {
         $this->pictureTag = $pictureTag;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSrcSet(): ?string
+    {
+        return $this->srcSet;
+    }
+
+    /**
+     * @param string|null $srcSet
+     *
+     * @return MediaFile
+     */
+    public function setSrcSet(?string $srcSet): MediaFile
+    {
+        $this->srcSet = $srcSet;
 
         return $this;
     }

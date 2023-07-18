@@ -34,4 +34,12 @@ class SrcSetItem
 
         return null;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'items' => $this->items,
+            'type' => $this->getMIMEType(),
+        ];
+    }
 }

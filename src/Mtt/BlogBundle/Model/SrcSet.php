@@ -96,4 +96,20 @@ class SrcSet
 
         return $firstItemSize < $originItemSize;
     }
+
+    public function toArray(): array
+    {
+        $data = [];
+        if ($this->origin) {
+            $data['origin'] = $this->origin->toArray();
+        }
+        if ($this->avif) {
+            $data['avif'] = $this->avif->toArray();
+        }
+        if ($this->webp) {
+            $data['webp'] = $this->webp->toArray();
+        }
+
+        return $data;
+    }
 }

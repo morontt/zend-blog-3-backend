@@ -10,6 +10,7 @@ namespace Mtt\BlogBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Mtt\BlogBundle\Model\Image;
 use Mtt\BlogBundle\Service\ImageManager;
 use Mtt\BlogBundle\Service\TextProcessor;
 use Symfony\Component\Console\Command\Command;
@@ -101,6 +102,13 @@ class PostsBatchUpdateCommand extends Command
                 if ($media && $media->isImage()) {
                     $picture = $this->im->featuredPictureTag($media);
                     $media->setPictureTag($picture);
+
+                    $srcSet = (new Image($media))->getSrcSet();
+                    $srcSetData = $srcSet->toArray();
+                    if (!empty($srcSetData)) {
+                        $media->setSrcSet(json_encode($srcSetData));
+                    }
+
                     $this->em->flush();
                 }
             }

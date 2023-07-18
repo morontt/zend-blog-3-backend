@@ -4,6 +4,7 @@ namespace Mtt\BlogBundle\EventListener\Doctrine;
 
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Mtt\BlogBundle\Entity\MediaFile;
+use Mtt\BlogBundle\Model\Image;
 use Mtt\BlogBundle\Service\ImageManager;
 
 class MediaFilePictureListener
@@ -29,6 +30,12 @@ class MediaFilePictureListener
         ) {
             $picture = $this->im->featuredPictureTag($entity);
             $entity->setPictureTag($picture);
+
+            $srcSet = (new Image($entity))->getSrcSet();
+            $srcSetData = $srcSet->toArray();
+            if (!empty($srcSetData)) {
+                $entity->setSrcSet(json_encode($srcSetData));
+            }
 
             $em = $args->getEntityManager();
             $meta = $em->getClassMetadata(MediaFile::class);

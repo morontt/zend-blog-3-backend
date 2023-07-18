@@ -35,7 +35,7 @@ class AvifResizer implements ResizerInterface
         $image->clear();
 
         $process = new Process(
-            '/usr/bin/cavif --quality=75 --speed=1 --quiet -o ' . escapeshellarg($newFilePath) . ' ' . $tmpfile
+            '/usr/bin/cavif --quality=75 --speed=1 --depth=8 --quiet -o ' . escapeshellarg($newFilePath) . ' ' . $tmpfile
         );
         $process->run();
         unlink($tmpfile);
@@ -69,7 +69,7 @@ class AvifResizer implements ResizerInterface
         $image->clear();
 
         $process = new Process(
-            '/usr/bin/cavif --quality=75 --speed=1 --quiet -o ' . escapeshellarg($resourcePath . '/' . $newFilePath)
+            '/usr/bin/cavif --quality=75 --speed=1 --depth=8 --quiet -o ' . escapeshellarg($resourcePath . '/' . $newFilePath)
             . ' ' . $tmpfile
         );
         $process->run();

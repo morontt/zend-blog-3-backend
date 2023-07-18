@@ -124,6 +124,7 @@ h6, .h6 {
 
 .blog-post img {
     max-width: 100%;
+    height: auto;
 }
 
 .blog-post-title {
