@@ -52,6 +52,9 @@ class AvifResizer implements ResizerInterface
     {
         $pathInfo = pathinfo($filePath);
         $newFilePath = $pathInfo['dirname'] . '/' . $pathInfo['filename'] . '.avif';
+        if (file_exists($resourcePath . '/' . $newFilePath)) {
+            return $newFilePath;
+        }
 
         $image = new Imagick($resourcePath . '/' . $filePath);
         $image->stripImage();

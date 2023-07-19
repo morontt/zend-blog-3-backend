@@ -112,15 +112,12 @@ class Image
                 $ext = pathinfo($this->media->getPath(), PATHINFO_EXTENSION);
                 $resizer = $this->getResizer($this->media->getPath(), $format);
                 if ($ext != $format && method_exists($resizer, 'convert')) {
-                    try {
-                        $newPath = $resizer->convert($this->media->getPath(), ImageManager::getUploadsDir());
-                        $data[] = [
-                            'width' => $width,
-                            'height' => $height,
-                            'path' => $newPath,
-                        ];
-                    } catch (\Throwable $e) {
-                    }
+                    $newPath = $resizer->convert($this->media->getPath(), ImageManager::getUploadsDir());
+                    $data[] = [
+                        'width' => $width,
+                        'height' => $height,
+                        'path' => $newPath,
+                    ];
                 }
             } else {
                 $data[] = [

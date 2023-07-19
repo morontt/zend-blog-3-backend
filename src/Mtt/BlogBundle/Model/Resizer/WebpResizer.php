@@ -48,6 +48,9 @@ class WebpResizer implements ResizerInterface
 
         $pathInfo = pathinfo($filePath);
         $newFilePath = $pathInfo['dirname'] . '/' . $pathInfo['filename'] . '.webp';
+        if (file_exists($resourcePath . '/' . $newFilePath)) {
+            return $newFilePath;
+        }
 
         $image = new Imagick($resourcePath . '/' . $filePath);
         $image->stripImage();
