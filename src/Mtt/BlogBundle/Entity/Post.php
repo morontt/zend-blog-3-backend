@@ -5,6 +5,7 @@ namespace Mtt\BlogBundle\Entity;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Mtt\BlogBundle\Entity\Traits\ModifyEntityTrait;
 
@@ -118,13 +119,6 @@ class Post
      * @ORM\OneToMany(targetEntity="MediaFile", mappedBy="post")
      */
     protected $mediaFiles;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(type="bigint", nullable=true, unique=true)
-     */
-    protected $disqusThread;
 
     /**
      * @var DateTime
@@ -375,30 +369,6 @@ class Post
     }
 
     /**
-     * Set disqusThread
-     *
-     * @param int $disqusThread
-     *
-     * @return Post
-     */
-    public function setDisqusThread($disqusThread)
-    {
-        $this->disqusThread = $disqusThread;
-
-        return $this;
-    }
-
-    /**
-     * Get disqusThread
-     *
-     * @return int
-     */
-    public function getDisqusThread()
-    {
-        return $this->disqusThread;
-    }
-
-    /**
      * Add mediaFile
      *
      * @param MediaFile $mediaFile
@@ -430,6 +400,15 @@ class Post
     public function getMediaFiles()
     {
         return $this->mediaFiles;
+    }
+
+    public function getDefaultImage(): ?MediaFile
+    {
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->eq('defaultImage', true))
+        ;
+
+        return $this->mediaFiles->matching($criteria)->first() ?: null;
     }
 
     /**

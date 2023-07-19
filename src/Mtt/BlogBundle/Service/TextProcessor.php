@@ -8,23 +8,12 @@
 
 namespace Mtt\BlogBundle\Service;
 
-use Doctrine\ORM\EntityManager;
 use Mtt\BlogBundle\Entity\Post;
 use Mtt\BlogBundle\Entity\Repository\MediaFileRepository;
 use Mtt\BlogBundle\Entity\Repository\PygmentsCodeRepository;
 
 class TextProcessor
 {
-    /**
-     * @var EntityManager
-     */
-    private $em;
-
-    /**
-     * @var string
-     */
-    private $imageBasepath;
-
     /**
      * @var MediaFileRepository
      */
@@ -35,19 +24,20 @@ class TextProcessor
      */
     private $codeRepository;
 
+    private ImageManager $im;
+
     /**
      * @param MediaFileRepository $mediaFileRepository
      * @param PygmentsCodeRepository $codeRepository
-     * @param string $cdn
      */
     public function __construct(
         MediaFileRepository $mediaFileRepository,
         PygmentsCodeRepository $codeRepository,
-        string $cdn
+        ImageManager $im
     ) {
         $this->mediaFileRepository = $mediaFileRepository;
         $this->codeRepository = $codeRepository;
-        $this->imageBasepath = $cdn . ImageManager::getImageBasePath() . '/';
+        $this->im = $im;
     }
 
     /**
@@ -70,7 +60,7 @@ class TextProcessor
     {
         return preg_replace_callback(
             '/!(?<id>\d+)(?:\((?<alt>[^\)]+)\))?!/m',
-            [$this, 'replaceImagesWithDefault'],
+            [$this, 'replaceImagesForArticle'],
             $text
         );
     }
@@ -86,7 +76,7 @@ class TextProcessor
 
         return preg_replace_callback(
             '/(<p>)?!(?<id>\d+)(\((?<alt>[^)]+)\))?!(<\/p>)?/m',
-            [$this, 'replaceImagesWithoutDefault'],
+            [$this, 'replaceImagesForPreview'],
             $preview[0]
         );
     }
@@ -116,28 +106,26 @@ class TextProcessor
         );
     }
 
-    public function replaceImagesWithDefault(array $matches)
-    {
-        return $this->replaceImages($matches);
-    }
-
-    public function replaceImagesWithoutDefault(array $matches)
-    {
-        return $this->replaceImages($matches, false);
-    }
-
-    private function replaceImages(array $matches, bool $withDefault = true)
+    public function replaceImagesForArticle(array $matches)
     {
         $media = $this->mediaFileRepository->find((int)$matches['id']);
         if ($media) {
-            if ($withDefault || !$media->isDefaultImage()) {
+            $alt = $matches['alt'] ?? $media->getDescription();
+            $replace = $this->im->articlePictureTag($media, $alt);
+        } else {
+            $replace = '<b>UNDEFINED</b>';
+        }
+
+        return $replace;
+    }
+
+    public function replaceImagesForPreview(array $matches)
+    {
+        $media = $this->mediaFileRepository->find((int)$matches['id']);
+        if ($media) {
+            if (!$media->isDefaultImage()) {
                 $alt = $matches['alt'] ?? $media->getDescription();
-                $replace = sprintf(
-                    '<img src="%s" alt="%s" title="%s"/>',
-                    $this->imageBasepath . $media->getPath(),
-                    $alt,
-                    $alt
-                );
+                $replace = $this->im->previewPictureTag($media, $alt);
             } else {
                 $replace = '';
             }

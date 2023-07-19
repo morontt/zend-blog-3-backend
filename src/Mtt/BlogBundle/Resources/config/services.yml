@@ -52,6 +52,10 @@ services:
         tags:
             - {name: doctrine.event_listener, event: postGenerateSchema }
 
+    Mtt\BlogBundle\EventListener\Doctrine\MediaFilePictureListener:
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate }
+
     Mtt\BlogBundle\Service\IpInfo\IpInfoDbClient:
         arguments:
             $key: "%ipinfodb_key%"
@@ -89,6 +93,10 @@ services:
         arguments:
             $adminId: "%telegram_admin_id%"
 
+    Mtt\BlogBundle\Service\ImageManager:
+        arguments:
+            $cdn: "%cdn_url%"
+
     Mtt\BlogBundle\Service\Mailer:
         arguments:
             $emailFrom: "%mailer_user%"
@@ -96,10 +104,6 @@ services:
     Mtt\BlogBundle\Service\SystemParametersStorage:
         arguments:
             $secret: "%secret%"
-
-    Mtt\BlogBundle\Service\TextProcessor:
-        arguments:
-            $cdn: "%cdn_url%"
 
     mtt_blog.text_processor:
         alias: Mtt\BlogBundle\Service\TextProcessor

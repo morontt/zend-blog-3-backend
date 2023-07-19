@@ -34,9 +34,7 @@ class ImagesSizeUpdate extends Command
         $rows = [];
         $repository = $this->em->getRepository(MediaFile::class);
         foreach ($repository->findAll() as $mediaFile) {
-            $pathInfo = pathinfo($mediaFile->getOriginalFileName());
-
-            if (in_array(strtolower($pathInfo['extension']), ['png', 'jpeg', 'jpg', 'gif'])) {
+            if ($mediaFile->isImage()) {
                 $image = new Image($mediaFile);
                 $geometry = $image->getImageGeometry();
 
@@ -45,6 +43,7 @@ class ImagesSizeUpdate extends Command
                     ->setHeight($geometry->height)
                 ;
 
+                $pathInfo = pathinfo($mediaFile->getPath());
                 $rows[] = [$pathInfo['basename'], $geometry->width, $geometry->height];
                 $this->em->flush();
             }
