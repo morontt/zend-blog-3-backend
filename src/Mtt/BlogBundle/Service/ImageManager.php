@@ -134,7 +134,7 @@ class ImageManager
     {
         $sizes = [
             '(min-width: 48em) calc(40vw - 2.25rem)',
-            'calc(100vw - 3.75rem)',
+            'calc(100vw - 1.875rem)',
         ];
 
         return $this->pictureTag($entity, $sizes, $entity->getDescription());
@@ -144,8 +144,8 @@ class ImageManager
     {
         $sizes = [
             '(min-width: 64em) calc(100vw - 280px - 11.25rem)', // sidebar 280px and paddings 7.5rem + 3.75rem
-            '(min-width: 48em) calc(100vw - 11.25rem)',
-            'calc(100vw - 3.75rem)',
+            '(min-width: 48em) calc(100vw - 9.375rem)',
+            'calc(100vw - 1.875rem)',
         ];
 
         return $this->pictureTag($entity, $sizes, $alt);
@@ -156,7 +156,7 @@ class ImageManager
         $sizes = [
             '(min-width: 48em) calc(60vw - 9.625rem)',
             '(min-width: 40.063em) calc(100vw - 10rem)',
-            'calc(100vw - 7.5rem)',
+            'calc(100vw - 5.625rem)',
         ];
 
         return $this->pictureTag($entity, $sizes, $alt);
