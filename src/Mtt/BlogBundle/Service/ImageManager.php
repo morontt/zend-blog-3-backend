@@ -137,7 +137,7 @@ class ImageManager
             'calc(100vw - 1.875rem)',
         ];
 
-        return $this->pictureTag($entity, $sizes, $entity->getDescription());
+        return $this->pictureTag($entity, $sizes, $entity->getDescription(), false);
     }
 
     public function articlePictureTag(MediaFile $entity, ?string $alt): string
@@ -162,7 +162,7 @@ class ImageManager
         return $this->pictureTag($entity, $sizes, $alt);
     }
 
-    public function pictureTag(MediaFile $entity, array $sizes, ?string $alt): string
+    public function pictureTag(MediaFile $entity, array $sizes, string $alt = null, $withTitle = true): string
     {
         $image = new Image($entity);
         $xml = new SimpleXMLElement('<picture/>');
@@ -214,7 +214,9 @@ class ImageManager
         $img->addAttribute('height', $first['height']);
         if ($alt) {
             $img->addAttribute('alt', $alt);
-            $img->addAttribute('title', $alt);
+            if ($withTitle) {
+                $img->addAttribute('title', $alt);
+            }
         }
 
         $img->addAttribute('srcset', implode(', ', $srcSetStrings));
