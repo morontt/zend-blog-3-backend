@@ -133,7 +133,7 @@ class ImageManager
     public function featuredPictureTag(MediaFile $entity): string
     {
         $sizes = [
-            '(min-width: 48em) calc(40vw - 2.25rem)',
+            '(min-width: 48em) calc(40vw - 1.5rem)',
             'calc(100vw - 1.875rem)',
         ];
 
