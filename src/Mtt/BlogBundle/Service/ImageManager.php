@@ -241,6 +241,11 @@ class ImageManager
         return '/uploads';
     }
 
+    public function cdnImagePath(): string
+    {
+        return $this->imageBasepath;
+    }
+
     /**
      * @param string $path
      */

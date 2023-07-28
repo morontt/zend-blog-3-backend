@@ -112,6 +112,14 @@ class TextProcessor
         if ($media) {
             $alt = $matches['alt'] ?? $media->getDescription();
             $replace = $this->im->articlePictureTag($media, $alt);
+
+            if ($media->getWidth() > 864) {
+                $replace = sprintf(
+                    '<a class="anima-image-popup" href="%s">%s</a>',
+                    $this->im->cdnImagePath() . $media->getPath(),
+                    $replace
+                );
+            }
         } else {
             $replace = '<b>UNDEFINED</b>';
         }
