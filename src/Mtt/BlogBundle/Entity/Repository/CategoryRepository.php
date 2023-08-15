@@ -3,6 +3,7 @@
 namespace Mtt\BlogBundle\Entity\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use Mtt\BlogBundle\Entity\Category;
 
@@ -16,8 +17,6 @@ use Mtt\BlogBundle\Entity\Category;
  */
 class CategoryRepository extends ServiceEntityRepository
 {
-    use ListQueryTrait;
-
     /**
      * @param ManagerRegistry $registry
      */
@@ -27,15 +26,35 @@ class CategoryRepository extends ServiceEntityRepository
     }
 
     /**
+     * @return Query
+     */
+    public function getListQuery(): Query
+    {
+        $qb = $this->createQueryBuilder('e');
+
+        return $qb->orderBy('e.name', 'ASC')
+            ->getQuery();
+    }
+
+    /**
      * @return array
      */
     public function getNamesArray(): array
     {
         $qb = $this->createQueryBuilder('c')
-            ->select('c.id', 'c.name')
-            ->orderBy('c.name', 'ASC');
+            ->select('c.id', 'c.name', 'c.nestedSet.depth AS depth')
+            ->orderBy('c.nestedSet.leftKey', 'ASC');
 
-        return $qb->getQuery()->getArrayResult();
+        return array_map(
+            function ($el) {
+                if ($el['depth'] > 1) {
+                    $el['name'] = str_repeat('_ ', $el['depth'] - 1) . $el['name'];
+                }
+
+                return $el;
+            },
+            $qb->getQuery()->getArrayResult()
+        );
     }
 
     /**
