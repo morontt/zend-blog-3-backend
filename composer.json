@@ -15,6 +15,7 @@
         "ext-openssl": "*",
         "ext-pdo_mysql": "*",
         "ext-xml": "*",
+        "ext-simplexml": "*",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/doctrine-cache-bundle": "^1.2",
         "doctrine/doctrine-migrations-bundle": "^1.0",

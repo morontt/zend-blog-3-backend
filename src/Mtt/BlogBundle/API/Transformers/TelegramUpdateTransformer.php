@@ -32,7 +32,11 @@ class TelegramUpdateTransformer extends BaseTransformer
      */
     public function includeTelegramUser(TelegramUpdate $entity): Collection
     {
-        $items = [$entity->getTelegramUser()];
+        $tgUser = $entity->getTelegramUser();
+        $items = [];
+        if ($tgUser) {
+            $items = [$tgUser];
+        }
 
         return $this->collection($items, new TelegramUserTransformer(), 'telegramUsers');
     }

@@ -385,16 +385,37 @@
       "text": "Уведомление на почту об ответе на комментарий",
       "priority": "high",
       "creation": 1687795993,
+      "completion": 1688077332,
       "tasks": [
         {
           "text": "Нет логотипа",
           "priority": "medium",
-          "creation": 1687796021
+          "creation": 1687796021,
+          "completion": 1688042142
         },
         {
           "text": "Поломаное сообщение в виде обычного текста",
           "priority": "medium",
           "creation": 1687796069
+        }
+      ]
+    },
+    {
+      "text": "Проверить протухшие ссылки у комментаторов",
+      "priority": "high",
+      "creation": 1688970428,
+      "completion": 1688977645
+    },
+    {
+      "text": "Responsive images",
+      "priority": "high",
+      "creation": 1689348282,
+      "tasks": [
+        {
+          "text": "Удалять картинки вместе с превью",
+          "priority": "medium",
+          "creation": 1689348322,
+          "completion": 1689365614
         }
       ]
     }

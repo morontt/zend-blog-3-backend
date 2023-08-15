@@ -26,7 +26,7 @@ class ImageSpec extends ObjectBehavior
 
     public function it_is_preview()
     {
-        $this->getPreview('admin_list')->shouldReturn('blog/201311/0_60_debug.jpg');
+        $this->getPreview('admin_list')->shouldReturn('blog/201311/debug_60h.jpg');
     }
 
     public function it_is_incorrect_size()
@@ -41,6 +41,11 @@ class ImageSpec extends ObjectBehavior
 
     public function it_is_root_directory_file()
     {
-        $this->getPathBySize('satan.png', 'admin_list')->shouldReturn('0_60_satan.png');
+        $this->getPathBySize('satan.png', 'admin_list')->shouldReturn('satan_60h.png');
+    }
+
+    public function it_is_root_directory_file_new_format()
+    {
+        $this->getPathBySize('satan.png', 'admin_list', 'webp')->shouldReturn('satan_60h.webp');
     }
 }

@@ -136,7 +136,7 @@ class TelegramRequester
         $responseData = null;
         if ($responseBody) {
             try {
-                $responseData = json_decode($responseBody, true, 512, JSON_THROW_ON_ERROR);
+                $responseData = json_decode($responseBody, true, 512, JSON_BIGINT_AS_STRING | JSON_THROW_ON_ERROR);
             } catch (\JsonException $e) {
                 $context = ['JsonException' => $e->getMessage()];
             }

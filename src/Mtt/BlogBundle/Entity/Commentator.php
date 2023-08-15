@@ -79,6 +79,20 @@ class Commentator implements CommentatorInterface
      */
     private $gender = self::MALE;
 
+    /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", options={"default": false})
+     */
+    private $rottenLink = false;
+
+    /**
+     * @var DateTime|null
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $rottenCheck;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -264,6 +278,46 @@ class Commentator implements CommentatorInterface
     public function setEmailCheck(?DateTime $emailCheck): self
     {
         $this->emailCheck = $emailCheck;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRottenLink(): bool
+    {
+        return $this->rottenLink;
+    }
+
+    /**
+     * @param bool $rottenLink
+     *
+     * @return Commentator
+     */
+    public function setRottenLink(bool $rottenLink): self
+    {
+        $this->rottenLink = $rottenLink;
+
+        return $this;
+    }
+
+    /**
+     * @return DateTime|null
+     */
+    public function getRottenCheck(): ?DateTime
+    {
+        return $this->rottenCheck;
+    }
+
+    /**
+     * @param DateTime|null $rottenCheck
+     *
+     * @return Commentator
+     */
+    public function setRottenCheck(?DateTime $rottenCheck): self
+    {
+        $this->rottenCheck = $rottenCheck;
 
         return $this;
     }

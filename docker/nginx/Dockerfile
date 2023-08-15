@@ -9,6 +9,13 @@ RUN sed -i "s/# export LS_OPTIONS='--color=auto'/export LS_OPTIONS='--color=auto
     && sed -i "s/# alias ll/alias ll/" /root/.bashrc \
   ;
 
+RUN sed -i "s/}//" /etc/nginx/mime.types \
+    && echo "    font/otf      otf;" >> /etc/nginx/mime.types \
+    && echo "    font/ttf      ttf;" >> /etc/nginx/mime.types \
+    && echo "    font/woff2    woff2;" >> /etc/nginx/mime.types \
+    && echo "    image/avif    avif;" >> /etc/nginx/mime.types \
+    && echo "}" >> /etc/nginx/mime.types
+
 COPY ./conf/* /etc/nginx/conf.d
 
 EXPOSE 443

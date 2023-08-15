@@ -84,4 +84,27 @@ class CommentatorRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * @return Commentator[]
+     */
+    public function getWithUncheckedLinks(): array
+    {
+        $from = (new \DateTime())->sub(new \DateInterval('P1W'))->format('Y-m-d H:i:s');
+
+        $qb = $this->createQueryBuilder('c');
+        $qb
+            ->andWhere($qb->expr()->isNotNull('c.website'))
+            ->andWhere(
+                $qb->expr()->orX(
+                    $qb->expr()->isNull('c.rottenCheck'),
+                    $qb->expr()->lt('c.rottenCheck', ':from')
+                )
+            )
+            ->setParameter('from', $from)
+            ->setMaxResults(10)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
 }

@@ -73,6 +73,34 @@ class MediaFile
      */
     protected $backuped = false;
 
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(type="smallint", nullable=true, options={"unsigned": true})
+     */
+    private $width;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(type="smallint", nullable=true, options={"unsigned": true})
+     */
+    private $height;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="text", length=65535, nullable=true)
+     */
+    private $pictureTag;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="text", length=65535, nullable=true)
+     */
+    private $srcSet;
+
     public function __construct()
     {
         $this->timeCreated = new DateTime();
@@ -81,9 +109,9 @@ class MediaFile
     /**
      * Get id
      *
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -118,6 +146,20 @@ class MediaFile
     public function getOriginalFileName(): string
     {
         return pathinfo($this->path, PATHINFO_BASENAME);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isImage(): bool
+    {
+        if (!$this->path) {
+            return false;
+        }
+
+        $extension = pathinfo($this->path, PATHINFO_EXTENSION);
+
+        return in_array(strtolower($extension), ['png', 'jpeg', 'jpg', 'gif']);
     }
 
     /**
@@ -238,5 +280,85 @@ class MediaFile
     public function isBackuped(): bool
     {
         return $this->backuped;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getWidth(): ?int
+    {
+        return $this->width;
+    }
+
+    /**
+     * @param int|null $width
+     *
+     * @return MediaFile
+     */
+    public function setWidth(?int $width): MediaFile
+    {
+        $this->width = $width;
+
+        return $this;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getHeight(): ?int
+    {
+        return $this->height;
+    }
+
+    /**
+     * @param int|null $height
+     *
+     * @return MediaFile
+     */
+    public function setHeight(?int $height): MediaFile
+    {
+        $this->height = $height;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPictureTag(): ?string
+    {
+        return $this->pictureTag;
+    }
+
+    /**
+     * @param string|null $pictureTag
+     *
+     * @return MediaFile
+     */
+    public function setPictureTag(?string $pictureTag): MediaFile
+    {
+        $this->pictureTag = $pictureTag;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSrcSet(): ?string
+    {
+        return $this->srcSet;
+    }
+
+    /**
+     * @param string|null $srcSet
+     *
+     * @return MediaFile
+     */
+    public function setSrcSet(?string $srcSet): MediaFile
+    {
+        $this->srcSet = $srcSet;
+
+        return $this;
     }
 }

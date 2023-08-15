@@ -44,6 +44,8 @@ class MediaFileTransformer extends BaseTransformer
             'post' => $postId,
             'postId' => $postId,
             'defaultImage' => $item->isDefaultImage(),
+            'width' => $item->getWidth(),
+            'height' => $item->getHeight(),
         ];
     }
 

@@ -1,15 +1,18 @@
 <td class="center-text">{{mediaFile.id}}</td>
-<td class="center-text">
+<td class="center-text media-preview">
     {{media-preview mediaFile.src}}
 </td>
-<td>{{mediaFile.originalFilename}}</td>
-<td>{{mediaFile.size}}</td>
+<td class="text-break-word">{{mediaFile.originalFilename}}</td>
+<td>
+    {{mediaFile.size}}<br>
+    <span class="resolution">{{mediaFile.width}}x{{mediaFile.height}}px</span>
+</td>
 {{#if isEditing}}
     <td>{{input value=mediaFile.description class="form-control"}}</td>
     <td>{{input value=mediaFile.postId class="form-control"}}</td>
     <td>{{input type="checkbox" checked=mediaFile.defaultImage}}</td>
 {{else}}
-    <td>{{mediaFile.description}}</td>
+    <td class="text-break-word">{{mediaFile.description}}</td>
     <td>
         {{#if mediaFile.postId}}
             {{mediaFile.postId}}.
@@ -26,7 +29,7 @@
         {{/if}}
     </td>
 {{/if}}
-<td class="text-right">{{date-format mediaFile.lastUpdate 'DD.MM.YYYY, HH:mm'}}</td>
+<td class="text-right">{{date-format mediaFile.timeCreated 'DD.MM.YYYY, HH:mm'}}</td>
 {{#if isEditing}}
     <td>
         <div class="pull-right">
