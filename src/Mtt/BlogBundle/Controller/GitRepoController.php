@@ -35,19 +35,21 @@ class GitRepoController extends AbstractController
             return new Response("Get out!\n", 403);
         }
 
-        fwrite($logfile, date('Y-m-d H:i:s') . ': ');
-        fwrite($logfile, print_r($request->headers->all(), true));
-
-        $content = $request->getContent();
-        if (!empty($content)) {
-            fwrite($logfile, date('Y-m-d H:i:s') . ': ' . $content . "\n");
+        $action = $request->request->get('action');
+        $push = $request->request->get('push');
+        if ($action === 'BRANCH_UPDATE' && !empty($push['ref'])) {
+            if ($push['ref'] === 'refs/heads/master') {
+                fwrite($logfile, date('Y-m-d H:i:s') . ": Updating...\n");
+            } else {
+                fwrite($logfile, sprintf("%s: Skip ref: %s\n", date('Y-m-d H:i:s'), $push['ref']));
+            }
         }
 
-        $action = $request->request->get('action');
-        if ($action === 'BRANCH_UPDATE') {
-            $push = $request->request->get('push');
-            if (!empty($push['ref']) && $push['ref'] === 'refs/heads/master') {
-                fwrite($logfile, date('Y-m-d H:i:s') . ": Updating...\n");
+        if (empty($push['ref']) || empty($action)) {
+            fwrite($logfile, date('Y-m-d H:i:s') . ": Something wrong...\n");
+            $content = $request->getContent();
+            if (!empty($content)) {
+                fwrite($logfile, date('Y-m-d H:i:s') . ': ' . $content . "\n");
             }
         }
 
