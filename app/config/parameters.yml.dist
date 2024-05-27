@@ -36,4 +36,6 @@ parameters:
     telegram_admin_id: 123456789
     telegram_webhook_token: Cqwa0tvQ111HNZ
 
+    gitrepo_webhook_token: zRTN2HPhS2C96x
+
     wsse_token_lifetime: 300

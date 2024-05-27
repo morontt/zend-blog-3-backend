@@ -7,3 +7,11 @@ Accept: application/json
 
 POST https://reprogl.xelbot.com/purge-cache
 X-Ban-Token: 1ED97CD18A244BE9
+
+###
+
+POST {{base_url}}//webhook/gitflic
+Gitflic-Webhook-Secret: zRTN2HPhS2C96x
+Content-Type: application/json
+
+{"test": 1}
