@@ -14,4 +14,18 @@ POST {{base_url}}/webhook/gitflic
 Gitflic-Webhook-Secret: zRTN2HPhS2C96x
 Content-Type: application/json
 
-{"test": 1}
+{
+  "action":"BRANCH_UPDATE",
+  "project_id":"1111-1111",
+  "project":{
+    "project_id":"2222-2222","title":"reprogl","alias":"reprogl","owner_alias":"morontt",
+    "owner_type":"USER","http_transport_url":"https://gitflic.ru/project/morontt/reprogl.git",
+    "ssh_transport_url":"git@gitflic.ru:morontt/reprogl.git","language":"Go","private":false},
+  "push":{
+    "before":"2ea28346be4e28f03f575775f8e7bfa2a5c72390",
+    "after":"61efd4d1b3a95a1b6204d81380f5be51b4147f42",
+    "ref":"refs/heads/master",
+    "commits":[
+      {"id":"61efd4d1b3a95a1b6204d81380f5be51b4147f42","message":"test commit\n",
+      "author_name":"Alexander Kharchenko","author_email":"morontt@yandex.ru","timestamp":"2024-05-27T13:15:56"}],
+    "total_commits_count":1,"author_id":"3333-3333"}}
