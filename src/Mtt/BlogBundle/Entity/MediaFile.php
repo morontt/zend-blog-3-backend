@@ -157,15 +157,13 @@ class MediaFile
             return false;
         }
 
-        $extension = pathinfo($this->path, PATHINFO_EXTENSION);
-
-        return in_array(strtolower($extension), ['png', 'jpeg', 'jpg', 'gif']);
+        return in_array(strtolower(pathinfo($this->path, PATHINFO_EXTENSION)), ['png', 'jpeg', 'jpg', 'gif']);
     }
 
     /**
      * Set post
      *
-     * @param Post $post
+     * @param Post|null $post
      *
      * @return MediaFile
      */

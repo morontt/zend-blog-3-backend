@@ -128,6 +128,12 @@ class Image
             }
         }
 
+        $data = array_map(function (array $item) {
+            $item['length'] = (int)filesize(ImageManager::getUploadsDir() . '/' . $item['path']);
+
+            return $item;
+        }, $data);
+
         usort($data, function ($a, $b) {
             if ($a['width'] == $b['width']) {
                 return 0;
