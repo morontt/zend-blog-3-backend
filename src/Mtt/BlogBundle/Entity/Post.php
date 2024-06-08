@@ -123,7 +123,9 @@ class Post
     /**
      * @var DateTime
      *
-     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
+     * @ORM\Column(type="datetime", options={
+     *   "default": "CURRENT_TIMESTAMP",
+     *   "comment": "updated if article content changes"})
      */
     private $updatedAt;
 
