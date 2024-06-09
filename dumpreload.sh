@@ -15,3 +15,4 @@ EOF
 
 docker exec rhinoceros bash -c "php app/console do:mi:mi && php app/console mtt:posts:update"
 docker exec rhinoceros bash -c "chown -R www-data:www-data ."
+docker exec rhinoceros bash -c "cd /var/www/resources && chown -R www-data:www-data ."
