@@ -170,31 +170,35 @@ class ImageManager
         $srcSet = $image->getSrcSet();
 
         if ($avifSet = $srcSet->getAvif()) {
-            $sourceAvif = $xml->addChild('source');
+            if (count($avifSet->getItems()) > 0) {
+                $sourceAvif = $xml->addChild('source');
 
-            $srcSetStrings = array_map(
-                function (array $el) {
-                    return $this->imageBasepath . $el['path'] . ' ' . $el['width'] . 'w';
-                },
-                $avifSet->getItems()
-            );
-            $sourceAvif->addAttribute('srcset', implode(', ', $srcSetStrings));
-            $sourceAvif->addAttribute('sizes', implode(', ', $sizes));
-            $sourceAvif->addAttribute('type', $avifSet->getMIMEType());
+                $srcSetStrings = array_map(
+                    function (array $el) {
+                        return $this->imageBasepath . $el['path'] . ' ' . $el['width'] . 'w';
+                    },
+                    $avifSet->getItems()
+                );
+                $sourceAvif->addAttribute('srcset', implode(', ', $srcSetStrings));
+                $sourceAvif->addAttribute('sizes', implode(', ', $sizes));
+                $sourceAvif->addAttribute('type', $avifSet->getMIMEType());
+            }
         }
 
         if ($webpSet = $srcSet->getWebp()) {
-            $sourceWebp = $xml->addChild('source');
+            if (count($webpSet->getItems()) > 0) {
+                $sourceWebp = $xml->addChild('source');
 
-            $srcSetStrings = array_map(
-                function (array $el) {
-                    return $this->imageBasepath . $el['path'] . ' ' . $el['width'] . 'w';
-                },
-                $webpSet->getItems()
-            );
-            $sourceWebp->addAttribute('srcset', implode(', ', $srcSetStrings));
-            $sourceWebp->addAttribute('sizes', implode(', ', $sizes));
-            $sourceWebp->addAttribute('type', $webpSet->getMIMEType());
+                $srcSetStrings = array_map(
+                    function (array $el) {
+                        return $this->imageBasepath . $el['path'] . ' ' . $el['width'] . 'w';
+                    },
+                    $webpSet->getItems()
+                );
+                $sourceWebp->addAttribute('srcset', implode(', ', $srcSetStrings));
+                $sourceWebp->addAttribute('sizes', implode(', ', $sizes));
+                $sourceWebp->addAttribute('type', $webpSet->getMIMEType());
+            }
         }
 
         $img = $xml->addChild('img');

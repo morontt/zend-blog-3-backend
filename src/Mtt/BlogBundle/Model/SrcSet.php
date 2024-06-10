@@ -100,13 +100,13 @@ class SrcSet
     public function toArray(): array
     {
         $data = [];
-        if ($this->origin) {
+        if ($this->origin && count($this->origin->getItems())) {
             $data['origin'] = $this->origin->toArray();
         }
-        if ($this->avif) {
+        if ($this->avif && count($this->avif->getItems())) {
             $data['avif'] = $this->avif->toArray();
         }
-        if ($this->webp) {
+        if ($this->webp && count($this->webp->getItems())) {
             $data['webp'] = $this->webp->toArray();
         }
 
