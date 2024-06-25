@@ -410,6 +410,7 @@
       "text": "Responsive images",
       "priority": "high",
       "creation": 1689348282,
+      "completion": 1690556400,
       "tasks": [
         {
           "text": "Удалять картинки вместе с превью",
@@ -418,6 +419,11 @@
           "completion": 1689365614
         }
       ]
+    },
+    {
+      "text": "Featured image not work",
+      "priority": "high",
+      "creation": 1719346855
     }
   ]
 }
