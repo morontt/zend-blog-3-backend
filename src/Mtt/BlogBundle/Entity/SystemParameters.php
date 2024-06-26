@@ -15,6 +15,7 @@ class SystemParameters
     const UPDATE_GEOLOCATION_FROM = 'upd_geolocation_from';
     const ERRORS_5XX_CHECK = 'errors_5xx_check';
     const TELEGRAM_UPDATES_CHECK = 'tg_updates_check';
+    const UPDATE_VIEW_COUNTS_DATA = 'upd_view_counts_data';
 
     /**
      * @var int

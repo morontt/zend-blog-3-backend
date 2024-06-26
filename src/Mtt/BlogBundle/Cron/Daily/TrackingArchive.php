@@ -47,6 +47,10 @@ class TrackingArchive implements DailyCronServiceInterface
      */
     public function getMessage(): ?string
     {
+        if (!$this->rows) {
+            return null;
+        }
+
         return 'Complete. ' . $this->rows . ' rows affected';
     }
 }
