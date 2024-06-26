@@ -424,6 +424,16 @@
       "text": "Featured image not work",
       "priority": "high",
       "creation": 1719346855
+    },
+    {
+      "text": "Update page views counter hourly",
+      "priority": "high",
+      "creation": 1719389360
+    },
+    {
+      "text": "update PHP-CS-Fixer to v3",
+      "priority": "medium",
+      "creation": 1719389500
     }
   ]
 }
