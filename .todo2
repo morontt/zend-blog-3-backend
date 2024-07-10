@@ -435,6 +435,11 @@
       "text": "update PHP-CS-Fixer to v3",
       "priority": "medium",
       "creation": 1719389500
+    },
+    {
+      "text": "5 неудачных попыток ввода пароля и блокировка на полчаса",
+      "priority": "medium",
+      "creation": 1720600619
     }
   ]
 }
