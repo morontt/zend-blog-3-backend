@@ -440,6 +440,11 @@
       "text": "5 неудачных попыток ввода пароля и блокировка на полчаса",
       "priority": "medium",
       "creation": 1720600619
+    },
+    {
+      "text": "Parse user-agent by https://user-agents.net/parser",
+      "priority": "medium",
+      "creation": 1720867983
     }
   ]
 }
