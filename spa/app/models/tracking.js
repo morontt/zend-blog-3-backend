@@ -12,6 +12,8 @@ export default DS.Model.extend({
     articleTitle: DS.attr('string'),
     articleSlug: DS.attr('string'),
     isCDN: DS.attr('boolean'),
+    duration: DS.attr('string'),
+    method: DS.attr('string'),
     createdAt: DS.attr('date'),
     privateIP: function () {
         return this.get('city') === '-';

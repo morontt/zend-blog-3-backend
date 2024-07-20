@@ -35,6 +35,16 @@ class TrackingTransformer extends BaseTransformer
             $flag = '';
         }
 
+        $duration = $item->getDuration();
+        $durationString = '';
+        if ($duration > 1000_000) {
+            $durationString = round($duration * 0.000001, 3) . ' s';
+        } elseif ($duration > 1000) {
+            $durationString = round($duration * 0.001, 2) . ' ms';
+        } elseif ($duration > 0) {
+            $durationString = $duration . ' µs';
+        }
+
         return [
             'id' => $item->getId(),
             'statusCode' => $item->getStatusCode(),
@@ -48,6 +58,8 @@ class TrackingTransformer extends BaseTransformer
             'region' => $locationRegion,
             'country' => $locationCountry,
             'countryFlag' => $flag,
+            'method' => (string)$item->getMethod(),
+            'duration' => $durationString,
             'createdAt' => $this->dateTimeToISO($item->getTimeCreated()),
         ];
     }

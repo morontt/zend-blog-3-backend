@@ -17,8 +17,10 @@
             <th class="center-text column-id">#code</th>
             <th>IP</th>
             <th></th>
+            <th></th>
             <th class="center-text">URL</th>
             <th>Запись</th>
+            <th></th>
             <th class="text-right text-date">Создан</th>
         </tr>
         </thead>
@@ -39,6 +41,7 @@
                         {{/if}}
                     {{/if}}
                 </td>
+                <td>{{track.method}}</td>
                 <td>{{#if track.isCDN}}CDN:{{/if}} {{track.requestUri}}</td>
                 <td>
                     {{#if track.articleSlug}}
@@ -49,11 +52,12 @@
                         -
                     {{/if}}
                 </td>
+                <td>{{track.duration}}</td>
                 <td class="text-right">{{date-format track.createdAt 'DD.MM.YYYY, HH:mm:ss'}}</td>
             </tr>
             <tr>
                 <td></td>
-                <td colspan="5" class="column-gray">
+                <td colspan="7" class="column-gray">
                     {{#if track.userAgent}}
                         {{#if track.userAgent.bot}}
                             <i class="glyphicon robot"></i>
