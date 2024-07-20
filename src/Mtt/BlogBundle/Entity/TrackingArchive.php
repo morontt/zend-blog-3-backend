@@ -44,7 +44,7 @@ class TrackingArchive
     protected $ipAddress;
 
     /**
-     * @var int
+     * @var int|null
      *
      * @ORM\Column(type="integer", nullable=true, options={"unsigned": true})
      */
@@ -77,6 +77,20 @@ class TrackingArchive
      * @ORM\Column(type="smallint", nullable=true)
      */
     protected $statusCode;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $duration;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=8, nullable=true)
+     */
+    private $method;
 
     /**
      * Get id
@@ -118,6 +132,11 @@ class TrackingArchive
         return $this->ipAddress;
     }
 
+    public function getIpLong(): ?int
+    {
+        return $this->ipLong;
+    }
+
     /**
      * Get timeCreated
      *
@@ -150,5 +169,15 @@ class TrackingArchive
     public function getStatusCode(): ?int
     {
         return $this->statusCode;
+    }
+
+    public function getDuration(): ?int
+    {
+        return $this->duration;
+    }
+
+    public function getMethod(): ?string
+    {
+        return $this->method;
     }
 }

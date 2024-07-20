@@ -79,6 +79,20 @@ class Tracking
      */
     private $statusCode;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", options={"unsigned": true, "default": 0})
+     */
+    private $duration = 0;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=8, nullable=true)
+     */
+    private $method;
+
     public function __construct()
     {
         $this->cdn = false;
@@ -270,6 +284,30 @@ class Tracking
     public function setGeoLocation(GeoLocation $location = null): self
     {
         $this->geoLocation = $location;
+
+        return $this;
+    }
+
+    public function getDuration(): int
+    {
+        return $this->duration;
+    }
+
+    public function setDuration(int $duration): self
+    {
+        $this->duration = $duration;
+
+        return $this;
+    }
+
+    public function getMethod(): ?string
+    {
+        return $this->method;
+    }
+
+    public function setMethod(string $method = null): self
+    {
+        $this->method = $method;
 
         return $this;
     }
