@@ -68,6 +68,7 @@ services:
 
     sloth:
         build: ./docker/nginx
+        container_name: "sloth"
         volumes:
             - .:/var/www/html
             - ${OLD_BLOG_PATH}:/var/www/old_resources

@@ -1,4 +1,4 @@
-FROM nginx:1.14
+FROM nginx:1.18
 
 MAINTAINER Alexander Harchenko <morontt@gmail.com>
 
@@ -12,10 +12,10 @@ RUN sed -i "s/# export LS_OPTIONS='--color=auto'/export LS_OPTIONS='--color=auto
 RUN sed -i "s/}//" /etc/nginx/mime.types \
     && echo "    font/otf      otf;" >> /etc/nginx/mime.types \
     && echo "    font/ttf      ttf;" >> /etc/nginx/mime.types \
-    && echo "    font/woff2    woff2;" >> /etc/nginx/mime.types \
     && echo "    image/avif    avif;" >> /etc/nginx/mime.types \
     && echo "}" >> /etc/nginx/mime.types
 
 COPY ./conf/* /etc/nginx/conf.d
+COPY ./nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 443
