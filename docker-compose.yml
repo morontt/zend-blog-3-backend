@@ -31,27 +31,6 @@ services:
         networks:
             - blognet
 
-    lizard:
-        build:
-            context: ${OLD_BLOG_PATH}/var/docker/web
-            # dockerfile: prod/Dockerfile
-            args:
-                HOST_UID: ${HOST_UID}
-        container_name: "lizard"
-        volumes:
-            - ${OLD_BLOG_PATH}:/var/www/html
-        links:
-            - mailcatcher
-        depends_on:
-            - mailcatcher
-        environment:
-            APPLICATION_ENV: development
-        extra_hosts:
-            - "database.lan:${DATABASE_IP}"
-            - "zendblog.xelbot.com:${APPLICATION_IP}"
-        networks:
-            - blognet
-
     mailcatcher:
         image: xelbot/mailcatcher
         ports:
@@ -70,17 +49,14 @@ services:
         build: ./docker/nginx
         volumes:
             - .:/var/www/html
-            - ${OLD_BLOG_PATH}:/var/www/old_resources
             - ${GOLANG_BLOG_PATH}:/var/www/app
         ports:
             - "443:443"
             - "80:80"
         depends_on:
             - rhinoceros
-            - lizard
         links:
             - rhinoceros
-            - lizard
         networks:
             - blognet
 
