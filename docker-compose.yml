@@ -1,11 +1,9 @@
-version: '3.5'
 services:
     rhinoceros:
         build:
             context: ./docker/web
             # dockerfile: prod/Dockerfile
-            args:
-                HOST_UID: ${HOST_UID}
+        platform: linux/amd64
         hostname: "rhinoceros"
         container_name: "rhinoceros"
         volumes:
@@ -14,7 +12,7 @@ services:
             - ${UPLOADS_PATH}:/var/www/resources
         tmpfs:
             - /tmp
-            - /var/www/html/var/cache:uid=${HOST_UID},gid=${HOST_UID}
+            - /var/www/html/var/cache:uid=33,gid=33
         ports:
             - "8033:80"
         links:
@@ -33,6 +31,7 @@ services:
 
     mailcatcher:
         image: xelbot/mailcatcher
+        platform: linux/amd64
         ports:
             - "1080:1080"
         networks:
@@ -40,6 +39,7 @@ services:
 
     nodejs:
         image: xelbot/docker-zendblog-nodejs
+        platform: linux/amd64
         volumes:
             - .:/var/www/html
         networks:
@@ -47,6 +47,7 @@ services:
 
     sloth:
         build: ./docker/nginx
+        platform: linux/amd64
         volumes:
             - .:/var/www/html
             - ${GOLANG_BLOG_PATH}:/var/www/app
