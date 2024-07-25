@@ -16,7 +16,6 @@ cp app/config/parameters.yml{.dist,}
 #### Requirements
 
 - docker
-- docker-compose
 
 #### Install
 
@@ -27,6 +26,6 @@ docker-compose up --build
 #### Install vendors, build app, etc.
 
 ```sh
-docker exec -it container_name bash
+docker exec -it rhinoceros bash
 ./deploy.sh
 ```

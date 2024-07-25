@@ -45,6 +45,8 @@ services:
             $secretToken: '%gitrepo_webhook_token%'
 
     Mtt\BlogBundle\EventListener\JsonBodyListener:
+        calls:
+            - [ setTelegramLogger, [ "@monolog.logger.telegram" ]]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 10 }
 
@@ -113,11 +115,6 @@ services:
         alias: Mtt\BlogBundle\Service\TextProcessor
         public: true
 
-    mtt_blog.telegram_logger:
-        class: Monolog\Logger
-        factory: [ "Mtt\\BlogBundle\\Telegram\\TelegramLoggerFactory", createLogger ]
-        arguments: [ "%kernel.logs_dir%" ]
-
     mtt_blog.telegram_bot:
         class: Xelbot\Telegram\Robot
         arguments:
@@ -125,7 +122,7 @@ services:
             - "%telegram_bot%"
             - "%telegram_admin_id%"
         calls:
-            - [ setLogger, [ "@mtt_blog.telegram_logger" ]]
+            - [ setLogger, [ "@monolog.logger.telegram" ]]
             - [ setUpdatesManager, [ '@Mtt\BlogBundle\Telegram\UpdatesManager' ]]
 
     Mtt\BlogBundle\ArgumentResolver\PostValueResolver:

@@ -170,7 +170,7 @@ class Category
     /**
      * Set parent
      *
-     * @param Category $parent
+     * @param Category|null $parent
      *
      * @return Category
      */
@@ -184,7 +184,7 @@ class Category
     /**
      * Get parent
      *
-     * @return \Mtt\BlogBundle\Entity\Category
+     * @return Category
      */
     public function getParent()
     {
