@@ -8,24 +8,28 @@
 
 namespace Mtt\BlogBundle\EventListener;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class JsonBodyListener
 {
+    private LoggerInterface $logger;
+
     /**
      * @param GetResponseEvent $event
      *
      * @throws BadRequestHttpException
+     * @throws \JsonException
      */
     public function onKernelRequest(GetResponseEvent $event)
     {
         $request = $event->getRequest();
         $method = $request->getMethod();
 
-        if (!count($request->request->all())
-            && in_array($method, ['POST', 'PUT', 'DELETE'])
+        if (in_array($method, ['POST', 'PUT', 'DELETE'])
+            && !count($request->request->all())
         ) {
             $contentType = $request->headers->get('Content-Type');
 
@@ -33,11 +37,16 @@ class JsonBodyListener
                 ? $request->getRequestFormat()
                 : $request->getFormat($contentType);
 
-            if ($format == 'json') {
+            if ($format === 'json') {
                 $content = $request->getContent();
                 if (!empty($content)) {
                     $this->telegramRawLog($request->getRequestUri(), $content);
-                    $data = json_decode($content, true, 512, JSON_BIGINT_AS_STRING | JSON_INVALID_UTF8_SUBSTITUTE);
+                    $data = json_decode(
+                        $content,
+                        true,
+                        512,
+                        JSON_BIGINT_AS_STRING | JSON_INVALID_UTF8_SUBSTITUTE | JSON_THROW_ON_ERROR
+                    );
                     if (is_array($data)) {
                         $request->request = new ParameterBag($data);
                     } else {
@@ -48,12 +57,15 @@ class JsonBodyListener
         }
     }
 
+    public function setTelegramLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
     private function telegramRawLog($uri, $content)
     {
         if (strpos($uri, '/telegram/') !== false) {
-            $fp = fopen(APP_VAR_DIR . '/logs/raw-telegram.log', 'a');
-            fwrite($fp, date('Y-m-d H:i:s') . ' : ' . $content . "\n");
-            fclose($fp);
+            $this->logger->debug('Raw telegram request', ['content' => $content]);
         }
     }
 }

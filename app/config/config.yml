@@ -61,6 +61,9 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
 
+monolog:
+    channels: ['telegram']
+
 knp_paginator:
     page_range: 5                      # default page range used in pagination control
     default_options:
