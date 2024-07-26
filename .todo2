@@ -434,7 +434,14 @@
     {
       "text": "update PHP-CS-Fixer to v3",
       "priority": "medium",
-      "creation": 1719389500
+      "creation": 1719389500,
+      "tasks": [
+        {
+          "text": "Blocked: friendsofphp/php-cs-fixer ~3.3 require symfony/console ^4.4.20 || ^5.1.3",
+          "priority": "medium",
+          "creation": 1721971530
+        }
+      ]
     },
     {
       "text": "5 неудачных попыток ввода пароля и блокировка на полчаса",
