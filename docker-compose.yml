@@ -14,6 +14,7 @@ services:
         tmpfs:
             - /tmp
             - /var/www/html/var/cache:uid=33,gid=33
+            - /var/www/html/var/spool:uid=33,gid=33
         ports:
             - "8033:80"
         links:
