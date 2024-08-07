@@ -1,6 +1,6 @@
 POST {{base_url}}/api/users/external
 Authorization: WSSE profile="UsernameToken"
-X-WSSE: UsernameToken Username="morontt", PasswordDigest="PezBYEuDsFy1SwFwUXKnUz8azd8=", Nonce="DlGkvoZqtszv/ZF6", Created="2024-08-07T08:33:40+03:00"
+X-WSSE: UsernameToken Username="morontt",PasswordDigest="HRF6zw/ovlx1QHz//gebopWuHmY=",Nonce="qIGduGMUFC+Erpqu",Created="2024-08-07T17:37:43+03:00"
 Accept: application/json
 Content-Type: application/json
 
