@@ -452,6 +452,18 @@
       "text": "Parse user-agent by https://user-agents.net/parser",
       "priority": "medium",
       "creation": 1720867983
+    },
+    {
+      "text": "Регистрация пользователей для комментариев",
+      "priority": "high",
+      "creation": 1722973473,
+      "tasks": [
+        {
+          "text": "Add separate tech-user for reprogl API",
+          "priority": "medium",
+          "creation": 1722973512
+        }
+      ]
     }
   ]
 }
