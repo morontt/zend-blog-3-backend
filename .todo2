@@ -452,6 +452,41 @@
       "text": "Parse user-agent by https://user-agents.net/parser",
       "priority": "medium",
       "creation": 1720867983
+    },
+    {
+      "text": "Регистрация пользователей для комментариев",
+      "priority": "high",
+      "creation": 1722973473,
+      "tasks": [
+        {
+          "text": "Add separate tech-user for reprogl API",
+          "priority": "medium",
+          "creation": 1722973512
+        }
+      ]
+    },
+    {
+      "text": "Почта",
+      "priority": "high",
+      "creation": 1723012356,
+      "tasks": [
+        {
+          "text": "Отправлять отчёт об ошибке",
+          "priority": "medium",
+          "creation": 1723012403,
+          "completion": 1723034918
+        },
+        {
+          "text": "Сменить настройки (Yandex PDD -\u003e ?)",
+          "priority": "medium",
+          "creation": 1723012441
+        },
+        {
+          "text": "fix telegram for error stacktrace sending",
+          "priority": "medium",
+          "creation": 1723016691
+        }
+      ]
     }
   ]
 }
