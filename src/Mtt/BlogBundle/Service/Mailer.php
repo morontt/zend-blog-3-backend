@@ -89,10 +89,13 @@ class Mailer
                 $message->addPart($messageDTO->messageText, 'text/plain');
             }
 
-            $this->mailer->send($message);
-            $successfullySent = true;
+            $successfullySent = $this->mailer->send($message) > 0;
         } catch (\Throwable $e) {
-            $this->bot->sendMessage('email sent error: ' . $e->getMessage());
+            $this->bot->sendMessage(
+                'email sent error: ' . $e->getMessage()
+                . "\n\nfile: " . $e->getFile()
+                . "\nline: " . $e->getLine()
+            );
         }
 
         return $successfullySent;

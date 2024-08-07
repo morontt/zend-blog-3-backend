@@ -473,7 +473,8 @@
         {
           "text": "Отправлять отчёт об ошибке",
           "priority": "medium",
-          "creation": 1723012403
+          "creation": 1723012403,
+          "completion": 1723034918
         },
         {
           "text": "Сменить настройки (Yandex PDD -\u003e ?)",
