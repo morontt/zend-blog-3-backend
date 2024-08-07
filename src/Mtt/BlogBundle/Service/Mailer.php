@@ -72,8 +72,9 @@ class Mailer
         $this->queueMessage($message);
     }
 
-    public function send(EmailMessageDTO $messageDTO): void
+    public function send(EmailMessageDTO $messageDTO): bool
     {
+        $successfullySent = false;
         try {
             $message = Swift_Message::newInstance()
                 ->setSubject($messageDTO->subject)
@@ -89,9 +90,12 @@ class Mailer
             }
 
             $this->mailer->send($message);
+            $successfullySent = true;
         } catch (\Throwable $e) {
             $this->bot->sendMessage('email sent error: ' . $e->getMessage());
         }
+
+        return $successfullySent;
     }
 
     /**
@@ -101,16 +105,20 @@ class Mailer
      */
     public function queueMessage(EmailMessageDTO $messageDTO): void
     {
+        try {
+            $randomBytes = bin2hex(random_bytes(3));
+        } catch (\Exception $e) {
+            $randomBytes = dechex(mt_rand(0, 255) + 256 * mt_rand(0, 255) + 65536 * mt_rand(0, 255));
+        }
+
         $fileName = sprintf(
             '%s/%X%s.message',
             $this->spoolPath(),
             (int)date('U'),
-            strtoupper(
-                bin2hex(openssl_random_pseudo_bytes(3))
-            )
+            strtoupper($randomBytes)
         );
 
-        $fp = fopen($fileName, 'w');
+        $fp = fopen($fileName, 'wb');
         fwrite($fp, serialize($messageDTO));
         fclose($fp);
     }
@@ -121,16 +129,19 @@ class Mailer
         $time = time();
         foreach (new \DirectoryIterator($this->spoolPath()) as $fileInfo) {
             $file = $fileInfo->getRealPath();
-            if (substr($file, -8) != '.message') {
+            if (substr($file, -8) !== '.message') {
                 continue;
             }
 
             if (rename($file, $file . '.sending')) {
-                $message = unserialize(file_get_contents($file . '.sending'));
-                $this->send($message);
-                $count++;
-
-                unlink($file . '.sending');
+                $message = unserialize(
+                    file_get_contents($file . '.sending'),
+                    ['allowed_classes' => [EmailMessageDTO::class]]
+                );
+                if ($this->send($message)) {
+                    $count++;
+                    unlink($file . '.sending');
+                }
             } else {
                 continue;
             }
