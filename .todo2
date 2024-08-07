@@ -464,6 +464,23 @@
           "creation": 1722973512
         }
       ]
+    },
+    {
+      "text": "Почта",
+      "priority": "high",
+      "creation": 1723012356,
+      "tasks": [
+        {
+          "text": "Отправлять отчёт об ошибке",
+          "priority": "medium",
+          "creation": 1723012403
+        },
+        {
+          "text": "Сменить настройки (Yandex PDD -\u003e ?)",
+          "priority": "medium",
+          "creation": 1723012441
+        }
+      ]
     }
   ]
 }
