@@ -15,13 +15,26 @@ class ExternalUserValueResolver implements ArgumentValueResolverInterface
             return false;
         }
 
-        dump($request->request);
-
-        return false;
+        return $request->request->has('userData');
     }
 
     public function resolve(Request $request, ArgumentMetadata $argument)
     {
-        // TODO: Implement resolve() method.
+        $data = $request->request->get('userData');
+        $dto = new ExternalUserDTO();
+
+        $dto->id = $data['id'];
+        $dto->dataProvider = $data['dataProvider'];
+        $dto->rawData = $data['rawData'];
+
+        $dto->username = $data['username'] ?? null;
+        $dto->email = $data['email'] ?? null;
+        $dto->displayName = $data['displayName'] ?? null;
+        $dto->firstName = $data['firstName'] ?? null;
+        $dto->lastName = $data['lastName'] ?? null;
+        $dto->gender = $data['gender'] ?? null;
+        $dto->avatar = $data['avatar'] ?? null;
+
+        yield $dto;
     }
 }

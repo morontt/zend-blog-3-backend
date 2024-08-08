@@ -461,7 +461,14 @@
         {
           "text": "Add separate tech-user for reprogl API",
           "priority": "medium",
-          "creation": 1722973512
+          "creation": 1722973512,
+          "tasks": [
+            {
+              "text": "Set avatar",
+              "priority": "medium",
+              "creation": 1723113285
+            }
+          ]
         },
         {
           "text": "Добавить роли, закрыть админку от гостей",
