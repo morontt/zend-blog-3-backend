@@ -32,6 +32,10 @@ class UserManager
 
     public function createFromExternalDTO(ExternalUserDTO $dataObj): User
     {
+        // external ID and provider are primary
+        // email after (if email is empty - generate)
+        // username - check if exists and generate
+
         $username = $dataObj->username;
         $email = $dataObj->email;
 

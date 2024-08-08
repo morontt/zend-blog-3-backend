@@ -120,6 +120,13 @@ class User implements UserInterface, Serializable
      */
     protected $comments;
 
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=64, nullable=true)
+     */
+    private $displayName;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();

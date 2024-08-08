@@ -37,7 +37,7 @@ class UserController extends BaseController
 
         $errors = $validator->validate($user);
         if (count($errors) > 0) {
-            throw new \Exception();
+            throw new \RuntimeException();
         }
 
         $this->em->persist($user);
