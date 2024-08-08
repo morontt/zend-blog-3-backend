@@ -120,16 +120,9 @@ class User implements UserInterface, Serializable
     {
         $this->comments = new ArrayCollection();
 
-        try {
-            $this->salt = bin2hex(random_bytes(16));
-        } catch (\Exception $e) {
-            $this->salt = bin2hex(openssl_random_pseudo_bytes(16));
-        }
-        try {
-            $this->wsseKey = base64_encode(random_bytes(18));
-        } catch (\Exception $e) {
-            $this->wsseKey = base64_encode(openssl_random_pseudo_bytes(18));
-        }
+        $this->setRandomSalt();
+        $this->setRandomWsseKey();
+
         $this->timeCreated = new DateTime();
         $this->userType = 'admin'; //TODO remove fake field
     }
@@ -181,6 +174,34 @@ class User implements UserInterface, Serializable
      */
     public function eraseCredentials()
     {
+    }
+
+    public function setRandomSalt(): void
+    {
+        try {
+            $randomBytes = random_bytes(16);
+        } catch (\Exception $e) {
+            $randomBytes = openssl_random_pseudo_bytes(16, $isSourceStrong);
+            if ($isSourceStrong === false || $randomBytes === false) {
+                throw new \RuntimeException('IV generation failed');
+            }
+        }
+
+        $this->salt = bin2hex($randomBytes);
+    }
+
+    public function setRandomWsseKey(): void
+    {
+        try {
+            $randomBytes = random_bytes(18);
+        } catch (\Exception $e) {
+            $randomBytes = openssl_random_pseudo_bytes(18, $isSourceStrong);
+            if ($isSourceStrong === false || $randomBytes === false) {
+                throw new \RuntimeException('IV generation failed');
+            }
+        }
+
+        $this->wsseKey = strtr(base64_encode($randomBytes), '+/', '-_');
     }
 
     /**

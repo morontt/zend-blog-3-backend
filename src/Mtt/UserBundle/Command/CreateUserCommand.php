@@ -9,7 +9,6 @@
 namespace Mtt\UserBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Mtt\UserBundle\Entity\Repository\UserRepository;
 use Mtt\UserBundle\Entity\User;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -22,11 +21,6 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class CreateUserCommand extends Command
 {
-    /**
-     * @var UserRepository
-     */
-    private $repository;
-
     /**
      * @var EncoderFactory
      */
@@ -43,18 +37,15 @@ class CreateUserCommand extends Command
     private $em;
 
     /**
-     * @param UserRepository $repository
      * @param EncoderFactoryInterface $encoderFactory
      * @param ValidatorInterface $validator
      * @param EntityManagerInterface $em
      */
     public function __construct(
-        UserRepository $repository,
         EncoderFactoryInterface $encoderFactory,
         ValidatorInterface $validator,
         EntityManagerInterface $em
     ) {
-        $this->repository = $repository;
         $this->encoderFactory = $encoderFactory;
         $this->validator = $validator;
         $this->em = $em;

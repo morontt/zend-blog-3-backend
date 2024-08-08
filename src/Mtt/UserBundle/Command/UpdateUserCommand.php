@@ -79,15 +79,10 @@ class UpdateUserCommand extends Command
         } else {
             $encoder = $this->encoderFactory->getEncoder($user);
 
-            try {
-                $salt = bin2hex(random_bytes(16));
-            } catch (\Exception $e) {
-                $salt = bin2hex(openssl_random_pseudo_bytes(16));
-            }
-            $passwordHash = $encoder->encodePassword($password, $salt);
-            $user
-                ->setSalt($salt)
-                ->setPassword($passwordHash);
+            $user->setRandomSalt();
+            $user->setRandomWsseKey();
+
+            $user->setPassword($encoder->encodePassword($password, $user->getSalt()));
 
             $this->em->flush();
 
