@@ -125,6 +125,10 @@ services:
             - [ setLogger, [ "@monolog.logger.telegram" ]]
             - [ setUpdatesManager, [ '@Mtt\BlogBundle\Telegram\UpdatesManager' ]]
 
+#    Mtt\BlogBundle\ArgumentResolver\PostValueResolver:
+#        tags:
+#            - { name: controller.argument_value_resolver, priority: 50 }
+
     Mtt\BlogBundle\ArgumentResolver\PostValueResolver:
         tags:
             - { name: controller.argument_value_resolver, priority: 50 }

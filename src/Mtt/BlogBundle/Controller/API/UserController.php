@@ -3,6 +3,7 @@
 namespace Mtt\BlogBundle\Controller\API;
 
 use Mtt\BlogBundle\Controller\BaseController;
+use Mtt\BlogBundle\DTO\ExternalUserDTO;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,8 +21,10 @@ class UserController extends BaseController
      *
      * @return JsonResponse
      */
-    public function createExternalAction(Request $request): JsonResponse
+    public function createExternalAction(ExternalUserDTO $userDTO, Request $request): JsonResponse
     {
+        dump($userDTO);
+
         return new JsonResponse(['status' => 'ok'], Response::HTTP_CREATED);
     }
 }

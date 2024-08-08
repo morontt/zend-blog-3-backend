@@ -462,6 +462,11 @@
           "text": "Add separate tech-user for reprogl API",
           "priority": "medium",
           "creation": 1722973512
+        },
+        {
+          "text": "Добавить роли, закрыть админку от гостей",
+          "priority": "medium",
+          "creation": 1723053131
         }
       ]
     },
@@ -479,7 +484,39 @@
         {
           "text": "Сменить настройки (Yandex PDD -\u003e ?)",
           "priority": "medium",
-          "creation": 1723012441
+          "creation": 1723012441,
+          "tasks": [
+            {
+              "text": "https://www.mail-tester.com/",
+              "priority": "medium",
+              "creation": 1723060297
+            },
+            {
+              "text": "https://stackoverflow.com/questions/52408023/dkim-signature-in-swift-mailer",
+              "priority": "low",
+              "creation": 1723097007
+            },
+            {
+              "text": "https://knowledge.validity.com/s/articles/DKIM-signature-header-detail",
+              "priority": "low",
+              "creation": 1723097156
+            },
+            {
+              "text": "https://dkim.org",
+              "priority": "low",
+              "creation": 1723097209
+            },
+            {
+              "text": "https://www.unisender.com/ru/glossary/dmarc/",
+              "priority": "low",
+              "creation": 1723105123
+            },
+            {
+              "text": "https://help.mail.ru/developers/notes/dmarc",
+              "priority": "low",
+              "creation": 1723105139
+            }
+          ]
         },
         {
           "text": "fix telegram for error stacktrace sending",
