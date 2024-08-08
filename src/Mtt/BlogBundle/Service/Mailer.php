@@ -54,7 +54,7 @@ class Mailer
         }
     }
 
-    public function newComment(Comment $comment, string $emailTo)
+    public function newComment(Comment $comment, string $emailTo, bool $spool = true)
     {
         $context = $this->twig->mergeGlobals($this->context($comment));
 
@@ -69,7 +69,7 @@ class Mailer
         $message->messageHtml = $template->render($context);
         $message->messageText = $textTemplate->render($context);
 
-        $this->queueMessage($message);
+        $spool ? $this->queueMessage($message) : $this->send($message);
     }
 
     public function send(EmailMessageDTO $messageDTO): bool
