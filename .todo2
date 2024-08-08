@@ -479,12 +479,18 @@
         {
           "text": "Сменить настройки (Yandex PDD -\u003e ?)",
           "priority": "medium",
-          "creation": 1723012441
+          "creation": 1723012441,
+          "completion": 1723112922
         },
         {
           "text": "fix telegram for error stacktrace sending",
           "priority": "medium",
           "creation": 1723016691
+        },
+        {
+          "text": "Иконка отправителя в разных почтовых сервисах",
+          "priority": "medium",
+          "creation": 1723112974
         }
       ]
     }
