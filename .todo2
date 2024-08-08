@@ -474,6 +474,11 @@
           "text": "Добавить роли, закрыть админку от гостей",
           "priority": "medium",
           "creation": 1723053131
+        },
+        {
+          "text": "Login history",
+          "priority": "medium",
+          "creation": 1723139406
         }
       ]
     },

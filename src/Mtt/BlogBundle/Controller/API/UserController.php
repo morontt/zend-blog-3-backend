@@ -4,10 +4,11 @@ namespace Mtt\BlogBundle\Controller\API;
 
 use Mtt\BlogBundle\Controller\BaseController;
 use Mtt\BlogBundle\DTO\ExternalUserDTO;
+use Mtt\UserBundle\Service\UserManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("/api/users")
@@ -17,14 +18,34 @@ class UserController extends BaseController
     /**
      * @Route("/external", methods={"POST"})
      *
-     * @param Request $request
+     * @param ExternalUserDTO $userDTO
+     * @param UserManager $userManager
+     * @param ValidatorInterface $validator
+     *
+     * @throws \Exception
      *
      * @return JsonResponse
      */
-    public function createExternalAction(ExternalUserDTO $userDTO, Request $request): JsonResponse
-    {
+    public function createExternalAction(
+        ExternalUserDTO $userDTO,
+        UserManager $userManager,
+        ValidatorInterface $validator
+    ): JsonResponse {
         dump($userDTO);
 
-        return new JsonResponse(['status' => 'ok'], Response::HTTP_CREATED);
+        $user = $userManager->createFromExternalDTO($userDTO);
+
+        $errors = $validator->validate($user);
+        if (count($errors) > 0) {
+            throw new \Exception();
+        }
+
+        $this->em->persist($user);
+        $this->em->flush();
+
+        return new JsonResponse(
+            $this->getDataConverter()->getUser($user),
+            Response::HTTP_CREATED
+        );
     }
 }

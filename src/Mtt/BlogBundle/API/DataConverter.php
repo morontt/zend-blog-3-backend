@@ -29,6 +29,7 @@ use Mtt\BlogBundle\Service\TextProcessor;
 use Mtt\BlogBundle\Utils\Inflector;
 use Mtt\BlogBundle\Utils\Pygment;
 use Mtt\BlogBundle\Utils\RuTransform;
+use Mtt\UserBundle\Entity\User;
 
 /**
  * Class DataConverter
@@ -57,6 +58,7 @@ use Mtt\BlogBundle\Utils\RuTransform;
  * @method array getTelegramUserArray($collection, $includes = null)
  * @method array getTelegramUpdate(Entity\TelegramUpdate $entity, $includes = null)
  * @method array getTelegramUpdateArray($collection, $includes = null)
+ * @method array getUser(User $entity, $includes = null)
  */
 class DataConverter
 {

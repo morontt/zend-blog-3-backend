@@ -8,14 +8,12 @@
 
 namespace Mtt\UserBundle\Command;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Mtt\UserBundle\Entity\Repository\UserRepository;
+use Mtt\UserBundle\Service\UserManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Security\Core\Encoder\EncoderFactory;
-use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class UpdateUserCommand extends Command
 {
@@ -25,28 +23,20 @@ class UpdateUserCommand extends Command
     private $repository;
 
     /**
-     * @var EncoderFactory
+     * @var UserManager
      */
-    private $encoderFactory;
-
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
+    private $userManager;
 
     /**
      * @param UserRepository $repository
-     * @param EncoderFactoryInterface $encoderFactory
-     * @param EntityManagerInterface $em
+     * @param UserManager $userManager
      */
     public function __construct(
         UserRepository $repository,
-        EncoderFactoryInterface $encoderFactory,
-        EntityManagerInterface $em
+        UserManager $userManager
     ) {
         $this->repository = $repository;
-        $this->encoderFactory = $encoderFactory;
-        $this->em = $em;
+        $this->userManager = $userManager;
 
         parent::__construct();
     }
@@ -77,14 +67,7 @@ class UpdateUserCommand extends Command
             $output->writeln(sprintf('<error>Error: user "%s" not found</error>', $username));
             $output->writeln('');
         } else {
-            $encoder = $this->encoderFactory->getEncoder($user);
-
-            $user->setRandomSalt();
-            $user->setRandomWsseKey();
-
-            $user->setPassword($encoder->encodePassword($password, $user->getSalt()));
-
-            $this->em->flush();
+            $this->userManager->updatePassword($user, $password);
 
             $output->writeln('');
             $output->writeln(sprintf('<info>Update user: <comment>%s</comment></info>', $username));

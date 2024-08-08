@@ -9,23 +9,16 @@
 namespace Mtt\UserBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Mtt\UserBundle\Entity\User;
+use Mtt\UserBundle\Service\UserManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Security\Core\Encoder\EncoderFactory;
-use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class CreateUserCommand extends Command
 {
-    /**
-     * @var EncoderFactory
-     */
-    private $encoderFactory;
-
     /**
      * @var ValidatorInterface
      */
@@ -37,16 +30,21 @@ class CreateUserCommand extends Command
     private $em;
 
     /**
-     * @param EncoderFactoryInterface $encoderFactory
+     * @var UserManager
+     */
+    private $userManager;
+
+    /**
+     * @param UserManager $userManager
      * @param ValidatorInterface $validator
      * @param EntityManagerInterface $em
      */
     public function __construct(
-        EncoderFactoryInterface $encoderFactory,
+        UserManager $userManager,
         ValidatorInterface $validator,
         EntityManagerInterface $em
     ) {
-        $this->encoderFactory = $encoderFactory;
+        $this->userManager = $userManager;
         $this->validator = $validator;
         $this->em = $em;
 
@@ -60,7 +58,7 @@ class CreateUserCommand extends Command
             ->setDescription('Create new user')
             ->addArgument('username', InputArgument::REQUIRED, 'username')
             ->addArgument('email', InputArgument::REQUIRED, 'email')
-            ->addOption('password', 'p', InputOption::VALUE_OPTIONAL, 'password', 'admin');
+            ->addOption('password', 'p', InputOption::VALUE_OPTIONAL, 'password');
     }
 
     /**
@@ -73,14 +71,7 @@ class CreateUserCommand extends Command
         $email = $input->getArgument('email');
         $password = $input->getOption('password');
 
-        $user = new User();
-        $encoder = $this->encoderFactory->getEncoder($user);
-
-        $passwordHash = $encoder->encodePassword($password, $user->getSalt());
-        $user
-            ->setUsername($username)
-            ->setEmail($email)
-            ->setPassword($passwordHash);
+        $user = $this->userManager->createUser($username, $email, $password);
 
         $errors = $this->validator->validate($user);
         if (count($errors) > 0) {
