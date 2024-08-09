@@ -33,6 +33,9 @@ class User implements UserInterface, Serializable
     public const TYPE_GUEST = 'guest';
     public const TYPE_ADMIN = 'admin';
 
+    public const MALE = 1;
+    public const FEMALE = 2;
+
     /**
      * @var int
      *
@@ -127,6 +130,13 @@ class User implements UserInterface, Serializable
      */
     private $displayName;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="smallint", options={"default": 1, "comment":"1: male, 2: female"})
+     */
+    private $gender = self::MALE;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -182,7 +192,9 @@ class User implements UserInterface, Serializable
      */
     public function getAvatarHash(): string
     {
-        return HashId::hash($this->getId(), HashId::TYPE_USER | HashId::MALE);
+        $genderOption = ($this->getGender() === self::MALE) ? HashId::MALE : HashId::FEMALE;
+
+        return HashId::hash($this->getId(), HashId::TYPE_USER | $genderOption);
     }
 
     /**
@@ -498,5 +510,29 @@ class User implements UserInterface, Serializable
     public function getLoginCount(): int
     {
         return $this->loginCount;
+    }
+
+    public function getDisplayName(): ?string
+    {
+        return $this->displayName;
+    }
+
+    public function setDisplayName(string $displayName = null): self
+    {
+        $this->displayName = $displayName;
+
+        return $this;
+    }
+
+    public function getGender(): int
+    {
+        return $this->gender;
+    }
+
+    public function setGender(int $gender): self
+    {
+        $this->gender = $gender;
+
+        return $this;
     }
 }

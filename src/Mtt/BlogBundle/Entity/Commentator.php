@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Mtt\BlogBundle\Entity\Traits\Gravatar;
+use Mtt\UserBundle\Entity\User;
 
 /**
  * @ORM\Table(name="commentators", uniqueConstraints={
@@ -17,9 +18,6 @@ use Mtt\BlogBundle\Entity\Traits\Gravatar;
 class Commentator implements CommentatorInterface
 {
     use Gravatar;
-
-    const MALE = 1;
-    const FEMALE = 2;
 
     /**
      * @var int
@@ -77,7 +75,7 @@ class Commentator implements CommentatorInterface
      *
      * @ORM\Column(type="smallint", options={"default": 1, "comment":"1: male, 2: female"})
      */
-    private $gender = self::MALE;
+    private $gender = User::MALE;
 
     /**
      * @var bool

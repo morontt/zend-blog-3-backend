@@ -9,7 +9,7 @@ use Mtt\UserBundle\Entity\User;
 /**
  * UserRepository
  *
- * @method User findOneByUsername($username)
+ * @method User|null findOneByUsername($username)
  * @method User|null findOneBy(array $criteria)
  */
 class UserRepository extends ServiceEntityRepository

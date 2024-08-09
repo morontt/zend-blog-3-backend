@@ -5,6 +5,7 @@ namespace Mtt\BlogBundle\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Mtt\BlogBundle\Entity\Traits\Gravatar;
+use Mtt\UserBundle\Entity\User;
 
 /**
  * @ORM\Table(name="v_commentators")
@@ -64,7 +65,7 @@ class ViewCommentator implements CommentatorInterface
      *
      * @ORM\Column(type="smallint")
      */
-    private $gender = Commentator::MALE;
+    private $gender = User::MALE;
 
     /**
      * Get id

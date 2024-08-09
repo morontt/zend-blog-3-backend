@@ -12,7 +12,7 @@ Content-Type: application/json
     "firstName": "Max",
     "lastName": "Mustermann",
     "gender": "male",
-    "email": "muster_mann@example.org",
+    "email": "mustermann1@example.org",
     "avatar": "44850/zqbdyPld16655SsGLi0woSs-1",
     "dataProvider": "yandex",
     "rawData": "PezBYEuDsFy1SwFwUXKnUz8azd8="

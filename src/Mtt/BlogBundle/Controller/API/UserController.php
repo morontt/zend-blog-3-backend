@@ -6,6 +6,7 @@ use Mtt\BlogBundle\Controller\BaseController;
 use Mtt\BlogBundle\DTO\ExternalUserDTO;
 use Mtt\UserBundle\Service\UserManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -22,16 +23,15 @@ class UserController extends BaseController
      * @param UserManager $userManager
      * @param ValidatorInterface $validator
      *
-     * @throws \Exception
-     *
      * @return JsonResponse
      */
     public function createExternalAction(
         ExternalUserDTO $userDTO,
         UserManager $userManager,
-        ValidatorInterface $validator
+        ValidatorInterface $validator,
+        Request $request
     ): JsonResponse {
-        $user = $userManager->findByExternalDTO($userDTO);
+        [$user, $foundInfo] = $userManager->findByExternalDTO($userDTO);
         if (!$user) {
             $user = $userManager->createFromExternalDTO($userDTO);
 
@@ -42,6 +42,15 @@ class UserController extends BaseController
 
             $this->em->persist($user);
             $this->em->flush();
+        }
+
+        if (!$foundInfo) {
+            $userManager->saveUserExtraInfo(
+                $userDTO,
+                $user,
+                $request->request->get('ipAddress'),
+                $request->request->get('userAgent')
+            );
         }
 
         return new JsonResponse(

@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Mtt\BlogBundle\Entity\Traits\Gravatar;
+use Mtt\UserBundle\Entity\User;
 
 /**
  * @ORM\Table(name="v_comments")
@@ -157,7 +158,7 @@ class ViewComment implements CommentInterface
      *
      * @ORM\Column(type="smallint")
      */
-    private $gender = Commentator::MALE;
+    private $gender = User::MALE;
 
     /**
      * @var string

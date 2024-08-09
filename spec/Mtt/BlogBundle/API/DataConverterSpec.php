@@ -15,6 +15,7 @@ use Mtt\BlogBundle\Entity\Repository\CategoryRepository;
 use Mtt\BlogBundle\Entity\Repository\CommentRepository;
 use Mtt\BlogBundle\Entity\Tag;
 use Mtt\BlogBundle\Service\TextProcessor;
+use Mtt\UserBundle\Entity\User;
 use PhpSpec\ObjectBehavior;
 use ReflectionClass;
 
@@ -153,7 +154,7 @@ class DataConverterSpec extends ObjectBehavior
             ->setName('test2-name')
             ->setEmail('two@example.org')
             ->setWebsite('http://example.com')
-            ->setGender(Commentator::FEMALE)
+            ->setGender(User::FEMALE)
         ;
 
         $reflectionProperty->setValue($commentator2, 72);
