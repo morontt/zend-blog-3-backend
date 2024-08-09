@@ -10,6 +10,7 @@ use Mtt\UserBundle\Entity\User;
  * UserRepository
  *
  * @method User findOneByUsername($username)
+ * @method User|null findOneBy(array $criteria)
  */
 class UserRepository extends ServiceEntityRepository
 {
@@ -29,6 +30,7 @@ class UserRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('u');
         $qb
             ->andWhere($qb->expr()->eq('u.userType', $qb->expr()->literal('admin')))
+            ->orderBy('u.id', 'ASC')
             ->setMaxResults(1)
         ;
 

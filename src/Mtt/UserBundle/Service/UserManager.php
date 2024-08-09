@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Mtt\BlogBundle\DTO\ExternalUserDTO;
 use Mtt\UserBundle\Entity\User;
+use Mtt\UserBundle\Entity\UserExtraInfo;
 use Mtt\UserBundle\Exception\ShortPasswordException;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
@@ -28,6 +29,29 @@ class UserManager
     ) {
         $this->em = $em;
         $this->encoderFactory = $encoderFactory;
+    }
+
+    public function findByExternalDTO(ExternalUserDTO $dataObj): ?User
+    {
+        $infoRepository = $this->em->getRepository(UserExtraInfo::class);
+        $userInfo = $infoRepository->findOneBy([
+            'externalId' => $dataObj->id,
+            'dataProvider' => $dataObj->dataProvider,
+        ]);
+
+        if ($userInfo) {
+            return $userInfo->getUser();
+        }
+
+        if (!empty($dataObj->email)) {
+            $userRepository = $this->em->getRepository(User::class);
+            $user = $userRepository->findOneBy(['email' => $dataObj->email]);
+            if ($user) {
+                return $user;
+            }
+        }
+
+        return null;
     }
 
     public function createFromExternalDTO(ExternalUserDTO $dataObj): User

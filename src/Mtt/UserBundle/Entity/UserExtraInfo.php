@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(uniqueConstraints={
  *   @ORM\UniqueConstraint(columns={"external_id", "data_provider"})
  * })
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="Mtt\UserBundle\Entity\Repository\UserExtraInfoRepository")
  */
 class UserExtraInfo
 {

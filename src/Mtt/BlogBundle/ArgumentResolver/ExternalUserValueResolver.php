@@ -27,8 +27,12 @@ class ExternalUserValueResolver implements ArgumentValueResolverInterface
         $dto->dataProvider = $data['dataProvider'];
         $dto->rawData = $data['rawData'];
 
+        $email = $data['email'] ?? null;
+        if (!empty($email)) {
+            $dto->email = strtolower(trim($email));
+        }
+
         $dto->username = $data['username'] ?? null;
-        $dto->email = $data['email'] ?? null;
         $dto->displayName = $data['displayName'] ?? null;
         $dto->firstName = $data['firstName'] ?? null;
         $dto->lastName = $data['lastName'] ?? null;

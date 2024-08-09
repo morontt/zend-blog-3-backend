@@ -31,17 +31,18 @@ class UserController extends BaseController
         UserManager $userManager,
         ValidatorInterface $validator
     ): JsonResponse {
-        dump($userDTO);
+        $user = $userManager->findByExternalDTO($userDTO);
+        if (!$user) {
+            $user = $userManager->createFromExternalDTO($userDTO);
 
-        $user = $userManager->createFromExternalDTO($userDTO);
+            $errors = $validator->validate($user);
+            if (count($errors) > 0) {
+                throw new \RuntimeException();
+            }
 
-        $errors = $validator->validate($user);
-        if (count($errors) > 0) {
-            throw new \RuntimeException();
+            $this->em->persist($user);
+            $this->em->flush();
         }
-
-        $this->em->persist($user);
-        $this->em->flush();
 
         return new JsonResponse(
             $this->getDataConverter()->getUser($user),
