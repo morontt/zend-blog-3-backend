@@ -95,7 +95,7 @@ class UserController extends BaseController
 
         return new JsonResponse(
             $this->getDataConverter()->getUser($user),
-            Response::HTTP_CREATED
+            $foundInfo ? Response::HTTP_OK : Response::HTTP_CREATED
         );
     }
 }
