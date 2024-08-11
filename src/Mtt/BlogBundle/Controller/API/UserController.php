@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -77,7 +78,16 @@ class UserController extends BaseController
 
             $errors = $validator->validate($user);
             if (count($errors) > 0) {
-                throw new \RuntimeException();
+                $responseData = ['errors' => []];
+                /* @var ConstraintViolationInterface $violation */
+                foreach ($errors as $violation) {
+                    $responseData['errors'][] = [
+                        'message' => $violation->getMessage(),
+                        'path' => $violation->getPropertyPath(),
+                    ];
+                }
+
+                return new JsonResponse($responseData, Response::HTTP_UNPROCESSABLE_ENTITY);
             }
 
             $this->em->persist($user);
