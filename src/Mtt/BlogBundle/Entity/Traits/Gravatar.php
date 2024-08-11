@@ -28,7 +28,7 @@ trait Gravatar
         }
 
         if ($id > ViewCommentator::USER_ID_OFFSET) {
-            $id = $id - ViewCommentator::USER_ID_OFFSET;
+            $id -= ViewCommentator::USER_ID_OFFSET;
             $userType = HashId::TYPE_USER;
         }
 

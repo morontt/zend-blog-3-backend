@@ -11,8 +11,12 @@ class UserTransformer extends BaseTransformer
         return [
             'id' => $item->getId(),
             'username' => $item->getUsername(),
+            'displayName' => $item->getDisplayName(),
             'email' => $item->getEmail(),
             'role' => $item->getUserType(),
+            'imageHash' => $item->getAvatarHash(),
+            'isMale' => $item->getGender() === User::MALE,
+            'createdAt' => $this->dateTimeToISO($item->getTimeCreated()),
         ];
     }
 }

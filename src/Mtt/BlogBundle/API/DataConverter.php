@@ -59,6 +59,7 @@ use Mtt\UserBundle\Entity\User;
  * @method array getTelegramUpdate(Entity\TelegramUpdate $entity, $includes = null)
  * @method array getTelegramUpdateArray($collection, $includes = null)
  * @method array getUser(User $entity, $includes = null)
+ * @method array getUserArray($collection, $includes = null)
  */
 class DataConverter
 {

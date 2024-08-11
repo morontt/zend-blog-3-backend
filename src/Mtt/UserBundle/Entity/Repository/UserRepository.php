@@ -3,6 +3,7 @@
 namespace Mtt\UserBundle\Entity\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use Mtt\UserBundle\Entity\User;
 
@@ -20,6 +21,14 @@ class UserRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
+    }
+
+    public function getListQuery(): Query
+    {
+        return $this
+            ->createQueryBuilder('e')
+            ->orderBy('e.id', 'ASC')
+            ->getQuery();
     }
 
     /**

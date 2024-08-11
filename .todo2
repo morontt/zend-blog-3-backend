@@ -212,6 +212,7 @@
       "text": "Flutter Desktop for UI #68",
       "priority": "verylow",
       "creation": 1686425605,
+      "completion": 1723302145,
       "tasks": [
         {
           "text": "And remove JavaScript SPA",
@@ -434,7 +435,7 @@
     },
     {
       "text": "update PHP-CS-Fixer to v3",
-      "priority": "medium",
+      "priority": "verylow",
       "creation": 1719389500,
       "tasks": [
         {
@@ -474,7 +475,8 @@
         {
           "text": "Добавить роли, закрыть админку от гостей",
           "priority": "medium",
-          "creation": 1723053131
+          "creation": 1723053131,
+          "completion": 1723270137
         },
         {
           "text": "Login history",
@@ -535,6 +537,18 @@
           "text": "fix telegram for error stacktrace sending",
           "priority": "medium",
           "creation": 1723016691
+        }
+      ]
+    },
+    {
+      "text": "Add created_at to commentators",
+      "priority": "medium",
+      "creation": 1723306388,
+      "tasks": [
+        {
+          "text": "Remove commentators without comments",
+          "priority": "medium",
+          "creation": 1723306414
         }
       ]
     }
