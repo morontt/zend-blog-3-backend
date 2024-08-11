@@ -18,12 +18,16 @@ class WsseAuthenticationProvider implements AuthenticationProviderInterface
      */
     private $userProvider;
 
+    private int $lifetime;
+
     /**
      * @param UserProviderInterface $userProvider
+     * @param int $lifetime
      */
-    public function __construct(UserProviderInterface $userProvider)
+    public function __construct(UserProviderInterface $userProvider, int $lifetime = 300)
     {
         $this->userProvider = $userProvider;
+        $this->lifetime = $lifetime;
     }
 
     /**
@@ -75,7 +79,7 @@ class WsseAuthenticationProvider implements AuthenticationProviderInterface
             throw new BadCredentialsException('Incorrectly formatted "created" in token.');
         }
 
-        if (abs($createdAt - time()) > 300) {
+        if (abs($createdAt - time()) > $this->lifetime) {
             throw new CredentialsExpiredException('Token has expired.');
         }
 

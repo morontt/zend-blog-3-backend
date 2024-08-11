@@ -10,6 +10,7 @@ namespace Mtt\BlogBundle\API\Transformers;
 
 use Mtt\BlogBundle\Entity\Commentator;
 use Mtt\BlogBundle\Entity\CommentatorInterface;
+use Mtt\UserBundle\Entity\User;
 
 class CommentatorTransformer extends BaseTransformer
 {
@@ -26,7 +27,7 @@ class CommentatorTransformer extends BaseTransformer
             'email' => $item->getEmail(),
             'website' => $item->getWebsite(),
             'imageHash' => $item->getAvatarHash(),
-            'isMale' => $item->getGender() === Commentator::MALE,
+            'isMale' => $item->getGender() === User::MALE,
         ];
     }
 
@@ -40,7 +41,7 @@ class CommentatorTransformer extends BaseTransformer
             ->setName($data['name'])
             ->setEmail($data['email'])
             ->setWebsite($data['website'])
-            ->setGender($data['isMale'] ? Commentator::MALE : Commentator::FEMALE)
+            ->setGender($data['isMale'] ? User::MALE : User::FEMALE)
         ;
     }
 }

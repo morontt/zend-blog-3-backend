@@ -26,6 +26,7 @@ Router.map(function () {
     this.route('telegramUser');
     this.route('telegramUpdate');
     this.route('replyTelegramUpdate', {path: '/reply-telegram/:update_id'});
+    this.route('users');
 });
 
 export default Router;

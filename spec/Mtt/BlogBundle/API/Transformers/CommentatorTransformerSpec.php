@@ -5,6 +5,7 @@ namespace spec\Mtt\BlogBundle\API\Transformers;
 use Mtt\BlogBundle\API\Transformers\CommentatorTransformer;
 use Mtt\BlogBundle\Entity\Commentator;
 use Mtt\BlogBundle\Entity\ViewCommentator;
+use Mtt\UserBundle\Entity\User;
 use PhpSpec\ObjectBehavior;
 use ReflectionClass;
 
@@ -51,7 +52,7 @@ class CommentatorTransformerSpec extends ObjectBehavior
             ->setName('test-name')
             ->setEmail('commentator@example.org')
             ->setWebsite('http://example.org')
-            ->setGender(Commentator::FEMALE)
+            ->setGender(User::FEMALE)
         ;
 
         $reflectionProperty->setValue($commentator, 27);
@@ -79,7 +80,7 @@ class CommentatorTransformerSpec extends ObjectBehavior
         $commentator = new ViewCommentator();
 
         $idProperty->setValue($commentator, 27);
-        $genderProperty->setValue($commentator, Commentator::MALE);
+        $genderProperty->setValue($commentator, User::MALE);
         $nameProperty->setValue($commentator, 'Pupkin');
 
         $this->transform($commentator)->shouldReturn([
@@ -105,7 +106,7 @@ class CommentatorTransformerSpec extends ObjectBehavior
         $commentator = new ViewCommentator();
 
         $idProperty->setValue($commentator, 10000048);
-        $genderProperty->setValue($commentator, Commentator::MALE);
+        $genderProperty->setValue($commentator, User::MALE);
         $nameProperty->setValue($commentator, 'Admin');
 
         $this->transform($commentator)->shouldReturn([

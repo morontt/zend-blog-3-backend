@@ -3,13 +3,15 @@
 namespace Mtt\UserBundle\Entity\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use Mtt\UserBundle\Entity\User;
 
 /**
  * UserRepository
  *
- * @method User findOneByUsername($username)
+ * @method User|null findOneByUsername($username)
+ * @method User|null findOneBy(array $criteria)
  */
 class UserRepository extends ServiceEntityRepository
 {
@@ -21,6 +23,14 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    public function getListQuery(): Query
+    {
+        return $this
+            ->createQueryBuilder('e')
+            ->orderBy('e.id', 'ASC')
+            ->getQuery();
+    }
+
     /**
      * @return User
      */
@@ -29,6 +39,7 @@ class UserRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('u');
         $qb
             ->andWhere($qb->expr()->eq('u.userType', $qb->expr()->literal('admin')))
+            ->orderBy('u.id', 'ASC')
             ->setMaxResults(1)
         ;
 

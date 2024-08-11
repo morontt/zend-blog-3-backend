@@ -212,6 +212,7 @@
       "text": "Flutter Desktop for UI #68",
       "priority": "verylow",
       "creation": 1686425605,
+      "completion": 1723302145,
       "tasks": [
         {
           "text": "And remove JavaScript SPA",
@@ -268,6 +269,7 @@
       "text": "Remove deprecated and unused fields from entities #60",
       "priority": "low",
       "creation": 1686425860,
+      "completion": 1723358063,
       "tasks": [
         {
           "text": "users table",
@@ -433,7 +435,7 @@
     },
     {
       "text": "update PHP-CS-Fixer to v3",
-      "priority": "medium",
+      "priority": "verylow",
       "creation": 1719389500,
       "tasks": [
         {
@@ -461,7 +463,25 @@
         {
           "text": "Add separate tech-user for reprogl API",
           "priority": "medium",
-          "creation": 1722973512
+          "creation": 1722973512,
+          "tasks": [
+            {
+              "text": "Set avatar",
+              "priority": "medium",
+              "creation": 1723113285
+            }
+          ]
+        },
+        {
+          "text": "Добавить роли, закрыть админку от гостей",
+          "priority": "medium",
+          "creation": 1723053131,
+          "completion": 1723270137
+        },
+        {
+          "text": "Login history",
+          "priority": "medium",
+          "creation": 1723139406
         }
       ]
     },
@@ -535,6 +555,18 @@
           "text": "Add unsubscribe link",
           "priority": "medium",
           "creation": 1723210211
+        }
+      ]
+    },
+    {
+      "text": "Add created_at to commentators",
+      "priority": "medium",
+      "creation": 1723306388,
+      "tasks": [
+        {
+          "text": "Remove commentators without comments",
+          "priority": "medium",
+          "creation": 1723306414
         }
       ]
     }

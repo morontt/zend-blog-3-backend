@@ -89,7 +89,7 @@ class Comment implements CommentInterface
     protected $trackingAgent;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="ip_addr", type="string", length=15, nullable=true)
      */
@@ -299,7 +299,7 @@ class Comment implements CommentInterface
     /**
      * Set ipAddress
      *
-     * @param string $ipAddress
+     * @param string|null $ipAddress
      *
      * @return Comment
      */
@@ -313,7 +313,7 @@ class Comment implements CommentInterface
     /**
      * Get ipAddress
      *
-     * @return string
+     * @return string|null
      */
     public function getIpAddress()
     {

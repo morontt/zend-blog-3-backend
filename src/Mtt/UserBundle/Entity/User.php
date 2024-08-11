@@ -27,6 +27,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User implements UserInterface, Serializable
 {
+    public const ROLE_USER = 'ROLE_USER';
+    public const ROLE_ADMIN = 'ROLE_ADMIN';
+
+    public const TYPE_GUEST = 'guest';
+    public const TYPE_ADMIN = 'admin';
+
+    public const MALE = 1;
+    public const FEMALE = 2;
+
     /**
      * @var int
      *
@@ -75,8 +84,6 @@ class User implements UserInterface, Serializable
     /**
      * @var string
      *
-     * @deprecated
-     *
      * @ORM\Column(name="user_type", type="string", length=16)
      */
     protected $userType;
@@ -116,22 +123,29 @@ class User implements UserInterface, Serializable
      */
     protected $comments;
 
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(type="string", length=64, nullable=true)
+     */
+    private $displayName;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="smallint", options={"default": 1, "comment":"1: male, 2: female"})
+     */
+    private $gender = self::MALE;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
 
-        try {
-            $this->salt = bin2hex(random_bytes(16));
-        } catch (\Exception $e) {
-            $this->salt = bin2hex(openssl_random_pseudo_bytes(16));
-        }
-        try {
-            $this->wsseKey = base64_encode(random_bytes(18));
-        } catch (\Exception $e) {
-            $this->wsseKey = base64_encode(openssl_random_pseudo_bytes(18));
-        }
+        $this->setRandomSalt();
+        $this->setRandomWsseKey();
+
         $this->timeCreated = new DateTime();
-        $this->userType = 'admin'; //TODO remove fake field
+        $this->userType = self::TYPE_GUEST;
     }
 
     /**
@@ -165,7 +179,12 @@ class User implements UserInterface, Serializable
      */
     public function getRoles()
     {
-        return ['ROLE_USER'];
+        $roles = [self::ROLE_USER];
+        if ($this->userType === self::TYPE_ADMIN) {
+            $roles = [self::ROLE_ADMIN];
+        }
+
+        return $roles;
     }
 
     /**
@@ -173,7 +192,9 @@ class User implements UserInterface, Serializable
      */
     public function getAvatarHash(): string
     {
-        return HashId::hash($this->getId(), HashId::TYPE_USER | HashId::MALE);
+        $genderOption = ($this->getGender() === self::MALE) ? HashId::MALE : HashId::FEMALE;
+
+        return HashId::hash($this->getId(), HashId::TYPE_USER | $genderOption);
     }
 
     /**
@@ -183,12 +204,40 @@ class User implements UserInterface, Serializable
     {
     }
 
+    public function setRandomSalt(): void
+    {
+        try {
+            $randomBytes = random_bytes(16);
+        } catch (\Exception $e) {
+            $randomBytes = openssl_random_pseudo_bytes(16, $isSourceStrong);
+            if ($isSourceStrong === false || $randomBytes === false) {
+                throw new \RuntimeException('IV generation failed');
+            }
+        }
+
+        $this->salt = bin2hex($randomBytes);
+    }
+
+    public function setRandomWsseKey(): void
+    {
+        try {
+            $randomBytes = random_bytes(18);
+        } catch (\Exception $e) {
+            $randomBytes = openssl_random_pseudo_bytes(18, $isSourceStrong);
+            if ($isSourceStrong === false || $randomBytes === false) {
+                throw new \RuntimeException('IV generation failed');
+            }
+        }
+
+        $this->wsseKey = strtr(base64_encode($randomBytes), '+/', '-_');
+    }
+
     /**
      * Get id
      *
-     * @return int
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -200,7 +249,7 @@ class User implements UserInterface, Serializable
      *
      * @return User
      */
-    public function setUsername($username)
+    public function setUsername(string $username): self
     {
         $this->username = $username;
 
@@ -224,7 +273,7 @@ class User implements UserInterface, Serializable
      *
      * @return User
      */
-    public function setEmail($email)
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
@@ -248,7 +297,7 @@ class User implements UserInterface, Serializable
      *
      * @return User
      */
-    public function setPassword($password)
+    public function setPassword(string $password): self
     {
         $this->password = $password;
 
@@ -260,7 +309,7 @@ class User implements UserInterface, Serializable
      *
      * @return string
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -272,7 +321,7 @@ class User implements UserInterface, Serializable
      *
      * @return User
      */
-    public function setSalt($salt)
+    public function setSalt(string $salt): self
     {
         $this->salt = $salt;
 
@@ -284,7 +333,7 @@ class User implements UserInterface, Serializable
      *
      * @return string
      */
-    public function getSalt()
+    public function getSalt(): string
     {
         return $this->salt;
     }
@@ -316,7 +365,7 @@ class User implements UserInterface, Serializable
      *
      * @return User
      */
-    public function setUserType($userType)
+    public function setUserType(string $userType): self
     {
         $this->userType = $userType;
 
@@ -328,7 +377,7 @@ class User implements UserInterface, Serializable
      *
      * @return string
      */
-    public function getUserType()
+    public function getUserType(): string
     {
         return $this->userType;
     }
@@ -340,7 +389,7 @@ class User implements UserInterface, Serializable
      *
      * @return User
      */
-    public function setTimeCreated($timeCreated)
+    public function setTimeCreated(DateTime $timeCreated): self
     {
         $this->timeCreated = $timeCreated;
 
@@ -352,7 +401,7 @@ class User implements UserInterface, Serializable
      *
      * @return DateTime
      */
-    public function getTimeCreated()
+    public function getTimeCreated(): DateTime
     {
         return $this->timeCreated;
     }
@@ -364,7 +413,7 @@ class User implements UserInterface, Serializable
      *
      * @return User
      */
-    public function setLastLogin($lastLogin)
+    public function setLastLogin(DateTime $lastLogin): self
     {
         $this->lastLogin = $lastLogin;
 
@@ -376,7 +425,7 @@ class User implements UserInterface, Serializable
      *
      * @return DateTime
      */
-    public function getLastLogin()
+    public function getLastLogin(): DateTime
     {
         return $this->lastLogin;
     }
@@ -384,13 +433,13 @@ class User implements UserInterface, Serializable
     /**
      * Set ipAddressLast
      *
-     * @param string $ipAddressLast
+     * @param string $ip
      *
      * @return User
      */
-    public function setIpAddressLast($ipAddressLast)
+    public function setIpAddressLast(string $ip): self
     {
-        $this->ipAddressLast = $ipAddressLast;
+        $this->ipAddressLast = $ip;
 
         return $this;
     }
@@ -400,7 +449,7 @@ class User implements UserInterface, Serializable
      *
      * @return string
      */
-    public function getIpAddressLast()
+    public function getIpAddressLast(): string
     {
         return $this->ipAddressLast;
     }
@@ -412,7 +461,7 @@ class User implements UserInterface, Serializable
      *
      * @return User
      */
-    public function addComment(Comment $comments)
+    public function addComment(Comment $comments): self
     {
         $this->comments[] = $comments;
 
@@ -424,7 +473,7 @@ class User implements UserInterface, Serializable
      *
      * @param Comment $comments
      */
-    public function removeComment(Comment $comments)
+    public function removeComment(Comment $comments): void
     {
         $this->comments->removeElement($comments);
     }
@@ -446,7 +495,7 @@ class User implements UserInterface, Serializable
      *
      * @return User
      */
-    public function setLoginCount($loginCount)
+    public function setLoginCount(int $loginCount): self
     {
         $this->loginCount = $loginCount;
 
@@ -458,8 +507,32 @@ class User implements UserInterface, Serializable
      *
      * @return int
      */
-    public function getLoginCount()
+    public function getLoginCount(): int
     {
         return $this->loginCount;
+    }
+
+    public function getDisplayName(): ?string
+    {
+        return $this->displayName;
+    }
+
+    public function setDisplayName(string $displayName = null): self
+    {
+        $this->displayName = $displayName;
+
+        return $this;
+    }
+
+    public function getGender(): int
+    {
+        return $this->gender;
+    }
+
+    public function setGender(int $gender): self
+    {
+        $this->gender = $gender;
+
+        return $this;
     }
 }

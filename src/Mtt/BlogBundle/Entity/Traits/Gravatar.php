@@ -8,9 +8,9 @@
 
 namespace Mtt\BlogBundle\Entity\Traits;
 
-use Mtt\BlogBundle\Entity\Commentator;
 use Mtt\BlogBundle\Entity\ViewCommentator;
 use Mtt\BlogBundle\Utils\HashId;
+use Mtt\UserBundle\Entity\User;
 
 trait Gravatar
 {
@@ -28,11 +28,11 @@ trait Gravatar
         }
 
         if ($id > ViewCommentator::USER_ID_OFFSET) {
-            $id = $id - ViewCommentator::USER_ID_OFFSET;
+            $id -= ViewCommentator::USER_ID_OFFSET;
             $userType = HashId::TYPE_USER;
         }
 
-        $gender = ($this->getGender() == Commentator::MALE) ? HashId::MALE : HashId::FEMALE;
+        $gender = ($this->getGender() === User::MALE) ? HashId::MALE : HashId::FEMALE;
 
         return HashId::hash($id, $userType | $gender);
     }

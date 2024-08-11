@@ -1,0 +1,24 @@
+POST {{base_url}}/api/users/external
+Authorization: WSSE profile="UsernameToken"
+X-WSSE: UsernameToken Username="morontt",PasswordDigest="nkTDBlRHNWMUPVx3H8iEDHKdssU=",Nonce="9zEa4NZoRuu4WDoF",Created="2024-08-08T21:19:07+03:00"
+Accept: application/json
+Content-Type: application/json
+
+{
+  "userData": {
+    "id": "9635285",
+    "username": "test-user1",
+    "displayName": "Max M.",
+    "firstName": "Max",
+    "lastName": "Mustermann",
+    "gender": "male",
+    "email": "mustermann1@example.org",
+    "avatar": "44850/zqbdyPld16655SsGLi0woSs-1",
+    "dataProvider": "yandex",
+    "rawData": "PezBYEuDsFy1SwFwUXKnUz8azd8="
+  },
+  "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36",
+  "ipAddress": "172.18.0.1"
+}
+
+###

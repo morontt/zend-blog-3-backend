@@ -172,6 +172,7 @@ class CommentController extends BaseController
     /**
      * @Route("/external", methods={"POST"})
      *
+     * @param CommentManager $commentManager
      * @param Request $request
      *
      * @return JsonResponse

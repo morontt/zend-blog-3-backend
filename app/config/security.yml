@@ -35,8 +35,12 @@ security:
             wsse:
                 lifetime: "%wsse_token_lifetime%"
 
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: ^/telegram, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         - { path: ^/webhook, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
-        - { path: ^/, roles: ROLE_USER, requires_channel: https }
+        - { path: ^/preview, roles: ROLE_USER, requires_channel: https }
+        - { path: ^/, roles: ROLE_ADMIN, requires_channel: https }
