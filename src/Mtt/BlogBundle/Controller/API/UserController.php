@@ -2,8 +2,10 @@
 
 namespace Mtt\BlogBundle\Controller\API;
 
+use Doctrine\ORM\ORMException;
 use Mtt\BlogBundle\Controller\BaseController;
 use Mtt\BlogBundle\DTO\ExternalUserDTO;
+use Mtt\BlogBundle\Form\UserFormType;
 use Mtt\UserBundle\Entity\Repository\UserRepository;
 use Mtt\UserBundle\Entity\User;
 use Mtt\UserBundle\Service\UserManager;
@@ -58,11 +60,37 @@ class UserController extends BaseController
     }
 
     /**
+     * @Route("/{id}", requirements={"id": "\d+"}, methods={"PUT"})
+     *
+     * @param Request $request
+     * @param User $entity
+     *
+     * @throws ORMException
+     *
+     * @return JsonResponse
+     */
+    public function updateAction(Request $request, User $entity): JsonResponse
+    {
+        $form = $this->createObjectForm('user', UserFormType::class, true);
+        $form->handleRequest($request);
+
+        [$formData, $errors] = $this->handleForm($form);
+        if ($errors) {
+            return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $result = $this->getDataConverter()->saveUser($entity, $formData['user']);
+
+        return new JsonResponse($result);
+    }
+
+    /**
      * @Route("/external", methods={"POST"})
      *
      * @param ExternalUserDTO $userDTO
      * @param UserManager $userManager
      * @param ValidatorInterface $validator
+     * @param Request $request
      *
      * @return JsonResponse
      */
