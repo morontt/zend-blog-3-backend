@@ -15,7 +15,7 @@ class CommentDTO
     public $commentator;
 
     /**
-     * @var UserDTO|null
+     * @var CommentUserDTO|null
      */
     public $user;
 

@@ -2,17 +2,16 @@
 
 namespace Mtt\BlogBundle\Form;
 
-use Mtt\BlogBundle\DTO\ArticleDTO;
+use Mtt\BlogBundle\DTO\UserDTO;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class ArticleFormType extends AbstractType
+class UserFormType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -22,67 +21,48 @@ class ArticleFormType extends AbstractType
     {
         $builder
             ->add(
-                'text',
-                TextareaType::class,
-                [
-                    'constraints' => [
-                        new Constraints\NotBlank(),
-                        new Constraints\Length(['max' => 65535]),
-                    ],
-                ]
-            )
-            ->add(
-                'categoryId',
-                IntegerType::class,
-                [
-                    'constraints' => [
-                        new Constraints\NotBlank(),
-                    ],
-                ]
-            )
-            ->add(
-                'title',
+                'username',
                 TextType::class,
                 [
-                    'constraints' => [
+                   'constraints' => [
                         new Constraints\NotBlank(),
                         new Constraints\Length(['max' => 128]),
                     ],
                 ]
             )
             ->add(
-                'url',
+                'displayName',
                 TextType::class,
                 [
                     'required' => false,
                     'constraints' => [
-                        new Constraints\Length(['max' => 255]),
+                        new Constraints\Length(['max' => 64]),
                     ],
                 ]
             )
             ->add(
-                'hidden',
-                CheckboxType::class
-            )
-            ->add(
-                'disableComments',
-                CheckboxType::class
-            )
-            ->add(
-                'description',
+                'email',
                 TextType::class,
                 [
-                    'required' => false,
                     'constraints' => [
-                        new Constraints\Length(['max' => 255]),
+                        new Constraints\NotBlank(),
+                        new Constraints\Email(),
+                        new Constraints\Length(['max' => 64]),
                     ],
                 ]
             )
             ->add(
-                'tagsString',
-                TextType::class,
+                'isMale',
+                CheckboxType::class
+            )
+            ->add(
+                'role',
+                ChoiceType::class,
                 [
-                    'required' => false,
+                    'choices' => [
+                        'admin',
+                        'guest',
+                    ],
                 ]
             )
         ;
@@ -96,7 +76,7 @@ class ArticleFormType extends AbstractType
         $resolver->setDefaults([
             'csrf_protection' => false,
             'allow_extra_fields' => true,
-            'data_class' => ArticleDTO::class,
+            'data_class' => UserDTO::class,
         ]);
     }
 

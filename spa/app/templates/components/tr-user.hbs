@@ -13,7 +13,9 @@
         {{input value=user.email class="form-control"}}
     </td>
     <td class="text-break-word">
-        {{input value=user.role class="form-control"}}
+        {{select-field
+            content=userRoles
+            selectedValue=user.role}}
     </td>
     <td class="center-text text-gender">
         {{input type="checkbox" checked=user.isMale}}

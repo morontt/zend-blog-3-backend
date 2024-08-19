@@ -2,6 +2,7 @@
 
 namespace Mtt\BlogBundle\API\Transformers;
 
+use Mtt\BlogBundle\DTO\UserDTO;
 use Mtt\UserBundle\Entity\User;
 
 class UserTransformer extends BaseTransformer
@@ -18,5 +19,16 @@ class UserTransformer extends BaseTransformer
             'isMale' => $item->getGender() === User::MALE,
             'createdAt' => $this->dateTimeToISO($item->getTimeCreated()),
         ];
+    }
+
+    public static function reverseTransform(User $entity, UserDTO $data)
+    {
+        $entity
+            ->setUsername($data['username'])
+            ->setEmail($data['email'])
+            ->setUserType($data['role'])
+            ->setGender($data['isMale'] ? User::MALE : User::FEMALE)
+            ->setDisplayName($data['displayName'])
+        ;
     }
 }

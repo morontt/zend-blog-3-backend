@@ -3,7 +3,7 @@
 namespace Mtt\BlogBundle\Telegram\Command;
 
 use Mtt\BlogBundle\DTO\CommentDTO;
-use Mtt\BlogBundle\DTO\UserDTO;
+use Mtt\BlogBundle\DTO\CommentUserDTO;
 use Mtt\BlogBundle\Entity\Repository\CommentRepository;
 use Mtt\BlogBundle\Service\CommentManager;
 use Mtt\BlogBundle\Utils\Http;
@@ -56,7 +56,7 @@ class AnswerComment extends AbstractAdminCommand implements TelegramCommandInter
             $commentData->userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
             $commentData->ipAddress = Http::getClientIp();
 
-            $user = new UserDTO();
+            $user = new CommentUserDTO();
             $user->id = 1;
             $commentData->user = $user;
 

@@ -260,7 +260,7 @@ class DataConverter
             $post = $this->em->getRepository('MttBlogBundle:Post')->find((int)$data['postId']);
             if ($post) {
                 $entity->setPost($post);
-                if ($this->em->getRepository('MttBlogBundle:MediaFile')->getCountByPostId((int)$data['postId']) == 0) {
+                if ($this->em->getRepository('MttBlogBundle:MediaFile')->getCountByPostId((int)$data['postId']) === 0) {
                     $entity->setDefaultImage(true);
                 }
             }
@@ -292,6 +292,8 @@ class DataConverter
      * @param Entity\PygmentsCode $entity
      * @param PygmentsCodeDTO $data
      *
+     * @throws ORMException
+     *
      * @return array
      */
     public function savePygmentsCode(Entity\PygmentsCode $entity, PygmentsCodeDTO $data): array
@@ -307,7 +309,7 @@ class DataConverter
             $entity->setLanguage(null);
         }
 
-        if ($oldHash != $entity->getContentHash()) {
+        if ($oldHash !== $entity->getContentHash()) {
             $htmlObj = Pygment::highlight($entity->getSourceCode(), $entity->getLexer());
             $entity
                 ->setSourceHtml($htmlObj->html())

@@ -2,7 +2,7 @@
 
 namespace Mtt\BlogBundle\Form;
 
-use Mtt\BlogBundle\DTO\UserDTO;
+use Mtt\BlogBundle\DTO\CommentUserDTO;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -30,7 +30,7 @@ class CommentUserFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => UserDTO::class,
+            'data_class' => CommentUserDTO::class,
         ]);
     }
 

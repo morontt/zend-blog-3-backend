@@ -2,7 +2,7 @@
 
 namespace Mtt\BlogBundle\Controller\API;
 
-use Doctrine\ORM\ORMException;
+use Mtt\BlogBundle\API\Transformers\UserTransformer;
 use Mtt\BlogBundle\Controller\BaseController;
 use Mtt\BlogBundle\DTO\ExternalUserDTO;
 use Mtt\BlogBundle\Form\UserFormType;
@@ -62,14 +62,13 @@ class UserController extends BaseController
     /**
      * @Route("/{id}", requirements={"id": "\d+"}, methods={"PUT"})
      *
+     * @param ValidatorInterface $validator
      * @param Request $request
      * @param User $entity
      *
-     * @throws ORMException
-     *
      * @return JsonResponse
      */
-    public function updateAction(Request $request, User $entity): JsonResponse
+    public function updateAction(ValidatorInterface $validator, Request $request, User $entity): JsonResponse
     {
         $form = $this->createObjectForm('user', UserFormType::class, true);
         $form->handleRequest($request);
@@ -79,9 +78,25 @@ class UserController extends BaseController
             return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $result = $this->getDataConverter()->saveUser($entity, $formData['user']);
+        UserTransformer::reverseTransform($entity, $formData['user']);
+        $errors = $validator->validate($entity);
+        if (count($errors) > 0) {
+            $responseData = ['errors' => []];
+            /* @var ConstraintViolationInterface $violation */
+            foreach ($errors as $violation) {
+                $responseData['errors'][] = [
+                    'message' => $violation->getMessage(),
+                    'path' => $violation->getPropertyPath(),
+                ];
+            }
 
-        return new JsonResponse($result);
+            return new JsonResponse($responseData, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $this->em->persist($entity);
+        $this->em->flush();
+
+        return new JsonResponse($this->getDataConverter()->getUser($entity));
     }
 
     /**

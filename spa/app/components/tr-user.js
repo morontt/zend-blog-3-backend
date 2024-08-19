@@ -3,6 +3,10 @@ import Ember from 'ember';
 export default Ember.Component.extend({
     tagName: 'tr',
     isEditing: false,
+    userRoles: [
+        {value: 'admin', label: 'admin'},
+        {value: 'guest', label: 'guest'},
+    ],
     actions: {
         edit: function () {
             this.set('isEditing', true);

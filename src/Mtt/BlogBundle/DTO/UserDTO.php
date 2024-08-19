@@ -2,10 +2,11 @@
 
 namespace Mtt\BlogBundle\DTO;
 
-class UserDTO
+class UserDTO extends BaseObject
 {
-    /**
-     * @var int
-     */
-    public $id;
+    public $username;
+    public $displayName;
+    public $email;
+    public $role;
+    public $isMale;
 }
