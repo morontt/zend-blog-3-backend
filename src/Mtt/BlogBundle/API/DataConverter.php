@@ -19,8 +19,6 @@ use League\Fractal\Resource\Item;
 use Mtt\BlogBundle\DTO\ArticleDTO;
 use Mtt\BlogBundle\DTO\CategoryDTO;
 use Mtt\BlogBundle\DTO\PygmentsCodeDTO;
-use Mtt\BlogBundle\DTO\PygmentsLanguageDTO;
-use Mtt\BlogBundle\DTO\TagDTO;
 use Mtt\BlogBundle\Entity;
 use Mtt\BlogBundle\Entity\Repository\CategoryRepository;
 use Mtt\BlogBundle\Entity\Repository\CommentRepository;
@@ -107,21 +105,6 @@ class DataConverter
 
         $this->em = $em;
         $this->textProcessor = $textProcessor;
-    }
-
-    /**
-     * @param Entity\Tag $entity
-     * @param TagDTO $data
-     *
-     * @return array
-     */
-    public function saveTag(Entity\Tag $entity, TagDTO $data): array
-    {
-        Transformers\TagTransformer::reverseTransform($entity, $data);
-
-        $this->save($entity);
-
-        return $this->getTag($entity);
     }
 
     /**
@@ -271,21 +254,6 @@ class DataConverter
         $this->save($entity);
 
         return $this->getMediaFile(new Image($entity));
-    }
-
-    /**
-     * @param Entity\PygmentsLanguage $entity
-     * @param PygmentsLanguageDTO $data
-     *
-     * @return array
-     */
-    public function savePygmentsLanguage(Entity\PygmentsLanguage $entity, PygmentsLanguageDTO $data): array
-    {
-        Transformers\PygmentsLanguageTransformer::reverseTransform($entity, $data);
-
-        $this->save($entity);
-
-        return $this->getPygmentsLanguage($entity);
     }
 
     /**

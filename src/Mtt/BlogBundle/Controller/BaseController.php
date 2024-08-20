@@ -19,6 +19,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\Validator\ConstraintViolationInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class BaseController extends AbstractController
 {
@@ -152,5 +154,23 @@ class BaseController extends AbstractController
         $fb->add($child, $type);
 
         return $fb->getForm();
+    }
+
+    protected function validate(ValidatorInterface $validator, object $entity): array
+    {
+        $errors = [];
+        $violations = $validator->validate($entity);
+        if (count($violations) > 0) {
+            $errors = ['errors' => []];
+            /* @var ConstraintViolationInterface $violation */
+            foreach ($violations as $violation) {
+                $errors['errors'][] = [
+                    'message' => $violation->getMessage(),
+                    'path' => $violation->getPropertyPath(),
+                ];
+            }
+        }
+
+        return $errors;
     }
 }

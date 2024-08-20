@@ -2,6 +2,7 @@
 
 namespace Mtt\BlogBundle\Controller\API;
 
+use Mtt\BlogBundle\API\Transformers\PygmentsLanguageTransformer;
 use Mtt\BlogBundle\Controller\BaseController;
 use Mtt\BlogBundle\Entity\PygmentsLanguage;
 use Mtt\BlogBundle\Entity\Repository\PygmentsLanguageRepository;
@@ -10,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("/api/pygmentsLanguages")
@@ -57,11 +59,12 @@ class PygmentsLanguageController extends BaseController
     /**
      * @Route("", methods={"POST"})
      *
+     * @param ValidatorInterface $validator
      * @param Request $request
      *
      * @return JsonResponse
      */
-    public function createAction(Request $request): JsonResponse
+    public function createAction(ValidatorInterface $validator, Request $request): JsonResponse
     {
         $form = $this->createObjectForm('pygmentsLanguage', PygmentsLanguageFormType::class);
         $form->handleRequest($request);
@@ -71,21 +74,30 @@ class PygmentsLanguageController extends BaseController
             return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $result = $this->getDataConverter()
-            ->savePygmentsLanguage(new PygmentsLanguage(), $formData['pygmentsLanguage']);
+        $entity = new PygmentsLanguage();
+        PygmentsLanguageTransformer::reverseTransform($entity, $formData['pygmentsLanguage']);
 
-        return new JsonResponse($result, Response::HTTP_CREATED);
+        $errors = $this->validate($validator, $entity);
+        if (count($errors) > 0) {
+            return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $this->em->persist($entity);
+        $this->em->flush();
+
+        return new JsonResponse($this->getDataConverter()->getPygmentsLanguage($entity), Response::HTTP_CREATED);
     }
 
     /**
      * @Route("/{id}", requirements={"id": "\d+"}, methods={"PUT"})
      *
+     * @param ValidatorInterface $validator
      * @param Request $request
      * @param PygmentsLanguage $entity
      *
      * @return JsonResponse
      */
-    public function updateAction(Request $request, PygmentsLanguage $entity): JsonResponse
+    public function updateAction(ValidatorInterface $validator, Request $request, PygmentsLanguage $entity): JsonResponse
     {
         $form = $this->createObjectForm('pygmentsLanguage', PygmentsLanguageFormType::class, true);
         $form->handleRequest($request);
@@ -95,10 +107,17 @@ class PygmentsLanguageController extends BaseController
             return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $result = $this->getDataConverter()
-            ->savePygmentsLanguage($entity, $formData['pygmentsLanguage']);
+        PygmentsLanguageTransformer::reverseTransform($entity, $formData['pygmentsLanguage']);
 
-        return new JsonResponse($result);
+        $errors = $this->validate($validator, $entity);
+        if (count($errors) > 0) {
+            return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $this->em->persist($entity);
+        $this->em->flush();
+
+        return new JsonResponse($this->getDataConverter()->getPygmentsLanguage($entity));
     }
 
     /**

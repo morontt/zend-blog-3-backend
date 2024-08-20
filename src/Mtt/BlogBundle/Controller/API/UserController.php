@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -79,18 +78,10 @@ class UserController extends BaseController
         }
 
         UserTransformer::reverseTransform($entity, $formData['user']);
-        $errors = $validator->validate($entity);
-        if (count($errors) > 0) {
-            $responseData = ['errors' => []];
-            /* @var ConstraintViolationInterface $violation */
-            foreach ($errors as $violation) {
-                $responseData['errors'][] = [
-                    'message' => $violation->getMessage(),
-                    'path' => $violation->getPropertyPath(),
-                ];
-            }
 
-            return new JsonResponse($responseData, Response::HTTP_UNPROCESSABLE_ENTITY);
+        $errors = $this->validate($validator, $entity);
+        if (count($errors) > 0) {
+            return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         $this->em->persist($entity);
@@ -119,18 +110,9 @@ class UserController extends BaseController
         if (!$user) {
             $user = $userManager->createFromExternalDTO($userDTO);
 
-            $errors = $validator->validate($user);
+            $errors = $this->validate($validator, $user);
             if (count($errors) > 0) {
-                $responseData = ['errors' => []];
-                /* @var ConstraintViolationInterface $violation */
-                foreach ($errors as $violation) {
-                    $responseData['errors'][] = [
-                        'message' => $violation->getMessage(),
-                        'path' => $violation->getPropertyPath(),
-                    ];
-                }
-
-                return new JsonResponse($responseData, Response::HTTP_UNPROCESSABLE_ENTITY);
+                return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
             }
 
             $this->em->persist($user);

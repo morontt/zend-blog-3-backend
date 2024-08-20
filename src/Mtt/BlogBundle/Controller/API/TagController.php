@@ -9,6 +9,7 @@
 namespace Mtt\BlogBundle\Controller\API;
 
 use Doctrine\ORM\ORMException;
+use Mtt\BlogBundle\API\Transformers\TagTransformer;
 use Mtt\BlogBundle\Controller\BaseController;
 use Mtt\BlogBundle\Entity\Repository\TagRepository;
 use Mtt\BlogBundle\Entity\Tag;
@@ -17,6 +18,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @Route("/api/tags")
@@ -66,11 +68,12 @@ class TagController extends BaseController
     /**
      * @Route("", methods={"POST"})
      *
+     * @param ValidatorInterface $validator
      * @param Request $request
      *
      * @return JsonResponse
      */
-    public function createAction(Request $request): JsonResponse
+    public function createAction(ValidatorInterface $validator, Request $request): JsonResponse
     {
         $form = $this->createObjectForm('tag', TagFormType::class);
         $form->handleRequest($request);
@@ -80,20 +83,30 @@ class TagController extends BaseController
             return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $result = $this->getDataConverter()->saveTag(new Tag(), $formData['tag']);
+        $entity = new Tag();
+        TagTransformer::reverseTransform($entity, $formData['tag']);
 
-        return new JsonResponse($result, Response::HTTP_CREATED);
+        $errors = $this->validate($validator, $entity);
+        if (count($errors) > 0) {
+            return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $this->em->persist($entity);
+        $this->em->flush();
+
+        return new JsonResponse($this->getDataConverter()->getTag($entity), Response::HTTP_CREATED);
     }
 
     /**
      * @Route("/{id}", requirements={"id": "\d+"}, methods={"PUT"})
      *
+     * @param ValidatorInterface $validator
      * @param Request $request
      * @param Tag $entity
      *
      * @return JsonResponse
      */
-    public function updateAction(Request $request, Tag $entity): JsonResponse
+    public function updateAction(ValidatorInterface $validator, Request $request, Tag $entity): JsonResponse
     {
         $form = $this->createObjectForm('tag', TagFormType::class, true);
         $form->handleRequest($request);
@@ -103,9 +116,17 @@ class TagController extends BaseController
             return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $result = $this->getDataConverter()->saveTag($entity, $formData['tag']);
+        TagTransformer::reverseTransform($entity, $formData['tag']);
 
-        return new JsonResponse($result);
+        $errors = $this->validate($validator, $entity);
+        if (count($errors) > 0) {
+            return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $this->em->persist($entity);
+        $this->em->flush();
+
+        return new JsonResponse($this->getDataConverter()->getTag($entity));
     }
 
     /**

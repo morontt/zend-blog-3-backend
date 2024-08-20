@@ -33,7 +33,7 @@ class PygmentsLanguage
     private $name;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=16, nullable=true)
      */
@@ -76,11 +76,11 @@ class PygmentsLanguage
     }
 
     /**
-     * @param string $lexer
+     * @param string|null $lexer
      *
      * @return PygmentsLanguage
      */
-    public function setLexer(string $lexer): self
+    public function setLexer(string $lexer = null): self
     {
         $this->lexer = $lexer;
 
