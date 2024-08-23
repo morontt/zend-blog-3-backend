@@ -34,6 +34,13 @@ use Xelbot\Telegram\Robot;
  */
 class CommentController extends BaseController
 {
+    protected array $errorsPathMap = [
+        'children[text].data' => 'comment_text',
+        'children[commentator].children[name].data' => 'name',
+        'children[commentator].children[email].data' => 'email',
+        'children[commentator].children[website].data' => 'website',
+    ];
+
     /**
      * @Route("", methods={"GET"})
      *

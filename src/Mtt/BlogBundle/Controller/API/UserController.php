@@ -20,6 +20,14 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class UserController extends BaseController
 {
+    protected array $errorsPathMap = [
+        'children[user].children[username].data' => 'username',
+        'children[user].children[displayName].data' => 'displayName',
+        'children[user].children[email].data' => 'email',
+        'username' => 'username',
+        'email' => 'email',
+    ];
+
     /**
      * @Route("", methods={"GET"})
      *

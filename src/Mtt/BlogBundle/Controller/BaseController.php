@@ -39,6 +39,8 @@ class BaseController extends AbstractController
      */
     protected $apiDataConverter;
 
+    protected array $errorsPathMap = [];
+
     /**
      * @param EntityManagerInterface $em
      * @param PaginatorInterface $paginator
@@ -122,7 +124,7 @@ class BaseController extends AbstractController
                 foreach ($form->getErrors(true) as $formError) {
                     $errors['errors'][] = [
                         'message' => $formError->getMessage(),
-                        'path' => $formError->getCause()->getPropertyPath(),
+                        'path' => $this->fixErrorPath($formError->getCause()->getPropertyPath()),
                     ];
                 }
 
@@ -166,11 +168,16 @@ class BaseController extends AbstractController
             foreach ($violations as $violation) {
                 $errors['errors'][] = [
                     'message' => $violation->getMessage(),
-                    'path' => $violation->getPropertyPath(),
+                    'path' => $this->fixErrorPath($violation->getPropertyPath()),
                 ];
             }
         }
 
         return $errors;
+    }
+
+    private function fixErrorPath(string $path): string
+    {
+        return $this->errorsPathMap[$path] ?? 'unknown';
     }
 }
