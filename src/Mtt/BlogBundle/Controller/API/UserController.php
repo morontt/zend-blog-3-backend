@@ -8,7 +8,10 @@ use Mtt\BlogBundle\DTO\ExternalUserDTO;
 use Mtt\BlogBundle\Form\UserFormType;
 use Mtt\UserBundle\Entity\Repository\UserRepository;
 use Mtt\UserBundle\Entity\User;
+use Mtt\UserBundle\Event\UserExtraEvent;
+use Mtt\UserBundle\MttUserEvents;
 use Mtt\UserBundle\Service\UserManager;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -104,6 +107,7 @@ class UserController extends BaseController
      * @param ExternalUserDTO $userDTO
      * @param UserManager $userManager
      * @param ValidatorInterface $validator
+     * @param EventDispatcherInterface $dispatcher
      * @param Request $request
      *
      * @return JsonResponse
@@ -112,6 +116,7 @@ class UserController extends BaseController
         ExternalUserDTO $userDTO,
         UserManager $userManager,
         ValidatorInterface $validator,
+        EventDispatcherInterface $dispatcher,
         Request $request
     ): JsonResponse {
         [$user, $foundInfo] = $userManager->findByExternalDTO($userDTO);
@@ -128,12 +133,14 @@ class UserController extends BaseController
         }
 
         if (!$foundInfo) {
-            $userManager->saveUserExtraInfo(
+            $userInfo = $userManager->saveUserExtraInfo(
                 $userDTO,
                 $user,
                 $request->request->get('ipAddress'),
                 $request->request->get('userAgent')
             );
+
+            $dispatcher->dispatch(MttUserEvents::EXTERNAL_USER_CREATED, new UserExtraEvent($userInfo));
         }
 
         return new JsonResponse(

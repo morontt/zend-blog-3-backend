@@ -137,6 +137,13 @@ class User implements UserInterface, Serializable
      */
     private $gender = self::MALE;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="smallint", options={"default": 0, "unsigned": true})
+     */
+    private $avatarVariant = 0;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -194,7 +201,10 @@ class User implements UserInterface, Serializable
     {
         $genderOption = ($this->getGender() === self::MALE) ? HashId::MALE : HashId::FEMALE;
 
-        return HashId::hash($this->getId(), HashId::TYPE_USER | $genderOption);
+        $options = HashId::TYPE_USER | $genderOption;
+        $options += $this->getAvatarVariant() << 4;
+
+        return HashId::hash($this->getId(), $options);
     }
 
     /**
@@ -532,6 +542,18 @@ class User implements UserInterface, Serializable
     public function setGender(int $gender): self
     {
         $this->gender = $gender;
+
+        return $this;
+    }
+
+    public function getAvatarVariant(): int
+    {
+        return $this->avatarVariant;
+    }
+
+    public function setAvatarVariant(int $avatarVariant): self
+    {
+        $this->avatarVariant = $avatarVariant;
 
         return $this;
     }

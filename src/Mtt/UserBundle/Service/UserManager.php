@@ -136,7 +136,7 @@ class UserManager
         $this->em->flush();
     }
 
-    public function saveUserExtraInfo(ExternalUserDTO $data, User $user, ?string $ip, ?string $userAgent): void
+    public function saveUserExtraInfo(ExternalUserDTO $data, User $user, ?string $ip, ?string $userAgent): UserExtraInfo
     {
         $agent = $userAgent ? $this->tracking->getTrackingAgent($userAgent) : null;
 
@@ -164,5 +164,7 @@ class UserManager
 
         $this->em->persist($userInfo);
         $this->em->flush();
+
+        return $userInfo;
     }
 }

@@ -6,11 +6,15 @@ services:
 
     Mtt\UserBundle\:
         resource: '../../*'
-        exclude: '../../{Entity,Security/Authentication/Token}'
+        exclude: '../../{Entity,Security/Authentication/Token,OAuth/Providers}'
 
     Mtt\UserBundle\Entity\Repository\:
         resource: '../../Entity/Repository'
         tags: ['doctrine.repository_service']
+
+    Mtt\UserBundle\EventListener\AvatarListener:
+        tags:
+            - { name: kernel.event_listener, event: mtt_user.external_user.created, method: onCreate }
 
     Mtt\UserBundle\EventListener\LoginListener:
         tags:
