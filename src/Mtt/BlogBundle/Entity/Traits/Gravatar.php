@@ -33,7 +33,12 @@ trait Gravatar
         }
 
         $gender = ($this->getGender() === User::MALE) ? HashId::MALE : HashId::FEMALE;
+        $options = $userType | $gender;
 
-        return HashId::hash($id, $userType | $gender);
+        if (method_exists($this, 'getAvatarVariant')) {
+            $options += $this->getAvatarVariant() << 4;
+        }
+
+        return HashId::hash($id, $options);
     }
 }

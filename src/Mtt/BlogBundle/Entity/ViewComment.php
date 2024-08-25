@@ -174,6 +174,13 @@ class ViewComment implements CommentInterface
      */
     protected $bot = false;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="smallint")
+     */
+    private $avatarVariant;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
@@ -394,5 +401,10 @@ class ViewComment implements CommentInterface
     public function isBot(): bool
     {
         return $this->bot;
+    }
+
+    public function getAvatarVariant(): int
+    {
+        return $this->avatarVariant;
     }
 }

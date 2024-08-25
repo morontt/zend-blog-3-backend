@@ -68,6 +68,13 @@ class ViewCommentator implements CommentatorInterface
     private $gender = User::MALE;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(type="smallint")
+     */
+    private $avatarVariant;
+
+    /**
      * Get id
      *
      * @return int|null
@@ -129,5 +136,10 @@ class ViewCommentator implements CommentatorInterface
     public function getEmailCheck(): ?DateTime
     {
         return $this->emailCheck;
+    }
+
+    public function getAvatarVariant(): int
+    {
+        return $this->avatarVariant;
     }
 }
