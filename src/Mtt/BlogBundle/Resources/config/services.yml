@@ -88,6 +88,10 @@ services:
         tags:
             - { name: kernel.event_listener, event: mtt_blog.code_updated, method: onUpdate }
 
+    Mtt\BlogBundle\EventListener\UserCommentsListener:
+        tags:
+            - { name: kernel.event_listener, event: mtt_user.user_updated, method: onUpdate }
+
     Mtt\BlogBundle\Cron\Daily\DatabaseBackup:
         arguments:
             - "%database_host%"

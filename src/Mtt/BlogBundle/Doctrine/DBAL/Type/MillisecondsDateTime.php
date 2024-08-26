@@ -10,8 +10,8 @@ use Doctrine\DBAL\Types\Type;
 
 class MillisecondsDateTime extends Type
 {
-    const NAME = 'milliseconds_dt';
-    const FORMAT_TIME = 'Y-m-d H:i:s.v';
+    public const NAME = 'milliseconds_dt';
+    public const FORMAT_TIME = 'Y-m-d H:i:s.v';
 
     /**
      * @param array $fieldDeclaration
@@ -59,7 +59,7 @@ class MillisecondsDateTime extends Type
      *
      * @throws ConversionException
      *
-     * @return DateTime
+     * @return DateTime|null
      */
     public function convertToPHPValue($value, AbstractPlatform $platform)
     {

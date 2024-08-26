@@ -6,7 +6,7 @@ services:
 
     Mtt\UserBundle\:
         resource: '../../*'
-        exclude: '../../{Entity,Security/Authentication/Token,OAuth/Providers}'
+        exclude: '../../{Entity,Security/Authentication/Token,OAuth/Providers,Event}'
 
     Mtt\UserBundle\Entity\Repository\:
         resource: '../../Entity/Repository'

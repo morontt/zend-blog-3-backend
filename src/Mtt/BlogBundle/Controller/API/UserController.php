@@ -8,6 +8,7 @@ use Mtt\BlogBundle\DTO\ExternalUserDTO;
 use Mtt\BlogBundle\Form\UserFormType;
 use Mtt\UserBundle\Entity\Repository\UserRepository;
 use Mtt\UserBundle\Entity\User;
+use Mtt\UserBundle\Event\UserEvent;
 use Mtt\UserBundle\Event\UserExtraEvent;
 use Mtt\UserBundle\MttUserEvents;
 use Mtt\UserBundle\Service\UserManager;
@@ -73,13 +74,18 @@ class UserController extends BaseController
      * @Route("/{id}", requirements={"id": "\d+"}, methods={"PUT"})
      *
      * @param ValidatorInterface $validator
+     * @param EventDispatcherInterface $dispatcher
      * @param Request $request
      * @param User $entity
      *
      * @return JsonResponse
      */
-    public function updateAction(ValidatorInterface $validator, Request $request, User $entity): JsonResponse
-    {
+    public function updateAction(
+        ValidatorInterface $validator,
+        EventDispatcherInterface $dispatcher,
+        Request $request,
+        User $entity
+    ): JsonResponse {
         $form = $this->createObjectForm('user', UserFormType::class, true);
         $form->handleRequest($request);
 
@@ -97,6 +103,8 @@ class UserController extends BaseController
 
         $this->em->persist($entity);
         $this->em->flush();
+
+        $dispatcher->dispatch(MttUserEvents::USER_UPDATED, new UserEvent($entity));
 
         return new JsonResponse($this->getDataConverter()->getUser($entity));
     }

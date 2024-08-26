@@ -26,7 +26,7 @@ class ReplyCommentListener
     /**
      * @param CommentEvent $event
      */
-    public function onReply(CommentEvent $event)
+    public function onReply(CommentEvent $event): void
     {
         $this->mailer->replyComment($event->getComment());
     }

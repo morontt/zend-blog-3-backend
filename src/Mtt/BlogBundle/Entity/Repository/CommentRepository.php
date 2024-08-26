@@ -4,6 +4,7 @@ namespace Mtt\BlogBundle\Entity\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Mtt\BlogBundle\Doctrine\DBAL\Type\MillisecondsDateTime;
 use Mtt\BlogBundle\Entity\Comment;
 use Mtt\BlogBundle\Entity\GeoLocation;
 
@@ -60,6 +61,20 @@ class CommentRepository extends ServiceEntityRepository
             ->where($qb->expr()->eq('c.ipAddress', ':ip'))
             ->setParameter('location', $location->getId())
             ->setParameter('ip', $ip)
+        ;
+
+        $qb->getQuery()->execute();
+    }
+
+    public function updateUserComments(int $userId)
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb
+            ->update()
+            ->set('c.lastUpdate', ':now')
+            ->where($qb->expr()->eq('c.user', ':id'))
+            ->setParameter('now', (new \DateTime())->format(MillisecondsDateTime::FORMAT_TIME))
+            ->setParameter('id', $userId)
         ;
 
         $qb->getQuery()->execute();

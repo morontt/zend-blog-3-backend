@@ -22,7 +22,7 @@ class CommentatorCheckListener
         $this->em = $em;
     }
 
-    public function onReply(CommentEvent $event)
+    public function onReply(CommentEvent $event): void
     {
         $commentator = $event->getComment()->getCommentator();
         if (!$commentator || (!$commentator->getEmail() && !$commentator->getWebsite())) {

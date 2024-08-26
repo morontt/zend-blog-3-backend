@@ -179,7 +179,7 @@ class ViewComment implements CommentInterface
      *
      * @ORM\Column(type="smallint")
      */
-    private $avatarVariant;
+    private $avatarVariant = 0;
 
     public function __construct()
     {

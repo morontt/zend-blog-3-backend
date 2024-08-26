@@ -72,7 +72,7 @@ class ViewCommentator implements CommentatorInterface
      *
      * @ORM\Column(type="smallint")
      */
-    private $avatarVariant;
+    private $avatarVariant = 0;
 
     /**
      * Get id
