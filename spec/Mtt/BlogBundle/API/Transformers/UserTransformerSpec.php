@@ -68,5 +68,17 @@ class UserTransformerSpec extends ObjectBehavior
             'isMale' => false,
             'createdAt' => '2024-08-11T11:28:39+03:00',
         ]);
+
+        $user->setAvatarVariant(1);
+        $this->transform($user)->shouldReturn([
+            'id' => 176,
+            'username' => 'Helga',
+            'displayName' => 'Хельга',
+            'email' => 'helga@example.org',
+            'role' => 'guest',
+            'imageHash' => 'R7WTVY',
+            'isMale' => false,
+            'createdAt' => '2024-08-11T11:28:39+03:00',
+        ]);
     }
 }
