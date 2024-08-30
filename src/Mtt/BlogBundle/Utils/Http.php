@@ -11,13 +11,13 @@ namespace Mtt\BlogBundle\Utils;
 class Http
 {
     /**
-     * @return mixed
+     * @return string|null
      */
-    public static function getClientIp()
+    public static function getClientIp(): ?string
     {
-        if (self::getServer('HTTP_CLIENT_IP') != null) {
+        if (self::getServer('HTTP_CLIENT_IP') !== null) {
             $ip = self::getServer('HTTP_CLIENT_IP');
-        } elseif (self::getServer('HTTP_X_FORWARDED_FOR') != null) {
+        } elseif (self::getServer('HTTP_X_FORWARDED_FOR') !== null) {
             $ip = self::getServer('HTTP_X_FORWARDED_FOR');
         } else {
             $ip = self::getServer('REMOTE_ADDR');
@@ -27,11 +27,11 @@ class Http
     }
 
     /**
-     * @param string|null $key
+     * @param string $key
      *
-     * @return mixed
+     * @return string|null
      */
-    public static function getServer($key)
+    public static function getServer(string $key): ?string
     {
         return $_SERVER[$key] ?? null;
     }

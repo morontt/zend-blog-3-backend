@@ -6,10 +6,10 @@ use Hashids\Hashids;
 
 class HashId
 {
-    const TYPE_USER = 1;
-    const TYPE_COMMENTATOR = 2;
-    const MALE = 4;
-    const FEMALE = 8;
+    public const TYPE_USER = 1;
+    public const TYPE_COMMENTATOR = 2;
+    public const MALE = 4;
+    public const FEMALE = 8;
 
     /**
      * @param int $id

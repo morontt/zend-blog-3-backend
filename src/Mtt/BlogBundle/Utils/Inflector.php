@@ -103,7 +103,7 @@ class Inflector
         }
 
         foreach (self::$irregularPairs as $rule) {
-            if ($rule[0] == $lastWord) {
+            if ($rule[0] === $lastWord) {
                 $substitution = $rule[1];
                 if ($isCamelized) {
                     $substitution = ucfirst($substitution);

@@ -4,6 +4,10 @@ namespace Mtt\BlogBundle\Service;
 
 use Mtt\BlogBundle\DTO\EmailMessageDTO;
 use Mtt\BlogBundle\Entity\Comment;
+use Mtt\BlogBundle\Entity\EmailSubscriptionSettings;
+use Mtt\BlogBundle\Entity\Repository\EmailSubscriptionSettingsRepository;
+use Mtt\BlogBundle\Utils\HashId;
+use Mtt\BlogBundle\Utils\VerifyEmail;
 use Swift_Mailer;
 use Swift_Message;
 use Twig\Environment as TwigEnvironment;
@@ -32,17 +36,34 @@ class Mailer
     private $bot;
 
     /**
+     * @var string
+     */
+    private $frontendSite;
+
+    private EmailSubscriptionSettingsRepository $subscriptionRepository;
+
+    /**
      * @param Swift_Mailer $mailer
      * @param TwigEnvironment $twig
      * @param Robot $bot
+     * @param EmailSubscriptionSettingsRepository $subscriptionRepository
+     * @param string $frontendSite
      * @param string $emailFrom
      */
-    public function __construct(Swift_Mailer $mailer, TwigEnvironment $twig, Robot $bot, string $emailFrom)
-    {
+    public function __construct(
+        Swift_Mailer $mailer,
+        TwigEnvironment $twig,
+        Robot $bot,
+        EmailSubscriptionSettingsRepository $subscriptionRepository,
+        string $frontendSite,
+        string $emailFrom
+    ) {
         $this->mailer = $mailer;
         $this->twig = $twig;
         $this->emailFrom = $emailFrom;
         $this->bot = $bot;
+        $this->subscriptionRepository = $subscriptionRepository;
+        $this->frontendSite = $frontendSite;
     }
 
     public function replyComment(Comment $comment)
@@ -56,6 +77,7 @@ class Mailer
 
     public function newComment(Comment $comment, string $emailTo, bool $spool = true)
     {
+        $emailTo = VerifyEmail::normalize($emailTo);
         $context = $this->twig->mergeGlobals($this->context($comment));
 
         $template = $this->twig->load('MttBlogBundle:mails:newComment.html.twig');
@@ -74,6 +96,11 @@ class Mailer
 
     public function send(EmailMessageDTO $messageDTO): bool
     {
+        if ($this->isBlocked($messageDTO)) {
+            // successfully sent to black hole :)
+            return true;
+        }
+
         $successfullySent = false;
         try {
             $message = Swift_Message::newInstance()
@@ -87,6 +114,15 @@ class Mailer
             }
             if ($messageDTO->messageText) {
                 $message->addPart($messageDTO->messageText, 'text/plain');
+            }
+
+            if ($messageDTO->unsubscribeLink) {
+                $headers = $message->getHeaders();
+                $headers->addTextHeader(
+                    'List-Unsubscribe',
+                    sprintf('<%s%s>', $this->frontendSite, $messageDTO->unsubscribeLink)
+                );
+                $headers->addTextHeader('List-Unsubscribe-Post', 'List-Unsubscribe=One-Click');
             }
 
             $successfullySent = $this->mailer->send($message) > 0;
@@ -108,6 +144,10 @@ class Mailer
      */
     public function queueMessage(EmailMessageDTO $messageDTO): void
     {
+        if ($this->isBlocked($messageDTO)) {
+            return;
+        }
+
         try {
             $randomBytes = bin2hex(random_bytes(3));
         } catch (\Exception $e) {
@@ -175,7 +215,15 @@ class Mailer
             }
 
             if ($emailTo) {
-                $context = $this->twig->mergeGlobals($this->context($comment));
+                $emailTo = VerifyEmail::normalize($emailTo);
+                $unsubscribeLink = $this->unsubscribeLink($emailTo, EmailSubscriptionSettings::TYPE_COMMENT_REPLY);
+
+                $context = $this->twig->mergeGlobals(array_merge(
+                    $this->context($comment),
+                    [
+                        'unsubscribeLink' => $unsubscribeLink,
+                    ],
+                ));
 
                 $template = $this->twig->load('MttBlogBundle:mails:replyComment.html.twig');
                 $textTemplate = $this->twig->load('MttBlogBundle:mails:replyComment.txt.twig');
@@ -187,6 +235,7 @@ class Mailer
                 $message->to = [$emailTo => $recipient];
                 $message->messageHtml = $template->render($context);
                 $message->messageText = $textTemplate->render($context);
+                $message->unsubscribeLink = $unsubscribeLink;
 
                 $this->queueMessage($message);
             }
@@ -214,5 +263,25 @@ class Mailer
             'commentText' => $comment->getText(),
             'avatar' => $comment->getAvatarHash() . '.png',
         ];
+    }
+
+    private function isBlocked(EmailMessageDTO $messageDTO): bool
+    {
+        if ($messageDTO->type === 0) {
+            return false;
+        }
+
+        $email = $messageDTO->getRecipientEmail();
+        $settings = $this->subscriptionRepository->findOneBy(['email' => $email, 'type' => $messageDTO->type]);
+
+        return $settings && $settings->isBlockSending();
+    }
+
+    private function unsubscribeLink(string $email, int $type): string
+    {
+        $settings = $this->subscriptionRepository->findOrCreate($email, $type);
+        $hash = HashId::hash($settings->getId(), mt_rand(1, 9999));
+
+        return '/email-unsubscribe/' . $hash;
     }
 }

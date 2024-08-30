@@ -32,6 +32,16 @@ class EmailMessageDTO implements Serializable
     public ?string $messageHtml;
 
     /**
+     * @var int
+     */
+    public $type = 0;
+
+    /**
+     * @var string|null
+     */
+    public $unsubscribeLink;
+
+    /**
      * @return string|null
      */
     public function serialize()
@@ -40,6 +50,8 @@ class EmailMessageDTO implements Serializable
             $this->subject,
             $this->from,
             $this->to,
+            $this->type,
+            $this->unsubscribeLink,
             $this->messageText,
             $this->messageHtml,
         ]);
@@ -54,8 +66,19 @@ class EmailMessageDTO implements Serializable
             $this->subject,
             $this->from,
             $this->to,
+            $this->type,
+            $this->unsubscribeLink,
             $this->messageText,
             $this->messageHtml
-            ) = unserialize($data);
+            ) = unserialize($data, ['allowed_classes' => false]);
+    }
+
+    public function getRecipientEmail(): string
+    {
+        if (is_array($this->to)) {
+            return array_key_first($this->to);
+        }
+
+        return $this->to;
     }
 }

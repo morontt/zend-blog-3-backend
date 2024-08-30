@@ -25,6 +25,11 @@ class VerifyEmail
         return $isValid;
     }
 
+    public static function normalize(string $email): string
+    {
+        return strtolower(trim($email));
+    }
+
     private static function getDomain(string $email)
     {
         $email_arr = explode('@', $email);

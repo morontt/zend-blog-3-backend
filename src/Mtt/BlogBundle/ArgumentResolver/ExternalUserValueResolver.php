@@ -3,6 +3,7 @@
 namespace Mtt\BlogBundle\ArgumentResolver;
 
 use Mtt\BlogBundle\DTO\ExternalUserDTO;
+use Mtt\BlogBundle\Utils\VerifyEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
@@ -29,7 +30,7 @@ class ExternalUserValueResolver implements ArgumentValueResolverInterface
 
         $email = $data['email'] ?? null;
         if (!empty($email)) {
-            $dto->email = strtolower(trim($email));
+            $dto->email = VerifyEmail::normalize($email);
         }
 
         $dto->username = $data['username'] ?? null;

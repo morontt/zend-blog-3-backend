@@ -18,7 +18,7 @@ class EmojiFlagSymbol
      *
      * @var int
      */
-    const INDICATOR_OFFSET = 127397;
+    private const INDICATOR_OFFSET = 127397;
 
     /**
      * @param string|null $countryCode

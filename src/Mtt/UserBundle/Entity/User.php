@@ -178,7 +178,7 @@ class User implements UserInterface, Serializable
             $this->username,
             $this->password,
             $this->salt
-            ) = unserialize($serialized);
+            ) = unserialize($serialized, ['allowed_classes' => false]);
     }
 
     /**
@@ -443,11 +443,11 @@ class User implements UserInterface, Serializable
     /**
      * Set ipAddressLast
      *
-     * @param string $ip
+     * @param string|null $ip
      *
      * @return User
      */
-    public function setIpAddressLast(string $ip): self
+    public function setIpAddressLast(string $ip = null): self
     {
         $this->ipAddressLast = $ip;
 
@@ -457,9 +457,9 @@ class User implements UserInterface, Serializable
     /**
      * Get ipAddressLast
      *
-     * @return string
+     * @return string|null
      */
-    public function getIpAddressLast(): string
+    public function getIpAddressLast(): ?string
     {
         return $this->ipAddressLast;
     }

@@ -110,6 +110,7 @@ services:
     Mtt\BlogBundle\Service\Mailer:
         arguments:
             $emailFrom: "%mailer_user%"
+            $frontendSite: "%frontend_site%"
 
     Mtt\BlogBundle\Service\SystemParametersStorage:
         arguments:
