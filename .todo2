@@ -578,6 +578,23 @@
           "creation": 1723306414
         }
       ]
+    },
+    {
+      "text": "Mail Space",
+      "priority": "medium",
+      "creation": 1725133867,
+      "tasks": [
+        {
+          "text": "https://help.mail.ru/cloud_web/app/webdav/",
+          "priority": "low",
+          "creation": 1725133954
+        },
+        {
+          "text": "https://github.com/fstanis/awesome-webdav?tab=readme-ov-file",
+          "priority": "low",
+          "creation": 1725133972
+        }
+      ]
     }
   ]
 }
