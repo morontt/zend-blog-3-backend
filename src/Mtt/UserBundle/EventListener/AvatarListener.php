@@ -82,6 +82,15 @@ class AvatarListener
                 $filename = '/var/www/resources/data/pictures/user.' . $user->getId() . $ext;
 
                 $filesystem = new Filesystem();
+                if ($filesystem->exists($filename)) {
+                    $filename = sprintf(
+                        '/var/www/resources/data/pictures/user.%d.%s%s',
+                        $user->getId(),
+                        substr(md5(microtime()), 0, 6),
+                        $ext
+                    );
+                }
+
                 try {
                     $filesystem->dumpFile($filename, $response->getBody()->getContents());
 
