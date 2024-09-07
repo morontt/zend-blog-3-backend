@@ -95,7 +95,7 @@ class UserExtraInfo
     /**
      * @var string|null
      *
-     * @ORM\Column(type="string", length=64, nullable=true)
+     * @ORM\Column(type="text", length=65535, nullable=true)
      */
     private $avatar;
 
