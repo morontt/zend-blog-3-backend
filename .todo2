@@ -595,6 +595,23 @@
           "creation": 1725133972
         }
       ]
+    },
+    {
+      "text": "Upgrade symfony",
+      "priority": "high",
+      "creation": 1726340929,
+      "tasks": [
+        {
+          "text": "https://symfony.com/doc/4.x/setup.html",
+          "priority": "low",
+          "creation": 1726340968
+        },
+        {
+          "text": "https://symfony.com/doc/4.x/setup/flex.html",
+          "priority": "low",
+          "creation": 1726340982
+        }
+      ]
     }
   ]
 }
