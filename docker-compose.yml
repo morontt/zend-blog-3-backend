@@ -3,6 +3,8 @@ services:
         build:
             context: ./docker/web
             # dockerfile: prod/Dockerfile
+            args:
+                HOST_UID: ${HOST_UID}
         platform: linux/amd64
         hostname: "rhinoceros"
         container_name: "rhinoceros"
