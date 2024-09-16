@@ -5,7 +5,9 @@
     "description": "zend-blog ver.3, backend",
     "autoload": {
         "psr-4": {
-            "": "src/"
+            "App\\": "src/App/",
+            "Mtt\\": "src/Mtt/",
+            "Xelbot\\": "src/Xelbot/"
         },
         "classmap": [
             "app/AppKernel.php",
