@@ -14,7 +14,9 @@
 /build/
 /vendor/
 /node_modules/
-/bin/
+/bin/*
+!/bin/console
+!/bin/phpunit
 /composer.phar
 /bower_components/
 behat.yml
