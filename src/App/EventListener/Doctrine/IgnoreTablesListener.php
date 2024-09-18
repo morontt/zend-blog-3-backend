@@ -1,6 +1,6 @@
 <?php
 
-namespace Mtt\BlogBundle\EventListener\Doctrine;
+namespace App\EventListener\Doctrine;
 
 use Doctrine\ORM\Tools\Event\GenerateSchemaEventArgs;
 
@@ -12,7 +12,6 @@ class IgnoreTablesListener
     public function postGenerateSchema(GenerateSchemaEventArgs $args)
     {
         $schema = $args->getSchema();
-
         $dbName = $args->getEntityManager()->getConnection()->getDatabase();
 
         foreach ($schema->getTableNames() as $tableName) {

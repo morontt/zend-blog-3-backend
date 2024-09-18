@@ -54,10 +54,6 @@ services:
         tags:
             - { name: doctrine.event_listener, event: preUpdate }
 
-    Mtt\BlogBundle\EventListener\Doctrine\IgnoreTablesListener:
-        tags:
-            - {name: doctrine.event_listener, event: postGenerateSchema }
-
     Mtt\BlogBundle\EventListener\Doctrine\MediaFilePictureListener:
         tags:
             - { name: doctrine.event_listener, event: preUpdate }
