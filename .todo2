@@ -593,6 +593,11 @@
           "text": "https://github.com/fstanis/awesome-webdav?tab=readme-ov-file",
           "priority": "low",
           "creation": 1725133972
+        },
+        {
+          "text": "Перенести бекапы БД и картинок",
+          "priority": "medium",
+          "creation": 1726664518
         }
       ]
     },
@@ -610,6 +615,23 @@
           "text": "https://symfony.com/doc/4.x/setup/flex.html",
           "priority": "low",
           "creation": 1726340982
+        },
+        {
+          "text": "Deploy",
+          "priority": "medium",
+          "creation": 1726664398,
+          "tasks": [
+            {
+              "text": "Подготовить конфиги",
+              "priority": "medium",
+              "creation": 1726664430
+            },
+            {
+              "text": "Залить doctrine_migrations в БД",
+              "priority": "medium",
+              "creation": 1726664455
+            }
+          ]
         }
       ]
     }
