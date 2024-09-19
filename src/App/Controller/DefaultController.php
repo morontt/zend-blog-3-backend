@@ -30,11 +30,11 @@ class DefaultController extends AbstractController
 
     private string $blogUrl;
 
-    public function __construct(string $kernelEnv, string $cdnUrl, string $blogUrl)
+    public function __construct(string $kernelEnv, string $cdnUrl, string $frontendSite)
     {
         $this->kernelEnv = $kernelEnv;
         $this->cdnUrl = $cdnUrl;
-        $this->blogUrl = $blogUrl;
+        $this->blogUrl = $frontendSite;
     }
 
     /**
@@ -45,11 +45,11 @@ class DefaultController extends AbstractController
      */
     public function indexAction()
     {
-        $isDev = $this->kernelEnv == 'dev';
+        $isDev = $this->kernelEnv === 'dev';
 
         $environment = [
             'modulePrefix' => 'mtt-blog',
-            'environment' => ($this->kernelEnv == 'prod') ? 'production' : 'development',
+            'environment' => ($this->kernelEnv === 'prod') ? 'production' : 'development',
             'baseURL' => '/',
             'locationType' => 'hash',
             'EmberENV' => [

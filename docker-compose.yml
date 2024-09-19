@@ -15,8 +15,8 @@ services:
             - app-logs:/var/www/html/var/logs
         tmpfs:
             - /tmp
-            - /var/www/html/var/cache:uid=33,gid=33
-            - /var/www/html/var/spool:uid=33,gid=33
+            - /var/www/html/var/cache:uid=${HOST_UID},gid=${HOST_UID}
+            - /var/www/html/var/spool:uid=${HOST_UID},gid=${HOST_UID}
         ports:
             - "8033:80"
         links:

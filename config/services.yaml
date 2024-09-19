@@ -4,6 +4,9 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    cdn_url: '%env(resolve:CDN_URL)%'
+    frontend_site: '%env(resolve:FRONT_SITE)%'
+    gitrepo_webhook_token: '%env(resolve:WEBHOOK_GIT_TOKEN)%'
 
 services:
     # default configuration for services in *this* file
@@ -13,12 +16,15 @@ services:
         public: false       # Allows optimizing the container by removing unused services; this also means
                             # fetching services directly from the container via $container->get() won't work.
                             # The best practice is to be explicit about your dependencies anyway.
+        bind:
+            $cdnUrl: '%cdn_url%'
+            $frontendSite: "%frontend_site%"
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/App/*'
-        exclude: '../src/App/{DependencyInjection,Entity,Model,Event,OAuth2/Client,OAuth2/Providers,Tests,Kernel.php,Utils,Doctrine/DBAL,DTO,Form,Exception}'
+        exclude: '../src/App/{DependencyInjection,Entity,Model,Event,OAuth2/Client,OAuth2/Providers,Tests,Service/IpInfo/LocationInfo.php,Kernel.php,Utils,Doctrine/DBAL,DTO,Form,Exception}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
@@ -32,3 +38,11 @@ services:
     App\EventListener\Doctrine\IgnoreTablesListener:
         tags:
             - { name: doctrine.event_listener, event: postGenerateSchema }
+
+    App\Controller\DefaultController:
+        arguments:
+            $kernelEnv: '%kernel.environment%'
+
+    App\Controller\GitRepoController:
+        arguments:
+            $secretToken: '%gitrepo_webhook_token%'
