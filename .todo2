@@ -630,6 +630,11 @@
               "text": "Залить doctrine_migrations в БД",
               "priority": "medium",
               "creation": 1726664455
+            },
+            {
+              "text": "docker-compose.yml on prod",
+              "priority": "medium",
+              "creation": 1726730317
             }
           ]
         }

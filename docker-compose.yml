@@ -10,7 +10,7 @@ services:
         container_name: "rhinoceros"
         volumes:
             - .:/var/www/html
-            - ./docker/web/apache_${APP_ENV}.conf:/etc/apache2/sites-available/000-default.conf:ro
+            - ./docker/web/apache.conf:/etc/apache2/sites-available/000-default.conf:ro
             - ${UPLOADS_PATH}:/var/www/resources
             - app-logs:/var/www/html/var/logs
         tmpfs:
