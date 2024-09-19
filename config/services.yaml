@@ -18,7 +18,7 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/App/*'
-        exclude: '../src/App/{DependencyInjection,Entity,Model,Event,OAuth2,Tests,Kernel.php,Utils,Doctrine/DBAL,DTO,Form,Exception}'
+        exclude: '../src/App/{DependencyInjection,Entity,Model,Event,OAuth2/Client,OAuth2/Providers,Tests,Kernel.php,Utils,Doctrine/DBAL,DTO,Form,Exception}'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
