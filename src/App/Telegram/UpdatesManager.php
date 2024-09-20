@@ -1,10 +1,10 @@
 <?php
 
-namespace Mtt\BlogBundle\Telegram;
+namespace App\Telegram;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Mtt\BlogBundle\Entity\TelegramUpdate;
-use Mtt\BlogBundle\Entity\TelegramUser;
+use App\Entity\TelegramUpdate;
+use App\Entity\TelegramUser;
 use Xelbot\Telegram\Entity\Update;
 use Xelbot\Telegram\UpdatesManagerInterface;
 
@@ -46,7 +46,7 @@ class UpdatesManager implements UpdatesManagerInterface
                     ;
 
                     if (isset($requestData['message']['from'])) {
-                        $dbUser->setRawMessage(json_encode($requestData['message']['from']));
+                        $dbUser->setRawMessage(json_encode($requestData['message']['from'], JSON_THROW_ON_ERROR));
                     }
                     $this->em->persist($dbUser);
                     $this->em->flush();
@@ -59,7 +59,7 @@ class UpdatesManager implements UpdatesManagerInterface
 
         $update = new TelegramUpdate();
         $update
-            ->setRawMessage(json_encode($requestData))
+            ->setRawMessage(json_encode($requestData, JSON_THROW_ON_ERROR))
             ->setTelegramUser($dbUser)
             ->setChatId($chatId)
             ->setTextMessage($textMessage)

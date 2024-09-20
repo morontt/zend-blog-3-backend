@@ -6,7 +6,7 @@
  * Time: 23:27
  */
 
-namespace Mtt\BlogBundle\Telegram;
+namespace App\Telegram;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

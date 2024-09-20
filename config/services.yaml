@@ -4,9 +4,22 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    cdn_url: '%env(resolve:CDN_URL)%'
-    frontend_site: '%env(resolve:FRONT_SITE)%'
-    gitrepo_webhook_token: '%env(resolve:WEBHOOK_GIT_TOKEN)%'
+    cdn_url: '%env(CDN_URL)%'
+    frontend_site: '%env(FRONT_SITE)%'
+    mailer_transport: smtp
+    mailer_host: '%env(MAILER_HOST)%'
+    mailer_port: '%env(MAILER_PORT)%'
+    mailer_user: '%env(MAILER_USER)%'
+    mailer_password: '%env(MAILER_PASSWORD)%'
+    mailer_encryption: '%env(MAILER_ENCRYPTION)%'
+    gitrepo_webhook_token: '%env(WEBHOOK_GIT_TOKEN)%'
+    telegram_token: '%env(TELEGRAM_TOKEN)%'
+    telegram_bot: '%env(TELEGRAM_BOT)%'
+    telegram_admin_id: '%env(CDN_URL)%'
+    telegram_webhook_token: '%env(TELEGRAM_WEBHOOK_TOKEN)%'
+    ipinfo_db_key: '%env(IPINFO_DB_KEY)%'
+    dropbox_key: '%env(DROPBOX_KEY)%'
+    dropbox_secret: '%env(DROPBOX_SECRET)%'
 
 services:
     # default configuration for services in *this* file
@@ -19,6 +32,8 @@ services:
         bind:
             $cdnUrl: '%cdn_url%'
             $frontendSite: "%frontend_site%"
+            $dropboxKey: "%dropbox_key%"
+            $dropboxSecret: "%dropbox_secret%"
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -31,6 +46,17 @@ services:
     App\Controller\:
         resource: '../src/App/Controller'
         tags: ['controller.service_arguments']
+
+    _instanceof:
+        App\Cron\DailyCronServiceInterface:
+            tags:
+                - { name: cron-daily }
+        App\Cron\HourlyCronServiceInterface:
+            tags:
+                - { name: cron-hourly }
+        Xelbot\Telegram\Command\TelegramCommandInterface:
+            tags:
+                - { name: telegram-command }
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
@@ -46,3 +72,33 @@ services:
     App\Controller\GitRepoController:
         arguments:
             $secretToken: '%gitrepo_webhook_token%'
+
+    App\Controller\TelegramController:
+        arguments:
+            $secretToken: '%telegram_webhook_token%'
+
+    App\Service\IpInfo\IpInfoDbClient:
+        arguments:
+            $key: "%ipinfo_db_key%"
+
+    App\Service\IpInfo\IpInfoClientInterface: '@App\Service\IpInfo\IpInfoDbClient'
+
+    App\Service\Mailer:
+        arguments:
+            $emailFrom: "%mailer_user%"
+
+    App\Service\SystemParametersStorage:
+        arguments:
+            $secret: '%env(APP_SECRET)%'
+
+    mtt_blog.telegram_bot:
+        class: Xelbot\Telegram\Robot
+        arguments:
+            - "%telegram_token%"
+            - "%telegram_bot%"
+            - "%telegram_admin_id%"
+        calls:
+            - [ setLogger, [ "@monolog.logger.telegram" ] ]
+            - [ setUpdatesManager, [ '@App\Telegram\UpdatesManager' ] ]
+
+    Xelbot\Telegram\Robot: '@mtt_blog.telegram_bot'

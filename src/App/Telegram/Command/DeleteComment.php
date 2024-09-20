@@ -1,19 +1,18 @@
 <?php
 
-namespace Mtt\BlogBundle\Telegram\Command;
+namespace App\Telegram\Command;
 
-use Mtt\BlogBundle\DTO\CommentDTO;
-use Mtt\BlogBundle\DTO\CommentUserDTO;
-use Mtt\BlogBundle\Entity\Repository\CommentRepository;
-use Mtt\BlogBundle\Service\CommentManager;
-use Mtt\BlogBundle\Utils\Http;
+use App\Repository\CommentRepository;
+use App\Event\CommentEvent;
+use App\Events;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Xelbot\Telegram\Command\AbstractAdminCommand;
 use Xelbot\Telegram\Command\TelegramCommandInterface;
 use Xelbot\Telegram\Command\TelegramCommandTrait;
 use Xelbot\Telegram\Entity\Message;
 use Xelbot\Telegram\Robot;
 
-class AnswerComment extends AbstractAdminCommand implements TelegramCommandInterface
+class DeleteComment extends AbstractAdminCommand implements TelegramCommandInterface
 {
     use TelegramCommandTrait;
 
@@ -23,45 +22,42 @@ class AnswerComment extends AbstractAdminCommand implements TelegramCommandInter
     private $repository;
 
     /**
-     * @var CommentManager
+     * @var EventDispatcherInterface
      */
-    private $commentManager;
+    private $dispatcher;
 
-    public function __construct(CommentRepository $repository, CommentManager $commentManager)
+    /**
+     * @param CommentRepository $repository
+     * @param EventDispatcherInterface $dispatcher
+     */
+    public function __construct(CommentRepository $repository, EventDispatcherInterface $dispatcher)
     {
         $this->repository = $repository;
-        $this->commentManager = $commentManager;
+        $this->dispatcher = $dispatcher;
     }
 
     public function getCommandName(): string
     {
-        return 'answer';
+        return 'deletecomment';
     }
 
+    /**
+     * @param Message $message
+     */
     protected function executeCommand(Message $message): void
     {
         $comment = null;
         $matches = [];
-        if (preg_match('/^\/answer (\d+)\s+(.+)$/ms', $message->getText(), $matches)) {
+        if (preg_match('/^\/deletecomment (\d+)$/', $message->getText(), $matches)) {
             $commentId = (int)$matches[1];
             $comment = $this->repository->find($commentId);
         }
 
         if ($comment) {
-            $commentData = new CommentDTO();
-            $commentData->topicId = $comment->getPost()->getId();
-            $commentData->parentId = $comment->getId();
-            $commentData->text = trim($matches[2]);
+            $this->repository->markAsDeleted($comment);
+            $this->dispatcher->dispatch(Events::DELETE_COMMENT, new CommentEvent($comment));
 
-            $commentData->userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
-            $commentData->ipAddress = Http::getClientIp();
-
-            $user = new CommentUserDTO();
-            $user->id = 1;
-            $commentData->user = $user;
-
-            $this->commentManager->saveExternalComment($commentData);
-
+            #TODO Null pointer exception may occur here
             $this->requester->sendMessage([
                 'chat_id' => $message->getChat()->getId(),
                 'text' => 'Готово ' . Robot::EMOJI_ROBOT,

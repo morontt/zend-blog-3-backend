@@ -30,12 +30,12 @@ class ImageManager
 
     /**
      * @param EntityManagerInterface $em
-     * @param string $cdn
+     * @param string $cdnUrl
      */
-    public function __construct(EntityManagerInterface $em, string $cdn)
+    public function __construct(EntityManagerInterface $em, string $cdnUrl)
     {
         $this->em = $em;
-        $this->imageBasepath = $cdn . self::getImageBasePath() . '/';
+        $this->imageBasepath = $cdnUrl . self::getImageBasePath() . '/';
     }
 
     /**

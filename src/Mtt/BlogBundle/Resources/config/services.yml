@@ -19,21 +19,6 @@ services:
         resource: '../../Controller'
         tags: ['controller.service_arguments']
 
-    _instanceof:
-        Mtt\BlogBundle\Cron\DailyCronServiceInterface:
-            tags:
-                - { name: cron-daily }
-        Mtt\BlogBundle\Cron\HourlyCronServiceInterface:
-            tags:
-                - { name: cron-hourly }
-        Xelbot\Telegram\Command\TelegramCommandInterface:
-            tags:
-                - { name: telegram-command }
-
-    Mtt\BlogBundle\Controller\TelegramController:
-        arguments:
-            $secretToken: '%telegram_webhook_token%'
-
     Mtt\BlogBundle\EventListener\JsonBodyListener:
         calls:
             - [ setTelegramLogger, [ "@monolog.logger.telegram" ]]
@@ -47,12 +32,6 @@ services:
     Mtt\BlogBundle\EventListener\Doctrine\MediaFilePictureListener:
         tags:
             - { name: doctrine.event_listener, event: preUpdate }
-
-    Mtt\BlogBundle\Service\IpInfo\IpInfoDbClient:
-        arguments:
-            $key: "%ipinfodb_key%"
-
-    Mtt\BlogBundle\Service\IpInfo\IpInfoClientInterface: '@Mtt\BlogBundle\Service\IpInfo\IpInfoDbClient'
 
     Mtt\BlogBundle\EventListener\CommentatorCheckListener:
         tags:
@@ -89,31 +68,6 @@ services:
         arguments:
             $adminId: "%telegram_admin_id%"
 
-    Mtt\BlogBundle\Service\ImageManager:
-        arguments:
-            $cdn: "%cdn_url%"
-
-    Mtt\BlogBundle\Service\Mailer:
-        arguments:
-            $emailFrom: "%mailer_user%"
-            $frontendSite: "%frontend_site%"
-
-    Mtt\BlogBundle\Service\SystemParametersStorage:
-        arguments:
-            $secret: "%secret%"
-
     mtt_blog.text_processor:
         alias: Mtt\BlogBundle\Service\TextProcessor
         public: true
-
-    mtt_blog.telegram_bot:
-        class: Xelbot\Telegram\Robot
-        arguments:
-            - "%telegram_token%"
-            - "%telegram_bot%"
-            - "%telegram_admin_id%"
-        calls:
-            - [ setLogger, [ "@monolog.logger.telegram" ]]
-            - [ setUpdatesManager, [ '@Mtt\BlogBundle\Telegram\UpdatesManager' ]]
-
-    Xelbot\Telegram\Robot: '@mtt_blog.telegram_bot'
