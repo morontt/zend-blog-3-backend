@@ -1,6 +1,6 @@
 <?php
 
-namespace Mtt\BlogBundle\Twig\Extension;
+namespace App\Exception\Twig;
 
 class AssetNotExistException extends \RuntimeException
 {

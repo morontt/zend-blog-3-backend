@@ -35,7 +35,7 @@ class Tracking
     public function getTrackingAgent(string $agentName): TrackingAgent
     {
         $hash = md5($agentName);
-        $agent = $this->em->getRepository('MttBlogBundle:TrackingAgent')->findOneByHash($hash);
+        $agent = $this->em->getRepository(TrackingAgent::class)->findOneByHash($hash);
         if (!$agent) {
             $agent = new TrackingAgent();
             $agent->setUserAgent($agentName);

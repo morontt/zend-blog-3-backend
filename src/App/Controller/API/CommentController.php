@@ -105,7 +105,7 @@ class CommentController extends BaseController
 
         $commentData = $request->request->get('comment');
         if ($commentData['parent']) {
-            $parent = $this->getEm()->getRepository('MttBlogBundle:Comment')->find((int)$commentData['parent']);
+            $parent = $this->getEm()->getRepository(Comment::class)->find((int)$commentData['parent']);
             if ($parent) {
                 $comment
                     ->setParent($parent)
@@ -117,7 +117,7 @@ class CommentController extends BaseController
         $this->getDataConverter()
             ->saveComment($comment, $commentData);
 
-        $dispatcher->dispatch(MttBlogEvents::REPLY_COMMENT, new CommentEvent($comment));
+        $dispatcher->dispatch(Events::REPLY_COMMENT, new CommentEvent($comment));
 
         return new JsonResponse($this->getDataConverter()->getComment($comment), Response::HTTP_CREATED);
     }

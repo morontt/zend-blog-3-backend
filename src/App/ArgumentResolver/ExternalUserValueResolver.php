@@ -1,9 +1,9 @@
 <?php
 
-namespace Mtt\BlogBundle\ArgumentResolver;
+namespace App\ArgumentResolver;
 
-use Mtt\BlogBundle\DTO\ExternalUserDTO;
-use Mtt\BlogBundle\Utils\VerifyEmail;
+use App\DTO\ExternalUserDTO;
+use App\Utils\VerifyEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;

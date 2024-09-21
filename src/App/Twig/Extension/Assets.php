@@ -1,7 +1,8 @@
 <?php
 
-namespace Mtt\BlogBundle\Twig\Extension;
+namespace App\Twig\Extension;
 
+use App\Exception\Twig\AssetNotExistException;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 

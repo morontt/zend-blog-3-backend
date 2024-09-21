@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Entity\Post;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Category;
 use App\Entity\Comment;
@@ -59,7 +60,7 @@ class InitNestedSetTreeCommand extends Command
         $handled = [];
 
         /* @var \App\Repository\CategoryRepository $categoryRepo */
-        $categoryRepo = $this->em->getRepository('MttBlogBundle:Category');
+        $categoryRepo = $this->em->getRepository(Category::class);
 
         $qb = $categoryRepo->createQueryBuilder('c');
         $qb->update()
@@ -119,7 +120,7 @@ class InitNestedSetTreeCommand extends Command
     private function handlePosts(OutputInterface $output)
     {
         /* @var \App\Repository\CommentRepository $commentsRepo */
-        $commentsRepo = $this->em->getRepository('MttBlogBundle:Comment');
+        $commentsRepo = $this->em->getRepository(Comment::class);
 
         $qb = $commentsRepo->createQueryBuilder('c');
         $qb->update()
@@ -131,7 +132,7 @@ class InitNestedSetTreeCommand extends Command
             ->execute()
         ;
 
-        $postRepo = $this->em->getRepository('MttBlogBundle:Post');
+        $postRepo = $this->em->getRepository(Post::class);
         $posts = $postRepo
             ->createQueryBuilder('p')
             ->select('p.id', 'p.url')

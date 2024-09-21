@@ -6,6 +6,7 @@
 parameters:
     cdn_url: '%env(CDN_URL)%'
     frontend_site: '%env(FRONT_SITE)%'
+    browsertitle: '%env(SITE_BROWSERTITLE)%'
     mailer_transport: smtp
     mailer_host: '%env(MAILER_HOST)%'
     mailer_port: '%env(MAILER_PORT)%'
@@ -15,7 +16,7 @@ parameters:
     gitrepo_webhook_token: '%env(WEBHOOK_GIT_TOKEN)%'
     telegram_token: '%env(TELEGRAM_TOKEN)%'
     telegram_bot: '%env(TELEGRAM_BOT)%'
-    telegram_admin_id: '%env(CDN_URL)%'
+    telegram_admin_id: '%env(int:TELEGRAM_ADMIN_ID)%'
     telegram_webhook_token: '%env(TELEGRAM_WEBHOOK_TOKEN)%'
     ipinfo_db_key: '%env(IPINFO_DB_KEY)%'
     dropbox_key: '%env(DROPBOX_KEY)%'
@@ -65,6 +66,55 @@ services:
         tags:
             - { name: doctrine.event_listener, event: postGenerateSchema }
 
+    App\EventListener\JsonBodyListener:
+        calls:
+            - [ setTelegramLogger, [ "@monolog.logger.telegram" ] ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 10 }
+
+    App\EventListener\Doctrine\ArticleUpdatedAtListener:
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate }
+
+#    Infinite loop:
+#    ImageManager -> DefaultEntityManager -> ImageManager -> ...
+#
+#    App\EventListener\Doctrine\MediaFilePictureListener:
+#        tags:
+#            - { name: doctrine.event_listener, event: preUpdate }
+
+    App\EventListener\CommentatorCheckListener:
+        tags:
+            - { name: kernel.event_listener, event: mtt_blog.reply_comment, method: onReply }
+
+    App\EventListener\CommentGeolocationListener:
+        tags:
+            - { name: kernel.event_listener, event: mtt_blog.reply_comment, method: onReply }
+
+    App\EventListener\NewCommentEmailListener:
+        tags:
+            - { name: kernel.event_listener, event: mtt_blog.reply_comment, method: onReply }
+
+    App\EventListener\ReplyCommentListener:
+        tags:
+            - { name: kernel.event_listener, event: mtt_blog.reply_comment, method: onReply }
+
+    App\EventListener\PygmentsCodeUpdateListener:
+        tags:
+            - { name: kernel.event_listener, event: mtt_blog.code_updated, method: onUpdate }
+
+    App\EventListener\UserCommentsListener:
+        tags:
+            - { name: kernel.event_listener, event: mtt_user.user_updated, method: onUpdate }
+
+    App\EventListener\AvatarListener:
+        tags:
+            - { name: kernel.event_listener, event: mtt_user.external_user.created, method: onCreate }
+
+    App\EventListener\LoginListener:
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login, method: onLogin }
+
     App\Controller\DefaultController:
         arguments:
             $kernelEnv: '%kernel.environment%'
@@ -90,6 +140,21 @@ services:
     App\Service\SystemParametersStorage:
         arguments:
             $secret: '%env(APP_SECRET)%'
+
+    App\Cron\Daily\DatabaseBackup:
+        arguments:
+            - '%env(DB_HOST)%'
+            - '%env(DB_NAME)%'
+            - '%env(DB_USER)%'
+            - '%env(DB_PASSWORD)%'
+
+    mtt_blog.text_processor:
+        alias: App\Service\TextProcessor
+        public: true
+
+    App\Cron\Hourly\TelegramUpdates:
+        arguments:
+            $adminId: "%telegram_admin_id%"
 
     mtt_blog.telegram_bot:
         class: Xelbot\Telegram\Robot

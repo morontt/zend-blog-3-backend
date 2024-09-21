@@ -27,7 +27,6 @@ use App\Service\TextProcessor;
 use App\Utils\Inflector;
 use App\Utils\Pygment;
 use App\Utils\RuTransform;
-use App\Entity\User;
 
 /**
  * Class DataConverter
@@ -56,7 +55,7 @@ use App\Entity\User;
  * @method array getTelegramUserArray($collection, $includes = null)
  * @method array getTelegramUpdate(Entity\TelegramUpdate $entity, $includes = null)
  * @method array getTelegramUpdateArray($collection, $includes = null)
- * @method array getUser(User $entity, $includes = null)
+ * @method array getUser(Entity\User $entity, $includes = null)
  * @method array getUserArray($collection, $includes = null)
  */
 class DataConverter
@@ -187,7 +186,7 @@ class DataConverter
 
         $this->textProcessor->processing($entity);
 
-        $entity->setCategory($this->em->getReference('MttBlogBundle:Category', (int)$data['categoryId']));
+        $entity->setCategory($this->em->getReference(Entity\Category::class, (int)$data['categoryId']));
 
         if ($entity->isHide()) {
             $entity->setTimeCreated(new DateTime());
@@ -201,7 +200,7 @@ class DataConverter
         $tagsArray = array_map('trim', explode(',', $data['tagsString']));
         foreach ($tagsArray as $tagName) {
             if ($tagName) {
-                $tag = $this->em->getRepository('MttBlogBundle:Tag')->getTagForPost($tagName);
+                $tag = $this->em->getRepository(Entity\Tag::class)->getTagForPost($tagName);
                 if ($tag) {
                     if ($originalTags->contains($tag)) {
                         $originalTags->removeElement($tag);
@@ -240,10 +239,10 @@ class DataConverter
         Transformers\MediaFileTransformer::reverseTransform($entity, $data);
 
         if ($data['postId']) {
-            $post = $this->em->getRepository('MttBlogBundle:Post')->find((int)$data['postId']);
+            $post = $this->em->getRepository(Entity\Post::class)->find((int)$data['postId']);
             if ($post) {
                 $entity->setPost($post);
-                if ($this->em->getRepository('MttBlogBundle:MediaFile')->getCountByPostId((int)$data['postId']) === 0) {
+                if ($this->em->getRepository(Entity\MediaFile::class)->getCountByPostId((int)$data['postId']) === 0) {
                     $entity->setDefaultImage(true);
                 }
             }
@@ -271,7 +270,7 @@ class DataConverter
 
         if ($data['languageId']) {
             $entity->setLanguage(
-                $this->em->getReference('MttBlogBundle:PygmentsLanguage', (int)$data['languageId'])
+                $this->em->getReference(Entity\PygmentsLanguage::class, (int)$data['languageId'])
             );
         } else {
             $entity->setLanguage(null);
@@ -300,7 +299,7 @@ class DataConverter
     {
         $matches = [];
         if (preg_match('/^get([A-Z]\w+)Array$/', $method, $matches)) {
-            $class = 'Mtt\\BlogBundle\\API\\Transformers\\' . $matches[1] . 'Transformer';
+            $class = 'App\\API\\Transformers\\' . $matches[1] . 'Transformer';
             $resource = new Collection(
                 $arguments[0],
                 new $class(),
@@ -313,7 +312,7 @@ class DataConverter
 
             $result = $this->fractal->createData($resource)->toArray();
         } elseif (preg_match('/^get([A-Z]\w+)$/', $method, $matches)) {
-            $class = 'Mtt\\BlogBundle\\API\\Transformers\\' . $matches[1] . 'Transformer';
+            $class = 'App\\API\\Transformers\\' . $matches[1] . 'Transformer';
             $resource = new Item($arguments[0], new $class(), lcfirst($matches[1]));
 
             if (!empty($arguments[1])) {

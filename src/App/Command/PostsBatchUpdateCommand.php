@@ -8,6 +8,7 @@
 
 namespace App\Command;
 
+use App\Entity\Post;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Model\Image;
@@ -62,7 +63,7 @@ class PostsBatchUpdateCommand extends Command
         $startTime = microtime(true);
 
         $postId = $input->getArgument('articleId');
-        $repo = $this->em->getRepository('MttBlogBundle:Post');
+        $repo = $this->em->getRepository(Post::class);
         if ($postId) {
             $postGenerator = function () use ($repo, $postId) {
                 $post = $repo->find((int)$postId);
@@ -92,7 +93,7 @@ class PostsBatchUpdateCommand extends Command
 
         $cnt = 0;
         foreach ($postGenerator() as $posts) {
-            /* @var \App\Entity\Post $post */
+            /* @var Post $post */
             foreach ($posts as $post) {
                 $cnt++;
                 $this->textProcessor->processing($post);

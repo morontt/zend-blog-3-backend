@@ -156,7 +156,7 @@ class TagController extends BaseController
     public function tagAutocompleteAction(Request $request): JsonResponse
     {
         $tags = $this->getEm()
-            ->getRepository('MttBlogBundle:Tag')
+            ->getRepository(Tag::class)
             ->getForAutocomplete($request->query->get('term'));
 
         $result = array_map(

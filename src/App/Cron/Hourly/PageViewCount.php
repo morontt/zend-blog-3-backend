@@ -32,7 +32,9 @@ class PageViewCount implements HourlyCronServiceInterface
     {
         $updatesData = json_decode(
             $this->paramStorage->getParameter(SystemParameters::UPDATE_VIEW_COUNTS_DATA) ?? '{}',
-            true
+            true,
+            512,
+            JSON_THROW_ON_ERROR
         );
 
         $from = $this->paramStorage->getParameter(SystemParameters::UPDATE_VIEW_COUNTS_FROM) ?? '2023-06-01 00:00:00';

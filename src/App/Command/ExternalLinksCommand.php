@@ -47,8 +47,8 @@ class ExternalLinksCommand extends Command
         $startTime = microtime(true);
         $cnt = 0;
 
-        $repo = $this->em->getRepository('MttBlogBundle:Comment');
-        $linkProcessor = new ExternalLinkProcessor(['morontt.info']);
+        $repo = $this->em->getRepository(Comment::class);
+        $linkProcessor = new ExternalLinkProcessor(['xelbot.com']);
 
         $i = 0;
         do {

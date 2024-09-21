@@ -8,6 +8,7 @@
 
 namespace App\Service;
 
+use App\Entity\Post;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMException;
@@ -70,10 +71,10 @@ class ImageManager
         ;
 
         if ($postId) {
-            $post = $this->em->getRepository('MttBlogBundle:Post')->find((int)$postId);
+            $post = $this->em->getRepository(Post::class)->find((int)$postId);
             if ($post) {
                 $media->setPost($post);
-                if ($this->em->getRepository('MttBlogBundle:MediaFile')->getCountByPostId($postId) === 0) {
+                if ($this->em->getRepository(MediaFile::class)->getCountByPostId($postId) === 0) {
                     $media->setDefaultImage(true);
                 }
             }
@@ -272,7 +273,7 @@ class ImageManager
      */
     protected function getMediaFile($remotePath)
     {
-        $media = $this->em->getRepository('MttBlogBundle:MediaFile')->findOneBy(['path' => $remotePath]);
+        $media = $this->em->getRepository(MediaFile::class)->findOneBy(['path' => $remotePath]);
         if ($media) {
             $media->setLastUpdate(new \DateTime());
         } else {

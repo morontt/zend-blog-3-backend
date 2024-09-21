@@ -39,7 +39,7 @@ class SystemParametersStorage
      */
     public function __construct(EntityManagerInterface $em, string $secret)
     {
-        $this->parametersRepo = $em->getRepository('MttBlogBundle:SystemParameters');
+        $this->parametersRepo = $em->getRepository(SystemParameters::class);
         $this->em = $em;
 
         $this->secret = $secret;

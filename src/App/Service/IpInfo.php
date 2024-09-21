@@ -42,7 +42,7 @@ class IpInfo
      */
     public function getLocationByIp(string $ip)
     {
-        $location = $this->em->getRepository('MttBlogBundle:GeoLocation')->findOrCreateByIpAddress($ip);
+        $location = $this->em->getRepository(GeoLocation::class)->findOrCreateByIpAddress($ip);
         if ($location && !$location->getCity()) {
             $location->increaseCountOfCheck();
             $data = $this->getCityInfo($ip);
@@ -87,7 +87,7 @@ class IpInfo
         if (!empty($data->cityName) && !empty($data->regionName)) {
             $country = $this->getCountry($data);
             if ($country) {
-                $city = $this->em->getRepository('MttBlogBundle:GeoLocationCity')->findOneBy([
+                $city = $this->em->getRepository(GeoLocationCity::class)->findOneBy([
                     'city' => $data->cityName,
                     'region' => $data->regionName,
                     'country' => $country->getId(),
@@ -124,7 +124,7 @@ class IpInfo
         $country = null;
         if (!empty($data->countryCode) && !empty($data->countryName)) {
             $country = $this->em
-                ->getRepository('MttBlogBundle:GeoLocationCountry')
+                ->getRepository(GeoLocationCountry::class)
                 ->findOneByCode($data->countryCode);
 
             if (!$country) {

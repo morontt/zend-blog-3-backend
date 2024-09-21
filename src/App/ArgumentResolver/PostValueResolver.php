@@ -1,9 +1,9 @@
 <?php
 
-namespace Mtt\BlogBundle\ArgumentResolver;
+namespace App\ArgumentResolver;
 
-use Mtt\BlogBundle\Entity\Post;
-use Mtt\BlogBundle\Entity\Repository\PostRepository;
+use App\Entity\Post;
+use App\Repository\PostRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;

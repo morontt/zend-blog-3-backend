@@ -8,6 +8,7 @@
 
 namespace App\Cron\Daily;
 
+use App\Entity\MediaFile;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Cron\DailyCronServiceInterface;
@@ -49,7 +50,7 @@ class ImagesBackup implements DailyCronServiceInterface
 
     public function run()
     {
-        $images = $this->em->getRepository('MttBlogBundle:MediaFile')->getNotBackuped();
+        $images = $this->em->getRepository(MediaFile::class)->getNotBackuped();
 
         if (count($images)) {
             foreach ($images as $image) {
