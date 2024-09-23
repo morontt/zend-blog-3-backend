@@ -4,8 +4,8 @@ api_root:
         _controller: FrameworkBundle:Template:template
         template: "MttBlogBundle:default:api.html.twig"
 
-#fos_js_routing:
-#    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
 
 logout:
     path: /logout

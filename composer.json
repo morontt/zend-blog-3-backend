@@ -113,6 +113,7 @@
         "symfony/polyfill-php56": "*"
     },
     "extra": {
+        "public-dir": "web",
         "symfony": {
             "allow-contrib": false,
             "require": "4.0.*"
