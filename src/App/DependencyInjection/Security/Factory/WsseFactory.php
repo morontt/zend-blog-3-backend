@@ -1,9 +1,9 @@
 <?php
 
-namespace Mtt\UserBundle\DependencyInjection\Security\Factory;
+namespace App\DependencyInjection\Security\Factory;
 
-use Mtt\UserBundle\Security\Authentication\Provider\WsseAuthenticationProvider;
-use Mtt\UserBundle\Security\Http\Firewall\WsseAuthenticationListener;
+use App\Security\Authentication\Provider\WsseAuthenticationProvider;
+use App\Security\Firewall\WsseAuthenticationListener;
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\SecurityFactoryInterface;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\DependencyInjection\ChildDefinition;
