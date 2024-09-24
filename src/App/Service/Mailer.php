@@ -8,6 +8,7 @@ use App\Entity\EmailSubscriptionSettings;
 use App\Repository\EmailSubscriptionSettingsRepository;
 use App\Utils\HashId;
 use App\Utils\VerifyEmail;
+use Psr\Log\LoggerInterface;
 use Swift_Mailer;
 use Swift_Message;
 use Twig\Environment as TwigEnvironment;
@@ -42,6 +43,8 @@ class Mailer
 
     private EmailSubscriptionSettingsRepository $subscriptionRepository;
 
+    private LoggerInterface $logger;
+
     /**
      * @param Swift_Mailer $mailer
      * @param TwigEnvironment $twig
@@ -55,6 +58,7 @@ class Mailer
         TwigEnvironment $twig,
         Robot $bot,
         EmailSubscriptionSettingsRepository $subscriptionRepository,
+        LoggerInterface $logger,
         string $frontendSite,
         string $emailFrom
     ) {
@@ -64,15 +68,7 @@ class Mailer
         $this->bot = $bot;
         $this->subscriptionRepository = $subscriptionRepository;
         $this->frontendSite = $frontendSite;
-    }
-
-    public function replyComment(Comment $comment)
-    {
-        try {
-            $this->sendEmailOnReply($comment);
-        } catch (\Throwable $e) {
-            $this->bot->sendMessage('onReply comment error: ' . $e->getMessage());
-        }
+        $this->logger = $logger;
     }
 
     public function newComment(Comment $comment, string $emailTo, bool $spool = true)
@@ -80,8 +76,8 @@ class Mailer
         $emailTo = VerifyEmail::normalize($emailTo);
         $context = $this->twig->mergeGlobals($this->context($comment));
 
-        $template = $this->twig->load('MttBlogBundle:mails:newComment.html.twig');
-        $textTemplate = $this->twig->load('MttBlogBundle:mails:newComment.txt.twig');
+        $template = $this->twig->load('mails/newComment.html.twig');
+        $textTemplate = $this->twig->load('mails/newComment.txt.twig');
 
         $message = new EmailMessageDTO();
 
@@ -103,7 +99,7 @@ class Mailer
 
         $successfullySent = false;
         try {
-            $message = Swift_Message::newInstance()
+            $message = (new Swift_Message())
                 ->setSubject($messageDTO->subject)
                 ->setFrom($messageDTO->from)
                 ->setTo($messageDTO->to)
@@ -127,6 +123,7 @@ class Mailer
 
             $successfullySent = $this->mailer->send($message) > 0;
         } catch (\Throwable $e) {
+            $this->logger->error('email sent error', ['exception' => $e]);
             $this->bot->sendMessage(
                 'email sent error: ' . $e->getMessage()
                 . "\n\nfile: " . $e->getFile()
@@ -200,7 +197,7 @@ class Mailer
         return $count;
     }
 
-    private function sendEmailOnReply(Comment $comment)
+    public function replyComment(Comment $comment)
     {
         $parent = $comment->getParent();
         if ($parent) {
