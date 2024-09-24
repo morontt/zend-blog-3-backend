@@ -1,8 +1,8 @@
 <?php
 
-namespace Mtt\UserBundle\Security\Http\Firewall;
+namespace App\Security\Firewall;
 
-use Mtt\UserBundle\Security\Authentication\Token\WsseUserToken;
+use App\Security\Authentication\Token\WsseUserToken;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;

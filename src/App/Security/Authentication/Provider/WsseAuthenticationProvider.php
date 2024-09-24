@@ -1,9 +1,9 @@
 <?php
 
-namespace Mtt\UserBundle\Security\Authentication\Provider;
+namespace App\Security\Authentication\Provider;
 
-use Mtt\UserBundle\Entity\User;
-use Mtt\UserBundle\Security\Authentication\Token\WsseUserToken;
+use App\Entity\User;
+use App\Security\Authentication\Token\WsseUserToken;
 use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;

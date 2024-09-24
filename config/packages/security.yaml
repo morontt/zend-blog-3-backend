@@ -1,23 +1,48 @@
 security:
+    encoders:
+        App\Entity\User:
+            algorithm: sha384
+            iterations: 3600
+            encode_as_base64: false
+
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        users_in_memory: { memory: null }
+        user_db:
+            entity:
+                class: App\Entity\User
+                property: username
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        main:
-            anonymous: true
-            provider: users_in_memory
+
+        login_firewall:
+            pattern: ^/login$
+            anonymous: ~
+
+        default:
+            pattern: ^/
+            anonymous: ~
+            form_login:
+                provider: user_db
+                login_path: /login
+                check_path: /login_check
+            logout:
+                path: /logout
+                target: /login
+            wsse:
+                lifetime: "%wsse_token_lifetime%"
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
 
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/telegram, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/webhook, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/preview, roles: ROLE_USER, requires_channel: https }
+        - { path: ^/, roles: ROLE_ADMIN, requires_channel: https }

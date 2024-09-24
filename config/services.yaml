@@ -22,6 +22,7 @@ parameters:
     ipinfo_db_key: '%env(IPINFO_DB_KEY)%'
     dropbox_key: '%env(DROPBOX_KEY)%'
     dropbox_secret: '%env(DROPBOX_SECRET)%'
+    wsse_token_lifetime: '%env(int:WSSE_TOKEN_LIFETIME)%'
 
 services:
     # default configuration for services in *this* file
