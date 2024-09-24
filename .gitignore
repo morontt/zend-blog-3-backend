@@ -1,6 +1,5 @@
 /app/config/parameters.yml
 /web/bundles/
-/web/css/
 /web/assetic/
 /web/dist/
 /web/js/

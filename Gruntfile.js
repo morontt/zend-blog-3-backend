@@ -18,7 +18,7 @@ module.exports = function (grunt) {
                 },
                 src: [
                     'bower_components/bootstrap/dist/css/bootstrap.css',
-                    'web/bundles/mttblog/css/main.css'
+                    'web/css/main.css'
                 ],
                 dest: 'web/dist/<%= pkg.name %>_login.css'
             },
@@ -61,9 +61,9 @@ module.exports = function (grunt) {
                 src: [
                     'web/dist/<%= pkg.name %>_jq_ui.css',
                     'bower_components/bootstrap/dist/css/bootstrap.css',
-                    'web/bundles/mttblog/css/pygments_table.css',
-                    'web/bundles/mttblog/css/pygments.css',
-                    'web/bundles/mttblog/css/blog.css'
+                    'web/css/pygments_table.css',
+                    'web/css/pygments.css',
+                    'web/css/blog.css'
                 ],
                 dest: 'web/dist/<%= pkg.name %>_preview.css'
             },
@@ -77,10 +77,10 @@ module.exports = function (grunt) {
                 src: [
                     'web/dist/<%= pkg.name %>_jq_ui.css',
                     'bower_components/bootstrap/dist/css/bootstrap.css',
-                    'web/bundles/mttblog/css/pygments_inline.css',
-                    'web/bundles/mttblog/css/pygments.css',
-                    'web/bundles/mttblog/css/symbola.css',
-                    'web/bundles/mttblog/css/main.css'
+                    'web/css/pygments_inline.css',
+                    'web/css/pygments.css',
+                    'web/css/symbola.css',
+                    'web/css/main.css'
                 ],
                 dest: 'web/dist/<%= pkg.name %>_main.css'
             },

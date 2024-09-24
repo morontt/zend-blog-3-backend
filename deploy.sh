@@ -6,6 +6,7 @@ rm -R ./web/spa/*
 
 docker exec rhinoceros bash -c "./buildapp_php.sh"
 docker compose run --rm nodejs bash -c "./buildapp_js.sh -i"
+docker exec rhinoceros bash -c "chown -R www-data:www-data ."
 
 function replace_old_asset() {
   NEW_FILE=$1
@@ -22,14 +23,6 @@ function replace_old_asset() {
     echo -e "Replace \033[33m$TARGET\033[0m"
   fi
 }
-
-platform="$(uname -s)"
-current_user="$(whoami)"
-case "$platform" in
-  Linux)
-    sudo chown -R $current_user:$current_user .
-    ;;
-esac
 
 replace_old_asset web/dist/mttblog_tmp_main.min.css    web/dist/mttblog_main.min.css
 replace_old_asset web/dist/mttblog_tmp_preview.min.css web/dist/mttblog_preview.min.css
