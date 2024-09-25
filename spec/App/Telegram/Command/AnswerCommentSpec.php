@@ -1,10 +1,10 @@
 <?php
 
-namespace spec\Mtt\BlogBundle\Telegram\Command;
+namespace spec\App\Telegram\Command;
 
-use Mtt\BlogBundle\Entity\Repository\CommentRepository;
-use Mtt\BlogBundle\Service\CommentManager;
-use Mtt\BlogBundle\Telegram\Command\AnswerComment;
+use App\Repository\CommentRepository;
+use App\Service\CommentManager;
+use App\Telegram\Command\AnswerComment;
 use PhpSpec\ObjectBehavior;
 
 class AnswerCommentSpec extends ObjectBehavior

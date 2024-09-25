@@ -1,8 +1,8 @@
 <?php
 
-namespace spec\Mtt\BlogBundle\Utils;
+namespace spec\App\Utils;
 
-use Mtt\BlogBundle\Utils\ExternalLinkProcessor;
+use App\Utils\ExternalLinkProcessor;
 use PhpSpec\ObjectBehavior;
 
 class ExternalLinkProcessorSpec extends ObjectBehavior

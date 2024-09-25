@@ -1,12 +1,12 @@
 <?php
 
-namespace spec\Mtt\BlogBundle\API\Transformers;
+namespace spec\App\API\Transformers;
 
-use Mtt\BlogBundle\API\Transformers\CommentTransformer;
-use Mtt\BlogBundle\Entity\Comment;
-use Mtt\BlogBundle\Entity\Commentator;
-use Mtt\BlogBundle\Entity\ViewComment;
-use Mtt\UserBundle\Entity\User;
+use App\API\Transformers\CommentTransformer;
+use App\Entity\Comment;
+use App\Entity\Commentator;
+use App\Entity\ViewComment;
+use App\Entity\User;
 use PhpSpec\ObjectBehavior;
 use ReflectionClass;
 

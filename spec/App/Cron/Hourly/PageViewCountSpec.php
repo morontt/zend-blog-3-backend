@@ -1,10 +1,10 @@
 <?php
 
-namespace spec\Mtt\BlogBundle\Cron\Hourly;
+namespace spec\App\Cron\Hourly;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Mtt\BlogBundle\Cron\Hourly\PageViewCount;
-use Mtt\BlogBundle\Service\SystemParametersStorage;
+use App\Cron\Hourly\PageViewCount;
+use App\Service\SystemParametersStorage;
 use PhpSpec\ObjectBehavior;
 
 class PageViewCountSpec extends ObjectBehavior

@@ -1,8 +1,8 @@
 <?php
 
-namespace spec\Mtt\BlogBundle\Utils;
+namespace spec\App\Utils;
 
-use Mtt\BlogBundle\Utils\Inflector;
+use App\Utils\Inflector;
 use PhpSpec\ObjectBehavior;
 
 class InflectorSpec extends ObjectBehavior

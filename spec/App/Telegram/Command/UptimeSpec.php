@@ -1,8 +1,8 @@
 <?php
 
-namespace spec\Mtt\BlogBundle\Telegram\Command;
+namespace spec\App\Telegram\Command;
 
-use Mtt\BlogBundle\Telegram\Command\Uptime;
+use App\Telegram\Command\Uptime;
 use PhpSpec\ObjectBehavior;
 
 class UptimeSpec extends ObjectBehavior

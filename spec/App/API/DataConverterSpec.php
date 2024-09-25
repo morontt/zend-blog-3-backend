@@ -1,21 +1,21 @@
 <?php
 
-namespace spec\Mtt\BlogBundle\API;
+namespace spec\App\API;
 
 use Doctrine\ORM\EntityManager;
-use Mtt\BlogBundle\API\DataConverter;
-use Mtt\BlogBundle\Entity\Category;
-use Mtt\BlogBundle\Entity\Comment;
-use Mtt\BlogBundle\Entity\Commentator;
-use Mtt\BlogBundle\Entity\GeoLocation;
-use Mtt\BlogBundle\Entity\GeoLocationCity;
-use Mtt\BlogBundle\Entity\GeoLocationCountry;
-use Mtt\BlogBundle\Entity\Post;
-use Mtt\BlogBundle\Entity\Repository\CategoryRepository;
-use Mtt\BlogBundle\Entity\Repository\CommentRepository;
-use Mtt\BlogBundle\Entity\Tag;
-use Mtt\BlogBundle\Service\TextProcessor;
-use Mtt\UserBundle\Entity\User;
+use App\API\DataConverter;
+use App\Entity\Category;
+use App\Entity\Comment;
+use App\Entity\Commentator;
+use App\Entity\GeoLocation;
+use App\Entity\GeoLocationCity;
+use App\Entity\GeoLocationCountry;
+use App\Entity\Post;
+use App\Repository\CategoryRepository;
+use App\Repository\CommentRepository;
+use App\Entity\Tag;
+use App\Service\TextProcessor;
+use App\Entity\User;
 use PhpSpec\ObjectBehavior;
 use ReflectionClass;
 

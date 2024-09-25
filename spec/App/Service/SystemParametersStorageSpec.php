@@ -1,9 +1,9 @@
 <?php
 
-namespace spec\Mtt\BlogBundle\Service;
+namespace spec\App\Service;
 
 use Doctrine\ORM\EntityManager;
-use Mtt\BlogBundle\Service\SystemParametersStorage;
+use App\Service\SystemParametersStorage;
 use PhpSpec\ObjectBehavior;
 
 class SystemParametersStorageSpec extends ObjectBehavior

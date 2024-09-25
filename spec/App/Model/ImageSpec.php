@@ -1,9 +1,9 @@
 <?php
 
-namespace spec\Mtt\BlogBundle\Model;
+namespace spec\App\Model;
 
-use Mtt\BlogBundle\Entity\MediaFile;
-use Mtt\BlogBundle\Model\Image;
+use App\Entity\MediaFile;
+use App\Model\Image;
 use PhpSpec\ObjectBehavior;
 
 class ImageSpec extends ObjectBehavior

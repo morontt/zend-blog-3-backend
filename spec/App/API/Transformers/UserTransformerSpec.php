@@ -1,9 +1,9 @@
 <?php
 
-namespace spec\Mtt\BlogBundle\API\Transformers;
+namespace spec\App\API\Transformers;
 
-use Mtt\BlogBundle\API\Transformers\UserTransformer;
-use Mtt\UserBundle\Entity\User;
+use App\API\Transformers\UserTransformer;
+use App\Entity\User;
 use PhpSpec\ObjectBehavior;
 use ReflectionClass;
 

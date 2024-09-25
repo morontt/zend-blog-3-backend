@@ -1,9 +1,9 @@
 <?php
 
-namespace spec\Mtt\BlogBundle\Telegram\Command;
+namespace spec\App\Telegram\Command;
 
-use Mtt\BlogBundle\Entity\Repository\CommentRepository;
-use Mtt\BlogBundle\Telegram\Command\DeleteComment;
+use App\Repository\CommentRepository;
+use App\Telegram\Command\DeleteComment;
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
