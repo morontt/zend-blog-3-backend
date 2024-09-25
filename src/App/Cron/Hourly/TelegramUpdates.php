@@ -4,8 +4,8 @@ namespace App\Cron\Hourly;
 
 use App\Cron\HourlyCronServiceInterface;
 use App\Doctrine\DBAL\Type\MillisecondsDateTime;
-use App\Repository\TelegramUpdateRepository;
 use App\Entity\SystemParameters;
+use App\Repository\TelegramUpdateRepository;
 use App\Service\SystemParametersStorage;
 
 class TelegramUpdates implements HourlyCronServiceInterface

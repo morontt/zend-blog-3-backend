@@ -2,9 +2,9 @@
 
 namespace App\Telegram;
 
-use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\TelegramUpdate;
 use App\Entity\TelegramUser;
+use Doctrine\ORM\EntityManagerInterface;
 use Xelbot\Telegram\Entity\Update;
 use Xelbot\Telegram\UpdatesManagerInterface;
 

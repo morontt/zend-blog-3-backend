@@ -2,8 +2,8 @@
 
 namespace App\EventListener\Doctrine;
 
-use Doctrine\ORM\Event\PreUpdateEventArgs;
 use App\Entity\Post;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 class ArticleUpdatedAtListener
 {

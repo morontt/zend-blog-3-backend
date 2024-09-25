@@ -8,9 +8,9 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\ModifyEntityTrait;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Traits\ModifyEntityTrait;
 
 /**
  * @ORM\Table()

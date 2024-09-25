@@ -2,7 +2,6 @@
 
 namespace spec\App\API;
 
-use Doctrine\ORM\EntityManager;
 use App\API\DataConverter;
 use App\Entity\Category;
 use App\Entity\Comment;
@@ -11,11 +10,12 @@ use App\Entity\GeoLocation;
 use App\Entity\GeoLocationCity;
 use App\Entity\GeoLocationCountry;
 use App\Entity\Post;
+use App\Entity\Tag;
+use App\Entity\User;
 use App\Repository\CategoryRepository;
 use App\Repository\CommentRepository;
-use App\Entity\Tag;
 use App\Service\TextProcessor;
-use App\Entity\User;
+use Doctrine\ORM\EntityManager;
 use PhpSpec\ObjectBehavior;
 use ReflectionClass;
 

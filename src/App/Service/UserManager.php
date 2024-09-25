@@ -2,13 +2,13 @@
 
 namespace App\Service;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use App\DTO\ExternalUserDTO;
 use App\Entity\User;
 use App\Entity\UserExtraInfo;
 use App\Exception\ShortPasswordException;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class UserManager

@@ -8,12 +8,12 @@
 
 namespace App\Controller\API;
 
-use Doctrine\ORM\ORMException;
 use App\API\Transformers\TagTransformer;
 use App\Controller\BaseController;
-use App\Repository\TagRepository;
 use App\Entity\Tag;
 use App\Form\TagFormType;
+use App\Repository\TagRepository;
+use Doctrine\ORM\ORMException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

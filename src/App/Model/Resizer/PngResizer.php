@@ -2,9 +2,9 @@
 
 namespace App\Model\Resizer;
 
+use App\Model\ResizerInterface;
 use Imagick;
 use ImagickException;
-use App\Model\ResizerInterface;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 

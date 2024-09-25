@@ -2,10 +2,10 @@
 
 namespace App\EventListener;
 
-use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\PostRepository;
 use App\Event\PygmentCodeEvent;
+use App\Repository\PostRepository;
 use App\Service\TextProcessor;
+use Doctrine\ORM\EntityManagerInterface;
 
 class PygmentsCodeUpdateListener
 {

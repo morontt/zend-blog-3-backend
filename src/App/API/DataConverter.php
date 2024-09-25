@@ -8,6 +8,17 @@
 
 namespace App\API;
 
+use App\DTO\ArticleDTO;
+use App\DTO\CategoryDTO;
+use App\DTO\PygmentsCodeDTO;
+use App\Entity;
+use App\Model\Image;
+use App\Repository\CategoryRepository;
+use App\Repository\CommentRepository;
+use App\Service\TextProcessor;
+use App\Utils\Inflector;
+use App\Utils\Pygment;
+use App\Utils\RuTransform;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
@@ -16,17 +27,6 @@ use Doctrine\ORM\ORMException;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
-use App\DTO\ArticleDTO;
-use App\DTO\CategoryDTO;
-use App\DTO\PygmentsCodeDTO;
-use App\Entity;
-use App\Repository\CategoryRepository;
-use App\Repository\CommentRepository;
-use App\Model\Image;
-use App\Service\TextProcessor;
-use App\Utils\Inflector;
-use App\Utils\Pygment;
-use App\Utils\RuTransform;
 
 /**
  * Class DataConverter

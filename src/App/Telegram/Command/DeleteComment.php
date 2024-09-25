@@ -2,9 +2,9 @@
 
 namespace App\Telegram\Command;
 
-use App\Repository\CommentRepository;
 use App\Event\CommentEvent;
 use App\Events;
+use App\Repository\CommentRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Xelbot\Telegram\Command\AbstractAdminCommand;
 use Xelbot\Telegram\Command\TelegramCommandInterface;
@@ -57,7 +57,7 @@ class DeleteComment extends AbstractAdminCommand implements TelegramCommandInter
             $this->repository->markAsDeleted($comment);
             $this->dispatcher->dispatch(Events::DELETE_COMMENT, new CommentEvent($comment));
 
-            #TODO Null pointer exception may occur here
+            //TODO Null pointer exception may occur here
             $this->requester->sendMessage([
                 'chat_id' => $message->getChat()->getId(),
                 'text' => 'Готово ' . Robot::EMOJI_ROBOT,

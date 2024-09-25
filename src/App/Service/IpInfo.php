@@ -8,13 +8,13 @@
 
 namespace App\Service;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\GeoLocation;
 use App\Entity\GeoLocationCity;
 use App\Entity\GeoLocationCountry;
 use App\Service\IpInfo\IpInfoClientInterface;
 use App\Service\IpInfo\LocationInfo;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class IpInfo
 {

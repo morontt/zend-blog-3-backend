@@ -9,11 +9,11 @@
 namespace App\Command;
 
 use App\Entity\Post;
+use App\Model\Image;
 use App\Service\PictureTagBuilder;
+use App\Service\TextProcessor;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Model\Image;
-use App\Service\TextProcessor;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -59,10 +59,10 @@ class PostsBatchUpdateCommand extends Command
      * @param InputInterface $input
      * @param OutputInterface $output
      *
-     * @return void
-     *
      * @throws \Doctrine\ORM\ORMException
      * @throws \JsonException
+     *
+     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

@@ -8,13 +8,13 @@
 
 namespace App\Cron\Daily;
 
-use App\Entity\MediaFile;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Cron\DailyCronServiceInterface;
+use App\Entity\MediaFile;
 use App\Service\DropboxService;
 use App\Service\ImageManager;
 use App\Service\SystemParametersStorage;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class ImagesBackup implements DailyCronServiceInterface
 {

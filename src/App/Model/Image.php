@@ -8,7 +8,6 @@
 
 namespace App\Model;
 
-use Imagick;
 use App\Entity\MediaFile;
 use App\Entity\Post;
 use App\Model\Resizer\AvifResizer;
@@ -17,6 +16,7 @@ use App\Model\Resizer\JpegResizer;
 use App\Model\Resizer\PngResizer;
 use App\Model\Resizer\WebpResizer;
 use App\Service\ImageManager;
+use Imagick;
 
 /**
  * @method int getId()
@@ -167,7 +167,7 @@ class Image
                     $this->sizes[$size]['height'] ?? 0
                 );
             } catch (\Throwable $e) {
-                #TODO add error to logger
+                //TODO add error to logger
                 return null;
             }
         }
@@ -221,7 +221,7 @@ class Image
             $obj->width = $geometry['width'];
             $obj->height = $geometry['height'];
         } catch (\ImagickException $e) {
-            #TODO add error to logger
+            //TODO add error to logger
         }
 
         return $obj;

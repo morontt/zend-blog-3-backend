@@ -2,8 +2,8 @@
 
 namespace App\API\Transformers;
 
-use League\Fractal\Resource\Collection;
 use App\Entity\TelegramUpdate;
+use League\Fractal\Resource\Collection;
 
 class TelegramUpdateTransformer extends BaseTransformer
 {

@@ -8,11 +8,11 @@
 
 namespace App\Controller\API;
 
-use Doctrine\ORM\ORMException;
 use App\Controller\BaseController;
 use App\Entity\Category;
-use App\Repository\CategoryRepository;
 use App\Form\CategoryFormType;
+use App\Repository\CategoryRepository;
+use Doctrine\ORM\ORMException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

@@ -8,11 +8,11 @@
 
 namespace App\Command;
 
-use Doctrine\ORM\ORMException;
-use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use App\Entity\SystemParameters;
 use App\OAuth2\Client\DropboxProvider;
 use App\Service\SystemParametersStorage;
+use Doctrine\ORM\ORMException;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

@@ -2,8 +2,8 @@
 
 namespace App\EventListener;
 
-use App\Repository\CommentRepository;
 use App\Event\UserEvent;
+use App\Repository\CommentRepository;
 
 class UserCommentsListener
 {

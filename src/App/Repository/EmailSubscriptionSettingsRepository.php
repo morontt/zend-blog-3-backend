@@ -2,9 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\EmailSubscriptionSettings;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use App\Entity\EmailSubscriptionSettings;
 
 /**
  * @method EmailSubscriptionSettings|null findOneBy(array $criteria, array $orderBy = null)

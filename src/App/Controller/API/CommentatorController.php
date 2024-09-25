@@ -10,8 +10,8 @@ namespace App\Controller\API;
 
 use App\Controller\BaseController;
 use App\Entity\Commentator;
-use App\Repository\CommentatorRepository;
 use App\Entity\ViewCommentator;
+use App\Repository\CommentatorRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;

@@ -8,9 +8,9 @@
 
 namespace App\Entity\Traits;
 
+use App\Entity\User;
 use App\Entity\ViewCommentator;
 use App\Utils\HashId;
-use App\Entity\User;
 
 trait Gravatar
 {

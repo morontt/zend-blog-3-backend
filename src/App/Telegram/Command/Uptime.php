@@ -25,7 +25,7 @@ class Uptime implements TelegramCommandInterface
         $process = new Process('uptime');
         $process->run();
 
-        #TODO Null pointer exception may occur here
+        //TODO Null pointer exception may occur here
         $this->requester->sendMessage([
             'chat_id' => $message->getChat()->getId(),
             'text' => $process->getOutput(),

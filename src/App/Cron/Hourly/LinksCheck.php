@@ -2,10 +2,10 @@
 
 namespace App\Cron\Hourly;
 
-use Doctrine\ORM\EntityManagerInterface;
 use App\Cron\HourlyCronServiceInterface;
 use App\Entity\Commentator;
 use App\Utils\RottenLink;
+use Doctrine\ORM\EntityManagerInterface;
 
 class LinksCheck implements HourlyCronServiceInterface
 {

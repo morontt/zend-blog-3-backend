@@ -8,10 +8,10 @@
 
 namespace App\API\Transformers;
 
-use League\Fractal\Resource\Collection;
 use App\Entity\MediaFile;
 use App\Model\Image;
 use App\Service\ImageManager;
+use League\Fractal\Resource\Collection;
 
 class MediaFileTransformer extends BaseTransformer
 {

@@ -2,11 +2,11 @@
 
 namespace App\EventSubscriber;
 
+use App\Event\CommentEvent;
+use App\Events;
 use Doctrine\DBAL\Driver\Exception as DriverException;
 use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Event\CommentEvent;
-use App\Events;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class CountCommentsSubscriber implements EventSubscriberInterface

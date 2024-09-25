@@ -8,12 +8,12 @@
 
 namespace App\API\Transformers;
 
-use League\Fractal\Resource\Collection;
 use App\Entity\Comment;
 use App\Entity\CommentInterface;
 use App\Entity\ViewComment;
 use App\Entity\ViewCommentator;
 use App\Utils\EmojiFlagSymbol;
+use League\Fractal\Resource\Collection;
 
 class CommentTransformer extends BaseTransformer
 {

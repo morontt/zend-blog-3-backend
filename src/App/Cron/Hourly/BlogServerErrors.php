@@ -4,8 +4,8 @@ namespace App\Cron\Hourly;
 
 use App\Cron\HourlyCronServiceInterface;
 use App\Doctrine\DBAL\Type\MillisecondsDateTime;
-use App\Repository\TrackingRepository;
 use App\Entity\SystemParameters;
+use App\Repository\TrackingRepository;
 use App\Service\SystemParametersStorage;
 
 class BlogServerErrors implements HourlyCronServiceInterface

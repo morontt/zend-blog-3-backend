@@ -2,9 +2,9 @@
 
 namespace App\API\Transformers;
 
-use League\Fractal\Resource\Collection;
 use App\DTO\PygmentsCodeDTO;
 use App\Entity\PygmentsCode;
+use League\Fractal\Resource\Collection;
 
 class PygmentsCodeTransformer extends BaseTransformer
 {

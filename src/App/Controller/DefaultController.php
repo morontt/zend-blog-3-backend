@@ -2,10 +2,10 @@
 
 namespace App\Controller;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\GuzzleException;
 use App\Entity\Post;
 use App\Repository\ViewCommentRepository;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -2,10 +2,10 @@
 
 namespace App\EventListener\Doctrine;
 
-use App\Service\PictureTagBuilder;
-use Doctrine\ORM\Event\PreUpdateEventArgs;
 use App\Entity\MediaFile;
 use App\Model\Image;
+use App\Service\PictureTagBuilder;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 class MediaFilePictureListener
 {
@@ -19,9 +19,9 @@ class MediaFilePictureListener
     /**
      * @param PreUpdateEventArgs $args
      *
-     * @return void
-     *
      * @throws \JsonException
+     *
+     * @return void
      */
     public function preUpdate(PreUpdateEventArgs $args): void
     {

@@ -4,8 +4,6 @@ namespace App\Entity;
 
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\GeoLocation;
-use App\Entity\TrackingAgent;
 
 /**
  * @ORM\Table(uniqueConstraints={

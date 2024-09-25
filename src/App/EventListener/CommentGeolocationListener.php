@@ -2,9 +2,9 @@
 
 namespace App\EventListener;
 
-use Doctrine\ORM\EntityManagerInterface;
-use App\Repository\GeoLocationRepository;
 use App\Event\CommentEvent;
+use App\Repository\GeoLocationRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 class CommentGeolocationListener
 {

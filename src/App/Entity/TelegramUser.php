@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use App\Entity\Traits\ModifyEntityTrait;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="telegram_users")

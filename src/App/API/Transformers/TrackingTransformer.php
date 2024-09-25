@@ -2,9 +2,9 @@
 
 namespace App\API\Transformers;
 
-use League\Fractal\Resource\Collection;
 use App\Entity\Tracking;
 use App\Utils\EmojiFlagSymbol;
+use League\Fractal\Resource\Collection;
 
 class TrackingTransformer extends BaseTransformer
 {

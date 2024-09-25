@@ -2,11 +2,11 @@
 
 namespace App\EventListener;
 
+use App\Event\UserExtraEvent;
+use App\OAuth2\DataProviderFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use App\Event\UserExtraEvent;
-use App\OAuth2\DataProviderFactory;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 

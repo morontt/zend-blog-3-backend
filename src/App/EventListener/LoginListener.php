@@ -8,10 +8,10 @@
 
 namespace App\EventListener;
 
+use App\Entity\User;
+use App\Utils\Http;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Utils\Http;
-use App\Entity\User;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class LoginListener

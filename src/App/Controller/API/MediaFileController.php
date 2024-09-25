@@ -8,13 +8,13 @@
 
 namespace App\Controller\API;
 
-use Doctrine\ORM\ORMException;
 use App\Controller\BaseController;
 use App\Entity\MediaFile;
-use App\Repository\MediaFileRepository;
 use App\Form\ImageFormType;
 use App\Model\Image;
+use App\Repository\MediaFileRepository;
 use App\Service\ImageManager;
+use Doctrine\ORM\ORMException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;

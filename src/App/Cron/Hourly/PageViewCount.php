@@ -2,13 +2,13 @@
 
 namespace App\Cron\Hourly;
 
-use Doctrine\ORM\EntityManagerInterface;
 use App\Cron\HourlyCronServiceInterface;
 use App\Doctrine\DBAL\Type\MillisecondsDateTime;
 use App\Entity\Post;
 use App\Entity\SystemParameters;
 use App\Entity\Tracking;
 use App\Service\SystemParametersStorage;
+use Doctrine\ORM\EntityManagerInterface;
 
 class PageViewCount implements HourlyCronServiceInterface
 {

@@ -8,8 +8,6 @@
 
 namespace App\Cron\Daily;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Cron\DailyCronServiceInterface;
 use App\Doctrine\DBAL\Type\MillisecondsDateTime;
 use App\Entity\Comment;
@@ -17,6 +15,8 @@ use App\Entity\GeoLocation;
 use App\Entity\SystemParameters;
 use App\Service\IpInfo;
 use App\Service\SystemParametersStorage;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 class CommentGeoLocation implements DailyCronServiceInterface
 {

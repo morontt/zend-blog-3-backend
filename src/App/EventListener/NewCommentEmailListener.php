@@ -3,8 +3,8 @@
 namespace App\EventListener;
 
 use App\Event\CommentEvent;
-use App\Service\Mailer;
 use App\Repository\UserRepository;
+use App\Service\Mailer;
 use Psr\Log\LoggerInterface;
 use Xelbot\Telegram\Robot;
 

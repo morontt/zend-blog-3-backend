@@ -8,18 +8,18 @@
 
 namespace App\Controller\API;
 
-use Doctrine\ORM\ORMException;
 use App\Controller\BaseController;
 use App\Cron\Daily\CommentGeoLocation;
 use App\Entity\Comment;
-use App\Repository\CommentRepository;
-use App\Repository\ViewCommentRepository;
 use App\Event\CommentEvent;
+use App\Events;
 use App\Exception\NotAllowedCommentException;
 use App\Form\CommentFormType;
-use App\Events;
+use App\Repository\CommentRepository;
+use App\Repository\ViewCommentRepository;
 use App\Service\CommentManager;
 use App\Service\Tracking;
+use Doctrine\ORM\ORMException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

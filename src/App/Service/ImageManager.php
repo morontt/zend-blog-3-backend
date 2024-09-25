@@ -8,12 +8,12 @@
 
 namespace App\Service;
 
+use App\Entity\MediaFile;
 use App\Entity\Post;
+use App\Model\Image;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\ORMException;
-use App\Entity\MediaFile;
-use App\Model\Image;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Process\Exception\ProcessFailedException;

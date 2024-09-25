@@ -2,10 +2,10 @@
 
 namespace App\EventListener;
 
-use Doctrine\ORM\EntityManagerInterface;
 use App\Event\CommentEvent;
 use App\Utils\RottenLink;
 use App\Utils\VerifyEmail;
+use Doctrine\ORM\EntityManagerInterface;
 
 class CommentatorCheckListener
 {

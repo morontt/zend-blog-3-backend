@@ -2,9 +2,9 @@
 
 namespace spec\App\Cron\Hourly;
 
-use Doctrine\ORM\EntityManagerInterface;
 use App\Cron\Hourly\PageViewCount;
 use App\Service\SystemParametersStorage;
+use Doctrine\ORM\EntityManagerInterface;
 use PhpSpec\ObjectBehavior;
 
 class PageViewCountSpec extends ObjectBehavior

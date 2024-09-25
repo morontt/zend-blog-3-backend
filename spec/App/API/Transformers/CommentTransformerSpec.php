@@ -5,8 +5,8 @@ namespace spec\App\API\Transformers;
 use App\API\Transformers\CommentTransformer;
 use App\Entity\Comment;
 use App\Entity\Commentator;
-use App\Entity\ViewComment;
 use App\Entity\User;
+use App\Entity\ViewComment;
 use PhpSpec\ObjectBehavior;
 use ReflectionClass;
 

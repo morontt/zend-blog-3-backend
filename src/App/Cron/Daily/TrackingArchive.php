@@ -8,10 +8,10 @@
 
 namespace App\Cron\Daily;
 
+use App\Cron\DailyCronServiceInterface;
 use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Cron\DailyCronServiceInterface;
 
 class TrackingArchive implements DailyCronServiceInterface
 {

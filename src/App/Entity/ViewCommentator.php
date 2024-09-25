@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\Gravatar;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
-use App\Entity\Traits\Gravatar;
 
 /**
  * @ORM\Table(name="v_commentators")

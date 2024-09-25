@@ -2,9 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\TrackingAgent;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use App\Entity\TrackingAgent;
 
 /**
  * TrackingAgentRepository

@@ -2,8 +2,8 @@
 
 namespace spec\App\Service;
 
-use Doctrine\ORM\EntityManager;
 use App\Service\SystemParametersStorage;
+use Doctrine\ORM\EntityManager;
 use PhpSpec\ObjectBehavior;
 
 class SystemParametersStorageSpec extends ObjectBehavior

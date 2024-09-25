@@ -2,16 +2,16 @@
 
 namespace App\Service;
 
-use Laminas\Filter\StripTags;
 use App\DTO\CommentDTO;
 use App\Entity\Comment;
+use App\Event\CommentEvent;
+use App\Events;
+use App\Exception\NotAllowedCommentException;
 use App\Repository\CommentatorRepository;
 use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
-use App\Event\CommentEvent;
-use App\Exception\NotAllowedCommentException;
-use App\Events;
 use App\Repository\UserRepository;
+use Laminas\Filter\StripTags;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class CommentManager

@@ -8,11 +8,11 @@
 
 namespace App\API\Transformers;
 
-use League\Fractal\Resource\Collection;
 use App\DTO\ArticleDTO;
 use App\Entity\Post;
 use App\Entity\Tag;
 use App\Utils\RuTransform;
+use League\Fractal\Resource\Collection;
 
 class PostTransformer extends BaseTransformer
 {

@@ -22,7 +22,7 @@ class Start implements TelegramCommandInterface
         $text .= ' Возможно, получишь какой-нибудь ответ, поскольку пишешь не совсем в космос ';
         $text .= '&#x2728;';
 
-        #TODO Null pointer exception may occur here
+        //TODO Null pointer exception may occur here
         $this->requester->sendMessage([
             'chat_id' => $message->getChat()->getId(),
             'text' => $text,

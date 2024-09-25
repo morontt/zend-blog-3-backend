@@ -8,9 +8,9 @@
 
 namespace App\Service;
 
+use App\Entity\TrackingAgent;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Entity\TrackingAgent;
 
 class Tracking
 {

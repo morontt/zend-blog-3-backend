@@ -2,9 +2,9 @@
 
 namespace App\Model\Resizer;
 
+use App\Model\ResizerInterface;
 use Imagick;
 use ImagickException;
-use App\Model\ResizerInterface;
 
 class JpegResizer implements ResizerInterface
 {
