@@ -2,24 +2,28 @@
 
 namespace App\EventListener\Doctrine;
 
+use App\Service\PictureTagBuilder;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use App\Entity\MediaFile;
 use App\Model\Image;
-use App\Service\ImageManager;
 
 class MediaFilePictureListener
 {
-    private ImageManager $im;
+    private PictureTagBuilder $ptb;
 
-    public function __construct(ImageManager $im)
+    public function __construct(PictureTagBuilder $ptb)
     {
-        $this->im = $im;
+        $this->ptb = $ptb;
     }
 
     /**
      * @param PreUpdateEventArgs $args
+     *
+     * @return void
+     *
+     * @throws \JsonException
      */
-    public function preUpdate(PreUpdateEventArgs $args)
+    public function preUpdate(PreUpdateEventArgs $args): void
     {
         $entity = $args->getObject();
         if (($entity instanceof MediaFile)
@@ -28,13 +32,13 @@ class MediaFilePictureListener
             && !$args->hasChangedField('pictureTag')
             && ($args->hasChangedField('defaultImage') || $args->hasChangedField('description'))
         ) {
-            $picture = $this->im->featuredPictureTag($entity);
+            $picture = $this->ptb->featuredPictureTag($entity);
             $entity->setPictureTag($picture);
 
             $srcSet = (new Image($entity))->getSrcSet();
             $srcSetData = $srcSet->toArray();
             if (!empty($srcSetData)) {
-                $entity->setSrcSet(json_encode($srcSetData));
+                $entity->setSrcSet(json_encode($srcSetData, JSON_THROW_ON_ERROR));
             }
 
             $em = $args->getEntityManager();

@@ -9,10 +9,10 @@
 namespace App\Command;
 
 use App\Entity\Post;
+use App\Service\PictureTagBuilder;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Model\Image;
-use App\Service\ImageManager;
 use App\Service\TextProcessor;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -26,24 +26,21 @@ class PostsBatchUpdateCommand extends Command
      */
     private $em;
 
-    /**
-     * @var TextProcessor
-     */
-    private $textProcessor;
+    private TextProcessor $textProcessor;
 
-    private ImageManager $im;
+    private PictureTagBuilder $ptb;
 
     /**
      * @param EntityManagerInterface $em
      * @param TextProcessor $textProcessor
-     * @param ImageManager $im
+     * @param PictureTagBuilder $ptb
      */
-    public function __construct(EntityManagerInterface $em, TextProcessor $textProcessor, ImageManager $im)
+    public function __construct(EntityManagerInterface $em, TextProcessor $textProcessor, PictureTagBuilder $ptb)
     {
         parent::__construct();
 
         $this->em = $em;
-        $this->im = $im;
+        $this->ptb = $ptb;
         $this->textProcessor = $textProcessor;
 
         $em->getConfiguration()->setSQLLogger(null);
@@ -58,6 +55,15 @@ class PostsBatchUpdateCommand extends Command
         ;
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     *
+     * @return void
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \JsonException
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $startTime = microtime(true);
@@ -101,13 +107,13 @@ class PostsBatchUpdateCommand extends Command
 
                 $media = $post->getDefaultImage();
                 if ($media && $media->isImage()) {
-                    $picture = $this->im->featuredPictureTag($media);
+                    $picture = $this->ptb->featuredPictureTag($media);
                     $media->setPictureTag($picture);
 
                     $srcSet = (new Image($media))->getSrcSet();
                     $srcSetData = $srcSet->toArray();
                     if (!empty($srcSetData)) {
-                        $media->setSrcSet(json_encode($srcSetData));
+                        $media->setSrcSet(json_encode($srcSetData, JSON_THROW_ON_ERROR));
                     }
 
                     $this->em->flush();

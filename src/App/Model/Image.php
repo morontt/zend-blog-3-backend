@@ -92,7 +92,7 @@ class Image
         $data = [];
         $addOriginal = false;
         foreach ($this->sizes as $key => $config) {
-            if ((strpos($key, 'article_') === 0) && isset($config['width'])) {
+            if (isset($config['width']) && (strpos($key, 'article_') === 0)) {
                 if ($config['width'] < $width) {
                     if ($newPath = $this->getPreview($key, $format)) {
                         $data[] = [
@@ -111,7 +111,7 @@ class Image
             if ($format) {
                 $ext = pathinfo($this->media->getPath(), PATHINFO_EXTENSION);
                 $resizer = $this->getResizer($this->media->getPath(), $format);
-                if ($ext != $format && method_exists($resizer, 'convert')) {
+                if ($ext !== $format && method_exists($resizer, 'convert')) {
                     $newPath = $resizer->convert($this->media->getPath(), ImageManager::getUploadsDir());
                     $data[] = [
                         'width' => $width,
@@ -135,7 +135,7 @@ class Image
         }, $data);
 
         usort($data, function ($a, $b) {
-            if ($a['width'] == $b['width']) {
+            if ($a['width'] === $b['width']) {
                 return 0;
             }
 
@@ -147,8 +147,9 @@ class Image
 
     /**
      * @param string $size
+     * @param string|null $format
      *
-     * @return string
+     * @return string|null
      */
     public function getPreview(string $size, string $format = null): ?string
     {
@@ -166,6 +167,7 @@ class Image
                     $this->sizes[$size]['height'] ?? 0
                 );
             } catch (\Throwable $e) {
+                #TODO add error to logger
                 return null;
             }
         }
@@ -219,14 +221,15 @@ class Image
             $obj->width = $geometry['width'];
             $obj->height = $geometry['height'];
         } catch (\ImagickException $e) {
+            #TODO add error to logger
         }
 
         return $obj;
     }
 
     /**
-     * @param string $method
-     * @param array $arguments
+     * @param $method
+     * @param $arguments
      *
      * @return mixed
      */

@@ -26,17 +26,23 @@ class TextProcessor
 
     private ImageManager $im;
 
+    private PictureTagBuilder $ptb;
+
     /**
      * @param MediaFileRepository $mediaFileRepository
      * @param PygmentsCodeRepository $codeRepository
+     * @param PictureTagBuilder $ptb
+     * @param ImageManager $im
      */
     public function __construct(
         MediaFileRepository $mediaFileRepository,
         PygmentsCodeRepository $codeRepository,
+        PictureTagBuilder $ptb,
         ImageManager $im
     ) {
         $this->mediaFileRepository = $mediaFileRepository;
         $this->codeRepository = $codeRepository;
+        $this->ptb = $ptb;
         $this->im = $im;
     }
 
@@ -111,7 +117,7 @@ class TextProcessor
         $media = $this->mediaFileRepository->find((int)$matches['id']);
         if ($media) {
             $alt = $matches['alt'] ?? $media->getDescription();
-            $replace = $this->im->articlePictureTag($media, $alt);
+            $replace = $this->ptb->articlePictureTag($media, $alt);
 
             if ($media->getWidth() > 864) {
                 $replace = sprintf(
@@ -133,7 +139,7 @@ class TextProcessor
         if ($media) {
             if (!$media->isDefaultImage()) {
                 $alt = $matches['alt'] ?? $media->getDescription();
-                $replace = $this->im->previewPictureTag($media, $alt);
+                $replace = $this->ptb->previewPictureTag($media, $alt);
             } else {
                 $replace = '';
             }

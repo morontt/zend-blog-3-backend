@@ -6,9 +6,9 @@ use App\Service\ImageManager;
 
 class SrcSet
 {
-    private ?SrcSetItem $origin;
-    private ?SrcSetItem $webp;
-    private ?SrcSetItem $avif;
+    private ?SrcSetItem $origin = null;
+    private ?SrcSetItem $webp = null;
+    private ?SrcSetItem $avif = null;
 
     /**
      * @return SrcSetItem|null

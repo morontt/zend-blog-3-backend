@@ -79,12 +79,9 @@ services:
         tags:
             - { name: doctrine.event_listener, event: preUpdate }
 
-#    Infinite loop:
-#    ImageManager -> DefaultEntityManager -> ImageManager -> ...
-#
-#    App\EventListener\Doctrine\MediaFilePictureListener:
-#        tags:
-#            - { name: doctrine.event_listener, event: preUpdate }
+    App\EventListener\Doctrine\MediaFilePictureListener:
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate }
 
     App\EventListener\CommentatorCheckListener:
         tags:
