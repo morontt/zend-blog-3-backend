@@ -12,6 +12,7 @@ RUN yes | pecl install xdebug-3.1.6 \
     && sed -i 's/memory_limit = 128M/memory_limit = 512M/' ${PHP_INI_DIR}/php.ini \
     ;
 
+RUN sed -i 's/php app\/console/php bin\/console/' /root/.bashrc
 RUN usermod -u ${HOST_UID} www-data && groupmod -g ${HOST_UID} www-data
 
 EXPOSE 80
