@@ -1,14 +1,16 @@
 <?php
 
-$finder = PhpCsFixer\Finder::create()
+$finder = (new PhpCsFixer\Finder())
     ->in([
         __DIR__ . '/spec',
         __DIR__ . '/src',
-        __DIR__ . '/app/DoctrineMigrations',
+        __DIR__ . '/migrations',
+        __DIR__ . '/config',
+        __DIR__ . '/web',
     ])
 ;
 
-return PhpCsFixer\Config::create()
+return (new PhpCsFixer\Config())
     ->setRules([
         '@Symfony' => true,
         'array_syntax' => ['syntax' => 'short'],
