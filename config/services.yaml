@@ -6,6 +6,7 @@
 parameters:
     cdn_url: '%env(CDN_URL)%'
     frontend_site: '%env(FRONT_SITE)%'
+    locale: 'ru'
     browsertitle: '%env(SITE_BROWSERTITLE)%'
     mailer_transport: smtp
     mailer_host: '%env(MAILER_HOST)%'

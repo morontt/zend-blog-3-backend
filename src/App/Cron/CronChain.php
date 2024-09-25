@@ -11,12 +11,12 @@ namespace App\Cron;
 class CronChain
 {
     /**
-     * @var array
+     * @var CronServiceInterface[]
      */
     private $dailyCrons;
 
     /**
-     * @var array
+     * @var CronServiceInterface[]
      */
     private $hourlyCrons;
 
