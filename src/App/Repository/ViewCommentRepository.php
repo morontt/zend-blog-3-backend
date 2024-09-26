@@ -5,7 +5,7 @@ namespace App\Repository;
 use App\Entity\Post;
 use App\Entity\ViewComment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 class ViewCommentRepository extends ServiceEntityRepository
 {

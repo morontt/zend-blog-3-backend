@@ -28,7 +28,7 @@
         "friendsofsymfony/jsrouting-bundle": "*",
         "guzzlehttp/guzzle": "~6.3",
         "hashids/hashids": "^4.1",
-        "knplabs/knp-paginator-bundle": "~2.4",
+        "knplabs/knp-paginator-bundle": "^4.0",
         "kunalvarma05/dropbox-php-sdk": "~0.2",
         "laminas/laminas-filter": "~2.9",
         "laminas/laminas-uri": "*",

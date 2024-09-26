@@ -6,7 +6,7 @@ use App\Doctrine\DBAL\Type\MillisecondsDateTime;
 use App\Entity\Comment;
 use App\Entity\GeoLocation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * CommentRepository

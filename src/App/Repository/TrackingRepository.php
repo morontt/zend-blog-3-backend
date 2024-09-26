@@ -5,8 +5,8 @@ namespace App\Repository;
 use App\Entity\GeoLocation;
 use App\Entity\Tracking;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * TrackingRepository

@@ -3,14 +3,15 @@
 namespace App\Security\Firewall;
 
 use App\Security\Authentication\Token\WsseUserToken;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Http\Firewall\ListenerInterface;
+use Symfony\Component\Security\Http\Firewall\AbstractListener;
 
-class WsseAuthenticationListener implements ListenerInterface
+class WsseAuthenticationListener extends AbstractListener
 {
     /**
      * @var TokenStorageInterface
@@ -32,16 +33,14 @@ class WsseAuthenticationListener implements ListenerInterface
         $this->authenticationManager = $authenticationManager;
     }
 
-    /**
-     * @param GetResponseEvent $event
-     */
-    public function handle(GetResponseEvent $event)
+    public function supports(Request $request): ?bool
+    {
+        return $request->headers->has('X-WSSE');
+    }
+
+    public function authenticate(RequestEvent $event)
     {
         $request = $event->getRequest();
-
-        if (!$request->headers->has('X-WSSE')) {
-            return;
-        }
 
         $wsseInfo = $this->parseHeader($request->headers->get('X-WSSE'));
         if (!$wsseInfo) {
