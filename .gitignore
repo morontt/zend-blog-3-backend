@@ -3,7 +3,7 @@
 /web/assetic/
 /web/dist/
 /web/js/
-/var/bootstrap.php.cache
+/var/.php_cs.cache
 /var/cache/*
 /var/logs/*
 /var/tests/*
