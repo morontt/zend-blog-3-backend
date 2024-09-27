@@ -5,7 +5,6 @@ namespace App\Controller\API;
 use App\Controller\BaseController;
 use App\Entity\PygmentsCode;
 use App\Event\PygmentCodeEvent;
-use App\Events;
 use App\Form\PygmentsCodeFormType;
 use App\Repository\PostRepository;
 use App\Repository\PygmentsCodeRepository;
@@ -112,7 +111,7 @@ class PygmentsCodeController extends BaseController
 
         $result = $this->getDataConverter()->savePygmentsCode($entity, $formData['pygmentsCode']);
 
-        $dispatcher->dispatch(Events::CODE_SNIPPET_UPDATED, new PygmentCodeEvent($entity));
+        $dispatcher->dispatch(new PygmentCodeEvent($entity));
 
         return new JsonResponse($result);
     }

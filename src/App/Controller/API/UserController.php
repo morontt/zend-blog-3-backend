@@ -8,7 +8,6 @@ use App\DTO\ExternalUserDTO;
 use App\Entity\User;
 use App\Event\UserEvent;
 use App\Event\UserExtraEvent;
-use App\Events;
 use App\Form\UserFormType;
 use App\Repository\UserRepository;
 use App\Service\UserManager;
@@ -107,7 +106,7 @@ class UserController extends BaseController
         $this->em->persist($entity);
         $this->em->flush();
 
-        $dispatcher->dispatch(Events::USER_UPDATED, new UserEvent($entity));
+        $dispatcher->dispatch(new UserEvent($entity));
 
         return new JsonResponse($this->getDataConverter()->getUser($entity));
     }
@@ -151,7 +150,7 @@ class UserController extends BaseController
                 $request->request->get('userAgent')
             );
 
-            $dispatcher->dispatch(Events::EXTERNAL_USER_CREATED, new UserExtraEvent($userInfo));
+            $dispatcher->dispatch(new UserExtraEvent($userInfo));
         }
 
         return new JsonResponse(

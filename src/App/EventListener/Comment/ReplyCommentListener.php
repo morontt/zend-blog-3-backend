@@ -6,7 +6,7 @@
  * Time: 21:11
  */
 
-namespace App\EventListener;
+namespace App\EventListener\Comment;
 
 use App\Event\CommentEvent;
 use App\Service\Mailer;
@@ -23,6 +23,8 @@ class ReplyCommentListener
 
     /**
      * @param Mailer $mailer
+     * @param LoggerInterface $logger
+     * @param Robot $bot
      */
     public function __construct(Mailer $mailer, LoggerInterface $logger, Robot $bot)
     {
@@ -34,7 +36,7 @@ class ReplyCommentListener
     /**
      * @param CommentEvent $event
      */
-    public function onReply(CommentEvent $event): void
+    public function __invoke(CommentEvent $event): void
     {
         try {
             $this->mailer->replyComment($event->getComment());

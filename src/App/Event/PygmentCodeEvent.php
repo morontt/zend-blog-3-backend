@@ -3,14 +3,11 @@
 namespace App\Event;
 
 use App\Entity\PygmentsCode;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class PygmentCodeEvent extends Event
 {
-    /**
-     * @var PygmentsCode
-     */
-    private $snippet;
+    private PygmentsCode $snippet;
 
     /**
      * @param PygmentsCode $snippet

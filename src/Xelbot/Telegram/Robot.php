@@ -22,23 +22,14 @@ use Xelbot\Telegram\Exception\TelegramException;
 
 class Robot
 {
-    const EMOJI_ROBOT = '&#x1F916;';
-    const EMOJI_THINKING_FACE = '&#x1F914;';
+    public const EMOJI_ROBOT = '&#x1F916;';
+    public const EMOJI_THINKING_FACE = '&#x1F914;';
 
-    /**
-     * @var string
-     */
-    protected $token = '';
+    protected string $token = '';
 
-    /**
-     * @var string
-     */
-    protected $botName = '';
+    protected string $botName = '';
 
-    /**
-     * @var int
-     */
-    protected $adminId;
+    protected int $adminId;
 
     /**
      * @var TelegramRequester
@@ -90,7 +81,7 @@ class Robot
     /**
      * @param LoggerInterface|null $logger
      */
-    public function setLogger(LoggerInterface $logger = null)
+    public function setLogger(LoggerInterface $logger = null): void
     {
         $this->logger = $logger;
         $this->requester->setLogger($logger);
@@ -99,7 +90,7 @@ class Robot
     /**
      * @param UpdatesManagerInterface $updatesManager
      */
-    public function setUpdatesManager(UpdatesManagerInterface $updatesManager)
+    public function setUpdatesManager(UpdatesManagerInterface $updatesManager): void
     {
         $this->updatesManager = $updatesManager;
     }
@@ -107,7 +98,7 @@ class Robot
     /**
      * @param TelegramCommandInterface $command
      */
-    public function addCommand(TelegramCommandInterface $command)
+    public function addCommand(TelegramCommandInterface $command): void
     {
         $command->setRequester($this->requester);
 
@@ -124,7 +115,7 @@ class Robot
      *
      * @return TelegramResponse
      */
-    public function sendMessage(string $message, int $chatId = null)
+    public function sendMessage(string $message, int $chatId = null): TelegramResponse
     {
         if ($chatId === null) {
             $chatId = $this->adminId;
@@ -139,6 +130,8 @@ class Robot
     /**
      * @param string $url
      * @param string|null $certificate
+     *
+     * @throws TelegramException
      *
      * @return TelegramResponse
      */
@@ -173,8 +166,10 @@ class Robot
 
     /**
      * @param array $requestData
+     *
+     * @throws \Symfony\Component\Serializer\Exception\ExceptionInterface
      */
-    public function handle(array $requestData)
+    public function handle(array $requestData): void
     {
         if ($this->logger) {
             $this->logger->info('Webhook: ', $requestData);
@@ -224,7 +219,7 @@ class Robot
      * @param Message $message
      * @param array $entity
      */
-    protected function executeCommand(Message $message, array $entity)
+    protected function executeCommand(Message $message, array $entity): void
     {
         if (!$message->getChat()) {
             $this->logger->error('message without chat', ['message' => serialize($message)]);
@@ -237,6 +232,7 @@ class Robot
             if (isset($this->commands[$commandName])) {
                 $this->commands[$commandName]->execute($message);
             } else {
+                //TODO Null pointer exception may occur here
                 $this->requester->sendMessage([
                     'chat_id' => $message->getChat()->getId(),
                     'text' => sprintf(
@@ -268,7 +264,7 @@ class Robot
     private function appealTo(int $idFrom): string
     {
         $text = '';
-        if ($idFrom == $this->adminId) {
+        if ($idFrom === $this->adminId) {
             $text = ', хозяин';
         }
 

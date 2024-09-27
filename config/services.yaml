@@ -73,7 +73,7 @@ services:
         calls:
             - [ setTelegramLogger, [ "@monolog.logger.telegram" ] ]
         tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 10 }
+            - { name: kernel.event_listener, event: kernel.request, priority: 10 }
 
     App\EventListener\Doctrine\ArticleUpdatedAtListener:
         tags:
@@ -83,35 +83,35 @@ services:
         tags:
             - { name: doctrine.event_listener, event: preUpdate }
 
-    App\EventListener\CommentatorCheckListener:
+    App\EventListener\Comment\CommentatorCheckListener:
         tags:
-            - { name: kernel.event_listener, event: mtt_blog.reply_comment, method: onReply }
+            - { name: kernel.event_listener, event: App\Event\CommentEvent }
 
-    App\EventListener\CommentGeolocationListener:
+    App\EventListener\Comment\CommentGeolocationListener:
         tags:
-            - { name: kernel.event_listener, event: mtt_blog.reply_comment, method: onReply }
+            - { name: kernel.event_listener, event: App\Event\CommentEvent }
 
-    App\EventListener\NewCommentEmailListener:
+    App\EventListener\Comment\NewCommentEmailListener:
         tags:
-            - { name: kernel.event_listener, event: mtt_blog.reply_comment, method: onReply }
+            - { name: kernel.event_listener, event: App\Event\CommentEvent }
 
-    App\EventListener\ReplyCommentListener:
+    App\EventListener\Comment\ReplyCommentListener:
         tags:
-            - { name: kernel.event_listener, event: mtt_blog.reply_comment, method: onReply }
+            - { name: kernel.event_listener, event: App\Event\CommentEvent }
 
     App\EventListener\PygmentsCodeUpdateListener:
         tags:
-            - { name: kernel.event_listener, event: mtt_blog.code_updated, method: onUpdate }
+            - { name: kernel.event_listener, event: App\Event\PygmentCodeEvent }
 
-    App\EventListener\UserCommentsListener:
+    App\EventListener\User\UserCommentsListener:
         tags:
-            - { name: kernel.event_listener, event: mtt_user.user_updated, method: onUpdate }
+            - { name: kernel.event_listener, event: App\Event\UserEvent }
 
-    App\EventListener\AvatarListener:
+    App\EventListener\User\AvatarListener:
         tags:
-            - { name: kernel.event_listener, event: mtt_user.external_user.created, method: onCreate }
+            - { name: kernel.event_listener, event: App\Event\UserExtraEvent }
 
-    App\EventListener\LoginListener:
+    App\EventListener\User\LoginListener:
         tags:
             - { name: kernel.event_listener, event: security.interactive_login, method: onLogin }
 

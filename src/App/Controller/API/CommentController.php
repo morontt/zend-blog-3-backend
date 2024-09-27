@@ -12,7 +12,7 @@ use App\Controller\BaseController;
 use App\Cron\Daily\CommentGeoLocation;
 use App\Entity\Comment;
 use App\Event\CommentEvent;
-use App\Events;
+use App\Event\DeleteCommentEvent;
 use App\Exception\NotAllowedCommentException;
 use App\Form\CommentFormType;
 use App\Repository\CommentRepository;
@@ -86,6 +86,8 @@ class CommentController extends BaseController
      * @param Tracking $tracking
      * @param EventDispatcherInterface $dispatcher
      *
+     * @throws \Doctrine\ORM\Exception\NotSupported
+     *
      * @return JsonResponse
      */
     public function createAction(
@@ -116,7 +118,7 @@ class CommentController extends BaseController
         $this->getDataConverter()
             ->saveComment($comment, $commentData);
 
-        $dispatcher->dispatch(Events::REPLY_COMMENT, new CommentEvent($comment));
+        $dispatcher->dispatch(new CommentEvent($comment));
 
         return new JsonResponse($this->getDataConverter()->getComment($comment), Response::HTTP_CREATED);
     }
@@ -152,7 +154,7 @@ class CommentController extends BaseController
         EventDispatcherInterface $dispatcher
     ): JsonResponse {
         $repository->markAsDeleted($entity);
-        $dispatcher->dispatch(Events::DELETE_COMMENT, new CommentEvent($entity));
+        $dispatcher->dispatch(new DeleteCommentEvent($entity));
 
         return new JsonResponse(true);
     }

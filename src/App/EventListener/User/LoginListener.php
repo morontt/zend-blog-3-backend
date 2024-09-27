@@ -6,7 +6,7 @@
  * Time: 23:40
  */
 
-namespace App\EventListener;
+namespace App\EventListener\User;
 
 use App\Entity\User;
 use App\Utils\Http;
@@ -16,10 +16,7 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class LoginListener
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @param EntityManagerInterface $em
@@ -32,7 +29,7 @@ class LoginListener
     /**
      * @param InteractiveLoginEvent $event
      */
-    public function onLogin(InteractiveLoginEvent $event)
+    public function onLogin(InteractiveLoginEvent $event): void
     {
         $user = $event->getAuthenticationToken()->getUser();
 

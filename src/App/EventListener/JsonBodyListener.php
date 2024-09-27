@@ -10,7 +10,7 @@ namespace App\EventListener;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class JsonBodyListener
@@ -18,12 +18,12 @@ class JsonBodyListener
     private LoggerInterface $logger;
 
     /**
-     * @param GetResponseEvent $event
+     * @param RequestEvent $event
      *
      * @throws BadRequestHttpException
      * @throws \JsonException
      */
-    public function onKernelRequest(GetResponseEvent $event)
+    public function onKernelRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();
         $method = $request->getMethod();
@@ -57,12 +57,12 @@ class JsonBodyListener
         }
     }
 
-    public function setTelegramLogger(LoggerInterface $logger)
+    public function setTelegramLogger(LoggerInterface $logger): void
     {
         $this->logger = $logger;
     }
 
-    private function telegramRawLog($uri, $content)
+    private function telegramRawLog($uri, $content): void
     {
         if (strpos($uri, '/telegram/') !== false) {
             $this->logger->debug('Raw telegram request', ['content' => $content]);

@@ -9,20 +9,11 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class PygmentsCodeUpdateListener
 {
-    /**
-     * @var TextProcessor
-     */
-    private $textProcessor;
+    private TextProcessor $textProcessor;
 
-    /**
-     * @var PostRepository
-     */
-    private $repository;
+    private PostRepository $repository;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
+    private EntityManagerInterface $em;
 
     /**
      * @param TextProcessor $textProcessor
@@ -42,7 +33,7 @@ class PygmentsCodeUpdateListener
     /**
      * @param PygmentCodeEvent $event
      */
-    public function onUpdate(PygmentCodeEvent $event)
+    public function __invoke(PygmentCodeEvent $event)
     {
         $posts = $this->repository->getPostsByCodeSnippet($event->getPygmentsCode()->getId());
         if (count($posts)) {

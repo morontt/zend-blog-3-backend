@@ -9,14 +9,11 @@
 namespace App\Event;
 
 use App\Entity\Comment;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class CommentEvent extends Event
 {
-    /**
-     * @var Comment
-     */
-    private $comment;
+    private Comment $comment;
 
     /**
      * @param Comment $comment

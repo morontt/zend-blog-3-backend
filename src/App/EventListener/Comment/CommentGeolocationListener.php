@@ -1,6 +1,6 @@
 <?php
 
-namespace App\EventListener;
+namespace App\EventListener\Comment;
 
 use App\Event\CommentEvent;
 use App\Repository\GeoLocationRepository;
@@ -8,15 +8,9 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class CommentGeolocationListener
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
+    private EntityManagerInterface $em;
 
-    /**
-     * @var GeoLocationRepository
-     */
-    private $repository;
+    private GeoLocationRepository $repository;
 
     /**
      * @param EntityManagerInterface $em
@@ -28,7 +22,7 @@ class CommentGeolocationListener
         $this->repository = $repository;
     }
 
-    public function onReply(CommentEvent $event)
+    public function __invoke(CommentEvent $event): void
     {
         $comment = $event->getComment();
         if ($comment->getGeoLocation()) {

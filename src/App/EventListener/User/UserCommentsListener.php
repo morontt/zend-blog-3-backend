@@ -1,6 +1,6 @@
 <?php
 
-namespace App\EventListener;
+namespace App\EventListener\User;
 
 use App\Event\UserEvent;
 use App\Repository\CommentRepository;
@@ -14,7 +14,7 @@ class UserCommentsListener
         $this->repository = $repository;
     }
 
-    public function onUpdate(UserEvent $event)
+    public function __invoke(UserEvent $event)
     {
         $this->repository->updateUserComments($event->getUser()->getId());
     }

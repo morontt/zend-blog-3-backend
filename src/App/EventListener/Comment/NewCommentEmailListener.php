@@ -1,6 +1,6 @@
 <?php
 
-namespace App\EventListener;
+namespace App\EventListener\Comment;
 
 use App\Event\CommentEvent;
 use App\Repository\UserRepository;
@@ -21,6 +21,7 @@ class NewCommentEmailListener
     /**
      * @param Mailer $mailer
      * @param UserRepository $repository
+     * @param LoggerInterface $logger
      * @param Robot $bot
      */
     public function __construct(Mailer $mailer, UserRepository $repository, LoggerInterface $logger, Robot $bot)
@@ -34,7 +35,7 @@ class NewCommentEmailListener
     /**
      * @param CommentEvent $event
      */
-    public function onReply(CommentEvent $event)
+    public function __invoke(CommentEvent $event): void
     {
         try {
             $admin = $this->repository->getAdmin();

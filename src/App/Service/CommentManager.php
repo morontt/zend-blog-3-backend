@@ -5,7 +5,6 @@ namespace App\Service;
 use App\DTO\CommentDTO;
 use App\Entity\Comment;
 use App\Event\CommentEvent;
-use App\Events;
 use App\Exception\NotAllowedCommentException;
 use App\Repository\CommentatorRepository;
 use App\Repository\CommentRepository;
@@ -109,7 +108,7 @@ class CommentManager
 
         $this->commentRepo->save($comment);
 
-        $this->dispatcher->dispatch(Events::REPLY_COMMENT, new CommentEvent($comment));
+        $this->dispatcher->dispatch(new CommentEvent($comment));
 
         return $comment;
     }

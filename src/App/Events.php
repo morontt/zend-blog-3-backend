@@ -10,7 +10,7 @@ namespace App;
 
 final class Events
 {
-    public const REPLY_COMMENT = 'mtt_blog.reply_comment';
+    public const RECEIVE_COMMENT = 'comment.received';
     public const DELETE_COMMENT = 'mtt_blog.delete_comment';
     public const CODE_SNIPPET_UPDATED = 'mtt_blog.code_updated';
     public const EXTERNAL_USER_CREATED = 'mtt_user.external_user.created';

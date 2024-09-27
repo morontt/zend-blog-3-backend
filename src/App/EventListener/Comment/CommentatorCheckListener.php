@@ -1,6 +1,6 @@
 <?php
 
-namespace App\EventListener;
+namespace App\EventListener\Comment;
 
 use App\Event\CommentEvent;
 use App\Utils\RottenLink;
@@ -9,10 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class CommentatorCheckListener
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
+    private EntityManagerInterface $em;
 
     /**
      * @param EntityManagerInterface $em
@@ -22,7 +19,7 @@ class CommentatorCheckListener
         $this->em = $em;
     }
 
-    public function onReply(CommentEvent $event): void
+    public function __invoke(CommentEvent $event): void
     {
         $commentator = $event->getComment()->getCommentator();
         if (!$commentator || (!$commentator->getEmail() && !$commentator->getWebsite())) {

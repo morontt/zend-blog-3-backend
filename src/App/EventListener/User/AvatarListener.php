@@ -1,6 +1,6 @@
 <?php
 
-namespace App\EventListener;
+namespace App\EventListener\User;
 
 use App\Event\UserExtraEvent;
 use App\OAuth2\DataProviderFactory;
@@ -25,7 +25,7 @@ class AvatarListener
         $this->em = $em;
     }
 
-    public function onCreate(UserExtraEvent $event): void
+    public function __invoke(UserExtraEvent $event): void
     {
         $extraInfo = $event->getExtraInfo();
 
