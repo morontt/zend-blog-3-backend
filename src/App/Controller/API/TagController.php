@@ -71,6 +71,9 @@ class TagController extends BaseController
      * @param ValidatorInterface $validator
      * @param Request $request
      *
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     *
      * @return JsonResponse
      */
     public function createAction(ValidatorInterface $validator, Request $request): JsonResponse
@@ -103,6 +106,9 @@ class TagController extends BaseController
      * @param ValidatorInterface $validator
      * @param Request $request
      * @param Tag $entity
+     *
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      *
      * @return JsonResponse
      */
@@ -150,6 +156,8 @@ class TagController extends BaseController
      * @Route("/autocomplete", name="tags_autocomplete", options={"expose"=true}, methods={"GET"})
      *
      * @param Request $request
+     *
+     * @throws \Doctrine\ORM\Exception\NotSupported
      *
      * @return JsonResponse
      */

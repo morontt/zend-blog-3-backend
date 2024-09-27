@@ -21,12 +21,12 @@ class DefaultController extends AbstractController
     /**
      * @var string
      */
-    private $kernelEnv;
+    private string $kernelEnv;
 
     /**
      * @var string
      */
-    private $cdnUrl;
+    private string $cdnUrl;
 
     private string $blogUrl;
 
@@ -41,9 +41,11 @@ class DefaultController extends AbstractController
      * @Route("/")
      * @Template()
      *
+     * @throws \JsonException
+     *
      * @return array
      */
-    public function indexAction()
+    public function indexAction(): array
     {
         $isDev = $this->kernelEnv === 'dev';
 
@@ -82,7 +84,7 @@ class DefaultController extends AbstractController
         ];
 
         return [
-            'env' => urlencode(json_encode($environment)),
+            'env' => urlencode(json_encode($environment, JSON_THROW_ON_ERROR)),
         ];
     }
 

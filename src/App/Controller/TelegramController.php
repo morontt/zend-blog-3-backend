@@ -19,12 +19,12 @@ class TelegramController extends AbstractController
     /**
      * @var string
      */
-    private $secretToken;
+    private string $secretToken;
 
     /**
      * @var Robot
      */
-    private $telegramBot;
+    private Robot $telegramBot;
 
     /**
      * @param Robot $telegramBot

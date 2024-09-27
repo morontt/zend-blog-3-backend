@@ -14,7 +14,6 @@ use App\Form\ImageFormType;
 use App\Model\Image;
 use App\Repository\MediaFileRepository;
 use App\Service\ImageManager;
-use Doctrine\ORM\ORMException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -108,7 +107,7 @@ class MediaFileController extends BaseController
      * @param MediaFile $entity
      * @param ImageManager $manager
      *
-     * @throws ORMException
+     * @throws \Doctrine\ORM\Exception\ORMException
      *
      * @return JsonResponse
      */
@@ -125,7 +124,8 @@ class MediaFileController extends BaseController
      * @param Request $request
      * @param ImageManager $manager
      *
-     * @throws ORMException
+     * @throws \Doctrine\ORM\Exception\NotSupported
+     * @throws \Doctrine\ORM\Exception\ORMException
      *
      * @return JsonResponse
      */

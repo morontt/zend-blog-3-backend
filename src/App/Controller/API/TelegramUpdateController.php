@@ -62,7 +62,7 @@ class TelegramUpdateController extends BaseController
      *
      * @return JsonResponse
      */
-    public function createAction(Request $request, TelegramUpdateRepository $repository, Robot $bot)
+    public function createAction(Request $request, TelegramUpdateRepository $repository, Robot $bot): JsonResponse
     {
         $now = new \DateTime();
         $messageData = $request->request->get('telegramUpdate');

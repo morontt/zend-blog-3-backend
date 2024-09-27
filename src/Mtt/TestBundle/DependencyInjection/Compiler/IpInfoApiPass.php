@@ -9,9 +9,9 @@ class IpInfoApiPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container)
     {
-        if ($container->has('Mtt\BlogBundle\Service\IpInfo\IpInfoClientInterface')) {
+        if ($container->has('App\Service\IpInfo\IpInfoClientInterface')) {
             $container->setDefinition(
-                'Mtt\BlogBundle\Service\IpInfo\IpInfoClientInterface',
+                'App\Service\IpInfo\IpInfoClientInterface',
                 $container->findDefinition('Mtt\TestBundle\Service\IpInfo\IpInfoDummyClient')
             );
         }

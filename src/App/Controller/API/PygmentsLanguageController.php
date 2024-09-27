@@ -62,6 +62,9 @@ class PygmentsLanguageController extends BaseController
      * @param ValidatorInterface $validator
      * @param Request $request
      *
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     *
      * @return JsonResponse
      */
     public function createAction(ValidatorInterface $validator, Request $request): JsonResponse
@@ -95,6 +98,9 @@ class PygmentsLanguageController extends BaseController
      * @param Request $request
      * @param PygmentsLanguage $entity
      *
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     *
      * @return JsonResponse
      */
     public function updateAction(ValidatorInterface $validator, Request $request, PygmentsLanguage $entity): JsonResponse
@@ -125,7 +131,7 @@ class PygmentsLanguageController extends BaseController
      *
      * @param PygmentsLanguage $entity
      *
-     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\Exception\ORMException
      *
      * @return JsonResponse
      */

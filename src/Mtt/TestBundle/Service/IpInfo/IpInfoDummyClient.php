@@ -2,9 +2,9 @@
 
 namespace Mtt\TestBundle\Service\IpInfo;
 
+use App\Service\IpInfo\IpInfoClientInterface;
+use App\Service\IpInfo\LocationInfo;
 use Faker\Factory as FakerFactory;
-use Mtt\BlogBundle\Service\IpInfo\IpInfoClientInterface;
-use Mtt\BlogBundle\Service\IpInfo\LocationInfo;
 use Symfony\Component\Intl\Intl;
 
 class IpInfoDummyClient implements IpInfoClientInterface

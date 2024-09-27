@@ -2,11 +2,11 @@
 
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
+use App\Entity\Commentator;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectManager as ObjectManagerInterface;
 use Faker\Factory as FakerFactory;
-use Mtt\BlogBundle\Entity\Commentator;
 
 class LoadCommentatorData extends Fixture
 {

@@ -12,7 +12,6 @@ use App\Controller\BaseController;
 use App\Entity\Category;
 use App\Form\CategoryFormType;
 use App\Repository\CategoryRepository;
-use Doctrine\ORM\ORMException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -68,7 +67,8 @@ class CategoryController extends BaseController
      *
      * @param Request $request
      *
-     * @throws ORMException
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      *
      * @return JsonResponse
      */
@@ -95,7 +95,8 @@ class CategoryController extends BaseController
      * @param Request $request
      * @param Category $entity
      *
-     * @throws ORMException
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      *
      * @return JsonResponse
      */
@@ -121,7 +122,7 @@ class CategoryController extends BaseController
      *
      * @param Category $entity
      *
-     * @throws ORMException
+     * @throws \Doctrine\ORM\Exception\ORMException
      *
      * @return JsonResponse
      */

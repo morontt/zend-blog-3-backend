@@ -23,7 +23,6 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\ORMException;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
@@ -176,7 +175,8 @@ class DataConverter
      * @param Entity\Post $entity
      * @param ArticleDTO $data
      *
-     * @throws ORMException
+     * @throws \Doctrine\ORM\Exception\NotSupported
+     * @throws \Doctrine\ORM\Exception\ORMException
      *
      * @return array
      */
@@ -259,7 +259,7 @@ class DataConverter
      * @param Entity\PygmentsCode $entity
      * @param PygmentsCodeDTO $data
      *
-     * @throws ORMException
+     * @throws \Doctrine\ORM\Exception\ORMException
      *
      * @return array
      */

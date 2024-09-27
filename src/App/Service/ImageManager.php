@@ -13,7 +13,6 @@ use App\Entity\Post;
 use App\Model\Image;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\ORMException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -43,9 +42,10 @@ class ImageManager
      * @param $postId
      * @param UploadedFile $file
      *
-     * @throws ORMException
+     * @throws \Doctrine\ORM\Exception\NotSupported
+     * @throws \Doctrine\ORM\Exception\ORMException
      */
-    public function uploadImage($description, $postId, UploadedFile $file)
+    public function uploadImage($description, $postId, UploadedFile $file): void
     {
         $fileName = $file->getClientOriginalName();
         $file->move($this->getTempDirectory(), $fileName);
@@ -97,9 +97,11 @@ class ImageManager
     /**
      * @param MediaFile $entity
      *
-     * @throws ORMException
+     * @throws \Doctrine\ORM\Exception\ORMException
+     *
+     * @return void
      */
-    public function remove(MediaFile $entity)
+    public function remove(MediaFile $entity): void
     {
         $this->removeAllPreview($entity);
 

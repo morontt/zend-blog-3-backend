@@ -2,14 +2,14 @@
 
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
+use App\Entity\Post;
+use App\Service\TextProcessor;
+use App\Utils\RuTransform;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectManager as ObjectManagerInterface;
 use Faker\Factory as FakerFactory;
-use Mtt\BlogBundle\Entity\Post;
-use Mtt\BlogBundle\Service\TextProcessor;
-use Mtt\BlogBundle\Utils\RuTransform;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 

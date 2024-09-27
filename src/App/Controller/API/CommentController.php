@@ -19,7 +19,6 @@ use App\Repository\CommentRepository;
 use App\Repository\ViewCommentRepository;
 use App\Service\CommentManager;
 use App\Service\Tracking;
-use Doctrine\ORM\ORMException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -145,8 +144,6 @@ class CommentController extends BaseController
      * @param CommentRepository $repository
      * @param EventDispatcherInterface $dispatcher
      *
-     * @throws ORMException
-     *
      * @return JsonResponse
      */
     public function deleteAction(
@@ -168,7 +165,7 @@ class CommentController extends BaseController
      *
      * @return JsonResponse
      */
-    public function getLocation(CommentGeoLocation $geoLocation, Robot $bot)
+    public function getLocation(CommentGeoLocation $geoLocation, Robot $bot): JsonResponse
     {
         $geoLocation->run();
         $bot->sendMessage('CommentGeoLocation: ' . $geoLocation->getMessage());

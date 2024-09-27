@@ -63,6 +63,10 @@ class PygmentsCodeController extends BaseController
      *
      * @param Request $request
      *
+     * @throws \Doctrine\ORM\Exception\ORMException
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     *
      * @return JsonResponse
      */
     public function createAction(Request $request): JsonResponse
@@ -86,6 +90,10 @@ class PygmentsCodeController extends BaseController
      * @param Request $request
      * @param PygmentsCode $entity
      * @param EventDispatcherInterface $dispatcher
+     *
+     * @throws \Doctrine\ORM\Exception\ORMException
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      *
      * @return JsonResponse
      */
@@ -115,7 +123,7 @@ class PygmentsCodeController extends BaseController
      * @param PygmentsCode $entity
      * @param PostRepository $repository
      *
-     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\Exception\ORMException
      *
      * @return JsonResponse
      */

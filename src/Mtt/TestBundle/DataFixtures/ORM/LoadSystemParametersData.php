@@ -2,10 +2,10 @@
 
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
+use App\Entity\SystemParameters;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectManager as ObjectManagerInterface;
-use Mtt\BlogBundle\Entity\SystemParameters;
 
 class LoadSystemParametersData extends Fixture
 {

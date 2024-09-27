@@ -78,6 +78,9 @@ class UserController extends BaseController
      * @param Request $request
      * @param User $entity
      *
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     *
      * @return JsonResponse
      */
     public function updateAction(

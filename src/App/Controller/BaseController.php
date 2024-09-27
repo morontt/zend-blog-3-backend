@@ -27,17 +27,17 @@ class BaseController extends AbstractController
     /**
      * @var EntityManagerInterface
      */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @var PaginatorInterface
      */
-    protected $paginator;
+    protected PaginatorInterface $paginator;
 
     /**
      * @var DataConverter
      */
-    protected $apiDataConverter;
+    protected DataConverter $apiDataConverter;
 
     protected array $errorsPathMap = [];
 
@@ -141,6 +141,9 @@ class BaseController extends AbstractController
      * @param $child
      * @param $type
      * @param bool $put
+     *
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      *
      * @return FormInterface
      */

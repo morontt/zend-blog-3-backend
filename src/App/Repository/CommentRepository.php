@@ -124,17 +124,14 @@ class CommentRepository extends ServiceEntityRepository
 
     /**
      * @param Comment $entity
-     *
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function markAsDeleted(Comment $entity)
+    public function markAsDeleted(Comment $entity): void
     {
         $entity->setDeleted(true);
         $this->getEntityManager()->flush();
     }
 
-    public function save(Comment $entity)
+    public function save(Comment $entity): void
     {
         $new = is_null($entity->getId());
 

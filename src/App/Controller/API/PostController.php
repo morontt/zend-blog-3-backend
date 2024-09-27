@@ -12,7 +12,6 @@ use App\Controller\BaseController;
 use App\Entity\Post;
 use App\Form\ArticleFormType;
 use App\Repository\PostRepository;
-use Doctrine\ORM\ORMException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -64,11 +63,12 @@ class PostController extends BaseController
     }
 
     /**
-     * @Route("", methods={"POST"})
-     *
      * @param Request $request
      *
-     * @throws ORMException
+     * @throws \Doctrine\ORM\Exception\NotSupported
+     * @throws \Doctrine\ORM\Exception\ORMException
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      *
      * @return JsonResponse
      */
@@ -93,7 +93,10 @@ class PostController extends BaseController
      * @param Request $request
      * @param Post $entity
      *
-     * @throws ORMException
+     * @throws \Doctrine\ORM\Exception\NotSupported
+     * @throws \Doctrine\ORM\Exception\ORMException
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      *
      * @return JsonResponse
      */
@@ -117,7 +120,7 @@ class PostController extends BaseController
      *
      * @param Post $entity
      *
-     * @throws ORMException
+     * @throws \Doctrine\ORM\Exception\ORMException
      *
      * @return JsonResponse
      */
