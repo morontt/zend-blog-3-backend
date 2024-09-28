@@ -34,6 +34,13 @@ class AvifResizer implements ResizerInterface
         $image->writeImage($tmpfile);
         $image->clear();
 
+        /**
+         * TODO rework:
+         *
+         * User Deprecated: Passing a command as string when creating a "Symfony\Component\Process\Process" instance
+         * is deprecated since Symfony 4.2, pass it as an array of its arguments instead, or use
+         * the "Process::fromShellCommandline()" constructor if you need features provided by the shell.
+         */
         $process = new Process(
             '/usr/bin/cavif --quality=75 --speed=1 --depth=8 --quiet -o ' . escapeshellarg($newFilePath) . ' ' . $tmpfile
         );

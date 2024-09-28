@@ -63,6 +63,8 @@ class PostController extends BaseController
     }
 
     /**
+     * @Route("", methods={"POST"})
+     *
      * @param Request $request
      *
      * @throws \Doctrine\ORM\Exception\NotSupported
