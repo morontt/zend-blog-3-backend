@@ -222,8 +222,8 @@ class Mailer
                     ],
                 ));
 
-                $template = $this->twig->load('MttBlogBundle:mails:replyComment.html.twig');
-                $textTemplate = $this->twig->load('MttBlogBundle:mails:replyComment.txt.twig');
+                $template = $this->twig->load('mails/replyComment.html.twig');
+                $textTemplate = $this->twig->load('mails/replyComment.txt.twig');
 
                 $message = new EmailMessageDTO();
 
