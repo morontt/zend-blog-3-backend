@@ -1,14 +1,13 @@
-/app/config/parameters.yml
 /web/bundles/
 /web/assetic/
 /web/dist/
 /web/js/
 /var/.php_cs.cache
 /var/cache/*
-/var/logs/*
+/var/log/*
 /var/tests/*
 !var/cache/.gitkeep
-!var/logs/.gitkeep
+!var/log/.gitkeep
 !var/tests/.gitkeep
 /build/
 /vendor/

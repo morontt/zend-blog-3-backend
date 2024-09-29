@@ -12,7 +12,7 @@ services:
             - .:/var/www/html
             - ./docker/web/apache.conf:/etc/apache2/sites-available/000-default.conf:ro
             - ${UPLOADS_PATH}:/var/www/resources
-            - app-logs:/var/www/html/var/logs
+            - app-logs:/var/www/html/var/log
         tmpfs:
             - /tmp
             - /var/www/html/var/cache:uid=${HOST_UID},gid=${HOST_UID}
