@@ -62,7 +62,7 @@ class DataConverter
     /**
      * @var Manager
      */
-    protected $fractal;
+    protected Manager $fractal;
 
     /**
      * @var EntityManager
@@ -72,17 +72,17 @@ class DataConverter
     /**
      * @var TextProcessor
      */
-    protected $textProcessor;
+    protected TextProcessor $textProcessor;
 
     /**
      * @var CategoryRepository
      */
-    private $categoryRepository;
+    private CategoryRepository $categoryRepository;
 
     /**
      * @var CommentRepository
      */
-    private $commentsRepository;
+    private CommentRepository $commentsRepository;
 
     /**
      * @param EntityManagerInterface $em
@@ -310,7 +310,7 @@ class DataConverter
                 $this->fractal->parseIncludes($arguments[1]);
             }
 
-            $result = $this->fractal->createData($resource)->toArray();
+            $scope = $this->fractal->createData($resource);
         } elseif (preg_match('/^get([A-Z]\w+)$/', $method, $matches)) {
             $class = 'App\\API\\Transformers\\' . $matches[1] . 'Transformer';
             $resource = new Item($arguments[0], new $class(), lcfirst($matches[1]));
@@ -319,12 +319,12 @@ class DataConverter
                 $this->fractal->parseIncludes($arguments[1]);
             }
 
-            $result = $this->fractal->createData($resource)->toArray();
+            $scope = $this->fractal->createData($resource);
         } else {
             throw new \RuntimeException(sprintf('Undefined method: %s', $method));
         }
 
-        return $result;
+        return $scope->toArray();
     }
 
     /**

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker-compose exec rhinoceros bash -c "bin/phpstan analyze src"
+docker compose exec rhinoceros bash -c "bin/phpstan analyze"
