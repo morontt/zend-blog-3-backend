@@ -85,6 +85,6 @@ class PostTransformer extends BaseTransformer
      */
     public function includeCategory(Post $entity): ResourceInterface
     {
-        return $this->item($entity->getCategory(), new CategoryTransformer(), 'category');
+        return $this->collection([$entity->getCategory()], new CategoryTransformer(), 'categories');
     }
 }
