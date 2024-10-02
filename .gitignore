@@ -30,7 +30,6 @@ behat.yml
 /spa/npm-debug.log
 /spa/testem.log
 /web/spa/
-/web/fonts/
 .env
 http-client.env.json
 /docker/nginx/fullchain.pem
