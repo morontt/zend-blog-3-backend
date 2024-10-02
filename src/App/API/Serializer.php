@@ -9,11 +9,14 @@
 namespace App\API;
 
 use App\Utils\Inflector;
+use League\Fractal\Pagination\PaginatorInterface;
 use League\Fractal\Resource\ResourceInterface;
 use League\Fractal\Serializer\ArraySerializer;
 
 class Serializer extends ArraySerializer
 {
+    private array $pluralizeCache = [];
+
     /**
      * Serialize an item.
      *
@@ -47,7 +50,7 @@ class Serializer extends ArraySerializer
         return [$key => $resources];
     }
 
-    /*
+    /**
      * Serialize the included data.
      *
      * @param ResourceInterface $resource
@@ -67,7 +70,7 @@ class Serializer extends ArraySerializer
                     }
                     $serializedData[$fk] = array_merge($serializedData[$fk], $includeValue[$fk]);
                 } else {
-                    $key = Inflector::pluralize($fk);
+                    $key = $this->pluralize($fk);
                     if (empty($serializedData[$key])) {
                         $serializedData[$key] = [];
                     }
@@ -77,6 +80,47 @@ class Serializer extends ArraySerializer
         }
 
         return empty($serializedData) ? [] : $serializedData;
+    }
+
+    /**
+     * Serialize the paginator.
+     *
+     * @param PaginatorInterface $paginator
+     *
+     * @return array[]
+     */
+    public function paginator(PaginatorInterface $paginator): array
+    {
+        $current = $paginator->getCurrentPage();
+        $data = [];
+        if ($current - 1 > 0) {
+            $data['previous'] = $current - 1;
+        }
+
+        if ($current + 1 <= $paginator->getLastPage()) {
+            $data['next'] = $current + 1;
+        }
+
+        return [
+            'pagination' => [
+                'last' => $paginator->getLastPage(),
+                'current' => $current,
+                'previous' => $data['previous'] ?? false,
+                'next' => $data['next'] ?? false,
+            ],
+        ];
+    }
+
+    /**
+     * Serialize the meta.
+     *
+     * @param array $meta
+     *
+     * @return array
+     */
+    public function meta(array $meta): array
+    {
+        return !empty($meta['pagination']) ? ['meta' => $meta['pagination']] : [];
     }
 
     public function sideloadIncludes(): bool
@@ -89,5 +133,17 @@ class Serializer extends ArraySerializer
         $fk = array_key_first($data);
 
         return !isset($data[$fk]['id']);
+    }
+
+    private function pluralize(string $word): string
+    {
+        if (!empty($this->pluralizeCache[$word])) {
+            return $this->pluralizeCache[$word];
+        }
+
+        $res = Inflector::pluralize($word);
+        $this->pluralizeCache[$word] = $res;
+
+        return $res;
     }
 }

@@ -42,8 +42,6 @@ class PostController extends BaseController
         $result = $this->getDataConverter()
             ->getPostArray($pagination, 'category');
 
-        $result['meta'] = $this->getPaginationMetadata($pagination->getPaginationData());
-
         return new JsonResponse($result);
     }
 

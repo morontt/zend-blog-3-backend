@@ -42,8 +42,6 @@ class CategoryController extends BaseController
         $result = $this->getDataConverter()
             ->getCategoryArray($pagination);
 
-        $result['meta'] = $this->getPaginationMetadata($pagination->getPaginationData());
-
         return new JsonResponse($result);
     }
 

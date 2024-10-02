@@ -8,6 +8,7 @@
 
 namespace App\API;
 
+use App\API\Fractal\Collection;
 use App\DTO\ArticleDTO;
 use App\DTO\CategoryDTO;
 use App\DTO\PygmentsCodeDTO;
@@ -24,7 +25,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Fractal\Manager;
-use League\Fractal\Resource\Collection;
 use League\Fractal\Resource\Item;
 
 /**

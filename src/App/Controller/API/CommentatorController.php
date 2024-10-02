@@ -41,8 +41,6 @@ class CommentatorController extends BaseController
         $result = $this->getDataConverter()
             ->getCommentatorArray($pagination);
 
-        $result['meta'] = $this->getPaginationMetadata($pagination->getPaginationData());
-
         return new JsonResponse($result);
     }
 

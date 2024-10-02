@@ -37,8 +37,6 @@ class PygmentsCodeController extends BaseController
         $result = $this->getDataConverter()
             ->getPygmentsCodeArray($pagination, 'language');
 
-        $result['meta'] = $this->getPaginationMetadata($pagination->getPaginationData());
-
         return new JsonResponse($result);
     }
 

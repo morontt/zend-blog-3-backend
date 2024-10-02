@@ -49,8 +49,6 @@ class UserController extends BaseController
         $result = $this->getDataConverter()
             ->getUserArray($pagination);
 
-        $result['meta'] = $this->getPaginationMetadata($pagination->getPaginationData());
-
         return new JsonResponse($result);
     }
 

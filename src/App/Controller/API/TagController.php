@@ -45,8 +45,6 @@ class TagController extends BaseController
         $result = $this->getDataConverter()
             ->getTagArray($pagination);
 
-        $result['meta'] = $this->getPaginationMetadata($pagination->getPaginationData());
-
         return new JsonResponse($result);
     }
 
