@@ -3,14 +3,14 @@
 namespace App\API\Transformers;
 
 use App\Entity\TelegramUpdate;
-use League\Fractal\Resource\Collection;
+use League\Fractal\Resource\ResourceInterface;
 
 class TelegramUpdateTransformer extends BaseTransformer
 {
     /**
      * @var array
      */
-    protected $availableIncludes = [
+    protected array $availableIncludes = [
         'telegramUser',
     ];
 
@@ -28,9 +28,9 @@ class TelegramUpdateTransformer extends BaseTransformer
     /**
      * @param TelegramUpdate $entity
      *
-     * @return Collection
+     * @return ResourceInterface
      */
-    public function includeTelegramUser(TelegramUpdate $entity): Collection
+    public function includeTelegramUser(TelegramUpdate $entity): ResourceInterface
     {
         $tgUser = $entity->getTelegramUser();
         $items = [];

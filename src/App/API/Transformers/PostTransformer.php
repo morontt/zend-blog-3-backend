@@ -12,14 +12,14 @@ use App\DTO\ArticleDTO;
 use App\Entity\Post;
 use App\Entity\Tag;
 use App\Utils\RuTransform;
-use League\Fractal\Resource\Collection;
+use League\Fractal\Resource\ResourceInterface;
 
 class PostTransformer extends BaseTransformer
 {
     /**
      * @var array
      */
-    protected $availableIncludes = [
+    protected array $availableIncludes = [
         'category',
     ];
 
@@ -81,12 +81,10 @@ class PostTransformer extends BaseTransformer
     /**
      * @param Post $entity
      *
-     * @return Collection
+     * @return ResourceInterface
      */
-    public function includeCategory(Post $entity): Collection
+    public function includeCategory(Post $entity): ResourceInterface
     {
-        $items = [$entity->getCategory()];
-
-        return $this->collection($items, new CategoryTransformer(), 'categories');
+        return $this->collection([$entity->getCategory()], new CategoryTransformer(), 'categories');
     }
 }

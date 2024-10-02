@@ -13,14 +13,14 @@ use App\Entity\CommentInterface;
 use App\Entity\ViewComment;
 use App\Entity\ViewCommentator;
 use App\Utils\EmojiFlagSymbol;
-use League\Fractal\Resource\Collection;
+use League\Fractal\Resource\ResourceInterface;
 
 class CommentTransformer extends BaseTransformer
 {
     /**
      * @var array
      */
-    protected $availableIncludes = [
+    protected array $availableIncludes = [
         'commentator',
     ];
 
@@ -137,9 +137,9 @@ class CommentTransformer extends BaseTransformer
     /**
      * @param Comment $entity
      *
-     * @return Collection
+     * @return ResourceInterface
      */
-    public function includeCommentator(Comment $entity): Collection
+    public function includeCommentator(Comment $entity): ResourceInterface
     {
         $commentator = $entity->getCommentator();
         $items = [];

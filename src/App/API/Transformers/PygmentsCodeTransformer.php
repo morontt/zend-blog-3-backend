@@ -4,14 +4,14 @@ namespace App\API\Transformers;
 
 use App\DTO\PygmentsCodeDTO;
 use App\Entity\PygmentsCode;
-use League\Fractal\Resource\Collection;
+use League\Fractal\Resource\ResourceInterface;
 
 class PygmentsCodeTransformer extends BaseTransformer
 {
     /**
      * @var array
      */
-    protected $availableIncludes = [
+    protected array $availableIncludes = [
         'language',
     ];
 
@@ -50,9 +50,9 @@ class PygmentsCodeTransformer extends BaseTransformer
     /**
      * @param PygmentsCode $entity
      *
-     * @return Collection
+     * @return ResourceInterface
      */
-    public function includeLanguage(PygmentsCode $entity): Collection
+    public function includeLanguage(PygmentsCode $entity): ResourceInterface
     {
         $items = [];
         if ($entity->getLanguage()) {

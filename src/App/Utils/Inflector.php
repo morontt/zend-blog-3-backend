@@ -18,12 +18,12 @@ namespace App\Utils;
  */
 class Inflector
 {
-    const BLANK_REGEX = '/^\s*$/';
-    const LAST_WORD_DASHED_REGEX = '/([\w\/-]+[_\/\s-])([a-z\d]+$)/';
-    const LAST_WORD_CAMELIZED_REGEX = '/([\w\/\s-]+)([A-Z][a-z\d]*$)/';
-    const CAMELIZED_REGEX = '/[A-Z][a-z\d]*$/';
+    private const BLANK_REGEX = '/^\s*$/';
+    private const LAST_WORD_DASHED_REGEX = '/([\w\/-]+[_\/\s-])([a-z\d]+$)/';
+    private const LAST_WORD_CAMELIZED_REGEX = '/([\w\/\s-]+)([A-Z][a-z\d]*$)/';
+    private const CAMELIZED_REGEX = '/[A-Z][a-z\d]*$/';
 
-    protected static $plurals = [
+    protected static array $plurals = [
         ['/$/', 's'],
         ['/s$/i', 's'],
         ['/^(ax|test)is$/i', '$1es'],
@@ -47,7 +47,7 @@ class Inflector
         ['/(quiz)$/i', '$1zes'],
     ];
 
-    protected static $irregularPairs = [
+    protected static array $irregularPairs = [
         ['person', 'people'],
         ['man', 'men'],
         ['child', 'children'],
@@ -57,7 +57,7 @@ class Inflector
         ['zombie', 'zombies'],
     ];
 
-    protected static $uncountable = [
+    protected static array $uncountable = [
         'equipment',
         'information',
         'rice',
@@ -75,7 +75,7 @@ class Inflector
      *
      * @return string
      */
-    public static function pluralize($word)
+    public static function pluralize(string $word): string
     {
         if (!$word || preg_match(self::BLANK_REGEX, $word)) {
             return $word;

@@ -11,14 +11,14 @@ namespace App\API\Transformers;
 use App\Entity\MediaFile;
 use App\Model\Image;
 use App\Service\ImageManager;
-use League\Fractal\Resource\Collection;
+use League\Fractal\Resource\ResourceInterface;
 
 class MediaFileTransformer extends BaseTransformer
 {
     /**
      * @var array
      */
-    protected $availableIncludes = [
+    protected array $availableIncludes = [
         'post',
     ];
 
@@ -64,9 +64,9 @@ class MediaFileTransformer extends BaseTransformer
     /**
      * @param Image $item
      *
-     * @return Collection
+     * @return ResourceInterface
      */
-    public function includePost(Image $item): Collection
+    public function includePost(Image $item): ResourceInterface
     {
         $items = [];
         $post = $item->getPost();

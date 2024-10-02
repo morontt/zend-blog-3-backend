@@ -4,14 +4,14 @@ namespace App\API\Transformers;
 
 use App\Entity\Tracking;
 use App\Utils\EmojiFlagSymbol;
-use League\Fractal\Resource\Collection;
+use League\Fractal\Resource\ResourceInterface;
 
 class TrackingTransformer extends BaseTransformer
 {
     /**
      * @var array
      */
-    protected $availableIncludes = [
+    protected array $availableIncludes = [
         'trackingAgents',
     ];
 
@@ -67,9 +67,9 @@ class TrackingTransformer extends BaseTransformer
     /**
      * @param Tracking $entity
      *
-     * @return Collection
+     * @return ResourceInterface
      */
-    public function includeTrackingAgents(Tracking $entity): Collection
+    public function includeTrackingAgents(Tracking $entity): ResourceInterface
     {
         $agent = $entity->getTrackingAgent();
         $items = [];

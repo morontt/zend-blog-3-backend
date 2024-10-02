@@ -33,8 +33,6 @@ class TelegramUpdateController extends BaseController
         $result = $this->getDataConverter()
             ->getTelegramUpdateArray($pagination, 'telegramUser');
 
-        $result['meta'] = $this->getPaginationMetadata($pagination->getPaginationData());
-
         return new JsonResponse($result);
     }
 

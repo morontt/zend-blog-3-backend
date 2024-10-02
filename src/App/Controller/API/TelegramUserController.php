@@ -32,8 +32,6 @@ class TelegramUserController extends BaseController
         $result = $this->getDataConverter()
             ->getTelegramUserArray($pagination);
 
-        $result['meta'] = $this->getPaginationMetadata($pagination->getPaginationData());
-
         return new JsonResponse($result);
     }
 
