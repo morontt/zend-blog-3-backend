@@ -643,7 +643,8 @@
     {
       "text": "Duplicate entry 'testovaya-zapis' for key 'posts.UNIQ_885DBAFAF47645AE'",
       "priority": "high",
-      "creation": 1727511937
+      "creation": 1727511937,
+      "completion": 1727983851
     }
   ]
 }

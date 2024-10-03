@@ -223,6 +223,21 @@ class DataConverter
             $entity->removeTag($tag);
         }
 
+        if (is_null($entity->getId())) {
+            $postRepository = $this->em->getRepository(Entity\Post::class);
+            $slug = $entity->getUrl();
+            $oldPost = $postRepository->findOneBy(['url' => $slug]);
+            if ($oldPost) {
+                $inc = 2;
+                do {
+                    $newSlug = $slug . '-' . $inc;
+                    $oldPost = $postRepository->findOneBy(['url' => $newSlug]);
+                    $inc++;
+                } while ($oldPost);
+                $entity->setUrl($newSlug);
+            }
+        }
+
         $this->save($entity);
 
         return $this->getPost($entity);
