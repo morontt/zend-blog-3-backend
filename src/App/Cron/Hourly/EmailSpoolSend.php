@@ -19,7 +19,7 @@ class EmailSpoolSend implements HourlyCronServiceInterface
         $this->mailer = $mailer;
     }
 
-    public function run()
+    public function run(): void
     {
         $this->emailsSent = $this->mailer->spoolSend(null, 60);
     }

@@ -11,12 +11,12 @@ class TrackingGeoLocation implements HourlyCronServiceInterface
     /**
      * @var TrackingRepository
      */
-    private $repository;
+    private TrackingRepository $repository;
 
     /**
      * @var IpInfo
      */
-    private $ipInfo;
+    private IpInfo $ipInfo;
 
     /**
      * @param IpInfo $ipInfo
@@ -28,7 +28,7 @@ class TrackingGeoLocation implements HourlyCronServiceInterface
         $this->ipInfo = $ipInfo;
     }
 
-    public function run()
+    public function run(): void
     {
         $ips = $this->repository->getUncheckedIps();
         foreach ($ips as $ip) {

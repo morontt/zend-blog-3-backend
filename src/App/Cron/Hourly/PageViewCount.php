@@ -15,12 +15,12 @@ class PageViewCount implements HourlyCronServiceInterface
     /**
      * @var EntityManagerInterface
      */
-    private $em;
+    private EntityManagerInterface $em;
 
     /**
      * @var SystemParametersStorage
      */
-    private $paramStorage;
+    private SystemParametersStorage $paramStorage;
 
     public function __construct(EntityManagerInterface $em, SystemParametersStorage $paramStorage)
     {
@@ -28,7 +28,7 @@ class PageViewCount implements HourlyCronServiceInterface
         $this->paramStorage = $paramStorage;
     }
 
-    public function run()
+    public function run(): void
     {
         $updatesData = json_decode(
             $this->paramStorage->getParameter(SystemParameters::UPDATE_VIEW_COUNTS_DATA) ?? '{}',

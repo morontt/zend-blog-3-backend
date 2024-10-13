@@ -13,17 +13,17 @@ class BlogServerErrors implements HourlyCronServiceInterface
     /**
      * @var TrackingRepository
      */
-    private $repository;
+    private TrackingRepository $repository;
 
     /**
      * @var SystemParametersStorage
      */
-    private $paramStorage;
+    private SystemParametersStorage $paramStorage;
 
     /**
      * @var array
      */
-    private $errors = [];
+    private array $errors = [];
 
     /**
      * @param TrackingRepository $repository
@@ -35,7 +35,7 @@ class BlogServerErrors implements HourlyCronServiceInterface
         $this->paramStorage = $paramStorage;
     }
 
-    public function run()
+    public function run(): void
     {
         $from = $this->paramStorage->getParameter(SystemParameters::ERRORS_5XX_CHECK) ?? '2023-06-01 00:00:00';
         $now = (new \DateTime())->format(MillisecondsDateTime::FORMAT_TIME);

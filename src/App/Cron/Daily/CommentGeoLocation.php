@@ -52,7 +52,7 @@ class CommentGeoLocation implements DailyCronServiceInterface
         $this->paramStorage = $paramStorage;
     }
 
-    public function run()
+    public function run(): void
     {
         $commentRepo = $this->em->getRepository(Comment::class);
 
@@ -80,7 +80,7 @@ class CommentGeoLocation implements DailyCronServiceInterface
     public function getMessage(): ?string
     {
         $message = 'Nothing';
-        if ($this->countImported == 1) {
+        if ($this->countImported === 1) {
             $message = '1 new location';
         } elseif ($this->countImported > 1) {
             $message = $this->countImported . ' new locations';

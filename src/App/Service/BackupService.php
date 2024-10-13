@@ -11,26 +11,29 @@ namespace App\Service;
 use App\Entity\SystemParameters;
 use Kunnu\Dropbox\Dropbox;
 use Kunnu\Dropbox\DropboxApp;
-use Kunnu\Dropbox\Models\FileMetadata;
 
-class DropboxService
+class BackupService
 {
+    public const DUMPS_PATH = '/db_dumps';
+    public const DUMPS_COUNT = 14;
+    public const IMAGES_PATH = '/blog_images';
+
     private static ?Dropbox $client = null;
 
     /**
      * @var string
      */
-    private $dropboxKey;
+    private string $dropboxKey;
 
     /**
      * @var string
      */
-    private $dropboxSecret;
+    private string $dropboxSecret;
 
     /**
      * @var SystemParametersStorage
      */
-    private $storage;
+    private SystemParametersStorage $storage;
 
     /**
      * @param string $dropboxKey
@@ -48,23 +51,27 @@ class DropboxService
      * @param string $dropboxFile
      * @param string $path
      *
-     * @return FileMetadata
+     * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
      */
     public function upload(string $dropboxFile, string $path)
     {
-        return $this->getDropboxClient()->uploadChunked($dropboxFile, $path, null, 2097152);
+        $this->getDropboxClient()->uploadChunked($dropboxFile, $path, null, 2097152);
     }
 
     /**
      * @param string $path
+     *
+     * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
      */
-    public function delete(string $path)
+    public function delete(string $path): void
     {
         $this->getDropboxClient()->delete($path);
     }
 
     /**
      * @param string $dir
+     *
+     * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
      *
      * @return array
      */
@@ -82,9 +89,11 @@ class DropboxService
     }
 
     /**
+     * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
+     *
      * @return Dropbox
      */
-    protected function getDropboxClient(): Dropbox
+    private function getDropboxClient(): Dropbox
     {
         if (static::$client) {
             return static::$client;

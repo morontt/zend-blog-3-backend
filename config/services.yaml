@@ -35,9 +35,9 @@ services:
                             # The best practice is to be explicit about your dependencies anyway.
         bind:
             $cdnUrl: '%cdn_url%'
-            $frontendSite: "%frontend_site%"
-            $dropboxKey: "%dropbox_key%"
-            $dropboxSecret: "%dropbox_secret%"
+            $frontendSite: '%frontend_site%'
+            $dropboxKey: '%dropbox_key%'
+            $dropboxSecret: '%dropbox_secret%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

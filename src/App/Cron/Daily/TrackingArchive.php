@@ -36,7 +36,7 @@ class TrackingArchive implements DailyCronServiceInterface
     /**
      * @throws DBALException
      */
-    public function run()
+    public function run(): void
     {
         $stmtResult = $this->em->getConnection()->executeQuery('CALL tracking_to_archive()');
         $this->rows = $stmtResult->rowCount();

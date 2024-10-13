@@ -28,7 +28,7 @@ class TelegramUpdates implements HourlyCronServiceInterface
         $this->adminId = $adminId;
     }
 
-    public function run()
+    public function run(): void
     {
         $from = $this->paramStorage->getParameter(SystemParameters::TELEGRAM_UPDATES_CHECK) ?? '2023-06-23 16:00:00';
         $now = (new \DateTime())->format(MillisecondsDateTime::FORMAT_TIME);

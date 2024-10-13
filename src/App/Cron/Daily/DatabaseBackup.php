@@ -9,67 +9,64 @@
 namespace App\Cron\Daily;
 
 use App\Cron\DailyCronServiceInterface;
-use App\Service\DropboxService;
+use App\Service\BackupService;
 use Symfony\Component\Process\Process;
 
 class DatabaseBackup implements DailyCronServiceInterface
 {
-    const DROPBOX_DUMPS_PATH = '/db_dumps';
-    const DROPBOX_DUMPS_COUNT = 14;
+    /**
+     * @var string
+     */
+    protected string $dbName;
 
     /**
      * @var string
      */
-    protected $dbName;
+    protected string $dbUser;
 
     /**
      * @var string
      */
-    protected $dbUser;
+    protected string $dbPassword;
 
     /**
      * @var string
      */
-    protected $dbPassword;
-
-    /**
-     * @var string
-     */
-    protected $dbHost;
+    protected string $dbHost;
 
     /**
      * @var int
      */
-    protected $dumpSize = 0;
+    protected int $dumpSize = 0;
 
     /**
-     * @var DropboxService
+     * @var BackupService
      */
-    protected $dropbox;
+    protected BackupService $backupService;
 
     /**
      * @param string $dbHost
      * @param string $dbName
      * @param string $dbUser
      * @param string $dbPassword
-     * @param DropboxService $dropbox
+     * @param BackupService $backupService
      */
     public function __construct(
         string $dbHost,
         string $dbName,
         string $dbUser,
         string $dbPassword,
-        DropboxService $dropbox
+        BackupService $backupService
     ) {
         $this->dbHost = $dbHost;
         $this->dbName = $dbName;
         $this->dbUser = $dbUser;
         $this->dbPassword = $dbPassword;
 
-        $this->dropbox = $dropbox;
+        $this->backupService = $backupService;
     }
 
-    public function run()
+    public function run(): void
     {
         $this->clearOldDumps();
 
@@ -92,7 +89,7 @@ class DatabaseBackup implements DailyCronServiceInterface
 
         $this->dumpSize = filesize($dumpPath);
 
-        $this->dropbox->upload($dumpPath, $this->getDropboxPath());
+        $this->backupService->upload($dumpPath, $this->getDropboxPath());
         unlink($dumpPath);
     }
 
@@ -104,9 +101,9 @@ class DatabaseBackup implements DailyCronServiceInterface
         return sprintf('%dKB', (int)($this->dumpSize / 1024));
     }
 
-    private function clearOldDumps()
+    private function clearOldDumps(): void
     {
-        $dropboxFiles = $this->dropbox->filesByDir(self::DROPBOX_DUMPS_PATH);
+        $dropboxFiles = $this->backupService->filesByDir(BackupService::DUMPS_PATH);
         rsort($dropboxFiles);
 
         $cnt = 0;
@@ -114,14 +111,14 @@ class DatabaseBackup implements DailyCronServiceInterface
         foreach ($dropboxFiles as $file) {
             if (preg_match('/\/\d+_' . $this->dbName . '\./', $file)) {
                 $cnt++;
-                if ($cnt >= self::DROPBOX_DUMPS_COUNT) {
+                if ($cnt >= BackupService::DUMPS_COUNT) {
                     $delete[] = $file;
                 }
             }
         }
 
         foreach ($delete as $file) {
-            $this->dropbox->delete($file);
+            $this->backupService->delete($file);
         }
     }
 
@@ -148,6 +145,6 @@ class DatabaseBackup implements DailyCronServiceInterface
      */
     private function getDropboxPath(): string
     {
-        return self::DROPBOX_DUMPS_PATH . '/' . $this->getFilename();
+        return BackupService::DUMPS_PATH . '/' . $this->getFilename();
     }
 }
