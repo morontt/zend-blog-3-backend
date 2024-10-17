@@ -23,17 +23,17 @@ class DropboxAuthCommand extends Command
     /**
      * @var string
      */
-    private $key;
+    private string $key;
 
     /**
      * @var string
      */
-    private $secret;
+    private string $secret;
 
     /**
      * @var SystemParametersStorage
      */
-    private $storage;
+    private SystemParametersStorage $storage;
 
     /**
      * @param SystemParametersStorage $storage
@@ -49,7 +49,7 @@ class DropboxAuthCommand extends Command
         $this->storage = $storage;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('mtt:dropbox:auth')
@@ -60,10 +60,12 @@ class DropboxAuthCommand extends Command
      * @param InputInterface $input
      * @param OutputInterface $output
      *
-     * @throws ORMException
      * @throws IdentityProviderException
+     * @throws ORMException
+     *
+     * @return int
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $provider = new DropboxProvider([
             'clientId' => $this->key,
@@ -97,6 +99,8 @@ class DropboxAuthCommand extends Command
         $output->writeln(sprintf('Access Token: <comment>%s</comment>', $accessToken->getToken()));
 
         $this->saveAccessToken($accessToken->getToken());
+
+        return 0;
     }
 
     /**
@@ -104,7 +108,7 @@ class DropboxAuthCommand extends Command
      *
      * @throws ORMException
      */
-    protected function saveAccessToken(string $accessToken)
+    protected function saveAccessToken(string $accessToken): void
     {
         $this->storage->saveParameter(SystemParameters::DROPBOX_TOKEN, $accessToken, true);
     }

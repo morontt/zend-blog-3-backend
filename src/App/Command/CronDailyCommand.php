@@ -12,7 +12,7 @@ use App\Cron\CronServiceInterface;
 
 class CronDailyCommand extends CronCommand
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('mtt:cron:daily')

@@ -71,7 +71,7 @@ class DatabaseBackup implements DailyCronServiceInterface
         $this->clearOldDumps();
 
         $dumpPath = $this->getDumpPath();
-        $process = new Process(
+        $process = Process::fromShellCommandline(
             sprintf(
                 'mysqldump -h %s -u %s --password=%s %s | bzip2 > %s',
                 $this->dbHost,
@@ -89,7 +89,7 @@ class DatabaseBackup implements DailyCronServiceInterface
 
         $this->dumpSize = filesize($dumpPath);
 
-        $this->backupService->upload($dumpPath, $this->getDropboxPath());
+        $this->backupService->upload($dumpPath, $this->getBackupPath());
         unlink($dumpPath);
     }
 
@@ -103,12 +103,12 @@ class DatabaseBackup implements DailyCronServiceInterface
 
     private function clearOldDumps(): void
     {
-        $dropboxFiles = $this->backupService->filesByDir(BackupService::DUMPS_PATH);
-        rsort($dropboxFiles);
+        $backedFiles = $this->backupService->filesByDir(BackupService::DUMPS_PATH);
+        rsort($backedFiles);
 
         $cnt = 0;
         $delete = [];
-        foreach ($dropboxFiles as $file) {
+        foreach ($backedFiles as $file) {
             if (preg_match('/\/\d+_' . $this->dbName . '\./', $file)) {
                 $cnt++;
                 if ($cnt >= BackupService::DUMPS_COUNT) {
@@ -143,7 +143,7 @@ class DatabaseBackup implements DailyCronServiceInterface
     /**
      * @return string
      */
-    private function getDropboxPath(): string
+    private function getBackupPath(): string
     {
         return BackupService::DUMPS_PATH . '/' . $this->getFilename();
     }

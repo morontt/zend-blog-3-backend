@@ -9,8 +9,10 @@
 namespace App\Service;
 
 use App\Entity\SystemParameters;
-use Kunnu\Dropbox\Dropbox;
-use Kunnu\Dropbox\DropboxApp;
+use League\Flysystem\Filesystem;
+use League\Flysystem\StorageAttributes;
+use Spatie\Dropbox\Client;
+use Spatie\FlysystemDropbox\DropboxAdapter;
 
 class BackupService
 {
@@ -18,17 +20,7 @@ class BackupService
     public const DUMPS_COUNT = 14;
     public const IMAGES_PATH = '/blog_images';
 
-    private static ?Dropbox $client = null;
-
-    /**
-     * @var string
-     */
-    private string $dropboxKey;
-
-    /**
-     * @var string
-     */
-    private string $dropboxSecret;
+    private static ?Filesystem $flySystem = null;
 
     /**
      * @var SystemParametersStorage
@@ -36,77 +28,80 @@ class BackupService
     private SystemParametersStorage $storage;
 
     /**
-     * @param string $dropboxKey
-     * @param string $dropboxSecret
      * @param SystemParametersStorage $storage
      */
-    public function __construct(string $dropboxKey, string $dropboxSecret, SystemParametersStorage $storage)
+    public function __construct(SystemParametersStorage $storage)
     {
-        $this->dropboxKey = $dropboxKey;
-        $this->dropboxSecret = $dropboxSecret;
         $this->storage = $storage;
     }
 
     /**
-     * @param string $dropboxFile
-     * @param string $path
+     * @param string $localPath
+     * @param string $remotePath
      *
-     * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
+     * @throws \League\Flysystem\FilesystemException
+     *
+     * @return void
      */
-    public function upload(string $dropboxFile, string $path)
+    public function upload(string $localPath, string $remotePath): void
     {
-        $this->getDropboxClient()->uploadChunked($dropboxFile, $path, null, 2097152);
+        $fp = fopen($localPath, 'rb');
+        $this->getFlySystem()->writeStream($remotePath, $fp);
     }
 
     /**
      * @param string $path
      *
-     * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
+     * @throws \League\Flysystem\FilesystemException
+     *
+     * @return void
      */
     public function delete(string $path): void
     {
-        $this->getDropboxClient()->delete($path);
+        $this->getFlySystem()->delete($path);
     }
 
     /**
      * @param string $dir
      *
-     * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
+     * @throws \League\Flysystem\FilesystemException
      *
-     * @return array
+     * @return string[]
      */
     public function filesByDir(string $dir): array
     {
         $files = [];
-        /* @var \Kunnu\Dropbox\Models\FileMetadata $item */
-        foreach ($this->getDropboxClient()->listFolder($dir)->getItems() as $item) {
-            if ($item->getTag() === 'file') {
-                $files[] = $item->getPathDisplay();
-            }
+        $listing = $this
+            ->getFlySystem()
+            ->listContents($dir)
+            ->filter(fn (StorageAttributes $attributes) => $attributes->isFile())
+        ;
+        /* @var StorageAttributes $item */
+        foreach ($listing as $item) {
+            $files[] = $item->path();
         }
 
         return $files;
     }
 
     /**
-     * @throws \Kunnu\Dropbox\Exceptions\DropboxClientException
-     *
-     * @return Dropbox
+     * @return Filesystem
      */
-    private function getDropboxClient(): Dropbox
+    private function getFlySystem(): Filesystem
     {
-        if (static::$client) {
-            return static::$client;
+        if (static::$flySystem) {
+            return static::$flySystem;
         }
 
-        $app = new DropboxApp(
-            $this->dropboxKey,
-            $this->dropboxSecret,
-            $this->storage->getParameter(SystemParameters::DROPBOX_TOKEN)
+        $client = new Client(
+            $this->storage->getParameter(SystemParameters::DROPBOX_TOKEN),
+            null,
+            2097152
         );
-        $client = new Dropbox($app);
-        static::$client = $client;
 
-        return $client;
+        $flySystem = new Filesystem(new DropboxAdapter($client), ['case_sensitive' => false]);
+        static::$flySystem = $flySystem;
+
+        return $flySystem;
     }
 }

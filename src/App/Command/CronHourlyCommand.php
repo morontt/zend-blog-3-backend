@@ -6,7 +6,7 @@ use App\Cron\CronServiceInterface;
 
 class CronHourlyCommand extends CronCommand
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('mtt:cron:hourly')
