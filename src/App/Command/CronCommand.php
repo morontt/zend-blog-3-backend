@@ -19,12 +19,12 @@ abstract class CronCommand extends Command
     /**
      * @var CronChain
      */
-    protected $chain;
+    protected CronChain $chain;
 
     /**
      * @var Robot
      */
-    private $bot;
+    private Robot $bot;
 
     /**
      * @param CronChain $chain
@@ -38,7 +38,7 @@ abstract class CronCommand extends Command
         $this->bot = $bot;
     }
 
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $messages = [];
         foreach ($this->getCrons() as $cronJob) {
@@ -65,6 +65,8 @@ abstract class CronCommand extends Command
         if (count($messages)) {
             $this->bot->sendMessage(implode("\n", $messages));
         }
+
+        return 0;
     }
 
     /**

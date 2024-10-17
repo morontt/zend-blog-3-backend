@@ -10,9 +10,8 @@ namespace App\Cron\Daily;
 
 use App\Cron\DailyCronServiceInterface;
 use App\Entity\MediaFile;
-use App\Service\DropboxService;
+use App\Service\BackupService;
 use App\Service\ImageManager;
-use App\Service\SystemParametersStorage;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -21,42 +20,37 @@ class ImagesBackup implements DailyCronServiceInterface
     /**
      * @var EntityManager
      */
-    protected $em;
+    protected EntityManagerInterface $em;
 
     /**
      * @var int
      */
-    protected $countImported = 0;
+    protected int $countImported = 0;
 
     /**
-     * @var SystemParametersStorage
+     * @var BackupService
      */
-    protected $storage;
-
-    /**
-     * @var DropboxService
-     */
-    protected $dropbox;
+    protected BackupService $backupService;
 
     /**
      * @param EntityManagerInterface $em
-     * @param DropboxService $dropbox
+     * @param BackupService $backupService
      */
-    public function __construct(EntityManagerInterface $em, DropboxService $dropbox)
+    public function __construct(EntityManagerInterface $em, BackupService $backupService)
     {
         $this->em = $em;
-        $this->dropbox = $dropbox;
+        $this->backupService = $backupService;
     }
 
-    public function run()
+    public function run(): void
     {
         $images = $this->em->getRepository(MediaFile::class)->getNotBackuped();
 
         if (count($images)) {
             foreach ($images as $image) {
-                $this->dropbox->upload(
+                $this->backupService->upload(
                     ImageManager::getUploadsDir() . '/' . $image->getPath(),
-                    '/blog_images/' . $image->getPath()
+                    BackupService::IMAGES_PATH . '/' . $image->getPath()
                 );
 
                 $image->setBackuped(true);
@@ -73,20 +67,12 @@ class ImagesBackup implements DailyCronServiceInterface
     public function getMessage(): ?string
     {
         $message = 'Nothing';
-        if ($this->countImported == 1) {
+        if ($this->countImported === 1) {
             $message = '1 new image';
         } elseif ($this->countImported > 1) {
             $message = $this->countImported . ' new images';
         }
 
         return $message;
-    }
-
-    /**
-     * @return bool|string
-     */
-    protected function getImagesDir()
-    {
-        return APP_WEB_DIR . '/uploads';
     }
 }

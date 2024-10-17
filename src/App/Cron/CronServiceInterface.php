@@ -10,7 +10,7 @@ namespace App\Cron;
 
 interface CronServiceInterface
 {
-    public function run();
+    public function run(): void;
 
     /**
      * @return string|null

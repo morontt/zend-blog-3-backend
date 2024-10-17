@@ -28,17 +28,17 @@ class CommentGeoLocation implements DailyCronServiceInterface
     /**
      * @var IpInfo
      */
-    protected $ipInfo;
+    protected IpInfo $ipInfo;
 
     /**
      * @var int
      */
-    protected $countImported = 0;
+    protected int $countImported = 0;
 
     /**
      * @var SystemParametersStorage
      */
-    private $paramStorage;
+    private SystemParametersStorage $paramStorage;
 
     /**
      * @param SystemParametersStorage $paramStorage
@@ -52,7 +52,7 @@ class CommentGeoLocation implements DailyCronServiceInterface
         $this->paramStorage = $paramStorage;
     }
 
-    public function run()
+    public function run(): void
     {
         $commentRepo = $this->em->getRepository(Comment::class);
 
@@ -68,7 +68,7 @@ class CommentGeoLocation implements DailyCronServiceInterface
             ?? ((new \DateTime())->sub(new \DateInterval('P1D'))->format('Y-m-d H:i:s'));
         $now = (new \DateTime())->format(MillisecondsDateTime::FORMAT_TIME);
 
-        $geolocationRepo = $this->em->getRepository(Geolocation::class);
+        $geolocationRepo = $this->em->getRepository(GeoLocation::class);
         $this->countImported = $geolocationRepo->getLocationsCount($from, $now);
 
         $this->paramStorage->saveParameter(SystemParameters::UPDATE_GEOLOCATION_FROM, $now);
@@ -80,7 +80,7 @@ class CommentGeoLocation implements DailyCronServiceInterface
     public function getMessage(): ?string
     {
         $message = 'Nothing';
-        if ($this->countImported == 1) {
+        if ($this->countImported === 1) {
             $message = '1 new location';
         } elseif ($this->countImported > 1) {
             $message = $this->countImported . ' new locations';

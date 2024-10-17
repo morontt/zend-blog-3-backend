@@ -11,28 +11,30 @@ class PageViewCount implements DailyCronServiceInterface
     /**
      * @var SystemParametersStorage
      */
-    private $paramStorage;
+    private SystemParametersStorage $paramStorage;
 
     /**
      * @var int
      */
-    private $count;
+    private int $count = 0;
 
     /**
      * @var int
      */
-    private $views = 0;
+    private int $views = 0;
 
     public function __construct(SystemParametersStorage $paramStorage)
     {
         $this->paramStorage = $paramStorage;
     }
 
-    public function run()
+    public function run(): void
     {
         $updatesData = json_decode(
             $this->paramStorage->getParameter(SystemParameters::UPDATE_VIEW_COUNTS_DATA) ?? '{}',
-            true
+            true,
+            512,
+            JSON_THROW_ON_ERROR
         );
 
         $this->count = count($updatesData);
