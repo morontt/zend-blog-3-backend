@@ -89,6 +89,7 @@ class DataConverterSpec extends ObjectBehavior
                     'url' => 'test-url',
                     'parent' => null,
                     'parentId' => null,
+                    'depth' => 1,
                 ],
             ]
         );
@@ -108,6 +109,7 @@ class DataConverterSpec extends ObjectBehavior
                         'url' => 'test-url',
                         'parent' => null,
                         'parentId' => null,
+                        'depth' => 1,
                     ],
                     [
                         'id' => null,
@@ -115,6 +117,7 @@ class DataConverterSpec extends ObjectBehavior
                         'url' => 'test2-url',
                         'parent' => null,
                         'parentId' => null,
+                        'depth' => 1,
                     ],
                 ],
             ]
@@ -396,6 +399,7 @@ class DataConverterSpec extends ObjectBehavior
                         'url' => 'php',
                         'parent' => null,
                         'parentId' => null,
+                        'depth' => 1,
                     ],
                 ],
             ]
@@ -453,6 +457,7 @@ class DataConverterSpec extends ObjectBehavior
                         'url' => 'php',
                         'parent' => null,
                         'parentId' => null,
+                        'depth' => 1,
                     ],
                     [
                         'id' => null,
@@ -460,6 +465,7 @@ class DataConverterSpec extends ObjectBehavior
                         'url' => 'php',
                         'parent' => null,
                         'parentId' => null,
+                        'depth' => 1,
                     ],
                 ],
             ]

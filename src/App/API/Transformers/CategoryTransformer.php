@@ -33,6 +33,7 @@ class CategoryTransformer extends BaseTransformer
             'url' => $item->getUrl(),
             'parent' => $parentId,
             'parentId' => $parentId,
+            'depth' => $item->getNestedSet()->getDepth(),
         ];
     }
 

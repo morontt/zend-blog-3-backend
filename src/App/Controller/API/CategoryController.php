@@ -34,13 +34,8 @@ class CategoryController extends BaseController
      */
     public function findAllAction(Request $request, CategoryRepository $repository): JsonResponse
     {
-        $pagination = $this->paginate(
-            $repository->getListQuery(),
-            $request->query->get('page', 1)
-        );
-
         $result = $this->getDataConverter()
-            ->getCategoryArray($pagination);
+            ->getCategoryArray($repository->getListQuery()->getResult());
 
         return new JsonResponse($result);
     }

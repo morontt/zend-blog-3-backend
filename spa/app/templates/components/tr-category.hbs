@@ -22,7 +22,7 @@
     </td>
 {{else}}
     <td class="center-text">{{category.id}}</td>
-    <td>{{category.name}}</td>
+    <td>{{category.depthPrefix}}{{category.name}}</td>
     <td>
         {{#if category.parent}}
             {{category.parent.name}}

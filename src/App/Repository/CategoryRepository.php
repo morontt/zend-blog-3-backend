@@ -32,7 +32,7 @@ class CategoryRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('e');
 
-        return $qb->orderBy('e.name', 'ASC')
+        return $qb->orderBy('e.nestedSet.leftKey', 'ASC')
             ->getQuery();
     }
 
@@ -122,7 +122,7 @@ class CategoryRepository extends ServiceEntityRepository
         }
 
         $key = (int)$qb->getQuery()->getSingleScalarResult();
-        if ($key == 0 && $entity->getParent()) {
+        if ($key === 0 && $entity->getParent()) {
             $key = $entity->getParent()->getNestedSet()->getLeftKey();
         }
 
@@ -141,7 +141,7 @@ class CategoryRepository extends ServiceEntityRepository
             if ($parent) {
                 $nsParent = $parent->getNestedSet();
 
-                if ($nsParent->getRightKey() - $nsParent->getLeftKey() == 1) {
+                if ($nsParent->getRightKey() - $nsParent->getLeftKey() === 1) {
                     $index = $nsParent->getRightKey();
                 } else {
                     $index = 1 + $this->findNeighbourKey($entity);
