@@ -593,6 +593,11 @@
               "text": "https://github.com/spatie/laravel-backup/discussions/1756",
               "priority": "low",
               "creation": 1729325666
+            },
+            {
+              "text": "https://curl.se/libcurl/c/CURLOPT_SEEKFUNCTION.html",
+              "priority": "medium",
+              "creation": 1729373031
             }
           ]
         },
