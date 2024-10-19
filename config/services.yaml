@@ -24,6 +24,8 @@ parameters:
     dropbox_key: '%env(DROPBOX_KEY)%'
     dropbox_secret: '%env(DROPBOX_SECRET)%'
     wsse_token_lifetime: '%env(int:WSSE_TOKEN_LIFETIME)%'
+    space_login: '%env(SPACE_LOGIN)%'
+    space_password: '%env(SPACE_PASSWORD)%'
 
 services:
     # default configuration for services in *this* file
@@ -130,6 +132,11 @@ services:
         arguments:
             $secretToken: '%telegram_webhook_token%'
 
+    App\Service\BackUp\FlysystemFactory:
+        arguments:
+            $spaceLogin: '%space_login%'
+            $spacePassword: '%space_password%'
+
     App\Service\IpInfo\IpInfoDbClient:
         arguments:
             $key: "%ipinfo_db_key%"
@@ -166,7 +173,11 @@ services:
             - "%telegram_bot%"
             - "%telegram_admin_id%"
         calls:
-            - [ setLogger, [ "@monolog.logger.telegram" ] ]
-            - [ setUpdatesManager, [ '@App\Telegram\UpdatesManager' ] ]
+            - [ setLogger, [ "@monolog.logger.telegram" ]]
+            - [ setUpdatesManager, [ '@App\Telegram\UpdatesManager' ]]
+
+    League\Flysystem\FilesystemOperator:
+        factory: [ '@App\Service\BackUp\FlysystemFactory', createFlysystem ]
+        arguments: [ 'mail_space' ]
 
     Xelbot\Telegram\Robot: '@mtt_blog.telegram_bot'
