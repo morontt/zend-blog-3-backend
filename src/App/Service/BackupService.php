@@ -8,11 +8,8 @@
 
 namespace App\Service;
 
-use App\Entity\SystemParameters;
-use League\Flysystem\Filesystem;
+use League\Flysystem\FilesystemOperator;
 use League\Flysystem\StorageAttributes;
-use Spatie\Dropbox\Client;
-use Spatie\FlysystemDropbox\DropboxAdapter;
 
 class BackupService
 {
@@ -20,19 +17,26 @@ class BackupService
     public const DUMPS_COUNT = 14;
     public const IMAGES_PATH = '/blog_images';
 
-    private static ?Filesystem $flySystem = null;
-
-    /**
-     * @var SystemParametersStorage
-     */
-    private SystemParametersStorage $storage;
+    private FilesystemOperator $flySystem;
 
     /**
      * @param SystemParametersStorage $storage
      */
-    public function __construct(SystemParametersStorage $storage)
+    public function __construct(FilesystemOperator $flySystem)
     {
-        $this->storage = $storage;
+        $this->flySystem = $flySystem;
+    }
+
+    /**
+     * @param string $remotePath
+     *
+     * @throws \League\Flysystem\FilesystemException
+     *
+     * @return bool
+     */
+    public function fileExists(string $remotePath): bool
+    {
+        return $this->flySystem->fileExists($remotePath);
     }
 
     /**
@@ -46,7 +50,7 @@ class BackupService
     public function upload(string $localPath, string $remotePath): void
     {
         $fp = fopen($localPath, 'rb');
-        $this->getFlySystem()->writeStream($remotePath, $fp);
+        $this->flySystem->writeStream($remotePath, $fp);
     }
 
     /**
@@ -58,7 +62,7 @@ class BackupService
      */
     public function delete(string $path): void
     {
-        $this->getFlySystem()->delete($path);
+        $this->flySystem->delete($path);
     }
 
     /**
@@ -72,7 +76,7 @@ class BackupService
     {
         $files = [];
         $listing = $this
-            ->getFlySystem()
+            ->flySystem
             ->listContents($dir)
             ->filter(fn (StorageAttributes $attributes) => $attributes->isFile())
         ;
@@ -82,26 +86,5 @@ class BackupService
         }
 
         return $files;
-    }
-
-    /**
-     * @return Filesystem
-     */
-    private function getFlySystem(): Filesystem
-    {
-        if (static::$flySystem) {
-            return static::$flySystem;
-        }
-
-        $client = new Client(
-            $this->storage->getParameter(SystemParameters::DROPBOX_TOKEN),
-            null,
-            2097152
-        );
-
-        $flySystem = new Filesystem(new DropboxAdapter($client), ['case_sensitive' => false]);
-        static::$flySystem = $flySystem;
-
-        return $flySystem;
     }
 }

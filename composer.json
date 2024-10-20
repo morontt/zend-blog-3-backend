@@ -36,6 +36,7 @@
         "league/fractal": "~0.12",
         "league/oauth2-client": "~2.2",
         "phpdocumentor/reflection-docblock": "^5.4",
+        "sabre/dav": "^4.6",
         "sensio/framework-extra-bundle": "^5.1",
         "spatie/flysystem-dropbox": "^2.0",
         "symfony/asset": "4.4.*",
