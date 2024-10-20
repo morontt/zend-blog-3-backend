@@ -71,7 +71,7 @@ class MediaFile
      *
      * @ORM\Column(type="boolean")
      */
-    protected $backuped = false;
+    protected $backedUp = false;
 
     /**
      * @var int|null
@@ -257,27 +257,23 @@ class MediaFile
     }
 
     /**
-     * Set backuped
-     *
-     * @param bool $backuped
-     *
-     * @return MediaFile
+     * @return bool
      */
-    public function setBackuped($backuped): MediaFile
+    public function isBackedUp(): bool
     {
-        $this->backuped = $backuped;
-
-        return $this;
+        return $this->backedUp;
     }
 
     /**
-     * Is backuped
+     * @param bool $backedUp
      *
-     * @return bool
+     * @return $this
      */
-    public function isBackuped(): bool
+    public function setBackedUp(bool $backedUp): MediaFile
     {
-        return $this->backuped;
+        $this->backedUp = $backedUp;
+
+        return $this;
     }
 
     /**

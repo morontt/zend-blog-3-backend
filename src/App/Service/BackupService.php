@@ -28,6 +28,18 @@ class BackupService
     }
 
     /**
+     * @param string $remotePath
+     *
+     * @throws \League\Flysystem\FilesystemException
+     *
+     * @return bool
+     */
+    public function fileExists(string $remotePath): bool
+    {
+        return $this->flySystem->fileExists($remotePath);
+    }
+
+    /**
      * @param string $localPath
      * @param string $remotePath
      *
