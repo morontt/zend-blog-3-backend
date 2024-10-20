@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Serializable;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
+use Symfony\Component\Security\Core\User\LegacyPasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -24,7 +25,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *   message="This email is already used"
  * )
  */
-class User implements UserInterface, Serializable
+class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface, Serializable
 {
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_ADMIN = 'ROLE_ADMIN';
@@ -152,6 +153,11 @@ class User implements UserInterface, Serializable
 
         $this->timeCreated = new DateTime();
         $this->userType = self::TYPE_GUEST;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->username;
     }
 
     /**
@@ -318,23 +324,9 @@ class User implements UserInterface, Serializable
      *
      * @return string
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
-    }
-
-    /**
-     * Set salt
-     *
-     * @param string $salt
-     *
-     * @return User
-     */
-    public function setSalt(string $salt): self
-    {
-        $this->salt = $salt;
-
-        return $this;
     }
 
     /**
@@ -342,7 +334,7 @@ class User implements UserInterface, Serializable
      *
      * @return string
      */
-    public function getSalt(): string
+    public function getSalt(): ?string
     {
         return $this->salt;
     }
