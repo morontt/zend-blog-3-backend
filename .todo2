@@ -591,21 +591,46 @@
           "creation": 1725133954,
           "tasks": [
             {
-              "text": "https://github.com/spatie/laravel-backup/discussions/1756",
-              "priority": "low",
-              "creation": 1729325666
-            },
-            {
-              "text": "https://curl.se/libcurl/c/CURLOPT_SEEKFUNCTION.html",
+              "text": "necessary data rewind wasn't possible",
               "priority": "medium",
-              "creation": 1729373031
+              "creation": 1729325666,
+              "tasks": [
+                {
+                  "text": "https://github.com/spatie/laravel-backup/discussions/1756",
+                  "priority": "low",
+                  "creation": 1729535079
+                },
+                {
+                  "text": "https://curl.se/libcurl/c/CURLOPT_SEEKFUNCTION.html",
+                  "priority": "medium",
+                  "creation": 1729373031
+                },
+                {
+                  "text": "https://github.com/sabre-io/dav/issues/441",
+                  "priority": "medium",
+                  "creation": 1729535203,
+                  "tasks": [
+                    {
+                      "text": "https://github.com/sabre-io/dav/blob/b73b22515b9cd736f91f9accdebd5290fa2f0f01/lib/Sabre/DAV/CorePlugin.php",
+                      "priority": "medium",
+                      "creation": 1729535228
+                    }
+                  ]
+                },
+                {
+                  "text": "https://stackoverflow.com/questions/66835981/sending-file-to-webdav-server-using-php-curl",
+                  "priority": "low",
+                  "creation": 1729537155
+                }
+              ]
             }
           ]
         },
         {
           "text": "https://github.com/fstanis/awesome-webdav?tab=readme-ov-file",
           "priority": "low",
-          "creation": 1725133972
+          "creation": 1725133972,
+          "completion": 1729535045
         },
         {
           "text": "Перенести бекапы БД и картинок",
