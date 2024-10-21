@@ -77,13 +77,17 @@ class MediaFileRepository extends ServiceEntityRepository
     /**
      * @return MediaFile[]
      */
-    public function getNotBackuped()
+    public function getNotBackedUp()
     {
         $qb = $this->createQueryBuilder('m');
 
         $qb
-            ->where($qb->expr()->eq('m.backuped', ':backuped'))
-            ->setParameter('backuped', false)
+            ->where(
+                $qb->expr()->eq(
+                    'm.backedUp',
+                    $qb->expr()->literal(false)
+                )
+            )
             ->setMaxResults(30)
         ;
 

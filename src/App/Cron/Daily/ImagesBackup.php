@@ -14,6 +14,7 @@ use App\Service\BackupService;
 use App\Service\ImageManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use League\Flysystem\FilesystemException;
 
 class ImagesBackup implements DailyCronServiceInterface
 {
@@ -22,10 +23,9 @@ class ImagesBackup implements DailyCronServiceInterface
      */
     protected EntityManagerInterface $em;
 
-    /**
-     * @var int
-     */
-    protected int $countImported = 0;
+    private int $countImported = 0;
+
+    private int $countError = 0;
 
     /**
      * @var BackupService
@@ -44,19 +44,28 @@ class ImagesBackup implements DailyCronServiceInterface
 
     public function run(): void
     {
-        $images = $this->em->getRepository(MediaFile::class)->getNotBackuped();
-
+        /* @var MediaFile[] $images */
+        $images = $this->em->getRepository(MediaFile::class)->getNotBackedUp();
         if (count($images)) {
             foreach ($images as $image) {
-                $this->backupService->upload(
-                    ImageManager::getUploadsDir() . '/' . $image->getPath(),
-                    BackupService::IMAGES_PATH . '/' . $image->getPath()
-                );
+                $remotePath = BackupService::IMAGES_PATH . '/' . $image->getPath();
+                if (!$this->backupService->fileExists($remotePath)) {
+                    try {
+                        $this->backupService->upload(
+                            ImageManager::getUploadsDir() . '/' . $image->getPath(),
+                            BackupService::IMAGES_PATH . '/' . $image->getPath()
+                        );
 
-                $image->setBackuped(true);
-                $this->em->flush();
-
-                $this->countImported++;
+                        $this->countImported++;
+                        $image->setBackedUp(true);
+                        $this->em->flush();
+                    } catch (FilesystemException $e) {
+                        $this->countError++;
+                    }
+                } else {
+                    $image->setBackedUp(true);
+                    $this->em->flush();
+                }
             }
         }
     }
@@ -71,6 +80,10 @@ class ImagesBackup implements DailyCronServiceInterface
             $message = '1 new image';
         } elseif ($this->countImported > 1) {
             $message = $this->countImported . ' new images';
+        }
+
+        if ($this->countError > 0) {
+            $message .= ', errors: ' . $this->countError;
         }
 
         return $message;
