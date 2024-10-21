@@ -64,8 +64,10 @@ class CreateUserCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $username = $input->getArgument('username');
         $email = $input->getArgument('email');
@@ -73,20 +75,20 @@ class CreateUserCommand extends Command
 
         $user = $this->userManager->createUser($username, $email, $password);
 
+        $output->writeln('');
         $errors = $this->validator->validate($user);
         if (count($errors) > 0) {
-            $output->writeln('');
             foreach ($errors as $error) {
                 $output->writeln(sprintf('<error>Error: %s</error>', $error->getMessage()));
             }
-            $output->writeln('');
         } else {
             $this->em->persist($user);
             $this->em->flush();
 
-            $output->writeln('');
             $output->writeln(sprintf('<info>Create user: <comment>%s</comment></info>', $username));
-            $output->writeln('');
         }
+        $output->writeln('');
+
+        return 0;
     }
 }

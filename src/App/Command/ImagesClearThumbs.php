@@ -23,7 +23,7 @@ class ImagesClearThumbs extends Command
         $this->im = $im;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('mtt:images:clear-thumbs')
@@ -31,7 +31,7 @@ class ImagesClearThumbs extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $i = 0;
         $repository = $this->em->getRepository(MediaFile::class);
@@ -42,5 +42,7 @@ class ImagesClearThumbs extends Command
                 sprintf('%d. <comment>%s</comment> was cleared', $i, $mediaFile->getOriginalFileName())
             );
         }
+
+        return 0;
     }
 }

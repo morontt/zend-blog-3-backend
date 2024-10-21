@@ -24,7 +24,7 @@ class FakeEmailCheck extends Command
         $this->em = $em;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('mtt:fake-email:check')
@@ -32,7 +32,7 @@ class FakeEmailCheck extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $rows = [];
 
@@ -62,5 +62,7 @@ class FakeEmailCheck extends Command
         } else {
             $output->writeln('Nothing to check');
         }
+
+        return 0;
     }
 }

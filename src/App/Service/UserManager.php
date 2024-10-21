@@ -9,7 +9,7 @@ use App\Exception\ShortPasswordException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserManager
 {
@@ -18,10 +18,7 @@ class UserManager
      */
     private $em;
 
-    /**
-     * @var EncoderFactoryInterface
-     */
-    private $encoderFactory;
+    private UserPasswordHasherInterface $passwordHasher;
 
     /**
      * @var Tracking
@@ -30,11 +27,11 @@ class UserManager
 
     public function __construct(
         EntityManagerInterface $em,
-        EncoderFactoryInterface $encoderFactory,
+        UserPasswordHasherInterface $passwordHasher,
         Tracking $tracking
     ) {
         $this->em = $em;
-        $this->encoderFactory = $encoderFactory;
+        $this->passwordHasher = $passwordHasher;
         $this->tracking = $tracking;
     }
 
@@ -95,6 +92,13 @@ class UserManager
         return $user;
     }
 
+    /**
+     * @param string $username
+     * @param string $email
+     * @param string|null $password
+     *
+     * @return User
+     */
     public function createUser(string $username, string $email, string $password = null): User
     {
         if (is_null($password)) {
@@ -106,30 +110,32 @@ class UserManager
         }
 
         $user = new User();
-        $encoder = $this->encoderFactory->getEncoder($user);
-
-        $passwordHash = $encoder->encodePassword($password, $user->getSalt());
         $user
             ->setUsername($username)
             ->setEmail($email)
-            ->setPassword($passwordHash)
+            ->setPassword($this->passwordHasher->hashPassword($user, $password))
         ;
 
         return $user;
     }
 
+    /**
+     * @param User $user
+     * @param string $password
+     *
+     * @throws ShortPasswordException
+     * @throws \Doctrine\ORM\Exception\ORMException
+     */
     public function updatePassword(User $user, string $password): void
     {
         if (strlen($password) <= 4) {
             throw new ShortPasswordException('Password too short');
         }
 
-        $encoder = $this->encoderFactory->getEncoder($user);
-
         $user->setRandomSalt();
         $user->setRandomWsseKey();
 
-        $user->setPassword($encoder->encodePassword($password, $user->getSalt()));
+        $user->setPassword($this->passwordHasher->hashPassword($user, $password));
 
         $this->em->persist($user);
         $this->em->flush();

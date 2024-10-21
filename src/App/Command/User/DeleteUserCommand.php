@@ -20,12 +20,12 @@ class DeleteUserCommand extends Command
     /**
      * @var UserRepository
      */
-    private $repository;
+    private UserRepository $repository;
 
     /**
      * @var EntityManagerInterface
      */
-    private $em;
+    private EntityManagerInterface $em;
 
     /**
      * @param UserRepository $repository
@@ -39,7 +39,7 @@ class DeleteUserCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('mtt:user:delete')
@@ -50,24 +50,26 @@ class DeleteUserCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $username = $input->getArgument('username');
 
         $user = $this->repository->findOneByUsername($username);
 
+        $output->writeln('');
         if (!$user) {
-            $output->writeln('');
             $output->writeln(sprintf('<error>Error: user "%s" not found</error>', $username));
-            $output->writeln('');
         } else {
             $this->em->remove($user);
             $this->em->flush();
 
-            $output->writeln('');
             $output->writeln(sprintf('<info>Delete user: <comment>%s</comment></info>', $username));
-            $output->writeln('');
         }
+        $output->writeln('');
+
+        return 0;
     }
 }

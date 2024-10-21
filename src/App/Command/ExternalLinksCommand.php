@@ -34,7 +34,7 @@ class ExternalLinksCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('mtt:comments:no-follow')
@@ -42,7 +42,7 @@ class ExternalLinksCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $startTime = microtime(true);
         $cnt = 0;
@@ -88,5 +88,7 @@ class ExternalLinksCommand extends Command
         $output->writeln(
             sprintf('<info>Total time: <comment>%s</comment> sec</info>', round($endTime - $startTime, 3))
         );
+
+        return 0;
     }
 }

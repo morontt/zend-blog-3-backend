@@ -20,12 +20,12 @@ class UpdateUserCommand extends Command
     /**
      * @var UserRepository
      */
-    private $repository;
+    private UserRepository $repository;
 
     /**
      * @var UserManager
      */
-    private $userManager;
+    private UserManager $userManager;
 
     /**
      * @param UserRepository $repository
@@ -41,7 +41,7 @@ class UpdateUserCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('mtt:user:update')
@@ -54,24 +54,28 @@ class UpdateUserCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
+     * @throws \App\Exception\ShortPasswordException
+     *
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $username = $input->getArgument('username');
         $password = $input->getArgument('password');
 
         $user = $this->repository->findOneByUsername($username);
 
+        $output->writeln('');
         if (!$user) {
-            $output->writeln('');
             $output->writeln(sprintf('<error>Error: user "%s" not found</error>', $username));
-            $output->writeln('');
         } else {
             $this->userManager->updatePassword($user, $password);
 
-            $output->writeln('');
             $output->writeln(sprintf('<info>Update user: <comment>%s</comment></info>', $username));
-            $output->writeln('');
         }
+        $output->writeln('');
+
+        return 0;
     }
 }

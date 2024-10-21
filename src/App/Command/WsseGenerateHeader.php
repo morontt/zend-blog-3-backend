@@ -13,7 +13,7 @@ class WsseGenerateHeader extends Command
     /**
      * @var UserRepository
      */
-    private $repository;
+    private UserRepository $repository;
 
     public function __construct(UserRepository $repository)
     {
@@ -22,7 +22,7 @@ class WsseGenerateHeader extends Command
         $this->repository = $repository;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('mtt:wsse:generate-header')
@@ -31,7 +31,7 @@ class WsseGenerateHeader extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $username = $input->getArgument('username');
 
@@ -47,7 +47,10 @@ class WsseGenerateHeader extends Command
         try {
             $nonce = random_bytes(12);
         } catch (\Exception $e) {
-            $nonce = openssl_random_pseudo_bytes(12);
+            $nonce = openssl_random_pseudo_bytes(12, $isSourceStrong);
+            if ($isSourceStrong === false || $nonce === false) {
+                throw new \RuntimeException('IV generation failed');
+            }
         }
 
         $created = date('c');
