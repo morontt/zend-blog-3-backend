@@ -178,6 +178,6 @@ services:
 
     League\Flysystem\FilesystemOperator:
         factory: [ '@App\Service\BackUp\FlysystemFactory', createFlysystem ]
-        arguments: [ 'mail_space' ]
+        arguments: [ 'dropbox' ]
 
     Xelbot\Telegram\Robot: '@mtt_blog.telegram_bot'
