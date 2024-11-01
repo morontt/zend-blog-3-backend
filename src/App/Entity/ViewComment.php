@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="v_comments")
+ *
  * @ORM\Entity(readOnly=true, repositoryClass="App\Repository\ViewCommentRepository")
  */
 class ViewComment implements CommentInterface
@@ -20,6 +21,7 @@ class ViewComment implements CommentInterface
      * @var int
      *
      * @ORM\Id
+     *
      * @ORM\Column(type="integer")
      */
     protected $id;
@@ -33,6 +35,7 @@ class ViewComment implements CommentInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="ViewComment", inversedBy="children")
+     *
      * @ORM\JoinColumn()
      **/
     protected $parent;
@@ -113,6 +116,7 @@ class ViewComment implements CommentInterface
      * Two-character country code based on ISO 3166.
      *
      * @var string
+     *
      * @ORM\Column(name="country_code", type="string", length=2, unique=true)
      */
     protected $code;

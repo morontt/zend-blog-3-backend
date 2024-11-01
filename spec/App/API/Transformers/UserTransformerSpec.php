@@ -4,6 +4,7 @@ namespace spec\App\API\Transformers;
 
 use App\API\Transformers\UserTransformer;
 use App\Entity\User;
+use DateTime;
 use PhpSpec\ObjectBehavior;
 use ReflectionClass;
 
@@ -24,7 +25,7 @@ class UserTransformerSpec extends ObjectBehavior
         $user
             ->setUsername('test-name')
             ->setEmail('user@example.org')
-            ->setTimeCreated(\DateTime::createFromFormat('Y-m-d H:i:s', '2024-08-11 11:30:28'))
+            ->setTimeCreated(DateTime::createFromFormat('Y-m-d H:i:s', '2024-08-11 11:30:28'))
         ;
 
         $reflectionProperty->setValue($user, 175);
@@ -53,7 +54,7 @@ class UserTransformerSpec extends ObjectBehavior
             ->setEmail('helga@example.org')
             ->setGender(User::FEMALE)
             ->setDisplayName('Хельга')
-            ->setTimeCreated(\DateTime::createFromFormat('Y-m-d H:i:s', '2024-08-11 11:28:39'))
+            ->setTimeCreated(DateTime::createFromFormat('Y-m-d H:i:s', '2024-08-11 11:28:39'))
         ;
 
         $reflectionProperty->setValue($user, 176);

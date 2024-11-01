@@ -7,7 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="telegram_updates")
+ *
  * @ORM\Entity(repositoryClass="App\Repository\TelegramUpdateRepository")
+ *
  * @ORM\HasLifecycleCallbacks()
  */
 class TelegramUpdate
@@ -18,7 +20,9 @@ class TelegramUpdate
      * @var int
      *
      * @ORM\Id
+     *
      * @ORM\Column(type="integer")
+     *
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
@@ -27,6 +31,7 @@ class TelegramUpdate
      * @var TelegramUser|null
      *
      * @ORM\ManyToOne(targetEntity="TelegramUser")
+     *
      * @ORM\JoinColumn(onDelete="SET NULL")
      */
     private $telegramUser;
@@ -133,7 +138,7 @@ class TelegramUpdate
      *
      * @return TelegramUpdate
      */
-    public function setTextMessage(string $textMessage = null): self
+    public function setTextMessage(?string $textMessage = null): self
     {
         $this->textMessage = $textMessage;
 

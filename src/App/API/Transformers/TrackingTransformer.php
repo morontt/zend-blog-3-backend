@@ -4,6 +4,7 @@ namespace App\API\Transformers;
 
 use App\Entity\Tracking;
 use App\Utils\EmojiFlagSymbol;
+use Exception;
 use League\Fractal\Resource\ResourceInterface;
 
 class TrackingTransformer extends BaseTransformer
@@ -31,7 +32,7 @@ class TrackingTransformer extends BaseTransformer
 
         try {
             $flag = $countryCode ? EmojiFlagSymbol::get($countryCode) : '';
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $flag = '';
         }
 

@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterfac
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Firewall\AbstractListener;
+use UnexpectedValueException;
 
 class WsseAuthenticationListener extends AbstractListener
 {
@@ -84,7 +85,7 @@ class WsseAuthenticationListener extends AbstractListener
             $result['digest'] = $this->parseValue('PasswordDigest', $header);
             $result['nonce'] = $this->parseValue('Nonce', $header);
             $result['created'] = $this->parseValue('Created', $header);
-        } catch (\UnexpectedValueException $e) {
+        } catch (UnexpectedValueException $e) {
             return null;
         }
 
@@ -100,7 +101,7 @@ class WsseAuthenticationListener extends AbstractListener
     private function parseValue(string $key, string $header): string
     {
         if (!preg_match('/' . $key . '="([^"]+)"/', $header, $matches)) {
-            throw new \UnexpectedValueException('The string was not found');
+            throw new UnexpectedValueException('The string was not found');
         }
 
         return (string)$matches[1];

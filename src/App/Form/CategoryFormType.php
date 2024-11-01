@@ -31,7 +31,7 @@ class CategoryFormType extends AbstractType
             )
             ->add(
                 'url',
-                 TextType::class,
+                TextType::class,
                 [
                     'required' => false,
                     'constraints' => [

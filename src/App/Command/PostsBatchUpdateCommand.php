@@ -14,6 +14,7 @@ use App\Service\PictureTagBuilder;
 use App\Service\TextProcessor;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use JsonException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -60,7 +61,7 @@ class PostsBatchUpdateCommand extends Command
      * @param OutputInterface $output
      *
      * @throws \Doctrine\ORM\ORMException
-     * @throws \JsonException
+     * @throws JsonException
      *
      * @return int
      */

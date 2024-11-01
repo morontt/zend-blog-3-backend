@@ -16,7 +16,11 @@ use App\Model\Resizer\JpegResizer;
 use App\Model\Resizer\PngResizer;
 use App\Model\Resizer\WebpResizer;
 use App\Service\ImageManager;
+use DateTime;
 use Imagick;
+use ImagickException;
+use RuntimeException;
+use Throwable;
 
 /**
  * @method int getId()
@@ -25,8 +29,8 @@ use Imagick;
  * @method string getOriginalFileName()
  * @method int getFileSize()
  * @method string|null getDescription()
- * @method \DateTime getTimeCreated()
- * @method \DateTime getLastUpdate()
+ * @method DateTime getTimeCreated()
+ * @method DateTime getLastUpdate()
  * @method bool isDefaultImage()
  * @method int|null getWidth()
  * @method int|null getHeight()
@@ -84,7 +88,7 @@ class Image
      *
      * @return array
      */
-    public function getSrcSetData(string $format = null): array
+    public function getSrcSetData(?string $format = null): array
     {
         $width = $this->media->getWidth();
         $height = $this->media->getHeight();
@@ -151,7 +155,7 @@ class Image
      *
      * @return string|null
      */
-    public function getPreview(string $size, string $format = null): ?string
+    public function getPreview(string $size, ?string $format = null): ?string
     {
         $newPath = $this->getPathBySize($this->media->getPath(), $size, $format);
         $fsPath = ImageManager::getUploadsDir() . '/' . $this->media->getPath();
@@ -166,8 +170,8 @@ class Image
                     $this->sizes[$size]['width'] ?? 0,
                     $this->sizes[$size]['height'] ?? 0
                 );
-            } catch (\Throwable $e) {
-                //TODO add error to logger
+            } catch (Throwable $e) {
+                // TODO add error to logger
                 return null;
             }
         }
@@ -182,10 +186,10 @@ class Image
      *
      * @return string
      */
-    public function getPathBySize(string $currentPath, string $size, string $format = null): string
+    public function getPathBySize(string $currentPath, string $size, ?string $format = null): string
     {
         if (!isset($this->sizes[$size])) {
-            throw new \RuntimeException('undefined size');
+            throw new RuntimeException('undefined size');
         }
 
         $pathInfo = pathinfo($currentPath);
@@ -220,8 +224,8 @@ class Image
 
             $obj->width = $geometry['width'];
             $obj->height = $geometry['height'];
-        } catch (\ImagickException $e) {
-            //TODO add error to logger
+        } catch (ImagickException $e) {
+            // TODO add error to logger
         }
 
         return $obj;
@@ -238,7 +242,7 @@ class Image
         return call_user_func_array([$this->media, $method], $arguments);
     }
 
-    private function getResizer(string $fsPath, string $format = null): ResizerInterface
+    private function getResizer(string $fsPath, ?string $format = null): ResizerInterface
     {
         switch ($format ?? strtolower(pathinfo($fsPath, PATHINFO_EXTENSION))) {
             case 'jpeg':

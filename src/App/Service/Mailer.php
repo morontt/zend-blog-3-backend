@@ -8,9 +8,12 @@ use App\Entity\EmailSubscriptionSettings;
 use App\Repository\EmailSubscriptionSettingsRepository;
 use App\Utils\HashId;
 use App\Utils\VerifyEmail;
+use DirectoryIterator;
+use Exception;
 use Psr\Log\LoggerInterface;
 use Swift_Mailer;
 use Swift_Message;
+use Throwable;
 use Twig\Environment as TwigEnvironment;
 use Xelbot\Telegram\Robot;
 
@@ -122,7 +125,7 @@ class Mailer
             }
 
             $successfullySent = $this->mailer->send($message) > 0;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $this->logger->error('email sent error', ['exception' => $e]);
             $this->bot->sendMessage(
                 'email sent error: ' . $e->getMessage()
@@ -147,7 +150,7 @@ class Mailer
 
         try {
             $randomBytes = bin2hex(random_bytes(3));
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $randomBytes = dechex(mt_rand(0, 255) + 256 * mt_rand(0, 255) + 65536 * mt_rand(0, 255));
         }
 
@@ -167,7 +170,7 @@ class Mailer
     {
         $count = 0;
         $time = time();
-        foreach (new \DirectoryIterator($this->spoolPath()) as $fileInfo) {
+        foreach (new DirectoryIterator($this->spoolPath()) as $fileInfo) {
             $file = $fileInfo->getRealPath();
             if (substr($file, -8) !== '.message') {
                 continue;

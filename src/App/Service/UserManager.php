@@ -99,7 +99,7 @@ class UserManager
      *
      * @return User
      */
-    public function createUser(string $username, string $email, string $password = null): User
+    public function createUser(string $username, string $email, ?string $password = null): User
     {
         if (is_null($password)) {
             try {

@@ -5,6 +5,7 @@ namespace App\EventListener\Comment;
 use App\Event\CommentEvent;
 use App\Utils\RottenLink;
 use App\Utils\VerifyEmail;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CommentatorCheckListener
@@ -30,7 +31,7 @@ class CommentatorCheckListener
             $result = VerifyEmail::isValid($commentator->getEmail());
             $commentator
                 ->setFakeEmail(!$result)
-                ->setEmailCheck(new \DateTime())
+                ->setEmailCheck(new DateTime())
             ;
         }
 
@@ -38,7 +39,7 @@ class CommentatorCheckListener
             $result = RottenLink::doesWork($commentator->getWebsite());
             $commentator
                 ->setRottenLink(!$result)
-                ->setRottenCheck(new \DateTime())
+                ->setRottenCheck(new DateTime())
             ;
         }
 

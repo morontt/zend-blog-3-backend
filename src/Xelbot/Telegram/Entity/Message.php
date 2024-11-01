@@ -73,7 +73,7 @@ class Message
      *
      * @return Message
      */
-    public function setFrom(User $from = null): self
+    public function setFrom(?User $from = null): self
     {
         $this->from = $from;
 
@@ -93,7 +93,7 @@ class Message
      *
      * @return Message
      */
-    public function setChat(Chat $chat = null): self
+    public function setChat(?Chat $chat = null): self
     {
         $this->chat = $chat;
 
@@ -133,7 +133,7 @@ class Message
      *
      * @return Message
      */
-    public function setText(string $text = null): self
+    public function setText(?string $text = null): self
     {
         $this->text = $text;
 

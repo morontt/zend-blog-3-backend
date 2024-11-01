@@ -3,6 +3,7 @@
 namespace App\EventListener\Doctrine;
 
 use App\Entity\Post;
+use DateTime;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 class ArticleUpdatedAtListener
@@ -14,7 +15,7 @@ class ArticleUpdatedAtListener
     {
         $entity = $args->getObject();
         if (($entity instanceof Post) && $args->hasChangedField('text')) {
-            $entity->setUpdatedAt(new \DateTime());
+            $entity->setUpdatedAt(new DateTime());
 
             $em = $args->getEntityManager();
 

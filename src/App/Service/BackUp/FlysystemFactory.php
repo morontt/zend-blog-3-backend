@@ -10,6 +10,7 @@ namespace App\Service\BackUp;
 use App\Entity\SystemParameters;
 use App\Service\SystemParametersStorage;
 use App\Utils\Flysystem\WebDAVAdapter;
+use InvalidArgumentException;
 use League\Flysystem\Filesystem;
 use Sabre\DAV\Client as SabreClient;
 use Spatie\Dropbox\Client as DropboxClient;
@@ -56,7 +57,7 @@ class FlysystemFactory
             $adapter = new DropboxAdapter($client);
             $options['case_sensitive'] = false;
         } else {
-            throw new \InvalidArgumentException('invalid flysystem name: ' . $name);
+            throw new InvalidArgumentException('invalid flysystem name: ' . $name);
         }
 
         return new Filesystem($adapter, $options);

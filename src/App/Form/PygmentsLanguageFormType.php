@@ -30,7 +30,7 @@ class PygmentsLanguageFormType extends AbstractType
             )
             ->add(
                 'lexer',
-                 TextType::class,
+                TextType::class,
                 [
                     'required' => false,
                     'constraints' => [

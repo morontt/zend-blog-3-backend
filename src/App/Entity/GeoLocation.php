@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table()
+ *
  * @ORM\Entity(repositoryClass="App\Repository\GeoLocationRepository")
  */
 class GeoLocation
@@ -21,8 +22,11 @@ class GeoLocation
      * @var int
      *
      * @ORM\Id
+     *
      * @ORM\GeneratedValue(strategy="CUSTOM")
+     *
      * @ORM\CustomIdGenerator(class="App\Doctrine\ORM\IpLongIdGenerator")
+     *
      * @ORM\Column(name="ip_long", type="integer", options={"unsigned": true})
      */
     private $id;
@@ -38,6 +42,7 @@ class GeoLocation
      * @var GeoLocationCity
      *
      * @ORM\ManyToOne(targetEntity="GeoLocationCity")
+     *
      * @ORM\JoinColumn(nullable=true, onDelete="RESTRICT")
      */
     private $city;
@@ -102,7 +107,7 @@ class GeoLocation
      *
      * @return GeoLocation
      */
-    public function setCity(GeoLocationCity $city = null)
+    public function setCity(?GeoLocationCity $city = null)
     {
         $this->city = $city;
 

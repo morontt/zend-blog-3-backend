@@ -11,7 +11,7 @@ use Faker\Factory as FakerFactory;
 
 class LoadTagData extends Fixture
 {
-    const COUNT_TAGS = 60;
+    public const COUNT_TAGS = 60;
 
     /**
      * @param ObjectManager $manager

@@ -69,8 +69,8 @@ class EmailMessageDTO implements Serializable
             $this->type,
             $this->unsubscribeLink,
             $this->messageText,
-            $this->messageHtml
-            ) = unserialize($data, ['allowed_classes' => false]);
+            $this->messageHtml,
+        ) = unserialize($data, ['allowed_classes' => false]);
     }
 
     public function getRecipientEmail(): string

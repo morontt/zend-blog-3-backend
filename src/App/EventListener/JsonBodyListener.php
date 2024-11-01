@@ -8,6 +8,7 @@
 
 namespace App\EventListener;
 
+use JsonException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -21,7 +22,7 @@ class JsonBodyListener
      * @param RequestEvent $event
      *
      * @throws BadRequestHttpException
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function onKernelRequest(RequestEvent $event): void
     {

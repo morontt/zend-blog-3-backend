@@ -52,7 +52,7 @@ class PictureTagBuilder
         return $this->pictureTag($entity, $sizes, $alt);
     }
 
-    private function pictureTag(MediaFile $entity, array $sizes, string $alt = null, $withTitle = true): string
+    private function pictureTag(MediaFile $entity, array $sizes, ?string $alt = null, $withTitle = true): string
     {
         $image = new Image($entity);
         $xml = new SimpleXMLElement('<picture/>');

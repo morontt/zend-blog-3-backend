@@ -24,7 +24,7 @@ class UserFormType extends AbstractType
                 'username',
                 TextType::class,
                 [
-                   'constraints' => [
+                    'constraints' => [
                         new Constraints\NotBlank(),
                         new Constraints\Length(['max' => 128]),
                     ],

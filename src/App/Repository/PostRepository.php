@@ -17,7 +17,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class PostRepository extends ServiceEntityRepository
 {
-    const ITERATION_STEP = 15;
+    public const ITERATION_STEP = 15;
 
     /**
      * @param ManagerRegistry $registry

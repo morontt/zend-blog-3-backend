@@ -8,7 +8,9 @@ use App\Entity\Post;
 use App\Entity\SystemParameters;
 use App\Entity\Tracking;
 use App\Service\SystemParametersStorage;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Throwable;
 
 class PageViewCount implements HourlyCronServiceInterface
 {
@@ -38,7 +40,7 @@ class PageViewCount implements HourlyCronServiceInterface
         );
 
         $from = $this->paramStorage->getParameter(SystemParameters::UPDATE_VIEW_COUNTS_FROM) ?? '2023-06-01 00:00:00';
-        $now = (new \DateTime())->format(MillisecondsDateTime::FORMAT_TIME);
+        $now = (new DateTime())->format(MillisecondsDateTime::FORMAT_TIME);
 
         $trackingRepo = $this->em->getRepository(Tracking::class);
         $info = $trackingRepo->getViewCountsInfo($from, $now);
@@ -59,7 +61,7 @@ class PageViewCount implements HourlyCronServiceInterface
 
             $this->paramStorage->saveParameter(SystemParameters::UPDATE_VIEW_COUNTS_FROM, $now);
             $conn->commit();
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $conn->rollBack();
 
             throw $e;

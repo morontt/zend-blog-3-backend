@@ -8,7 +8,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Table(name="tags")
+ *
  * @ORM\Entity(repositoryClass="App\Repository\TagRepository")
+ *
  * @UniqueEntity(fields={"name"})
  * @UniqueEntity(fields={"url"})
  */
@@ -18,7 +20,9 @@ class Tag
      * @var int
      *
      * @ORM\Id
+     *
      * @ORM\Column(type="integer")
+     *
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;

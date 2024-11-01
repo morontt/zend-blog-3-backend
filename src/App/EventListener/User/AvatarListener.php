@@ -5,10 +5,12 @@ namespace App\EventListener\User;
 use App\Event\UserExtraEvent;
 use App\OAuth2\DataProviderFactory;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Throwable;
 
 class AvatarListener
 {
@@ -31,7 +33,7 @@ class AvatarListener
 
         try {
             $provider = $this->providerFactory->dataProvider($extraInfo->getDataProvider());
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $this->logger->error($e->getMessage(), [
                 'extraInfoID' => $extraInfo->getId(),
                 'provider' => $extraInfo->getDataProvider(),
@@ -96,7 +98,7 @@ class AvatarListener
 
                     $user->setAvatarVariant(1 + $user->getAvatarVariant());
                     $this->em->flush();
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     $this->logger->error($e->getMessage(), [
                         'extraInfoID' => $extraInfo->getId(),
                         'provider' => $extraInfo->getDataProvider(),

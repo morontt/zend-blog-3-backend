@@ -7,6 +7,8 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
+use RuntimeException;
 use Serializable;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use Symfony\Component\Security\Core\User\LegacyPasswordAuthenticatedUserInterface;
@@ -15,7 +17,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="users")
+ *
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ *
  * @DoctrineAssert\UniqueEntity(
  *   fields={"username"},
  *   message="This username is already used"
@@ -40,7 +44,9 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface, S
      * @var int
      *
      * @ORM\Id
+     *
      * @ORM\Column(type="integer")
+     *
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
@@ -56,6 +62,7 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface, S
      * @var string
      *
      * @ORM\Column(name="mail", type="string", length=64, unique=true)
+     *
      * @Assert\Email()
      */
     protected $email;
@@ -182,8 +189,8 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface, S
             $this->id,
             $this->username,
             $this->password,
-            $this->salt
-            ) = unserialize($serialized, ['allowed_classes' => false]);
+            $this->salt,
+        ) = unserialize($serialized, ['allowed_classes' => false]);
     }
 
     /**
@@ -223,10 +230,10 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface, S
     {
         try {
             $randomBytes = random_bytes(16);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $randomBytes = openssl_random_pseudo_bytes(16, $isSourceStrong);
             if ($isSourceStrong === false || $randomBytes === false) {
-                throw new \RuntimeException('IV generation failed');
+                throw new RuntimeException('IV generation failed');
             }
         }
 
@@ -237,10 +244,10 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface, S
     {
         try {
             $randomBytes = random_bytes(18);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $randomBytes = openssl_random_pseudo_bytes(18, $isSourceStrong);
             if ($isSourceStrong === false || $randomBytes === false) {
-                throw new \RuntimeException('IV generation failed');
+                throw new RuntimeException('IV generation failed');
             }
         }
 
@@ -438,7 +445,7 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface, S
      *
      * @return User
      */
-    public function setIpAddressLast(string $ip = null): self
+    public function setIpAddressLast(?string $ip = null): self
     {
         $this->ipAddressLast = $ip;
 
@@ -518,7 +525,7 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface, S
         return $this->displayName;
     }
 
-    public function setDisplayName(string $displayName = null): self
+    public function setDisplayName(?string $displayName = null): self
     {
         $this->displayName = $displayName;
 

@@ -72,7 +72,7 @@ class IpInfo
         $ip4 = array_map(function ($b) { return (int)$b; }, explode('.', $ip));
 
         return $ip4[0] == 10
-            || ($ip4[0] == 172 && ($ip4[1] & 0xf0) == 16)
+            || ($ip4[0] == 172 && ($ip4[1] & 0xF0) == 16)
             || ($ip4[0] == 192 && $ip4[1] == 168);
     }
 

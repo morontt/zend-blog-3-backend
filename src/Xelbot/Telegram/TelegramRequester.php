@@ -10,7 +10,9 @@ namespace Xelbot\Telegram;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use JsonException;
 use Psr\Log\LoggerInterface;
+use Throwable;
 use Xelbot\Telegram\Exception\TelegramException;
 
 /**
@@ -42,7 +44,7 @@ class TelegramRequester
     /**
      * @var LoggerInterface|null
      */
-    protected $logger = null;
+    protected $logger;
 
     /**
      * @param string $token
@@ -60,7 +62,7 @@ class TelegramRequester
     /**
      * @param LoggerInterface|null $logger
      */
-    public function setLogger(LoggerInterface $logger = null)
+    public function setLogger(?LoggerInterface $logger = null)
     {
         $this->logger = $logger;
     }
@@ -129,7 +131,7 @@ class TelegramRequester
             } else {
                 $context = ['RequestException' => $e->getMessage()];
             }
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $context = ['Error' => $e->getMessage()];
         }
 
@@ -137,7 +139,7 @@ class TelegramRequester
         if ($responseBody) {
             try {
                 $responseData = json_decode($responseBody, true, 512, JSON_BIGINT_AS_STRING | JSON_THROW_ON_ERROR);
-            } catch (\JsonException $e) {
+            } catch (JsonException $e) {
                 $context = ['JsonException' => $e->getMessage()];
             }
         }

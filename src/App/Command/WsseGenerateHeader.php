@@ -3,6 +3,8 @@
 namespace App\Command;
 
 use App\Repository\UserRepository;
+use Exception;
+use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -46,10 +48,10 @@ class WsseGenerateHeader extends Command
 
         try {
             $nonce = random_bytes(12);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $nonce = openssl_random_pseudo_bytes(12, $isSourceStrong);
             if ($isSourceStrong === false || $nonce === false) {
-                throw new \RuntimeException('IV generation failed');
+                throw new RuntimeException('IV generation failed');
             }
         }
 

@@ -3,13 +3,17 @@
 namespace App\Entity;
 
 use App\Entity\Traits\ModifyEntityTrait;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="subscription_settings", uniqueConstraints={
+ *
  *   @ORM\UniqueConstraint(columns={"email", "subs_type"})
  * })
+ *
  * @ORM\Entity(repositoryClass="App\Repository\EmailSubscriptionSettingsRepository")
+ *
  * @ORM\HasLifecycleCallbacks()
  */
 class EmailSubscriptionSettings
@@ -22,7 +26,9 @@ class EmailSubscriptionSettings
      * @var int
      *
      * @ORM\Id
+     *
      * @ORM\Column(type="integer")
+     *
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
@@ -50,7 +56,7 @@ class EmailSubscriptionSettings
 
     public function __construct()
     {
-        $this->timeCreated = new \DateTime();
+        $this->timeCreated = new DateTime();
     }
 
     public function getId()

@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class LoadUserData extends Fixture implements ContainerAwareInterface
 {
-    const COUNT_USERS = 10;
+    public const COUNT_USERS = 10;
 
     /**
      * @var ContainerInterface
@@ -23,7 +23,7 @@ class LoadUserData extends Fixture implements ContainerAwareInterface
     /**
      * {@inheritdoc}
      */
-    public function setContainer(ContainerInterface $container = null)
+    public function setContainer(?ContainerInterface $container = null)
     {
         $this->container = $container;
     }

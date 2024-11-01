@@ -13,8 +13,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(uniqueConstraints={
+ *
  *   @ORM\UniqueConstraint(columns={"city", "region", "country_id"})
  * })
+ *
  * @ORM\Entity(repositoryClass="App\Repository\GeoLocationCityRepository")
  */
 class GeoLocationCity
@@ -23,7 +25,9 @@ class GeoLocationCity
      * @var int
      *
      * @ORM\Id
+     *
      * @ORM\Column(type="integer")
+     *
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
@@ -74,6 +78,7 @@ class GeoLocationCity
      * @var GeoLocationCountry
      *
      * @ORM\ManyToOne(targetEntity="GeoLocationCountry")
+     *
      * @ORM\JoinColumn(nullable=false, onDelete="RESTRICT")
      */
     protected $country;

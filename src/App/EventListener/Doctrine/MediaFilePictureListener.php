@@ -6,6 +6,7 @@ use App\Entity\MediaFile;
 use App\Model\Image;
 use App\Service\PictureTagBuilder;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
+use JsonException;
 
 class MediaFilePictureListener
 {
@@ -19,7 +20,7 @@ class MediaFilePictureListener
     /**
      * @param PreUpdateEventArgs $args
      *
-     * @throws \JsonException
+     * @throws JsonException
      *
      * @return void
      */

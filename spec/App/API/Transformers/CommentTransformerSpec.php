@@ -7,6 +7,7 @@ use App\Entity\Comment;
 use App\Entity\Commentator;
 use App\Entity\User;
 use App\Entity\ViewComment;
+use DateTime;
 use PhpSpec\ObjectBehavior;
 use ReflectionClass;
 
@@ -36,7 +37,7 @@ class CommentTransformerSpec extends ObjectBehavior
         $comment
             ->setText('Тестовый комментарий')
             ->setIpAddress('94.231.112.91')
-            ->setTimeCreated(\DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-28 01:30:49'))
+            ->setTimeCreated(DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-28 01:30:49'))
             ->setCommentator($commentator)
         ;
 
@@ -79,7 +80,7 @@ class CommentTransformerSpec extends ObjectBehavior
         $uidProperty->setValue($comment, 27);
         $usernameProperty->setValue($comment, 'test-name');
         $textProperty->setValue($comment, 'Lorem ipsum');
-        $createdProperty->setValue($comment, \DateTime::createFromFormat('Y-m-d H:i:s', '2023-06-27 14:21:09'));
+        $createdProperty->setValue($comment, DateTime::createFromFormat('Y-m-d H:i:s', '2023-06-27 14:21:09'));
 
         $this->transform($comment)->shouldReturn([
             'id' => null,
@@ -121,7 +122,7 @@ class CommentTransformerSpec extends ObjectBehavior
         $comment
             ->setText('Тестовый комментарий')
             ->setIpAddress('94.231.112.91')
-            ->setTimeCreated(\DateTime::createFromFormat('Y-m-d H:i:s', '2023-02-28 01:30:49'))
+            ->setTimeCreated(DateTime::createFromFormat('Y-m-d H:i:s', '2023-02-28 01:30:49'))
             ->setUser($user)
         ;
 

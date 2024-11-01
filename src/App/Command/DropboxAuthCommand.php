@@ -13,6 +13,7 @@ use App\OAuth2\Client\DropboxProvider;
 use App\Service\SystemParametersStorage;
 use Doctrine\ORM\ORMException;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
+use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -82,7 +83,7 @@ class DropboxAuthCommand extends Command
         $question = new Question('Enter the authorization code here: ');
         $question->setValidator(function ($answer) {
             if (!trim($answer)) {
-                throw new \RuntimeException('Empty code :(');
+                throw new RuntimeException('Empty code :(');
             }
 
             return $answer;

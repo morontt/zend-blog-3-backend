@@ -2,6 +2,8 @@
 
 namespace App\Utils;
 
+use Throwable;
+
 class RottenLink
 {
     public static function doesWork(string $link): bool
@@ -11,7 +13,7 @@ class RottenLink
             $host = $matches[1];
             try {
                 $records = dns_get_record($host, DNS_A | DNS_CNAME | DNS_AAAA);
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 return false;
             }
 

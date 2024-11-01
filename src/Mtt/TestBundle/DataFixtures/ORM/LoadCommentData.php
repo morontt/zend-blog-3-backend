@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class LoadCommentData extends Fixture implements DependentFixtureInterface, ContainerAwareInterface
 {
-    const COUNT_COMMENTS = 450;
+    public const COUNT_COMMENTS = 450;
 
     /**
      * @var array
@@ -29,7 +29,7 @@ class LoadCommentData extends Fixture implements DependentFixtureInterface, Cont
     /**
      * @param ContainerInterface $container
      */
-    public function setContainer(ContainerInterface $container = null)
+    public function setContainer(?ContainerInterface $container = null)
     {
         $this->container = $container;
     }

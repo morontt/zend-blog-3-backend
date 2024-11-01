@@ -7,7 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table()
+ *
  * @ORM\Entity(repositoryClass="App\Repository\PygmentsCodeRepository")
+ *
  * @ORM\HasLifecycleCallbacks()
  */
 class PygmentsCode
@@ -18,7 +20,9 @@ class PygmentsCode
      * @var int
      *
      * @ORM\Id
+     *
      * @ORM\Column(type="integer")
+     *
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
@@ -27,6 +31,7 @@ class PygmentsCode
      * @var PygmentsLanguage
      *
      * @ORM\ManyToOne(targetEntity="PygmentsLanguage")
+     *
      * @ORM\JoinColumn(referencedColumnName="id", onDelete="SET NULL")
      */
     private $language;
@@ -94,7 +99,7 @@ class PygmentsCode
      *
      * @return PygmentsCode
      */
-    public function setLanguage(PygmentsLanguage $language = null): self
+    public function setLanguage(?PygmentsLanguage $language = null): self
     {
         $this->language = $language;
 
@@ -154,7 +159,7 @@ class PygmentsCode
      *
      * @return PygmentsCode
      */
-    public function setSourceHtmlPreview(string $sourceHtmlPreview = null): PygmentsCode
+    public function setSourceHtmlPreview(?string $sourceHtmlPreview = null): PygmentsCode
     {
         $this->sourceHtmlPreview = $sourceHtmlPreview;
 

@@ -8,20 +8,22 @@
 
 namespace App\API\Transformers;
 
+use DateTime;
+use DateTimeInterface;
 use League\Fractal\TransformerAbstract;
 
 abstract class BaseTransformer extends TransformerAbstract
 {
     /**
-     * @param \DateTime|null $dateTime
+     * @param DateTime|null $dateTime
      *
      * @return string|null
      */
-    protected function dateTimeToISO(\DateTime $dateTime = null)
+    protected function dateTimeToISO(?DateTime $dateTime = null)
     {
         $result = null;
         if ($dateTime) {
-            $result = $dateTime->format(\DateTimeInterface::ATOM);
+            $result = $dateTime->format(DateTimeInterface::ATOM);
         }
 
         return $result;

@@ -5,6 +5,7 @@ namespace App\Model\Resizer;
 use App\Model\ResizerInterface;
 use Imagick;
 use ImagickException;
+use RuntimeException;
 
 class WebpResizer implements ResizerInterface
 {
@@ -16,7 +17,7 @@ class WebpResizer implements ResizerInterface
     public function resize(string $filePath, string $newFilePath, int $width, int $height)
     {
         if (!Imagick::queryFormats('WEBP')) {
-            throw new \RuntimeException('Webp format is not supported by Imagick installation.');
+            throw new RuntimeException('Webp format is not supported by Imagick installation.');
         }
 
         $image = new Imagick($filePath);
@@ -31,7 +32,7 @@ class WebpResizer implements ResizerInterface
         $image->setImageCompression(Imagick::COMPRESSION_JPEG);
         $image->setImageCompressionQuality(80);
 
-        //$this->annotate($width, $height, $image);
+        // $this->annotate($width, $height, $image);
 
         $image->writeImage($newFilePath);
         $image->clear();
@@ -43,7 +44,7 @@ class WebpResizer implements ResizerInterface
     public function convert(string $filePath, string $resourcePath): string
     {
         if (!Imagick::queryFormats('WEBP')) {
-            throw new \RuntimeException('Webp format is not supported by Imagick installation.');
+            throw new RuntimeException('Webp format is not supported by Imagick installation.');
         }
 
         $pathInfo = pathinfo($filePath);
@@ -62,7 +63,7 @@ class WebpResizer implements ResizerInterface
         $image->setImageCompression(Imagick::COMPRESSION_JPEG);
         $image->setImageCompressionQuality(80);
 
-        //$this->annotate(0, 0, $image);
+        // $this->annotate(0, 0, $image);
 
         $image->writeImage($resourcePath . '/' . $newFilePath);
         $image->clear();

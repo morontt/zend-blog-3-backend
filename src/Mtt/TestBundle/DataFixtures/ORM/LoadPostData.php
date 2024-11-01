@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class LoadPostData extends Fixture implements ContainerAwareInterface, DependentFixtureInterface
 {
-    const COUNT_POSTS = 50;
+    public const COUNT_POSTS = 50;
 
     /**
      * @var ContainerInterface
@@ -25,7 +25,7 @@ class LoadPostData extends Fixture implements ContainerAwareInterface, Dependent
     /**
      * {@inheritdoc}
      */
-    public function setContainer(ContainerInterface $container = null)
+    public function setContainer(?ContainerInterface $container = null)
     {
         $this->container = $container;
     }

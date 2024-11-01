@@ -8,8 +8,11 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Table()
+ *
  * @ORM\Entity(repositoryClass="App\Repository\PygmentsLanguageRepository")
+ *
  * @ORM\HasLifecycleCallbacks()
+ *
  * @UniqueEntity(fields={"name"})
  */
 class PygmentsLanguage
@@ -20,7 +23,9 @@ class PygmentsLanguage
      * @var int
      *
      * @ORM\Id
+     *
      * @ORM\Column(type="integer")
+     *
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
@@ -80,7 +85,7 @@ class PygmentsLanguage
      *
      * @return PygmentsLanguage
      */
-    public function setLexer(string $lexer = null): self
+    public function setLexer(?string $lexer = null): self
     {
         $this->lexer = $lexer;
 

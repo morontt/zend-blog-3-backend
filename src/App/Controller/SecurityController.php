@@ -18,6 +18,7 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/login")
+     *
      * @Template()
      *
      * @return array

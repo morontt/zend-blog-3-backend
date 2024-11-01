@@ -28,7 +28,7 @@ class JpegResizer implements ResizerInterface
         $image->setCompressionQuality(75);
         $image->setImageCompressionQuality(75);
 
-        //$this->annotate($width, $height, $image);
+        // $this->annotate($width, $height, $image);
 
         $image->writeImage($newFilePath);
         $image->clear();

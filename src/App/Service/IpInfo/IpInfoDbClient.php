@@ -2,6 +2,8 @@
 
 namespace App\Service\IpInfo;
 
+use Throwable;
+
 class IpInfoDbClient implements IpInfoClientInterface
 {
     private string $key;
@@ -33,7 +35,7 @@ class IpInfoDbClient implements IpInfoClientInterface
                 sleep(2);
 
                 return LocationInfo::createFromArray(json_decode($json, true, 512, JSON_THROW_ON_ERROR));
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 return null;
             }
         }

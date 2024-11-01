@@ -7,7 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="telegram_users")
+ *
  * @ORM\Entity(repositoryClass="App\Repository\TelegramUserRepository")
+ *
  * @ORM\HasLifecycleCallbacks()
  */
 class TelegramUser
@@ -18,7 +20,9 @@ class TelegramUser
      * @var int
      *
      * @ORM\Id
+     *
      * @ORM\Column(type="integer")
+     *
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;

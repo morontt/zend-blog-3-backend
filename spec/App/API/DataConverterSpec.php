@@ -15,6 +15,7 @@ use App\Entity\User;
 use App\Repository\CategoryRepository;
 use App\Repository\CommentRepository;
 use App\Service\TextProcessor;
+use DateTime;
 use Doctrine\ORM\EntityManager;
 use PhpSpec\ObjectBehavior;
 use ReflectionClass;
@@ -202,7 +203,7 @@ class DataConverterSpec extends ObjectBehavior
         $comment
             ->setText('Тестовый комментарий')
             ->setIpAddress('94.231.112.91')
-            ->setTimeCreated(\DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-28 01:30:49'))
+            ->setTimeCreated(DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-28 01:30:49'))
             ->setCommentator($commentator)
         ;
 
@@ -235,7 +236,7 @@ class DataConverterSpec extends ObjectBehavior
         $comment2
             ->setText('йцук фыва олдж')
             ->setIpAddress('62.72.188.111')
-            ->setTimeCreated(\DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-28 01:43:14'))
+            ->setTimeCreated(DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-28 01:43:14'))
         ;
 
         $location = new GeoLocation();
@@ -369,8 +370,8 @@ class DataConverterSpec extends ObjectBehavior
             ->setHide(false)
             ->setRawText('<p>Ещё одна запись о PHP</p>')
             ->setDescription('description PHP')
-            ->setTimeCreated(\DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-07 22:40:24'))
-            ->setLastUpdate(\DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-07 22:40:24'))
+            ->setTimeCreated(DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-07 22:40:24'))
+            ->setLastUpdate(DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-07 22:40:24'))
         ;
 
         $this->getPost($post, 'category')->shouldReturn(
@@ -409,11 +410,11 @@ class DataConverterSpec extends ObjectBehavior
             ->setHide(false)
             ->setRawText('<p>Тестовая запись, собственно...</p>')
             ->setDescription('метатег description')
-            ->setTimeCreated(\DateTime::createFromFormat('Y-m-d H:i:s', '2016-01-11 01:05:33'))
-            ->setLastUpdate(\DateTime::createFromFormat('Y-m-d H:i:s', '2016-01-11 01:05:33'))
+            ->setTimeCreated(DateTime::createFromFormat('Y-m-d H:i:s', '2016-01-11 01:05:33'))
+            ->setLastUpdate(DateTime::createFromFormat('Y-m-d H:i:s', '2016-01-11 01:05:33'))
         ;
 
-        //TODO duplicate categories
+        // TODO duplicate categories
         $this->getPostArray([$post, $post2], 'category')->shouldReturn(
             [
                 'posts' => [
