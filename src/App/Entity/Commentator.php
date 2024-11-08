@@ -10,8 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="commentators", uniqueConstraints={
+ *
  *   @ORM\UniqueConstraint(columns={"name", "mail", "website"})
  * })
+ *
  * @ORM\Entity(repositoryClass="App\Repository\CommentatorRepository")
  */
 class Commentator implements CommentatorInterface
@@ -22,7 +24,9 @@ class Commentator implements CommentatorInterface
      * @var int
      *
      * @ORM\Id
+     *
      * @ORM\Column(type="integer")
+     *
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;

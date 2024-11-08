@@ -24,6 +24,7 @@ return (new PhpCsFixer\Config())
         'no_unused_imports' => true,
         'ordered_imports' => true,
         'no_superfluous_phpdoc_tags' => false,
+        'global_namespace_import' => ['import_classes' => true],
     ])
     ->setFinder($finder)
     ->setCacheFile(__DIR__ . '/var/.php_cs.cache')

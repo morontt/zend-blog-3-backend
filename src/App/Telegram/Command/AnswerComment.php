@@ -62,7 +62,7 @@ class AnswerComment extends AbstractAdminCommand implements TelegramCommandInter
 
             $this->commentManager->saveExternalComment($commentData);
 
-            //TODO Null pointer exception may occur here
+            // TODO Null pointer exception may occur here
             $this->requester->sendMessage([
                 'chat_id' => $message->getChat()->getId(),
                 'text' => 'Готово ' . Robot::EMOJI_ROBOT,

@@ -8,6 +8,8 @@
 
 namespace App\Utils;
 
+use ErrorException;
+
 class ExternalLinkProcessor
 {
     /**
@@ -38,7 +40,7 @@ class ExternalLinkProcessor
      *
      * @return string|null
      */
-    public function upgradeLinks(string $content = null): ?string
+    public function upgradeLinks(?string $content = null): ?string
     {
         if ($content === null) {
             return null;
@@ -136,7 +138,7 @@ class ExternalLinkProcessor
                     foreach ($xml->attributes() as $k => $v) {
                         $attributes[] = sprintf('%s="%s"', $k, (string)$v);
                     }
-                } catch (\ErrorException $e) {
+                } catch (ErrorException $e) {
                     break;
                 }
 

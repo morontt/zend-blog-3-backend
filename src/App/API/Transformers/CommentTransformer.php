@@ -13,6 +13,7 @@ use App\Entity\CommentInterface;
 use App\Entity\ViewComment;
 use App\Entity\ViewCommentator;
 use App\Utils\EmojiFlagSymbol;
+use Exception;
 use League\Fractal\Resource\ResourceInterface;
 
 class CommentTransformer extends BaseTransformer
@@ -99,7 +100,7 @@ class CommentTransformer extends BaseTransformer
 
         try {
             $flag = $countryCode ? EmojiFlagSymbol::get($countryCode) : '';
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $flag = '';
         }
 

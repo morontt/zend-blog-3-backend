@@ -29,7 +29,7 @@ class PngResizer implements ResizerInterface
         $image->setCompression(Imagick::COMPRESSION_ZIP);
         $image->setImageCompression(Imagick::COMPRESSION_ZIP);
 
-        //$this->annotate($width, $height, $image);
+        // $this->annotate($width, $height, $image);
 
         $image->writeImage($newFilePath);
         $image->clear();

@@ -38,9 +38,11 @@ class IpInfo
     /**
      * @param string $ip
      *
+     * @throws \Doctrine\ORM\Exception\ORMException
+     *
      * @return GeoLocation|null
      */
-    public function getLocationByIp(string $ip)
+    public function getLocationByIp(string $ip): ?GeoLocation
     {
         $location = $this->em->getRepository(GeoLocation::class)->findOrCreateByIpAddress($ip);
         if ($location && !$location->getCity()) {
@@ -71,9 +73,9 @@ class IpInfo
     {
         $ip4 = array_map(function ($b) { return (int)$b; }, explode('.', $ip));
 
-        return $ip4[0] == 10
-            || ($ip4[0] == 172 && ($ip4[1] & 0xf0) == 16)
-            || ($ip4[0] == 192 && $ip4[1] == 168);
+        return $ip4[0] === 10
+            || ($ip4[0] === 172 && ($ip4[1] & 0xF0) === 16)
+            || ($ip4[0] === 192 && $ip4[1] === 168);
     }
 
     /**
@@ -81,7 +83,7 @@ class IpInfo
      *
      * @return GeoLocationCity|null
      */
-    protected function getCity(LocationInfo $data)
+    protected function getCity(LocationInfo $data): ?GeoLocationCity
     {
         $city = null;
         if (!empty($data->cityName) && !empty($data->regionName)) {
@@ -119,7 +121,7 @@ class IpInfo
      *
      * @return GeoLocationCountry|null
      */
-    protected function getCountry(LocationInfo $data)
+    protected function getCountry(LocationInfo $data): ?GeoLocationCountry
     {
         $country = null;
         if (!empty($data->countryCode) && !empty($data->countryName)) {

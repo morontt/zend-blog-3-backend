@@ -14,6 +14,7 @@ class TestEmailController extends AbstractController
 {
     /**
      * @Route("/test-emails", methods={"GET"})
+     *
      * @Template()
      *
      * @return array

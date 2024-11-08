@@ -11,6 +11,7 @@ namespace App\Service;
 use App\Entity\MediaFile;
 use App\Entity\Post;
 use App\Model\Image;
+use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -177,7 +178,7 @@ class ImageManager
     {
         $media = $this->em->getRepository(MediaFile::class)->findOneBy(['path' => $remotePath]);
         if ($media) {
-            $media->setLastUpdate(new \DateTime());
+            $media->setLastUpdate(new DateTime());
         } else {
             $media = new MediaFile();
             $media->setPath($remotePath);
@@ -191,7 +192,7 @@ class ImageManager
      */
     protected function getPrefixPath()
     {
-        return sprintf('blog/%s/', (new \DateTime())->format('Y/m'));
+        return sprintf('blog/%s/', (new DateTime())->format('Y/m'));
     }
 
     /**

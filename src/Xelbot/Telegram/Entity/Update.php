@@ -68,7 +68,7 @@ class Update
      *
      * @return Update
      */
-    public function setMessage(Message $message = null)
+    public function setMessage(?Message $message = null)
     {
         $this->message = $message;
 
@@ -88,7 +88,7 @@ class Update
      *
      * @return Update
      */
-    public function setEditedMessage(Message $editedMessage = null): self
+    public function setEditedMessage(?Message $editedMessage = null): self
     {
         $this->editedMessage = $editedMessage;
 
@@ -108,7 +108,7 @@ class Update
      *
      * @return Update
      */
-    public function setChannelPost(Message $channelPost = null): self
+    public function setChannelPost(?Message $channelPost = null): self
     {
         $this->channelPost = $channelPost;
 
@@ -128,7 +128,7 @@ class Update
      *
      * @return Update
      */
-    public function setEditedChannelPost(Message $editedChannelPost = null): self
+    public function setEditedChannelPost(?Message $editedChannelPost = null): self
     {
         $this->editedChannelPost = $editedChannelPost;
 

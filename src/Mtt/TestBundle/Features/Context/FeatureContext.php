@@ -6,6 +6,8 @@ use Behat\Behat\Context\Context;
 use Behat\Behat\Hook\Scope\AfterStepScope;
 use Behat\Gherkin\Node\TableNode;
 use Behat\MinkExtension\Context\MinkContext;
+use Exception;
+use Swift_Message;
 use Symfony\Component\HttpKernel\Profiler\Profiler;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
@@ -82,7 +84,7 @@ class FeatureContext extends MinkContext implements Context
      * @param string $recipient
      * @param string $text
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function shouldReceiveEmailWithTheText($recipient, $text)
     {
@@ -92,12 +94,12 @@ class FeatureContext extends MinkContext implements Context
         $response = $client->getResponse();
         $token = $response->getHeader('X-Debug-Token');
         if (!$token) {
-            throw new \Exception('X-Debug-Token not available');
+            throw new Exception('X-Debug-Token not available');
         }
 
         $profile = $this->profiler->loadProfile($token);
         if (!$profile) {
-            throw new \Exception('Symfony profile not available');
+            throw new Exception('Symfony profile not available');
         }
 
         /* @var \Symfony\Bundle\SwiftmailerBundle\DataCollector\MessageDataCollector $mailCollector */
@@ -107,7 +109,7 @@ class FeatureContext extends MinkContext implements Context
         /* @var \Swift_Message $message */
         $message = $collectedMessages[0];
 
-        $this->assert($message instanceof \Swift_Message, 'Message not instanceof Swift_Message');
+        $this->assert($message instanceof Swift_Message, 'Message not instanceof Swift_Message');
         $this->assert(key($message->getTo()) === $recipient, 'The recipient is not ' . $recipient);
         $this->assert(mb_strpos($message->getBody(), $text) !== false, 'The message not contains text: ' . $text);
     }
@@ -153,12 +155,12 @@ class FeatureContext extends MinkContext implements Context
      * @param bool $condition
      * @param string $message
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function assert($condition, $message)
     {
         if (!$condition) {
-            throw new \Exception($message);
+            throw new Exception($message);
         }
     }
 }

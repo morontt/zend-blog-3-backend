@@ -5,6 +5,7 @@ namespace App\Cron\Hourly;
 use App\Cron\HourlyCronServiceInterface;
 use App\Entity\Commentator;
 use App\Utils\RottenLink;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 
 class LinksCheck implements HourlyCronServiceInterface
@@ -24,7 +25,7 @@ class LinksCheck implements HourlyCronServiceInterface
         $repository = $this->em->getRepository(Commentator::class);
         foreach ($repository->getWithUncheckedLinks() as $commentator) {
             $commentator
-                ->setRottenCheck(new \DateTime())
+                ->setRottenCheck(new DateTime())
                 ->setRottenLink(!RottenLink::doesWork($commentator->getWebsite()))
             ;
         }

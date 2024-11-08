@@ -13,6 +13,7 @@ use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Throwable;
 use Xelbot\Telegram\Command\AbstractAdminCommand;
 use Xelbot\Telegram\Command\TelegramCommandInterface;
 use Xelbot\Telegram\Entity\Message;
@@ -39,7 +40,7 @@ class Robot
     /**
      * @var LoggerInterface|null
      */
-    protected $logger = null;
+    protected $logger;
 
     /**
      * @var TelegramCommandInterface[]
@@ -81,7 +82,7 @@ class Robot
     /**
      * @param LoggerInterface|null $logger
      */
-    public function setLogger(LoggerInterface $logger = null): void
+    public function setLogger(?LoggerInterface $logger = null): void
     {
         $this->logger = $logger;
         $this->requester->setLogger($logger);
@@ -115,7 +116,7 @@ class Robot
      *
      * @return TelegramResponse
      */
-    public function sendMessage(string $message, int $chatId = null): TelegramResponse
+    public function sendMessage(string $message, ?int $chatId = null): TelegramResponse
     {
         if ($chatId === null) {
             $chatId = $this->adminId;
@@ -135,7 +136,7 @@ class Robot
      *
      * @return TelegramResponse
      */
-    public function setWebhook(string $url, string $certificate = null): TelegramResponse
+    public function setWebhook(string $url, ?string $certificate = null): TelegramResponse
     {
         $data = [
             'url' => $url,
@@ -232,7 +233,7 @@ class Robot
             if (isset($this->commands[$commandName])) {
                 $this->commands[$commandName]->execute($message);
             } else {
-                //TODO Null pointer exception may occur here
+                // TODO Null pointer exception may occur here
                 $this->requester->sendMessage([
                     'chat_id' => $message->getChat()->getId(),
                     'text' => sprintf(
@@ -251,7 +252,7 @@ class Robot
             ]);
 
             $this->logger->notice($e->getMessage());
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $this->logger->error($e->getMessage());
         }
     }

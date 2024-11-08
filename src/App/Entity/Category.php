@@ -10,10 +10,13 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Table(name="category", indexes={
+ *
  *   @ORM\Index(name="left_key_idx", columns={"tree_left_key"}),
  *   @ORM\Index(name="right_key_idx", columns={"tree_right_key"})
  * })
+ *
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
+ *
  * @UniqueEntity(fields={"url"})
  */
 class Category
@@ -22,7 +25,9 @@ class Category
      * @var int
      *
      * @ORM\Id
+     *
      * @ORM\Column(type="integer")
+     *
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
@@ -36,6 +41,7 @@ class Category
 
     /**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="children")
+     *
      * @ORM\JoinColumn(onDelete="SET NULL")
      **/
     protected $parent;
@@ -174,7 +180,7 @@ class Category
      *
      * @return Category
      */
-    public function setParent(self $parent = null)
+    public function setParent(?self $parent = null)
     {
         $this->parent = $parent;
 

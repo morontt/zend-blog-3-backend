@@ -11,7 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="posts")
+ *
  * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
+ *
  * @ORM\HasLifecycleCallbacks()
  */
 class Post
@@ -22,7 +24,9 @@ class Post
      * @var int
      *
      * @ORM\Id
+     *
      * @ORM\Column(type="integer")
+     *
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
@@ -80,6 +84,7 @@ class Post
      * @var Category
      *
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="posts")
+     *
      * @ORM\JoinColumn(nullable=false)
      */
     protected $category;
@@ -88,6 +93,7 @@ class Post
      * @var Collection
      *
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="posts")
+     *
      * @ORM\JoinTable(name="relation_topictag")
      */
     protected $tags;
@@ -283,7 +289,7 @@ class Post
      *
      * @return Post
      */
-    public function setCategory(Category $category = null)
+    public function setCategory(?Category $category = null)
     {
         $this->category = $category;
 

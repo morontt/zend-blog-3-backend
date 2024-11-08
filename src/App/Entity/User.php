@@ -7,14 +7,19 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Exception;
+use RuntimeException;
 use Serializable;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
+use Symfony\Component\Security\Core\User\LegacyPasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="users")
+ *
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ *
  * @DoctrineAssert\UniqueEntity(
  *   fields={"username"},
  *   message="This username is already used"
@@ -24,7 +29,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *   message="This email is already used"
  * )
  */
-class User implements UserInterface, Serializable
+class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface, Serializable
 {
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_ADMIN = 'ROLE_ADMIN';
@@ -39,7 +44,9 @@ class User implements UserInterface, Serializable
      * @var int
      *
      * @ORM\Id
+     *
      * @ORM\Column(type="integer")
+     *
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
@@ -55,6 +62,7 @@ class User implements UserInterface, Serializable
      * @var string
      *
      * @ORM\Column(name="mail", type="string", length=64, unique=true)
+     *
      * @Assert\Email()
      */
     protected $email;
@@ -154,6 +162,11 @@ class User implements UserInterface, Serializable
         $this->userType = self::TYPE_GUEST;
     }
 
+    public function getUserIdentifier(): string
+    {
+        return $this->username;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -176,8 +189,8 @@ class User implements UserInterface, Serializable
             $this->id,
             $this->username,
             $this->password,
-            $this->salt
-            ) = unserialize($serialized, ['allowed_classes' => false]);
+            $this->salt,
+        ) = unserialize($serialized, ['allowed_classes' => false]);
     }
 
     /**
@@ -217,10 +230,10 @@ class User implements UserInterface, Serializable
     {
         try {
             $randomBytes = random_bytes(16);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $randomBytes = openssl_random_pseudo_bytes(16, $isSourceStrong);
             if ($isSourceStrong === false || $randomBytes === false) {
-                throw new \RuntimeException('IV generation failed');
+                throw new RuntimeException('IV generation failed');
             }
         }
 
@@ -231,10 +244,10 @@ class User implements UserInterface, Serializable
     {
         try {
             $randomBytes = random_bytes(18);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $randomBytes = openssl_random_pseudo_bytes(18, $isSourceStrong);
             if ($isSourceStrong === false || $randomBytes === false) {
-                throw new \RuntimeException('IV generation failed');
+                throw new RuntimeException('IV generation failed');
             }
         }
 
@@ -318,23 +331,9 @@ class User implements UserInterface, Serializable
      *
      * @return string
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
-    }
-
-    /**
-     * Set salt
-     *
-     * @param string $salt
-     *
-     * @return User
-     */
-    public function setSalt(string $salt): self
-    {
-        $this->salt = $salt;
-
-        return $this;
     }
 
     /**
@@ -342,7 +341,7 @@ class User implements UserInterface, Serializable
      *
      * @return string
      */
-    public function getSalt(): string
+    public function getSalt(): ?string
     {
         return $this->salt;
     }
@@ -446,7 +445,7 @@ class User implements UserInterface, Serializable
      *
      * @return User
      */
-    public function setIpAddressLast(string $ip = null): self
+    public function setIpAddressLast(?string $ip = null): self
     {
         $this->ipAddressLast = $ip;
 
@@ -526,7 +525,7 @@ class User implements UserInterface, Serializable
         return $this->displayName;
     }
 
-    public function setDisplayName(string $displayName = null): self
+    public function setDisplayName(?string $displayName = null): self
     {
         $this->displayName = $displayName;
 

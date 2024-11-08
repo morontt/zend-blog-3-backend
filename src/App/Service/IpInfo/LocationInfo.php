@@ -2,6 +2,8 @@
 
 namespace App\Service\IpInfo;
 
+use LogicException;
+
 class LocationInfo
 {
     /**
@@ -70,7 +72,7 @@ class LocationInfo
             || !array_key_exists('regionName', $data)
             || !array_key_exists('cityName', $data)
         ) {
-            throw new \LogicException('Missing required properties');
+            throw new LogicException('Missing required properties');
         }
 
         $self = new self();

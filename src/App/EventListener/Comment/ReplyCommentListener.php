@@ -11,6 +11,7 @@ namespace App\EventListener\Comment;
 use App\Event\CommentEvent;
 use App\Service\Mailer;
 use Psr\Log\LoggerInterface;
+use Throwable;
 use Xelbot\Telegram\Robot;
 
 class ReplyCommentListener
@@ -40,7 +41,7 @@ class ReplyCommentListener
     {
         try {
             $this->mailer->replyComment($event->getComment());
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $this->logger->error('reply comment email error', ['exception' => $e]);
             $this->bot->sendMessage('reply comment email error: ' . $e->getMessage());
         }

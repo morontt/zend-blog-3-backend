@@ -6,22 +6,25 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="sys_parameters")
+ *
  * @ORM\Entity(repositoryClass="App\Repository\SystemParametersRepository")
  */
 class SystemParameters
 {
-    const DROPBOX_TOKEN = 'dropbox_token';
-    const UPDATE_VIEW_COUNTS_FROM = 'upd_view_counts_from';
-    const UPDATE_GEOLOCATION_FROM = 'upd_geolocation_from';
-    const ERRORS_5XX_CHECK = 'errors_5xx_check';
-    const TELEGRAM_UPDATES_CHECK = 'tg_updates_check';
-    const UPDATE_VIEW_COUNTS_DATA = 'upd_view_counts_data';
+    public const DROPBOX_TOKEN = 'dropbox_token';
+    public const UPDATE_VIEW_COUNTS_FROM = 'upd_view_counts_from';
+    public const UPDATE_GEOLOCATION_FROM = 'upd_geolocation_from';
+    public const ERRORS_5XX_CHECK = 'errors_5xx_check';
+    public const TELEGRAM_UPDATES_CHECK = 'tg_updates_check';
+    public const UPDATE_VIEW_COUNTS_DATA = 'upd_view_counts_data';
 
     /**
      * @var int
      *
      * @ORM\Id
+     *
      * @ORM\Column(type="integer")
+     *
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;

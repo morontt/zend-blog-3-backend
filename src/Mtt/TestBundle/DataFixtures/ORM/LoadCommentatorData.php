@@ -10,7 +10,7 @@ use Faker\Factory as FakerFactory;
 
 class LoadCommentatorData extends Fixture
 {
-    const COUNT_COMMENTATORS = 24;
+    public const COUNT_COMMENTATORS = 24;
 
     /**
      * @param ObjectManager $manager

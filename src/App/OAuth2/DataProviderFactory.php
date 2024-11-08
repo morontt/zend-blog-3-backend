@@ -5,6 +5,7 @@ namespace App\OAuth2;
 use App\OAuth2\Providers\DataProviderInterface;
 use App\OAuth2\Providers\VkDataProvider;
 use App\OAuth2\Providers\YandexDataProvider;
+use InvalidArgumentException;
 
 class DataProviderFactory
 {
@@ -17,6 +18,6 @@ class DataProviderFactory
                 return new VkDataProvider();
         }
 
-        throw new \InvalidArgumentException('Unknown provider: ' . $providerName);
+        throw new InvalidArgumentException('Unknown provider: ' . $providerName);
     }
 }

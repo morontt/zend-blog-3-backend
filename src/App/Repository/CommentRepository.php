@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Doctrine\DBAL\Type\MillisecondsDateTime;
 use App\Entity\Comment;
 use App\Entity\GeoLocation;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -73,7 +74,7 @@ class CommentRepository extends ServiceEntityRepository
             ->update()
             ->set('c.lastUpdate', ':now')
             ->where($qb->expr()->eq('c.user', ':id'))
-            ->setParameter('now', (new \DateTime())->format(MillisecondsDateTime::FORMAT_TIME))
+            ->setParameter('now', (new DateTime())->format(MillisecondsDateTime::FORMAT_TIME))
             ->setParameter('id', $userId)
         ;
 

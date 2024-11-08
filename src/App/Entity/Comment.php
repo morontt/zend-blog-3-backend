@@ -11,10 +11,13 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="comments", indexes={
+ *
  *   @ORM\Index(name="left_key_idx", columns={"tree_left_key"}),
  *   @ORM\Index(name="right_key_idx", columns={"tree_right_key"})
  * })
+ *
  * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
+ *
  * @ORM\HasLifecycleCallbacks()
  */
 class Comment implements CommentInterface
@@ -25,7 +28,9 @@ class Comment implements CommentInterface
      * @var int
      *
      * @ORM\Id
+     *
      * @ORM\Column(type="integer")
+     *
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
@@ -39,6 +44,7 @@ class Comment implements CommentInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="Comment", inversedBy="children")
+     *
      * @ORM\JoinColumn(onDelete="SET NULL")
      **/
     protected $parent;
@@ -47,6 +53,7 @@ class Comment implements CommentInterface
      * @var Post
      *
      * @ORM\ManyToOne(targetEntity="Post", inversedBy="comments")
+     *
      * @ORM\JoinColumn(nullable=false)
      */
     protected $post;
@@ -83,6 +90,7 @@ class Comment implements CommentInterface
      * @var TrackingAgent
      *
      * @ORM\ManyToOne(targetEntity="TrackingAgent")
+     *
      * @ORM\JoinColumn(name="user_agent_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $trackingAgent;
@@ -98,6 +106,7 @@ class Comment implements CommentInterface
      * @var GeoLocation
      *
      * @ORM\ManyToOne(targetEntity="GeoLocation")
+     *
      * @ORM\JoinColumn(name="ip_long", referencedColumnName="ip_long", onDelete="SET NULL")
      */
     private $geoLocation;
@@ -182,7 +191,7 @@ class Comment implements CommentInterface
      *
      * @return Comment
      */
-    public function setParent(self $parent = null)
+    public function setParent(?self $parent = null)
     {
         $this->parent = $parent;
 
@@ -206,7 +215,7 @@ class Comment implements CommentInterface
      *
      * @return Comment
      */
-    public function setCommentator(Commentator $commentator = null)
+    public function setCommentator(?Commentator $commentator = null)
     {
         $this->commentator = $commentator;
 
@@ -230,7 +239,7 @@ class Comment implements CommentInterface
      *
      * @return Comment
      */
-    public function setUser(User $user = null)
+    public function setUser(?User $user = null)
     {
         $this->user = $user;
 
@@ -326,7 +335,7 @@ class Comment implements CommentInterface
      *
      * @return Comment
      */
-    public function setPost(Post $post = null)
+    public function setPost(?Post $post = null)
     {
         $this->post = $post;
 
@@ -350,7 +359,7 @@ class Comment implements CommentInterface
      *
      * @return Comment
      */
-    public function setTrackingAgent(TrackingAgent $trackingAgent = null)
+    public function setTrackingAgent(?TrackingAgent $trackingAgent = null)
     {
         $this->trackingAgent = $trackingAgent;
 
@@ -382,7 +391,7 @@ class Comment implements CommentInterface
      *
      * @return $this
      */
-    public function setGeoLocation(GeoLocation $location = null): self
+    public function setGeoLocation(?GeoLocation $location = null): self
     {
         $this->geoLocation = $location;
 

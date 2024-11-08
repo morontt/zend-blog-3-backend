@@ -7,8 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="tracking_archive", indexes={
+ *
  *   @ORM\Index(columns={"user_agent_id"})
  * })
+ *
  * @ORM\Entity(repositoryClass="App\Repository\TrackingArchiveRepository")
  */
 class TrackingArchive
@@ -17,7 +19,9 @@ class TrackingArchive
      * @var int
      *
      * @ORM\Id
+     *
      * @ORM\Column(type="integer")
+     *
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;

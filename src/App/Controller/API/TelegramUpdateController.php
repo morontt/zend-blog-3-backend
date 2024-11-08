@@ -5,6 +5,8 @@ namespace App\Controller\API;
 use App\Controller\BaseController;
 use App\Entity\TelegramUpdate;
 use App\Repository\TelegramUpdateRepository;
+use DateTime;
+use DateTimeInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -62,7 +64,7 @@ class TelegramUpdateController extends BaseController
      */
     public function createAction(Request $request, TelegramUpdateRepository $repository, Robot $bot): JsonResponse
     {
-        $now = new \DateTime();
+        $now = new DateTime();
         $messageData = $request->request->get('telegramUpdate');
         $message = $messageData['message'];
         $replyId = $messageData['replyId'];
@@ -80,7 +82,7 @@ class TelegramUpdateController extends BaseController
             'id' => (int)$now->format('U'),
             'user' => null,
             'message' => $message,
-            'createdAt' => $now->format(\DateTimeInterface::ATOM),
+            'createdAt' => $now->format(DateTimeInterface::ATOM),
             'replyId' => 0,
         ]);
     }

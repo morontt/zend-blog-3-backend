@@ -16,7 +16,7 @@ use Doctrine\ORM\ORMException;
 
 class SystemParametersStorage
 {
-    const CIPHER = 'DES-EDE3-OFB';
+    public const CIPHER = 'DES-EDE3-OFB';
 
     /**
      * @var SystemParametersRepository

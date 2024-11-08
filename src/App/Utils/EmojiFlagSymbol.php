@@ -25,7 +25,7 @@ class EmojiFlagSymbol
      *
      * @return string
      */
-    public static function get(string $countryCode = null): string
+    public static function get(?string $countryCode = null): string
     {
         if ($countryCode === '-') {
             // Pirate Flag Emoji

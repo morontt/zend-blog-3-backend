@@ -13,3 +13,6 @@ framework:
     #fragments: true
     php_errors:
         log: true
+
+    router:
+        utf8: false

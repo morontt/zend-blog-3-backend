@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="tracking_agent")
+ *
  * @ORM\Entity(repositoryClass="App\Repository\TrackingAgentRepository")
  */
 class TrackingAgent
@@ -17,7 +18,9 @@ class TrackingAgent
      * @var int
      *
      * @ORM\Id
+     *
      * @ORM\Column(type="integer")
+     *
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;

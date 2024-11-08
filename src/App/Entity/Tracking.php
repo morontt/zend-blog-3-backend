@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="tracking")
+ *
  * @ORM\Entity(repositoryClass="App\Repository\TrackingRepository")
  */
 class Tracking
@@ -15,23 +16,27 @@ class Tracking
      * @var int
      *
      * @ORM\Id
+     *
      * @ORM\Column(type="integer")
+     *
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
 
     /**
-     * @var \App\Entity\Post
+     * @var Post
      *
      * @ORM\ManyToOne(targetEntity="Post")
+     *
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
     protected $post;
 
     /**
-     * @var \App\Entity\TrackingAgent
+     * @var TrackingAgent
      *
      * @ORM\ManyToOne(targetEntity="TrackingAgent", inversedBy="trackings")
+     *
      * @ORM\JoinColumn(name="user_agent_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $trackingAgent;
@@ -47,6 +52,7 @@ class Tracking
      * @var GeoLocation
      *
      * @ORM\ManyToOne(targetEntity="GeoLocation")
+     *
      * @ORM\JoinColumn(name="ip_long", referencedColumnName="ip_long", onDelete="SET NULL")
      */
     private $geoLocation;
@@ -165,7 +171,7 @@ class Tracking
      *
      * @return Tracking
      */
-    public function setTrackingAgent(TrackingAgent $trackingAgent = null)
+    public function setTrackingAgent(?TrackingAgent $trackingAgent = null)
     {
         $this->trackingAgent = $trackingAgent;
 
@@ -189,7 +195,7 @@ class Tracking
      *
      * @return Tracking
      */
-    public function setPost(Post $post = null)
+    public function setPost(?Post $post = null)
     {
         $this->post = $post;
 
@@ -239,7 +245,7 @@ class Tracking
      *
      * @return Tracking
      */
-    public function setRequestURI(string $requestURI = null): self
+    public function setRequestURI(?string $requestURI = null): self
     {
         $this->requestURI = $requestURI;
 
@@ -259,7 +265,7 @@ class Tracking
      *
      * @return Tracking
      */
-    public function setStatusCode(int $statusCode = null): self
+    public function setStatusCode(?int $statusCode = null): self
     {
         $this->statusCode = $statusCode;
 
@@ -281,7 +287,7 @@ class Tracking
      *
      * @return $this
      */
-    public function setGeoLocation(GeoLocation $location = null): self
+    public function setGeoLocation(?GeoLocation $location = null): self
     {
         $this->geoLocation = $location;
 
@@ -305,7 +311,7 @@ class Tracking
         return $this->method;
     }
 
-    public function setMethod(string $method = null): self
+    public function setMethod(?string $method = null): self
     {
         $this->method = $method;
 

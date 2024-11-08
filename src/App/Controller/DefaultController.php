@@ -6,6 +6,7 @@ use App\Entity\Post;
 use App\Repository\ViewCommentRepository;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use JsonException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,9 +40,10 @@ class DefaultController extends AbstractController
 
     /**
      * @Route("/")
+     *
      * @Template()
      *
-     * @throws \JsonException
+     * @throws JsonException
      *
      * @return array
      */
@@ -90,7 +92,9 @@ class DefaultController extends AbstractController
 
     /**
      * @Route("/preview/{slug}", name="post_preview", options={"expose"=true})
+     *
      * @ParamConverter("post", options={"mapping": {"slug": "url"}})
+     *
      * @Template()
      *
      * @param Post|null $post
@@ -98,7 +102,7 @@ class DefaultController extends AbstractController
      *
      * @return array
      */
-    public function previewAction(ViewCommentRepository $repository, Post $post = null): array
+    public function previewAction(ViewCommentRepository $repository, ?Post $post = null): array
     {
         if (!$post) {
             throw $this->createNotFoundException();

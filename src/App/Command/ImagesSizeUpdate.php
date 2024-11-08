@@ -21,7 +21,7 @@ class ImagesSizeUpdate extends Command
         $this->em = $em;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('mtt:images:update-size')
@@ -29,7 +29,7 @@ class ImagesSizeUpdate extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $rows = [];
         $repository = $this->em->getRepository(MediaFile::class);
@@ -57,5 +57,7 @@ class ImagesSizeUpdate extends Command
         } else {
             $output->writeln('Nothing to show');
         }
+
+        return 0;
     }
 }

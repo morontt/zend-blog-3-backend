@@ -113,7 +113,7 @@ class User
      *
      * @return User
      */
-    public function setLastName(string $lastName = null): self
+    public function setLastName(?string $lastName = null): self
     {
         $this->lastName = $lastName;
 
@@ -133,7 +133,7 @@ class User
      *
      * @return User
      */
-    public function setUsername(string $username = null): self
+    public function setUsername(?string $username = null): self
     {
         $this->username = $username;
 
@@ -153,7 +153,7 @@ class User
      *
      * @return User
      */
-    public function setLanguageCode(string $languageCode = null): self
+    public function setLanguageCode(?string $languageCode = null): self
     {
         $this->languageCode = $languageCode;
 

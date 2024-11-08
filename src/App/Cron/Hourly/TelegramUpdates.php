@@ -7,6 +7,7 @@ use App\Doctrine\DBAL\Type\MillisecondsDateTime;
 use App\Entity\SystemParameters;
 use App\Repository\TelegramUpdateRepository;
 use App\Service\SystemParametersStorage;
+use DateTime;
 
 class TelegramUpdates implements HourlyCronServiceInterface
 {
@@ -31,7 +32,7 @@ class TelegramUpdates implements HourlyCronServiceInterface
     public function run(): void
     {
         $from = $this->paramStorage->getParameter(SystemParameters::TELEGRAM_UPDATES_CHECK) ?? '2023-06-23 16:00:00';
-        $now = (new \DateTime())->format(MillisecondsDateTime::FORMAT_TIME);
+        $now = (new DateTime())->format(MillisecondsDateTime::FORMAT_TIME);
 
         $this->cnt = $this->repository->countNewMessages($from, $now, $this->adminId);
         $this->paramStorage->saveParameter(SystemParameters::TELEGRAM_UPDATES_CHECK, $now);

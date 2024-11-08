@@ -15,6 +15,8 @@ use App\Entity\GeoLocation;
 use App\Entity\SystemParameters;
 use App\Service\IpInfo;
 use App\Service\SystemParametersStorage;
+use DateInterval;
+use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -65,8 +67,8 @@ class CommentGeoLocation implements DailyCronServiceInterface
         }
 
         $from = $this->paramStorage->getParameter(SystemParameters::UPDATE_GEOLOCATION_FROM)
-            ?? ((new \DateTime())->sub(new \DateInterval('P1D'))->format('Y-m-d H:i:s'));
-        $now = (new \DateTime())->format(MillisecondsDateTime::FORMAT_TIME);
+            ?? (new DateTime())->sub(new DateInterval('P1D'))->format('Y-m-d H:i:s');
+        $now = (new DateTime())->format(MillisecondsDateTime::FORMAT_TIME);
 
         $geolocationRepo = $this->em->getRepository(GeoLocation::class);
         $this->countImported = $geolocationRepo->getLocationsCount($from, $now);

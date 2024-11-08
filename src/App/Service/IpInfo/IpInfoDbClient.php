@@ -2,38 +2,57 @@
 
 namespace App\Service\IpInfo;
 
+use Psr\Log\LoggerInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Throwable;
+
 class IpInfoDbClient implements IpInfoClientInterface
 {
     private string $key;
 
+    private HttpClientInterface $client;
+
+    private LoggerInterface $logger;
+
     /**
+     * @param HttpClientInterface $client
+     * @param LoggerInterface $logger
      * @param string $key
      */
-    public function __construct(string $key)
+    public function __construct(HttpClientInterface $client, LoggerInterface $logger, string $key)
     {
         $this->key = $key;
+        $this->client = $client;
+        $this->logger = $logger;
     }
 
     public function getLocationInfo(string $ip): ?LocationInfo
     {
         if (filter_var($ip, FILTER_VALIDATE_IP)) {
-            $params = http_build_query([
-                'key' => $this->key,
-                'ip' => $ip,
-                'format' => 'json',
-            ]);
-
-            $context = stream_context_create([
-                'http' => [
-                    'timeout' => 5,
-                ],
-            ]);
             try {
-                $json = file_get_contents('https://api.ipinfodb.com/v3/ip-city/?' . $params, false, $context);
-                sleep(2);
+                $response = $this->client->request('GET', 'https://api.ipinfodb.com/v3/ip-city/', [
+                    'query' => [
+                        'key' => $this->key,
+                        'ip' => $ip,
+                        'format' => 'json',
+                    ],
+                    'timeout' => 5,
+                ]);
 
-                return LocationInfo::createFromArray(json_decode($json, true, 512, JSON_THROW_ON_ERROR));
-            } catch (\Throwable $e) {
+                if ($response->getStatusCode() === 200) {
+                    return LocationInfo::createFromArray(json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR));
+                } else {
+                    $this->logger->error(
+                        'IpInfoDbClient error',
+                        ['code' => $response->getStatusCode(), 'message' => $response->getContent()]
+                    );
+                }
+            } catch (Throwable $e) {
+                $this->logger->critical(
+                    'IpInfoDbClient error',
+                    ['exception' => $e]
+                );
+
                 return null;
             }
         }

@@ -14,7 +14,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class WebhookCommand extends AbstractTelegramCommand
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('mtt:telegram:webhook')
@@ -27,12 +27,18 @@ class WebhookCommand extends AbstractTelegramCommand
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
+     * @throws \Xelbot\Telegram\Exception\TelegramException
+     *
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $result = $this->bot->setWebhook($input->getArgument('url'), $input->getArgument('certificate'));
         if ($result->isOk()) {
             $output->writeln($result->getDescription());
         }
+
+        return 0;
     }
 }

@@ -7,8 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(uniqueConstraints={
+ *
  *   @ORM\UniqueConstraint(columns={"external_id", "data_provider"})
  * })
+ *
  * @ORM\Entity(repositoryClass="App\Repository\UserExtraInfoRepository")
  */
 class UserExtraInfo
@@ -21,7 +23,9 @@ class UserExtraInfo
      * @var int
      *
      * @ORM\Id
+     *
      * @ORM\Column(type="integer")
+     *
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
@@ -44,6 +48,7 @@ class UserExtraInfo
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     *
      * @ORM\JoinColumn(nullable=false)
      */
     protected $user;
@@ -115,6 +120,7 @@ class UserExtraInfo
      * @var TrackingAgent|null
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\TrackingAgent")
+     *
      * @ORM\JoinColumn(name="user_agent_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $trackingAgent;
@@ -130,6 +136,7 @@ class UserExtraInfo
      * @var GeoLocation|null
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\GeoLocation")
+     *
      * @ORM\JoinColumn(name="ip_long", referencedColumnName="ip_long", onDelete="SET NULL")
      */
     private $geoLocation;
@@ -293,7 +300,7 @@ class UserExtraInfo
         return $this->trackingAgent;
     }
 
-    public function setTrackingAgent(TrackingAgent $trackingAgent = null): self
+    public function setTrackingAgent(?TrackingAgent $trackingAgent = null): self
     {
         $this->trackingAgent = $trackingAgent;
 
@@ -317,7 +324,7 @@ class UserExtraInfo
         return $this->geoLocation;
     }
 
-    public function setGeoLocation(GeoLocation $geoLocation = null): self
+    public function setGeoLocation(?GeoLocation $geoLocation = null): self
     {
         $this->geoLocation = $geoLocation;
 

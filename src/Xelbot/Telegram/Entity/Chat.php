@@ -68,7 +68,7 @@ class Chat
      *
      * @return Chat
      */
-    public function setFirstName(string $firstName = null): self
+    public function setFirstName(?string $firstName = null): self
     {
         $this->firstName = $firstName;
 
@@ -88,7 +88,7 @@ class Chat
      *
      * @return Chat
      */
-    public function setLastName(string $lastName = null): self
+    public function setLastName(?string $lastName = null): self
     {
         $this->lastName = $lastName;
 
@@ -108,7 +108,7 @@ class Chat
      *
      * @return Chat
      */
-    public function setUsername(string $username = null): self
+    public function setUsername(?string $username = null): self
     {
         $this->username = $username;
 

@@ -4,6 +4,7 @@ namespace App\Command;
 
 use App\Repository\CommentatorRepository;
 use App\Utils\VerifyEmail;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
@@ -24,7 +25,7 @@ class FakeEmailCheck extends Command
         $this->em = $em;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('mtt:fake-email:check')
@@ -32,7 +33,7 @@ class FakeEmailCheck extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $rows = [];
 
@@ -42,7 +43,7 @@ class FakeEmailCheck extends Command
 
             $entity
                 ->setFakeEmail(!$result)
-                ->setEmailCheck(new \DateTime())
+                ->setEmailCheck(new DateTime())
             ;
 
             $rows[] = [
@@ -62,5 +63,7 @@ class FakeEmailCheck extends Command
         } else {
             $output->writeln('Nothing to check');
         }
+
+        return 0;
     }
 }

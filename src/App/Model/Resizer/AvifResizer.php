@@ -28,7 +28,7 @@ class AvifResizer implements ResizerInterface
         $image->setCompression(Imagick::COMPRESSION_ZIP);
         $image->setImageCompression(Imagick::COMPRESSION_ZIP);
 
-        //$this->annotate($width, $height, $image);
+        // $this->annotate($width, $height, $image);
 
         $tmpfile = sys_get_temp_dir() . '/' . uniqid() . '.png';
         $image->writeImage($tmpfile);
@@ -72,7 +72,7 @@ class AvifResizer implements ResizerInterface
         $image->setCompression(Imagick::COMPRESSION_ZIP);
         $image->setImageCompression(Imagick::COMPRESSION_ZIP);
 
-        //$this->annotate(0, 0, $image);
+        // $this->annotate(0, 0, $image);
 
         $tmpfile = sys_get_temp_dir() . '/' . uniqid() . '.png';
         $image->writeImage($tmpfile);

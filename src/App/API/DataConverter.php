@@ -26,6 +26,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Item;
+use RuntimeException;
 
 /**
  * Class DataConverter
@@ -336,7 +337,7 @@ class DataConverter
 
             $scope = $this->fractal->createData($resource);
         } else {
-            throw new \RuntimeException(sprintf('Undefined method: %s', $method));
+            throw new RuntimeException(sprintf('Undefined method: %s', $method));
         }
 
         return $scope->toArray();

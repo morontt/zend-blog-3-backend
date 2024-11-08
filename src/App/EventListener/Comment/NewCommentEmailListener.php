@@ -6,6 +6,7 @@ use App\Event\CommentEvent;
 use App\Repository\UserRepository;
 use App\Service\Mailer;
 use Psr\Log\LoggerInterface;
+use Throwable;
 use Xelbot\Telegram\Robot;
 
 class NewCommentEmailListener
@@ -59,7 +60,7 @@ class NewCommentEmailListener
             }
 
             $this->mailer->newComment($comment, $admin->getEmail());
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $this->logger->error('new comment email error', ['exception' => $e]);
             $this->bot->sendMessage('new comment email error: ' . $e->getMessage());
         }

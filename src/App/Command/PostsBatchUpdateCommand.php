@@ -14,6 +14,7 @@ use App\Service\PictureTagBuilder;
 use App\Service\TextProcessor;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use JsonException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -46,7 +47,7 @@ class PostsBatchUpdateCommand extends Command
         $em->getConfiguration()->setSQLLogger(null);
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('mtt:posts:update')
@@ -60,11 +61,11 @@ class PostsBatchUpdateCommand extends Command
      * @param OutputInterface $output
      *
      * @throws \Doctrine\ORM\ORMException
-     * @throws \JsonException
+     * @throws JsonException
      *
-     * @return void
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $startTime = microtime(true);
 
@@ -78,8 +79,6 @@ class PostsBatchUpdateCommand extends Command
                 }
 
                 yield [$post];
-
-                return;
             };
         } else {
             $postGenerator = function () use ($repo) {
@@ -129,5 +128,7 @@ class PostsBatchUpdateCommand extends Command
         $output->writeln(
             sprintf('<info>Total time: <comment>%s</comment> sec</info>', round($endTime - $startTime, 3))
         );
+
+        return 0;
     }
 }

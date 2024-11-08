@@ -14,7 +14,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table()
+ *
  * @ORM\Entity(repositoryClass="App\Repository\MediaFileRepository")
+ *
  * @ORM\HasLifecycleCallbacks()
  */
 class MediaFile
@@ -25,7 +27,9 @@ class MediaFile
      * @var int
      *
      * @ORM\Id
+     *
      * @ORM\Column(type="integer")
+     *
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
@@ -34,6 +38,7 @@ class MediaFile
      * @var Post
      *
      * @ORM\ManyToOne(targetEntity="Post", inversedBy="mediaFiles")
+     *
      * @ORM\JoinColumn(onDelete="SET NULL", nullable=true)
      */
     protected $post;
@@ -167,7 +172,7 @@ class MediaFile
      *
      * @return MediaFile
      */
-    public function setPost(Post $post = null): MediaFile
+    public function setPost(?Post $post = null): MediaFile
     {
         $this->post = $post;
 
@@ -191,7 +196,7 @@ class MediaFile
      *
      * @return MediaFile
      */
-    public function setDescription(string $description = null): MediaFile
+    public function setDescription(?string $description = null): MediaFile
     {
         $this->description = $description;
 

@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\DTO\CommentatorDTO;
 use App\Entity\Commentator;
+use DateInterval;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -90,7 +92,7 @@ class CommentatorRepository extends ServiceEntityRepository
      */
     public function getWithUncheckedLinks(): array
     {
-        $from = (new \DateTime())->sub(new \DateInterval('P1W'))->format('Y-m-d H:i:s');
+        $from = (new DateTime())->sub(new DateInterval('P1W'))->format('Y-m-d H:i:s');
 
         $qb = $this->createQueryBuilder('c');
         $qb

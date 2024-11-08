@@ -6,6 +6,7 @@ use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use LogicException;
 
 /**
  * UserRepository
@@ -45,7 +46,7 @@ class UserRepository extends ServiceEntityRepository
 
         $user = $qb->getQuery()->getOneOrNullResult();
         if (!$user) {
-            throw new \LogicException('Blog without admin :(');
+            throw new LogicException('Blog without admin :(');
         }
 
         return $user;

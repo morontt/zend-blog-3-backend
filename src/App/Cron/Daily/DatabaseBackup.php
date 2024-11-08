@@ -10,6 +10,8 @@ namespace App\Cron\Daily;
 
 use App\Cron\DailyCronServiceInterface;
 use App\Service\BackupService;
+use DateTime;
+use RuntimeException;
 use Symfony\Component\Process\Process;
 
 class DatabaseBackup implements DailyCronServiceInterface
@@ -84,7 +86,7 @@ class DatabaseBackup implements DailyCronServiceInterface
         $process->run();
 
         if (!$process->isSuccessful()) {
-            throw new \RuntimeException($process->getErrorOutput());
+            throw new RuntimeException($process->getErrorOutput());
         }
 
         $this->dumpSize = filesize($dumpPath);
@@ -127,7 +129,7 @@ class DatabaseBackup implements DailyCronServiceInterface
      */
     private function getFilename(): string
     {
-        $datetime = (new \DateTime())->format('YmdHi');
+        $datetime = (new DateTime())->format('YmdHi');
 
         return sprintf('%s_%s.sql.bz2', $datetime, $this->dbName);
     }

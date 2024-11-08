@@ -11,6 +11,7 @@ use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
 use Laminas\Filter\StripTags;
+use LogicException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class CommentManager
@@ -103,7 +104,7 @@ class CommentManager
         } elseif ($commentData->user && $user = $this->userRepository->find($commentData->user->id)) {
             $comment->setUser($user);
         } else {
-            throw new \LogicException('Comment without sender');
+            throw new LogicException('Comment without sender');
         }
 
         $this->commentRepo->save($comment);

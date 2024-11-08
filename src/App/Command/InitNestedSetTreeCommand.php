@@ -15,7 +15,7 @@ class InitNestedSetTreeCommand extends Command
     /**
      * @var EntityManagerInterface
      */
-    private $em;
+    private EntityManagerInterface $em;
 
     /**
      * @param EntityManagerInterface $em
@@ -36,7 +36,7 @@ class InitNestedSetTreeCommand extends Command
         ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $startTime = microtime(true);
 
@@ -53,9 +53,11 @@ class InitNestedSetTreeCommand extends Command
         $output->writeln(
             sprintf('<info>Total time: <comment>%s</comment> sec</info>', round($endTime - $startTime, 3))
         );
+
+        return 0;
     }
 
-    private function handleCategory()
+    private function handleCategory(): void
     {
         $handled = [];
 
@@ -117,7 +119,7 @@ class InitNestedSetTreeCommand extends Command
     /**
      * @param OutputInterface $output
      */
-    private function handlePosts(OutputInterface $output)
+    private function handlePosts(OutputInterface $output): void
     {
         /* @var \App\Repository\CommentRepository $commentsRepo */
         $commentsRepo = $this->em->getRepository(Comment::class);

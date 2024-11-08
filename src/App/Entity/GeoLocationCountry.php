@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table()
+ *
  * @ORM\Entity(repositoryClass="App\Repository\GeoLocationCountryRepository")
  */
 class GeoLocationCountry
@@ -21,7 +22,9 @@ class GeoLocationCountry
      * @var int
      *
      * @ORM\Id
+     *
      * @ORM\Column(type="integer")
+     *
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
@@ -30,6 +33,7 @@ class GeoLocationCountry
      * Two-character country code based on ISO 3166.
      *
      * @var string
+     *
      * @ORM\Column(name="country_code", type="string", length=2, unique=true)
      */
     protected $code;
@@ -38,6 +42,7 @@ class GeoLocationCountry
      * Country name based on ISO 3166.
      *
      * @var string
+     *
      * @ORM\Column(name="country_name", type="string", length=64)
      */
     protected $name;

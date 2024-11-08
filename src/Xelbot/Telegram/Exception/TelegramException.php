@@ -8,6 +8,8 @@
 
 namespace Xelbot\Telegram\Exception;
 
-class TelegramException extends \Exception
+use Exception;
+
+class TelegramException extends Exception
 {
 }

@@ -4,6 +4,7 @@ namespace App\ArgumentResolver;
 
 use App\Entity\Post;
 use App\Repository\PostRepository;
+use Generator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
@@ -39,7 +40,7 @@ class PostValueResolver implements ArgumentValueResolverInterface
      * @param Request $request
      * @param ArgumentMetadata $argument
      *
-     * @return \Generator
+     * @return Generator
      */
     public function resolve(Request $request, ArgumentMetadata $argument)
     {

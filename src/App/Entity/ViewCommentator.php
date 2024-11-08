@@ -8,18 +8,20 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Table(name="v_commentators")
+ *
  * @ORM\Entity(readOnly=true)
  */
 class ViewCommentator implements CommentatorInterface
 {
     use Gravatar;
 
-    const USER_ID_OFFSET = 10000000;
+    public const USER_ID_OFFSET = 10000000;
 
     /**
      * @var int
      *
      * @ORM\Id
+     *
      * @ORM\Column(type="integer")
      */
     private $id;

@@ -67,10 +67,10 @@ trait ModifyEntityTrait
     public function prePersist()
     {
         if (!$this->timeCreated) {
-            $this->timeCreated = new DatetIme();
+            $this->timeCreated = new DateTime();
         }
 
-        $this->lastUpdate = new DatetIme();
+        $this->lastUpdate = new DateTime();
     }
 
     /**
@@ -78,6 +78,6 @@ trait ModifyEntityTrait
      */
     public function preUpdate()
     {
-        $this->lastUpdate = new DatetIme();
+        $this->lastUpdate = new DateTime();
     }
 }

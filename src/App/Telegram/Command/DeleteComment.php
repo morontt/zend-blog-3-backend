@@ -56,7 +56,7 @@ class DeleteComment extends AbstractAdminCommand implements TelegramCommandInter
             $this->repository->markAsDeleted($comment);
             $this->dispatcher->dispatch(new DeleteCommentEvent($comment));
 
-            //TODO Null pointer exception may occur here
+            // TODO Null pointer exception may occur here
             $this->requester->sendMessage([
                 'chat_id' => $message->getChat()->getId(),
                 'text' => 'Готово ' . Robot::EMOJI_ROBOT,
