@@ -65,6 +65,6 @@ class GeoLocationRepository extends ServiceEntityRepository
             ->setParameter('to', $to)
         ;
 
-        return $qb->getQuery()->getSingleScalarResult();
+        return (int)$qb->getQuery()->getSingleScalarResult();
     }
 }

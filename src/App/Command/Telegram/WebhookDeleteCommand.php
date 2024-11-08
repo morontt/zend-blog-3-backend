@@ -13,7 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class WebhookDeleteCommand extends AbstractTelegramCommand
 {
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('mtt:telegram:webhook-delete')
@@ -24,12 +24,16 @@ class WebhookDeleteCommand extends AbstractTelegramCommand
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $result = $this->bot->deleteWebhook();
         if ($result->isOk()) {
             $output->writeln($result->getDescription());
         }
+
+        return 0;
     }
 }
