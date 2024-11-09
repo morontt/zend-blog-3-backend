@@ -1,0 +1,8 @@
+framework:
+    router:
+        utf8: false
+
+when@prod:
+    framework:
+        router:
+            strict_requirements: null

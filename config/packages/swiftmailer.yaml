@@ -5,3 +5,7 @@ swiftmailer:
     username: "%mailer_user%"
     password: "%mailer_password%"
     encryption: "%mailer_encryption%"
+
+when@test:
+    swiftmailer:
+        disable_delivery: true

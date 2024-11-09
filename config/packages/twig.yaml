@@ -5,3 +5,7 @@ twig:
     globals:
         browsertitle: "%browsertitle%"
         frontend_site: "%frontend_site%"
+
+when@test:
+    twig:
+        strict_variables: true

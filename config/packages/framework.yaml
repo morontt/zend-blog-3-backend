@@ -14,5 +14,8 @@ framework:
     php_errors:
         log: true
 
-    router:
-        utf8: false
+when@test:
+    framework:
+        test: true
+        session:
+            storage_id: session.storage.mock_file
