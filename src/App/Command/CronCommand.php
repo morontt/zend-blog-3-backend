@@ -77,8 +77,7 @@ abstract class CronCommand extends Command
      */
     protected static function getJobName($cronJob): string
     {
-        $classParts = explode('\\', get_class($cronJob));
-
-        return $classParts[count($classParts) - 1];
+        // https://stackoverflow.com/a/27457689/6109406
+        return substr(strrchr(get_class($cronJob), '\\'), 1);
     }
 }

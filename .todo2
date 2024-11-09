@@ -438,6 +438,7 @@
       "text": "update PHP-CS-Fixer to v3",
       "priority": "verylow",
       "creation": 1719389500,
+      "completion": 1731142027,
       "tasks": [
         {
           "text": "Blocked: friendsofphp/php-cs-fixer ~3.3 require symfony/console ^4.4.20 || ^5.1.3",
@@ -565,6 +566,11 @@
               "creation": 1723401395
             }
           ]
+        },
+        {
+          "text": "Change mailer",
+          "priority": "medium",
+          "creation": 1731141741
         }
       ]
     },
@@ -683,6 +689,23 @@
       "priority": "high",
       "creation": 1727511937,
       "completion": 1727983851
+    },
+    {
+      "text": "Pattern: Circuit Breaker",
+      "priority": "medium",
+      "creation": 1731141943,
+      "tasks": [
+        {
+          "text": "https://microservices.io/patterns/reliability/circuit-breaker.html",
+          "priority": "low",
+          "creation": 1731141969
+        },
+        {
+          "text": "IpInfoDbClient error: HTTP/2 503",
+          "priority": "medium",
+          "creation": 1731142015
+        }
+      ]
     }
   ]
 }
