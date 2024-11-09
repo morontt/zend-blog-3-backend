@@ -675,6 +675,18 @@
               "creation": 1726730317
             }
           ]
+        },
+        {
+          "text": "Fix security deprecations",
+          "priority": "medium",
+          "creation": 1731171156,
+          "tasks": [
+            {
+              "text": "https://github.com/lexik/LexikJWTAuthenticationBundle",
+              "priority": "low",
+              "creation": 1731171201
+            }
+          ]
         }
       ]
     },
