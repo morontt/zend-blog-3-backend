@@ -653,17 +653,20 @@
         {
           "text": "https://symfony.com/doc/4.x/setup.html",
           "priority": "low",
-          "creation": 1726340968
+          "creation": 1726340968,
+          "completion": 1731143416
         },
         {
           "text": "https://symfony.com/doc/4.x/setup/flex.html",
           "priority": "low",
-          "creation": 1726340982
+          "creation": 1726340982,
+          "completion": 1731143418
         },
         {
           "text": "Deploy",
           "priority": "medium",
           "creation": 1726664398,
+          "completion": 1731143406,
           "tasks": [
             {
               "text": "Подготовить конфиги",
@@ -681,6 +684,11 @@
               "creation": 1726730317
             }
           ]
+        },
+        {
+          "text": "Upgrade to 6.4",
+          "priority": "medium",
+          "creation": 1731143433
         }
       ]
     },
@@ -704,6 +712,18 @@
           "text": "IpInfoDbClient error: HTTP/2 503",
           "priority": "medium",
           "creation": 1731142015
+        }
+      ]
+    },
+    {
+      "text": "Tracking archive to CSV",
+      "priority": "medium",
+      "creation": 1731143356,
+      "tasks": [
+        {
+          "text": "push to backup",
+          "priority": "medium",
+          "creation": 1731143382
         }
       ]
     }
