@@ -20,10 +20,8 @@ services:
         ports:
             - "8033:80"
         links:
-            - mailcatcher
             - mailpit
         depends_on:
-            - mailcatcher
             - mailpit
         environment:
             APPLICATION_ENV: development
@@ -35,23 +33,17 @@ services:
         networks:
             - blognet
 
-    mailcatcher:
-        image: xelbot/mailcatcher
-        platform: linux/amd64
-        ports:
-            - "1080:1080"
-        networks:
-            - blognet
-
     mailpit:
         image: axllent/mailpit
+        container_name: "mailpit"
         ports:
-            - "1025"
             - "8025:8025"
         environment:
             MP_SMTP_AUTH_ACCEPT_ANY: 1
             MP_SMTP_AUTH_ALLOW_INSECURE: 1
             TZ: "Europe/Moscow"
+        extra_hosts:
+            - "reprogl.xelbot.com:${APPLICATION_IP}"
         networks:
             - blognet
 

@@ -572,6 +572,7 @@
           "text": "Change mailer",
           "priority": "medium",
           "creation": 1731141741,
+          "completion": 1731619463,
           "tasks": [
             {
               "text": "Fix link check on Mailpit",
