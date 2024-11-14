@@ -547,7 +547,8 @@
         {
           "text": "fix telegram for error stacktrace sending",
           "priority": "medium",
-          "creation": 1723016691
+          "creation": 1723016691,
+          "completion": 1731612972
         },
         {
           "text": "Иконка отправителя в разных почтовых сервисах",
@@ -570,7 +571,14 @@
         {
           "text": "Change mailer",
           "priority": "medium",
-          "creation": 1731141741
+          "creation": 1731141741,
+          "tasks": [
+            {
+              "text": "Fix link check on Mailpit",
+              "priority": "medium",
+              "creation": 1731612957
+            }
+          ]
         }
       ]
     },

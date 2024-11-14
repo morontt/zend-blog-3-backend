@@ -11,53 +11,52 @@ use App\Utils\VerifyEmail;
 use DirectoryIterator;
 use Exception;
 use Psr\Log\LoggerInterface;
-use Swift_Mailer;
-use Swift_Message;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Email;
 use Throwable;
 use Twig\Environment as TwigEnvironment;
 use Xelbot\Telegram\Robot;
 
 class Mailer
 {
-    /**
-     * @var Swift_Mailer
-     */
-    private $mailer;
+    private MailerInterface $mailer;
 
     /**
      * @var TwigEnvironment
      */
-    private $twig;
+    private TwigEnvironment $twig;
 
     /**
      * @var string
      */
-    private $emailFrom;
+    private string $emailFrom;
 
     /**
      * @var Robot
      */
-    private $bot;
+    private Robot $bot;
 
     /**
      * @var string
      */
-    private $frontendSite;
+    private string $frontendSite;
 
     private EmailSubscriptionSettingsRepository $subscriptionRepository;
 
     private LoggerInterface $logger;
 
     /**
-     * @param Swift_Mailer $mailer
+     * @param MailerInterface $mailer
      * @param TwigEnvironment $twig
      * @param Robot $bot
      * @param EmailSubscriptionSettingsRepository $subscriptionRepository
+     * @param LoggerInterface $logger
      * @param string $frontendSite
      * @param string $emailFrom
      */
     public function __construct(
-        Swift_Mailer $mailer,
+        MailerInterface $mailer,
         TwigEnvironment $twig,
         Robot $bot,
         EmailSubscriptionSettingsRepository $subscriptionRepository,
@@ -100,19 +99,19 @@ class Mailer
             return true;
         }
 
-        $successfullySent = false;
+        $successfullySent = true;
         try {
-            $message = (new Swift_Message())
-                ->setSubject($messageDTO->subject)
-                ->setFrom($messageDTO->from)
-                ->setTo($messageDTO->to)
+            $message = (new Email())
+                ->subject($messageDTO->subject)
+                ->from($this->addressFrom($messageDTO->from))
+                ->to($this->addressFrom($messageDTO->to))
             ;
 
             if ($messageDTO->messageHtml) {
-                $message->addPart($messageDTO->messageHtml, 'text/html');
+                $message->html($messageDTO->messageHtml);
             }
             if ($messageDTO->messageText) {
-                $message->addPart($messageDTO->messageText, 'text/plain');
+                $message->text($messageDTO->messageText);
             }
 
             if ($messageDTO->unsubscribeLink) {
@@ -124,7 +123,7 @@ class Mailer
                 $headers->addTextHeader('List-Unsubscribe-Post', 'List-Unsubscribe=One-Click');
             }
 
-            $successfullySent = $this->mailer->send($message) > 0;
+            $this->mailer->send($message);
         } catch (Throwable $e) {
             $this->logger->error('email sent error', ['exception' => $e]);
             $this->bot->sendMessage(
@@ -132,6 +131,8 @@ class Mailer
                 . "\n\nfile: " . $e->getFile()
                 . "\nline: " . $e->getLine()
             );
+
+            $successfullySent = false;
         }
 
         return $successfullySent;
@@ -283,5 +284,21 @@ class Mailer
         $hash = HashId::hash($settings->getId(), mt_rand(1, 9999));
 
         return '/email-unsubscribe/' . $hash;
+    }
+
+    /**
+     * @param string|array $recipient
+     *
+     * @return Address
+     */
+    private function addressFrom($recipient): Address
+    {
+        if (is_array($recipient)) {
+            $email = array_key_first($recipient);
+
+            return new Address($email, $recipient[$email]);
+        }
+
+        return new Address($recipient);
     }
 }

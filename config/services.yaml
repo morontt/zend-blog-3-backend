@@ -8,13 +8,7 @@ parameters:
     frontend_site: '%env(FRONT_SITE)%'
     locale: 'ru'
     browsertitle: '%env(SITE_BROWSERTITLE)%'
-    mailer_transport: smtp
-    mailer_host: '%env(MAILER_HOST)%'
-    mailer_port: '%env(MAILER_PORT)%'
     mailer_user: '%env(MAILER_USER)%'
-    mailer_password: '%env(MAILER_PASSWORD)%'
-    mailer_encryption: '%env(MAILER_ENCRYPTION)%'
-    env(MAILER_ENCRYPTION): ~
     gitrepo_webhook_token: '%env(WEBHOOK_GIT_TOKEN)%'
     telegram_token: '%env(TELEGRAM_TOKEN)%'
     telegram_bot: '%env(TELEGRAM_BOT)%'
