@@ -741,6 +741,28 @@
       "priority": "medium",
       "creation": 1731477186,
       "completion": 1731481672
+    },
+    {
+      "text": "Telegram",
+      "priority": "high",
+      "creation": 1732225557,
+      "tasks": [
+        {
+          "text": "type message in list",
+          "priority": "medium",
+          "creation": 1732225618
+        },
+        {
+          "text": "notification about message only",
+          "priority": "medium",
+          "creation": 1732225646
+        },
+        {
+          "text": "raw update.json in list",
+          "priority": "medium",
+          "creation": 1732225671
+        }
+      ]
     }
   ]
 }
