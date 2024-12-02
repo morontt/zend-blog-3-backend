@@ -21,6 +21,7 @@ services:
             - "8033:80"
         links:
             - mailpit
+            - gateway
         depends_on:
             - mailpit
         environment:
@@ -69,6 +70,15 @@ services:
             - rhinoceros
         links:
             - rhinoceros
+        networks:
+            - blognet
+
+    gateway:
+        image: prom/pushgateway:v1.10.0
+        container_name: "prom_pushgateway"
+        platform: linux/amd64
+        ports:
+            - "9091:9091"
         networks:
             - blognet
 

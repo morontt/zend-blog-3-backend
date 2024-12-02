@@ -20,6 +20,7 @@ parameters:
     wsse_token_lifetime: '%env(int:WSSE_TOKEN_LIFETIME)%'
     space_login: '%env(SPACE_LOGIN)%'
     space_password: '%env(SPACE_PASSWORD)%'
+    push_gateway_dsn: '%env(PROM_PUSH_GATEWAY_DSN)%'
 
 services:
     # default configuration for services in *this* file
@@ -155,6 +156,10 @@ services:
     mtt_blog.text_processor:
         alias: App\Service\TextProcessor
         public: true
+
+    App\Service\Metrics\PrometheusPushGateway:
+        arguments:
+            $dsn: '%push_gateway_dsn%'
 
     App\Cron\Hourly\TelegramUpdates:
         arguments:
