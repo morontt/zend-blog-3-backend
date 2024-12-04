@@ -38,6 +38,6 @@ class PrometheusPushGateway
 
     private function push()
     {
-        $this->pushGateway->push($this->registry, 'cron_daily', ['instance' => 'zendblog_backend']);
+        $this->pushGateway->push($this->registry, 'cron_tasks', ['instance' => 'zendblog_backend']);
     }
 }
