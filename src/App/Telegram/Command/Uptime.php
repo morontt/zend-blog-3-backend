@@ -22,7 +22,7 @@ class Uptime implements TelegramCommandInterface
      */
     public function execute(Message $message): void
     {
-        $process = new Process('uptime');
+        $process = new Process(['uptime']);
         $process->run();
 
         // TODO Null pointer exception may occur here
