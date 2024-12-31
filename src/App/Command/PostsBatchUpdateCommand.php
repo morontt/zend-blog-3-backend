@@ -109,7 +109,7 @@ class PostsBatchUpdateCommand extends Command
                     $picture = $this->ptb->featuredPictureTag($media);
                     $media->setPictureTag($picture);
 
-                    $srcSet = (new Image($media))->getSrcSet();
+                    $srcSet = $this->ptb->getSrcSet(new Image($media));
                     $srcSetData = $srcSet->toArray();
                     if (!empty($srcSetData)) {
                         $media->setSrcSet(json_encode($srcSetData, JSON_THROW_ON_ERROR));

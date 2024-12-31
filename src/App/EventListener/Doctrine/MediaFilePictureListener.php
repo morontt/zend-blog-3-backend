@@ -36,7 +36,7 @@ class MediaFilePictureListener
             $picture = $this->ptb->featuredPictureTag($entity);
             $entity->setPictureTag($picture);
 
-            $srcSet = (new Image($entity))->getSrcSet();
+            $srcSet = $this->ptb->getSrcSet(new Image($entity));
             $srcSetData = $srcSet->toArray();
             if (!empty($srcSetData)) {
                 $entity->setSrcSet(json_encode($srcSetData, JSON_THROW_ON_ERROR));

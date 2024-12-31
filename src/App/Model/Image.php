@@ -20,7 +20,6 @@ use DateTime;
 use Imagick;
 use ImagickException;
 use RuntimeException;
-use Throwable;
 
 /**
  * @method int getId()
@@ -69,18 +68,6 @@ class Image
     public function __construct(MediaFile $media)
     {
         $this->media = $media;
-    }
-
-    public function getSrcSet(): SrcSet
-    {
-        $srcSet = new SrcSet();
-        $srcSet
-            ->setOrigin($this->getSrcSetData())
-            ->setWebp($this->getSrcSetData('webp'))
-            ->setAvif($this->getSrcSetData('avif'))
-        ;
-
-        return $srcSet;
     }
 
     /**
@@ -163,17 +150,12 @@ class Image
 
         if (!file_exists($fsNewPath) && file_exists($fsPath) && is_file($fsPath)) {
             $resizer = $this->getResizer($fsPath, $format);
-            try {
-                $resizer->resize(
-                    $fsPath,
-                    $fsNewPath,
-                    $this->sizes[$size]['width'] ?? 0,
-                    $this->sizes[$size]['height'] ?? 0
-                );
-            } catch (Throwable $e) {
-                // TODO add error to logger
-                return null;
-            }
+            $resizer->resize(
+                $fsPath,
+                $fsNewPath,
+                $this->sizes[$size]['width'] ?? 0,
+                $this->sizes[$size]['height'] ?? 0
+            );
         }
 
         return $newPath;

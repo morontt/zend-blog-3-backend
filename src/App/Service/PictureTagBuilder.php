@@ -9,15 +9,20 @@ namespace App\Service;
 
 use App\Entity\MediaFile;
 use App\Model\Image;
+use App\Model\SrcSet;
+use Psr\Log\LoggerInterface;
 use SimpleXMLElement;
+use Throwable;
 
 class PictureTagBuilder
 {
     private string $imageBasepath;
+    private LoggerInterface $logger;
 
-    public function __construct(string $cdnUrl)
+    public function __construct(LoggerInterface $logger, string $cdnUrl)
     {
         $this->imageBasepath = $cdnUrl . ImageManager::getImageBasePath() . '/';
+        $this->logger = $logger;
     }
 
     public function featuredPictureTag(MediaFile $entity): string
@@ -52,12 +57,40 @@ class PictureTagBuilder
         return $this->pictureTag($entity, $sizes, $alt);
     }
 
+    public function getSrcSet(Image $image): SrcSet
+    {
+        $srcSet = new SrcSet();
+
+        try {
+            $data = $image->getSrcSetData();
+            $srcSet->setOrigin($data);
+        } catch (Throwable $e) {
+            $this->logger->critical($e->getMessage());
+        }
+
+        try {
+            $data = $image->getSrcSetData('webp');
+            $srcSet->setWebp($data);
+        } catch (Throwable $e) {
+            $this->logger->critical($e->getMessage());
+        }
+
+        try {
+            $data = $image->getSrcSetData('avif');
+            $srcSet->setAvif($data);
+        } catch (Throwable $e) {
+            $this->logger->critical($e->getMessage());
+        }
+
+        return $srcSet;
+    }
+
     private function pictureTag(MediaFile $entity, array $sizes, ?string $alt = null, $withTitle = true): string
     {
         $image = new Image($entity);
         $xml = new SimpleXMLElement('<picture/>');
 
-        $srcSet = $image->getSrcSet();
+        $srcSet = $this->getSrcSet($image);
 
         if ($avifSet = $srcSet->getAvif()) {
             if (count($avifSet->getItems()) > 0) {
