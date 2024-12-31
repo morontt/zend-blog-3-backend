@@ -160,7 +160,7 @@ class ImageManager
     protected function preprocessing($path)
     {
         if (strtolower(pathinfo($path, PATHINFO_EXTENSION)) === 'png') {
-            $process = new Process('/usr/bin/pngquant -s1 --quality=60-80 --ext .png -f ' . escapeshellarg($path));
+            $process = new Process(['/usr/bin/pngquant', '-s1', '--quality=60-80', '--ext', '.png', '-f', $path]);
             $process->run();
 
             if (!$process->isSuccessful()) {

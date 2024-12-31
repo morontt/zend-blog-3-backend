@@ -34,9 +34,15 @@ class PngResizer implements ResizerInterface
         $image->writeImage($newFilePath);
         $image->clear();
 
-        $process = new Process(
-            '/usr/bin/pngquant -s1 --quality=60-80 --ext .png -f ' . escapeshellarg($newFilePath)
-        );
+        $process = new Process([
+            '/usr/bin/pngquant',
+            '-s1',
+            '--quality=60-80',
+            '--ext',
+            '.png',
+            '-f',
+            $newFilePath,
+        ]);
         $process->run();
 
         if (!$process->isSuccessful()) {
