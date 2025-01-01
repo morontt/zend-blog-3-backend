@@ -12,7 +12,6 @@ services:
             - .:/var/www/html
             - ./docker/web/apache.conf:/etc/apache2/sites-available/000-default.conf:ro
             - ${UPLOADS_PATH}:/var/www/resources
-            - app-logs:/var/www/html/var/log
         tmpfs:
             - /tmp
             - /var/www/html/var/cache:uid=${HOST_UID},gid=${HOST_UID}
@@ -82,19 +81,6 @@ services:
         networks:
             - blognet
 
-    newt:
-        image: busybox
-        container_name: newt
-        platform: linux/amd64
-        volumes:
-            - app-logs:/var/log/zendblog
-        command: [ "tail", "-f", "/var/log/zendblog/dev.log" ]
-        depends_on:
-            - rhinoceros
-
 networks:
     blognet:
         external: true
-
-volumes:
-    app-logs:
