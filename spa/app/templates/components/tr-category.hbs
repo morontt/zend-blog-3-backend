@@ -7,7 +7,13 @@
             selectedValue=category.parentId}}
     </td>
     <td>{{input value=category.url class="form-control"}}</td>
-    <td class="text-right">-</td>
+    <td class="text-right">
+        {{#if category.postsCount}}
+            {{category.postsCount}}
+        {{else}}
+            -
+        {{/if}}
+    </td>
     <td>
         <div class="pull-right">
             <a class="btn btn-success" {{action "save"}}>
@@ -31,7 +37,13 @@
         {{/if}}
     </td>
     <td>{{category.url}}</td>
-    <td class="text-right">-</td>
+    <td class="text-right">
+        {{#if category.postsCount}}
+            {{category.postsCount}}
+        {{else}}
+            -
+        {{/if}}
+    </td>
     <td>
         <div class="pull-right">
             <a class="btn btn-primary" {{action "edit"}}>

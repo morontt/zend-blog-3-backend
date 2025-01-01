@@ -6,6 +6,7 @@ export default DS.Model.extend({
     depth: DS.attr('number'),
     parentId: DS.attr('number'),
     parent: DS.belongsTo('category', { inverse: null }),
+    postsCount: DS.attr('number'),
     depthPrefix: function () {
         let depth = this.get('depth');
         let prefix = '';

@@ -91,6 +91,7 @@ class DataConverterSpec extends ObjectBehavior
                     'parent' => null,
                     'parentId' => null,
                     'depth' => 1,
+                    'postsCount' => 0,
                 ],
             ]
         );
@@ -111,6 +112,7 @@ class DataConverterSpec extends ObjectBehavior
                         'parent' => null,
                         'parentId' => null,
                         'depth' => 1,
+                        'postsCount' => 0,
                     ],
                     [
                         'id' => null,
@@ -119,6 +121,7 @@ class DataConverterSpec extends ObjectBehavior
                         'parent' => null,
                         'parentId' => null,
                         'depth' => 1,
+                        'postsCount' => 0,
                     ],
                 ],
             ]
@@ -401,6 +404,7 @@ class DataConverterSpec extends ObjectBehavior
                         'parent' => null,
                         'parentId' => null,
                         'depth' => 1,
+                        'postsCount' => 0,
                     ],
                 ],
             ]
@@ -459,6 +463,7 @@ class DataConverterSpec extends ObjectBehavior
                         'parent' => null,
                         'parentId' => null,
                         'depth' => 1,
+                        'postsCount' => 0,
                     ],
                     [
                         'id' => null,
@@ -467,6 +472,7 @@ class DataConverterSpec extends ObjectBehavior
                         'parent' => null,
                         'parentId' => null,
                         'depth' => 1,
+                        'postsCount' => 0,
                     ],
                 ],
             ]

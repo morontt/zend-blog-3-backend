@@ -10,16 +10,17 @@ namespace App\API\Transformers;
 
 use App\DTO\CategoryDTO;
 use App\Entity\Category;
+use App\Entity\CategoryInterface;
 use App\Utils\RuTransform;
 
 class CategoryTransformer extends BaseTransformer
 {
     /**
-     * @param Category $item
+     * @param CategoryInterface $item
      *
      * @return array
      */
-    public function transform(Category $item)
+    public function transform(CategoryInterface $item)
     {
         $parentId = null;
         $parent = $item->getParent();
@@ -34,6 +35,7 @@ class CategoryTransformer extends BaseTransformer
             'parent' => $parentId,
             'parentId' => $parentId,
             'depth' => $item->getNestedSet()->getDepth(),
+            'postsCount' => $item->getPostsCount(),
         ];
     }
 

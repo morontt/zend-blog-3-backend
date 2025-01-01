@@ -12,6 +12,7 @@ use App\Controller\BaseController;
 use App\Entity\Category;
 use App\Form\CategoryFormType;
 use App\Repository\CategoryRepository;
+use App\Repository\ViewCategoryRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,11 +29,11 @@ class CategoryController extends BaseController
      * @Route("", methods={"GET"})
      *
      * @param Request $request
-     * @param CategoryRepository $repository
+     * @param ViewCategoryRepository $repository
      *
      * @return JsonResponse
      */
-    public function findAllAction(Request $request, CategoryRepository $repository): JsonResponse
+    public function findAllAction(Request $request, ViewCategoryRepository $repository): JsonResponse
     {
         $result = $this->getDataConverter()
             ->getCategoryArray($repository->getListQuery()->getResult());

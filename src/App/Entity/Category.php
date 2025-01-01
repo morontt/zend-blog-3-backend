@@ -19,7 +19,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @UniqueEntity(fields={"url"})
  */
-class Category
+class Category implements CategoryInterface
 {
     /**
      * @var int
@@ -30,42 +30,42 @@ class Category
      *
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
      * @var Collection
      *
      * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
      **/
-    protected $children;
+    private $children;
 
     /**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="children")
      *
      * @ORM\JoinColumn(onDelete="SET NULL")
      **/
-    protected $parent;
+    private $parent;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=100)
      */
-    protected $name;
+    private $name;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=255, unique=true)
      */
-    protected $url;
+    private $url;
 
     /**
      * @var Collection
      *
      * @ORM\OneToMany(targetEntity="Post", mappedBy="category")
      */
-    protected $posts;
+    private $posts;
 
     /**
      * @var NestedSet
@@ -86,7 +86,7 @@ class Category
      *
      * @return int
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -98,7 +98,7 @@ class Category
      *
      * @return Category
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
 
@@ -110,7 +110,7 @@ class Category
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -122,7 +122,7 @@ class Category
      *
      * @return Category
      */
-    public function setUrl($url)
+    public function setUrl(string $url)
     {
         $this->url = $url;
 
@@ -134,7 +134,7 @@ class Category
      *
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -249,5 +249,10 @@ class Category
         $this->nestedSet = $nestedSet;
 
         return $this;
+    }
+
+    public function getPostsCount(): int
+    {
+        return 0;
     }
 }

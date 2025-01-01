@@ -374,7 +374,8 @@
         {
           "text": "Work counters",
           "priority": "medium",
-          "creation": 1687519061
+          "creation": 1687519061,
+          "completion": 1735764478
         },
         {
           "text": "without pagination, sort by left key",
