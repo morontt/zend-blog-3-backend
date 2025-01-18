@@ -20,7 +20,7 @@ final class Version20250118091212 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE commentators ADD time_created DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3) NOT NULL, ADD last_update DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3) NOT NULL');
+        $this->addSql('ALTER TABLE commentators ADD time_created DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3) NOT NULL COMMENT \'(DC2Type:milliseconds_dt)\', ADD last_update DATETIME(3) DEFAULT CURRENT_TIMESTAMP(3) NOT NULL COMMENT \'(DC2Type:milliseconds_dt)\'');
         $this->addSql(<<<SQL
 CREATE TEMPORARY TABLE `commentators_temp` (
   `id` int unsigned NOT NULL,
