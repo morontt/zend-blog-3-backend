@@ -588,6 +588,7 @@
       "text": "Add created_at to commentators",
       "priority": "medium",
       "creation": 1723306388,
+      "completion": 1737195410,
       "tasks": [
         {
           "text": "Remove commentators without comments",

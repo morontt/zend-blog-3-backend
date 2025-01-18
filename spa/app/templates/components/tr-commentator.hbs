@@ -13,6 +13,7 @@
         {{input value=commentator.website class="form-control"}}
     </td>
     <td>{{input type="checkbox" checked=commentator.isMale}}</td>
+    <td>{{date-format commentator.createdAt 'DD.MM.YYYY, HH:mm'}}</td>
     <td>
         <div class="pull-right">
             <a class="btn btn-success" {{action "save"}}>
@@ -42,6 +43,7 @@
             <i class="glyphicon venus"></i>
         {{/if}}
     </td>
+    <td>{{date-format commentator.createdAt 'DD.MM.YYYY, HH:mm'}}</td>
     <td>
         <div class="pull-right">
             <a class="btn btn-primary" {{action "edit"}}>

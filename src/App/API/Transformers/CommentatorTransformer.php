@@ -28,6 +28,7 @@ class CommentatorTransformer extends BaseTransformer
             'website' => $item->getWebsite(),
             'imageHash' => $item->getAvatarHash(),
             'isMale' => $item->getGender() === User::MALE,
+            'createdAt' => $this->dateTimeToISO($item->getTimeCreated()),
         ];
     }
 
