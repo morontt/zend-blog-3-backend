@@ -45,4 +45,9 @@ interface CommentatorInterface
      * @return int
      */
     public function getGender(): int;
+
+    /**
+     * @return DateTime
+     */
+    public function getTimeCreated(): DateTime;
 }

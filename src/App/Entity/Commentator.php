@@ -16,6 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  * })
  *
  * @ORM\Entity(repositoryClass="App\Repository\CommentatorRepository")
+ *
  * @ORM\HasLifecycleCallbacks()
  */
 class Commentator implements CommentatorInterface

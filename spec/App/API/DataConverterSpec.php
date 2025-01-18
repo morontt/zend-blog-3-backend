@@ -139,6 +139,7 @@ class DataConverterSpec extends ObjectBehavior
             ->setName('test-name')
             ->setEmail('commentator@example.org')
             ->setWebsite('http://example.org')
+            ->setTimeCreated(DateTime::createFromFormat('Y-m-d H:i:s', '2025-01-18 20:05:49'))
         ;
 
         $reflectionProperty->setValue($commentator, 13);
@@ -152,6 +153,7 @@ class DataConverterSpec extends ObjectBehavior
                     'website' => 'http://example.org',
                     'imageHash' => 'A9GSDZ',
                     'isMale' => true,
+                    'createdAt' => '2025-01-18T20:05:49+03:00',
                 ],
             ]
         );
@@ -162,6 +164,7 @@ class DataConverterSpec extends ObjectBehavior
             ->setEmail('two@example.org')
             ->setWebsite('http://example.com')
             ->setGender(User::FEMALE)
+            ->setTimeCreated(DateTime::createFromFormat('Y-m-d H:i:s', '2025-01-18 20:06:01'))
         ;
 
         $reflectionProperty->setValue($commentator2, 72);
@@ -176,6 +179,7 @@ class DataConverterSpec extends ObjectBehavior
                         'website' => 'http://example.org',
                         'imageHash' => 'A9GSDZ',
                         'isMale' => true,
+                        'createdAt' => '2025-01-18T20:05:49+03:00',
                     ],
                     [
                         'id' => 72,
@@ -184,6 +188,7 @@ class DataConverterSpec extends ObjectBehavior
                         'website' => 'http://example.com',
                         'imageHash' => '07XXUP',
                         'isMale' => false,
+                        'createdAt' => '2025-01-18T20:06:01+03:00',
                     ],
                 ],
             ]
@@ -201,6 +206,7 @@ class DataConverterSpec extends ObjectBehavior
             ->setName('test-name')
             ->setEmail('commentator@example.org')
             ->setWebsite('http://example.org')
+            ->setTimeCreated(DateTime::createFromFormat('Y-m-d H:i:s', '2025-01-18 20:05:49'))
         ;
 
         $reflectionProperty->setValue($commentator, 13);
@@ -269,6 +275,7 @@ class DataConverterSpec extends ObjectBehavior
             ->setName('test-name')
             ->setEmail('commentator@example.org')
             ->setWebsite('http://example.org')
+            ->setTimeCreated(DateTime::createFromFormat('Y-m-d H:i:s', '2025-01-18 20:05:49'))
         ;
 
         $reflectionProperty->setValue($commentator, 34);
@@ -354,6 +361,7 @@ class DataConverterSpec extends ObjectBehavior
                         'website' => 'http://example.org',
                         'imageHash' => 'ZJQ6CD',
                         'isMale' => true,
+                        'createdAt' => '2025-01-18T20:05:49+03:00',
                     ],
                 ],
             ]

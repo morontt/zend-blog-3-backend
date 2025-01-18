@@ -76,6 +76,13 @@ class ViewCommentator implements CommentatorInterface
     private $avatarVariant = 0;
 
     /**
+     * @var DateTime
+     *
+     * @ORM\Column(type="milliseconds_dt")
+     */
+    protected $timeCreated;
+
+    /**
      * Get id
      *
      * @return int|null
@@ -142,5 +149,10 @@ class ViewCommentator implements CommentatorInterface
     public function getAvatarVariant(): int
     {
         return $this->avatarVariant;
+    }
+
+    public function getTimeCreated(): DateTime
+    {
+        return $this->timeCreated;
     }
 }
