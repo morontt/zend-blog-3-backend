@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "50a435d4d6e61e4029c0dc817231a6a7",
+    "content-hash": "657738fc1fa89d2cbbac1dbe43fe3694",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -9966,6 +9966,61 @@
                 "source": "https://github.com/willdurand/JsonpCallbackValidator/tree/master"
             },
             "time": "2014-01-20T22:35:06+00:00"
+        },
+        {
+            "name": "xelbot/lib-telegram",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/xelbot/lib-telegram.git",
+                "reference": "c3c0c1c90b839544d5afc2841ee633d79b1fe7ba"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/xelbot/lib-telegram/zipball/c3c0c1c90b839544d5afc2841ee633d79b1fe7ba",
+                "reference": "c3c0c1c90b839544d5afc2841ee633d79b1fe7ba",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "~6.3||~7.0",
+                "php": ">=7.4",
+                "psr/log": "^1.0||^2.0||^3.0",
+                "symfony/property-info": "^5.0|^6.0",
+                "symfony/serializer": "^5.0|^6.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.39"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Xelbot\\Telegram\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Zlib"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Kharchenko",
+                    "email": "morontt@yandex.ru",
+                    "homepage": "https://xelbot.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Library for telegram bots",
+            "homepage": "https://github.com/xelbot/lib-telegram",
+            "keywords": [
+                "bot",
+                "telegram"
+            ],
+            "support": {
+                "issues": "https://github.com/xelbot/lib-telegram/issues",
+                "source": "https://github.com/xelbot/lib-telegram/tree/1.0"
+            },
+            "time": "2025-02-19T21:18:56+00:00"
         }
     ],
     "packages-dev": [

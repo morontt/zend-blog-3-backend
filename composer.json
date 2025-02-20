@@ -6,8 +6,7 @@
     "autoload": {
         "psr-4": {
             "App\\": "src/App/",
-            "Mtt\\": "src/Mtt/",
-            "Xelbot\\": "src/Xelbot/"
+            "Mtt\\": "src/Mtt/"
         }
     },
     "require": {
@@ -65,7 +64,8 @@
         "symfony/web-link": "5.4.*",
         "symfony/yaml": "5.4.*",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^2.12|^3.0",
+        "xelbot/lib-telegram": "^1.0"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.0",
