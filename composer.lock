@@ -9969,16 +9969,16 @@
         },
         {
             "name": "xelbot/lib-telegram",
-            "version": "1.0",
+            "version": "1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/xelbot/lib-telegram.git",
-                "reference": "c3c0c1c90b839544d5afc2841ee633d79b1fe7ba"
+                "reference": "3b392a2eb37d31cabe421f0a297eded873a6c665"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xelbot/lib-telegram/zipball/c3c0c1c90b839544d5afc2841ee633d79b1fe7ba",
-                "reference": "c3c0c1c90b839544d5afc2841ee633d79b1fe7ba",
+                "url": "https://api.github.com/repos/xelbot/lib-telegram/zipball/3b392a2eb37d31cabe421f0a297eded873a6c665",
+                "reference": "3b392a2eb37d31cabe421f0a297eded873a6c665",
                 "shasum": ""
             },
             "require": {
@@ -10018,9 +10018,9 @@
             ],
             "support": {
                 "issues": "https://github.com/xelbot/lib-telegram/issues",
-                "source": "https://github.com/xelbot/lib-telegram/tree/1.0"
+                "source": "https://github.com/xelbot/lib-telegram/tree/1.1"
             },
-            "time": "2025-02-19T21:18:56+00:00"
+            "time": "2025-02-21T07:51:19+00:00"
         }
     ],
     "packages-dev": [
@@ -13773,6 +13773,6 @@
         "ext-simplexml": "*",
         "ext-xml": "*"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }

@@ -11,7 +11,6 @@ parameters:
     mailer_user: '%env(MAILER_USER)%'
     gitrepo_webhook_token: '%env(WEBHOOK_GIT_TOKEN)%'
     telegram_token: '%env(TELEGRAM_TOKEN)%'
-    telegram_bot: '%env(TELEGRAM_BOT)%'
     telegram_admin_id: '%env(int:TELEGRAM_ADMIN_ID)%'
     telegram_webhook_token: '%env(TELEGRAM_WEBHOOK_TOKEN)%'
     ipinfo_db_key: '%env(IPINFO_DB_KEY)%'
@@ -169,7 +168,6 @@ services:
         class: Xelbot\Telegram\Robot
         arguments:
             - "%telegram_token%"
-            - "%telegram_bot%"
             - "%telegram_admin_id%"
         calls:
             - [ setLogger, [ "@monolog.logger.telegram" ]]
