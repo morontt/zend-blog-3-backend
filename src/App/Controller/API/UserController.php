@@ -127,7 +127,8 @@ class UserController extends BaseController
         EventDispatcherInterface $dispatcher,
         Request $request
     ): JsonResponse {
-        [$user, $foundInfo] = $userManager->findByExternalDTO($userDTO);
+        $findResult = $userManager->findByExternalDTO($userDTO);
+        $user = $findResult->getUser();
         if (!$user) {
             $user = $userManager->createFromExternalDTO($userDTO);
 
@@ -140,7 +141,7 @@ class UserController extends BaseController
             $this->em->flush();
         }
 
-        if (!$foundInfo) {
+        if (!$findResult->found()) {
             $userInfo = $userManager->saveUserExtraInfo(
                 $userDTO,
                 $user,
@@ -153,7 +154,7 @@ class UserController extends BaseController
 
         return new JsonResponse(
             $this->getDataConverter()->getUser($user),
-            $foundInfo ? Response::HTTP_OK : Response::HTTP_CREATED
+            $findResult->found() ? Response::HTTP_OK : Response::HTTP_CREATED
         );
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\DTO\ExternalUserDTO;
+use App\DTO\UserByExternalDTO;
 use App\Entity\User;
 use App\Entity\UserExtraInfo;
 use App\Exception\ShortPasswordException;
@@ -35,7 +36,7 @@ class UserManager
         $this->tracking = $tracking;
     }
 
-    public function findByExternalDTO(ExternalUserDTO $data): array
+    public function findByExternalDTO(ExternalUserDTO $data): UserByExternalDTO
     {
         $infoRepository = $this->em->getRepository(UserExtraInfo::class);
         $userInfo = $infoRepository->findOneBy([
@@ -44,18 +45,18 @@ class UserManager
         ]);
 
         if ($userInfo) {
-            return [$userInfo->getUser(), true];
+            return new UserByExternalDTO($userInfo->getUser(), true);
         }
 
         if (!empty($data->email)) {
             $userRepository = $this->em->getRepository(User::class);
             $user = $userRepository->findOneBy(['email' => $data->email]);
             if ($user) {
-                return [$user, false];
+                return new UserByExternalDTO($user, false);
             }
         }
 
-        return [null, false];
+        return new UserByExternalDTO(null, false);
     }
 
     public function createFromExternalDTO(ExternalUserDTO $data): User
