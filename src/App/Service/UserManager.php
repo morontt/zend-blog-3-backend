@@ -21,10 +21,7 @@ class UserManager
 
     private UserPasswordHasherInterface $passwordHasher;
 
-    /**
-     * @var Tracking
-     */
-    private $tracking;
+    private Tracking $tracking;
 
     public function __construct(
         EntityManagerInterface $em,
@@ -61,11 +58,10 @@ class UserManager
 
     public function createFromExternalDTO(ExternalUserDTO $data): User
     {
-        $generatedUsername = 'ext-' . str_pad(mt_rand(0, 9999999), 7, '0', STR_PAD_LEFT);
+        $generatedUsername = $this->randomUsername();
         $userRepository = $this->em->getRepository(User::class);
 
         $username = $data->username;
-        $email = $data->email;
 
         if (empty($username)) {
             $username = $generatedUsername;
@@ -76,6 +72,7 @@ class UserManager
             }
         }
 
+        $email = $data->email;
         if (empty($email)) {
             $email = $generatedUsername . '@xelbot.fake';
         }
@@ -172,5 +169,16 @@ class UserManager
         $this->em->flush();
 
         return $userInfo;
+    }
+
+    private function randomUsername(): string
+    {
+        $repository = $this->em->getRepository(User::class);
+        do {
+            $random = 'ext-' . str_pad(mt_rand(0, 9999999), 7, '0', STR_PAD_LEFT);
+            $obj = $repository->findOneByUsername($random);
+        } while ($obj !== null);
+
+        return $random;
     }
 }
