@@ -4,10 +4,10 @@ import loadInitializers from 'ember-load-initializers';
 import config from 'mtt-blog/config/environment';
 
 let App = Application.extend({
-  modulePrefix: config.modulePrefix,
-  podModulePrefix: config.podModulePrefix,
-  Resolver: Resolver,
-  rootElement: '#main-application',
+    modulePrefix: config.modulePrefix,
+    podModulePrefix: config.podModulePrefix,
+    Resolver: Resolver,
+    rootElement: '#main-application',
 });
 
 loadInitializers(App, config.modulePrefix);
