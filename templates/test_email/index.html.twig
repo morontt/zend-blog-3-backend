@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+    <title>Тест отправляемых писем</title>
+    {{- assets("/dist/mttblog_preview.min.css") }}
+</head>
+<body>
+<div class="container">
+    <div class="blog-header">
+        <h1 class="blog-title">{{ browsertitle }}</h1>
+        <p class="lead blog-description">Официальный пример шаблона блога, спёртый с Bootstrap-а.</p>
+    </div>
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+            <div class="blog-post">
+                <form method="POST">
+                    <div class="form-group">
+                        <label for="_receiver">Кому</label>
+                        <input type="email"
+                               name="_receiver"
+                               id="_receiver"
+                               class="form-control"
+                               placeholder="Email">
+                    </div>
+                    <button type="submit" class="btn btn-default">Отправить</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+            <div class="sidebar-module sidebar-module-inset">
+                <h4>About</h4>
+                <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet
+                    fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="blog-footer">
+    <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a
+                href="https://twitter.com/mdo">@mdo</a>.</p>
+</footer>
+</body>
+</html>

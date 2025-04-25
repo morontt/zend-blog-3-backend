@@ -2,18 +2,18 @@
 
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
+use App\Entity\User;
+use App\Utils\RuTransform;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectManager as ObjectManagerInterface;
 use Faker\Factory as FakerFactory;
-use Mtt\BlogBundle\Utils\RuTransform;
-use Mtt\UserBundle\Entity\User;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class LoadUserData extends Fixture implements ContainerAwareInterface
 {
-    const COUNT_USERS = 10;
+    public const COUNT_USERS = 10;
 
     /**
      * @var ContainerInterface
@@ -23,7 +23,7 @@ class LoadUserData extends Fixture implements ContainerAwareInterface
     /**
      * {@inheritdoc}
      */
-    public function setContainer(ContainerInterface $container = null)
+    public function setContainer(?ContainerInterface $container = null)
     {
         $this->container = $container;
     }

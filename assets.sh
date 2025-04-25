@@ -1,6 +1,6 @@
 #!/bin/bash
 
-docker exec rhinoceros bash -c "php app/console assets:install"
+docker exec rhinoceros bash -c "php app/console assets:install web"
 docker exec rhinoceros bash -c "./buildapp_js_temp.sh"
 docker compose run --rm nodejs bash -c "grunt"
 docker exec rhinoceros bash -c "chown -R www-data:www-data ."

@@ -1,0 +1,63 @@
+{{#if isEditing}}
+    <td class="center-text">{{user.id}}</td>
+    <td>
+        <img src="{{user.avatarUrl}}" width="80" height="80" alt="{{user.avatarTitle}}"/>
+    </td>
+    <td>
+        {{input value=user.username class="form-control"}}
+    </td>
+    <td class="text-break-word">
+        {{input value=user.displayName class="form-control"}}
+    </td>
+    <td class="text-break-word">
+        {{input value=user.email class="form-control"}}
+    </td>
+    <td class="text-break-word">
+        {{select-field
+            content=userRoles
+            selectedValue=user.role}}
+    </td>
+    <td class="center-text text-gender">
+        {{input type="checkbox" checked=user.isMale}}
+    </td>
+    <td class="text-right">{{date-format user.createdAt 'DD.MM.YYYY, HH:mm:ss'}}</td>
+    <td>
+        <div class="pull-right">
+            <a class="btn btn-success" {{action "save"}}>
+                <i class="glyphicon glyphicon-ok"></i>
+                <span>save</span>
+            </a>
+            <button class="btn btn-warning btn-confirm" {{action "reset"}}>
+                <i class="glyphicon glyphicon-remove"></i>
+                <span>reset</span>
+            </button>
+        </div>
+    </td>
+{{else}}
+    <td class="center-text">{{user.id}}</td>
+    <td>
+        <img src="{{user.avatarUrl}}" width="80" height="80" alt="{{user.avatarTitle}}"/>
+    </td>
+    <td>
+        <strong>{{user.username}}</strong>
+    </td>
+    <td class="text-break-word">{{user.displayName}}</td>
+    <td class="text-break-word">{{user.email}}</td>
+    <td class="text-break-word">{{user.role}}</td>
+    <td class="center-text text-gender">
+        {{#if user.isMale}}
+            <i class="glyphicon mars"></i>
+        {{else}}
+            <i class="glyphicon venus"></i>
+        {{/if}}
+    </td>
+    <td class="text-right">{{date-format user.createdAt 'DD.MM.YYYY, HH:mm:ss'}}</td>
+    <td>
+        <div class="pull-right">
+            <a class="btn btn-primary" {{action "edit"}}>
+                <i class="glyphicon glyphicon-pencil"></i>
+                <span>edit</span>
+            </a>
+        </div>
+    </td>
+{{/if}}

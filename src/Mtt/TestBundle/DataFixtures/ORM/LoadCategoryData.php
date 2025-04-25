@@ -2,11 +2,11 @@
 
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
+use App\Entity\Category;
+use App\Utils\RuTransform;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectManager as ObjectManagerInterface;
-use Mtt\BlogBundle\Entity\Category;
-use Mtt\BlogBundle\Utils\RuTransform;
 
 class LoadCategoryData extends Fixture
 {

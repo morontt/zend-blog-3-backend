@@ -1,0 +1,180 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    cdn_url: '%env(CDN_URL)%'
+    frontend_site: '%env(FRONT_SITE)%'
+    locale: 'ru'
+    browsertitle: '%env(SITE_BROWSERTITLE)%'
+    mailer_user: '%env(MAILER_USER)%'
+    gitrepo_webhook_token: '%env(WEBHOOK_GIT_TOKEN)%'
+    telegram_token: '%env(TELEGRAM_TOKEN)%'
+    telegram_admin_id: '%env(int:TELEGRAM_ADMIN_ID)%'
+    telegram_webhook_token: '%env(TELEGRAM_WEBHOOK_TOKEN)%'
+    ipinfo_db_key: '%env(IPINFO_DB_KEY)%'
+    dropbox_key: '%env(DROPBOX_KEY)%'
+    dropbox_secret: '%env(DROPBOX_SECRET)%'
+    wsse_token_lifetime: '%env(int:WSSE_TOKEN_LIFETIME)%'
+    space_login: '%env(SPACE_LOGIN)%'
+    space_password: '%env(SPACE_PASSWORD)%'
+    push_gateway_dsn: '%env(PROM_PUSH_GATEWAY_DSN)%'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # Allows optimizing the container by removing unused services; this also means
+                            # fetching services directly from the container via $container->get() won't work.
+                            # The best practice is to be explicit about your dependencies anyway.
+        bind:
+            $cdnUrl: '%cdn_url%'
+            $frontendSite: '%frontend_site%'
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/App/*'
+        exclude: '../src/App/{DependencyInjection,Entity,Model,Event,OAuth2/Client,OAuth2/Providers,Tests,Service/IpInfo/LocationInfo.php,Kernel.php,Utils,Doctrine/DBAL,DTO,Form,Exception}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/App/Controller'
+        tags: ['controller.service_arguments']
+
+    _instanceof:
+        App\Cron\DailyCronServiceInterface:
+            tags:
+                - { name: cron-daily }
+        App\Cron\HourlyCronServiceInterface:
+            tags:
+                - { name: cron-hourly }
+        Xelbot\Telegram\Command\TelegramCommandInterface:
+            tags:
+                - { name: telegram-command }
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+    App\Command\DropboxAuthCommand:
+        arguments:
+            $dropboxKey: '%dropbox_key%'
+            $dropboxSecret: '%dropbox_secret%'
+
+    App\EventListener\Doctrine\IgnoreTablesListener:
+        tags:
+            - { name: doctrine.event_listener, event: postGenerateSchema }
+
+    App\EventListener\JsonBodyListener:
+        calls:
+            - [ setTelegramLogger, [ "@monolog.logger.telegram" ] ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, priority: 10 }
+
+    App\EventListener\Doctrine\ArticleUpdatedAtListener:
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate }
+
+    App\EventListener\Doctrine\MediaFilePictureListener:
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate }
+
+    App\EventListener\Comment\CommentatorCheckListener:
+        tags:
+            - { name: kernel.event_listener, event: App\Event\CommentEvent }
+
+    App\EventListener\Comment\CommentGeolocationListener:
+        tags:
+            - { name: kernel.event_listener, event: App\Event\CommentEvent }
+
+    App\EventListener\Comment\NewCommentEmailListener:
+        tags:
+            - { name: kernel.event_listener, event: App\Event\CommentEvent }
+
+    App\EventListener\Comment\ReplyCommentListener:
+        tags:
+            - { name: kernel.event_listener, event: App\Event\CommentEvent }
+
+    App\EventListener\PygmentsCodeUpdateListener:
+        tags:
+            - { name: kernel.event_listener, event: App\Event\PygmentCodeEvent }
+
+    App\EventListener\User\UserCommentsListener:
+        tags:
+            - { name: kernel.event_listener, event: App\Event\UserEvent }
+
+    App\EventListener\User\AvatarListener:
+        tags:
+            - { name: kernel.event_listener, event: App\Event\UserExtraEvent }
+
+    App\EventListener\User\LoginListener:
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login, method: onLogin }
+
+    App\Controller\DefaultController:
+        arguments:
+            $kernelEnv: '%kernel.environment%'
+
+    App\Controller\GitRepoController:
+        arguments:
+            $secretToken: '%gitrepo_webhook_token%'
+
+    App\Controller\TelegramController:
+        arguments:
+            $secretToken: '%telegram_webhook_token%'
+
+    App\Service\BackUp\FlysystemFactory:
+        arguments:
+            $spaceLogin: '%space_login%'
+            $spacePassword: '%space_password%'
+
+    App\Service\IpInfo\IpInfoDbClient:
+        arguments:
+            $key: "%ipinfo_db_key%"
+
+    App\Service\IpInfo\IpInfoClientInterface: '@App\Service\IpInfo\IpInfoDbClient'
+
+    App\Service\Mailer:
+        arguments:
+            $emailFrom: "%mailer_user%"
+
+    App\Service\SystemParametersStorage:
+        arguments:
+            $secret: '%env(APP_SECRET)%'
+
+    App\Cron\Daily\DatabaseBackup:
+        arguments:
+            - '%env(DB_HOST)%'
+            - '%env(DB_NAME)%'
+            - '%env(DB_USER)%'
+            - '%env(DB_PASSWORD)%'
+
+    mtt_blog.text_processor:
+        alias: App\Service\TextProcessor
+        public: true
+
+    App\Service\Metrics\PrometheusPushGateway:
+        arguments:
+            $dsn: '%push_gateway_dsn%'
+
+    App\Cron\Hourly\TelegramUpdates:
+        arguments:
+            $adminId: "%telegram_admin_id%"
+
+    mtt_blog.telegram_bot:
+        class: Xelbot\Telegram\Robot
+        arguments:
+            - "%telegram_token%"
+            - "%telegram_admin_id%"
+        calls:
+            - [ setLogger, [ "@monolog.logger.telegram" ]]
+            - [ setUpdatesManager, [ '@App\Telegram\UpdatesManager' ]]
+
+    League\Flysystem\FilesystemOperator:
+        factory: [ '@App\Service\BackUp\FlysystemFactory', createFlysystem ]
+        arguments: [ 'dropbox' ]
+
+    Xelbot\Telegram\Robot: '@mtt_blog.telegram_bot'

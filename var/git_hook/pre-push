@@ -20,7 +20,7 @@ else
     echo -e "\e[32mphpspec OK\e[0m\n"
 fi
 
-docker compose run --rm --remove-orphans -T rhinoceros bash -c "php app/console doctrine:schema:validate"
+docker compose run --rm --remove-orphans -T rhinoceros bash -c "php bin/console doctrine:schema:validate"
 retVal=$?
 if [ $retVal -ne 0 ]; then
     echo -e "\e[31mdoctrine:schema:validate error\e[0m\n"

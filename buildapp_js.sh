@@ -23,7 +23,7 @@ done
 
 if [[ "$WITH_INSTALL" == "yes" ]]; then
   bower install
-  cp -R bower_components/bootstrap/fonts web
+  # cp -R bower_components/bootstrap/fonts web
   cp -R bower_components/jquery-ui/themes/base/images web/dist
   yarn install
 fi

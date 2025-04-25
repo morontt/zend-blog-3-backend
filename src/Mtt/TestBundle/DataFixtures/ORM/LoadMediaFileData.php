@@ -8,10 +8,10 @@
 
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
+use App\Entity\MediaFile;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectManager as ObjectManagerInterface;
-use Mtt\BlogBundle\Entity\MediaFile;
 
 class LoadMediaFileData extends Fixture
 {

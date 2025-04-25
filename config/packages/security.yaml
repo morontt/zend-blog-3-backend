@@ -1,0 +1,48 @@
+security:
+    password_hashers:
+        App\Entity\User:
+            algorithm: sha384
+            iterations: 3600
+            encode_as_base64: false
+
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        user_db:
+            entity:
+                class: App\Entity\User
+                property: username
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        login_firewall:
+            pattern: ^/login$
+            anonymous: ~
+
+        default:
+            pattern: ^/
+            anonymous: ~
+            form_login:
+                provider: user_db
+                login_path: /login
+                check_path: /login_check
+            logout:
+                path: /logout
+                target: /login
+            wsse:
+                lifetime: "%wsse_token_lifetime%"
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/telegram, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/webhook, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/preview, roles: ROLE_USER, requires_channel: https }
+        - { path: ^/, roles: ROLE_ADMIN, requires_channel: https }

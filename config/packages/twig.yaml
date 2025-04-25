@@ -1,0 +1,11 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    globals:
+        browsertitle: "%browsertitle%"
+        frontend_site: "%frontend_site%"
+
+when@test:
+    twig:
+        strict_variables: true

@@ -2,19 +2,19 @@
 
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
+use App\Entity\Comment;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\DBAL\DBALException;
 use Doctrine\Persistence\ObjectManager as ObjectManagerInterface;
 use Faker\Factory as FakerFactory;
-use Mtt\BlogBundle\Entity\Comment;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class LoadCommentData extends Fixture implements DependentFixtureInterface, ContainerAwareInterface
 {
-    const COUNT_COMMENTS = 450;
+    public const COUNT_COMMENTS = 450;
 
     /**
      * @var array
@@ -29,7 +29,7 @@ class LoadCommentData extends Fixture implements DependentFixtureInterface, Cont
     /**
      * @param ContainerInterface $container
      */
-    public function setContainer(ContainerInterface $container = null)
+    public function setContainer(?ContainerInterface $container = null)
     {
         $this->container = $container;
     }

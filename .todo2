@@ -212,6 +212,7 @@
       "text": "Flutter Desktop for UI #68",
       "priority": "verylow",
       "creation": 1686425605,
+      "completion": 1723302145,
       "tasks": [
         {
           "text": "And remove JavaScript SPA",
@@ -268,6 +269,7 @@
       "text": "Remove deprecated and unused fields from entities #60",
       "priority": "low",
       "creation": 1686425860,
+      "completion": 1723358063,
       "tasks": [
         {
           "text": "users table",
@@ -372,12 +374,14 @@
         {
           "text": "Work counters",
           "priority": "medium",
-          "creation": 1687519061
+          "creation": 1687519061,
+          "completion": 1735764478
         },
         {
           "text": "without pagination, sort by left key",
           "priority": "medium",
-          "creation": 1687519084
+          "creation": 1687519084,
+          "completion": 1729236430
         }
       ]
     },
@@ -410,12 +414,367 @@
       "text": "Responsive images",
       "priority": "high",
       "creation": 1689348282,
+      "completion": 1690556400,
       "tasks": [
         {
           "text": "Удалять картинки вместе с превью",
           "priority": "medium",
           "creation": 1689348322,
           "completion": 1689365614
+        }
+      ]
+    },
+    {
+      "text": "Featured image not work",
+      "priority": "high",
+      "creation": 1719346855
+    },
+    {
+      "text": "Update page views counter hourly",
+      "priority": "high",
+      "creation": 1719389360,
+      "completion": 1719418822
+    },
+    {
+      "text": "update PHP-CS-Fixer to v3",
+      "priority": "verylow",
+      "creation": 1719389500,
+      "completion": 1731142027,
+      "tasks": [
+        {
+          "text": "Blocked: friendsofphp/php-cs-fixer ~3.3 require symfony/console ^4.4.20 || ^5.1.3",
+          "priority": "medium",
+          "creation": 1721971530
+        }
+      ]
+    },
+    {
+      "text": "5 неудачных попыток ввода пароля и блокировка на полчаса",
+      "priority": "medium",
+      "creation": 1720600619
+    },
+    {
+      "text": "Parse user-agent by https://user-agents.net/parser",
+      "priority": "medium",
+      "creation": 1720867983
+    },
+    {
+      "text": "Регистрация пользователей для комментариев",
+      "priority": "high",
+      "creation": 1722973473,
+      "tasks": [
+        {
+          "text": "Add separate tech-user for reprogl API",
+          "priority": "medium",
+          "creation": 1722973512,
+          "completion": 1724700192,
+          "tasks": [
+            {
+              "text": "Set avatar",
+              "priority": "medium",
+              "creation": 1723113285
+            }
+          ]
+        },
+        {
+          "text": "Добавить роли, закрыть админку от гостей",
+          "priority": "medium",
+          "creation": 1723053131,
+          "completion": 1723270137
+        },
+        {
+          "text": "Login history",
+          "priority": "medium",
+          "creation": 1723139406
+        }
+      ]
+    },
+    {
+      "text": "Почта",
+      "priority": "high",
+      "creation": 1723012356,
+      "tasks": [
+        {
+          "text": "Отправлять отчёт об ошибке",
+          "priority": "medium",
+          "creation": 1723012403,
+          "completion": 1723034918
+        },
+        {
+          "text": "Сменить настройки (Yandex PDD -\u003e ?)",
+          "priority": "medium",
+          "creation": 1723012441,
+          "completion": 1723207447,
+          "tasks": [
+            {
+              "text": "https://www.mail-tester.com/",
+              "priority": "medium",
+              "creation": 1723060297,
+              "tasks": [
+                {
+                  "text": "https://www.mail-tester.com/test-so16er4vf",
+                  "priority": "medium",
+                  "creation": 1723207337
+                }
+              ]
+            },
+            {
+              "text": "https://stackoverflow.com/questions/52408023/dkim-signature-in-swift-mailer",
+              "priority": "low",
+              "creation": 1723097007
+            },
+            {
+              "text": "https://knowledge.validity.com/s/articles/DKIM-signature-header-detail",
+              "priority": "low",
+              "creation": 1723097156
+            },
+            {
+              "text": "https://dkim.org",
+              "priority": "low",
+              "creation": 1723097209
+            },
+            {
+              "text": "https://www.unisender.com/ru/glossary/dmarc/",
+              "priority": "low",
+              "creation": 1723105123
+            },
+            {
+              "text": "https://help.mail.ru/developers/notes/dmarc",
+              "priority": "low",
+              "creation": 1723105139
+            }
+          ]
+        },
+        {
+          "text": "fix telegram for error stacktrace sending",
+          "priority": "medium",
+          "creation": 1723016691,
+          "completion": 1731612972
+        },
+        {
+          "text": "Иконка отправителя в разных почтовых сервисах",
+          "priority": "medium",
+          "creation": 1723112974
+        },
+        {
+          "text": "Add unsubscribe link",
+          "priority": "medium",
+          "creation": 1723210211,
+          "completion": 1725004417,
+          "tasks": [
+            {
+              "text": "https://postmarkapp.com/support/article/1299-how-to-include-a-list-unsubscribe-header",
+              "priority": "low",
+              "creation": 1723401395
+            }
+          ]
+        },
+        {
+          "text": "Change mailer",
+          "priority": "medium",
+          "creation": 1731141741,
+          "completion": 1731619463,
+          "tasks": [
+            {
+              "text": "Fix link check on Mailpit",
+              "priority": "medium",
+              "creation": 1731612957
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Add created_at to commentators",
+      "priority": "medium",
+      "creation": 1723306388,
+      "completion": 1737195410,
+      "tasks": [
+        {
+          "text": "Remove commentators without comments",
+          "priority": "medium",
+          "creation": 1723306414
+        }
+      ]
+    },
+    {
+      "text": "Mail Space",
+      "priority": "medium",
+      "creation": 1725133867,
+      "tasks": [
+        {
+          "text": "https://help.mail.ru/cloud_web/app/webdav/",
+          "priority": "low",
+          "creation": 1725133954,
+          "tasks": [
+            {
+              "text": "necessary data rewind wasn't possible",
+              "priority": "medium",
+              "creation": 1729325666,
+              "tasks": [
+                {
+                  "text": "https://github.com/spatie/laravel-backup/discussions/1756",
+                  "priority": "low",
+                  "creation": 1729535079
+                },
+                {
+                  "text": "https://curl.se/libcurl/c/CURLOPT_SEEKFUNCTION.html",
+                  "priority": "medium",
+                  "creation": 1729373031
+                },
+                {
+                  "text": "https://github.com/sabre-io/dav/issues/441",
+                  "priority": "medium",
+                  "creation": 1729535203,
+                  "tasks": [
+                    {
+                      "text": "https://github.com/sabre-io/dav/blob/b73b22515b9cd736f91f9accdebd5290fa2f0f01/lib/Sabre/DAV/CorePlugin.php",
+                      "priority": "medium",
+                      "creation": 1729535228
+                    }
+                  ]
+                },
+                {
+                  "text": "https://stackoverflow.com/questions/66835981/sending-file-to-webdav-server-using-php-curl",
+                  "priority": "low",
+                  "creation": 1729537155
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "text": "https://github.com/fstanis/awesome-webdav?tab=readme-ov-file",
+          "priority": "low",
+          "creation": 1725133972,
+          "completion": 1729535045
+        },
+        {
+          "text": "Перенести бекапы БД и картинок",
+          "priority": "medium",
+          "creation": 1726664518
+        }
+      ]
+    },
+    {
+      "text": "Upgrade symfony",
+      "priority": "high",
+      "creation": 1726340929,
+      "tasks": [
+        {
+          "text": "https://symfony.com/doc/4.x/setup.html",
+          "priority": "low",
+          "creation": 1726340968,
+          "completion": 1731143416
+        },
+        {
+          "text": "https://symfony.com/doc/4.x/setup/flex.html",
+          "priority": "low",
+          "creation": 1726340982,
+          "completion": 1731143418
+        },
+        {
+          "text": "Deploy",
+          "priority": "medium",
+          "creation": 1726664398,
+          "completion": 1731143406,
+          "tasks": [
+            {
+              "text": "Подготовить конфиги",
+              "priority": "medium",
+              "creation": 1726664430
+            },
+            {
+              "text": "Залить doctrine_migrations в БД",
+              "priority": "medium",
+              "creation": 1726664455
+            },
+            {
+              "text": "docker-compose.yml on prod",
+              "priority": "medium",
+              "creation": 1726730317
+            }
+          ]
+        },
+        {
+          "text": "Upgrade to 6.4",
+          "priority": "medium",
+          "creation": 1731143433
+        },
+        {
+          "text": "Fix security deprecations",
+          "priority": "medium",
+          "creation": 1731171156,
+          "tasks": [
+            {
+              "text": "https://github.com/lexik/LexikJWTAuthenticationBundle",
+              "priority": "low",
+              "creation": 1731171201
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Duplicate entry 'testovaya-zapis' for key 'posts.UNIQ_885DBAFAF47645AE'",
+      "priority": "high",
+      "creation": 1727511937,
+      "completion": 1727983851
+    },
+    {
+      "text": "Pattern: Circuit Breaker",
+      "priority": "medium",
+      "creation": 1731141943,
+      "tasks": [
+        {
+          "text": "https://microservices.io/patterns/reliability/circuit-breaker.html",
+          "priority": "low",
+          "creation": 1731141969
+        },
+        {
+          "text": "IpInfoDbClient error: HTTP/2 503",
+          "priority": "medium",
+          "creation": 1731142015
+        }
+      ]
+    },
+    {
+      "text": "Tracking archive to CSV",
+      "priority": "medium",
+      "creation": 1731143356,
+      "tasks": [
+        {
+          "text": "push to backup",
+          "priority": "medium",
+          "creation": 1731143382
+        }
+      ]
+    },
+    {
+      "text": "85.31.47.61 Private IP - incorrect",
+      "priority": "medium",
+      "creation": 1731477186,
+      "completion": 1731481672
+    },
+    {
+      "text": "Telegram",
+      "priority": "high",
+      "creation": 1732225557,
+      "tasks": [
+        {
+          "text": "type message in list",
+          "priority": "medium",
+          "creation": 1732225618
+        },
+        {
+          "text": "notification about message only",
+          "priority": "medium",
+          "creation": 1732225646
+        },
+        {
+          "text": "raw update.json in list",
+          "priority": "medium",
+          "creation": 1732225671
         }
       ]
     }

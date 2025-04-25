@@ -2,11 +2,11 @@
 
 namespace Mtt\TestBundle\DataFixtures\ORM;
 
+use App\Entity\Tracking;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectManager as ObjectManagerInterface;
-use Mtt\BlogBundle\Entity\Tracking;
 
 class LoadTrackingData extends Fixture implements DependentFixtureInterface
 {

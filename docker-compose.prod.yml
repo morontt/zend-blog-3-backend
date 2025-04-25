@@ -16,7 +16,7 @@ services:
         volumes_from:
             - source
         volumes:
-            - ./httpdocs/docker/web/apache_prod.conf:/etc/apache2/sites-available/000-default.conf:ro
+            - ./httpdocs/docker/web/apache.conf:/etc/apache2/sites-available/000-default.conf:ro
         ports:
             - "8011:80"
         depends_on:

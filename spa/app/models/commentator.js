@@ -7,6 +7,7 @@ export default DS.Model.extend({
     website: DS.attr('string'),
     isMale: DS.attr('boolean'),
     imageHash: DS.attr('string'),
+    createdAt: DS.attr('date'),
     avatarTitle: function () {
         return this.get('imageHash') + '.png';
     }.property('imageHash'),

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>
+        Login
+    </title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/dist/mttblog_login.min.css" type="text/css" />
+</head>
+<body class="signin">
+<form method="post" action="{{ path('login_check') }}" class="form-signin">
+    {% if error %}
+        <div class="alert alert-danger">
+            {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+    {% endif %}
+
+    <input type="hidden" name="_csrf_token"
+           value="{{ csrf_token('authenticate') }}">
+
+    <input type="text"
+           name="_username"
+           class="form-control input-lg"
+           value="{{ lastUsername }}"
+           placeholder="username">
+    <br>
+    <input type="password"
+           name="_password"
+           class="form-control input-lg"
+           placeholder="password">
+    <br>
+    <button class="btn btn-block btn-lg btn-success"
+            type="submit">login</button>
+</form>
+</body>
+</html>

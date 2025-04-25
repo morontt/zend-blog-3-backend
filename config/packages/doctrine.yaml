@@ -1,0 +1,65 @@
+doctrine:
+    dbal:
+        dbname:   '%env(DB_NAME)%'
+        host:     '%env(DB_HOST)%'
+        port:     '%env(DB_PORT)%'
+        user:     '%env(DB_USER)%'
+        password: '%env(DB_PASSWORD)%'
+        driver: pdo_mysql
+
+        # IMPORTANT: You MUST configure your server version,
+        server_version: '8.0'
+
+        # only needed for MySQL
+        charset: utf8mb4
+        default_table_options:
+            charset: utf8mb4
+            collate: utf8mb4_unicode_ci
+        types:
+            milliseconds_dt: App\Doctrine\DBAL\Type\MillisecondsDateTime
+        schema_filter: "~^(?!v_)~"
+    orm:
+        auto_generate_proxy_classes: true
+        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+        auto_mapping: true
+        mappings:
+            App:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/App/Entity'
+                prefix: 'App\Entity'
+                alias: App
+
+when@prod:
+    doctrine:
+        orm:
+            auto_generate_proxy_classes: false
+            metadata_cache_driver:
+                type: service
+                id: doctrine.system_cache_provider
+            query_cache_driver:
+                type: service
+                id: doctrine.system_cache_provider
+            result_cache_driver:
+                type: service
+                id: doctrine.result_cache_provider
+
+    services:
+        doctrine.result_cache_provider:
+            class: Symfony\Component\Cache\DoctrineProvider
+            public: false
+            arguments:
+                - '@doctrine.result_cache_pool'
+        doctrine.system_cache_provider:
+            class: Symfony\Component\Cache\DoctrineProvider
+            public: false
+            arguments:
+                - '@doctrine.system_cache_pool'
+
+    framework:
+        cache:
+            pools:
+                doctrine.result_cache_pool:
+                    adapter: cache.app
+                doctrine.system_cache_pool:
+                    adapter: cache.system

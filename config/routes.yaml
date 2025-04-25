@@ -1,0 +1,14 @@
+api_root:
+    path: /api
+    defaults:
+        _controller: Symfony\Bundle\FrameworkBundle\Controller\TemplateController::templateAction
+        template: "default/api.html.twig"
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing-sf4.xml"
+
+logout:
+    path: /logout
+
+login_check:
+    path: /login_check

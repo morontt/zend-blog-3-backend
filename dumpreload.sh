@@ -10,8 +10,9 @@ DROP DATABASE morontt_db;
 CREATE DATABASE morontt_db;
 USE morontt_db;
 \. dump.sql
-\. app/DoctrineMigrations/sql/drop_migrations.sql
+\. migrations/sql/drop_migrations.sql
 EOF
 
-docker exec rhinoceros bash -c "php app/console do:mi:mi && php app/console mtt:posts:update"
+docker exec rhinoceros bash -c "php bin/console do:mi:mi && php bin/console mtt:posts:update"
 docker exec rhinoceros bash -c "chown -R www-data:www-data ."
+docker exec rhinoceros bash -c "cd /var/www/resources && chown -R www-data:www-data ."
