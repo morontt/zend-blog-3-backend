@@ -700,6 +700,18 @@
           "text": "Upgrade to 6.4",
           "priority": "medium",
           "creation": 1731143433
+        },
+        {
+          "text": "Fix security deprecations",
+          "priority": "medium",
+          "creation": 1731171156,
+          "tasks": [
+            {
+              "text": "https://github.com/lexik/LexikJWTAuthenticationBundle",
+              "priority": "low",
+              "creation": 1731171201
+            }
+          ]
         }
       ]
     },
