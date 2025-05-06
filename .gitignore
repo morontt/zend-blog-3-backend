@@ -18,6 +18,7 @@
 /composer.phar
 /bower_components/
 behat.yml
+/var/livejournal/
 
 /spa/dist
 /spa/tmp
