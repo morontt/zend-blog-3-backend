@@ -118,6 +118,13 @@ class Comment implements CommentInterface
      */
     private $nestedSet;
 
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(type="milliseconds_dt", nullable=true)
+     */
+    private $forceCreatedAt;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();

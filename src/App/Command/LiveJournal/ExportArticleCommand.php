@@ -98,7 +98,7 @@ class ExportArticleCommand extends Command
 
                     $output->writeln(sprintf("Log time:\t<comment>%s</comment>", $created->format('Y-m-d H:i:s')));
 
-                    $articleDTO->forceCreatedAt = $created->format('Y-m-d H:i:s');
+                    $articleDTO->forceCreatedAt = $created->format('Y-m-d H:i:s') . '.' . (new DateTime())->format('v');
 
                     break 2;
                 }

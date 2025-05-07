@@ -10,7 +10,10 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="posts")
+ * @ORM\Table(name="posts", indexes={
+ *
+ *     @ORM\Index(columns={"timestamp_sort"})
+ * })
  *
  * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
  *
@@ -142,6 +145,20 @@ class Post
      */
     private $disableComments = false;
 
+    /**
+     * @var DateTime|null
+     *
+     * @ORM\Column(type="milliseconds_dt", nullable=true)
+     */
+    private $forceCreatedAt;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer", nullable=true, options={"unsigned": true})
+     */
+    private $timestampSort;
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -150,6 +167,15 @@ class Post
 
         $this->timeCreated = new DateTime();
         $this->updatedAt = new DateTime();
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function recalculateSortField()
+    {
+        $dt = $this->forceCreatedAt ?? $this->timeCreated;
+        $this->timestampSort = $dt->getTimestamp();
     }
 
     /**
@@ -547,6 +573,18 @@ class Post
     public function setDisableComments(bool $disableComments): self
     {
         $this->disableComments = $disableComments;
+
+        return $this;
+    }
+
+    public function getForceCreatedAt(): ?DateTime
+    {
+        return $this->forceCreatedAt;
+    }
+
+    public function setForceCreatedAt(?DateTime $forceCreatedAt = null): self
+    {
+        $this->forceCreatedAt = $forceCreatedAt;
 
         return $this;
     }
