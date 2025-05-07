@@ -38,4 +38,14 @@ class CommentDTO
      * @var int
      */
     public $parentId = 0;
+
+    /**
+     * @var string|null
+     */
+    public $forceCreatedAt;
+
+    /**
+     * @var bool
+     */
+    public $deleted = false;
 }
