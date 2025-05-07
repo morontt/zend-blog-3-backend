@@ -37,17 +37,15 @@ class ExportArticleCommand extends Command
         $this
             ->setName('mtt:lj:export')
             ->setDescription('Export article and comments')
-            ->addArgument('file', InputArgument::REQUIRED, 'XML file name')
             ->addArgument('articleId', InputArgument::REQUIRED, 'article ID')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $file = $input->getArgument('file');
         $articleId = (int)$input->getArgument('articleId');
 
-        $ljPost = $this->exportArticle($articleId, $file, $output);
+        $ljPost = $this->exportArticle($articleId, $output);
         if (is_null($ljPost)) {
             return 1;
         }
@@ -55,7 +53,7 @@ class ExportArticleCommand extends Command
         return 0;
     }
 
-    private function exportArticle(int $articleId, string $file, OutputInterface $output): ?LjPost
+    private function exportArticle(int $articleId, OutputInterface $output): ?LjPost
     {
         $ljPostsRepo = $this->em->getRepository(LjPost::class);
         $obj = $ljPostsRepo->findOneBy(['ljItemId' => $articleId]);
@@ -65,44 +63,45 @@ class ExportArticleCommand extends Command
             return $obj;
         }
 
-        $dataStr = @file_get_contents(APP_VAR_DIR . '/livejournal/posts-xml/' . $file);
-        if ($dataStr === false) {
-            $output->writeln('<error>file ' . $file . ' cannot be read</error>');
-
-            return null;
-        }
-
-        $data = @simplexml_load_string($dataStr);
-        if ($data === false) {
-            $output->writeln('<error>invalid data on file ' . $file . '</error>');
-
-            return null;
-        }
-
         $articleDTO = null;
-        foreach ($data->entry as $item) {
-            if ((int)$item->itemid === $articleId) {
-                $articleDTO = new ArticleDTO();
+        foreach (glob(APP_VAR_DIR . '/livejournal/posts-xml/*.xml') as $filename) {
+            $file = pathinfo($filename, PATHINFO_BASENAME);
+            $dataStr = @file_get_contents($filename);
+            if ($dataStr === false) {
+                $output->writeln('<error>file ' . $file . ' cannot be read</error>');
 
-                $articleDTO->hidden = true;
-                $articleDTO->title = (string)$item->subject;
-                $articleDTO->categoryId = 91;
-                $articleDTO->text = (string)$item->event;
+                return null;
+            }
 
-                $output->writeln(sprintf("Article found:\t<info>%s</info>", $articleDTO->title));
+            $data = @simplexml_load_string($dataStr);
+            if ($data === false) {
+                $output->writeln('<error>invalid data on file ' . $file . '</error>');
 
-                $eventTime = $item->eventtime;
-                $logTime = $item->logtime;
+                return null;
+            }
 
-                $output->writeln(sprintf("Event time:\t<comment>%s</comment>", $eventTime));
-                $output->writeln(sprintf("Log time:\t<comment>%s</comment>", $logTime));
+            foreach ($data->entry as $item) {
+                if ((int)$item->itemid === $articleId) {
+                    $articleDTO = new ArticleDTO();
 
-                $created = new DateTime($logTime, new DateTimeZone('UTC'));
-                $created->setTimezone(new DateTimeZone('Europe/Kiev'));
+                    $articleDTO->hidden = true;
+                    $articleDTO->title = (string)$item->subject;
+                    $articleDTO->categoryId = 91;
+                    $articleDTO->text = (string)$item->event;
+                    $articleDTO->tagsString = 'из жеже';
 
-                $output->writeln(sprintf("Computed:\t<comment>%s</comment>", $created->format('Y-m-d H:i:s')));
+                    $output->writeln(sprintf("Parsed file:\t<comment>%s</comment>", $file));
+                    $output->writeln(sprintf("Article found:\t<info>%s</info>", $articleDTO->title));
 
-                $articleDTO->forceCreatedAt = $created->format('Y-m-d H:i:s');
+                    $created = new DateTime($item->logtime, new DateTimeZone('UTC'));
+                    $created->setTimezone(new DateTimeZone('Europe/Kiev'));
+
+                    $output->writeln(sprintf("Log time:\t<comment>%s</comment>", $created->format('Y-m-d H:i:s')));
+
+                    $articleDTO->forceCreatedAt = $created->format('Y-m-d H:i:s');
+
+                    break 2;
+                }
             }
         }
 
