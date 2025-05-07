@@ -12,6 +12,8 @@ use App\DTO\ArticleDTO;
 use App\Entity\Post;
 use App\Entity\Tag;
 use App\Utils\RuTransform;
+use DateTime;
+use Exception;
 use League\Fractal\Resource\ResourceInterface;
 
 class PostTransformer extends BaseTransformer
@@ -38,6 +40,7 @@ class PostTransformer extends BaseTransformer
             'categoryId' => $item->getCategory()->getId(),
             'hidden' => $item->isHide(),
             'disableComments' => $item->isDisableComments(),
+            'forceCreatedAt' => $item->getForceCreatedAt() ? $item->getForceCreatedAt()->format('Y-m-d H:i:s.v') : null,
             'text' => $item->getRawText(),
             'description' => $item->getDescription(),
             'tagsString' => implode(
@@ -70,6 +73,15 @@ class PostTransformer extends BaseTransformer
             ->setRawText($data['text'])
             ->setDescription($data['description'])
         ;
+
+        $dtForce = null;
+        if ($data->forceCreatedAt) {
+            try {
+                $dtForce = new DateTime($data->forceCreatedAt);
+            } catch (Exception $e) {
+            }
+        }
+        $entity->setForceCreatedAt($dtForce);
 
         if ($data['url']) {
             $entity->setUrl($data['url']);

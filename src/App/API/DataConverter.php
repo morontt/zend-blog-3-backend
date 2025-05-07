@@ -193,10 +193,6 @@ class DataConverter
             $entity->setTimeCreated(new DateTime());
         }
 
-        if ($data->forceCreatedAt) {
-            $entity->setForceCreatedAt(DateTime::createFromFormat('Y-m-d H:i:s.v', $data->forceCreatedAt));
-        }
-
         $originalTags = new ArrayCollection();
         foreach ($entity->getTags() as $tag) {
             $originalTags->add($tag);
