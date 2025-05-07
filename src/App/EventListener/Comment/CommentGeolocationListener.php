@@ -29,7 +29,12 @@ class CommentGeolocationListener
             return;
         }
 
-        $location = $this->repository->findOrCreateByIpAddress($comment->getIpAddress());
+        $ip = $comment->getIpAddress();
+        if (empty($ip)) {
+            return;
+        }
+
+        $location = $this->repository->findOrCreateByIpAddress($ip);
         if ($location) {
             $comment->setGeoLocation($location);
             $this->em->flush();

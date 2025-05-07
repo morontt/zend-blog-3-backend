@@ -45,6 +45,13 @@ class CommentatorRepository extends ServiceEntityRepository
 
     public function getByCommentatorData(CommentatorDTO $commentator): ?Commentator
     {
+        if ($commentator->id) {
+            $obj = $this->find($commentator->id);
+            if ($obj) {
+                return $obj;
+            }
+        }
+
         $qb = $this->createQueryBuilder('c');
         $qb
             ->where($qb->expr()->eq('c.name', ':name'))

@@ -11,6 +11,7 @@ use App\API\DataConverter;
 use App\DTO\ArticleDTO;
 use App\DTO\CommentatorDTO;
 use App\DTO\CommentDTO;
+use App\DTO\CommentUserDTO;
 use App\Entity\LjCommentMeta;
 use App\Entity\LjPost;
 use App\Entity\Post;
@@ -33,7 +34,8 @@ class ExportArticleCommand extends Command
     private CommentManager $commentManager;
     private EntityRepository $commentMetaRepo;
 
-    private $postersMap = [];
+    private array $postersMap = [];
+    private array $commentsMap = [];
 
     public function __construct(
         DataConverter $dataConverter,
@@ -66,6 +68,13 @@ class ExportArticleCommand extends Command
     {
         $articleId = (int)$input->getArgument('articleId');
 
+        $obj = $this->em->getRepository(LjPost::class)->findOneBy(['ljItemId' => $articleId]);
+        if ($obj) {
+            $output->writeln("Was exported:\tID=<info>" . $obj->getPost()->getId() . '</info>');
+
+            return 0;
+        }
+
         $ljPost = $this->exportArticle($articleId, $output);
         if (is_null($ljPost)) {
             return 1;
@@ -78,14 +87,6 @@ class ExportArticleCommand extends Command
 
     private function exportArticle(int $articleId, OutputInterface $output): ?LjPost
     {
-        $ljPostsRepo = $this->em->getRepository(LjPost::class);
-        $obj = $ljPostsRepo->findOneBy(['ljItemId' => $articleId]);
-        if ($obj) {
-            $output->writeln("Was exported:\tID=<info>" . $obj->getPost()->getId() . '</info>');
-
-            return $obj;
-        }
-
         $articleDTO = null;
         foreach (glob(APP_VAR_DIR . '/livejournal/posts-xml/*.xml') as $filename) {
             $file = pathinfo($filename, PATHINFO_BASENAME);
@@ -188,8 +189,6 @@ class ExportArticleCommand extends Command
 
     private function saveComment(SimpleXMLElement $data, int $postId, OutputInterface $output)
     {
-        var_dump($data);
-
         $dto = new CommentDTO();
 
         $dto->topicId = $postId;
@@ -205,23 +204,55 @@ class ExportArticleCommand extends Command
             $text .= $body;
         }
 
-        $dto->text = $text ?: 'empty';
+        $dto->text = $text ?: 'empty body';
 
         $created = new DateTime((string)$data->date);
         $created->setTimezone(new DateTimeZone('Europe/Kiev'));
         $dto->forceCreatedAt = $created->format('Y-m-d H:i:s') . '.' . (new DateTime())->format('v');
 
-        $this->setSender($dto, (int)$data['posterid']);
+        $posterId = (int)$data['posterid'];
+        $this->setSender($dto, $posterId);
+
+        if ((string)$data['state']) {
+            $dto->deleted = true;
+        }
+
+        $parentId = (string)$data['parentid'];
+        if ($parentId && isset($this->commentsMap[$parentId])) {
+            $dto->parentId = $this->commentsMap[$parentId];
+        }
 
         try {
-            var_dump($dto);
-            exit;
             $comment = $this->commentManager->saveExternalComment($dto);
+            $output->writeln('Comment saved, ID: <comment>' . $data['id'] . '</comment>');
         } catch (Throwable $e) {
             $output->writeln('<error>' . $e->getMessage() . '</error>');
-
             exit;
         }
+
+        if (!isset($this->postersMap[$posterId])) {
+            $user = $comment->getUser();
+            if ($user) {
+                $userDto = new CommentUserDTO();
+                $userDto->id = $user->getId();
+                $this->postersMap[$posterId] = $userDto;
+            }
+
+            $commentator = $comment->getCommentator();
+            if ($commentator) {
+                $commentatorDto = new CommentatorDTO();
+                $commentatorDto->id = $commentator->getId();
+                $this->postersMap[$posterId] = $commentatorDto;
+
+                $meta = $this->commentMetaRepo->findOneBy(['posterId' => $posterId]);
+                if ($meta) {
+                    $meta->setCommentator($commentator);
+                    $this->em->flush();
+                }
+            }
+        }
+
+        $this->commentsMap[(string)$data['id']] = $comment->getId();
     }
 
     private function setSender(CommentDTO $commentDTO, int $posterId): void
@@ -232,11 +263,42 @@ class ExportArticleCommand extends Command
             return;
         }
 
+        if (isset($this->postersMap[$posterId])) {
+            $cached = $this->postersMap[$posterId];
+            if ($cached instanceof CommentUserDTO) {
+                $commentDTO->user = $cached;
+            } elseif ($cached instanceof CommentatorDTO) {
+                $commentDTO->commentator = $cached;
+            }
+
+            return;
+        }
+
+        /* @var LjCommentMeta|null $meta */
         $meta = $this->commentMetaRepo->findOneBy(['posterId' => $posterId]);
         if (!$meta) {
             $commentDTO->commentator = $this->postersMap[0];
 
             return;
         }
+
+        $user = $meta->getUser();
+        if ($user) {
+            $userDto = new CommentUserDTO();
+            $userDto->id = $user->getId();
+            $commentDTO->user = $userDto;
+
+            return;
+        }
+
+        $commentatorDto = new CommentatorDTO();
+        $commentator = $meta->getCommentator();
+        if ($commentator) {
+            $commentatorDto->id = $commentator->getId();
+        } else {
+            $commentatorDto->name = $meta->getLjName();
+        }
+
+        $commentDTO->commentator = $commentatorDto;
     }
 }

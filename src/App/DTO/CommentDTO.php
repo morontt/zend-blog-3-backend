@@ -22,7 +22,7 @@ class CommentDTO
     /**
      * @var string|null
      */
-    public $userAgent;
+    public $userAgent = '';
 
     /**
      * @var string|null

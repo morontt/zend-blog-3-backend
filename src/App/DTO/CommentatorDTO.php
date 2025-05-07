@@ -22,12 +22,15 @@ class CommentatorDTO
     public $website;
 
     /**
+     * @var int|null
+     */
+    public $id;
+
+    /**
      * @return string|null
      */
     public function getNormalizedURL(): ?string
     {
-        $filter = new UriNormalize(['enforcedScheme' => 'http']);
-
-        return $filter->filter($this->website);
+        return (new UriNormalize(['enforcedScheme' => 'http']))->filter($this->website);
     }
 }

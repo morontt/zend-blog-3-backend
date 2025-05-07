@@ -118,6 +118,10 @@ class CommentManager
         }
         $comment->setForceCreatedAt($dtForce);
 
+        if ($commentData->deleted) {
+            $comment->setDeleted(true);
+        }
+
         $this->commentRepo->save($comment);
 
         $this->dispatcher->dispatch(new CommentEvent($comment));

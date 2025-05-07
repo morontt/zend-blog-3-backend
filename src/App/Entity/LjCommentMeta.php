@@ -89,6 +89,13 @@ class LjCommentMeta
         return $this->commentator;
     }
 
+    public function setCommentator(?Commentator $commentator): self
+    {
+        $this->commentator = $commentator;
+
+        return $this;
+    }
+
     public function getUser(): ?User
     {
         return $this->user;
