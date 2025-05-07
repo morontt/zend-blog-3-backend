@@ -47,18 +47,36 @@ class ExportArticleCommand extends Command
         $file = $input->getArgument('file');
         $articleId = (int)$input->getArgument('articleId');
 
+        $ljPost = $this->exportArticle($articleId, $file, $output);
+        if (is_null($ljPost)) {
+            return 1;
+        }
+
+        return 0;
+    }
+
+    private function exportArticle(int $articleId, string $file, OutputInterface $output): ?LjPost
+    {
+        $ljPostsRepo = $this->em->getRepository(LjPost::class);
+        $obj = $ljPostsRepo->findOneBy(['ljItemId' => $articleId]);
+        if ($obj) {
+            $output->writeln("Was exported:\tID=" . $obj->getPost()->getId());
+
+            return $obj;
+        }
+
         $dataStr = @file_get_contents(APP_VAR_DIR . '/livejournal/posts-xml/' . $file);
         if ($dataStr === false) {
             $output->writeln('<error>file ' . $file . ' cannot be read</error>');
 
-            return 1;
+            return null;
         }
 
         $data = @simplexml_load_string($dataStr);
         if ($data === false) {
             $output->writeln('<error>invalid data on file ' . $file . '</error>');
 
-            return 1;
+            return null;
         }
 
         $articleDTO = null;
@@ -91,7 +109,7 @@ class ExportArticleCommand extends Command
         if ($articleDTO === null) {
             $output->writeln('<error>Article not found</error>');
 
-            return 1;
+            return null;
         }
 
         $post = new Post();
@@ -109,6 +127,6 @@ class ExportArticleCommand extends Command
         $this->em->persist($ljPost);
         $this->em->flush();
 
-        return 0;
+        return $ljPost;
     }
 }

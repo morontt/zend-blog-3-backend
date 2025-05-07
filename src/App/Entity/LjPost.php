@@ -7,6 +7,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,9 +33,9 @@ class LjPost
      *
      * @ORM\OneToOne(targetEntity="Post")
      *
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
-    protected $post;
+    private $post;
 
     /**
      * @var int
@@ -42,6 +43,18 @@ class LjPost
      * @ORM\Column(type="integer", unique=true)
      */
     private $ljItemId;
+
+    /**
+     * @var DateTime
+     *
+     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
+     */
+    private $timeCreated;
+
+    public function __construct()
+    {
+        $this->timeCreated = new DateTime();
+    }
 
     public function getId(): int
     {
