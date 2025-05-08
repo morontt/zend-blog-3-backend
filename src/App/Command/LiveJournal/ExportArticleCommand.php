@@ -12,6 +12,7 @@ use App\DTO\ArticleDTO;
 use App\DTO\CommentatorDTO;
 use App\DTO\CommentDTO;
 use App\DTO\CommentUserDTO;
+use App\Entity\LjComment;
 use App\Entity\LjCommentMeta;
 use App\Entity\LjPost;
 use App\Entity\Post;
@@ -222,9 +223,18 @@ class ExportArticleCommand extends Command
             $dto->parentId = $this->commentsMap[$parentId];
         }
 
+        $ljCommentId = (string)$data['id'];
+
         try {
             $comment = $this->commentManager->saveExternalComment($dto);
-            $output->writeln('Comment saved, ID: <comment>' . $data['id'] . '</comment>');
+
+            $preview = str_replace("\n", ' ', $comment->getText());
+            if (mb_strlen($preview) > 32) {
+                $preview = mb_substr($preview, 0, 29) . '...';
+            }
+            $output->writeln(
+                sprintf("Comment saved, ID: <comment>%s\t%s</comment>", $ljCommentId, $preview)
+            );
         } catch (Throwable $e) {
             $output->writeln('<error>' . $e->getMessage() . '</error>');
             exit;
@@ -252,7 +262,15 @@ class ExportArticleCommand extends Command
             }
         }
 
-        $this->commentsMap[(string)$data['id']] = $comment->getId();
+        $this->commentsMap[$ljCommentId] = $comment->getId();
+
+        $ljCommObj = new LjComment();
+        $ljCommObj
+            ->setComment($comment)
+            ->setLjId((int)$ljCommentId)
+        ;
+        $this->em->persist($ljCommObj);
+        $this->em->flush();
     }
 
     private function setSender(CommentDTO $commentDTO, int $posterId): void
