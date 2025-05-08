@@ -17,6 +17,7 @@ use App\Entity\LjCommentMeta;
 use App\Entity\LjPost;
 use App\Entity\Post;
 use App\Service\CommentManager;
+use App\Utils\LiveJournalHelper;
 use DateTime;
 use DateTimeZone;
 use Doctrine\ORM\EntityManagerInterface;
@@ -205,7 +206,7 @@ class ExportArticleCommand extends Command
             $text .= $body;
         }
 
-        $dto->text = $text ?: 'empty body';
+        $dto->text = $text ? LiveJournalHelper::replaceUserTag($text) : 'empty body';
 
         $created = new DateTime((string)$data->date);
         $created->setTimezone(new DateTimeZone('Europe/Kiev'));

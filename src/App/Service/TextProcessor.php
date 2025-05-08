@@ -11,6 +11,7 @@ namespace App\Service;
 use App\Entity\Post;
 use App\Repository\MediaFileRepository;
 use App\Repository\PygmentsCodeRepository;
+use App\Utils\LiveJournalHelper;
 
 class TextProcessor
 {
@@ -52,8 +53,10 @@ class TextProcessor
     public function processing(Post $entity)
     {
         $text = $this->codeSnippetProcessing($entity->getRawText());
+        $text = $this->ljUserProcessing($text);
+        $text = $this->imageProcessing($text);
 
-        $entity->setText($this->imageProcessing($text));
+        $entity->setText($text);
         $entity->setPreview($this->preview($text));
     }
 
@@ -110,6 +113,11 @@ class TextProcessor
             $func,
             $text
         );
+    }
+
+    private function ljUserProcessing(string $text): string
+    {
+        return LiveJournalHelper::replaceUserTag($text);
     }
 
     public function replaceImagesForArticle(array $matches)

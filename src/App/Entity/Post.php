@@ -588,4 +588,9 @@ class Post
 
         return $this;
     }
+
+    public function getVirtualCreated(): DateTime
+    {
+        return $this->forceCreatedAt ?? $this->timeCreated;
+    }
 }

@@ -82,7 +82,7 @@ class CommentManager
 
         $filter = new StripTags([
             'allowTags' => ['a', 's', 'b', 'i', 'em', 'strong', 'img', 'p'],
-            'allowAttribs' => ['src', 'href'],
+            'allowAttribs' => ['src', 'href', 'class'],
         ]);
 
         $comment = new Comment();
