@@ -113,7 +113,7 @@ class ExportArticleCommand extends Command
                     $articleDTO->hidden = true;
                     $articleDTO->title = (string)$item->subject;
                     $articleDTO->categoryId = 91;
-                    $articleDTO->text = (string)$item->event;
+                    $articleDTO->text = LiveJournalHelper::clearLjCutTag((string)$item->event);
                     $articleDTO->tagsString = 'из жеже';
 
                     $output->writeln(sprintf("Parsed file:\t<comment>%s</comment>", $file));
