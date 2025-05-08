@@ -11,16 +11,27 @@ class ArticleUpdatedAtListener
     /**
      * @param PreUpdateEventArgs $args
      */
-    public function preUpdate(PreUpdateEventArgs $args)
+    public function preUpdate(PreUpdateEventArgs $args): void
     {
         $entity = $args->getObject();
-        if (($entity instanceof Post) && $args->hasChangedField('text')) {
-            $entity->setUpdatedAt(new DateTime());
+        if ($entity instanceof Post) {
+            $changed = false;
+            if ($args->hasChangedField('text')) {
+                $entity->setUpdatedAt(new DateTime());
+                $changed = true;
+            }
 
-            $em = $args->getEntityManager();
+            if ($args->hasChangedField('timeCreated') || $args->hasChangedField('forceCreatedAt')) {
+                $entity->recalculateSortField();
+                $changed = true;
+            }
 
-            $meta = $em->getClassMetadata(Post::class);
-            $em->getUnitOfWork()->recomputeSingleEntityChangeSet($meta, $entity);
+            if ($changed) {
+                $em = $args->getEntityManager();
+
+                $meta = $em->getClassMetadata(Post::class);
+                $em->getUnitOfWork()->recomputeSingleEntityChangeSet($meta, $entity);
+            }
         }
     }
 }

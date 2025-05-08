@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\DTO\ArticleDTO;
+use App\Validator\Constraints\DateTimeString;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -83,6 +84,16 @@ class ArticleFormType extends AbstractType
                 TextType::class,
                 [
                     'required' => false,
+                ]
+            )
+            ->add(
+                'forceCreatedAt',
+                TextType::class,
+                [
+                    'required' => false,
+                    'constraints' => [
+                        new DateTimeString(),
+                    ],
                 ]
             )
         ;

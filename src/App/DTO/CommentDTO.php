@@ -22,7 +22,7 @@ class CommentDTO
     /**
      * @var string|null
      */
-    public $userAgent;
+    public $userAgent = '';
 
     /**
      * @var string|null
@@ -38,4 +38,14 @@ class CommentDTO
      * @var int
      */
     public $parentId = 0;
+
+    /**
+     * @var string|null
+     */
+    public $forceCreatedAt;
+
+    /**
+     * @var bool
+     */
+    public $deleted = false;
 }

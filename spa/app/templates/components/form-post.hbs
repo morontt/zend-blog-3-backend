@@ -21,19 +21,27 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label class="col-lg-2 control-label required">Slug:</label>
-                    <div class="col-lg-10">
+                    <label class="col-lg-3 control-label required">Slug:</label>
+                    <div class="col-lg-9">
                         {{input class="form-control"
                             type="text"
                             value=model.url}}
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-lg-2 control-label required">Категория:</label>
-                    <div class="col-lg-10">
+                    <label class="col-lg-3 control-label required">Категория:</label>
+                    <div class="col-lg-9">
                         {{select-field
                             content=categoryChoices
                             selectedValue=model.categoryId}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label required">Force Created:</label>
+                    <div class="col-lg-9">
+                        {{input class="form-control"
+                            type="text"
+                            value=model.forceCreatedAt}}
                     </div>
                 </div>
             </div>

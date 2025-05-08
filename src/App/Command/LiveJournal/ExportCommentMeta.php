@@ -9,6 +9,7 @@ namespace App\Command\LiveJournal;
 
 use App\Entity\LjCommentMeta;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -16,12 +17,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ExportCommentMeta extends Command
 {
     private EntityManagerInterface $em;
+    private EntityRepository $commentMetaRepo;
 
     public function __construct(EntityManagerInterface $em)
     {
         parent::__construct();
 
         $this->em = $em;
+        $this->commentMetaRepo = $this->em->getRepository(LjCommentMeta::class);
     }
 
     protected function configure(): void
@@ -34,14 +37,22 @@ class ExportCommentMeta extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $meta = simplexml_load_string(file_get_contents(APP_VAR_DIR . '/livejournal/comments-xml/comment_meta.xml'));
+        $meta = simplexml_load_string(
+            file_get_contents(APP_VAR_DIR . '/livejournal/comments-xml/comment_meta_9999.xml')
+        );
         $cnt = 0;
         foreach ($meta->usermaps[0] as $item) {
+            $posterId = (int)$item['id'];
+            $metaObj = $this->commentMetaRepo->findOneBy(['posterId' => $posterId]);
+            if ($metaObj) {
+                continue;
+            }
+
             $commentMeta = new LjCommentMeta();
             $this->em->persist($commentMeta);
 
             $commentMeta
-                ->setPosterId((int)$item['id'])
+                ->setPosterId($posterId)
                 ->setLjName((string)$item['user'])
             ;
 

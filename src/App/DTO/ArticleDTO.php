@@ -42,5 +42,10 @@ class ArticleDTO extends BaseObject
     /**
      * @var bool
      */
-    public $disableComments;
+    public $disableComments = false;
+
+    /**
+     * @var string|null
+     */
+    public $forceCreatedAt;
 }

@@ -10,6 +10,8 @@ use App\Repository\CommentatorRepository;
 use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
+use DateTime;
+use Exception;
 use Laminas\Filter\StripTags;
 use LogicException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -105,6 +107,19 @@ class CommentManager
             $comment->setUser($user);
         } else {
             throw new LogicException('Comment without sender');
+        }
+
+        $dtForce = null;
+        if ($commentData->forceCreatedAt) {
+            try {
+                $dtForce = new DateTime($commentData->forceCreatedAt);
+            } catch (Exception $e) {
+            }
+        }
+        $comment->setForceCreatedAt($dtForce);
+
+        if ($commentData->deleted) {
+            $comment->setDeleted(true);
         }
 
         $this->commentRepo->save($comment);

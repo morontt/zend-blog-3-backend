@@ -118,6 +118,13 @@ class Comment implements CommentInterface
      */
     private $nestedSet;
 
+    /**
+     * @var DateTime|null
+     *
+     * @ORM\Column(type="milliseconds_dt", nullable=true)
+     */
+    private $forceCreatedAt;
+
     public function __construct()
     {
         $this->children = new ArrayCollection();
@@ -414,6 +421,18 @@ class Comment implements CommentInterface
     public function setNestedSet(NestedSet $nestedSet): self
     {
         $this->nestedSet = $nestedSet;
+
+        return $this;
+    }
+
+    public function getForceCreatedAt(): ?DateTime
+    {
+        return $this->forceCreatedAt;
+    }
+
+    public function setForceCreatedAt(?DateTime $forceCreatedAt = null): self
+    {
+        $this->forceCreatedAt = $forceCreatedAt;
 
         return $this;
     }

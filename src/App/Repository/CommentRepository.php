@@ -141,6 +141,7 @@ class CommentRepository extends ServiceEntityRepository
 
         if ($new) {
             if ($parent = $entity->getParent()) {
+                $this->getEntityManager()->refresh($parent);
                 $this->addToTree(
                     $entity,
                     $parent->getNestedSet()->getRightKey(),
