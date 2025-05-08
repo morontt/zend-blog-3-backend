@@ -54,10 +54,9 @@ class TextProcessor
     {
         $text = $this->codeSnippetProcessing($entity->getRawText());
         $text = $this->ljUserProcessing($text);
-        $text = $this->imageProcessing($text);
 
-        $entity->setText($text);
-        $entity->setPreview($this->preview($text));
+        $entity->setText($this->imageProcessing($text));
+        $entity->setPreview($this->imageProcessingPreview($text));
     }
 
     /**
@@ -79,7 +78,7 @@ class TextProcessor
      *
      * @return string
      */
-    private function preview(string $text): string
+    private function imageProcessingPreview(string $text): string
     {
         $preview = explode('<!-- cut -->', $text);
 

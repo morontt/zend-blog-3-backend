@@ -244,16 +244,16 @@ class DataConverter
         return $this->getPost($entity);
     }
 
-    /**
-     * @param Entity\MediaFile $entity
-     * @param array $data
-     *
-     * @return array
-     */
     public function saveMediaFile(Entity\MediaFile $entity, array $data): array
     {
+        $oldPostId = null;
+        if ($oldPost = $entity->getPost()) {
+            $oldPostId = $oldPost->getId();
+        }
+
         Transformers\MediaFileTransformer::reverseTransform($entity, $data);
 
+        $newPostId = null;
         if ($data['postId']) {
             $post = $this->em->getRepository(Entity\Post::class)->find((int)$data['postId']);
             if ($post) {
@@ -261,12 +261,25 @@ class DataConverter
                 if ($this->em->getRepository(Entity\MediaFile::class)->getCountByPostId((int)$data['postId']) === 0) {
                     $entity->setDefaultImage(true);
                 }
+                $newPostId = $post->getId();
             }
         } else {
             $entity->setPost(null);
         }
 
         $this->save($entity);
+
+        if ($oldPostId) {
+            $post = $this->em->getRepository(Entity\Post::class)->find($oldPostId);
+            $this->textProcessor->processing($post);
+            $this->em->flush();
+        }
+
+        if ($newPostId && $newPostId !== $oldPostId) {
+            $post = $this->em->getRepository(Entity\Post::class)->find($newPostId);
+            $this->textProcessor->processing($post);
+            $this->em->flush();
+        }
 
         return $this->getMediaFile(new Image($entity));
     }

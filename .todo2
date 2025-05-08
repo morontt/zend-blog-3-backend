@@ -428,7 +428,8 @@
     {
       "text": "Featured image not work",
       "priority": "high",
-      "creation": 1719346855
+      "creation": 1719346855,
+      "completion": 1746732145
     },
     {
       "text": "Update page views counter hourly",
