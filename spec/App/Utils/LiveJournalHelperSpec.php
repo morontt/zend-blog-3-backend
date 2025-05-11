@@ -29,10 +29,10 @@ class LiveJournalHelperSpec extends ObjectBehavior
 
     public function it_is_lj_community_replace()
     {
-        $text = "в сообществе <lj comm=\"ru_radio_electr\"> на";
+        $text = 'в сообществе <lj comm="ru_radio_electr"> на';
 
-        $want = "в сообществе <a href=\"https://ru-radio-electr.livejournal.com/\"";
-        $want .= " class=\"lj-comm\">ru_radio_electr</a> на";
+        $want = 'в сообществе <a href="https://ru-radio-electr.livejournal.com/"';
+        $want .= ' class="lj-comm">ru_radio_electr</a> на';
 
         $this::replaceUserTag($text)->shouldReturn($want);
     }
