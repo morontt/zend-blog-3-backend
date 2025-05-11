@@ -67,7 +67,7 @@ class CommentRepository extends ServiceEntityRepository
         $qb->getQuery()->execute();
     }
 
-    public function updateUserComments(int $userId)
+    public function updateUserComments(int $userId): void
     {
         $qb = $this->createQueryBuilder('c');
         $qb
@@ -76,6 +76,20 @@ class CommentRepository extends ServiceEntityRepository
             ->where($qb->expr()->eq('c.user', ':id'))
             ->setParameter('now', (new DateTime())->format(MillisecondsDateTime::FORMAT_TIME))
             ->setParameter('id', $userId)
+        ;
+
+        $qb->getQuery()->execute();
+    }
+
+    public function updateCommentsByCommentator(int $commId): void
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb
+            ->update()
+            ->set('c.lastUpdate', ':now')
+            ->where($qb->expr()->eq('c.commentator', ':id'))
+            ->setParameter('now', (new DateTime())->format(MillisecondsDateTime::FORMAT_TIME))
+            ->setParameter('id', $commId)
         ;
 
         $qb->getQuery()->execute();

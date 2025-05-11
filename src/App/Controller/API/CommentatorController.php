@@ -11,7 +11,9 @@ namespace App\Controller\API;
 use App\Controller\BaseController;
 use App\Entity\Commentator;
 use App\Entity\ViewCommentator;
+use App\Event\UpdateCommentatorEvent;
 use App\Repository\CommentatorRepository;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -63,14 +65,20 @@ class CommentatorController extends BaseController
      * @Route("/{id}", requirements={"id": "\d+"}, methods={"PUT"})
      *
      * @param Request $request
+     * @param EventDispatcherInterface $dispatcher
      * @param Commentator $entity
      *
      * @return JsonResponse
      */
-    public function updateAction(Request $request, Commentator $entity): JsonResponse
-    {
+    public function updateAction(
+        Request $request,
+        EventDispatcherInterface $dispatcher,
+        Commentator $entity
+    ): JsonResponse {
         $result = $this->getDataConverter()
             ->saveCommentator($entity, $request->request->get('commentator'));
+
+        $dispatcher->dispatch(new UpdateCommentatorEvent($entity));
 
         return new JsonResponse($result);
     }
