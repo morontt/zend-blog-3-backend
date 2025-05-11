@@ -20,8 +20,19 @@ class LiveJournalHelperSpec extends ObjectBehavior
     public function it_is_ljuser_replace()
     {
         $text = "спасибо <lj user=\"iridos_indium\">\nснимок выпросил у него\n<lj user=\"vasia\"> ";
+
         $want = "спасибо <a href=\"https://iridos-indium.livejournal.com/\" class=\"lj-user\">iridos_indium</a>\n";
         $want .= "снимок выпросил у него\n<a href=\"https://vasia.livejournal.com/\" class=\"lj-user\">vasia</a> ";
+
+        $this::replaceUserTag($text)->shouldReturn($want);
+    }
+
+    public function it_is_lj_community_replace()
+    {
+        $text = "в сообществе <lj comm=\"ru_radio_electr\"> на";
+
+        $want = "в сообществе <a href=\"https://ru-radio-electr.livejournal.com/\"";
+        $want .= " class=\"lj-comm\">ru_radio_electr</a> на";
 
         $this::replaceUserTag($text)->shouldReturn($want);
     }
