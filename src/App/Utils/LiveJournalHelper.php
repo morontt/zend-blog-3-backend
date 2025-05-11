@@ -16,7 +16,7 @@ class LiveJournalHelper
             static function (array $matches) {
                 return sprintf(
                     '<a href="https://%s.livejournal.com/" class="lj-user">%s</a>',
-                    $matches['name'],
+                    str_replace('_', '-', $matches['name']),
                     $matches['name']
                 );
             },
