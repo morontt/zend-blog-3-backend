@@ -241,6 +241,11 @@ class DataConverter
 
         $this->save($entity);
 
+        if ($media = $entity->getDefaultImage()) {
+            $media->setLastUpdate(new DateTime());
+            $this->em->flush();
+        }
+
         return $this->getPost($entity);
     }
 

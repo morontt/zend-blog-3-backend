@@ -31,7 +31,6 @@ class MediaFilePictureListener
             && $entity->isImage()
             && $entity->isDefaultImage()
             && !$args->hasChangedField('pictureTag')
-            && ($args->hasChangedField('defaultImage') || $args->hasChangedField('description'))
         ) {
             $picture = $this->ptb->featuredPictureTag($entity);
             $entity->setPictureTag($picture);
