@@ -98,6 +98,10 @@ services:
         tags:
             - { name: kernel.event_listener, event: App\Event\CommentEvent }
 
+    App\EventListener\Comment\UpdateCommentsListener:
+        tags:
+            - { name: kernel.event_listener, event: App\Event\UpdateCommentatorEvent }
+
     App\EventListener\PygmentsCodeUpdateListener:
         tags:
             - { name: kernel.event_listener, event: App\Event\PygmentCodeEvent }
