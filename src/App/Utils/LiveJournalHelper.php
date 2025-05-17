@@ -38,6 +38,6 @@ class LiveJournalHelper
 
     public static function clearLjCutTag(string $text): string
     {
-        return preg_replace('/<\/?lj-cut(?:\s+text=".+")?>/m', '', $text);
+        return preg_replace('/<\/?lj-cut(?:\s+text="[^"]+")?>/m', '', $text);
     }
 }

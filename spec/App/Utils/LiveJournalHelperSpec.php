@@ -44,4 +44,12 @@ class LiveJournalHelperSpec extends ObjectBehavior
 
         $this::clearLjCutTag($text)->shouldReturn($want);
     }
+
+    public function it_is_clear_lj_cut_part2()
+    {
+        $text = '<p><lj-cut text="Больше всего порадовала...">Больше всего порадовала <a target="_blank" href="http://example.org/IMG.JPG">коробка</a></p>';
+        $want = '<p>Больше всего порадовала <a target="_blank" href="http://example.org/IMG.JPG">коробка</a></p>';
+
+        $this::clearLjCutTag($text)->shouldReturn($want);
+    }
 }
