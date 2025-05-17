@@ -1,0 +1,41 @@
+<div class="modal fade" id="modal_avatar" tabindex="-1" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button"
+                        class="close"
+                        aria-label="Close"
+                        {{action "closeModal"}}>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Новый аватар</h4>
+            </div>
+            <div class="modal-body">
+                <div>Для <strong id="object-name"></strong></div>
+                <form id="avatar-form" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input type="file" name="upload" id="upload-image"/>
+                    </div>
+                    {{#if hasErrors}}
+                        <div class="alert alert-danger" role="alert">
+                            <ul>
+                                {{#each errors as |error|}}
+                                    {{error}}
+                                {{/each}}
+                            </ul>
+                        </div>
+                    {{/if}}
+                    <input type="hidden"
+                           id="commentator_id"
+                           name="commentator_id"/>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        {{action "sendFile"}}
+                        class="btn btn-primary">Отправить</button>
+            </div>
+        </div>
+    </div>
+</div>

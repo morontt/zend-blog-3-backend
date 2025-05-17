@@ -8,8 +8,10 @@
 
 namespace App\Service;
 
+use App\Entity\Commentator;
 use App\Entity\MediaFile;
 use App\Entity\Post;
+use App\Exception\ObjectNotFoundException;
 use App\Model\Image;
 use DateTime;
 use Doctrine\ORM\EntityManager;
@@ -93,6 +95,48 @@ class ImageManager
         $this->em->flush();
 
         unlink($localPath);
+    }
+
+    /**
+     * @throws ObjectNotFoundException
+     */
+    public function uploadAvatar($commentatorId, UploadedFile $file): void
+    {
+        $commentator = $this->em->getRepository(Commentator::class)->find((int)$commentatorId);
+        if (!$commentator) {
+            throw new ObjectNotFoundException();
+        }
+
+        switch ($file->getMimeType()) {
+            case 'image/png':
+                $ext = '.png';
+                break;
+            case 'image/jpeg':
+                $ext = '.jpg';
+                break;
+            default:
+                $ext = '.out';
+        }
+
+        $fileName = $file->getClientOriginalName();
+        $file->move($this->getTempDirectory(), $fileName);
+
+        $localPath = $this->getTempDirectory() . '/' . $fileName;
+
+        // TODO check file is exist
+        $remotePath = '/var/www/resources/data/pictures/commentator.' . $commentator->getId() . $ext;
+
+        $fs = new Filesystem();
+        $fs->copy(
+            $localPath,
+            $remotePath,
+            true
+        );
+
+        unlink($localPath);
+
+        $commentator->setAvatarVariant(1 + $commentator->getAvatarVariant());
+        $this->em->flush();
     }
 
     /**
