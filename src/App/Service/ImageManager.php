@@ -8,12 +8,16 @@
 
 namespace App\Service;
 
+use App\Entity\Commentator;
 use App\Entity\MediaFile;
 use App\Entity\Post;
+use App\Event\UpdateCommentatorEvent;
+use App\Exception\ObjectNotFoundException;
 use App\Model\Image;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -28,14 +32,16 @@ class ImageManager
 
     private string $imageBasepath;
 
-    /**
-     * @param EntityManagerInterface $em
-     * @param string $cdnUrl
-     */
-    public function __construct(EntityManagerInterface $em, string $cdnUrl)
-    {
+    private EventDispatcherInterface $dispatcher;
+
+    public function __construct(
+        EntityManagerInterface $em,
+        EventDispatcherInterface $dispatcher,
+        string $cdnUrl
+    ) {
         $this->em = $em;
         $this->imageBasepath = $cdnUrl . self::getImageBasePath() . '/';
+        $this->dispatcher = $dispatcher;
     }
 
     /**
@@ -93,6 +99,50 @@ class ImageManager
         $this->em->flush();
 
         unlink($localPath);
+    }
+
+    /**
+     * @throws ObjectNotFoundException
+     */
+    public function uploadAvatar($commentatorId, UploadedFile $file): void
+    {
+        $commentator = $this->em->getRepository(Commentator::class)->find((int)$commentatorId);
+        if (!$commentator) {
+            throw new ObjectNotFoundException();
+        }
+
+        switch ($file->getMimeType()) {
+            case 'image/png':
+                $ext = '.png';
+                break;
+            case 'image/jpeg':
+                $ext = '.jpg';
+                break;
+            default:
+                $ext = '.out';
+        }
+
+        $fileName = $file->getClientOriginalName();
+        $file->move($this->getTempDirectory(), $fileName);
+
+        $localPath = $this->getTempDirectory() . '/' . $fileName;
+
+        // TODO check file is exist
+        $remotePath = '/var/www/resources/data/pictures/commentator.' . $commentator->getId() . $ext;
+
+        $fs = new Filesystem();
+        $fs->copy(
+            $localPath,
+            $remotePath,
+            true
+        );
+
+        unlink($localPath);
+
+        $commentator->setAvatarVariant(1 + $commentator->getAvatarVariant());
+        $this->em->flush();
+
+        $this->dispatcher->dispatch(new UpdateCommentatorEvent($commentator));
     }
 
     /**

@@ -10,6 +10,8 @@ namespace App\Controller\API;
 
 use App\Controller\BaseController;
 use App\Entity\MediaFile;
+use App\Exception\ObjectNotFoundException;
+use App\Form\AvatarFormType;
 use App\Form\ImageFormType;
 use App\Model\Image;
 use App\Repository\MediaFileRepository;
@@ -140,6 +142,43 @@ class MediaFileController extends BaseController
                 $form->get('post_id')->getData(),
                 $form->get('upload')->getData()
             );
+        } else {
+            $messages = [];
+            foreach ($form->get('upload')->getErrors() as $error) {
+                $messages[] = $error->getMessage();
+            }
+
+            return new JsonResponse(['errors' => $messages], 422);
+        }
+
+        return new JsonResponse(true, 201);
+    }
+
+    /**
+     * @Route("/upload-avatar", name="upload_avatar", options={"expose"=true}, methods={"POST"})
+     *
+     * @param Request $request
+     * @param ImageManager $manager
+     *
+     * @throws \Doctrine\ORM\Exception\NotSupported
+     * @throws \Doctrine\ORM\Exception\ORMException
+     *
+     * @return JsonResponse
+     */
+    public function uploadAvatarAction(Request $request, ImageManager $manager): JsonResponse
+    {
+        $form = $this->createForm(AvatarFormType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $manager->uploadAvatar(
+                    $form->get('commentator_id')->getData(),
+                    $form->get('upload')->getData()
+                );
+            } catch (ObjectNotFoundException $e) {
+                return new JsonResponse(['errors' => ['Commentator not found']], 422);
+            }
         } else {
             $messages = [];
             foreach ($form->get('upload')->getErrors() as $error) {

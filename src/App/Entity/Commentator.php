@@ -98,6 +98,11 @@ class Commentator implements CommentatorInterface
      */
     private $rottenCheck;
 
+    /**
+     * @ORM\Column(type="smallint", options={"default": 0, "unsigned": true})
+     */
+    private $avatarVariant = 0;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -323,6 +328,18 @@ class Commentator implements CommentatorInterface
     public function setRottenCheck(?DateTime $rottenCheck): self
     {
         $this->rottenCheck = $rottenCheck;
+
+        return $this;
+    }
+
+    public function getAvatarVariant(): int
+    {
+        return $this->avatarVariant;
+    }
+
+    public function setAvatarVariant(int $avatarVariant): self
+    {
+        $this->avatarVariant = $avatarVariant;
 
         return $this;
     }

@@ -783,7 +783,14 @@
     {
       "text": "Custom images for commentators",
       "priority": "high",
-      "creation": 1747475548
+      "creation": 1747475548,
+      "tasks": [
+        {
+          "text": "Check file if exists",
+          "priority": "medium",
+          "creation": 1747507355
+        }
+      ]
     }
   ]
 }
