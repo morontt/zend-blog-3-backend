@@ -6,6 +6,9 @@ export default Ember.Component.extend({
     actions: {
         closeModal() {
             $('#modal_new_image').modal('hide');
+
+            this.set('hasErrors', false);
+            this.set('errors', []);
         },
         sendFile() {
             var them = this;

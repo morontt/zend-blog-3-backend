@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ImageFormType extends AbstractType
 {
@@ -41,6 +42,7 @@ class ImageFormType extends AbstractType
                         new Image([
                             'maxSize' => '4M',
                         ]),
+                        new NotBlank(),
                     ],
                 ]
             )
