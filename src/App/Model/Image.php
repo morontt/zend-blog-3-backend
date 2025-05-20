@@ -144,8 +144,15 @@ class Image
      */
     public function getPreview(string $size, ?string $format = null): ?string
     {
-        $newPath = $this->getPathBySize($this->media->getPath(), $size, $format);
-        $fsPath = ImageManager::getUploadsDir() . '/' . $this->media->getPath();
+        if ($this->media->isImage()) {
+            $mediaPath = $this->media->getPath();
+            $fsPath = ImageManager::getUploadsDir() . '/' . $mediaPath;
+        } else {
+            $mediaPath = 'not_image.png';
+            $fsPath = APP_WEB_DIR . '/img/' . $mediaPath;
+        }
+
+        $newPath = $this->getPathBySize($mediaPath, $size, $format);
         $fsNewPath = ImageManager::getUploadsDir() . '/' . $newPath;
 
         if (!file_exists($fsNewPath) && file_exists($fsPath) && is_file($fsPath)) {
