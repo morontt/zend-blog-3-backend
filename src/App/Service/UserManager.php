@@ -74,7 +74,7 @@ class UserManager
 
         $email = $data->email;
         if (empty($email)) {
-            $email = $generatedUsername . '@xelbot.fake';
+            $email = User::fakeEmail($generatedUsername);
         }
 
         $user = $this->createUser($username, $email);
@@ -176,7 +176,7 @@ class UserManager
         $repository = $this->em->getRepository(User::class);
         do {
             $random = 'ext-' . str_pad(mt_rand(0, 9999999), 7, '0', STR_PAD_LEFT);
-            $obj = $repository->findOneByUsername($random);
+            $obj = $repository->getByRandomName($random);
         } while ($obj !== null);
 
         return $random;

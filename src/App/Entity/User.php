@@ -49,14 +49,14 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface, S
      *
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=128, unique=true)
      */
-    protected $username;
+    private $username;
 
     /**
      * @var string
@@ -65,70 +65,70 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface, S
      *
      * @Assert\Email()
      */
-    protected $email;
+    private $email;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string", length=96)
+     * @ORM\Column(name="password_hash", type="string", length=96)
      */
-    protected $password;
+    private $password;
 
     /**
      * @var string
      *
      * @ORM\Column(name="password_salt", type="string", length=32)
      */
-    protected $salt;
+    private $salt;
 
     /**
      * @var string
      *
      * @ORM\Column(type="string", length=24)
      */
-    protected $wsseKey;
+    private $wsseKey;
 
     /**
      * @var string
      *
      * @ORM\Column(name="user_type", type="string", length=16)
      */
-    protected $userType;
+    private $userType;
 
     /**
      * @var DateTime
      *
      * @ORM\Column(name="time_created", type="milliseconds_dt")
      */
-    protected $timeCreated;
+    private $timeCreated;
 
     /**
      * @var DateTime
      *
      * @ORM\Column(name="last_login", type="milliseconds_dt", nullable=true)
      */
-    protected $lastLogin;
+    private $lastLogin;
 
     /**
      * @var int
      *
      * @ORM\Column(type="integer")
      */
-    protected $loginCount = 0;
+    private $loginCount = 0;
 
     /**
      * @var string
      *
      * @ORM\Column(name="ip_last", type="string", length=15, nullable=true)
      */
-    protected $ipAddressLast;
+    private $ipAddressLast;
 
     /**
      * @var Collection
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user")
      */
-    protected $comments;
+    private $comments;
 
     /**
      * @var string|null
@@ -252,6 +252,11 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface, S
         }
 
         $this->wsseKey = strtr(base64_encode($randomBytes), '+/', '-_');
+    }
+
+    public static function fakeEmail(string $prefix): string
+    {
+        return $prefix . '@xelbot.fake';
     }
 
     /**

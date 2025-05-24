@@ -32,9 +32,6 @@ class UserRepository extends ServiceEntityRepository
             ->getQuery();
     }
 
-    /**
-     * @return User
-     */
     public function getAdmin(): User
     {
         $qb = $this->createQueryBuilder('u');
@@ -50,5 +47,18 @@ class UserRepository extends ServiceEntityRepository
         }
 
         return $user;
+    }
+
+    public function getByRandomName(string $random): ?User
+    {
+        $qb = $this->createQueryBuilder('u');
+        $qb
+            ->where($qb->expr()->eq('u.username', ':username'))
+            ->orWhere($qb->expr()->eq('u.email', ':email'))
+            ->setParameter('username', $random)
+            ->setParameter('email', User::fakeEmail($random))
+        ;
+
+        return $qb->getQuery()->getOneOrNullResult();
     }
 }
