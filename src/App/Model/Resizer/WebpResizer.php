@@ -2,12 +2,11 @@
 
 namespace App\Model\Resizer;
 
-use App\Model\ResizerInterface;
 use Imagick;
 use ImagickException;
 use RuntimeException;
 
-class WebpResizer implements ResizerInterface
+class WebpResizer extends CommonResizer
 {
     use DebugAnnotation;
 
@@ -21,6 +20,7 @@ class WebpResizer implements ResizerInterface
         }
 
         $image = new Imagick($filePath);
+        $this->orientate($image);
         $image->stripImage();
 
         $image->resizeImage($width, $height, Imagick::FILTER_LANCZOS, 1);
@@ -54,6 +54,7 @@ class WebpResizer implements ResizerInterface
         }
 
         $image = new Imagick($resourcePath . '/' . $filePath);
+        $this->orientate($image);
         $image->stripImage();
 
         $image->setFormat($this->getFormat());

@@ -2,11 +2,10 @@
 
 namespace App\Model\Resizer;
 
-use App\Model\ResizerInterface;
 use Imagick;
 use ImagickException;
 
-class DefaultResizer implements ResizerInterface
+class DefaultResizer extends CommonResizer
 {
     /**
      * @throws ImagickException
@@ -14,6 +13,7 @@ class DefaultResizer implements ResizerInterface
     public function resize(string $filePath, string $newFilePath, int $width, int $height)
     {
         $image = new Imagick($filePath);
+        $this->orientate($image);
         $image->thumbnailImage($width, $height);
 
         $image->writeImage($newFilePath);

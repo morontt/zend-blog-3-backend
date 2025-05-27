@@ -2,13 +2,12 @@
 
 namespace App\Model\Resizer;
 
-use App\Model\ResizerInterface;
 use Imagick;
 use ImagickException;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
-class PngResizer implements ResizerInterface
+class PngResizer extends CommonResizer
 {
     use DebugAnnotation;
 
@@ -19,6 +18,7 @@ class PngResizer implements ResizerInterface
     public function resize(string $filePath, string $newFilePath, int $width, int $height)
     {
         $image = new Imagick($filePath);
+        $this->orientate($image);
         $image->stripImage();
 
         $image->scaleImage($width, $height);

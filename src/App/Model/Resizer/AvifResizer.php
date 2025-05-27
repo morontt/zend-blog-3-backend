@@ -2,13 +2,12 @@
 
 namespace App\Model\Resizer;
 
-use App\Model\ResizerInterface;
 use Imagick;
 use ImagickException;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
-class AvifResizer implements ResizerInterface
+class AvifResizer extends CommonResizer
 {
     use DebugAnnotation;
 
@@ -18,6 +17,7 @@ class AvifResizer implements ResizerInterface
     public function resize(string $filePath, string $newFilePath, int $width, int $height)
     {
         $image = new Imagick($filePath);
+        $this->orientate($image);
         $image->stripImage();
 
         $image->resizeImage($width, $height, Imagick::FILTER_LANCZOS, 1);
@@ -64,6 +64,7 @@ class AvifResizer implements ResizerInterface
         }
 
         $image = new Imagick($resourcePath . '/' . $filePath);
+        $this->orientate($image);
         $image->stripImage();
 
         $image->setFormat('png');

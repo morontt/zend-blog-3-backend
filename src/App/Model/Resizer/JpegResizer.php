@@ -2,11 +2,10 @@
 
 namespace App\Model\Resizer;
 
-use App\Model\ResizerInterface;
 use Imagick;
 use ImagickException;
 
-class JpegResizer implements ResizerInterface
+class JpegResizer extends CommonResizer
 {
     use DebugAnnotation;
 
@@ -16,6 +15,7 @@ class JpegResizer implements ResizerInterface
     public function resize(string $filePath, string $newFilePath, int $width, int $height)
     {
         $image = new Imagick($filePath);
+        $this->orientate($image);
         $image->stripImage();
 
         $image->resizeImage($width, $height, Imagick::FILTER_LANCZOS, 1);
