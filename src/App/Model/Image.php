@@ -209,10 +209,25 @@ class Image
         try {
             $image = new Imagick($fsPath);
             $geometry = $image->getImageGeometry();
+            $orientation = $image->getImageOrientation();
             $image->clear();
 
-            $obj->width = $geometry['width'];
-            $obj->height = $geometry['height'];
+            if (in_array(
+                $orientation,
+                [
+                    Imagick::ORIENTATION_LEFTTOP,
+                    Imagick::ORIENTATION_RIGHTTOP,
+                    Imagick::ORIENTATION_RIGHTBOTTOM,
+                    Imagick::ORIENTATION_LEFTBOTTOM,
+                ],
+                true
+            )) {
+                $obj->width = $geometry['height'];
+                $obj->height = $geometry['width'];
+            } else {
+                $obj->width = $geometry['width'];
+                $obj->height = $geometry['height'];
+            }
         } catch (ImagickException $e) {
             // TODO add error to logger
         }
