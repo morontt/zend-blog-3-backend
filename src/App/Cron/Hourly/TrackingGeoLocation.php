@@ -36,6 +36,7 @@ class TrackingGeoLocation implements HourlyCronServiceInterface
             if ($location) {
                 $this->repository->updateLocation($location, $ip);
             }
+            sleep(1);
         }
     }
 

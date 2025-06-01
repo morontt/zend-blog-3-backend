@@ -59,7 +59,12 @@ class CommentGeoLocation implements DailyCronServiceInterface
         $commentRepo = $this->em->getRepository(Comment::class);
 
         $ips = $commentRepo->getUncheckedIps();
+        $first = true;
         foreach ($ips as $ip) {
+            if (!$first) {
+                sleep(1);
+            }
+            $first = false;
             $location = $this->ipInfo->getLocationByIp($ip);
             if ($location) {
                 $commentRepo->updateLocation($location, $ip);
