@@ -1,10 +1,41 @@
-FROM gitverse.ru/morontt/docker-zendblog-admin:1.0.1
+FROM php:8.2-apache-bookworm
+
+LABEL org.opencontainers.image.authors="Alexander Kharchenko <morontt@yandex.ru>"
 
 VOLUME ["/var/www/html", "/var/www/resources"]
 
 ARG HOST_UID=1000
 
-RUN yes | pecl install xdebug-3.1.6 \
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PHP_CPPFLAGS="$PHP_CPPFLAGS -std=c++11"
+ENV TZ="Europe/Moscow"
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+COPY ./custom-apt.sh /tmp/custom-apt.sh
+RUN bash /tmp/custom-apt.sh
+
+RUN docker-php-ext-install -j$(nproc) intl zip pdo_mysql opcache \
+    gmp \
+    && pecl install imagick \
+    && docker-php-ext-enable imagick
+
+COPY ./.bashrc /root/.bashrc
+#RUN cp ${PHP_INI_DIR}/php.ini-production ${PHP_INI_DIR}/php.ini \
+#    && sed -i 's/;date.timezone =/date.timezone = Europe\/Moscow/' ${PHP_INI_DIR}/php.ini \
+#    && sed -i 's/memory_limit = 128M/memory_limit = 512M/' ${PHP_INI_DIR}/php.ini \
+#    && sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 7M/' ${PHP_INI_DIR}/php.ini \
+#    && echo "LogFormat \"%a %l %u %t \\\"%r\\\" %>s %O \\\"%{User-Agent}i\\\"\" mainlog" >> /etc/apache2/apache2.conf
+#RUN a2enmod rewrite remoteip && a2dismod deflate -f
+
+RUN echo "LogFormat \"%a %l %u %t \\\"%r\\\" %>s %O \\\"%{User-Agent}i\\\"\" mainlog" >> /etc/apache2/apache2.conf
+RUN a2enmod rewrite remoteip && a2dismod deflate -f
+
+RUN set -x && curl -sS https://getcomposer.org/installer | php \
+    && mv composer.phar /usr/local/bin/composer
+
+RUN yes | pecl install xdebug-3.4.2 \
     && docker-php-ext-enable xdebug \
     && cp ${PHP_INI_DIR}/php.ini-development ${PHP_INI_DIR}/php.ini \
     && sed -i 's/;date.timezone =/date.timezone = Europe\/Moscow/' ${PHP_INI_DIR}/php.ini \
