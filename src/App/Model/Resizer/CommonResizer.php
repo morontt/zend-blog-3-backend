@@ -13,7 +13,7 @@ use Imagick;
 
 abstract class CommonResizer implements ResizerInterface
 {
-    abstract public function resize(string $filePath, string $newFilePath, int $width, int $height);
+    abstract public function resize(string $filePath, string $newFilePath, int $width, int $height): void;
 
     protected function orientate(Imagick $image): void
     {

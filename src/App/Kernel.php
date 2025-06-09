@@ -13,18 +13,6 @@ class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
 
-    public function __construct(string $environment, bool $debug)
-    {
-        parent::__construct($environment, $debug);
-
-        if (!defined('APP_VAR_DIR')) {
-            define('APP_VAR_DIR', dirname(__DIR__, 2) . '/var');
-        }
-        if (!defined('APP_WEB_DIR')) {
-            define('APP_WEB_DIR', dirname(__DIR__, 2) . '/web');
-        }
-    }
-
     public function getProjectDir(): string
     {
         return dirname(__DIR__, 2);

@@ -10,7 +10,7 @@ class DefaultResizer extends CommonResizer
     /**
      * @throws ImagickException
      */
-    public function resize(string $filePath, string $newFilePath, int $width, int $height)
+    public function resize(string $filePath, string $newFilePath, int $width, int $height): void
     {
         $image = new Imagick($filePath);
         $this->orientate($image);

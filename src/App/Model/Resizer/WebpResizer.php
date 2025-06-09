@@ -13,7 +13,7 @@ class WebpResizer extends CommonResizer
     /**
      * @throws ImagickException
      */
-    public function resize(string $filePath, string $newFilePath, int $width, int $height)
+    public function resize(string $filePath, string $newFilePath, int $width, int $height): void
     {
         if (!Imagick::queryFormats('WEBP')) {
             throw new RuntimeException('Webp format is not supported by Imagick installation.');

@@ -4,7 +4,7 @@ namespace App\Utils;
 
 class RuTransform
 {
-    public static function ruTransform($value = null)
+    public static function ruTransform(?string $value = null): string
     {
         // replace non letter or digits by -
         $value = trim(preg_replace('/[^\pL\d]+/u', '-', $value), '-');
@@ -44,9 +44,8 @@ class RuTransform
             'Ю' => 'Yu',   'ю' => 'yu',
             'Я' => 'Ya',   'я' => 'ya',
         ];
-        $konform_temp = strtolower(strtr($value, $transform));
 
-        $result = strtr($konform_temp, [
+        $result = strtr(strtolower(strtr($value, $transform)), [
             '---' => '-',
             '--' => '-',
         ]);

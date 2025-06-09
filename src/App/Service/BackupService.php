@@ -20,9 +20,6 @@ class BackupService
 
     private FilesystemOperator $flySystem;
 
-    /**
-     * @param SystemParametersStorage $storage
-     */
     public function __construct(FilesystemOperator $flySystem)
     {
         $this->flySystem = $flySystem;

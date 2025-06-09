@@ -7,7 +7,8 @@ namespace App\Utils;
  */
 class VerifyEmail
 {
-    private static $domains = [];
+    /** @var array<string, bool> */
+    private static array $domains = [];
 
     public static function isValid(string $email): bool
     {
@@ -30,7 +31,7 @@ class VerifyEmail
         return strtolower(trim($email));
     }
 
-    private static function getDomain(string $email)
+    private static function getDomain(string $email): string
     {
         $email_arr = explode('@', $email);
         $domain = array_slice($email_arr, -1);

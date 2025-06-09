@@ -7,17 +7,13 @@ use App\DTO\UserByExternalDTO;
 use App\Entity\User;
 use App\Entity\UserExtraInfo;
 use App\Exception\ShortPasswordException;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserManager
 {
-    /**
-     * @var EntityManager
-     */
-    private $em;
+    private EntityManagerInterface $em;
 
     private UserPasswordHasherInterface $passwordHasher;
 
@@ -59,6 +55,7 @@ class UserManager
     public function createFromExternalDTO(ExternalUserDTO $data): User
     {
         $generatedUsername = $this->randomUsername();
+        /** @var \App\Repository\UserRepository $userRepository */
         $userRepository = $this->em->getRepository(User::class);
 
         $username = $data->username;
@@ -103,7 +100,7 @@ class UserManager
             try {
                 $password = base64_encode(random_bytes(32));
             } catch (Exception $exception) {
-                $password = hash('sha256', uniqid(mt_rand(), true));
+                $password = hash('sha256', uniqid((string)mt_rand(), true));
             }
         }
 
@@ -173,9 +170,10 @@ class UserManager
 
     private function randomUsername(): string
     {
+        /** @var \App\Repository\UserRepository $repository */
         $repository = $this->em->getRepository(User::class);
         do {
-            $random = 'ext-' . str_pad(mt_rand(0, 9999999), 7, '0', STR_PAD_LEFT);
+            $random = 'ext-' . str_pad((string)mt_rand(0, 9999999), 7, '0', STR_PAD_LEFT);
             $obj = $repository->getByRandomName($random);
         } while ($obj !== null);
 

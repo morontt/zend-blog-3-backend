@@ -15,7 +15,7 @@ class PngResizer extends CommonResizer
      * @throws ImagickException
      * @throws ProcessFailedException
      */
-    public function resize(string $filePath, string $newFilePath, int $width, int $height)
+    public function resize(string $filePath, string $newFilePath, int $width, int $height): void
     {
         $image = new Imagick($filePath);
         $this->orientate($image);
