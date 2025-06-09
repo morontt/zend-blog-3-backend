@@ -33,7 +33,8 @@ RUN echo "LogFormat \"%a %l %u %t \\\"%r\\\" %>s %O \\\"%{User-Agent}i\\\"\" mai
 RUN a2enmod rewrite remoteip && a2dismod deflate -f
 
 RUN set -x && curl -sS https://getcomposer.org/installer | php \
-    && mv composer.phar /usr/local/bin/composer
+    && mv composer.phar /usr/local/bin/composer \
+    && git config --global --add safe.directory /var/www/html
 
 RUN yes | pecl install xdebug-3.4.2 \
     && docker-php-ext-enable xdebug \

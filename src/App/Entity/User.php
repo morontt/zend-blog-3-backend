@@ -9,7 +9,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use RuntimeException;
-use Serializable;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use Symfony\Component\Security\Core\User\LegacyPasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -29,7 +28,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *   message="This email is already used"
  * )
  */
-class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface, Serializable
+class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface
 {
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_ADMIN = 'ROLE_ADMIN';
@@ -167,30 +166,24 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface, S
         return $this->username;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function serialize()
+    public function __serialize(): array
     {
-        return serialize([
+        return [
             $this->id,
             $this->username,
             $this->password,
             $this->salt,
-        ]);
+        ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function unserialize($serialized)
+    public function __unserialize(array $data): void
     {
-        list(
+        [
             $this->id,
             $this->username,
             $this->password,
             $this->salt,
-        ) = unserialize($serialized, ['allowed_classes' => false]);
+        ] = $data;
     }
 
     /**
