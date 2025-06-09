@@ -5,7 +5,7 @@ namespace Mtt\TestBundle\Service\IpInfo;
 use App\Service\IpInfo\IpInfoClientInterface;
 use App\Service\IpInfo\LocationInfo;
 use Faker\Factory as FakerFactory;
-use Symfony\Component\Intl\Intl;
+use Symfony\Component\Intl\Countries;
 
 class IpInfoDummyClient implements IpInfoClientInterface
 {
@@ -23,7 +23,7 @@ class IpInfoDummyClient implements IpInfoClientInterface
         $faker = FakerFactory::create();
         $faker->seed(ip2long($ip));
 
-        $countries = Intl::getRegionBundle()->getCountryNames('en_US');
+        $countries = Countries::getNames('en_US');
         do {
             $countryCode = null;
             $country = $faker->country;
