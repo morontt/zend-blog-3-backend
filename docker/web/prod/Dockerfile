@@ -1,4 +1,4 @@
-FROM gitverse.ru/morontt/docker-zendblog-admin:1.0.1
+FROM xelbot/docker-zendblog-admin:1.0.2
 
 VOLUME ["/var/www/html", "/var/www/resources"]
 
