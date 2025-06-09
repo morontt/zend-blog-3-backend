@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: morontt
@@ -33,7 +34,7 @@ class UpdateUserCommand extends Command
      */
     public function __construct(
         UserRepository $repository,
-        UserManager $userManager
+        UserManager $userManager,
     ) {
         $this->repository = $repository;
         $this->userManager = $userManager;

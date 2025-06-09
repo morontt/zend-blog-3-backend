@@ -26,7 +26,7 @@ class UserManager
     public function __construct(
         EntityManagerInterface $em,
         UserPasswordHasherInterface $passwordHasher,
-        Tracking $tracking
+        Tracking $tracking,
     ) {
         $this->em = $em;
         $this->passwordHasher = $passwordHasher;

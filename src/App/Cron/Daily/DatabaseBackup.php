@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: morontt
@@ -58,7 +59,7 @@ class DatabaseBackup implements DailyCronServiceInterface
         string $dbName,
         string $dbUser,
         string $dbPassword,
-        BackupService $backupService
+        BackupService $backupService,
     ) {
         $this->dbHost = $dbHost;
         $this->dbName = $dbName;

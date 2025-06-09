@@ -22,7 +22,7 @@ class TelegramUpdates implements HourlyCronServiceInterface
     public function __construct(
         TelegramUpdateRepository $repository,
         SystemParametersStorage $paramStorage,
-        int $adminId
+        int $adminId,
     ) {
         $this->repository = $repository;
         $this->paramStorage = $paramStorage;

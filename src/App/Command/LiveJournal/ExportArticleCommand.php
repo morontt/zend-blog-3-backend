@@ -1,4 +1,5 @@
 <?php
+
 /**
  * User: morontt
  * Date: 06.05.2025
@@ -42,7 +43,7 @@ class ExportArticleCommand extends Command
     public function __construct(
         DataConverter $dataConverter,
         EntityManagerInterface $em,
-        CommentManager $commentManager
+        CommentManager $commentManager,
     ) {
         parent::__construct();
 

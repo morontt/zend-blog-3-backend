@@ -1,4 +1,5 @@
 <?php
+
 /**
  * User: morontt
  * Date: 11.05.2025

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: morontt
@@ -95,7 +96,7 @@ class DataConverter
         EntityManagerInterface $em,
         TextProcessor $textProcessor,
         CommentRepository $commentsRepository,
-        CategoryRepository $categoryRepository
+        CategoryRepository $categoryRepository,
     ) {
         $this->fractal = new Manager();
         $this->fractal->setSerializer(new Serializer());

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: morontt
@@ -42,7 +43,7 @@ class CreateUserCommand extends Command
     public function __construct(
         UserManager $userManager,
         ValidatorInterface $validator,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
     ) {
         $this->userManager = $userManager;
         $this->validator = $validator;

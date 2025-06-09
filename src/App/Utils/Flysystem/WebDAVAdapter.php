@@ -1,4 +1,5 @@
 <?php
+
 /**
  * User: morontt
  * Date: 18.10.2024
@@ -46,7 +47,7 @@ class WebDAVAdapter implements FilesystemAdapter
 
     public function __construct(
         Client $client,
-        string $prefix = ''
+        string $prefix = '',
     ) {
         $this->client = $client;
         $this->prefixer = new PathPrefixer($prefix);

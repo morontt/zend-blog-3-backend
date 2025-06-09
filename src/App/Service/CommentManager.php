@@ -54,7 +54,7 @@ class CommentManager
         CommentatorRepository $commentatorRepo,
         CommentRepository $commentRepo,
         UserRepository $userRepository,
-        PostRepository $postRepo
+        PostRepository $postRepo,
     ) {
         $this->tracking = $tracking;
         $this->dispatcher = $dispatcher;
