@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: morontt
@@ -91,7 +92,7 @@ class CommentController extends BaseController
     public function createAction(
         Request $request,
         Tracking $tracking,
-        EventDispatcherInterface $dispatcher
+        EventDispatcherInterface $dispatcher,
     ): JsonResponse {
         $agent = $tracking->getTrackingAgent($request->server->get('HTTP_USER_AGENT'));
 
@@ -149,7 +150,7 @@ class CommentController extends BaseController
     public function deleteAction(
         Comment $entity,
         CommentRepository $repository,
-        EventDispatcherInterface $dispatcher
+        EventDispatcherInterface $dispatcher,
     ): JsonResponse {
         $repository->markAsDeleted($entity);
         $dispatcher->dispatch(new DeleteCommentEvent($entity));

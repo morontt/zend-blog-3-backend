@@ -97,7 +97,7 @@ class PygmentsCodeController extends BaseController
     public function updateAction(
         Request $request,
         PygmentsCode $entity,
-        EventDispatcherInterface $dispatcher
+        EventDispatcherInterface $dispatcher,
     ): JsonResponse {
         $form = $this->createObjectForm('pygmentsCode', PygmentsCodeFormType::class, true);
         $form->handleRequest($request);

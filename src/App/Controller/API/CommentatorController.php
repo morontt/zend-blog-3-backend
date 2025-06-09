@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: morontt
@@ -73,7 +74,7 @@ class CommentatorController extends BaseController
     public function updateAction(
         Request $request,
         EventDispatcherInterface $dispatcher,
-        Commentator $entity
+        Commentator $entity,
     ): JsonResponse {
         $result = $this->getDataConverter()
             ->saveCommentator($entity, $request->request->get('commentator'));

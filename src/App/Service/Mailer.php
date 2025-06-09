@@ -62,7 +62,7 @@ class Mailer
         EmailSubscriptionSettingsRepository $subscriptionRepository,
         LoggerInterface $logger,
         string $frontendSite,
-        string $emailFrom
+        string $emailFrom,
     ) {
         $this->mailer = $mailer;
         $this->twig = $twig;

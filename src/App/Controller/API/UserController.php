@@ -84,7 +84,7 @@ class UserController extends BaseController
         ValidatorInterface $validator,
         EventDispatcherInterface $dispatcher,
         Request $request,
-        User $entity
+        User $entity,
     ): JsonResponse {
         $form = $this->createObjectForm('user', UserFormType::class, true);
         $form->handleRequest($request);
@@ -125,7 +125,7 @@ class UserController extends BaseController
         UserManager $userManager,
         ValidatorInterface $validator,
         EventDispatcherInterface $dispatcher,
-        Request $request
+        Request $request,
     ): JsonResponse {
         $findResult = $userManager->findByExternalDTO($userDTO);
         $user = $findResult->getUser();

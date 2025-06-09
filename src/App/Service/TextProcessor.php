@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: morontt
@@ -39,7 +40,7 @@ class TextProcessor
         MediaFileRepository $mediaFileRepository,
         PygmentsCodeRepository $codeRepository,
         PictureTagBuilder $ptb,
-        ImageManager $im
+        ImageManager $im,
     ) {
         $this->mediaFileRepository = $mediaFileRepository;
         $this->codeRepository = $codeRepository;

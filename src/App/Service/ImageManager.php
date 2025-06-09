@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: morontt
@@ -37,7 +38,7 @@ class ImageManager
     public function __construct(
         EntityManagerInterface $em,
         EventDispatcherInterface $dispatcher,
-        string $cdnUrl
+        string $cdnUrl,
     ) {
         $this->em = $em;
         $this->imageBasepath = $cdnUrl . self::getImageBasePath() . '/';

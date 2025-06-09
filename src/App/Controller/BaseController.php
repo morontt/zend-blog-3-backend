@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: morontt
@@ -49,7 +50,7 @@ class BaseController extends AbstractController
     public function __construct(
         EntityManagerInterface $em,
         PaginatorInterface $paginator,
-        DataConverter $apiDataConverter
+        DataConverter $apiDataConverter,
     ) {
         $this->em = $em;
         $this->paginator = $paginator;

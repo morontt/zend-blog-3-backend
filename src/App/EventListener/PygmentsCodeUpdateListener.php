@@ -23,7 +23,7 @@ class PygmentsCodeUpdateListener
     public function __construct(
         TextProcessor $textProcessor,
         PostRepository $repository,
-        EntityManagerInterface $em
+        EntityManagerInterface $em,
     ) {
         $this->textProcessor = $textProcessor;
         $this->repository = $repository;
