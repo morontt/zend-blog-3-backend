@@ -178,6 +178,11 @@ class Post
         $this->timestampSort = $dt->getTimestamp();
     }
 
+    public function hashedId(): int
+    {
+        return ($this->id << 7) + (crc32($this->url) & 0b1111111);
+    }
+
     /**
      * Get id
      *

@@ -17,6 +17,7 @@ use App\Event\DeleteCommentEvent;
 use App\Exception\NotAllowedCommentException;
 use App\Form\CommentFormType;
 use App\Repository\CommentRepository;
+use App\Repository\PostRepository;
 use App\Repository\ViewCommentRepository;
 use App\Service\CommentManager;
 use App\Service\Tracking;
@@ -182,8 +183,11 @@ class CommentController extends BaseController
      *
      * @return JsonResponse
      */
-    public function createExternalAction(CommentManager $commentManager, Request $request): JsonResponse
-    {
+    public function createExternalAction(
+        CommentManager $commentManager,
+        PostRepository $postRepo,
+        Request $request,
+    ): JsonResponse {
         $form = $this->createForm(CommentFormType::class);
         $form->handleRequest($request);
 
@@ -191,6 +195,13 @@ class CommentController extends BaseController
         if ($errors) {
             return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
+
+        $article = $postRepo->find($formData->topicId >> 7);
+        if (!$article || $article->hashedId() !== $formData->topicId) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $formData->topicId >>= 7;
 
         try {
             $comment = $commentManager->saveExternalComment($formData);
