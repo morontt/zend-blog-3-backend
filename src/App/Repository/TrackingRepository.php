@@ -4,8 +4,10 @@ namespace App\Repository;
 
 use App\Entity\GeoLocation;
 use App\Entity\Tracking;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -112,7 +114,7 @@ class TrackingRepository extends ServiceEntityRepository
      * @param GeoLocation $location
      * @param string $ip
      */
-    public function updateLocation(GeoLocation $location, string $ip)
+    public function updateLocation(GeoLocation $location, string $ip): void
     {
         $qb = $this->createQueryBuilder('t');
         $qb
@@ -124,5 +126,19 @@ class TrackingRepository extends ServiceEntityRepository
         ;
 
         $qb->getQuery()->execute();
+    }
+
+    public function getDataToArchiveQuery(DateTime $dateTo): QueryBuilder
+    {
+        $qb = $this->createQueryBuilder('t');
+        $qb
+            ->select('t', 'ta', 'ar')
+            ->leftJoin('t.trackingAgent', 'ta')
+            ->leftJoin('t.post', 'ar')
+            ->where($qb->expr()->lt('t.timeCreated', ':to'))
+            ->setParameter('to', $dateTo)
+        ;
+
+        return $qb;
     }
 }
