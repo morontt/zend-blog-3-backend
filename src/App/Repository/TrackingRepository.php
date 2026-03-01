@@ -141,4 +141,16 @@ class TrackingRepository extends ServiceEntityRepository
 
         return $qb;
     }
+
+    public function removeTracking(DateTime $dateTo): void
+    {
+        $qb = $this->createQueryBuilder('t');
+        $qb
+            ->delete()
+            ->where($qb->expr()->lt('t.timeCreated', ':to'))
+            ->setParameter('to', $dateTo)
+        ;
+
+        $qb->getQuery()->execute();
+    }
 }

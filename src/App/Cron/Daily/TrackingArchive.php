@@ -28,9 +28,6 @@ class TrackingArchive implements DailyCronServiceInterface
      */
     private $rows;
 
-    /**
-     * @param EntityManagerInterface $em
-     */
     public function __construct(
         private EntityManagerInterface $em,
         private TrackingRepository $trackingRepo,
@@ -84,12 +81,10 @@ class TrackingArchive implements DailyCronServiceInterface
             fclose($fp);
         }
 
-        /* if ($cnt) {
+        $this->trackingRepo->removeTracking($to);
+        if ($cnt) {
             $this->rows = $cnt;
-        } */
-
-        $stmtResult = $this->em->getConnection()->executeQuery('CALL tracking_to_archive()');
-        $this->rows = $stmtResult->rowCount();
+        }
     }
 
     /**
