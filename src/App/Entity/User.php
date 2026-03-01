@@ -116,14 +116,14 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface
     private $loginCount = 0;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="ip_last", type="string", length=15, nullable=true)
      */
     private $ipAddressLast;
 
     /**
-     * @var Collection
+     * @var Collection<int, Comment>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user")
      */
@@ -176,6 +176,9 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface
         ];
     }
 
+    /**
+     * @phpstan-ignore missingType.iterableValue
+     */
     public function __unserialize(array $data): void
     {
         [
@@ -215,7 +218,7 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface
     /**
      * {@inheritdoc}
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
     }
 
@@ -225,6 +228,7 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface
             $randomBytes = random_bytes(16);
         } catch (Exception $e) {
             $randomBytes = openssl_random_pseudo_bytes(16, $isSourceStrong);
+            // @phpstan-ignore identical.alwaysFalse
             if ($isSourceStrong === false || $randomBytes === false) {
                 throw new RuntimeException('IV generation failed');
             }
@@ -239,6 +243,7 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface
             $randomBytes = random_bytes(18);
         } catch (Exception $e) {
             $randomBytes = openssl_random_pseudo_bytes(18, $isSourceStrong);
+            // @phpstan-ignore identical.alwaysFalse
             if ($isSourceStrong === false || $randomBytes === false) {
                 throw new RuntimeException('IV generation failed');
             }
@@ -487,7 +492,7 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface
     /**
      * Get comments
      *
-     * @return Collection
+     * @return Collection<int, Comment>
      */
     public function getComments()
     {

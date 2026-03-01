@@ -64,8 +64,9 @@ trait ModifyEntityTrait
     /**
      * @ORM\PrePersist
      */
-    public function prePersist()
+    public function prePersist(): void
     {
+        // @phpstan-ignore booleanNot.alwaysFalse
         if (!$this->timeCreated) {
             $this->timeCreated = new DateTime();
         }
@@ -76,7 +77,7 @@ trait ModifyEntityTrait
     /**
      * @ORM\PreUpdate
      */
-    public function preUpdate()
+    public function preUpdate(): void
     {
         $this->lastUpdate = new DateTime();
     }

@@ -34,7 +34,7 @@ class ViewCommentator implements CommentatorInterface
     private $name;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="mail", type="string", length=80, nullable=true)
      */
@@ -55,7 +55,7 @@ class ViewCommentator implements CommentatorInterface
     private $emailCheck;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=160, nullable=true)
      */

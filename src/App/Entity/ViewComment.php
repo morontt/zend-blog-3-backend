@@ -27,13 +27,15 @@ class ViewComment implements CommentInterface
     protected $id;
 
     /**
-     * @var Collection
+     * @var Collection<int, ViewComment>
      *
      * @ORM\OneToMany(targetEntity="ViewComment", mappedBy="parent")
      **/
     protected $children;
 
     /**
+     * @var self|null
+     *
      * @ORM\ManyToOne(targetEntity="ViewComment", inversedBy="children")
      *
      * @ORM\JoinColumn()
@@ -44,11 +46,13 @@ class ViewComment implements CommentInterface
      * @var Post
      *
      * @ORM\ManyToOne(targetEntity="Post")
+     *
+     * @ORM\JoinColumn(nullable=false)
      */
     protected $post;
 
     /**
-     * @var string
+     * @var int
      *
      * @ORM\Column(name="uid", type="integer")
      */
@@ -62,14 +66,14 @@ class ViewComment implements CommentInterface
     protected $username;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="mail", type="string", length=80, nullable=true)
      */
     protected $email;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=160, nullable=true)
      */
@@ -83,7 +87,7 @@ class ViewComment implements CommentInterface
     protected $text;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="ip_addr", type="string", length=15, nullable=true)
      */
@@ -223,7 +227,7 @@ class ViewComment implements CommentInterface
     /**
      * Get email
      *
-     * @return string
+     * @return string|null
      */
     public function getEmail()
     {
@@ -233,7 +237,7 @@ class ViewComment implements CommentInterface
     /**
      * Get website
      *
-     * @return string
+     * @return string|null
      */
     public function getWebsite()
     {
@@ -323,7 +327,7 @@ class ViewComment implements CommentInterface
     /**
      * Get children
      *
-     * @return Collection
+     * @return Collection<int, ViewComment>
      */
     public function getChildren()
     {

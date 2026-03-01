@@ -28,6 +28,8 @@ class ViewCategory implements CategoryInterface
     private $id;
 
     /**
+     * @var self|null
+     *
      * @ORM\ManyToOne(targetEntity="ViewCategory")
      */
     private $parent;
@@ -80,7 +82,7 @@ class ViewCategory implements CategoryInterface
         return $this->nestedSet;
     }
 
-    public function getParent()
+    public function getParent(): ?self
     {
         return $this->parent;
     }
