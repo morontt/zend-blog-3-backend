@@ -17,6 +17,7 @@ use DateTime;
 use DateTimeInterface;
 use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\ORM\EntityManagerInterface;
+use RuntimeException;
 use Silarhi\CursorPagination\Configuration\OrderConfiguration;
 use Silarhi\CursorPagination\Configuration\OrderConfigurations;
 use Silarhi\CursorPagination\Pagination\CursorPagination;
@@ -66,6 +67,10 @@ class TrackingArchive implements DailyCronServiceInterface
                     $addHeader = !file_exists($fileName);
 
                     $fp = fopen($fileName, 'a+');
+                    if ($fp === false) {
+                        throw new RuntimeException('Failed to create file: ' . $fileName);
+                    }
+
                     if ($addHeader) {
                         fputcsv($fp, $this->archiveHeader());
                     }
