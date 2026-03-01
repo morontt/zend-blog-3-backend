@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Entity\Traits\ModifyEntityTrait;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -93,7 +92,7 @@ class Post
     protected $category;
 
     /**
-     * @var Collection
+     * @var ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="posts")
      *
@@ -116,14 +115,14 @@ class Post
     protected $viewsCount = 0;
 
     /**
-     * @var Collection
+     * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="post")
      */
     protected $comments;
 
     /**
-     * @var Collection
+     * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="MediaFile", mappedBy="post")
      */
@@ -366,7 +365,7 @@ class Post
     /**
      * Get tags
      *
-     * @return Collection
+     * @return ArrayCollection
      */
     public function getTags()
     {
@@ -400,7 +399,7 @@ class Post
     /**
      * Get comments
      *
-     * @return Collection
+     * @return ArrayCollection
      */
     public function getComments()
     {
@@ -434,7 +433,7 @@ class Post
     /**
      * Get mediaFiles
      *
-     * @return Collection
+     * @return ArrayCollection
      */
     public function getMediaFiles()
     {

@@ -41,12 +41,12 @@ class IpInfoDbClient implements IpInfoClientInterface
 
                 if ($response->getStatusCode() === 200) {
                     return LocationInfo::createFromArray(json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR));
-                } else {
-                    $this->logger->error(
-                        'IpInfoDbClient error',
-                        ['code' => $response->getStatusCode(), 'message' => $response->getContent()]
-                    );
                 }
+
+                $this->logger->error(
+                    'IpInfoDbClient error',
+                    ['code' => $response->getStatusCode(), 'message' => $response->getContent()]
+                );
             } catch (Throwable $e) {
                 $this->logger->critical(
                     'IpInfoDbClient error',

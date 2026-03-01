@@ -4,10 +4,10 @@ namespace App\Command;
 
 use App\Cron\CronChain;
 use App\Cron\CronServiceInterface;
-use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Throwable;
 use Xelbot\Telegram\Robot;
 
 abstract class CronCommand extends Command
@@ -55,7 +55,7 @@ abstract class CronCommand extends Command
                         sprintf('<comment>%s:</comment> without message', self::getJobName($cronJob))
                     );
                 }
-            } catch (Exception $e) {
+            } catch (Throwable $e) {
                 $messages[] = sprintf('Error %s: %s', self::getJobName($cronJob), $e->getMessage());
                 $output->writeln(
                     sprintf('<error>%s Error:</error> %s', self::getJobName($cronJob), $e->getMessage())
