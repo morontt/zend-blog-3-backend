@@ -53,6 +53,7 @@ class TrackingArchive implements DailyCronServiceInterface
             100
         );
 
+        $fileName = null;
         $oldFileName = null;
         $fp = null;
         $cnt = 0;
@@ -61,7 +62,10 @@ class TrackingArchive implements DailyCronServiceInterface
                 $fileName = $this->fileName($trackingItem);
                 if ($fileName !== $oldFileName) {
                     if ($fp !== null) {
-                        fclose($fp);
+                        $result = fclose($fp);
+                        if (!$result) {
+                            throw new RuntimeException('Failed to close file: ' . $oldFileName);
+                        }
                     }
 
                     $addHeader = !file_exists($fileName);
@@ -76,14 +80,20 @@ class TrackingArchive implements DailyCronServiceInterface
                     }
                 }
 
-                fputcsv($fp, $this->archiveData($trackingItem));
+                $res = fputcsv($fp, $this->archiveData($trackingItem));
+                if ($res === false) {
+                    throw new RuntimeException('Failed to write data: ' . $fileName);
+                }
                 $cnt++;
             }
             $this->em->clear();
         }
 
         if ($fp !== null) {
-            fclose($fp);
+            $result = fclose($fp);
+            if (!$result) {
+                throw new RuntimeException('Failed to close file: ' . $fileName);
+            }
         }
 
         $this->trackingRepo->removeTracking($to);
