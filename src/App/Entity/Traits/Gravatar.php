@@ -22,6 +22,7 @@ trait Gravatar
     {
         $userType = HashId::TYPE_COMMENTATOR;
 
+        // @phpstan-ignore function.alreadyNarrowedType
         if (method_exists($this, 'getVirtualUserId')) {
             $id = $this->getVirtualUserId();
         } else {
@@ -36,6 +37,7 @@ trait Gravatar
         $gender = ($this->getGender() === User::MALE) ? HashId::MALE : HashId::FEMALE;
         $options = $userType | $gender;
 
+        // @phpstan-ignore function.alreadyNarrowedType
         if (method_exists($this, 'getAvatarVariant')) {
             $options += $this->getAvatarVariant() << 4;
         }

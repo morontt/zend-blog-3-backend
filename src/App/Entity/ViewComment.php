@@ -259,7 +259,7 @@ class ViewComment implements CommentInterface
      *
      * @return string
      */
-    public function getIpAddress()
+    public function getIpAddress(): ?string
     {
         return $this->ipAddress;
     }
@@ -319,7 +319,7 @@ class ViewComment implements CommentInterface
      *
      * @return DateTime
      */
-    public function getTimeCreated()
+    public function getTimeCreated(): DateTime
     {
         return $this->timeCreated;
     }

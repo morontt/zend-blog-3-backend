@@ -54,7 +54,7 @@ class TrackingAgent
     protected $createdAt;
 
     /**
-     * @var Collection
+     * @var Collection<int, Tracking>
      *
      * @ORM\OneToMany(targetEntity="Tracking", mappedBy="trackingAgent", cascade={"persist"})
      */
@@ -83,7 +83,7 @@ class TrackingAgent
      *
      * @return TrackingAgent
      */
-    public function setUserAgent($userAgent)
+    public function setUserAgent($userAgent): self
     {
         $this->userAgent = $userAgent;
         $this->hash = md5($userAgent);
@@ -108,7 +108,7 @@ class TrackingAgent
      *
      * @return TrackingAgent
      */
-    public function addTracking(Tracking $trackings)
+    public function addTracking(Tracking $trackings): self
     {
         $this->trackings[] = $trackings;
 
@@ -120,7 +120,7 @@ class TrackingAgent
      *
      * @param Tracking $trackings
      */
-    public function removeTracking(Tracking $trackings)
+    public function removeTracking(Tracking $trackings): void
     {
         $this->trackings->removeElement($trackings);
     }
@@ -128,7 +128,7 @@ class TrackingAgent
     /**
      * Get trackings
      *
-     * @return Collection
+     * @return Collection<int, Tracking>
      */
     public function getTrackings()
     {
@@ -142,7 +142,7 @@ class TrackingAgent
      *
      * @return TrackingAgent
      */
-    public function setHash($hash)
+    public function setHash($hash): self
     {
         $this->hash = $hash;
 
@@ -166,7 +166,7 @@ class TrackingAgent
      *
      * @return TrackingAgent
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt($createdAt): self
     {
         $this->createdAt = $createdAt;
 

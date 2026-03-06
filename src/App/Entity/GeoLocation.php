@@ -40,7 +40,7 @@ class GeoLocation
     private $ipAddress;
 
     /**
-     * @var GeoLocationCity
+     * @var GeoLocationCity|null
      *
      * @ORM\ManyToOne(targetEntity="GeoLocationCity")
      *
@@ -84,7 +84,7 @@ class GeoLocation
      *
      * @return GeoLocation
      */
-    public function setIpAddress($ipAddress)
+    public function setIpAddress($ipAddress): self
     {
         $this->ipAddress = $ipAddress;
 
@@ -108,7 +108,7 @@ class GeoLocation
      *
      * @return GeoLocation
      */
-    public function setCity(?GeoLocationCity $city = null)
+    public function setCity(?GeoLocationCity $city = null): self
     {
         $this->city = $city;
 
@@ -117,10 +117,8 @@ class GeoLocation
 
     /**
      * Get city
-     *
-     * @return GeoLocationCity
      */
-    public function getCity()
+    public function getCity(): ?GeoLocationCity
     {
         return $this->city;
     }
@@ -132,7 +130,7 @@ class GeoLocation
      *
      * @return GeoLocation
      */
-    public function setTimeCreated($timeCreated)
+    public function setTimeCreated($timeCreated): self
     {
         $this->timeCreated = $timeCreated;
 

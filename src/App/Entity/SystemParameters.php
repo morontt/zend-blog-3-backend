@@ -67,7 +67,7 @@ class SystemParameters
      *
      * @return SystemParameters
      */
-    public function setOptionKey($optionKey)
+    public function setOptionKey($optionKey): self
     {
         $this->optionKey = $optionKey;
 
@@ -91,7 +91,7 @@ class SystemParameters
      *
      * @return SystemParameters
      */
-    public function setValue($value)
+    public function setValue($value): self
     {
         $this->value = $value;
 
@@ -115,7 +115,7 @@ class SystemParameters
      *
      * @return SystemParameters
      */
-    public function setEncrypted(bool $encrypted)
+    public function setEncrypted(bool $encrypted): self
     {
         $this->encrypted = $encrypted;
 

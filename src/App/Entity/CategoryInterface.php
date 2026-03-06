@@ -20,7 +20,7 @@ interface CategoryInterface
 
     public function getNestedSet(): NestedSet;
 
-    public function getParent();
+    public function getParent(): ?CategoryInterface;
 
     public function getPostsCount(): int;
 }

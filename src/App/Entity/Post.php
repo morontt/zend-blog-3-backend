@@ -76,7 +76,7 @@ class Post
     protected $rawText;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -92,7 +92,7 @@ class Post
     protected $category;
 
     /**
-     * @var ArrayCollection
+     * @var \Doctrine\Common\Collections\Collection<int, Tag>
      *
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="posts")
      *
@@ -115,14 +115,14 @@ class Post
     protected $viewsCount = 0;
 
     /**
-     * @var ArrayCollection
+     * @var \Doctrine\Common\Collections\Collection<int, Comment>
      *
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="post")
      */
     protected $comments;
 
     /**
-     * @var ArrayCollection
+     * @var \Doctrine\Common\Collections\Collection<int, MediaFile>|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="MediaFile", mappedBy="post")
      */
@@ -152,7 +152,7 @@ class Post
     private $forceCreatedAt;
 
     /**
-     * @var int
+     * @var int|null
      *
      * @ORM\Column(type="integer", nullable=true, options={"unsigned": true})
      */
@@ -171,7 +171,7 @@ class Post
     /**
      * @ORM\PrePersist
      */
-    public function recalculateSortField()
+    public function recalculateSortField(): void
     {
         $dt = $this->forceCreatedAt ?? $this->timeCreated;
         $this->timestampSort = $dt->getTimestamp();
@@ -199,7 +199,7 @@ class Post
      *
      * @return Post
      */
-    public function setTitle($title)
+    public function setTitle($title): self
     {
         $this->title = $title;
 
@@ -223,7 +223,7 @@ class Post
      *
      * @return Post
      */
-    public function setUrl($url)
+    public function setUrl($url): self
     {
         $this->url = $url;
 
@@ -247,7 +247,7 @@ class Post
      *
      * @return Post
      */
-    public function setHide($hide)
+    public function setHide($hide): self
     {
         $this->hide = $hide;
 
@@ -271,7 +271,7 @@ class Post
      *
      * @return Post
      */
-    public function setText($text)
+    public function setText($text): self
     {
         $this->text = $text;
 
@@ -295,7 +295,7 @@ class Post
      *
      * @return Post
      */
-    public function setDescription($description)
+    public function setDescription(?string $description): self
     {
         $this->description = $description;
 
@@ -304,10 +304,8 @@ class Post
 
     /**
      * Get description
-     *
-     * @return string
      */
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -319,7 +317,7 @@ class Post
      *
      * @return Post
      */
-    public function setCategory(?Category $category = null)
+    public function setCategory(?Category $category = null): self
     {
         $this->category = $category;
 
@@ -343,7 +341,7 @@ class Post
      *
      * @return Post
      */
-    public function addTag(Tag $tag)
+    public function addTag(Tag $tag): self
     {
         if (!$this->tags->contains($tag)) {
             $this->tags->add($tag);
@@ -357,7 +355,7 @@ class Post
      *
      * @param Tag $tag
      */
-    public function removeTag(Tag $tag)
+    public function removeTag(Tag $tag): void
     {
         $this->tags->removeElement($tag);
     }
@@ -365,7 +363,7 @@ class Post
     /**
      * Get tags
      *
-     * @return ArrayCollection
+     * @return \Doctrine\Common\Collections\Collection<int, Tag>
      */
     public function getTags()
     {
@@ -379,7 +377,7 @@ class Post
      *
      * @return Post
      */
-    public function addComment(Comment $comments)
+    public function addComment(Comment $comments): self
     {
         $this->comments[] = $comments;
 
@@ -391,7 +389,7 @@ class Post
      *
      * @param Comment $comments
      */
-    public function removeComment(Comment $comments)
+    public function removeComment(Comment $comments): void
     {
         $this->comments->removeElement($comments);
     }
@@ -399,7 +397,7 @@ class Post
     /**
      * Get comments
      *
-     * @return ArrayCollection
+     * @return \Doctrine\Common\Collections\Collection<int, Comment>
      */
     public function getComments()
     {
@@ -413,7 +411,7 @@ class Post
      *
      * @return Post
      */
-    public function addMediaFile(MediaFile $mediaFile)
+    public function addMediaFile(MediaFile $mediaFile): self
     {
         $this->mediaFiles[] = $mediaFile;
 
@@ -425,7 +423,7 @@ class Post
      *
      * @param MediaFile $mediaFile
      */
-    public function removeMediaFile(MediaFile $mediaFile)
+    public function removeMediaFile(MediaFile $mediaFile): void
     {
         $this->mediaFiles->removeElement($mediaFile);
     }
@@ -433,7 +431,7 @@ class Post
     /**
      * Get mediaFiles
      *
-     * @return ArrayCollection
+     * @return \Doctrine\Common\Collections\Collection<int, MediaFile>
      */
     public function getMediaFiles()
     {
@@ -456,7 +454,7 @@ class Post
      *
      * @return Post
      */
-    public function setRawText($rawText)
+    public function setRawText($rawText): self
     {
         $this->rawText = $rawText;
 
@@ -480,7 +478,7 @@ class Post
      *
      * @return Post
      */
-    public function setCommentsCount($commentsCount)
+    public function setCommentsCount($commentsCount): self
     {
         $this->commentsCount = $commentsCount;
 
@@ -504,7 +502,7 @@ class Post
      *
      * @return Post
      */
-    public function setViewsCount($viewsCount)
+    public function setViewsCount($viewsCount): self
     {
         $this->viewsCount = $viewsCount;
 
@@ -534,7 +532,7 @@ class Post
      *
      * @return Post
      */
-    public function setPreview($preview): Post
+    public function setPreview($preview): self
     {
         $this->preview = $preview;
 
