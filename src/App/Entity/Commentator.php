@@ -64,14 +64,14 @@ class Commentator implements CommentatorInterface
     private $emailCheck;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="string", length=160, nullable=true)
      */
     private $website;
 
     /**
-     * @var Collection
+     * @var Collection<int, Comment>
      *
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="commentator")
      */
@@ -101,7 +101,7 @@ class Commentator implements CommentatorInterface
     /**
      * @ORM\Column(type="smallint", options={"default": 0, "unsigned": true})
      */
-    private $avatarVariant = 0;
+    private int $avatarVariant = 0;
 
     public function __construct()
     {
@@ -133,7 +133,7 @@ class Commentator implements CommentatorInterface
      *
      * @return Commentator
      */
-    public function setName($name)
+    public function setName($name): self
     {
         $this->name = $name;
 
@@ -157,7 +157,7 @@ class Commentator implements CommentatorInterface
      *
      * @return Commentator
      */
-    public function setEmail($email)
+    public function setEmail($email): self
     {
         $this->email = $email;
 
@@ -177,11 +177,11 @@ class Commentator implements CommentatorInterface
     /**
      * Set website
      *
-     * @param string $website
+     * @param string|null $website
      *
      * @return Commentator
      */
-    public function setWebsite($website)
+    public function setWebsite($website): self
     {
         $this->website = $website;
 
@@ -205,7 +205,7 @@ class Commentator implements CommentatorInterface
      *
      * @return Commentator
      */
-    public function addComment(Comment $comments)
+    public function addComment(Comment $comments): self
     {
         $this->comments[] = $comments;
 
@@ -217,7 +217,7 @@ class Commentator implements CommentatorInterface
      *
      * @param Comment $comments
      */
-    public function removeComment(Comment $comments)
+    public function removeComment(Comment $comments): void
     {
         $this->comments->removeElement($comments);
     }
@@ -225,7 +225,7 @@ class Commentator implements CommentatorInterface
     /**
      * Get comments
      *
-     * @return Collection
+     * @return Collection<int, Comment>
      */
     public function getComments()
     {

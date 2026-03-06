@@ -42,7 +42,7 @@ class Tag
     protected $url;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection
+     * @var \Doctrine\Common\Collections\Collection<int, Post>
      *
      * @ORM\ManyToMany(targetEntity="Post", mappedBy="tags")
      */
@@ -70,7 +70,7 @@ class Tag
      *
      * @return Tag
      */
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
 
@@ -82,7 +82,7 @@ class Tag
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -94,7 +94,7 @@ class Tag
      *
      * @return Tag
      */
-    public function setUrl($url)
+    public function setUrl(string $url): self
     {
         $this->url = $url;
 
@@ -106,7 +106,7 @@ class Tag
      *
      * @return string
      */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
@@ -118,7 +118,7 @@ class Tag
      *
      * @return Tag
      */
-    public function addPost(Post $posts)
+    public function addPost(Post $posts): self
     {
         $this->posts[] = $posts;
 
@@ -130,7 +130,7 @@ class Tag
      *
      * @param Post $posts
      */
-    public function removePost(Post $posts)
+    public function removePost(Post $posts): void
     {
         $this->posts->removeElement($posts);
     }
@@ -138,7 +138,7 @@ class Tag
     /**
      * Get posts
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection<int, Post>
      */
     public function getPosts()
     {

@@ -36,7 +36,7 @@ class MediaFile
     protected $id;
 
     /**
-     * @var Post
+     * @var Post|null
      *
      * @ORM\ManyToOne(targetEntity="Post", inversedBy="mediaFiles")
      *
@@ -52,7 +52,7 @@ class MediaFile
     protected $path;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="string", nullable=true)
      */
@@ -129,7 +129,7 @@ class MediaFile
      *
      * @return MediaFile
      */
-    public function setPath(string $path): MediaFile
+    public function setPath(string $path): self
     {
         $this->path = $path;
 
@@ -173,7 +173,7 @@ class MediaFile
      *
      * @return MediaFile
      */
-    public function setPost(?Post $post = null): MediaFile
+    public function setPost(?Post $post = null): self
     {
         $this->post = $post;
 
@@ -197,7 +197,7 @@ class MediaFile
      *
      * @return MediaFile
      */
-    public function setDescription(?string $description = null): MediaFile
+    public function setDescription(?string $description = null): self
     {
         $this->description = $description;
 
@@ -221,7 +221,7 @@ class MediaFile
      *
      * @return MediaFile
      */
-    public function setFileSize(int $fileSize): MediaFile
+    public function setFileSize(int $fileSize): self
     {
         $this->fileSize = $fileSize;
 
@@ -245,7 +245,7 @@ class MediaFile
      *
      * @return MediaFile
      */
-    public function setDefaultImage(bool $defaultImage): MediaFile
+    public function setDefaultImage(bool $defaultImage): self
     {
         $this->defaultImage = $defaultImage;
 
@@ -275,7 +275,7 @@ class MediaFile
      *
      * @return $this
      */
-    public function setBackedUp(bool $backedUp): MediaFile
+    public function setBackedUp(bool $backedUp): self
     {
         $this->backedUp = $backedUp;
 
@@ -295,7 +295,7 @@ class MediaFile
      *
      * @return MediaFile
      */
-    public function setWidth(?int $width): MediaFile
+    public function setWidth(?int $width): self
     {
         $this->width = $width;
 
@@ -315,7 +315,7 @@ class MediaFile
      *
      * @return MediaFile
      */
-    public function setHeight(?int $height): MediaFile
+    public function setHeight(?int $height): self
     {
         $this->height = $height;
 
@@ -335,7 +335,7 @@ class MediaFile
      *
      * @return MediaFile
      */
-    public function setPictureTag(?string $pictureTag): MediaFile
+    public function setPictureTag(?string $pictureTag): self
     {
         $this->pictureTag = $pictureTag;
 
@@ -355,7 +355,7 @@ class MediaFile
      *
      * @return MediaFile
      */
-    public function setSrcSet(?string $srcSet): MediaFile
+    public function setSrcSet(?string $srcSet): self
     {
         $this->srcSet = $srcSet;
 

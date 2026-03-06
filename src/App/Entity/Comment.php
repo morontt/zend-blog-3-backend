@@ -36,13 +36,15 @@ class Comment implements CommentInterface
     protected $id;
 
     /**
-     * @var Collection
+     * @var Collection<int, Comment>
      *
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="parent")
      **/
     protected $children;
 
     /**
+     * @var Comment|null
+     *
      * @ORM\ManyToOne(targetEntity="Comment", inversedBy="children")
      *
      * @ORM\JoinColumn(onDelete="SET NULL")
@@ -59,14 +61,14 @@ class Comment implements CommentInterface
     protected $post;
 
     /**
-     * @var Commentator
+     * @var Commentator|null
      *
      * @ORM\ManyToOne(targetEntity="Commentator", inversedBy="comments")
      */
     protected $commentator;
 
     /**
-     * @var User
+     * @var User|null
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
      */
@@ -87,7 +89,7 @@ class Comment implements CommentInterface
     protected $deleted = false;
 
     /**
-     * @var TrackingAgent
+     * @var TrackingAgent|null
      *
      * @ORM\ManyToOne(targetEntity="TrackingAgent")
      *
@@ -103,7 +105,7 @@ class Comment implements CommentInterface
     protected $ipAddress;
 
     /**
-     * @var GeoLocation
+     * @var GeoLocation|null
      *
      * @ORM\ManyToOne(targetEntity="GeoLocation")
      *
@@ -164,7 +166,7 @@ class Comment implements CommentInterface
      *
      * @return Comment
      */
-    public function addChild(self $children)
+    public function addChild(self $children): self
     {
         $this->children[] = $children;
 
@@ -176,7 +178,7 @@ class Comment implements CommentInterface
      *
      * @param Comment $children
      */
-    public function removeChild(self $children)
+    public function removeChild(self $children): void
     {
         $this->children->removeElement($children);
     }
@@ -184,7 +186,7 @@ class Comment implements CommentInterface
     /**
      * Get children
      *
-     * @return Collection
+     * @return Collection<int, Comment>
      */
     public function getChildren()
     {
@@ -198,7 +200,7 @@ class Comment implements CommentInterface
      *
      * @return Comment
      */
-    public function setParent(?self $parent = null)
+    public function setParent(?self $parent = null): self
     {
         $this->parent = $parent;
 
@@ -222,7 +224,7 @@ class Comment implements CommentInterface
      *
      * @return Comment
      */
-    public function setCommentator(?Commentator $commentator = null)
+    public function setCommentator(?Commentator $commentator = null): self
     {
         $this->commentator = $commentator;
 
@@ -246,7 +248,7 @@ class Comment implements CommentInterface
      *
      * @return Comment
      */
-    public function setUser(?User $user = null)
+    public function setUser(?User $user = null): self
     {
         $this->user = $user;
 
@@ -270,7 +272,7 @@ class Comment implements CommentInterface
      *
      * @return Comment
      */
-    public function setText($text)
+    public function setText($text): self
     {
         $this->text = $text;
 
@@ -294,7 +296,7 @@ class Comment implements CommentInterface
      *
      * @return Comment
      */
-    public function setDeleted($deleted)
+    public function setDeleted($deleted): self
     {
         $this->deleted = $deleted;
 
@@ -318,7 +320,7 @@ class Comment implements CommentInterface
      *
      * @return Comment
      */
-    public function setIpAddress($ipAddress)
+    public function setIpAddress($ipAddress): self
     {
         $this->ipAddress = $ipAddress;
 
@@ -330,7 +332,7 @@ class Comment implements CommentInterface
      *
      * @return string|null
      */
-    public function getIpAddress()
+    public function getIpAddress(): ?string
     {
         return $this->ipAddress;
     }
@@ -342,7 +344,7 @@ class Comment implements CommentInterface
      *
      * @return Comment
      */
-    public function setPost(?Post $post = null)
+    public function setPost(?Post $post = null): self
     {
         $this->post = $post;
 
@@ -366,7 +368,7 @@ class Comment implements CommentInterface
      *
      * @return Comment
      */
-    public function setTrackingAgent(?TrackingAgent $trackingAgent = null)
+    public function setTrackingAgent(?TrackingAgent $trackingAgent = null): self
     {
         $this->trackingAgent = $trackingAgent;
 
@@ -378,7 +380,7 @@ class Comment implements CommentInterface
      *
      * @return TrackingAgent
      */
-    public function getTrackingAgent()
+    public function getTrackingAgent(): ?TrackingAgent
     {
         return $this->trackingAgent;
     }

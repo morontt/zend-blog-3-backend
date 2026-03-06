@@ -31,6 +31,8 @@ class TelegramUser
      * @var int
      *
      * @ORM\Column(type="bigint")
+     *
+     * @phpstan-ignore doctrine.columnType
      */
     private $userId;
 
@@ -63,7 +65,7 @@ class TelegramUser
     private $username;
 
     /**
-     * @var string|null
+     * @var string
      *
      * @ORM\Column(type="text", length=65535)
      */
@@ -185,19 +187,19 @@ class TelegramUser
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getRawMessage(): ?string
+    public function getRawMessage(): string
     {
         return $this->rawMessage;
     }
 
     /**
-     * @param string|null $rawMessage
+     * @param string $rawMessage
      *
      * @return TelegramUser
      */
-    public function setRawMessage(?string $rawMessage): self
+    public function setRawMessage(string $rawMessage): self
     {
         $this->rawMessage = $rawMessage;
 

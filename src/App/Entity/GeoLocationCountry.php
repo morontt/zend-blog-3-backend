@@ -77,7 +77,7 @@ class GeoLocationCountry
      *
      * @return GeoLocationCountry
      */
-    public function setCode($code)
+    public function setCode($code): self
     {
         $this->code = $code;
 
@@ -101,7 +101,7 @@ class GeoLocationCountry
      *
      * @return GeoLocationCountry
      */
-    public function setName($name)
+    public function setName($name): self
     {
         $this->name = $name;
 
@@ -125,7 +125,7 @@ class GeoLocationCountry
      *
      * @return GeoLocationCountry
      */
-    public function setTimeCreated($timeCreated)
+    public function setTimeCreated($timeCreated): self
     {
         $this->timeCreated = $timeCreated;
 

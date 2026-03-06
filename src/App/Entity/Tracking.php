@@ -24,7 +24,7 @@ class Tracking
     protected $id;
 
     /**
-     * @var Post
+     * @var Post|null
      *
      * @ORM\ManyToOne(targetEntity="Post")
      *
@@ -33,7 +33,7 @@ class Tracking
     protected $post;
 
     /**
-     * @var TrackingAgent
+     * @var TrackingAgent|null
      *
      * @ORM\ManyToOne(targetEntity="TrackingAgent", inversedBy="trackings")
      *
@@ -42,14 +42,14 @@ class Tracking
     protected $trackingAgent;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(name="ip_addr", type="string", length=15, nullable=true)
      */
     protected $ipAddress;
 
     /**
-     * @var GeoLocation
+     * @var GeoLocation|null
      *
      * @ORM\ManyToOne(targetEntity="GeoLocation")
      *
@@ -123,7 +123,7 @@ class Tracking
      *
      * @return Tracking
      */
-    public function setIpAddress($ipAddress)
+    public function setIpAddress($ipAddress): self
     {
         $this->ipAddress = $ipAddress;
 
@@ -132,10 +132,8 @@ class Tracking
 
     /**
      * Get ipAddress
-     *
-     * @return string
      */
-    public function getIpAddress()
+    public function getIpAddress(): ?string
     {
         return $this->ipAddress;
     }
@@ -147,7 +145,7 @@ class Tracking
      *
      * @return Tracking
      */
-    public function setTimeCreated(DateTime $timeCreated)
+    public function setTimeCreated(DateTime $timeCreated): self
     {
         $this->timeCreated = $timeCreated;
 
@@ -171,7 +169,7 @@ class Tracking
      *
      * @return Tracking
      */
-    public function setTrackingAgent(?TrackingAgent $trackingAgent = null)
+    public function setTrackingAgent(?TrackingAgent $trackingAgent = null): self
     {
         $this->trackingAgent = $trackingAgent;
 
@@ -180,10 +178,8 @@ class Tracking
 
     /**
      * Get trackingAgent
-     *
-     * @return TrackingAgent
      */
-    public function getTrackingAgent()
+    public function getTrackingAgent(): ?TrackingAgent
     {
         return $this->trackingAgent;
     }
@@ -195,7 +191,7 @@ class Tracking
      *
      * @return Tracking
      */
-    public function setPost(?Post $post = null)
+    public function setPost(?Post $post = null): self
     {
         $this->post = $post;
 
@@ -204,10 +200,8 @@ class Tracking
 
     /**
      * Get post
-     *
-     * @return Post
      */
-    public function getPost()
+    public function getPost(): ?Post
     {
         return $this->post;
     }
@@ -225,7 +219,7 @@ class Tracking
      *
      * @return Tracking
      */
-    public function setCdn(bool $cdn): Tracking
+    public function setCdn(bool $cdn): self
     {
         $this->cdn = $cdn;
 

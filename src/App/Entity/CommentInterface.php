@@ -2,15 +2,17 @@
 
 namespace App\Entity;
 
+use DateTime;
+
 interface CommentInterface
 {
     public function getId(): ?int;
 
-    public function getText();
+    public function getText(): string;
 
-    public function getIpAddress();
+    public function getIpAddress(): ?string;
 
-    public function isDeleted();
+    public function isDeleted(): bool;
 
-    public function getTimeCreated();
+    public function getTimeCreated(): DateTime;
 }

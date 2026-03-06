@@ -113,7 +113,7 @@ class GeoLocationCity
      *
      * @return GeoLocationCity
      */
-    public function setCity($city)
+    public function setCity($city): self
     {
         $this->city = $city;
 
@@ -137,7 +137,7 @@ class GeoLocationCity
      *
      * @return GeoLocationCity
      */
-    public function setRegion($region)
+    public function setRegion($region): self
     {
         $this->region = $region;
 
@@ -161,7 +161,7 @@ class GeoLocationCity
      *
      * @return GeoLocationCity
      */
-    public function setLatitude($latitude)
+    public function setLatitude($latitude): self
     {
         $this->latitude = $latitude;
 
@@ -185,7 +185,7 @@ class GeoLocationCity
      *
      * @return GeoLocationCity
      */
-    public function setLongitude($longitude)
+    public function setLongitude($longitude): self
     {
         $this->longitude = $longitude;
 
@@ -209,7 +209,7 @@ class GeoLocationCity
      *
      * @return GeoLocationCity
      */
-    public function setZip($zip)
+    public function setZip($zip): self
     {
         $this->zip = $zip;
 
@@ -233,7 +233,7 @@ class GeoLocationCity
      *
      * @return GeoLocationCity
      */
-    public function setTimeZone($timeZone)
+    public function setTimeZone($timeZone): self
     {
         $this->timeZone = $timeZone;
 
@@ -257,7 +257,7 @@ class GeoLocationCity
      *
      * @return GeoLocationCity
      */
-    public function setCountry(GeoLocationCountry $country)
+    public function setCountry(GeoLocationCountry $country): self
     {
         $this->country = $country;
 
@@ -281,7 +281,7 @@ class GeoLocationCity
      *
      * @return GeoLocationCity
      */
-    public function setTimeCreated($timeCreated)
+    public function setTimeCreated($timeCreated): self
     {
         $this->timeCreated = $timeCreated;
 

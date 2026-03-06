@@ -1,3 +1,7 @@
+includes:
+    - vendor/phpstan/phpstan-doctrine/extension.neon
+    - vendor/phpstan/phpstan-doctrine/rules.neon
+
 parameters:
     level: 6
     paths:
@@ -5,3 +9,5 @@ parameters:
         - web/
         - src/App/
         - tests/
+    doctrine:
+        objectManagerLoader: tests/object-manager.php

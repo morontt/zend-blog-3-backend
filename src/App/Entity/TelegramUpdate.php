@@ -40,11 +40,13 @@ class TelegramUpdate
      * @var int|null
      *
      * @ORM\Column(type="bigint", nullable=true)
+     *
+     * @phpstan-ignore doctrine.columnType
      */
     private $chatId;
 
     /**
-     * @var string
+     * @var string|null
      *
      * @ORM\Column(type="text", length=65535, nullable=true)
      */

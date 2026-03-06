@@ -28,7 +28,7 @@ class PygmentsCode
     private $id;
 
     /**
-     * @var PygmentsLanguage
+     * @var PygmentsLanguage|null
      *
      * @ORM\ManyToOne(targetEntity="PygmentsLanguage")
      *
@@ -159,7 +159,7 @@ class PygmentsCode
      *
      * @return PygmentsCode
      */
-    public function setSourceHtmlPreview(?string $sourceHtmlPreview = null): PygmentsCode
+    public function setSourceHtmlPreview(?string $sourceHtmlPreview = null): self
     {
         $this->sourceHtmlPreview = $sourceHtmlPreview;
 

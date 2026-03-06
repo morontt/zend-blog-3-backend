@@ -33,13 +33,15 @@ class Category implements CategoryInterface
     private $id;
 
     /**
-     * @var Collection
+     * @var Collection<int, Category>
      *
      * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
      **/
     private $children;
 
     /**
+     * @var Category|null
+     *
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="children")
      *
      * @ORM\JoinColumn(onDelete="SET NULL")
@@ -61,7 +63,7 @@ class Category implements CategoryInterface
     private $url;
 
     /**
-     * @var Collection
+     * @var Collection<int, Post>
      *
      * @ORM\OneToMany(targetEntity="Post", mappedBy="category")
      */
@@ -98,7 +100,7 @@ class Category implements CategoryInterface
      *
      * @return Category
      */
-    public function setName(string $name)
+    public function setName(string $name): self
     {
         $this->name = $name;
 
@@ -122,7 +124,7 @@ class Category implements CategoryInterface
      *
      * @return Category
      */
-    public function setUrl(string $url)
+    public function setUrl(string $url): self
     {
         $this->url = $url;
 
@@ -146,7 +148,7 @@ class Category implements CategoryInterface
      *
      * @return Category
      */
-    public function addChild(self $children)
+    public function addChild(self $children): self
     {
         $this->children[] = $children;
 
@@ -158,7 +160,7 @@ class Category implements CategoryInterface
      *
      * @param Category $children
      */
-    public function removeChild(self $children)
+    public function removeChild(self $children): void
     {
         $this->children->removeElement($children);
     }
@@ -166,7 +168,7 @@ class Category implements CategoryInterface
     /**
      * Get children
      *
-     * @return Collection
+     * @return Collection<int, Category>
      */
     public function getChildren()
     {
@@ -180,7 +182,7 @@ class Category implements CategoryInterface
      *
      * @return Category
      */
-    public function setParent(?self $parent = null)
+    public function setParent(?self $parent = null): self
     {
         $this->parent = $parent;
 
@@ -192,7 +194,7 @@ class Category implements CategoryInterface
      *
      * @return Category
      */
-    public function getParent()
+    public function getParent(): ?self
     {
         return $this->parent;
     }
@@ -204,7 +206,7 @@ class Category implements CategoryInterface
      *
      * @return Category
      */
-    public function addPost(Post $posts)
+    public function addPost(Post $posts): self
     {
         $this->posts[] = $posts;
 
@@ -216,7 +218,7 @@ class Category implements CategoryInterface
      *
      * @param Post $posts
      */
-    public function removePost(Post $posts)
+    public function removePost(Post $posts): void
     {
         $this->posts->removeElement($posts);
     }
@@ -224,7 +226,7 @@ class Category implements CategoryInterface
     /**
      * Get posts
      *
-     * @return Collection
+     * @return Collection<int, Post>
      */
     public function getPosts()
     {
