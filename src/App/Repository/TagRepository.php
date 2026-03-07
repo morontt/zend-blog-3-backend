@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Tag;
+use App\Repository\Traits\ListQueryTrait;
 use App\Utils\RuTransform;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;

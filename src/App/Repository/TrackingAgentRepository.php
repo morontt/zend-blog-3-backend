@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\TrackingAgent;
+use App\Repository\Traits\ListQueryTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

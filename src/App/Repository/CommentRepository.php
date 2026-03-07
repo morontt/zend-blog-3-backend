@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Doctrine\DBAL\Type\MillisecondsDateTime;
 use App\Entity\Comment;
 use App\Entity\GeoLocation;
+use App\Repository\Traits\ListQueryTrait;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;

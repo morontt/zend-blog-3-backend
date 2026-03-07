@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\DTO\CommentatorDTO;
 use App\Entity\Commentator;
+use App\Repository\Traits\ListQueryTrait;
 use DateInterval;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

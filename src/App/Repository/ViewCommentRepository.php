@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Post;
 use App\Entity\ViewComment;
+use App\Repository\Traits\ListQueryTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
