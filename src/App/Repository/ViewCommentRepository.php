@@ -7,6 +7,9 @@ use App\Entity\ViewComment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @extends ServiceEntityRepository<ViewComment>
+ */
 class ViewCommentRepository extends ServiceEntityRepository
 {
     use ListQueryTrait;

@@ -7,7 +7,9 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method UserExtraInfo|null findOneBy(array $criteria)
+ * @method UserExtraInfo|null findOneBy(array<string, mixed> $criteria)
+ *
+ * @extends ServiceEntityRepository<UserExtraInfo>
  */
 class UserExtraInfoRepository extends ServiceEntityRepository
 {

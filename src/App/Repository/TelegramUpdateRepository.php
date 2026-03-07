@@ -8,6 +8,8 @@ use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method TelegramUpdate|null find($id, $lockMode = null, $lockVersion = null)
+ *
+ * @extends ServiceEntityRepository<TelegramUpdate>
  */
 class TelegramUpdateRepository extends ServiceEntityRepository
 {
@@ -21,13 +23,6 @@ class TelegramUpdateRepository extends ServiceEntityRepository
         parent::__construct($registry, TelegramUpdate::class);
     }
 
-    /**
-     * @param string $from
-     * @param string $to
-     * @param int $adminId
-     *
-     * @return array
-     */
     public function countNewMessages(string $from, string $to, int $adminId): int
     {
         $qb = $this->createQueryBuilder('t');

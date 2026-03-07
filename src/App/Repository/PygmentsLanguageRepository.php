@@ -6,6 +6,9 @@ use App\Entity\PygmentsLanguage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @extends ServiceEntityRepository<PygmentsLanguage>
+ */
 class PygmentsLanguageRepository extends ServiceEntityRepository
 {
     use ListQueryTrait;
@@ -19,7 +22,7 @@ class PygmentsLanguageRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getNamesArray(): array
     {

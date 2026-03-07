@@ -14,6 +14,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * repository methods below.
  *
  * @method Category[] findAll()
+ *
+ * @extends ServiceEntityRepository<Category>
  */
 class CategoryRepository extends ServiceEntityRepository
 {
@@ -26,7 +28,7 @@ class CategoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Query
+     * @return Query<null, Category>
      */
     public function getListQuery(): Query
     {
@@ -37,7 +39,7 @@ class CategoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getNamesArray(): array
     {
@@ -129,7 +131,7 @@ class CategoryRepository extends ServiceEntityRepository
         return $key;
     }
 
-    public function save(Category $entity)
+    public function save(Category $entity): void
     {
         $new = is_null($entity->getId());
 

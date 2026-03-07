@@ -11,8 +11,10 @@ use LogicException;
 /**
  * UserRepository
  *
- * @method User|null findOneByUsername($username)
- * @method User|null findOneBy(array $criteria)
+ * @method User|null findOneByUsername(string $username)
+ * @method User|null findOneBy(array<string, mixed> $criteria)
+ *
+ * @extends ServiceEntityRepository<User>
  */
 class UserRepository extends ServiceEntityRepository
 {
@@ -24,6 +26,9 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+    /**
+     * @return Query<null, User>
+     */
     public function getListQuery(): Query
     {
         return $this

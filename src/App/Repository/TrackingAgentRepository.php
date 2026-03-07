@@ -10,6 +10,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * TrackingAgentRepository
  *
  * @method TrackingAgent|null findOneByHash($hash)
+ *
+ * @extends ServiceEntityRepository<TrackingAgent>
  */
 class TrackingAgentRepository extends ServiceEntityRepository
 {

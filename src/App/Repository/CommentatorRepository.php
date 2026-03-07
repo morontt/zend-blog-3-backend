@@ -13,6 +13,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * CommentatorRepository
  *
  * @method Commentator|null findOneByDisqusId($id)
+ *
+ * @extends ServiceEntityRepository<Commentator>
  */
 class CommentatorRepository extends ServiceEntityRepository
 {

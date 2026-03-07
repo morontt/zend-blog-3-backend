@@ -7,7 +7,9 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method EmailSubscriptionSettings|null findOneBy(array $criteria, array $orderBy = null)
+ * @method EmailSubscriptionSettings|null findOneBy(array<string, mixed> $criteria, array<string, string> $orderBy = null)
+ *
+ * @extends ServiceEntityRepository<EmailSubscriptionSettings>
  */
 class EmailSubscriptionSettingsRepository extends ServiceEntityRepository
 {

@@ -9,6 +9,8 @@ use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method PygmentsCode|null find($id, $lockMode = null, $lockVersion = null)
+ *
+ * @extends ServiceEntityRepository<PygmentsCode>
  */
 class PygmentsCodeRepository extends ServiceEntityRepository
 {
@@ -20,6 +22,9 @@ class PygmentsCodeRepository extends ServiceEntityRepository
         parent::__construct($registry, PygmentsCode::class);
     }
 
+    /**
+     * @return Query<null, PygmentsCode>
+     */
     public function getListQuery(): Query
     {
         $qb = $this->createQueryBuilder('e');
