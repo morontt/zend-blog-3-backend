@@ -10,6 +10,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * SystemParametersRepository
  *
  * @method SystemParameters|null findOneByOptionKey($key)
+ *
+ * @extends ServiceEntityRepository<SystemParameters>
  */
 class SystemParametersRepository extends ServiceEntityRepository
 {

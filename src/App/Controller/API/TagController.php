@@ -162,9 +162,9 @@ class TagController extends BaseController
      */
     public function tagAutocompleteAction(Request $request): JsonResponse
     {
-        $tags = $this->getEm()
-            ->getRepository(Tag::class)
-            ->getForAutocomplete($request->query->get('term'));
+        /** @var TagRepository $tagRepo */
+        $tagRepo = $this->getEm()->getRepository(Tag::class);
+        $tags = $tagRepo->getForAutocomplete((string)$request->query->get('term'));
 
         $result = array_map(
             function (Tag $tag) {

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Tag;
+use App\Repository\Traits\ListQueryTrait;
 use App\Utils\RuTransform;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -10,7 +11,9 @@ use Doctrine\Persistence\ManagerRegistry;
 /**
  * TagRepository
  *
- * @method Tag|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Tag|null findOneBy(array<string, mixed> $criteria, array<string, string> $orderBy = null)
+ *
+ * @extends ServiceEntityRepository<Tag>
  */
 class TagRepository extends ServiceEntityRepository
 {
@@ -29,7 +32,7 @@ class TagRepository extends ServiceEntityRepository
      *
      * @return Tag[]
      */
-    public function getForAutocomplete($term): array
+    public function getForAutocomplete(string $term): array
     {
         $qb = $this->createQueryBuilder('t');
 

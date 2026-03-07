@@ -13,6 +13,9 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @extends ServiceEntityRepository<ViewCategory>
+ */
 class ViewCategoryRepository extends ServiceEntityRepository
 {
     /**
@@ -24,7 +27,7 @@ class ViewCategoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Query
+     * @return Query<null, ViewCategory>
      */
     public function getListQuery(): Query
     {

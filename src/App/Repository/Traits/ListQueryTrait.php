@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Repository;
+namespace App\Repository\Traits;
 
 use Doctrine\ORM\Query;
-use Doctrine\ORM\QueryBuilder;
 
 trait ListQueryTrait
 {
     /**
      * @param bool $nameBased
      *
-     * @return Query
+     * @phpstan-ignore missingType.generics
      */
     public function getListQuery(bool $nameBased = false): Query
     {
-        /* @var QueryBuilder $qb */
+        /* @var \Doctrine\ORM\QueryBuilder $qb */
         $qb = $this->createQueryBuilder('e');
 
         if ($nameBased) {
@@ -23,6 +22,7 @@ trait ListQueryTrait
             $qb->orderBy('e.id', 'DESC');
         }
 
+        /* @phpstan-ignore doctrine.dql */
         return $qb->getQuery();
     }
 }

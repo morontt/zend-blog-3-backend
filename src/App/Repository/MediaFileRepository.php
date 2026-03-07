@@ -11,6 +11,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * MediaFileRepository
  *
  * @method MediaFile|null find($id, $lockMode = null, $lockVersion = null)
+ *
+ * @extends ServiceEntityRepository<MediaFile>
  */
 class MediaFileRepository extends ServiceEntityRepository
 {
@@ -23,7 +25,7 @@ class MediaFileRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Query
+     * @return Query<null, MediaFile>
      */
     public function getListQuery(): Query
     {

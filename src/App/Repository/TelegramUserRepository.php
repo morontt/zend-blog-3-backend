@@ -3,9 +3,13 @@
 namespace App\Repository;
 
 use App\Entity\TelegramUser;
+use App\Repository\Traits\ListQueryTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+/**
+ * @extends ServiceEntityRepository<TelegramUser>
+ */
 class TelegramUserRepository extends ServiceEntityRepository
 {
     use ListQueryTrait;

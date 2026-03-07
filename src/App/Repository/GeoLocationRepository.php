@@ -13,6 +13,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * repository methods below.
  *
  * @method GeoLocation|null findOneByIpAddress($ip)
+ *
+ * @extends ServiceEntityRepository<GeoLocation>
  */
 class GeoLocationRepository extends ServiceEntityRepository
 {

@@ -57,6 +57,7 @@ class CommentGeoLocation implements DailyCronServiceInterface
 
     public function run(): void
     {
+        /** @var \App\Repository\CommentRepository */
         $commentRepo = $this->em->getRepository(Comment::class);
 
         $ips = $commentRepo->getUncheckedIps();

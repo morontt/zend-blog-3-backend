@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\DTO\CommentatorDTO;
 use App\Entity\Commentator;
+use App\Repository\Traits\ListQueryTrait;
 use DateInterval;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -13,6 +14,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * CommentatorRepository
  *
  * @method Commentator|null findOneByDisqusId($id)
+ *
+ * @extends ServiceEntityRepository<Commentator>
  */
 class CommentatorRepository extends ServiceEntityRepository
 {

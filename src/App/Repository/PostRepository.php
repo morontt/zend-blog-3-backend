@@ -14,6 +14,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * repository methods below.
  *
  * @method Post|null find($id, $lockMode = null, $lockVersion = null)
+ *
+ * @extends ServiceEntityRepository<Post>
  */
 class PostRepository extends ServiceEntityRepository
 {
@@ -28,7 +30,7 @@ class PostRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Query
+     * @return Query<null, Post>
      */
     public function getListQuery(): Query
     {
@@ -61,7 +63,7 @@ class PostRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function increaseViewCounter(int $articleId, int $cnt)
+    public function increaseViewCounter(int $articleId, int $cnt): void
     {
         $qb = $this->createQueryBuilder('p');
         $qb

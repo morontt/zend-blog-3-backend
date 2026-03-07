@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\TrackingAgent;
+use App\Repository\Traits\ListQueryTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -10,6 +11,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * TrackingAgentRepository
  *
  * @method TrackingAgent|null findOneByHash($hash)
+ *
+ * @extends ServiceEntityRepository<TrackingAgent>
  */
 class TrackingAgentRepository extends ServiceEntityRepository
 {

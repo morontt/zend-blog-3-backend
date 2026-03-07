@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Doctrine\DBAL\Type\MillisecondsDateTime;
 use App\Entity\Comment;
 use App\Entity\GeoLocation;
+use App\Repository\Traits\ListQueryTrait;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -14,6 +15,8 @@ use Doctrine\Persistence\ManagerRegistry;
  *
  * @method Comment|null findOneByDisqusId($id)
  * @method Comment|null find($id, $lockMode = null, $lockVersion = null)
+ *
+ * @extends ServiceEntityRepository<Comment>
  */
 class CommentRepository extends ServiceEntityRepository
 {
@@ -28,9 +31,9 @@ class CommentRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return array
+     * @return string[]
      */
-    public function getUncheckedIps()
+    public function getUncheckedIps(): array
     {
         $qb = $this->createQueryBuilder('c');
 
@@ -53,7 +56,7 @@ class CommentRepository extends ServiceEntityRepository
      * @param GeoLocation $location
      * @param string $ip
      */
-    public function updateLocation(GeoLocation $location, string $ip)
+    public function updateLocation(GeoLocation $location, string $ip): void
     {
         $qb = $this->createQueryBuilder('c');
         $qb

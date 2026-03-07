@@ -13,6 +13,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * repository methods below.
  *
  * @method GeoLocationCountry|null findOneByCode($code)
+ *
+ * @extends ServiceEntityRepository<GeoLocationCountry>
  */
 class GeoLocationCountryRepository extends ServiceEntityRepository
 {
