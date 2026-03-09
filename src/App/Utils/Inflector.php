@@ -24,6 +24,7 @@ class Inflector
     private const LAST_WORD_CAMELIZED_REGEX = '/([\w\/\s-]+)([A-Z][a-z\d]*$)/';
     private const CAMELIZED_REGEX = '/[A-Z][a-z\d]*$/';
 
+    /** @var array<int, string[]> */
     protected static array $plurals = [
         ['/$/', 's'],
         ['/s$/i', 's'],
@@ -48,6 +49,7 @@ class Inflector
         ['/(quiz)$/i', '$1zes'],
     ];
 
+    /** @var array<int, string[]> */
     protected static array $irregularPairs = [
         ['person', 'people'],
         ['man', 'men'],
@@ -58,6 +60,7 @@ class Inflector
         ['zombie', 'zombies'],
     ];
 
+    /** @var string[] */
     protected static array $uncountable = [
         'equipment',
         'information',

@@ -296,6 +296,11 @@ class WebDAVAdapter implements FilesystemAdapter
         }
     }
 
+    /**
+     * @param array<string, mixed> $object
+     *
+     * @return array<string, mixed>
+     */
     private function normalizeObject(array $object): array
     {
         $mapping = [
@@ -366,6 +371,9 @@ class WebDAVAdapter implements FilesystemAdapter
         }
     }
 
+    /**
+     * @param array<string, mixed> $properties
+     */
     private function propsIsDirectory(array $properties): bool
     {
         if (isset($properties['{DAV:}resourcetype'])) {
@@ -389,6 +397,9 @@ class WebDAVAdapter implements FilesystemAdapter
         $this->createDirectory($dirname, new Config());
     }
 
+    /**
+     * @return mixed
+     */
     private function propFind(string $path, string $section, string $property)
     {
         $location = $this->encodePath($this->prefixer->prefixPath($path));

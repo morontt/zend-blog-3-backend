@@ -23,7 +23,10 @@ class UpdatesManager implements UpdatesManagerInterface
         $this->em = $em;
     }
 
-    public function saveUpdate(Update $obj, array $requestData)
+    /**
+     * @param array<string, mixed> $requestData
+     */
+    public function saveUpdate(Update $obj, array $requestData): void
     {
         $dbUser = null;
         $chatId = null;

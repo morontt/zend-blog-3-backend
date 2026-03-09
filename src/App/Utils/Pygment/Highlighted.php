@@ -5,15 +5,19 @@ namespace App\Utils\Pygment;
 class Highlighted
 {
     /**
-     * @var array
+     * @var string[]
      */
     private $strings;
 
     /**
-     * @var array
+     * @var string[]
      */
     private $stringsInline;
 
+    /**
+     * @param string[] $stringsTable
+     * @param string[] $stringsInline
+     */
     public function __construct(array $stringsTable, array $stringsInline)
     {
         $this->strings = $stringsTable;

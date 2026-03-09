@@ -14,22 +14,22 @@ use ErrorException;
 class ExternalLinkProcessor
 {
     /**
-     * @var array
+     * @var array<int, array<string, string>>
      */
     protected $hrefs = [];
 
     /**
-     * @var array
+     * @var array<int, array<string, string>>
      */
     protected $replaces = [];
 
     /**
-     * @var array
+     * @var string[]
      */
     protected $internalHosts;
 
     /**
-     * @param array $hosts
+     * @param string[] $hosts
      */
     public function __construct(array $hosts = [])
     {
@@ -59,6 +59,7 @@ class ExternalLinkProcessor
             $fuse++;
         } while ($r && $fuse < 200);
 
+        // @phpstan-ignore if.alwaysFalse
         if (count($this->hrefs)) {
             $content1 = $content;
             $fuse = 0;
@@ -67,6 +68,7 @@ class ExternalLinkProcessor
                 $fuse++;
             } while ($r && $fuse < 200);
 
+            // @phpstan-ignore foreach.emptyArray
             foreach ($this->replaces as $replacePair) {
                 $content = str_replace($replacePair['old'], $replacePair['new'], $content);
             }

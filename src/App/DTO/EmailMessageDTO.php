@@ -2,9 +2,7 @@
 
 namespace App\DTO;
 
-use Serializable;
-
-class EmailMessageDTO implements Serializable
+class EmailMessageDTO
 {
     /**
      * @var string
@@ -12,12 +10,12 @@ class EmailMessageDTO implements Serializable
     public string $subject;
 
     /**
-     * @var string|array
+     * @var string|array<string, string>
      */
     public $from;
 
     /**
-     * @var string|array
+     * @var string|array<string, string>
      */
     public $to;
 
@@ -41,12 +39,9 @@ class EmailMessageDTO implements Serializable
      */
     public $unsubscribeLink;
 
-    /**
-     * @return string|null
-     */
-    public function serialize()
+    public function __serialize(): array
     {
-        return serialize([
+        return [
             $this->subject,
             $this->from,
             $this->to,
@@ -54,15 +49,15 @@ class EmailMessageDTO implements Serializable
             $this->unsubscribeLink,
             $this->messageText,
             $this->messageHtml,
-        ]);
+        ];
     }
 
     /**
-     * @param $data
+     * @phpstan-ignore missingType.iterableValue
      */
-    public function unserialize($data)
+    public function __unserialize(array $data)
     {
-        list(
+        [
             $this->subject,
             $this->from,
             $this->to,
@@ -70,7 +65,7 @@ class EmailMessageDTO implements Serializable
             $this->unsubscribeLink,
             $this->messageText,
             $this->messageHtml,
-        ) = unserialize($data, ['allowed_classes' => false]);
+        ] = $data;
     }
 
     public function getRecipientEmail(): string

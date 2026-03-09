@@ -5,6 +5,9 @@ namespace App\DTO;
 use ArrayAccess;
 use RuntimeException;
 
+/**
+ * @implements ArrayAccess<string, mixed>
+ */
 abstract class BaseObject implements ArrayAccess
 {
     public function offsetExists($offset): bool
@@ -12,7 +15,7 @@ abstract class BaseObject implements ArrayAccess
         return isset($this->{$offset});
     }
 
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         if (!property_exists($this, $offset)) {
             throw new RuntimeException("Illegal property \"{$offset}\" of \\" . static::class);
@@ -21,7 +24,7 @@ abstract class BaseObject implements ArrayAccess
         return $this->{$offset};
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (!property_exists($this, $offset)) {
             throw new RuntimeException("Illegal property \"{$offset}\" of \\" . static::class);
@@ -30,7 +33,7 @@ abstract class BaseObject implements ArrayAccess
         $this->{$offset} = $value;
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         if (!property_exists($this, $offset)) {
             throw new RuntimeException("Illegal property \"{$offset}\" of \\" . static::class);

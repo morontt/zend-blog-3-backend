@@ -31,6 +31,7 @@ class CommentatorDTO
      */
     public function getNormalizedURL(): ?string
     {
+        // @phpstan-ignore argument.type
         return (new UriNormalize(['enforcedScheme' => 'http']))->filter($this->website);
     }
 }
