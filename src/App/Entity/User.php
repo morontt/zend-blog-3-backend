@@ -102,27 +102,6 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface
     private $timeCreated;
 
     /**
-     * @var DateTime
-     *
-     * @ORM\Column(name="last_login", type="milliseconds_dt", nullable=true)
-     */
-    private $lastLogin;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(type="integer")
-     */
-    private $loginCount = 0;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="ip_last", type="string", length=15, nullable=true)
-     */
-    private $ipAddressLast;
-
-    /**
      * @var Collection<int, Comment>
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user")
@@ -418,54 +397,6 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface
     }
 
     /**
-     * Set lastLogin
-     *
-     * @param DateTime $lastLogin
-     *
-     * @return User
-     */
-    public function setLastLogin(DateTime $lastLogin): self
-    {
-        $this->lastLogin = $lastLogin;
-
-        return $this;
-    }
-
-    /**
-     * Get lastLogin
-     *
-     * @return DateTime
-     */
-    public function getLastLogin(): DateTime
-    {
-        return $this->lastLogin;
-    }
-
-    /**
-     * Set ipAddressLast
-     *
-     * @param string|null $ip
-     *
-     * @return User
-     */
-    public function setIpAddressLast(?string $ip = null): self
-    {
-        $this->ipAddressLast = $ip;
-
-        return $this;
-    }
-
-    /**
-     * Get ipAddressLast
-     *
-     * @return string|null
-     */
-    public function getIpAddressLast(): ?string
-    {
-        return $this->ipAddressLast;
-    }
-
-    /**
      * Add comments
      *
      * @param Comment $comments
@@ -497,30 +428,6 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface
     public function getComments()
     {
         return $this->comments;
-    }
-
-    /**
-     * Set loginCount
-     *
-     * @param int $loginCount
-     *
-     * @return User
-     */
-    public function setLoginCount(int $loginCount): self
-    {
-        $this->loginCount = $loginCount;
-
-        return $this;
-    }
-
-    /**
-     * Get loginCount
-     *
-     * @return int
-     */
-    public function getLoginCount(): int
-    {
-        return $this->loginCount;
     }
 
     public function getDisplayName(): ?string

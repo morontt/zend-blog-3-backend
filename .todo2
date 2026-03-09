@@ -487,7 +487,8 @@
         {
           "text": "Login history",
           "priority": "medium",
-          "creation": 1723139406
+          "creation": 1723139406,
+          "completion": 1773047178
         }
       ]
     },

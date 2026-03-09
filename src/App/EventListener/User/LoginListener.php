@@ -9,9 +9,9 @@
 
 namespace App\EventListener\User;
 
+use App\Entity\LoginHistory;
 use App\Entity\User;
 use App\Utils\Http;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
@@ -35,13 +35,13 @@ class LoginListener
         $user = $event->getAuthenticationToken()->getUser();
 
         if ($user instanceof User) {
-            $user
-                ->setLastLogin(new DateTime())
-                ->setLoginCount($user->getLoginCount() + 1)
-                ->setIpAddressLast(Http::getClientIp())
+            $history = new LoginHistory();
+            $history
+                ->setUser($user)
+                ->setIpAddress(Http::getClientIp())
             ;
 
-            $this->em->persist($user);
+            $this->em->persist($history);
             $this->em->flush();
         }
     }
