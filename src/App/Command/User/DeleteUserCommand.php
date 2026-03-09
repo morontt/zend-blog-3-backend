@@ -18,25 +18,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class DeleteUserCommand extends Command
 {
-    /**
-     * @var UserRepository
-     */
-    private UserRepository $repository;
-
-    /**
-     * @var EntityManagerInterface
-     */
-    private EntityManagerInterface $em;
-
-    /**
-     * @param UserRepository $repository
-     * @param EntityManagerInterface $em
-     */
-    public function __construct(UserRepository $repository, EntityManagerInterface $em)
-    {
-        $this->repository = $repository;
-        $this->em = $em;
-
+    public function __construct(
+        private UserRepository $repository,
+        private EntityManagerInterface $em,
+    ) {
         parent::__construct();
     }
 

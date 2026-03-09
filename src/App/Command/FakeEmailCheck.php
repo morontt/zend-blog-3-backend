@@ -13,16 +13,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class FakeEmailCheck extends Command
 {
-    private CommentatorRepository $repository;
-
-    private EntityManagerInterface $em;
-
-    public function __construct(CommentatorRepository $repository, EntityManagerInterface $em)
-    {
+    public function __construct(
+        private CommentatorRepository $repository,
+        private EntityManagerInterface $em,
+    ) {
         parent::__construct();
-
-        $this->repository = $repository;
-        $this->em = $em;
     }
 
     protected function configure(): void

@@ -45,7 +45,7 @@ class DefaultController extends AbstractController
      *
      * @throws JsonException
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function indexAction(): array
     {
@@ -100,7 +100,7 @@ class DefaultController extends AbstractController
      * @param Post|null $post
      * @param ViewCommentRepository $repository
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function previewAction(ViewCommentRepository $repository, ?Post $post = null): array
     {

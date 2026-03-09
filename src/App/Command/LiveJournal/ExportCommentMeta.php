@@ -17,14 +17,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ExportCommentMeta extends Command
 {
-    private EntityManagerInterface $em;
     private EntityRepository $commentMetaRepo;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em)
     {
         parent::__construct();
 
-        $this->em = $em;
         $this->commentMetaRepo = $this->em->getRepository(LjCommentMeta::class);
     }
 

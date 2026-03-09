@@ -17,7 +17,7 @@ class TestEmailController extends AbstractController
      *
      * @Template()
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function indexAction(): array
     {

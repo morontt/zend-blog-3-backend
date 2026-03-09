@@ -32,24 +32,17 @@ use Throwable;
 
 class ExportArticleCommand extends Command
 {
-    private DataConverter $dataConverter;
-    private EntityManagerInterface $em;
-    private CommentManager $commentManager;
     private EntityRepository $commentMetaRepo;
 
     private array $postersMap = [];
     private array $commentsMap = [];
 
     public function __construct(
-        DataConverter $dataConverter,
-        EntityManagerInterface $em,
-        CommentManager $commentManager,
+        private DataConverter $dataConverter,
+        private EntityManagerInterface $em,
+        private CommentManager $commentManager,
     ) {
         parent::__construct();
-
-        $this->dataConverter = $dataConverter;
-        $this->commentManager = $commentManager;
-        $this->em = $em;
 
         $this->commentMetaRepo = $this->em->getRepository(LjCommentMeta::class);
 

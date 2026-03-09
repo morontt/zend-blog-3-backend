@@ -10,20 +10,14 @@
 namespace App\Service;
 
 use App\Entity\TrackingAgent;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 
 class Tracking
 {
     /**
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
      * @param EntityManagerInterface $em
      */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em)
     {
         $this->em = $em;
     }
@@ -42,7 +36,7 @@ class Tracking
             $agent->setUserAgent($agentName);
 
             $this->em->persist($agent);
-            $this->em->flush($agent);
+            $this->em->flush();
         }
 
         return $agent;

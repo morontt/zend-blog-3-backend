@@ -12,13 +12,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ImagesSizeUpdate extends Command
 {
-    private EntityManagerInterface $em;
-
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em)
     {
         parent::__construct();
-
-        $this->em = $em;
     }
 
     protected function configure(): void

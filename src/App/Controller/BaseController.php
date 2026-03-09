@@ -10,96 +10,56 @@
 namespace App\Controller;
 
 use App\API\DataConverter;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query;
 use Knp\Component\Pager\Pagination\PaginationInterface;
-use Knp\Component\Pager\Pagination\SlidingPagination;
-use Knp\Component\Pager\Paginator;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class BaseController extends AbstractController
 {
     /**
-     * @var EntityManagerInterface
+     * @var array<string, string>
      */
-    protected EntityManagerInterface $em;
-
-    /**
-     * @var PaginatorInterface
-     */
-    protected PaginatorInterface $paginator;
-
-    /**
-     * @var DataConverter
-     */
-    protected DataConverter $apiDataConverter;
-
     protected array $errorsPathMap = [];
 
-    /**
-     * @param EntityManagerInterface $em
-     * @param PaginatorInterface $paginator
-     * @param DataConverter $apiDataConverter
-     */
     public function __construct(
-        EntityManagerInterface $em,
-        PaginatorInterface $paginator,
-        DataConverter $apiDataConverter,
+        private EntityManagerInterface $em,
+        private PaginatorInterface $paginator,
+        private DataConverter $apiDataConverter,
     ) {
-        $this->em = $em;
-        $this->paginator = $paginator;
-        $this->apiDataConverter = $apiDataConverter;
     }
 
-    /**
-     * @return EntityManager
-     */
-    public function getEm(): EntityManagerInterface
+    protected function getEm(): EntityManagerInterface
     {
         return $this->em;
     }
 
-    /**
-     * @return DataConverter
-     */
-    public function getDataConverter(): DataConverter
+    protected function getDataConverter(): DataConverter
     {
         return $this->apiDataConverter;
     }
 
     /**
-     * @return Paginator
+     * @param Query<null, mixed> $query
+     *
+     * @return PaginationInterface
      */
-    public function getPaginator(): PaginatorInterface
+    protected function paginate(Query $query, int $page, int $limit = 15): PaginationInterface
     {
-        return $this->paginator;
+        return $this->paginator->paginate($query, (int)$page, $limit);
     }
 
     /**
-     * @param $query
-     * @param $page
-     * @param int $limit
+     * @param array<string, mixed> $data
      *
-     * @return SlidingPagination
+     * @return array<string, mixed>
      */
-    public function paginate($query, $page, int $limit = 15): PaginationInterface
-    {
-        return $this->getPaginator()
-            ->paginate($query, (int)$page, $limit);
-    }
-
-    /**
-     * @param array $data
-     *
-     * @return array
-     */
-    public function getPaginationMetadata(array $data): array
+    protected function getPaginationMetadata(array $data): array
     {
         return [
             'last' => $data['last'],
@@ -112,7 +72,7 @@ class BaseController extends AbstractController
     /**
      * @param FormInterface $form
      *
-     * @return array
+     * @return mixed[]
      */
     protected function handleForm(FormInterface $form): array
     {
@@ -139,36 +99,38 @@ class BaseController extends AbstractController
     }
 
     /**
-     * @param $child
-     * @param $type
-     * @param bool $put
+     * @param string|\Symfony\Component\Form\FormBuilderInterface $child
      *
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      *
      * @return FormInterface
      */
-    protected function createObjectForm($child, $type, bool $put = false): FormInterface
+    protected function createObjectForm($child, ?string $type, bool $put = false): FormInterface
     {
-        $fb = $this->container
-            ->get('form.factory')
+        /** @var \Symfony\Component\Form\FormFactory $formFactory */
+        $formFactory = $this->container
+            ->get('form.factory');
+
+        $formBuilder = $formFactory
             ->createNamedBuilder('', FormType::class, null, [
                 'csrf_protection' => false,
                 'method' => $put ? 'PUT' : 'POST',
             ]);
 
-        $fb->add($child, $type);
-
-        return $fb->getForm();
+        return $formBuilder->add($child, $type)->getForm();
     }
 
+    /**
+     * @return array<string, array<int, array <string, string>>>
+     */
     protected function validate(ValidatorInterface $validator, object $entity): array
     {
         $errors = [];
         $violations = $validator->validate($entity);
         if (count($violations) > 0) {
             $errors = ['errors' => []];
-            /* @var ConstraintViolationInterface $violation */
+            /** @var \Symfony\Component\Validator\ConstraintViolationInterface $violation */
             foreach ($violations as $violation) {
                 $errors['errors'][] = [
                     'message' => $violation->getMessage(),

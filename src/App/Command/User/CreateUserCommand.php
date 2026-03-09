@@ -20,35 +20,11 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class CreateUserCommand extends Command
 {
-    /**
-     * @var ValidatorInterface
-     */
-    private $validator;
-
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
-
-    /**
-     * @var UserManager
-     */
-    private $userManager;
-
-    /**
-     * @param UserManager $userManager
-     * @param ValidatorInterface $validator
-     * @param EntityManagerInterface $em
-     */
     public function __construct(
-        UserManager $userManager,
-        ValidatorInterface $validator,
-        EntityManagerInterface $em,
+        private UserManager $userManager,
+        private ValidatorInterface $validator,
+        private EntityManagerInterface $em,
     ) {
-        $this->userManager = $userManager;
-        $this->validator = $validator;
-        $this->em = $em;
-
         parent::__construct();
     }
 

@@ -13,7 +13,6 @@ use App\Entity\Post;
 use App\Model\Image;
 use App\Service\PictureTagBuilder;
 use App\Service\TextProcessor;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use JsonException;
 use Symfony\Component\Console\Command\Command;
@@ -23,29 +22,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class PostsBatchUpdateCommand extends Command
 {
-    /**
-     * @var EntityManager
-     */
-    private $em;
-
-    private TextProcessor $textProcessor;
-
-    private PictureTagBuilder $ptb;
-
-    /**
-     * @param EntityManagerInterface $em
-     * @param TextProcessor $textProcessor
-     * @param PictureTagBuilder $ptb
-     */
-    public function __construct(EntityManagerInterface $em, TextProcessor $textProcessor, PictureTagBuilder $ptb)
-    {
+    public function __construct(
+        private EntityManagerInterface $em,
+        private TextProcessor $textProcessor,
+        private PictureTagBuilder $ptb,
+    ) {
         parent::__construct();
 
-        $this->em = $em;
-        $this->ptb = $ptb;
-        $this->textProcessor = $textProcessor;
-
-        $em->getConfiguration()->setSQLLogger(null);
+        $this->em->getConfiguration()->setSQLLogger(null);
     }
 
     protected function configure(): void

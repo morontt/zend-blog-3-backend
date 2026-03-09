@@ -93,8 +93,8 @@ class TagController extends BaseController
             return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $this->em->persist($entity);
-        $this->em->flush();
+        $this->getEm()->persist($entity);
+        $this->getEm()->flush();
 
         return new JsonResponse($this->getDataConverter()->getTag($entity), Response::HTTP_CREATED);
     }
@@ -128,8 +128,8 @@ class TagController extends BaseController
             return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $this->em->persist($entity);
-        $this->em->flush();
+        $this->getEm()->persist($entity);
+        $this->getEm()->flush();
 
         return new JsonResponse($this->getDataConverter()->getTag($entity));
     }

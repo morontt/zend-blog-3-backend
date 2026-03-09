@@ -12,19 +12,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class InitNestedSetTreeCommand extends Command
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private EntityManagerInterface $em;
-
-    /**
-     * @param EntityManagerInterface $em
-     */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em)
     {
         parent::__construct();
 
-        $this->em = $em;
         $this->em->getConfiguration()->setSQLLogger(null);
     }
 

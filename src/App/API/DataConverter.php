@@ -86,12 +86,6 @@ class DataConverter
      */
     private CommentRepository $commentsRepository;
 
-    /**
-     * @param EntityManagerInterface $em
-     * @param TextProcessor $textProcessor
-     * @param CommentRepository $commentsRepository
-     * @param CategoryRepository $categoryRepository
-     */
     public function __construct(
         EntityManagerInterface $em,
         TextProcessor $textProcessor,
@@ -362,9 +356,6 @@ class DataConverter
         return $scope->toArray();
     }
 
-    /**
-     * @param $entity
-     */
     protected function save($entity)
     {
         $this->em->persist($entity);

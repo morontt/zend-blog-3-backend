@@ -101,8 +101,8 @@ class UserController extends BaseController
             return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $this->em->persist($entity);
-        $this->em->flush();
+        $this->getEm()->persist($entity);
+        $this->getEm()->flush();
 
         $dispatcher->dispatch(new UserEvent($entity));
 
@@ -137,8 +137,8 @@ class UserController extends BaseController
                 return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
             }
 
-            $this->em->persist($user);
-            $this->em->flush();
+            $this->getEm()->persist($user);
+            $this->getEm()->flush();
         }
 
         if (!$findResult->found()) {

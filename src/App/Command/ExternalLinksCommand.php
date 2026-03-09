@@ -11,7 +11,6 @@ namespace App\Command;
 
 use App\Entity\Comment;
 use App\Utils\ExternalLinkProcessor;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,18 +18,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ExternalLinksCommand extends Command
 {
-    /**
-     * @var EntityManager
-     */
-    private $em;
-
-    /**
-     * @param EntityManagerInterface $em
-     */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em)
     {
-        $this->em = $em;
-        $em->getConfiguration()->setSQLLogger(null);
+        $this->em->getConfiguration()->setSQLLogger(null);
 
         parent::__construct();
     }

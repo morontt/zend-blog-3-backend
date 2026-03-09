@@ -11,16 +11,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ImagesClearThumbs extends Command
 {
-    private EntityManagerInterface $em;
-
-    private ImageManager $im;
-
-    public function __construct(EntityManagerInterface $em, ImageManager $im)
-    {
+    public function __construct(
+        private EntityManagerInterface $em,
+        private ImageManager $im,
+    ) {
         parent::__construct();
-
-        $this->em = $em;
-        $this->im = $im;
     }
 
     protected function configure(): void

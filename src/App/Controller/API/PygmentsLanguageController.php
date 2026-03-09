@@ -83,8 +83,8 @@ class PygmentsLanguageController extends BaseController
             return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $this->em->persist($entity);
-        $this->em->flush();
+        $this->getEm()->persist($entity);
+        $this->getEm()->flush();
 
         return new JsonResponse($this->getDataConverter()->getPygmentsLanguage($entity), Response::HTTP_CREATED);
     }
@@ -118,8 +118,8 @@ class PygmentsLanguageController extends BaseController
             return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $this->em->persist($entity);
-        $this->em->flush();
+        $this->getEm()->persist($entity);
+        $this->getEm()->flush();
 
         return new JsonResponse($this->getDataConverter()->getPygmentsLanguage($entity));
     }

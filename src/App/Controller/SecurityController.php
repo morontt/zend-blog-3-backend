@@ -9,11 +9,8 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-    private AuthenticationUtils $authUtils;
-
-    public function __construct(AuthenticationUtils $authUtils)
+    public function __construct(private AuthenticationUtils $authUtils)
     {
-        $this->authUtils = $authUtils;
     }
 
     /**
@@ -21,7 +18,7 @@ class SecurityController extends AbstractController
      *
      * @Template()
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function loginAction(): array
     {
