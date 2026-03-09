@@ -23,6 +23,7 @@ class Kernel extends BaseKernel
         $container->addCompilerPass(new CronCompilerPass());
         $container->addCompilerPass(new TelegramCompilerPass());
 
+        /** @var \Symfony\Bundle\SecurityBundle\DependencyInjection\SecurityExtension $extension */
         $extension = $container->getExtension('security');
         $extension->addSecurityListenerFactory(new WsseFactory());
     }
