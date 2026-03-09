@@ -24,7 +24,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^2.20",
         "friendsofsymfony/jsrouting-bundle": "~2.8",
-        "guzzlehttp/guzzle": "~6.3",
+        "guzzlehttp/guzzle": "^7.10",
         "hashids/hashids": "^4.1",
         "knplabs/knp-paginator-bundle": "~5.7",
         "laminas/laminas-filter": "~2.9",
