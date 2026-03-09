@@ -11,14 +11,8 @@ use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 
 class PostValueResolver implements ArgumentValueResolverInterface
 {
-    /**
-     * @var PostRepository
-     */
-    private $repository;
-
-    public function __construct(PostRepository $repository)
+    public function __construct(private PostRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     /**
@@ -27,7 +21,7 @@ class PostValueResolver implements ArgumentValueResolverInterface
      *
      * @return bool
      */
-    public function supports(Request $request, ArgumentMetadata $argument)
+    public function supports(Request $request, ArgumentMetadata $argument): bool
     {
         if (Post::class !== $argument->getType()) {
             return false;
@@ -42,7 +36,7 @@ class PostValueResolver implements ArgumentValueResolverInterface
      *
      * @return Generator
      */
-    public function resolve(Request $request, ArgumentMetadata $argument)
+    public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
         yield $this->repository->findOneBy(['url' => $request->attributes->get('slug')]);
     }

@@ -169,9 +169,9 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @return string[]
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         $roles = [self::ROLE_USER];
         if ($this->userType === self::TYPE_ADMIN) {

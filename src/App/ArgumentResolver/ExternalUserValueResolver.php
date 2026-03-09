@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 
 class ExternalUserValueResolver implements ArgumentValueResolverInterface
 {
-    public function supports(Request $request, ArgumentMetadata $argument)
+    public function supports(Request $request, ArgumentMetadata $argument): bool
     {
         if (ExternalUserDTO::class !== $argument->getType()) {
             return false;
@@ -19,7 +19,7 @@ class ExternalUserValueResolver implements ArgumentValueResolverInterface
         return $request->request->has('userData');
     }
 
-    public function resolve(Request $request, ArgumentMetadata $argument)
+    public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
         $data = $request->request->get('userData');
         $dto = new ExternalUserDTO();
