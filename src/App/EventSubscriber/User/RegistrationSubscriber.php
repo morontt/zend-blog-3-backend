@@ -14,12 +14,11 @@ use Xelbot\Telegram\Robot;
 
 class RegistrationSubscriber implements EventSubscriberInterface
 {
-    public function __construct(Robot $bot)
+    public function __construct(private Robot $bot)
     {
-        $this->bot = $bot;
     }
 
-    public function newRegistration(UserExtraEvent $event)
+    public function newRegistration(UserExtraEvent $event): void
     {
         $info = $event->getExtraInfo();
 

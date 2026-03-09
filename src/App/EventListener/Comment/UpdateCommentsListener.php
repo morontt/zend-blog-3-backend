@@ -13,14 +13,11 @@ use App\Repository\CommentRepository;
 
 class UpdateCommentsListener
 {
-    private CommentRepository $repository;
-
-    public function __construct(CommentRepository $repository)
+    public function __construct(private CommentRepository $repository)
     {
-        $this->repository = $repository;
     }
 
-    public function __invoke(UpdateCommentatorEvent $event)
+    public function __invoke(UpdateCommentatorEvent $event): void
     {
         $this->repository->updateCommentsByCommentator($event->getCommentator()->getId());
     }

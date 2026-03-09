@@ -17,22 +17,11 @@ use Xelbot\Telegram\Robot;
 
 class ReplyCommentListener
 {
-    private Mailer $mailer;
-
-    private LoggerInterface $logger;
-
-    private Robot $bot;
-
-    /**
-     * @param Mailer $mailer
-     * @param LoggerInterface $logger
-     * @param Robot $bot
-     */
-    public function __construct(Mailer $mailer, LoggerInterface $logger, Robot $bot)
-    {
-        $this->mailer = $mailer;
-        $this->logger = $logger;
-        $this->bot = $bot;
+    public function __construct(
+        private Mailer $mailer,
+        private LoggerInterface $logger,
+        private Robot $bot,
+    ) {
     }
 
     /**

@@ -11,22 +11,12 @@ use Xelbot\Telegram\Robot;
 
 class NewCommentEmailListener
 {
-    private Mailer $mailer;
-
-    private UserRepository $repository;
-
-    private LoggerInterface $logger;
-
-    private Robot $bot;
-
-    /**
-     * @param Mailer $mailer
-     * @param UserRepository $repository
-     * @param LoggerInterface $logger
-     * @param Robot $bot
-     */
-    public function __construct(Mailer $mailer, UserRepository $repository, LoggerInterface $logger, Robot $bot)
-    {
+    public function __construct(
+        private Mailer $mailer,
+        private UserRepository $repository,
+        private LoggerInterface $logger,
+        private Robot $bot,
+    ) {
         $this->repository = $repository;
         $this->mailer = $mailer;
         $this->logger = $logger;

@@ -6,10 +6,7 @@ use Doctrine\ORM\Tools\Event\GenerateSchemaEventArgs;
 
 class IgnoreTablesListener
 {
-    /**
-     * @param GenerateSchemaEventArgs $args
-     */
-    public function postGenerateSchema(GenerateSchemaEventArgs $args)
+    public function postGenerateSchema(GenerateSchemaEventArgs $args): void
     {
         $schema = $args->getSchema();
         $dbName = $args->getEntityManager()->getConnection()->getDatabase();

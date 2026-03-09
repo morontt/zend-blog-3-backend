@@ -7,14 +7,11 @@ use App\Repository\CommentRepository;
 
 class UserCommentsListener
 {
-    private CommentRepository $repository;
-
-    public function __construct(CommentRepository $repository)
+    public function __construct(private CommentRepository $repository)
     {
-        $this->repository = $repository;
     }
 
-    public function __invoke(UserEvent $event)
+    public function __invoke(UserEvent $event): void
     {
         $this->repository->updateUserComments($event->getUser()->getId());
     }

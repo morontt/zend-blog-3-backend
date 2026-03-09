@@ -8,16 +8,10 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class CommentGeolocationListener
 {
-    private EntityManagerInterface $em;
-
-    private GeoLocationRepository $repository;
-
-    /**
-     * @param EntityManagerInterface $em
-     * @param GeoLocationRepository $repository
-     */
-    public function __construct(EntityManagerInterface $em, GeoLocationRepository $repository)
-    {
+    public function __construct(
+        private EntityManagerInterface $em,
+        private GeoLocationRepository $repository,
+    ) {
         $this->em = $em;
         $this->repository = $repository;
     }
