@@ -12,6 +12,7 @@ namespace App\Controller\API;
 use App\Controller\BaseController;
 use App\Cron\Daily\CommentGeoLocation;
 use App\Entity\Comment;
+use App\Entity\User;
 use App\Event\CommentEvent;
 use App\Event\DeleteCommentEvent;
 use App\Exception\NotAllowedCommentException;
@@ -21,6 +22,7 @@ use App\Repository\PostRepository;
 use App\Repository\ViewCommentRepository;
 use App\Service\CommentManager;
 use App\Service\Tracking;
+use RuntimeException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -97,14 +99,19 @@ class CommentController extends BaseController
     ): JsonResponse {
         $agent = $tracking->getTrackingAgent($request->server->get('HTTP_USER_AGENT'));
 
+        $user = $this->getUser();
+        if (!$user || !($user instanceof User)) {
+            throw new RuntimeException('User is null or not supported');
+        }
+
         $comment = new Comment();
         $comment
-            ->setUser($this->getUser())
+            ->setUser($user)
             ->setTrackingAgent($agent)
             ->setIpAddress($request->getClientIp())
         ;
 
-        $commentData = $request->request->get('comment');
+        $commentData = $this->getArrayData($request, 'comment');
         if ($commentData['parent']) {
             $parent = $this->getEm()->getRepository(Comment::class)->find((int)$commentData['parent']);
             if ($parent) {
@@ -133,8 +140,12 @@ class CommentController extends BaseController
      */
     public function updateAction(Request $request, Comment $entity): JsonResponse
     {
-        $result = $this->getDataConverter()
-            ->saveComment($entity, $request->request->get('comment'));
+        $commentData = $this->getArrayData($request, 'comment');
+
+        $result = $this
+            ->getDataConverter()
+            ->saveComment($entity, $commentData)
+        ;
 
         return new JsonResponse($result);
     }

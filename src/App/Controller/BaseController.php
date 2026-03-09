@@ -17,6 +17,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -47,7 +48,7 @@ class BaseController extends AbstractController
     /**
      * @param Query<null, mixed> $query
      *
-     * @return PaginationInterface
+     * @phpstan-ignore missingType.iterableValue
      */
     protected function paginate(Query $query, int $page, int $limit = 15): PaginationInterface
     {
@@ -140,6 +141,23 @@ class BaseController extends AbstractController
         }
 
         return $errors;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function getArrayData(Request $request, string $key): array
+    {
+        $requestData = null;
+        if ($request->request->has($key)) {
+            $requestData = $request->request->all()[$key];
+        }
+
+        if (!is_array($requestData)) {
+            throw new BadRequestHttpException("Empty '{$key}' data");
+        }
+
+        return $requestData;
     }
 
     private function fixErrorPath(string $path): string

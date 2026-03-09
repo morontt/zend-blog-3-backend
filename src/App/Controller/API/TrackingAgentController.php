@@ -61,8 +61,12 @@ class TrackingAgentController extends BaseController
      */
     public function updateAction(Request $request, TrackingAgent $entity): JsonResponse
     {
-        $result = $this->getDataConverter()
-            ->saveTrackingAgent($entity, $request->request->get('userAgent'));
+        $userAgent = $this->getArrayData($request, 'userAgent');
+
+        $result = $this
+            ->getDataConverter()
+            ->saveTrackingAgent($entity, $userAgent)
+        ;
 
         return new JsonResponse($result);
     }

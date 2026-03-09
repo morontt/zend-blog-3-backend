@@ -51,6 +51,7 @@ class MediaFileController extends BaseController
                     )
                 );
         } else {
+            /** @var \Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination $pagination */
             $pagination = $this->paginate(
                 $repository->getListQuery(),
                 $request->query->get('page', 1)
@@ -98,8 +99,12 @@ class MediaFileController extends BaseController
      */
     public function updateAction(Request $request, MediaFile $entity): JsonResponse
     {
-        $result = $this->getDataConverter()
-            ->saveMediaFile($entity, $request->request->get('mediaFile'));
+        $mediaFile = $this->getArrayData($request, 'mediaFile');
+
+        $result = $this
+            ->getDataConverter()
+            ->saveMediaFile($entity, $mediaFile)
+        ;
 
         return new JsonResponse($result);
     }

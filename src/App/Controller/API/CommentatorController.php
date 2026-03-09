@@ -76,8 +76,12 @@ class CommentatorController extends BaseController
         EventDispatcherInterface $dispatcher,
         Commentator $entity,
     ): JsonResponse {
-        $result = $this->getDataConverter()
-            ->saveCommentator($entity, $request->request->get('commentator'));
+        $commentator = $this->getArrayData($request, 'commentator');
+
+        $result = $this
+            ->getDataConverter()
+            ->saveCommentator($entity, $commentator)
+        ;
 
         $dispatcher->dispatch(new UpdateCommentatorEvent($entity));
 
