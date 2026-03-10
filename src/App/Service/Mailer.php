@@ -76,7 +76,7 @@ class Mailer
     public function newComment(Comment $comment, string $emailTo, bool $spool = true)
     {
         $emailTo = VerifyEmail::normalize($emailTo);
-        $context = $this->twig->mergeGlobals($this->context($comment));
+        $context = $this->context($comment);
 
         $template = $this->twig->load('mails/newComment.html.twig');
         $textTemplate = $this->twig->load('mails/newComment.txt.twig');
@@ -219,12 +219,12 @@ class Mailer
                 $emailTo = VerifyEmail::normalize($emailTo);
                 $unsubscribeLink = $this->unsubscribeLink($emailTo, EmailSubscriptionSettings::TYPE_COMMENT_REPLY);
 
-                $context = $this->twig->mergeGlobals(array_merge(
+                $context = array_merge(
                     $this->context($comment),
                     [
                         'unsubscribeLink' => $unsubscribeLink,
                     ],
-                ));
+                );
 
                 $template = $this->twig->load('mails/replyComment.html.twig');
                 $textTemplate = $this->twig->load('mails/replyComment.txt.twig');

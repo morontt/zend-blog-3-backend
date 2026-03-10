@@ -792,6 +792,16 @@
           "creation": 1747507355
         }
       ]
+    },
+    {
+      "text": "body element in email (by Mailpit)",
+      "priority": "medium",
+      "creation": 1773127172
+    },
+    {
+      "text": "Send email to fake email address",
+      "priority": "medium",
+      "creation": 1773127516
     }
   ]
 }
