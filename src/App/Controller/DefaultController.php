@@ -7,46 +7,22 @@ use App\Repository\ViewCommentRepository;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use JsonException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class DefaultController
- */
 class DefaultController extends AbstractController
 {
-    /**
-     * @var string
-     */
-    private string $kernelEnv;
-
-    /**
-     * @var string
-     */
-    private string $cdnUrl;
-
-    private string $blogUrl;
-
-    public function __construct(string $kernelEnv, string $cdnUrl, string $frontendSite)
+    public function __construct(private string $kernelEnv, private string $cdnUrl, private string $frontendSite)
     {
-        $this->kernelEnv = $kernelEnv;
-        $this->cdnUrl = $cdnUrl;
-        $this->blogUrl = $frontendSite;
     }
 
     /**
-     * @Template()
-     *
      * @throws JsonException
-     *
-     * @return array<string, mixed>
      */
     #[Route(path: '/')]
-    public function indexAction(): array
+    public function indexAction(): Response
     {
         $isDev = $this->kernelEnv === 'dev';
 
@@ -84,23 +60,13 @@ class DefaultController extends AbstractController
             ],
         ];
 
-        return [
+        return $this->render('default/index.html.twig', [
             'env' => urlencode(json_encode($environment, JSON_THROW_ON_ERROR)),
-        ];
+        ]);
     }
 
-    /**
-     * @ParamConverter("post", options={"mapping": {"slug": "url"}})
-     *
-     * @Template()
-     *
-     * @param Post|null $post
-     * @param ViewCommentRepository $repository
-     *
-     * @return array<string, mixed>
-     */
     #[Route(path: '/preview/{slug}', name: 'post_preview', options: ['expose' => true])]
-    public function previewAction(ViewCommentRepository $repository, ?Post $post = null): array
+    public function previewAction(ViewCommentRepository $repository, ?Post $post = null): Response
     {
         if (!$post) {
             throw $this->createNotFoundException();
@@ -108,7 +74,7 @@ class DefaultController extends AbstractController
 
         $comments = $repository->getCommentsByPost($post);
 
-        return compact('post', 'comments');
+        return $this->render('default/preview.html.twig', compact('post', 'comments'));
     }
 
     /**
@@ -117,7 +83,7 @@ class DefaultController extends AbstractController
     #[Route(path: '/purge-cache', name: 'purge_cache', options: ['expose' => true], methods: ['POST'])]
     public function purgeBlogCacheAction(): JsonResponse
     {
-        $httpClient = new Client(['base_uri' => $this->blogUrl]);
+        $httpClient = new Client(['base_uri' => $this->frontendSite]);
         try {
             $response = $httpClient->request(
                 'POST',

@@ -4,23 +4,18 @@ namespace App\Controller;
 
 use App\Repository\CommentRepository;
 use App\Service\Mailer;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TestEmailController extends AbstractController
 {
-    /**
-     * @Template()
-     *
-     * @return array<string, mixed>
-     */
     #[Route(path: '/test-emails', methods: ['GET'])]
-    public function indexAction(): array
+    public function indexAction(): Response
     {
-        return [];
+        return $this->render('test_email/index.html.twig');
     }
 
     /**
