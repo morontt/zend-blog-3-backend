@@ -9,19 +9,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/api/userAgents")
- */
+#[Route(path: '/api/userAgents')]
 class TrackingAgentController extends BaseController
 {
     /**
-     * @Route("", methods={"GET"})
-     *
      * @param Request $request
      * @param TrackingAgentRepository $repository
      *
      * @return JsonResponse
      */
+    #[Route(path: '', methods: ['GET'])]
     public function findAllAction(Request $request, TrackingAgentRepository $repository): JsonResponse
     {
         $pagination = $this->paginate(
@@ -37,12 +34,11 @@ class TrackingAgentController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"GET"})
-     *
      * @param TrackingAgent $entity
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function findAction(TrackingAgent $entity): JsonResponse
     {
         $result = $this->getDataConverter()
@@ -52,13 +48,12 @@ class TrackingAgentController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"PUT"})
-     *
      * @param Request $request
      * @param TrackingAgent $entity
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['PUT'])]
     public function updateAction(Request $request, TrackingAgent $entity): JsonResponse
     {
         $userAgent = $this->getArrayData($request, 'userAgent');

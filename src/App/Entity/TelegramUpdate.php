@@ -3,60 +3,47 @@
 namespace App\Entity;
 
 use App\Entity\Traits\ModifyEntityTrait;
+use App\Repository\TelegramUpdateRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="telegram_updates")
- *
- * @ORM\Entity(repositoryClass="App\Repository\TelegramUpdateRepository")
- *
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Table(name: 'telegram_updates')]
+#[ORM\Entity(repositoryClass: TelegramUpdateRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class TelegramUpdate
 {
     use ModifyEntityTrait;
 
     /**
      * @var int
-     *
-     * @ORM\Id
-     *
-     * @ORM\Column(type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private $id;
 
     /**
      * @var TelegramUser|null
-     *
-     * @ORM\ManyToOne(targetEntity="TelegramUser")
-     *
-     * @ORM\JoinColumn(onDelete="SET NULL")
      */
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: TelegramUser::class)]
     private $telegramUser;
 
     /**
      * @var int|null
-     *
-     * @ORM\Column(type="bigint", nullable=true)
-     *
-     * @phpstan-ignore doctrine.columnType
      */
-    private $chatId;
+    #[ORM\Column(type: 'bigint', nullable: true)]
+    private $chatId; // @phpstan-ignore doctrine.columnType
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(type: 'text', length: 65535, nullable: true)]
     private $textMessage;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="text", length=65535)
      */
+    #[ORM\Column(type: 'text', length: 65535)]
     private $rawMessage;
 
     /**

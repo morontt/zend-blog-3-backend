@@ -3,19 +3,14 @@
 namespace App\Entity;
 
 use App\Entity\Traits\ModifyEntityTrait;
+use App\Repository\EmailSubscriptionSettingsRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="subscription_settings", uniqueConstraints={
- *
- *   @ORM\UniqueConstraint(columns={"email", "subs_type"})
- * })
- *
- * @ORM\Entity(repositoryClass="App\Repository\EmailSubscriptionSettingsRepository")
- *
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Table(name: 'subscription_settings')]
+#[ORM\UniqueConstraint(columns: ['email', 'subs_type'])]
+#[ORM\Entity(repositoryClass: EmailSubscriptionSettingsRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class EmailSubscriptionSettings
 {
     use ModifyEntityTrait;
@@ -24,34 +19,28 @@ class EmailSubscriptionSettings
 
     /**
      * @var int
-     *
-     * @ORM\Id
-     *
-     * @ORM\Column(type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=64)
      */
+    #[ORM\Column(type: 'string', length: 64)]
     private $email;
 
     /**
      * @var bool
-     *
-     * @ORM\Column(type="boolean", options={"default": false})
      */
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
     private $blockSending = false;
 
     /**
      * @var int
-     *
-     * @ORM\Column(type="smallint", name="subs_type", options={"default": 1, "comment":"1: reply"})
      */
+    #[ORM\Column(type: 'smallint', name: 'subs_type', options: ['default' => 1, 'comment' => '1: reply'])]
     private $type = self::TYPE_COMMENT_REPLY;
 
     public function __construct()

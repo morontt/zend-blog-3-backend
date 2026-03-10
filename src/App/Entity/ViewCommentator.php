@@ -6,11 +6,8 @@ use App\Entity\Traits\Gravatar;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="v_commentators")
- *
- * @ORM\Entity(readOnly=true)
- */
+#[ORM\Table(name: 'v_commentators')]
+#[ORM\Entity(readOnly: true)]
 class ViewCommentator implements CommentatorInterface
 {
     use Gravatar;
@@ -19,67 +16,57 @@ class ViewCommentator implements CommentatorInterface
 
     /**
      * @var int
-     *
-     * @ORM\Id
-     *
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=80)
      */
+    #[ORM\Column(type: 'string', length: 80)]
     private $name;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="mail", type="string", length=80, nullable=true)
      */
+    #[ORM\Column(name: 'mail', type: 'string', length: 80, nullable: true)]
     private $email;
 
     /**
      * @var bool|null
-     *
-     * @ORM\Column(type="boolean", nullable=true)
      */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $fakeEmail;
 
     /**
      * @var DateTime|null
-     *
-     * @ORM\Column(type="datetime", nullable=true)
      */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $emailCheck;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(type="string", length=160, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 160, nullable: true)]
     private $website;
 
     /**
      * @var int
-     *
-     * @ORM\Column(type="smallint")
      */
+    #[ORM\Column(type: 'smallint')]
     private $gender = User::MALE;
 
     /**
      * @var int
-     *
-     * @ORM\Column(type="smallint")
      */
+    #[ORM\Column(type: 'smallint')]
     private $avatarVariant = 0;
 
     /**
      * @var DateTime
-     *
-     * @ORM\Column(type="milliseconds_dt")
      */
+    #[ORM\Column(type: 'milliseconds_dt')]
     protected $timeCreated;
 
     /**

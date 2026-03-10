@@ -2,50 +2,41 @@
 
 namespace App\Entity;
 
+use App\Repository\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-/**
- * @ORM\Table(name="tags")
- *
- * @ORM\Entity(repositoryClass="App\Repository\TagRepository")
- *
- * @UniqueEntity(fields={"name"})
- * @UniqueEntity(fields={"url"})
- */
+#[ORM\Table(name: 'tags')]
+#[ORM\Entity(repositoryClass: TagRepository::class)]
+#[UniqueEntity(fields: ['name'])]
+#[UniqueEntity(fields: ['url'])]
 class Tag
 {
     /**
      * @var int
-     *
-     * @ORM\Id
-     *
-     * @ORM\Column(type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=100, unique=true)
      */
+    #[ORM\Column(type: 'string', length: 100, unique: true)]
     protected $name;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=255, unique=true)
      */
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
     protected $url;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, Post>
-     *
-     * @ORM\ManyToMany(targetEntity="Post", mappedBy="tags")
      */
+    #[ORM\ManyToMany(targetEntity: Post::class, mappedBy: 'tags')]
     protected $posts;
 
     public function __construct()

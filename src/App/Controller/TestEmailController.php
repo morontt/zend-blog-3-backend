@@ -13,26 +13,24 @@ use Symfony\Component\Routing\Annotation\Route;
 class TestEmailController extends AbstractController
 {
     /**
-     * @Route("/test-emails", methods={"GET"})
-     *
      * @Template()
      *
      * @return array<string, mixed>
      */
+    #[Route(path: '/test-emails', methods: ['GET'])]
     public function indexAction(): array
     {
         return [];
     }
 
     /**
-     * @Route("/test-emails", methods={"POST"})
-     *
      * @param Mailer $mailer
      * @param CommentRepository $repository
      * @param Request $request
      *
      * @return RedirectResponse
      */
+    #[Route(path: '/test-emails', methods: ['POST'])]
     public function sendAction(Mailer $mailer, CommentRepository $repository, Request $request): RedirectResponse
     {
         $mailTo = $request->request->get('_receiver');

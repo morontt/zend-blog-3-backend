@@ -13,19 +13,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-/**
- * @Route("/api/pygmentsLanguages")
- */
+#[Route(path: '/api/pygmentsLanguages')]
 class PygmentsLanguageController extends BaseController
 {
     /**
-     * @Route("", methods={"GET"})
-     *
      * @param Request $request
      * @param PygmentsLanguageRepository $repository
      *
      * @return JsonResponse
      */
+    #[Route(path: '', methods: ['GET'])]
     public function findAllAction(Request $request, PygmentsLanguageRepository $repository): JsonResponse
     {
         $pagination = $this->paginate(
@@ -40,12 +37,11 @@ class PygmentsLanguageController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"GET"})
-     *
      * @param PygmentsLanguage $entity
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function findAction(PygmentsLanguage $entity): JsonResponse
     {
         $result = $this->getDataConverter()
@@ -55,8 +51,6 @@ class PygmentsLanguageController extends BaseController
     }
 
     /**
-     * @Route("", methods={"POST"})
-     *
      * @param ValidatorInterface $validator
      * @param Request $request
      *
@@ -65,6 +59,7 @@ class PygmentsLanguageController extends BaseController
      *
      * @return JsonResponse
      */
+    #[Route(path: '', methods: ['POST'])]
     public function createAction(ValidatorInterface $validator, Request $request): JsonResponse
     {
         $form = $this->createObjectForm('pygmentsLanguage', PygmentsLanguageFormType::class);
@@ -90,8 +85,6 @@ class PygmentsLanguageController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"PUT"})
-     *
      * @param ValidatorInterface $validator
      * @param Request $request
      * @param PygmentsLanguage $entity
@@ -101,6 +94,7 @@ class PygmentsLanguageController extends BaseController
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['PUT'])]
     public function updateAction(ValidatorInterface $validator, Request $request, PygmentsLanguage $entity): JsonResponse
     {
         $form = $this->createObjectForm('pygmentsLanguage', PygmentsLanguageFormType::class, true);
@@ -125,14 +119,13 @@ class PygmentsLanguageController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"DELETE"})
-     *
      * @param PygmentsLanguage $entity
      *
      * @throws \Doctrine\ORM\Exception\ORMException
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['DELETE'])]
     public function deleteAction(PygmentsLanguage $entity): JsonResponse
     {
         $this->getEm()->remove($entity);
@@ -142,12 +135,11 @@ class PygmentsLanguageController extends BaseController
     }
 
     /**
-     * @Route("/list", name="language_choices", options={"expose"=true}, methods={"GET"})
-     *
      * @param PygmentsLanguageRepository $repository
      *
      * @return JsonResponse
      */
+    #[Route(path: '/list', name: 'language_choices', options: ['expose' => true], methods: ['GET'])]
     public function ajaxLanguagesListAction(PygmentsLanguageRepository $repository): JsonResponse
     {
         return new JsonResponse($repository->getNamesArray());

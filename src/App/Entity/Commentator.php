@@ -4,21 +4,16 @@ namespace App\Entity;
 
 use App\Entity\Traits\Gravatar;
 use App\Entity\Traits\ModifyEntityTrait;
+use App\Repository\CommentatorRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="commentators", uniqueConstraints={
- *
- *   @ORM\UniqueConstraint(columns={"name", "mail", "website"})
- * })
- *
- * @ORM\Entity(repositoryClass="App\Repository\CommentatorRepository")
- *
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Table(name: 'commentators')]
+#[ORM\UniqueConstraint(columns: ['name', 'mail', 'website'])]
+#[ORM\Entity(repositoryClass: CommentatorRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Commentator implements CommentatorInterface
 {
     use Gravatar;
@@ -26,81 +21,67 @@ class Commentator implements CommentatorInterface
 
     /**
      * @var int
-     *
-     * @ORM\Id
-     *
-     * @ORM\Column(type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=80)
      */
+    #[ORM\Column(type: 'string', length: 80)]
     private $name;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="mail", type="string", length=80, nullable=true)
      */
+    #[ORM\Column(name: 'mail', type: 'string', length: 80, nullable: true)]
     private $email;
 
     /**
      * @var bool|null
-     *
-     * @ORM\Column(type="boolean", nullable=true)
      */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $fakeEmail;
 
     /**
      * @var DateTime|null
-     *
-     * @ORM\Column(type="datetime", nullable=true)
      */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $emailCheck;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(type="string", length=160, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 160, nullable: true)]
     private $website;
 
     /**
      * @var Collection<int, Comment>
-     *
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="commentator")
      */
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'commentator')]
     private $comments;
 
     /**
      * @var int
-     *
-     * @ORM\Column(type="smallint", options={"default": 1, "comment":"1: male, 2: female"})
      */
+    #[ORM\Column(type: 'smallint', options: ['default' => 1, 'comment' => '1: male, 2: female'])]
     private $gender = User::MALE;
 
     /**
      * @var bool
-     *
-     * @ORM\Column(type="boolean", options={"default": false})
      */
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
     private $rottenLink = false;
 
     /**
      * @var DateTime|null
-     *
-     * @ORM\Column(type="datetime", nullable=true)
      */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $rottenCheck;
 
-    /**
-     * @ORM\Column(type="smallint", options={"default": 0, "unsigned": true})
-     */
+    #[ORM\Column(type: 'smallint', options: ['default' => 0, 'unsigned' => true])]
     private int $avatarVariant = 0;
 
     public function __construct()

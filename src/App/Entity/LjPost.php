@@ -11,45 +11,35 @@ namespace App\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="lj_posts")
- *
- * @ORM\Entity()
- */
+#[ORM\Table(name: 'lj_posts')]
+#[ORM\Entity]
 class LjPost
 {
     /**
      * @var int
-     *
-     * @ORM\Id
-     *
-     * @ORM\Column(type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private $id;
 
     /**
      * @var Post
-     *
-     * @ORM\OneToOne(targetEntity="Post")
-     *
-     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]
+    #[ORM\OneToOne(targetEntity: Post::class)]
     private $post;
 
     /**
      * @var int
-     *
-     * @ORM\Column(type="integer", unique=true)
      */
+    #[ORM\Column(type: 'integer', unique: true)]
     private $ljItemId;
 
     /**
      * @var DateTime
-     *
-     * @ORM\Column(type="datetime", options={"default": "CURRENT_TIMESTAMP"})
      */
+    #[ORM\Column(type: 'datetime', options: ['default' => 'CURRENT_TIMESTAMP'])]
     private $timeCreated;
 
     public function __construct()
@@ -84,5 +74,10 @@ class LjPost
         $this->ljItemId = $ljItemId;
 
         return $this;
+    }
+
+    public function getTimeCreated(): DateTime
+    {
+        return $this->timeCreated;
     }
 }

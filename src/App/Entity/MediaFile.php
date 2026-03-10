@@ -10,101 +10,84 @@
 namespace App\Entity;
 
 use App\Entity\Traits\ModifyEntityTrait;
+use App\Repository\MediaFileRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table()
- *
- * @ORM\Entity(repositoryClass="App\Repository\MediaFileRepository")
- *
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Table]
+#[ORM\Entity(repositoryClass: MediaFileRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class MediaFile
 {
     use ModifyEntityTrait;
 
     /**
      * @var int
-     *
-     * @ORM\Id
-     *
-     * @ORM\Column(type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected $id;
 
     /**
      * @var Post|null
-     *
-     * @ORM\ManyToOne(targetEntity="Post", inversedBy="mediaFiles")
-     *
-     * @ORM\JoinColumn(onDelete="SET NULL", nullable=true)
      */
+    #[ORM\JoinColumn(onDelete: 'SET NULL', nullable: true)]
+    #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'mediaFiles')]
     protected $post;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", unique=true)
      */
+    #[ORM\Column(type: 'string', unique: true)]
     protected $path;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(type="string", nullable=true)
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     protected $description;
 
     /**
      * @var int
-     *
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $fileSize;
 
     /**
      * @var bool
-     *
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $defaultImage = false;
 
     /**
      * @var bool
-     *
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $backedUp = false;
 
     /**
      * @var int|null
-     *
-     * @ORM\Column(type="smallint", nullable=true, options={"unsigned": true})
      */
+    #[ORM\Column(type: 'smallint', nullable: true, options: ['unsigned' => true])]
     private $width;
 
     /**
      * @var int|null
-     *
-     * @ORM\Column(type="smallint", nullable=true, options={"unsigned": true})
      */
+    #[ORM\Column(type: 'smallint', nullable: true, options: ['unsigned' => true])]
     private $height;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(type: 'text', length: 65535, nullable: true)]
     private $pictureTag;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(type: 'text', length: 65535, nullable: true)]
     private $srcSet;
 
     public function __construct()

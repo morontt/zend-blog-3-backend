@@ -9,16 +9,14 @@ trait ModifyEntityTrait
 {
     /**
      * @var DateTime
-     *
-     * @ORM\Column(type="milliseconds_dt", options={"default": "CURRENT_TIMESTAMP(3)"})
      */
+    #[ORM\Column(type: 'milliseconds_dt', options: ['default' => 'CURRENT_TIMESTAMP(3)'])]
     protected $timeCreated;
 
     /**
      * @var DateTime
-     *
-     * @ORM\Column(type="milliseconds_dt", options={"default": "CURRENT_TIMESTAMP(3)"})
      */
+    #[ORM\Column(type: 'milliseconds_dt', options: ['default' => 'CURRENT_TIMESTAMP(3)'])]
     protected $lastUpdate;
 
     /**
@@ -61,9 +59,7 @@ trait ModifyEntityTrait
         return $this->lastUpdate;
     }
 
-    /**
-     * @ORM\PrePersist
-     */
+    #[ORM\PrePersist]
     public function prePersist(): void
     {
         // @phpstan-ignore booleanNot.alwaysFalse
@@ -74,9 +70,7 @@ trait ModifyEntityTrait
         $this->lastUpdate = new DateTime();
     }
 
-    /**
-     * @ORM\PreUpdate
-     */
+    #[ORM\PreUpdate]
     public function preUpdate(): void
     {
         $this->lastUpdate = new DateTime();

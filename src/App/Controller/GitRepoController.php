@@ -17,12 +17,11 @@ class GitRepoController extends AbstractController
     }
 
     /**
-     * @Route("/webhook/gitflic", methods={"POST"})
-     *
      * @param Request $request
      *
      * @return Response
      */
+    #[Route(path: '/webhook/gitflic', methods: ['POST'])]
     public function webHookAction(Request $request): Response
     {
         $logfile = fopen(APP_VAR_DIR . '/logs/gitflic.log', 'a');

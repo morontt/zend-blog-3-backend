@@ -2,62 +2,52 @@
 
 namespace App\Entity;
 
+use App\Repository\TrackingAgentRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="tracking_agent")
- *
- * @ORM\Entity(repositoryClass="App\Repository\TrackingAgentRepository")
- */
+#[ORM\Table(name: 'tracking_agent')]
+#[ORM\Entity(repositoryClass: TrackingAgentRepository::class)]
 class TrackingAgent
 {
     /**
      * @var int
-     *
-     * @ORM\Id
-     *
-     * @ORM\Column(type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="text", length=65000)
      */
+    #[ORM\Column(type: 'text', length: 65000)]
     protected $userAgent;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=32, unique=true)
      */
+    #[ORM\Column(type: 'string', length: 32, unique: true)]
     protected $hash;
 
     /**
      * @var bool
-     *
-     * @ORM\Column(type="boolean", name="is_bot", options={"default": false})
      */
+    #[ORM\Column(type: 'boolean', name: 'is_bot', options: ['default' => false])]
     protected $bot = false;
 
     /**
      * @var DateTime
-     *
-     * @ORM\Column(type="milliseconds_dt", options={"default": "CURRENT_TIMESTAMP(3)"})
      */
+    #[ORM\Column(type: 'milliseconds_dt', options: ['default' => 'CURRENT_TIMESTAMP(3)'])]
     protected $createdAt;
 
     /**
      * @var Collection<int, Tracking>
-     *
-     * @ORM\OneToMany(targetEntity="Tracking", mappedBy="trackingAgent", cascade={"persist"})
      */
+    #[ORM\OneToMany(targetEntity: Tracking::class, mappedBy: 'trackingAgent', cascade: ['persist'])]
     protected $trackings;
 
     public function __construct()

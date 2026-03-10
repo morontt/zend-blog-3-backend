@@ -12,19 +12,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Xelbot\Telegram\Robot;
 
-/**
- * @Route("/api/telegramUpdates")
- */
+#[Route(path: '/api/telegramUpdates')]
 class TelegramUpdateController extends BaseController
 {
     /**
-     * @Route("", methods={"GET"})
-     *
      * @param Request $request
      * @param TelegramUpdateRepository $repository
      *
      * @return JsonResponse
      */
+    #[Route(path: '', methods: ['GET'])]
     public function findAllAction(Request $request, TelegramUpdateRepository $repository): JsonResponse
     {
         $pagination = $this->paginate(
@@ -39,12 +36,11 @@ class TelegramUpdateController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"GET"})
-     *
      * @param TelegramUpdate $entity
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function findAction(TelegramUpdate $entity): JsonResponse
     {
         $result = $this->getDataConverter()
@@ -54,14 +50,13 @@ class TelegramUpdateController extends BaseController
     }
 
     /**
-     * @Route("", methods={"POST"})
-     *
      * @param Request $request
      * @param TelegramUpdateRepository $repository
      * @param Robot $bot
      *
      * @return JsonResponse
      */
+    #[Route(path: '', methods: ['POST'])]
     public function createAction(Request $request, TelegramUpdateRepository $repository, Robot $bot): JsonResponse
     {
         $now = new DateTime();

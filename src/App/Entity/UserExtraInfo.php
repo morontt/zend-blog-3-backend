@@ -2,17 +2,13 @@
 
 namespace App\Entity;
 
+use App\Repository\UserExtraInfoRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(uniqueConstraints={
- *
- *   @ORM\UniqueConstraint(columns={"external_id", "data_provider"})
- * })
- *
- * @ORM\Entity(repositoryClass="App\Repository\UserExtraInfoRepository")
- */
+#[ORM\Table]
+#[ORM\UniqueConstraint(columns: ['external_id', 'data_provider'])]
+#[ORM\Entity(repositoryClass: UserExtraInfoRepository::class)]
 class UserExtraInfo
 {
     public const MALE = 1;
@@ -21,124 +17,103 @@ class UserExtraInfo
 
     /**
      * @var int
-     *
-     * @ORM\Id
-     *
-     * @ORM\Column(type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=64)
      */
+    #[ORM\Column(type: 'string', length: 64)]
     private $externalId;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=16)
      */
+    #[ORM\Column(type: 'string', length: 16)]
     private $dataProvider;
 
     /**
      * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     *
-     * @ORM\JoinColumn(nullable=false)
      */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     protected $user;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(type="string", length=64, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 64, nullable: true)]
     private $username;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(type="string", length=64, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 64, nullable: true)]
     private $displayName;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(type="string", length=64, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 64, nullable: true)]
     private $firstName;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(type="string", length=64, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 64, nullable: true)]
     private $lastName;
 
     /**
      * @var int
-     *
-     * @ORM\Column(type="smallint", options={"default": 3, "comment":"1: male, 2: female, 3: n/a"})
      */
+    #[ORM\Column(type: 'smallint', options: ['default' => 3, 'comment' => '1: male, 2: female, 3: n/a'])]
     private $gender = self::UNKNOWN;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(type="string", length=64, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 64, nullable: true)]
     private $email;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(type: 'text', length: 65535, nullable: true)]
     private $avatar;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="text", length=65535)
      */
+    #[ORM\Column(type: 'text', length: 65535)]
     private $rawData;
 
     /**
      * @var DateTime
-     *
-     * @ORM\Column(type="milliseconds_dt", options={"default": "CURRENT_TIMESTAMP(3)"})
      */
+    #[ORM\Column(type: 'milliseconds_dt', options: ['default' => 'CURRENT_TIMESTAMP(3)'])]
     private $timeCreated;
 
     /**
      * @var TrackingAgent|null
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\TrackingAgent")
-     *
-     * @ORM\JoinColumn(name="user_agent_id", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\JoinColumn(name: 'user_agent_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: TrackingAgent::class)]
     protected $trackingAgent;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="ip_addr", type="string", length=15, nullable=true)
      */
+    #[ORM\Column(name: 'ip_addr', type: 'string', length: 15, nullable: true)]
     protected $ipAddress;
 
     /**
      * @var GeoLocation|null
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\GeoLocation")
-     *
-     * @ORM\JoinColumn(name="ip_long", referencedColumnName="ip_long", onDelete="SET NULL")
      */
+    #[ORM\JoinColumn(name: 'ip_long', referencedColumnName: 'ip_long', onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: GeoLocation::class)]
     private $geoLocation;
 
     public function __construct()

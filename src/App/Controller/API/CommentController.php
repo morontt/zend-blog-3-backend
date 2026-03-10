@@ -30,11 +30,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Xelbot\Telegram\Robot;
 
-/**
- * @Route("/api/comments")
- *
- * Class CommentController
- */
+#[Route(path: '/api/comments')]
 class CommentController extends BaseController
 {
     protected array $errorsPathMap = [
@@ -45,13 +41,12 @@ class CommentController extends BaseController
     ];
 
     /**
-     * @Route("", methods={"GET"})
-     *
      * @param Request $request
      * @param ViewCommentRepository $repository
      *
      * @return JsonResponse
      */
+    #[Route(path: '', methods: ['GET'])]
     public function findAllAction(Request $request, ViewCommentRepository $repository): JsonResponse
     {
         $pagination = $this->paginate(
@@ -67,12 +62,11 @@ class CommentController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"GET"})
-     *
      * @param Comment $entity
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function findAction(Comment $entity): JsonResponse
     {
         $result = $this->getDataConverter()
@@ -82,8 +76,6 @@ class CommentController extends BaseController
     }
 
     /**
-     * @Route("", methods={"POST"})
-     *
      * @param Request $request
      * @param Tracking $tracking
      * @param EventDispatcherInterface $dispatcher
@@ -92,6 +84,7 @@ class CommentController extends BaseController
      *
      * @return JsonResponse
      */
+    #[Route(path: '', methods: ['POST'])]
     public function createAction(
         Request $request,
         Tracking $tracking,
@@ -131,13 +124,12 @@ class CommentController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"PUT"})
-     *
      * @param Request $request
      * @param Comment $entity
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['PUT'])]
     public function updateAction(Request $request, Comment $entity): JsonResponse
     {
         $commentData = $this->getArrayData($request, 'comment');
@@ -151,14 +143,13 @@ class CommentController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"DELETE"})
-     *
      * @param Comment $entity
      * @param CommentRepository $repository
      * @param EventDispatcherInterface $dispatcher
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['DELETE'])]
     public function deleteAction(
         Comment $entity,
         CommentRepository $repository,
@@ -171,13 +162,12 @@ class CommentController extends BaseController
     }
 
     /**
-     * @Route("/geo-location", methods={"POST"})
-     *
      * @param CommentGeoLocation $geoLocation
      * @param Robot $bot
      *
      * @return JsonResponse
      */
+    #[Route(path: '/geo-location', methods: ['POST'])]
     public function getLocation(CommentGeoLocation $geoLocation, Robot $bot): JsonResponse
     {
         $geoLocation->run();
@@ -187,13 +177,12 @@ class CommentController extends BaseController
     }
 
     /**
-     * @Route("/external", methods={"POST"})
-     *
      * @param CommentManager $commentManager
      * @param Request $request
      *
      * @return JsonResponse
      */
+    #[Route(path: '/external', methods: ['POST'])]
     public function createExternalAction(
         CommentManager $commentManager,
         PostRepository $postRepo,

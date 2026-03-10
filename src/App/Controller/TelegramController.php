@@ -38,13 +38,12 @@ class TelegramController extends AbstractController
     }
 
     /**
-     * @Route("/telegram/{token}", methods={"POST"})
-     *
      * @param Request $request
      * @param string $token
      *
      * @return Response
      */
+    #[Route(path: '/telegram/{token}', methods: ['POST'])]
     public function webHookAction(Request $request, string $token): Response
     {
         if (!hash_equals(sha1($this->secretToken), sha1($token))) {

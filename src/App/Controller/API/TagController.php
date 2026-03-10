@@ -21,21 +21,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-/**
- * @Route("/api/tags")
- *
- * Class TagController
- */
+#[Route(path: '/api/tags')]
 class TagController extends BaseController
 {
     /**
-     * @Route("", methods={"GET"})
-     *
      * @param Request $request
      * @param TagRepository $repository
      *
      * @return JsonResponse
      */
+    #[Route(path: '', methods: ['GET'])]
     public function findAllAction(Request $request, TagRepository $repository): JsonResponse
     {
         $pagination = $this->paginate(
@@ -50,12 +45,11 @@ class TagController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"GET"})
-     *
      * @param Tag $entity
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function findAction(Tag $entity): JsonResponse
     {
         $result = $this->getDataConverter()
@@ -65,8 +59,6 @@ class TagController extends BaseController
     }
 
     /**
-     * @Route("", methods={"POST"})
-     *
      * @param ValidatorInterface $validator
      * @param Request $request
      *
@@ -75,6 +67,7 @@ class TagController extends BaseController
      *
      * @return JsonResponse
      */
+    #[Route(path: '', methods: ['POST'])]
     public function createAction(ValidatorInterface $validator, Request $request): JsonResponse
     {
         $form = $this->createObjectForm('tag', TagFormType::class);
@@ -100,8 +93,6 @@ class TagController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"PUT"})
-     *
      * @param ValidatorInterface $validator
      * @param Request $request
      * @param Tag $entity
@@ -111,6 +102,7 @@ class TagController extends BaseController
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['PUT'])]
     public function updateAction(ValidatorInterface $validator, Request $request, Tag $entity): JsonResponse
     {
         $form = $this->createObjectForm('tag', TagFormType::class, true);
@@ -135,14 +127,13 @@ class TagController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"DELETE"})
-     *
      * @param Tag $entity
      *
      * @throws ORMException
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['DELETE'])]
     public function deleteAction(Tag $entity): JsonResponse
     {
         $this->getEm()->remove($entity);
@@ -152,14 +143,13 @@ class TagController extends BaseController
     }
 
     /**
-     * @Route("/autocomplete", name="tags_autocomplete", options={"expose"=true}, methods={"GET"})
-     *
      * @param Request $request
      *
      * @throws \Doctrine\ORM\Exception\NotSupported
      *
      * @return JsonResponse
      */
+    #[Route(path: '/autocomplete', name: 'tags_autocomplete', options: ['expose' => true], methods: ['GET'])]
     public function tagAutocompleteAction(Request $request): JsonResponse
     {
         /** @var TagRepository $tagRepo */

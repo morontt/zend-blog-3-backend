@@ -10,50 +10,40 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table()
- *
- * @ORM\Entity()
- */
+#[ORM\Table]
+#[ORM\Entity]
 class LjCommentMeta
 {
     /**
      * @var int
-     *
-     * @ORM\Id
-     *
-     * @ORM\Column(type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=32, unique=true)
      */
+    #[ORM\Column(type: 'string', length: 32, unique: true)]
     private $ljName;
 
     /**
      * @var int
-     *
-     * @ORM\Column(type="integer", unique=true)
      */
+    #[ORM\Column(type: 'integer', unique: true)]
     private $posterId;
 
     /**
      * @var Commentator|null
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Commentator")
      */
+    #[ORM\ManyToOne(targetEntity: Commentator::class)]
     private $commentator;
 
     /**
      * @var User|null
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
      */
+    #[ORM\ManyToOne(targetEntity: User::class)]
     private $user;
 
     public function getId(): int

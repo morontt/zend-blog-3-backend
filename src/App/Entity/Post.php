@@ -3,159 +3,130 @@
 namespace App\Entity;
 
 use App\Entity\Traits\ModifyEntityTrait;
+use App\Repository\PostRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="posts", indexes={
- *
- *     @ORM\Index(columns={"timestamp_sort"})
- * })
- *
- * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
- *
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Table(name: 'posts')]
+#[ORM\Index(columns: ['timestamp_sort'])]
+#[ORM\Entity(repositoryClass: PostRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Post
 {
     use ModifyEntityTrait;
 
     /**
      * @var int
-     *
-     * @ORM\Id
-     *
-     * @ORM\Column(type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=128)
      */
+    #[ORM\Column(type: 'string', length: 128)]
     protected $title;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=255, unique=true)
      */
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
     protected $url;
 
     /**
      * @var bool
-     *
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $hide = false;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="text", name="text_post")
      */
+    #[ORM\Column(type: 'text', name: 'text_post')]
     protected $text;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="text")
      */
+    #[ORM\Column(type: 'text')]
     protected $preview;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="text")
      */
+    #[ORM\Column(type: 'text')]
     protected $rawText;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(type="string", length=255, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     protected $description;
 
     /**
      * @var Category
-     *
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="posts")
-     *
-     * @ORM\JoinColumn(nullable=false)
      */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'posts')]
     protected $category;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, Tag>
-     *
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="posts")
-     *
-     * @ORM\JoinTable(name="relation_topictag")
      */
+    #[ORM\JoinTable(name: 'relation_topictag')]
+    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'posts')]
     protected $tags;
 
     /**
      * @var int
-     *
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $commentsCount = 0;
 
     /**
      * @var int
-     *
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Column(type: 'integer')]
     protected $viewsCount = 0;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, Comment>
-     *
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="post")
      */
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'post')]
     protected $comments;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, MediaFile>|ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="MediaFile", mappedBy="post")
      */
+    #[ORM\OneToMany(targetEntity: MediaFile::class, mappedBy: 'post')]
     protected $mediaFiles;
 
     /**
      * @var DateTime
-     *
-     * @ORM\Column(type="datetime", options={
-     *   "default": "CURRENT_TIMESTAMP",
-     *   "comment": "updated if article content changes"})
      */
+    #[ORM\Column(type: 'datetime', options: ['default' => 'CURRENT_TIMESTAMP', 'comment' => 'updated if article content changes'])]
     private $updatedAt;
 
     /**
      * @var bool
-     *
-     * @ORM\Column(type="boolean", options={"default": false})
      */
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
     private $disableComments = false;
 
     /**
      * @var DateTime|null
-     *
-     * @ORM\Column(type="milliseconds_dt", nullable=true)
      */
+    #[ORM\Column(type: 'milliseconds_dt', nullable: true)]
     private $forceCreatedAt;
 
     /**
      * @var int|null
-     *
-     * @ORM\Column(type="integer", nullable=true, options={"unsigned": true})
      */
+    #[ORM\Column(type: 'integer', nullable: true, options: ['unsigned' => true])]
     private $timestampSort;
 
     public function __construct()
@@ -168,9 +139,7 @@ class Post
         $this->updatedAt = new DateTime();
     }
 
-    /**
-     * @ORM\PrePersist
-     */
+    #[ORM\PrePersist]
     public function recalculateSortField(): void
     {
         $dt = $this->forceCreatedAt ?? $this->timeCreated;

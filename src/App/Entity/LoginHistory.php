@@ -5,45 +5,35 @@ namespace App\Entity;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="user_login_histories")
- *
- * @ORM\Entity()
- */
+#[ORM\Table(name: 'user_login_histories')]
+#[ORM\Entity]
 class LoginHistory
 {
     /**
      * @var int
-     *
-     * @ORM\Id
-     *
-     * @ORM\Column(type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private $id;
 
     /**
      * @var User
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
-     *
-     * @ORM\JoinColumn(nullable=false)
      */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     private $user;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="ip_addr", type="string", length=15, nullable=true)
      */
+    #[ORM\Column(name: 'ip_addr', type: 'string', length: 15, nullable: true)]
     private $ipAddress;
 
     /**
      * @var DateTime
-     *
-     * @ORM\Column(type="milliseconds_dt", options={"default": "CURRENT_TIMESTAMP(3)"})
      */
+    #[ORM\Column(type: 'milliseconds_dt', options: ['default' => 'CURRENT_TIMESTAMP(3)'])]
     private $timeCreated;
 
     public function __construct()

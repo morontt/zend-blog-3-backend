@@ -3,189 +3,163 @@
 namespace App\Entity;
 
 use App\Entity\Traits\Gravatar;
+use App\Repository\ViewCommentRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="v_comments")
- *
- * @ORM\Entity(readOnly=true, repositoryClass="App\Repository\ViewCommentRepository")
- */
+#[ORM\Table(name: 'v_comments')]
+#[ORM\Entity(readOnly: true, repositoryClass: ViewCommentRepository::class)]
 class ViewComment implements CommentInterface
 {
     use Gravatar;
 
     /**
      * @var int
-     *
-     * @ORM\Id
-     *
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
     protected $id;
 
     /**
      * @var Collection<int, ViewComment>
-     *
-     * @ORM\OneToMany(targetEntity="ViewComment", mappedBy="parent")
      **/
+    #[ORM\OneToMany(targetEntity: ViewComment::class, mappedBy: 'parent')]
     protected $children;
 
     /**
      * @var self|null
      *
-     * @ORM\ManyToOne(targetEntity="ViewComment", inversedBy="children")
      *
-     * @ORM\JoinColumn()
      **/
+    #[ORM\JoinColumn]
+    #[ORM\ManyToOne(targetEntity: ViewComment::class, inversedBy: 'children')]
     protected $parent;
 
     /**
      * @var Post
-     *
-     * @ORM\ManyToOne(targetEntity="Post")
-     *
-     * @ORM\JoinColumn(nullable=false)
      */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Post::class)]
     protected $post;
 
     /**
      * @var int
-     *
-     * @ORM\Column(name="uid", type="integer")
      */
+    #[ORM\Column(name: 'uid', type: 'integer')]
     protected $virtualUserId;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=80)
      */
+    #[ORM\Column(type: 'string', length: 80)]
     protected $username;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="mail", type="string", length=80, nullable=true)
      */
+    #[ORM\Column(name: 'mail', type: 'string', length: 80, nullable: true)]
     protected $email;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(type="string", length=160, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 160, nullable: true)]
     protected $website;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="text")
      */
+    #[ORM\Column(type: 'text')]
     protected $text;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="ip_addr", type="string", length=15, nullable=true)
      */
+    #[ORM\Column(name: 'ip_addr', type: 'string', length: 15, nullable: true)]
     protected $ipAddress;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=128)
      */
+    #[ORM\Column(type: 'string', length: 128)]
     protected $city;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=128)
      */
+    #[ORM\Column(type: 'string', length: 128)]
     protected $region;
 
     /**
      * Country name based on ISO 3166.
      *
      * @var string
-     *
-     * @ORM\Column(name="country_name", type="string", length=64)
      */
+    #[ORM\Column(name: 'country_name', type: 'string', length: 64)]
     protected $country;
 
     /**
      * Two-character country code based on ISO 3166.
      *
      * @var string
-     *
-     * @ORM\Column(name="country_code", type="string", length=2, unique=true)
      */
+    #[ORM\Column(name: 'country_code', type: 'string', length: 2, unique: true)]
     protected $code;
 
     /**
      * @var float
-     *
-     * @ORM\Column(type="float")
      */
+    #[ORM\Column(type: 'float')]
     protected $latitude;
 
     /**
      * @var float
-     *
-     * @ORM\Column(type="float")
      */
+    #[ORM\Column(type: 'float')]
     protected $longitude;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=8)
      */
+    #[ORM\Column(type: 'string', length: 8)]
     protected $timeZone;
 
     /**
      * @var bool
-     *
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $deleted = false;
 
     /**
      * @var DateTime
-     *
-     * @ORM\Column(type="milliseconds_dt")
      */
+    #[ORM\Column(type: 'milliseconds_dt')]
     protected $timeCreated;
 
     /**
      * @var int
-     *
-     * @ORM\Column(type="smallint")
      */
+    #[ORM\Column(type: 'smallint')]
     private $gender = User::MALE;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="text", length=65000)
      */
+    #[ORM\Column(type: 'text', length: 65000)]
     protected $userAgent;
 
     /**
      * @var bool
-     *
-     * @ORM\Column(type="boolean", name="is_bot")
      */
+    #[ORM\Column(type: 'boolean', name: 'is_bot')]
     protected $bot = false;
 
     /**
      * @var int
-     *
-     * @ORM\Column(type="smallint")
      */
+    #[ORM\Column(type: 'smallint')]
     private $avatarVariant = 0;
 
     public function __construct()

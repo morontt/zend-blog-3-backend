@@ -18,9 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-/**
- * @Route("/api/users")
- */
+#[Route(path: '/api/users')]
 class UserController extends BaseController
 {
     protected array $errorsPathMap = [
@@ -32,13 +30,12 @@ class UserController extends BaseController
     ];
 
     /**
-     * @Route("", methods={"GET"})
-     *
      * @param Request $request
      * @param UserRepository $repository
      *
      * @return JsonResponse
      */
+    #[Route(path: '', methods: ['GET'])]
     public function findAllAction(Request $request, UserRepository $repository): JsonResponse
     {
         $pagination = $this->paginate(
@@ -53,12 +50,11 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"GET"})
-     *
      * @param User $entity
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function findAction(User $entity): JsonResponse
     {
         $result = $this->getDataConverter()
@@ -68,8 +64,6 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"PUT"})
-     *
      * @param ValidatorInterface $validator
      * @param EventDispatcherInterface $dispatcher
      * @param Request $request
@@ -80,6 +74,7 @@ class UserController extends BaseController
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['PUT'])]
     public function updateAction(
         ValidatorInterface $validator,
         EventDispatcherInterface $dispatcher,
@@ -110,8 +105,6 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/external", methods={"POST"})
-     *
      * @param ExternalUserDTO $userDTO
      * @param UserManager $userManager
      * @param ValidatorInterface $validator
@@ -120,6 +113,7 @@ class UserController extends BaseController
      *
      * @return JsonResponse
      */
+    #[Route(path: '/external', methods: ['POST'])]
     public function createExternalAction(
         ExternalUserDTO $userDTO,
         UserManager $userManager,

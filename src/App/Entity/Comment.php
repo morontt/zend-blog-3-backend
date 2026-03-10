@@ -4,127 +4,105 @@ namespace App\Entity;
 
 use App\Entity\Embedded\NestedSet;
 use App\Entity\Traits\ModifyEntityTrait;
+use App\Repository\CommentRepository;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="comments", indexes={
- *
- *   @ORM\Index(name="left_key_idx", columns={"tree_left_key"}),
- *   @ORM\Index(name="right_key_idx", columns={"tree_right_key"})
- * })
- *
- * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
- *
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Table(name: 'comments')]
+#[ORM\Index(name: 'left_key_idx', columns: ['tree_left_key'])]
+#[ORM\Index(name: 'right_key_idx', columns: ['tree_right_key'])]
+#[ORM\Entity(repositoryClass: CommentRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Comment implements CommentInterface
 {
     use ModifyEntityTrait;
 
     /**
      * @var int
-     *
-     * @ORM\Id
-     *
-     * @ORM\Column(type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected $id;
 
     /**
      * @var Collection<int, Comment>
-     *
-     * @ORM\OneToMany(targetEntity="Comment", mappedBy="parent")
      **/
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'parent')]
     protected $children;
 
     /**
      * @var Comment|null
      *
-     * @ORM\ManyToOne(targetEntity="Comment", inversedBy="children")
      *
-     * @ORM\JoinColumn(onDelete="SET NULL")
      **/
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: Comment::class, inversedBy: 'children')]
     protected $parent;
 
     /**
      * @var Post
-     *
-     * @ORM\ManyToOne(targetEntity="Post", inversedBy="comments")
-     *
-     * @ORM\JoinColumn(nullable=false)
      */
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'comments')]
     protected $post;
 
     /**
      * @var Commentator|null
-     *
-     * @ORM\ManyToOne(targetEntity="Commentator", inversedBy="comments")
      */
+    #[ORM\ManyToOne(targetEntity: Commentator::class, inversedBy: 'comments')]
     protected $commentator;
 
     /**
      * @var User|null
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="comments")
      */
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'comments')]
     protected $user;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="text")
      */
+    #[ORM\Column(type: 'text')]
     protected $text;
 
     /**
      * @var bool
-     *
-     * @ORM\Column(type="boolean", options={"default": false})
      */
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
     protected $deleted = false;
 
     /**
      * @var TrackingAgent|null
-     *
-     * @ORM\ManyToOne(targetEntity="TrackingAgent")
-     *
-     * @ORM\JoinColumn(name="user_agent_id", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\JoinColumn(name: 'user_agent_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: TrackingAgent::class)]
     protected $trackingAgent;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="ip_addr", type="string", length=15, nullable=true)
      */
+    #[ORM\Column(name: 'ip_addr', type: 'string', length: 15, nullable: true)]
     protected $ipAddress;
 
     /**
      * @var GeoLocation|null
-     *
-     * @ORM\ManyToOne(targetEntity="GeoLocation")
-     *
-     * @ORM\JoinColumn(name="ip_long", referencedColumnName="ip_long", onDelete="SET NULL")
      */
+    #[ORM\JoinColumn(name: 'ip_long', referencedColumnName: 'ip_long', onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: GeoLocation::class)]
     private $geoLocation;
 
     /**
      * @var NestedSet
-     *
-     * @ORM\Embedded(class="App\Entity\Embedded\NestedSet", columnPrefix = "tree_")
      */
+    #[ORM\Embedded(class: NestedSet::class, columnPrefix: 'tree_')]
     private $nestedSet;
 
     /**
      * @var DateTime|null
-     *
-     * @ORM\Column(type="milliseconds_dt", nullable=true)
      */
+    #[ORM\Column(type: 'milliseconds_dt', nullable: true)]
     private $forceCreatedAt;
 
     public function __construct()
