@@ -3,58 +3,47 @@
 namespace App\Entity;
 
 use App\Entity\Traits\ModifyEntityTrait;
+use App\Repository\PygmentsCodeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table()
- *
- * @ORM\Entity(repositoryClass="App\Repository\PygmentsCodeRepository")
- *
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Table]
+#[ORM\Entity(repositoryClass: PygmentsCodeRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class PygmentsCode
 {
     use ModifyEntityTrait;
 
     /**
      * @var int
-     *
-     * @ORM\Id
-     *
-     * @ORM\Column(type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private $id;
 
     /**
      * @var PygmentsLanguage|null
-     *
-     * @ORM\ManyToOne(targetEntity="PygmentsLanguage")
-     *
-     * @ORM\JoinColumn(referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\JoinColumn(referencedColumnName: 'id', onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: PygmentsLanguage::class)]
     private $language;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="text", length=65535)
      */
+    #[ORM\Column(type: 'text', length: 65535)]
     private $sourceCode = '';
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(type: 'text', length: 65535, nullable: true)]
     private $sourceHtml;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(type: 'text', length: 65535, nullable: true)]
     private $sourceHtmlPreview;
 
     /**

@@ -19,21 +19,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/api/categories")
- *
- * Class CategoryController
- */
+#[Route(path: '/api/categories')]
 class CategoryController extends BaseController
 {
     /**
-     * @Route("", methods={"GET"})
-     *
      * @param Request $request
      * @param ViewCategoryRepository $repository
      *
      * @return JsonResponse
      */
+    #[Route(path: '', methods: ['GET'])]
     public function findAllAction(Request $request, ViewCategoryRepository $repository): JsonResponse
     {
         $result = $this->getDataConverter()
@@ -43,12 +38,11 @@ class CategoryController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"GET"})
-     *
      * @param Category $entity
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function findAction(Category $entity): JsonResponse
     {
         $result = $this->getDataConverter()
@@ -58,8 +52,6 @@ class CategoryController extends BaseController
     }
 
     /**
-     * @Route("", methods={"POST"})
-     *
      * @param Request $request
      *
      * @throws \Psr\Container\ContainerExceptionInterface
@@ -67,6 +59,7 @@ class CategoryController extends BaseController
      *
      * @return JsonResponse
      */
+    #[Route(path: '', methods: ['POST'])]
     public function createAction(Request $request): JsonResponse
     {
         $form = $this->createObjectForm('category', CategoryFormType::class);
@@ -85,8 +78,6 @@ class CategoryController extends BaseController
     /**
      * TODO update nested-set tree
      *
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"PUT"})
-     *
      * @param Request $request
      * @param Category $entity
      *
@@ -95,6 +86,7 @@ class CategoryController extends BaseController
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['PUT'])]
     public function updateAction(Request $request, Category $entity): JsonResponse
     {
         $form = $this->createObjectForm('category', CategoryFormType::class, true);
@@ -113,14 +105,13 @@ class CategoryController extends BaseController
     /**
      * TODO update nested-set tree
      *
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"DELETE"})
-     *
      * @param Category $entity
      *
      * @throws \Doctrine\ORM\Exception\ORMException
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['DELETE'])]
     public function deleteAction(Category $entity): JsonResponse
     {
         $this->getEm()->remove($entity);
@@ -130,12 +121,11 @@ class CategoryController extends BaseController
     }
 
     /**
-     * @Route("/list", name="category_choices", options={"expose"=true}, methods={"GET"})
-     *
      * @param CategoryRepository $repository
      *
      * @return JsonResponse
      */
+    #[Route(path: '/list', name: 'category_choices', options: ['expose' => true], methods: ['GET'])]
     public function ajaxCategoryListAction(CategoryRepository $repository): JsonResponse
     {
         return new JsonResponse($repository->getNamesArray());

@@ -2,13 +2,11 @@
 
 namespace App\Entity;
 
+use App\Repository\SystemParametersRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="sys_parameters")
- *
- * @ORM\Entity(repositoryClass="App\Repository\SystemParametersRepository")
- */
+#[ORM\Table(name: 'sys_parameters')]
+#[ORM\Entity(repositoryClass: SystemParametersRepository::class)]
 class SystemParameters
 {
     public const DROPBOX_TOKEN = 'dropbox_token';
@@ -20,34 +18,28 @@ class SystemParameters
 
     /**
      * @var int
-     *
-     * @ORM\Id
-     *
-     * @ORM\Column(type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="optionkey", length=128, unique=true)
      */
+    #[ORM\Column(name: 'optionkey', length: 128, unique: true)]
     protected $optionKey;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="text")
      */
+    #[ORM\Column(type: 'text')]
     protected $value;
 
     /**
      * @var bool
-     *
-     * @ORM\Column(type="boolean")
      */
+    #[ORM\Column(type: 'boolean')]
     protected $encrypted = false;
 
     /**

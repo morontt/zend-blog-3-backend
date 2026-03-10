@@ -3,77 +3,64 @@
 namespace App\Entity;
 
 use App\Entity\Embedded\NestedSet;
+use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-/**
- * @ORM\Table(name="category", indexes={
- *
- *   @ORM\Index(name="left_key_idx", columns={"tree_left_key"}),
- *   @ORM\Index(name="right_key_idx", columns={"tree_right_key"})
- * })
- *
- * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
- *
- * @UniqueEntity(fields={"url"})
- */
+#[ORM\Table(name: 'category')]
+#[ORM\Index(name: 'left_key_idx', columns: ['tree_left_key'])]
+#[ORM\Index(name: 'right_key_idx', columns: ['tree_right_key'])]
+#[ORM\Entity(repositoryClass: CategoryRepository::class)]
+#[UniqueEntity(fields: ['url'])]
 class Category implements CategoryInterface
 {
     /**
      * @var int
-     *
-     * @ORM\Id
-     *
-     * @ORM\Column(type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private $id;
 
     /**
      * @var Collection<int, Category>
-     *
-     * @ORM\OneToMany(targetEntity="Category", mappedBy="parent")
      **/
+    #[ORM\OneToMany(targetEntity: Category::class, mappedBy: 'parent')]
     private $children;
 
     /**
      * @var Category|null
      *
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="children")
      *
-     * @ORM\JoinColumn(onDelete="SET NULL")
      **/
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'children')]
     private $parent;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=100)
      */
+    #[ORM\Column(type: 'string', length: 100)]
     private $name;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=255, unique=true)
      */
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
     private $url;
 
     /**
      * @var Collection<int, Post>
-     *
-     * @ORM\OneToMany(targetEntity="Post", mappedBy="category")
      */
+    #[ORM\OneToMany(targetEntity: Post::class, mappedBy: 'category')]
     private $posts;
 
     /**
      * @var NestedSet
-     *
-     * @ORM\Embedded(class="App\Entity\Embedded\NestedSet", columnPrefix = "tree_")
      */
+    #[ORM\Embedded(class: NestedSet::class, columnPrefix: 'tree_')]
     private $nestedSet;
 
     public function __construct()

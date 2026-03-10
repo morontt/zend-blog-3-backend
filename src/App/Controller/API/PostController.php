@@ -18,21 +18,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/api/posts")
- *
- * Class PostController
- */
+#[Route(path: '/api/posts')]
 class PostController extends BaseController
 {
     /**
-     * @Route("", methods={"GET"})
-     *
      * @param Request $request
      * @param PostRepository $repository
      *
      * @return JsonResponse
      */
+    #[Route(path: '', methods: ['GET'])]
     public function findAllAction(Request $request, PostRepository $repository): JsonResponse
     {
         $pagination = $this->paginate(
@@ -47,12 +42,11 @@ class PostController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"GET"})
-     *
      * @param Post $entity
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function findAction(Post $entity): JsonResponse
     {
         $result = $this->getDataConverter()
@@ -62,8 +56,6 @@ class PostController extends BaseController
     }
 
     /**
-     * @Route("", methods={"POST"})
-     *
      * @param Request $request
      *
      * @throws \Doctrine\ORM\Exception\NotSupported
@@ -73,6 +65,7 @@ class PostController extends BaseController
      *
      * @return JsonResponse
      */
+    #[Route(path: '', methods: ['POST'])]
     public function createAction(Request $request): JsonResponse
     {
         $form = $this->createObjectForm('post', ArticleFormType::class);
@@ -89,8 +82,6 @@ class PostController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"PUT"})
-     *
      * @param Request $request
      * @param Post $entity
      *
@@ -101,6 +92,7 @@ class PostController extends BaseController
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['PUT'])]
     public function updateAction(Request $request, Post $entity): JsonResponse
     {
         $form = $this->createObjectForm('post', ArticleFormType::class, true);
@@ -117,14 +109,13 @@ class PostController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"DELETE"})
-     *
      * @param Post $entity
      *
      * @throws \Doctrine\ORM\Exception\ORMException
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['DELETE'])]
     public function deleteAction(Post $entity): JsonResponse
     {
         $this->getEm()->remove($entity);

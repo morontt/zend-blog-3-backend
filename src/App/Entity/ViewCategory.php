@@ -9,57 +9,48 @@
 namespace App\Entity;
 
 use App\Entity\Embedded\NestedSet;
+use App\Repository\ViewCategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="v_category")
- *
- * @ORM\Entity(readOnly=true, repositoryClass="App\Repository\ViewCategoryRepository")
- */
+#[ORM\Table(name: 'v_category')]
+#[ORM\Entity(readOnly: true, repositoryClass: ViewCategoryRepository::class)]
 class ViewCategory implements CategoryInterface
 {
     /**
      * @var int
-     *
-     * @ORM\Id
-     *
-     * @ORM\Column(type="integer")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
     /**
      * @var self|null
-     *
-     * @ORM\ManyToOne(targetEntity="ViewCategory")
      */
+    #[ORM\ManyToOne(targetEntity: ViewCategory::class)]
     private $parent;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string")
      */
+    #[ORM\Column(type: 'string')]
     private $name;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string")
      */
+    #[ORM\Column(type: 'string')]
     private $url;
 
     /**
      * @var NestedSet
-     *
-     * @ORM\Embedded(class="App\Entity\Embedded\NestedSet", columnPrefix = "tree_")
      */
+    #[ORM\Embedded(class: NestedSet::class, columnPrefix: 'tree_')]
     private $nestedSet;
 
     /**
      * @var int
-     *
-     * @ORM\Column(type="integer", name="cnt")
      */
+    #[ORM\Column(type: 'integer', name: 'cnt')]
     private $postsCount;
 
     public function getId(): ?int

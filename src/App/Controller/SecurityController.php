@@ -17,12 +17,11 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/login")
-     *
      * @Template()
      *
      * @return array
      */
+    #[Route(path: '/login')]
     public function loginAction(): array
     {
         $error = $this->authUtils->getLastAuthenticationError();

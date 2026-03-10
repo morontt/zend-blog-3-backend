@@ -21,21 +21,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/api/mediaFiles")
- *
- * Class MediaFileController
- */
+#[Route(path: '/api/mediaFiles')]
 class MediaFileController extends BaseController
 {
     /**
-     * @Route("", methods={"GET"})
-     *
      * @param Request $request
      * @param MediaFileRepository $repository
      *
      * @return JsonResponse
      */
+    #[Route(path: '', methods: ['GET'])]
     public function findAllAction(Request $request, MediaFileRepository $repository): JsonResponse
     {
         $params = $request->query->all();
@@ -74,12 +69,11 @@ class MediaFileController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"GET"})
-     *
      * @param MediaFile $entity
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function findAction(MediaFile $entity): JsonResponse
     {
         $result = $this->getDataConverter()
@@ -89,13 +83,12 @@ class MediaFileController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"PUT"})
-     *
      * @param Request $request
      * @param MediaFile $entity
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['PUT'])]
     public function updateAction(Request $request, MediaFile $entity): JsonResponse
     {
         $result = $this->getDataConverter()
@@ -105,8 +98,6 @@ class MediaFileController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"DELETE"})
-     *
      * @param MediaFile $entity
      * @param ImageManager $manager
      *
@@ -114,6 +105,7 @@ class MediaFileController extends BaseController
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['DELETE'])]
     public function deleteAction(MediaFile $entity, ImageManager $manager): JsonResponse
     {
         $manager->remove($entity);
@@ -122,8 +114,6 @@ class MediaFileController extends BaseController
     }
 
     /**
-     * @Route("/upload", name="upload_image", options={"expose"=true}, methods={"POST"})
-     *
      * @param Request $request
      * @param ImageManager $manager
      *
@@ -132,6 +122,7 @@ class MediaFileController extends BaseController
      *
      * @return JsonResponse
      */
+    #[Route(path: '/upload', name: 'upload_image', options: ['expose' => true], methods: ['POST'])]
     public function uploadAction(Request $request, ImageManager $manager): JsonResponse
     {
         $form = $this->createForm(ImageFormType::class);
@@ -156,8 +147,6 @@ class MediaFileController extends BaseController
     }
 
     /**
-     * @Route("/upload-avatar", name="upload_avatar", options={"expose"=true}, methods={"POST"})
-     *
      * @param Request $request
      * @param ImageManager $manager
      *
@@ -166,6 +155,7 @@ class MediaFileController extends BaseController
      *
      * @return JsonResponse
      */
+    #[Route(path: '/upload-avatar', name: 'upload_avatar', options: ['expose' => true], methods: ['POST'])]
     public function uploadAvatarAction(Request $request, ImageManager $manager): JsonResponse
     {
         $form = $this->createForm(AvatarFormType::class);

@@ -792,6 +792,18 @@
           "creation": 1747507355
         }
       ]
+    },
+    {
+      "text": "Convert doctrine annotations to attributes",
+      "priority": "medium",
+      "creation": 1773170324,
+      "tasks": [
+        {
+          "text": "https://stackoverflow.com/questions/71411187/how-to-create-table-index-with-doctrine-and-php-attributes",
+          "priority": "low",
+          "creation": 1773170357
+        }
+      ]
     }
   ]
 }

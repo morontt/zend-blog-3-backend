@@ -3,45 +3,36 @@
 namespace App\Entity;
 
 use App\Entity\Traits\ModifyEntityTrait;
+use App\Repository\PygmentsLanguageRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-/**
- * @ORM\Table()
- *
- * @ORM\Entity(repositoryClass="App\Repository\PygmentsLanguageRepository")
- *
- * @ORM\HasLifecycleCallbacks()
- *
- * @UniqueEntity(fields={"name"})
- */
+#[ORM\Table]
+#[ORM\Entity(repositoryClass: PygmentsLanguageRepository::class)]
+#[ORM\HasLifecycleCallbacks]
+#[UniqueEntity(fields: ['name'])]
 class PygmentsLanguage
 {
     use ModifyEntityTrait;
 
     /**
      * @var int
-     *
-     * @ORM\Id
-     *
-     * @ORM\Column(type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=32, unique=true)
      */
+    #[ORM\Column(type: 'string', length: 32, unique: true)]
     private $name;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(type="string", length=16, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 16, nullable: true)]
     private $lexer;
 
     /**

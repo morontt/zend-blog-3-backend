@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Repository\UserRepository;
 use App\Utils\HashId;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -14,20 +15,10 @@ use Symfony\Component\Security\Core\User\LegacyPasswordAuthenticatedUserInterfac
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Table(name="users")
- *
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- *
- * @DoctrineAssert\UniqueEntity(
- *   fields={"username"},
- *   message="This username is already used"
- * )
- * @DoctrineAssert\UniqueEntity(
- *   fields={"email"},
- *   message="This email is already used"
- * )
- */
+#[ORM\Table(name: 'users')]
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[DoctrineAssert\UniqueEntity(fields: ['username'], message: 'This username is already used')]
+#[DoctrineAssert\UniqueEntity(fields: ['email'], message: 'This email is already used')]
 class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface
 {
     public const ROLE_USER = 'ROLE_USER';
@@ -41,92 +32,77 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface
 
     /**
      * @var int
-     *
-     * @ORM\Id
-     *
-     * @ORM\Column(type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="username", type="string", length=128, unique=true)
      */
+    #[ORM\Column(name: 'username', type: 'string', length: 128, unique: true)]
     private $username;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="mail", type="string", length=64, unique=true)
-     *
-     * @Assert\Email()
      */
+    #[ORM\Column(name: 'mail', type: 'string', length: 64, unique: true)]
+    #[Assert\Email]
     private $email;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="password_hash", type="string", length=96)
      */
+    #[ORM\Column(name: 'password_hash', type: 'string', length: 96)]
     private $password;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="password_salt", type="string", length=32)
      */
+    #[ORM\Column(name: 'password_salt', type: 'string', length: 32)]
     private $salt;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=24)
      */
+    #[ORM\Column(type: 'string', length: 24)]
     private $wsseKey;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="user_type", type="string", length=16)
      */
+    #[ORM\Column(name: 'user_type', type: 'string', length: 16)]
     private $userType;
 
     /**
      * @var DateTime
-     *
-     * @ORM\Column(name="time_created", type="milliseconds_dt")
      */
+    #[ORM\Column(name: 'time_created', type: 'milliseconds_dt')]
     private $timeCreated;
 
     /**
      * @var Collection<int, Comment>
-     *
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="user")
      */
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'user')]
     private $comments;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(type="string", length=64, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 64, nullable: true)]
     private $displayName;
 
     /**
      * @var int
-     *
-     * @ORM\Column(type="smallint", options={"default": 1, "comment":"1: male, 2: female"})
      */
+    #[ORM\Column(type: 'smallint', options: ['default' => 1, 'comment' => '1: male, 2: female'])]
     private $gender = self::MALE;
 
     /**
      * @var int
-     *
-     * @ORM\Column(type="smallint", options={"default": 0, "unsigned": true})
      */
+    #[ORM\Column(type: 'smallint', options: ['default' => 0, 'unsigned' => true])]
     private $avatarVariant = 0;
 
     public function __construct()
@@ -156,7 +132,7 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface
     }
 
     /**
-     * @phpstan-ignore missingType.iterableValue
+     * @param array<int, mixed> $data
      */
     public function __unserialize(array $data): void
     {

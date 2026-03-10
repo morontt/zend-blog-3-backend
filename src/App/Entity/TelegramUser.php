@@ -3,79 +3,64 @@
 namespace App\Entity;
 
 use App\Entity\Traits\ModifyEntityTrait;
+use App\Repository\TelegramUserRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="telegram_users")
- *
- * @ORM\Entity(repositoryClass="App\Repository\TelegramUserRepository")
- *
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Table(name: 'telegram_users')]
+#[ORM\Entity(repositoryClass: TelegramUserRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class TelegramUser
 {
     use ModifyEntityTrait;
 
     /**
      * @var int
-     *
-     * @ORM\Id
-     *
-     * @ORM\Column(type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private $id;
 
     /**
      * @var int
-     *
-     * @ORM\Column(type="bigint")
-     *
-     * @phpstan-ignore doctrine.columnType
      */
-    private $userId;
+    #[ORM\Column(type: 'bigint')]
+    private $userId; // @phpstan-ignore doctrine.columnType
 
     /**
      * @var bool
-     *
-     * @ORM\Column(name="is_bot", type="boolean")
      */
+    #[ORM\Column(name: 'is_bot', type: 'boolean')]
     private $bot;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string")
      */
+    #[ORM\Column(type: 'string')]
     private $firstName;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(type="string", nullable=true)
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     private $lastName;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(type="string", nullable=true)
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     private $username;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="text", length=65535)
      */
+    #[ORM\Column(type: 'text', length: 65535)]
     private $rawMessage;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="lang", type="string", length=8, nullable=true)
      */
+    #[ORM\Column(name: 'lang', type: 'string', length: 8, nullable: true)]
     private $language;
 
     /**

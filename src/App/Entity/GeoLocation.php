@@ -9,57 +9,46 @@
 
 namespace App\Entity;
 
+use App\Repository\GeoLocationRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table()
- *
- * @ORM\Entity(repositoryClass="App\Repository\GeoLocationRepository")
- */
+#[ORM\Table]
+#[ORM\Entity(repositoryClass: GeoLocationRepository::class)]
 class GeoLocation
 {
     /**
      * @var int
-     *
-     * @ORM\Id
-     *
-     * @ORM\GeneratedValue(strategy="CUSTOM")
-     *
-     * @ORM\CustomIdGenerator(class="App\Doctrine\ORM\IpLongIdGenerator")
-     *
-     * @ORM\Column(name="ip_long", type="integer", options={"unsigned": true})
      */
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'CUSTOM')]
+    #[ORM\CustomIdGenerator(class: \App\Doctrine\ORM\IpLongIdGenerator::class)]
+    #[ORM\Column(name: 'ip_long', type: 'integer', options: ['unsigned' => true])]
     private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="ip_addr", type="string", length=15, unique=true)
      */
+    #[ORM\Column(name: 'ip_addr', type: 'string', length: 15, unique: true)]
     private $ipAddress;
 
     /**
      * @var GeoLocationCity|null
-     *
-     * @ORM\ManyToOne(targetEntity="GeoLocationCity")
-     *
-     * @ORM\JoinColumn(nullable=true, onDelete="RESTRICT")
      */
+    #[ORM\JoinColumn(nullable: true, onDelete: 'RESTRICT')]
+    #[ORM\ManyToOne(targetEntity: GeoLocationCity::class)]
     private $city;
 
     /**
      * @var DateTime
-     *
-     * @ORM\Column(type="milliseconds_dt")
      */
+    #[ORM\Column(type: 'milliseconds_dt')]
     private $timeCreated;
 
     /**
      * @var int
-     *
-     * @ORM\Column(type="smallint", options={"unsigned": true, "default": 0})
      */
+    #[ORM\Column(type: 'smallint', options: ['unsigned' => true, 'default' => 0])]
     private $countOfCheck = 0;
 
     public function __construct()

@@ -19,21 +19,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/api/commentators")
- *
- * Class CommentatorController
- */
+#[Route(path: '/api/commentators')]
 class CommentatorController extends BaseController
 {
     /**
-     * @Route("", methods={"GET"})
-     *
      * @param Request $request
      * @param CommentatorRepository $repository
      *
      * @return JsonResponse
      */
+    #[Route(path: '', methods: ['GET'])]
     public function findAllAction(Request $request, CommentatorRepository $repository): JsonResponse
     {
         $pagination = $this->paginate(
@@ -48,12 +43,11 @@ class CommentatorController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"GET"})
-     *
      * @param ViewCommentator $entity
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function findAction(ViewCommentator $entity): JsonResponse
     {
         $result = $this->getDataConverter()
@@ -63,14 +57,13 @@ class CommentatorController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"PUT"})
-     *
      * @param Request $request
      * @param EventDispatcherInterface $dispatcher
      * @param Commentator $entity
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['PUT'])]
     public function updateAction(
         Request $request,
         EventDispatcherInterface $dispatcher,

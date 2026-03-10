@@ -9,19 +9,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/api/trackings")
- */
+#[Route(path: '/api/trackings')]
 class TrackingController extends BaseController
 {
     /**
-     * @Route("", methods={"GET"})
-     *
      * @param Request $request
      * @param TrackingRepository $repository
      *
      * @return JsonResponse
      */
+    #[Route(path: '', methods: ['GET'])]
     public function findAllAction(Request $request, TrackingRepository $repository): JsonResponse
     {
         $pagination = $this->paginate(
@@ -36,12 +33,11 @@ class TrackingController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"GET"})
-     *
      * @param Tracking $entity
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function findAction(Tracking $entity): JsonResponse
     {
         $result = $this->getDataConverter()

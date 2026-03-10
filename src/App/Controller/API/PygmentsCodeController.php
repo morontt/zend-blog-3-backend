@@ -14,19 +14,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/api/pygmentsCodes")
- */
+#[Route(path: '/api/pygmentsCodes')]
 class PygmentsCodeController extends BaseController
 {
     /**
-     * @Route("", methods={"GET"})
-     *
      * @param Request $request
      * @param PygmentsCodeRepository $repository
      *
      * @return JsonResponse
      */
+    #[Route(path: '', methods: ['GET'])]
     public function findAllAction(Request $request, PygmentsCodeRepository $repository): JsonResponse
     {
         $pagination = $this->paginate(
@@ -41,12 +38,11 @@ class PygmentsCodeController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"GET"})
-     *
      * @param PygmentsCode $entity
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function findAction(PygmentsCode $entity): JsonResponse
     {
         $result = $this->getDataConverter()
@@ -56,8 +52,6 @@ class PygmentsCodeController extends BaseController
     }
 
     /**
-     * @Route("", methods={"POST"})
-     *
      * @param Request $request
      *
      * @throws \Doctrine\ORM\Exception\ORMException
@@ -66,6 +60,7 @@ class PygmentsCodeController extends BaseController
      *
      * @return JsonResponse
      */
+    #[Route(path: '', methods: ['POST'])]
     public function createAction(Request $request): JsonResponse
     {
         $form = $this->createObjectForm('pygmentsCode', PygmentsCodeFormType::class);
@@ -82,8 +77,6 @@ class PygmentsCodeController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"PUT"})
-     *
      * @param Request $request
      * @param PygmentsCode $entity
      * @param EventDispatcherInterface $dispatcher
@@ -94,6 +87,7 @@ class PygmentsCodeController extends BaseController
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['PUT'])]
     public function updateAction(
         Request $request,
         PygmentsCode $entity,
@@ -115,8 +109,6 @@ class PygmentsCodeController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"DELETE"})
-     *
      * @param PygmentsCode $entity
      * @param PostRepository $repository
      *
@@ -124,6 +116,7 @@ class PygmentsCodeController extends BaseController
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['DELETE'])]
     public function deleteAction(PygmentsCode $entity, PostRepository $repository): JsonResponse
     {
         $posts = $repository->getPostsByCodeSnippet($entity->getId());

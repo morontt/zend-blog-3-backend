@@ -9,86 +9,70 @@
 
 namespace App\Entity;
 
+use App\Repository\GeoLocationCityRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(uniqueConstraints={
- *
- *   @ORM\UniqueConstraint(columns={"city", "region", "country_id"})
- * })
- *
- * @ORM\Entity(repositoryClass="App\Repository\GeoLocationCityRepository")
- */
+#[ORM\Table]
+#[ORM\UniqueConstraint(columns: ['city', 'region', 'country_id'])]
+#[ORM\Entity(repositoryClass: GeoLocationCityRepository::class)]
 class GeoLocationCity
 {
     /**
      * @var int
-     *
-     * @ORM\Id
-     *
-     * @ORM\Column(type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=128)
      */
+    #[ORM\Column(type: 'string', length: 128)]
     protected $city;
 
     /**
      * @var string
-     *
-     * @ORM\Column(type="string", length=128)
      */
+    #[ORM\Column(type: 'string', length: 128)]
     protected $region;
 
     /**
      * @var float|null
-     *
-     * @ORM\Column(type="float", nullable=true)
      */
+    #[ORM\Column(type: 'float', nullable: true)]
     protected $latitude;
 
     /**
      * @var float|null
-     *
-     * @ORM\Column(type="float", nullable=true)
      */
+    #[ORM\Column(type: 'float', nullable: true)]
     protected $longitude;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(type="string", length=30, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 30, nullable: true)]
     protected $zip;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(type="string", length=8, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 8, nullable: true)]
     protected $timeZone;
 
     /**
      * @var GeoLocationCountry
-     *
-     * @ORM\ManyToOne(targetEntity="GeoLocationCountry")
-     *
-     * @ORM\JoinColumn(nullable=false, onDelete="RESTRICT")
      */
+    #[ORM\JoinColumn(nullable: false, onDelete: 'RESTRICT')]
+    #[ORM\ManyToOne(targetEntity: GeoLocationCountry::class)]
     protected $country;
 
     /**
      * @var DateTime
-     *
-     * @ORM\Column(type="milliseconds_dt")
      */
+    #[ORM\Column(type: 'milliseconds_dt')]
     protected $timeCreated;
 
     public function __construct()

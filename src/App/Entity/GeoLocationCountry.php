@@ -9,50 +9,42 @@
 
 namespace App\Entity;
 
+use App\Repository\GeoLocationCountryRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table()
- *
- * @ORM\Entity(repositoryClass="App\Repository\GeoLocationCountryRepository")
- */
+#[ORM\Table]
+#[ORM\Entity(repositoryClass: GeoLocationCountryRepository::class)]
 class GeoLocationCountry
 {
     /**
      * @var int
-     *
-     * @ORM\Id
-     *
-     * @ORM\Column(type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected $id;
 
     /**
      * Two-character country code based on ISO 3166.
      *
      * @var string
-     *
-     * @ORM\Column(name="country_code", type="string", length=2, unique=true)
      */
+    #[ORM\Column(name: 'country_code', type: 'string', length: 2, unique: true)]
     protected $code;
 
     /**
      * Country name based on ISO 3166.
      *
      * @var string
-     *
-     * @ORM\Column(name="country_name", type="string", length=64)
      */
+    #[ORM\Column(name: 'country_name', type: 'string', length: 64)]
     protected $name;
 
     /**
      * @var DateTime
-     *
-     * @ORM\Column(type="milliseconds_dt")
      */
+    #[ORM\Column(type: 'milliseconds_dt')]
     protected $timeCreated;
 
     public function __construct()

@@ -9,19 +9,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/api/telegramUsers")
- */
+#[Route(path: '/api/telegramUsers')]
 class TelegramUserController extends BaseController
 {
     /**
-     * @Route("", methods={"GET"})
-     *
      * @param Request $request
      * @param TelegramUserRepository $repository
      *
      * @return JsonResponse
      */
+    #[Route(path: '', methods: ['GET'])]
     public function findAllAction(Request $request, TelegramUserRepository $repository): JsonResponse
     {
         $pagination = $this->paginate(
@@ -36,12 +33,11 @@ class TelegramUserController extends BaseController
     }
 
     /**
-     * @Route("/{id}", requirements={"id": "\d+"}, methods={"GET"})
-     *
      * @param TelegramUser $entity
      *
      * @return JsonResponse
      */
+    #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function findAction(TelegramUser $entity): JsonResponse
     {
         $result = $this->getDataConverter()

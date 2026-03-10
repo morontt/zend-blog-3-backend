@@ -2,101 +2,83 @@
 
 namespace App\Entity;
 
+use App\Repository\TrackingRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Table(name="tracking")
- *
- * @ORM\Entity(repositoryClass="App\Repository\TrackingRepository")
- */
+#[ORM\Table(name: 'tracking')]
+#[ORM\Entity(repositoryClass: TrackingRepository::class)]
 class Tracking
 {
     /**
      * @var int
-     *
-     * @ORM\Id
-     *
-     * @ORM\Column(type="integer")
-     *
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected $id;
 
     /**
      * @var Post|null
-     *
-     * @ORM\ManyToOne(targetEntity="Post")
-     *
-     * @ORM\JoinColumn(onDelete="CASCADE")
      */
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
+    #[ORM\ManyToOne(targetEntity: Post::class)]
     protected $post;
 
     /**
      * @var TrackingAgent|null
-     *
-     * @ORM\ManyToOne(targetEntity="TrackingAgent", inversedBy="trackings")
-     *
-     * @ORM\JoinColumn(name="user_agent_id", referencedColumnName="id", onDelete="SET NULL")
      */
+    #[ORM\JoinColumn(name: 'user_agent_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: TrackingAgent::class, inversedBy: 'trackings')]
     protected $trackingAgent;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="ip_addr", type="string", length=15, nullable=true)
      */
+    #[ORM\Column(name: 'ip_addr', type: 'string', length: 15, nullable: true)]
     protected $ipAddress;
 
     /**
      * @var GeoLocation|null
-     *
-     * @ORM\ManyToOne(targetEntity="GeoLocation")
-     *
-     * @ORM\JoinColumn(name="ip_long", referencedColumnName="ip_long", onDelete="SET NULL")
      */
+    #[ORM\JoinColumn(name: 'ip_long', referencedColumnName: 'ip_long', onDelete: 'SET NULL')]
+    #[ORM\ManyToOne(targetEntity: GeoLocation::class)]
     private $geoLocation;
 
     /**
      * @var DateTime
-     *
-     * @ORM\Column(type="milliseconds_dt")
      */
+    #[ORM\Column(type: 'milliseconds_dt')]
     protected $timeCreated;
 
     /**
      * @var bool
-     *
-     * @ORM\Column(name="is_cdn", type="boolean", options={"default": false})
      */
+    #[ORM\Column(name: 'is_cdn', type: 'boolean', options: ['default' => false])]
     private $cdn;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(type="string", length=128, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 128, nullable: true)]
     private $requestURI;
 
     /**
      * @var int|null
-     *
-     * @ORM\Column(type="smallint", nullable=true)
      */
+    #[ORM\Column(type: 'smallint', nullable: true)]
     private $statusCode;
 
     /**
      * @var int
-     *
-     * @ORM\Column(type="integer", options={"unsigned": true, "default": 0})
      */
+    #[ORM\Column(type: 'integer', options: ['unsigned' => true, 'default' => 0])]
     private $duration = 0;
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(type="string", length=8, nullable=true)
      */
+    #[ORM\Column(type: 'string', length: 8, nullable: true)]
     private $method;
 
     public function __construct()

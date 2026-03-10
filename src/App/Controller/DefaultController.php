@@ -39,14 +39,13 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/")
-     *
      * @Template()
      *
      * @throws JsonException
      *
      * @return array
      */
+    #[Route(path: '/')]
     public function indexAction(): array
     {
         $isDev = $this->kernelEnv === 'dev';
@@ -91,8 +90,6 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/preview/{slug}", name="post_preview", options={"expose"=true})
-     *
      * @ParamConverter("post", options={"mapping": {"slug": "url"}})
      *
      * @Template()
@@ -102,6 +99,7 @@ class DefaultController extends AbstractController
      *
      * @return array
      */
+    #[Route(path: '/preview/{slug}', name: 'post_preview', options: ['expose' => true])]
     public function previewAction(ViewCommentRepository $repository, ?Post $post = null): array
     {
         if (!$post) {
@@ -114,10 +112,9 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/purge-cache", name="purge_cache", options={"expose"=true}, methods={"POST"})
-     *
      * @return JsonResponse
      */
+    #[Route(path: '/purge-cache', name: 'purge_cache', options: ['expose' => true], methods: ['POST'])]
     public function purgeBlogCacheAction(): JsonResponse
     {
         $httpClient = new Client(['base_uri' => $this->blogUrl]);

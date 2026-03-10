@@ -4,30 +4,25 @@ namespace App\Entity\Embedded;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Embeddable()
- */
+#[ORM\Embeddable]
 class NestedSet
 {
     /**
      * @var int
-     *
-     * @ORM\Column(type="integer", nullable=true, options={"unsigned": true})
      */
+    #[ORM\Column(type: 'integer', nullable: true, options: ['unsigned' => true])]
     private $leftKey;
 
     /**
      * @var int
-     *
-     * @ORM\Column(type="integer", nullable=true, options={"unsigned": true})
      */
+    #[ORM\Column(type: 'integer', nullable: true, options: ['unsigned' => true])]
     private $rightKey;
 
     /**
      * @var int
-     *
-     * @ORM\Column(type="integer", options={"unsigned": true, "default": 1})
      */
+    #[ORM\Column(type: 'integer', options: ['unsigned' => true, 'default' => 1])]
     private $depth = 1;
 
     /**
