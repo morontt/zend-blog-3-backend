@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
@@ -16,17 +16,12 @@ class SecurityController extends AbstractController
         $this->authUtils = $authUtils;
     }
 
-    /**
-     * @Template()
-     *
-     * @return array
-     */
     #[Route(path: '/login')]
-    public function loginAction(): array
+    public function loginAction(): Response
     {
         $error = $this->authUtils->getLastAuthenticationError();
         $lastUsername = $this->authUtils->getLastUsername();
 
-        return compact('error', 'lastUsername');
+        return $this->render('security/login.html.twig', compact('error', 'lastUsername'));
     }
 }

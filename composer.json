@@ -35,7 +35,6 @@
         "phpdocumentor/reflection-docblock": "^5.4",
         "promphp/prometheus_push_gateway_php": "^1.1",
         "sabre/dav": "^4.6",
-        "sensio/framework-extra-bundle": "*",
         "silarhi/cursor-pagination": "^1.2",
         "spatie/flysystem-dropbox": "^2.0",
         "symfony/asset": "5.4.*",
