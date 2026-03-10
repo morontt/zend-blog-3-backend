@@ -4,6 +4,7 @@ namespace App\ArgumentResolver;
 
 use App\DTO\ExternalUserDTO;
 use App\Utils\VerifyEmail;
+use Generator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
@@ -19,9 +20,12 @@ class ExternalUserValueResolver implements ArgumentValueResolverInterface
         return $request->request->has('userData');
     }
 
+    /**
+     * @return Generator
+     */
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
-        $data = $request->request->get('userData');
+        $data = $request->request->all('userData');
         $dto = new ExternalUserDTO();
 
         $dto->id = $data['id'];
