@@ -13,34 +13,18 @@ use App\Cron\DailyCronServiceInterface;
 use App\Entity\MediaFile;
 use App\Service\BackupService;
 use App\Service\ImageManager;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemException;
 
 class ImagesBackup implements DailyCronServiceInterface
 {
-    /**
-     * @var EntityManager
-     */
-    protected EntityManagerInterface $em;
-
     private int $countImported = 0;
-
     private int $countError = 0;
 
-    /**
-     * @var BackupService
-     */
-    protected BackupService $backupService;
-
-    /**
-     * @param EntityManagerInterface $em
-     * @param BackupService $backupService
-     */
-    public function __construct(EntityManagerInterface $em, BackupService $backupService)
-    {
-        $this->em = $em;
-        $this->backupService = $backupService;
+    public function __construct(
+        private EntityManagerInterface $em,
+        private BackupService $backupService,
+    ) {
     }
 
     public function run(): void

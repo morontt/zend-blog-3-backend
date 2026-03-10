@@ -25,7 +25,7 @@ use Silarhi\CursorPagination\Pagination\CursorPagination;
 class TrackingArchive implements DailyCronServiceInterface
 {
     /**
-     * @var int|string
+     * @var int
      */
     private $rows;
 
@@ -53,7 +53,9 @@ class TrackingArchive implements DailyCronServiceInterface
             100
         );
 
+        /** @var ?string $fileName */
         $fileName = null;
+        /** @var ?string $oldFileName */
         $oldFileName = null;
         $fp = null;
         $cnt = 0;
@@ -119,12 +121,15 @@ class TrackingArchive implements DailyCronServiceInterface
         return APP_VAR_DIR . '/tracking_archive/' . sprintf('tracking_%s.csv', $item->getTimeCreated()->format('Y_m'));
     }
 
+    /**
+     * @return array<int, int|string>
+     */
     private function archiveData(Tracking $item): array
     {
         return [
             $item->getTimeCreated()->format(DateTimeInterface::RFC3339_EXTENDED),
-            $item->getIpAddress(),
-            $item->getStatusCode(),
+            $item->getIpAddress() ?? '',
+            $item->getStatusCode() ?? '',
             $item->getPost()?->getId() ?? '',
             $item->getRequestURI() ?? '',
             $item->getDuration() ?: '',
@@ -134,6 +139,9 @@ class TrackingArchive implements DailyCronServiceInterface
         ];
     }
 
+    /**
+     * @return string[]
+     */
     private function archiveHeader(): array
     {
         return [

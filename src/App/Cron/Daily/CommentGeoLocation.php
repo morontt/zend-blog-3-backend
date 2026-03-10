@@ -18,41 +18,20 @@ use App\Service\IpInfo;
 use App\Service\SystemParametersStorage;
 use DateInterval;
 use DateTime;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CommentGeoLocation implements DailyCronServiceInterface
 {
     /**
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * @var IpInfo
-     */
-    protected IpInfo $ipInfo;
-
-    /**
      * @var int
      */
     protected int $countImported = 0;
 
-    /**
-     * @var SystemParametersStorage
-     */
-    private SystemParametersStorage $paramStorage;
-
-    /**
-     * @param SystemParametersStorage $paramStorage
-     * @param EntityManagerInterface $em
-     * @param IpInfo $ipInfo
-     */
-    public function __construct(EntityManagerInterface $em, IpInfo $ipInfo, SystemParametersStorage $paramStorage)
-    {
-        $this->em = $em;
-        $this->ipInfo = $ipInfo;
-        $this->paramStorage = $paramStorage;
+    public function __construct(
+        private EntityManagerInterface $em,
+        private IpInfo $ipInfo,
+        private SystemParametersStorage $paramStorage,
+    ) {
     }
 
     public function run(): void

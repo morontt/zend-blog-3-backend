@@ -14,20 +14,10 @@ use Throwable;
 
 class PageViewCount implements HourlyCronServiceInterface
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private EntityManagerInterface $em;
-
-    /**
-     * @var SystemParametersStorage
-     */
-    private SystemParametersStorage $paramStorage;
-
-    public function __construct(EntityManagerInterface $em, SystemParametersStorage $paramStorage)
-    {
-        $this->em = $em;
-        $this->paramStorage = $paramStorage;
+    public function __construct(
+        private EntityManagerInterface $em,
+        private SystemParametersStorage $paramStorage,
+    ) {
     }
 
     public function run(): void
@@ -74,6 +64,12 @@ class PageViewCount implements HourlyCronServiceInterface
         return null;
     }
 
+    /**
+     * @param array<string, int> $a
+     * @param array<string, int> $b
+     *
+     * @return array<string, int>
+     */
     public function merge(array $a, array $b): array
     {
         foreach ($b as $k => $v) {

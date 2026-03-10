@@ -14,31 +14,19 @@ class CronChain
     /**
      * @var CronServiceInterface[]
      */
-    private $dailyCrons;
+    private $dailyCrons = [];
 
     /**
      * @var CronServiceInterface[]
      */
-    private $hourlyCrons;
+    private $hourlyCrons = [];
 
-    public function __construct()
-    {
-        $this->hourlyCrons = [];
-        $this->dailyCrons = [];
-    }
-
-    /**
-     * @param CronServiceInterface $service
-     */
-    public function addCronDailyService(CronServiceInterface $service)
+    public function addCronDailyService(CronServiceInterface $service): void
     {
         $this->dailyCrons[] = $service;
     }
 
-    /**
-     * @param CronServiceInterface $service
-     */
-    public function addCronHourlyService(CronServiceInterface $service)
+    public function addCronHourlyService(CronServiceInterface $service): void
     {
         $this->hourlyCrons[] = $service;
     }

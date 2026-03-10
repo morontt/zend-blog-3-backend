@@ -12,28 +12,14 @@ use DateTime;
 class BlogServerErrors implements HourlyCronServiceInterface
 {
     /**
-     * @var TrackingRepository
-     */
-    private TrackingRepository $repository;
-
-    /**
-     * @var SystemParametersStorage
-     */
-    private SystemParametersStorage $paramStorage;
-
-    /**
-     * @var array
+     * @var array<string, mixed>
      */
     private array $errors = [];
 
-    /**
-     * @param TrackingRepository $repository
-     * @param SystemParametersStorage $paramStorage
-     */
-    public function __construct(TrackingRepository $repository, SystemParametersStorage $paramStorage)
-    {
-        $this->repository = $repository;
-        $this->paramStorage = $paramStorage;
+    public function __construct(
+        private TrackingRepository $repository,
+        private SystemParametersStorage $paramStorage,
+    ) {
     }
 
     public function run(): void
