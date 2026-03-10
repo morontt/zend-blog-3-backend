@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class TelegramCompilerPass implements CompilerPassInterface
 {
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (!$container->has('mtt_blog.telegram_bot')) {
             return;

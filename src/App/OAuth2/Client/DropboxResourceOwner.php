@@ -17,20 +17,12 @@ class DropboxResourceOwner implements ResourceOwnerInterface
     use ArrayAccessorTrait;
 
     /**
-     * Raw response
-     *
-     * @var array
-     */
-    protected $response;
-
-    /**
      * Creates new resource owner.
      *
-     * @param array $response
+     * @param array<string, mixed> $response
      */
-    public function __construct(array $response = [])
+    public function __construct(private array $response = [])
     {
-        $this->response = $response;
     }
 
     /**
@@ -56,7 +48,7 @@ class DropboxResourceOwner implements ResourceOwnerInterface
     /**
      * Return all of the owner details available as an array.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArray()
     {

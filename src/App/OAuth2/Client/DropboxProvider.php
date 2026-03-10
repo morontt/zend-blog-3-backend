@@ -42,7 +42,7 @@ class DropboxProvider extends AbstractProvider
      *
      * Eg. https://oauth.service.com/token
      *
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return string
      */
@@ -66,7 +66,7 @@ class DropboxProvider extends AbstractProvider
     /**
      * Builds the authorization URL.
      *
-     * @param  array $options
+     * @param array<string, mixed> $options
      *
      * @return string Authorization URL
      */
@@ -88,7 +88,7 @@ class DropboxProvider extends AbstractProvider
      * This should only be the scopes that are required to request the details
      * of the resource owner, rather than all the available scopes.
      *
-     * @return array
+     * @return string[]
      */
     protected function getDefaultScopes()
     {
@@ -99,7 +99,7 @@ class DropboxProvider extends AbstractProvider
      * Checks a provider response for errors.
      *
      * @param  ResponseInterface $response
-     * @param  array|string $data Parsed response data
+     * @param  array<string, mixed>|string $data Parsed response data
      *
      * @throws IdentityProviderException
      */
@@ -114,8 +114,8 @@ class DropboxProvider extends AbstractProvider
      * Generates a resource owner object from a successful resource owner
      * details request.
      *
-     * @param  array $response
-     * @param  AccessToken $token
+     * @param array<string, mixed> $response
+     * @param AccessToken $token
      *
      * @return ResourceOwnerInterface
      */

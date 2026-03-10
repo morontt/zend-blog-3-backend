@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class CronCompilerPass implements CompilerPassInterface
 {
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (!$container->has(CronChain::class)) {
             return;

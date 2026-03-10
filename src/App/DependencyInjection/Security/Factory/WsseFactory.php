@@ -13,15 +13,11 @@ use Symfony\Component\DependencyInjection\Reference;
 class WsseFactory implements SecurityFactoryInterface
 {
     /**
-     * @param ContainerBuilder $container
-     * @param $id
-     * @param $config
-     * @param $userProvider
-     * @param $defaultEntryPoint
+     * @param mixed[] $config
      *
-     * @return array
+     * @return string[]
      */
-    public function create(ContainerBuilder $container, $id, $config, $userProvider, $defaultEntryPoint)
+    public function create(ContainerBuilder $container, string $id, array $config, string $userProvider, ?string $defaultEntryPoint)
     {
         $providerId = 'security.authentication.provider.wsse.' . $id;
         $container
@@ -36,30 +32,24 @@ class WsseFactory implements SecurityFactoryInterface
         return [$providerId, $listenerId, $defaultEntryPoint];
     }
 
-    /**
-     * @return string
-     */
-    public function getPosition()
+    public function getPosition(): string
     {
         return 'pre_auth';
     }
 
-    /**
-     * @return string
-     */
-    public function getKey()
+    public function getKey(): string
     {
         return 'wsse';
     }
 
     /**
-     * @param NodeDefinition $builder
+     * @param \Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $builder
      */
-    public function addConfiguration(NodeDefinition $builder)
+    public function addConfiguration(NodeDefinition $builder): void
     {
         $builder
             ->children()
                 ->scalarNode('lifetime')->defaultValue(300)->end()
-            ->end();
+            ->end(); // @phpstan-ignore-line
     }
 }

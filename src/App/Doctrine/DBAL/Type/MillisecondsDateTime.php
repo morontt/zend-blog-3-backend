@@ -14,12 +14,9 @@ class MillisecondsDateTime extends Type
     public const FORMAT_TIME = 'Y-m-d H:i:s.v';
 
     /**
-     * @param array $fieldDeclaration
-     * @param AbstractPlatform $platform
-     *
-     * @return string
+     * @param mixed[] $column
      */
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
+    public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
         return 'DATETIME(3)';
     }
@@ -34,13 +31,10 @@ class MillisecondsDateTime extends Type
 
     /**
      * @param mixed $value
-     * @param AbstractPlatform $platform
      *
      * @throws ConversionException
-     *
-     * @return string|null
      */
-    public function convertToDatabaseValue($value, AbstractPlatform $platform)
+    public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
     {
         if (null === $value) {
             return $value;
@@ -55,13 +49,10 @@ class MillisecondsDateTime extends Type
 
     /**
      * @param mixed $value
-     * @param AbstractPlatform $platform
      *
      * @throws ConversionException
-     *
-     * @return DateTime|null
      */
-    public function convertToPHPValue($value, AbstractPlatform $platform)
+    public function convertToPHPValue($value, AbstractPlatform $platform): ?DateTimeInterface
     {
         if ($value === null || $value instanceof DateTimeInterface) {
             return $value;
