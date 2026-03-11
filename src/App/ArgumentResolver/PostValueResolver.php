@@ -16,9 +16,6 @@ class PostValueResolver implements ArgumentValueResolverInterface
     }
 
     /**
-     * @param Request $request
-     * @param ArgumentMetadata $argument
-     *
      * @return bool
      */
     public function supports(Request $request, ArgumentMetadata $argument): bool
@@ -31,9 +28,6 @@ class PostValueResolver implements ArgumentValueResolverInterface
     }
 
     /**
-     * @param Request $request
-     * @param ArgumentMetadata $argument
-     *
      * @return Generator
      */
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
