@@ -18,9 +18,9 @@ class TagTransformer extends BaseTransformer
     /**
      * @param Tag $item
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function transform(Tag $item)
+    public function transform(Tag $item): array
     {
         return [
             'id' => $item->getId(),

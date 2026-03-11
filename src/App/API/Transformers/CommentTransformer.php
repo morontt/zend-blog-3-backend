@@ -29,7 +29,7 @@ class CommentTransformer extends BaseTransformer
     /**
      * @param CommentInterface $item
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function transform(CommentInterface $item): array
     {

@@ -19,9 +19,9 @@ class CategoryTransformer extends BaseTransformer
     /**
      * @param CategoryInterface $item
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function transform(CategoryInterface $item)
+    public function transform(CategoryInterface $item): array
     {
         $parentId = null;
         $parent = $item->getParent();

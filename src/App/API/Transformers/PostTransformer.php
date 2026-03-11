@@ -29,9 +29,9 @@ class PostTransformer extends BaseTransformer
     /**
      * @param Post $item
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function transform(Post $item)
+    public function transform(Post $item): array
     {
         return [
             'id' => $item->getId(),

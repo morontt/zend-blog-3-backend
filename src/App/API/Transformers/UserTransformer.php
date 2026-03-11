@@ -7,6 +7,9 @@ use App\Entity\User;
 
 class UserTransformer extends BaseTransformer
 {
+    /**
+     * @return array<string, mixed>
+     */
     public function transform(User $item): array
     {
         return [

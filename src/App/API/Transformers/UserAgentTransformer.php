@@ -9,9 +9,9 @@ class UserAgentTransformer extends BaseTransformer
     /**
      * @param TrackingAgent $item
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function transform(TrackingAgent $item)
+    public function transform(TrackingAgent $item): array
     {
         return [
             'id' => $item->getId(),

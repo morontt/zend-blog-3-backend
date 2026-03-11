@@ -152,9 +152,7 @@ class Post
     }
 
     /**
-     * Get id
-     *
-     * @return int
+     * @return int|null
      */
     public function getId()
     {
@@ -162,8 +160,6 @@ class Post
     }
 
     /**
-     * Set title
-     *
      * @param string $title
      *
      * @return Post
@@ -176,8 +172,6 @@ class Post
     }
 
     /**
-     * Get title
-     *
      * @return string
      */
     public function getTitle()
@@ -186,8 +180,6 @@ class Post
     }
 
     /**
-     * Set url
-     *
      * @param string $url
      *
      * @return Post
@@ -200,8 +192,6 @@ class Post
     }
 
     /**
-     * Get url
-     *
      * @return string
      */
     public function getUrl()
@@ -210,8 +200,6 @@ class Post
     }
 
     /**
-     * Set hide
-     *
      * @param bool $hide
      *
      * @return Post
@@ -224,8 +212,6 @@ class Post
     }
 
     /**
-     * Get hide
-     *
      * @return bool
      */
     public function isHide()
@@ -234,8 +220,6 @@ class Post
     }
 
     /**
-     * Set text
-     *
      * @param string $text
      *
      * @return Post
@@ -248,8 +232,6 @@ class Post
     }
 
     /**
-     * Get text
-     *
      * @return string
      */
     public function getText()
@@ -258,8 +240,6 @@ class Post
     }
 
     /**
-     * Set description
-     *
      * @param string $description
      *
      * @return Post
@@ -271,17 +251,12 @@ class Post
         return $this;
     }
 
-    /**
-     * Get description
-     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
     /**
-     * Set category
-     *
      * @param Category $category
      *
      * @return Post
@@ -294,8 +269,6 @@ class Post
     }
 
     /**
-     * Get category
-     *
      * @return Category
      */
     public function getCategory()
@@ -304,8 +277,6 @@ class Post
     }
 
     /**
-     * Add tag
-     *
      * @param Tag $tag
      *
      * @return Post
@@ -320,8 +291,6 @@ class Post
     }
 
     /**
-     * Remove tag
-     *
      * @param Tag $tag
      */
     public function removeTag(Tag $tag): void
@@ -330,8 +299,6 @@ class Post
     }
 
     /**
-     * Get tags
-     *
      * @return \Doctrine\Common\Collections\Collection<int, Tag>
      */
     public function getTags()
@@ -340,8 +307,6 @@ class Post
     }
 
     /**
-     * Add comments
-     *
      * @param Comment $comments
      *
      * @return Post
@@ -354,8 +319,6 @@ class Post
     }
 
     /**
-     * Remove comments
-     *
      * @param Comment $comments
      */
     public function removeComment(Comment $comments): void
@@ -364,8 +327,6 @@ class Post
     }
 
     /**
-     * Get comments
-     *
      * @return \Doctrine\Common\Collections\Collection<int, Comment>
      */
     public function getComments()
@@ -374,8 +335,6 @@ class Post
     }
 
     /**
-     * Add mediaFile
-     *
      * @param MediaFile $mediaFile
      *
      * @return Post
@@ -388,8 +347,6 @@ class Post
     }
 
     /**
-     * Remove mediaFile
-     *
      * @param MediaFile $mediaFile
      */
     public function removeMediaFile(MediaFile $mediaFile): void
@@ -398,8 +355,6 @@ class Post
     }
 
     /**
-     * Get mediaFiles
-     *
      * @return \Doctrine\Common\Collections\Collection<int, MediaFile>
      */
     public function getMediaFiles()
@@ -417,8 +372,6 @@ class Post
     }
 
     /**
-     * Set rawText
-     *
      * @param string $rawText
      *
      * @return Post
@@ -431,8 +384,6 @@ class Post
     }
 
     /**
-     * Get rawText
-     *
      * @return string
      */
     public function getRawText()
@@ -441,8 +392,6 @@ class Post
     }
 
     /**
-     * Set commentsCount
-     *
      * @param int $commentsCount
      *
      * @return Post
@@ -455,8 +404,6 @@ class Post
     }
 
     /**
-     * Get commentsCount
-     *
      * @return int
      */
     public function getCommentsCount()
@@ -465,8 +412,6 @@ class Post
     }
 
     /**
-     * Set viewsCount
-     *
      * @param int $viewsCount
      *
      * @return Post
@@ -479,8 +424,6 @@ class Post
     }
 
     /**
-     * Get viewsCount
-     *
      * @return int
      */
     public function getViewsCount()

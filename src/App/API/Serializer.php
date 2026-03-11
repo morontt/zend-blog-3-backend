@@ -16,6 +16,7 @@ use League\Fractal\Serializer\ArraySerializer;
 
 class Serializer extends ArraySerializer
 {
+    /** @var array<string, string> */
     private array $pluralizeCache = [];
 
     /**

@@ -26,9 +26,9 @@ class MediaFileTransformer extends BaseTransformer
     /**
      * @param Image $item
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function transform(Image $item)
+    public function transform(Image $item): array
     {
         $post = $item->getPost();
         $postId = $post ? $post->getId() : null;

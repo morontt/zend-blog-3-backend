@@ -10,9 +10,9 @@ class PygmentsLanguageTransformer extends BaseTransformer
     /**
      * @param PygmentsLanguage $item
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function transform(PygmentsLanguage $item)
+    public function transform(PygmentsLanguage $item): array
     {
         return [
             'id' => $item->getId(),

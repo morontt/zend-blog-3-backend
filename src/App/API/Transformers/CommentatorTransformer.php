@@ -18,9 +18,9 @@ class CommentatorTransformer extends BaseTransformer
     /**
      * @param CommentatorInterface $item
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function transform(CommentatorInterface $item)
+    public function transform(CommentatorInterface $item): array
     {
         return [
             'id' => $item->getId(),

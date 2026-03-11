@@ -8,12 +8,15 @@ use League\Fractal\Resource\ResourceInterface;
 class TelegramUpdateTransformer extends BaseTransformer
 {
     /**
-     * @var array
+     * @var string[]
      */
     protected array $availableIncludes = [
         'telegramUser',
     ];
 
+    /**
+     * @return array<string, mixed>
+     */
     public function transform(TelegramUpdate $item): array
     {
         return [

@@ -23,7 +23,6 @@ use App\Utils\Pygment;
 use App\Utils\RuTransform;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Item;
@@ -32,80 +31,49 @@ use RuntimeException;
 /**
  * Class DataConverter
  *
- * @method array getCategory(Entity\Category $entity, $includes = null)
- * @method array getCategoryArray($collection, $includes = null)
- * @method array getComment(Entity\Comment $entity, $includes = null)
- * @method array getCommentArray($collection, $includes = null)
- * @method array getCommentator(Entity\CommentatorInterface $entity, $includes = null)
- * @method array getCommentatorArray($collection, $includes = null)
- * @method array getMediaFile(Image $entity, $includes = null)
- * @method array getMediaFileArray($collection, $includes = null)
- * @method array getPost(Entity\Post $entity, $includes = null)
- * @method array getPostArray($collection, $includes = null)
- * @method array getTag(Entity\Tag $entity, $includes = null)
- * @method array getTagArray($collection, $includes = null)
- * @method array getPygmentsLanguage(Entity\PygmentsLanguage $entity, $includes = null)
- * @method array getPygmentsLanguageArray($collection, $includes = null)
- * @method array getPygmentsCode(Entity\PygmentsCode $entity, $includes = null)
- * @method array getPygmentsCodeArray($collection, $includes = null)
- * @method array getUserAgent(Entity\TrackingAgent $entity, $includes = null)
- * @method array getUserAgentArray($collection, $includes = null)
- * @method array getTracking(Entity\Tracking $entity, $includes = null)
- * @method array getTrackingArray($collection, $includes = null)
- * @method array getTelegramUser(Entity\TelegramUser $entity, $includes = null)
- * @method array getTelegramUserArray($collection, $includes = null)
- * @method array getTelegramUpdate(Entity\TelegramUpdate $entity, $includes = null)
- * @method array getTelegramUpdateArray($collection, $includes = null)
- * @method array getUser(Entity\User $entity, $includes = null)
- * @method array getUserArray($collection, $includes = null)
+ * @method array<string, mixed> getCategory(Entity\Category $entity, $includes = null)
+ * @method array<int, array<string, mixed>> getCategoryArray($collection, $includes = null)
+ * @method array<string, mixed> getComment(Entity\Comment $entity, $includes = null)
+ * @method array<int, array<string, mixed>> getCommentArray($collection, $includes = null)
+ * @method array<string, mixed> getCommentator(Entity\CommentatorInterface $entity, $includes = null)
+ * @method array<int, array<string, mixed>> getCommentatorArray($collection, $includes = null)
+ * @method array<string, mixed> getMediaFile(Image $entity, $includes = null)
+ * @method array<int, array<string, mixed>> getMediaFileArray($collection, $includes = null)
+ * @method array<string, mixed> getPost(Entity\Post $entity, $includes = null)
+ * @method array<int, array<string, mixed>> getPostArray($collection, $includes = null)
+ * @method array<string, mixed> getTag(Entity\Tag $entity, $includes = null)
+ * @method array<int, array<string, mixed>> getTagArray($collection, $includes = null)
+ * @method array<string, mixed> getPygmentsLanguage(Entity\PygmentsLanguage $entity, $includes = null)
+ * @method array<int, array<string, mixed>> getPygmentsLanguageArray($collection, $includes = null)
+ * @method array<string, mixed> getPygmentsCode(Entity\PygmentsCode $entity, $includes = null)
+ * @method array<int, array<string, mixed>> getPygmentsCodeArray($collection, $includes = null)
+ * @method array<string, mixed> getUserAgent(Entity\TrackingAgent $entity, $includes = null)
+ * @method array<int, array<string, mixed>> getUserAgentArray($collection, $includes = null)
+ * @method array<string, mixed> getTracking(Entity\Tracking $entity, $includes = null)
+ * @method array<int, array<string, mixed>> getTrackingArray($collection, $includes = null)
+ * @method array<string, mixed> getTelegramUser(Entity\TelegramUser $entity, $includes = null)
+ * @method array<int, array<string, mixed>> getTelegramUserArray($collection, $includes = null)
+ * @method array<string, mixed> getTelegramUpdate(Entity\TelegramUpdate $entity, $includes = null)
+ * @method array<int, array<string, mixed>> getTelegramUpdateArray($collection, $includes = null)
+ * @method array<string, mixed> getUser(Entity\User $entity, $includes = null)
+ * @method array<int, array<string, mixed>> getUserArray($collection, $includes = null)
  */
 class DataConverter
 {
-    /**
-     * @var Manager
-     */
-    protected Manager $fractal;
-
-    /**
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * @var TextProcessor
-     */
-    protected TextProcessor $textProcessor;
-
-    /**
-     * @var CategoryRepository
-     */
-    private CategoryRepository $categoryRepository;
-
-    /**
-     * @var CommentRepository
-     */
-    private CommentRepository $commentsRepository;
+    private Manager $fractal;
 
     public function __construct(
-        EntityManagerInterface $em,
-        TextProcessor $textProcessor,
-        CommentRepository $commentsRepository,
-        CategoryRepository $categoryRepository,
+        private EntityManagerInterface $em,
+        private TextProcessor $textProcessor,
+        private CommentRepository $commentsRepository,
+        private CategoryRepository $categoryRepository,
     ) {
         $this->fractal = new Manager();
         $this->fractal->setSerializer(new Serializer());
-        $this->categoryRepository = $categoryRepository;
-        $this->commentsRepository = $commentsRepository;
-
-        $this->em = $em;
-        $this->textProcessor = $textProcessor;
     }
 
     /**
-     * @param Entity\Category $entity
-     * @param CategoryDTO $data
-     *
-     * @return array
+     * @return array<string, mixed>
      */
     public function saveCategory(Entity\Category $entity, CategoryDTO $data): array
     {
@@ -124,10 +92,9 @@ class DataConverter
     }
 
     /**
-     * @param Entity\Commentator $entity
-     * @param array $data
+     * @param array<string, mixed> $data
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function saveCommentator(Entity\Commentator $entity, array $data): array
     {
@@ -139,10 +106,9 @@ class DataConverter
     }
 
     /**
-     * @param Entity\TrackingAgent $entity
-     * @param array $data
+     * @param array<string, mixed> $data
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function saveTrackingAgent(Entity\TrackingAgent $entity, array $data): array
     {
@@ -154,10 +120,9 @@ class DataConverter
     }
 
     /**
-     * @param Entity\Comment $entity
-     * @param array $data
+     * @param array<string, mixed> $data
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function saveComment(Entity\Comment $entity, array $data): array
     {
@@ -168,13 +133,10 @@ class DataConverter
     }
 
     /**
-     * @param Entity\Post $entity
-     * @param ArticleDTO $data
-     *
      * @throws \Doctrine\ORM\Exception\NotSupported
      * @throws \Doctrine\ORM\Exception\ORMException
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function savePost(Entity\Post $entity, ArticleDTO $data): array
     {
@@ -193,11 +155,14 @@ class DataConverter
             $originalTags->add($tag);
         }
 
+        /** @var \App\Repository\TagRepository $tagRepository */
+        $tagRepository = $this->em->getRepository(Entity\Tag::class);
         $tagsArray = array_map('trim', explode(',', $data['tagsString']));
         foreach ($tagsArray as $tagName) {
             if ($tagName) {
-                $tag = $this->em->getRepository(Entity\Tag::class)->getTagForPost($tagName);
+                $tag = $tagRepository->getTagForPost($tagName);
                 if ($tag) {
+                    // @phpstan-ignore if.alwaysFalse
                     if ($originalTags->contains($tag)) {
                         $originalTags->removeElement($tag);
                     } else {
@@ -244,6 +209,11 @@ class DataConverter
         return $this->getPost($entity);
     }
 
+    /**
+     * @param array<string, mixed> $data
+     *
+     * @return array<string, mixed>
+     */
     public function saveMediaFile(Entity\MediaFile $entity, array $data): array
     {
         $oldPostId = null;
@@ -285,12 +255,9 @@ class DataConverter
     }
 
     /**
-     * @param Entity\PygmentsCode $entity
-     * @param PygmentsCodeDTO $data
-     *
      * @throws \Doctrine\ORM\Exception\ORMException
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function savePygmentsCode(Entity\PygmentsCode $entity, PygmentsCodeDTO $data): array
     {
@@ -319,10 +286,10 @@ class DataConverter
     }
 
     /**
-     * @param $method
-     * @param $arguments
+     * @param string $method
+     * @param array<int, mixed> $arguments
      *
-     * @return array|null
+     * @return array<string, mixed>|null
      */
     public function __call($method, $arguments)
     {
@@ -356,7 +323,7 @@ class DataConverter
         return $scope->toArray();
     }
 
-    protected function save($entity)
+    protected function save(object $entity): void
     {
         $this->em->persist($entity);
         $this->em->flush();

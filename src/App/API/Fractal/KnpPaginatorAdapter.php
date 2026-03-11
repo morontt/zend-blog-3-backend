@@ -13,6 +13,7 @@ use League\Fractal\Pagination\PaginatorInterface;
 
 class KnpPaginatorAdapter implements PaginatorInterface
 {
+    /** @var array<string, mixed> */
     private array $paginationsData;
 
     public function __construct(SlidingPagination $paginator)

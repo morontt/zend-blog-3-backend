@@ -18,9 +18,9 @@ class PygmentsCodeTransformer extends BaseTransformer
     /**
      * @param PygmentsCode $item
      *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function transform(PygmentsCode $item)
+    public function transform(PygmentsCode $item): array
     {
         $languageId = null;
         if ($item->getLanguage()) {

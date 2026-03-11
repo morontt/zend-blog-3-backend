@@ -16,7 +16,10 @@ class TrackingTransformer extends BaseTransformer
         'trackingAgents',
     ];
 
-    public function transform(Tracking $item)
+    /**
+     * @return array<string, mixed>
+     */
+    public function transform(Tracking $item): array
     {
         $countryCode = null;
         $locationCity = null;

@@ -6,6 +6,9 @@ use App\Entity\TelegramUser;
 
 class TelegramUserTransformer extends BaseTransformer
 {
+    /**
+     * @return array<string, mixed>
+     */
     public function transform(TelegramUser $item): array
     {
         return [
