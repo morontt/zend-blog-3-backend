@@ -17,6 +17,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class ExportCommentMeta extends Command
 {
+    /** @var EntityRepository<LjCommentMeta> */
     private EntityRepository $commentMetaRepo;
 
     public function __construct(private EntityManagerInterface $em)

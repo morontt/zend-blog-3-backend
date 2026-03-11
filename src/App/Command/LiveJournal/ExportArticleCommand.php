@@ -32,9 +32,13 @@ use Throwable;
 
 class ExportArticleCommand extends Command
 {
+    /** @var EntityRepository<LjCommentMeta> */
     private EntityRepository $commentMetaRepo;
 
+    /** @var array<int, CommentatorDTO|CommentUserDTO> */
     private array $postersMap = [];
+
+    /** @var array<string, int> */
     private array $commentsMap = [];
 
     public function __construct(
@@ -149,7 +153,7 @@ class ExportArticleCommand extends Command
         return $ljPost;
     }
 
-    private function exportComments(LjPost $ljPost, OutputInterface $output)
+    private function exportComments(LjPost $ljPost, OutputInterface $output): void
     {
         $output->writeln("\nExport comments:");
 
@@ -165,14 +169,14 @@ class ExportArticleCommand extends Command
             if ($dataStr === false) {
                 $output->writeln('<error>file ' . $file . ' cannot be read</error>');
 
-                return null;
+                return;
             }
 
             $data = @simplexml_load_string($dataStr);
             if ($data === false) {
                 $output->writeln('<error>invalid data on file ' . $file . '</error>');
 
-                return null;
+                return;
             }
 
             foreach ($data->comments[0] as $item) {
@@ -183,7 +187,7 @@ class ExportArticleCommand extends Command
         }
     }
 
-    private function saveComment(SimpleXMLElement $data, int $postId, OutputInterface $output)
+    private function saveComment(SimpleXMLElement $data, int $postId, OutputInterface $output): void
     {
         $dto = new CommentDTO();
 

@@ -19,7 +19,7 @@ class InitNestedSetTreeCommand extends Command
         $this->em->getConfiguration()->setSQLLogger(null);
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('mtt:tree:init')

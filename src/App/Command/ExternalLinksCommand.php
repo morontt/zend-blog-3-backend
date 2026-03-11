@@ -52,9 +52,9 @@ class ExternalLinksCommand extends Command
                 ->setMaxResults(20)
             ;
 
-            /* @var Comment[] $comments */
+            /** @var Comment[] $comments */
             $comments = $qb->getQuery()->getResult();
-            $output->writeln(count($comments));
+            $output->writeln((string)count($comments));
             foreach ($comments as $entity) {
                 $newContent = $linkProcessor->upgradeLinks($entity->getText());
                 if ($newContent) {

@@ -17,26 +17,11 @@ abstract class CronCommand extends Command
      */
     abstract protected function getCrons(): array;
 
-    /**
-     * @var CronChain
-     */
-    protected CronChain $chain;
-
-    /**
-     * @var Robot
-     */
-    private Robot $bot;
-
-    /**
-     * @param CronChain $chain
-     * @param Robot $bot
-     */
-    public function __construct(CronChain $chain, Robot $bot)
-    {
+    public function __construct(
+        protected CronChain $chain,
+        private Robot $bot,
+    ) {
         parent::__construct();
-
-        $this->chain = $chain;
-        $this->bot = $bot;
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
@@ -70,12 +55,7 @@ abstract class CronCommand extends Command
         return 0;
     }
 
-    /**
-     * @param $cronJob
-     *
-     * @return string
-     */
-    protected static function getJobName($cronJob): string
+    protected static function getJobName(CronServiceInterface $cronJob): string
     {
         // https://stackoverflow.com/a/27457689/6109406
         return substr(strrchr(get_class($cronJob), '\\'), 1);

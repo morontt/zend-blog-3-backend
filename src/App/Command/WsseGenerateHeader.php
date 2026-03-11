@@ -50,6 +50,7 @@ class WsseGenerateHeader extends Command
             $nonce = random_bytes(12);
         } catch (Exception $e) {
             $nonce = openssl_random_pseudo_bytes(12, $isSourceStrong);
+            // @phpstan-ignore identical.alwaysFalse
             if ($isSourceStrong === false || $nonce === false) {
                 throw new RuntimeException('IV generation failed');
             }
