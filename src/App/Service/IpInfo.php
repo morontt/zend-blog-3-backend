@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Created by PhpStorm.
  * User: morontt
@@ -14,34 +16,20 @@ use App\Entity\GeoLocationCity;
 use App\Entity\GeoLocationCountry;
 use App\Service\IpInfo\IpInfoClientInterface;
 use App\Service\IpInfo\LocationInfo;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 
 class IpInfo
 {
-    /**
-     * @var EntityManager
-     */
-    private $em;
-
-    private IpInfoClientInterface $ipInfoClient;
-
-    /**
-     * @param EntityManagerInterface $em
-     * @param IpInfoClientInterface $ipInfoClient
-     */
-    public function __construct(EntityManagerInterface $em, IpInfoClientInterface $ipInfoClient)
-    {
+    public function __construct(
+        private EntityManagerInterface $em,
+        private IpInfoClientInterface $ipInfoClient,
+    ) {
         $this->em = $em;
         $this->ipInfoClient = $ipInfoClient;
     }
 
     /**
-     * @param string $ip
-     *
      * @throws \Doctrine\ORM\Exception\ORMException
-     *
-     * @return GeoLocation|null
      */
     public function getLocationByIp(string $ip): ?GeoLocation
     {
@@ -79,11 +67,6 @@ class IpInfo
             || ($ip4[0] === 192 && $ip4[1] === 168);
     }
 
-    /**
-     * @param LocationInfo $data
-     *
-     * @return GeoLocationCity|null
-     */
     protected function getCity(LocationInfo $data): ?GeoLocationCity
     {
         $city = null;
@@ -117,11 +100,6 @@ class IpInfo
         return $city;
     }
 
-    /**
-     * @param LocationInfo $data
-     *
-     * @return GeoLocationCountry|null
-     */
     protected function getCountry(LocationInfo $data): ?GeoLocationCountry
     {
         $country = null;
@@ -145,12 +123,7 @@ class IpInfo
         return $country;
     }
 
-    /**
-     * @param $ip
-     *
-     * @return LocationInfo|null
-     */
-    protected function getCityInfo($ip): ?LocationInfo
+    protected function getCityInfo(string $ip): ?LocationInfo
     {
         if (filter_var($ip, FILTER_VALIDATE_IP)) {
             if ($this->isPrivateIP($ip)) {

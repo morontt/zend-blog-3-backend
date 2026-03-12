@@ -141,7 +141,7 @@ class GeoLocationCity
     /**
      * Set latitude
      *
-     * @param float $latitude
+     * @param float|string|null $latitude
      *
      * @return GeoLocationCity
      */
@@ -155,7 +155,7 @@ class GeoLocationCity
     /**
      * Get latitude
      *
-     * @return float
+     * @return float|null
      */
     public function getLatitude()
     {
@@ -165,7 +165,7 @@ class GeoLocationCity
     /**
      * Set longitude
      *
-     * @param float $longitude
+     * @param float|string|null $longitude
      *
      * @return GeoLocationCity
      */
@@ -179,7 +179,7 @@ class GeoLocationCity
     /**
      * Get longitude
      *
-     * @return float
+     * @return float|null
      */
     public function getLongitude()
     {

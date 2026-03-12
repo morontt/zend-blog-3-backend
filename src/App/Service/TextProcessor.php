@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Created by PhpStorm.
  * User: morontt
@@ -16,31 +18,11 @@ use App\Utils\LiveJournalHelper;
 
 class TextProcessor
 {
-    /**
-     * @var MediaFileRepository
-     */
-    private $mediaFileRepository;
-
-    /**
-     * @var PygmentsCodeRepository
-     */
-    private $codeRepository;
-
-    private ImageManager $im;
-
-    private PictureTagBuilder $ptb;
-
-    /**
-     * @param MediaFileRepository $mediaFileRepository
-     * @param PygmentsCodeRepository $codeRepository
-     * @param PictureTagBuilder $ptb
-     * @param ImageManager $im
-     */
     public function __construct(
-        MediaFileRepository $mediaFileRepository,
-        PygmentsCodeRepository $codeRepository,
-        PictureTagBuilder $ptb,
-        ImageManager $im,
+        private MediaFileRepository $mediaFileRepository,
+        private PygmentsCodeRepository $codeRepository,
+        private PictureTagBuilder $ptb,
+        private ImageManager $im,
     ) {
         $this->mediaFileRepository = $mediaFileRepository;
         $this->codeRepository = $codeRepository;
@@ -51,7 +33,7 @@ class TextProcessor
     /**
      * @param Post $entity
      */
-    public function processing(Post $entity)
+    public function processing(Post $entity): void
     {
         $text = $this->codeSnippetProcessing($entity->getRawText());
         $text = $this->ljUserProcessing($text);
@@ -120,7 +102,10 @@ class TextProcessor
         return LiveJournalHelper::replaceUserTag($text);
     }
 
-    public function replaceImagesForArticle(array $matches)
+    /**
+     * @param array<string, string> $matches
+     */
+    public function replaceImagesForArticle(array $matches): string
     {
         $media = $this->mediaFileRepository->find((int)$matches['id']);
         if ($media) {
@@ -141,7 +126,10 @@ class TextProcessor
         return $replace;
     }
 
-    public function replaceImagesForPreview(array $matches)
+    /**
+     * @param array<string, string> $matches
+     */
+    public function replaceImagesForPreview(array $matches): string
     {
         $media = $this->mediaFileRepository->find((int)$matches['id']);
         if ($media) {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Created by PhpStorm.
  * User: morontt
@@ -16,7 +18,6 @@ use App\Event\UpdateCommentatorEvent;
 use App\Exception\ObjectNotFoundException;
 use App\Model\Image;
 use DateTime;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -26,34 +27,21 @@ use Symfony\Component\Process\Process;
 
 class ImageManager
 {
-    /**
-     * @var EntityManager
-     */
-    protected $em;
-
     private string $imageBasepath;
 
-    private EventDispatcherInterface $dispatcher;
-
     public function __construct(
-        EntityManagerInterface $em,
-        EventDispatcherInterface $dispatcher,
+        private EntityManagerInterface $em,
+        private EventDispatcherInterface $dispatcher,
         string $cdnUrl,
     ) {
-        $this->em = $em;
         $this->imageBasepath = $cdnUrl . self::getImageBasePath() . '/';
-        $this->dispatcher = $dispatcher;
     }
 
     /**
-     * @param $description
-     * @param $postId
-     * @param UploadedFile $file
-     *
      * @throws \Doctrine\ORM\Exception\NotSupported
      * @throws \Doctrine\ORM\Exception\ORMException
      */
-    public function uploadImage($description, $postId, UploadedFile $file): void
+    public function uploadImage(?string $description, ?string $postId, UploadedFile $file): void
     {
         $fileName = $file->getClientOriginalName();
         $file->move($this->getTempDirectory(), $fileName);
@@ -78,10 +66,14 @@ class ImageManager
         ;
 
         if ($postId) {
-            $post = $this->em->getRepository(Post::class)->find((int)$postId);
+            /** @var \App\Repository\PostRepository $postRepository */
+            $postRepository = $this->em->getRepository(Post::class);
+            $post = $postRepository->find((int)$postId);
             if ($post) {
                 $media->setPost($post);
-                if ($this->em->getRepository(MediaFile::class)->getCountByPostId($postId) === 0) {
+                /** @var \App\Repository\MediaFileRepository $mediaRepository */
+                $mediaRepository = $this->em->getRepository(MediaFile::class);
+                if ($mediaRepository->getCountByPostId((int)$postId) === 0) {
                     $media->setDefaultImage(true);
                 }
             }
@@ -103,6 +95,8 @@ class ImageManager
     }
 
     /**
+     * @param string $commentatorId
+     *
      * @throws ObjectNotFoundException
      */
     public function uploadAvatar($commentatorId, UploadedFile $file): void
@@ -164,7 +158,7 @@ class ImageManager
         $this->em->flush();
     }
 
-    public function removeAllPreview(MediaFile $entity)
+    public function removeAllPreview(MediaFile $entity): void
     {
         $pathInfo = pathinfo(static::getUploadsDir() . '/' . $entity->getPath());
         $directory = $pathInfo['dirname'];
@@ -208,7 +202,7 @@ class ImageManager
     /**
      * @param string $path
      */
-    protected function preprocessing($path)
+    protected function preprocessing($path): void
     {
         if (strtolower(pathinfo($path, PATHINFO_EXTENSION)) === 'png') {
             $process = new Process(['/usr/bin/pngquant', '-s1', '--quality=60-80', '--ext', '.png', '-f', $path]);
@@ -220,12 +214,7 @@ class ImageManager
         }
     }
 
-    /**
-     * @param string $remotePath
-     *
-     * @return MediaFile
-     */
-    protected function getMediaFile($remotePath)
+    protected function getMediaFile(string $remotePath): MediaFile
     {
         $media = $this->em->getRepository(MediaFile::class)->findOneBy(['path' => $remotePath]);
         if ($media) {

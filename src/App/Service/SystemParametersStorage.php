@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Created by PhpStorm.
  * User: morontt
@@ -11,49 +13,23 @@ namespace App\Service;
 
 use App\Entity\SystemParameters;
 use App\Repository\SystemParametersRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\ORMException;
 
 class SystemParametersStorage
 {
     public const CIPHER = 'DES-EDE3-OFB';
 
-    /**
-     * @var SystemParametersRepository
-     */
-    protected $parametersRepo;
-
-    /**
-     * @var string
-     */
-    protected $secret;
-
-    /**
-     * @var EntityManager
-     */
-    protected $em;
-
-    /**
-     * @param EntityManagerInterface $em
-     * @param string $secret
-     */
-    public function __construct(EntityManagerInterface $em, string $secret)
-    {
-        $this->parametersRepo = $em->getRepository(SystemParameters::class);
-        $this->em = $em;
-
-        $this->secret = $secret;
+    public function __construct(
+        private EntityManagerInterface $em,
+        private SystemParametersRepository $parametersRepo,
+        private string $secret,
+    ) {
     }
 
     /**
-     * @param string $key
-     * @param string $value
-     * @param bool $encrypted
-     *
-     * @throws ORMException
+     * @throws \Doctrine\ORM\ORMException
      */
-    public function saveParameter(string $key, string $value, bool $encrypted = false)
+    public function saveParameter(string $key, string $value, bool $encrypted = false): void
     {
         $sp = $this->parametersRepo->findOneByOptionKey($key);
 
@@ -63,8 +39,11 @@ class SystemParametersStorage
             $this->em->persist($sp);
         }
 
-        $sp->setValue($encrypted ? $this->encrypt($value) : $value)
-            ->setEncrypted($encrypted);
+        $sp
+            ->setValue($encrypted ? $this->encrypt($value) : $value)
+            ->setEncrypted($encrypted)
+        ;
+
         $this->em->flush();
     }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * User: morontt
  * Date: 25.09.2024
@@ -18,12 +20,12 @@ use Throwable;
 class PictureTagBuilder
 {
     private string $imageBasepath;
-    private LoggerInterface $logger;
 
-    public function __construct(LoggerInterface $logger, string $cdnUrl)
-    {
+    public function __construct(
+        private LoggerInterface $logger,
+        string $cdnUrl,
+    ) {
         $this->imageBasepath = $cdnUrl . ImageManager::getImageBasePath() . '/';
-        $this->logger = $logger;
     }
 
     public function featuredPictureTag(MediaFile $entity): string
@@ -86,7 +88,10 @@ class PictureTagBuilder
         return $srcSet;
     }
 
-    private function pictureTag(MediaFile $entity, array $sizes, ?string $alt = null, $withTitle = true): string
+    /**
+     * @param string[] $sizes
+     */
+    private function pictureTag(MediaFile $entity, array $sizes, ?string $alt = null, bool $withTitle = true): string
     {
         $image = new Image($entity);
         $xml = new SimpleXMLElement('<picture/>');

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * User: morontt
  * Date: 02.12.2024
@@ -37,7 +39,7 @@ class PrometheusPushGateway
         $this->push();
     }
 
-    private function push()
+    private function push(): void
     {
         $this->pushGateway->push($this->registry, 'cron_tasks', ['instance' => 'zendblog_backend']);
     }

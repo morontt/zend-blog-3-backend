@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\IpInfo;
 
 use LogicException;
@@ -20,50 +22,24 @@ class LocationInfo
         'timeZone',
     ];
 
-    /**
-     * @var string
-     */
     public string $countryCode;
 
-    /**
-     * @var string
-     */
     public string $countryName;
 
-    /**
-     * @var string
-     */
     public string $cityName;
 
-    /**
-     * @var string
-     */
     public string $regionName;
 
-    /**
-     * @var string|null
-     */
-    public $latitude;
+    public ?string $latitude = null;
+
+    public ?string $longitude = null;
+
+    public ?string $timeZone = null;
+
+    public ?string $zipCode = null;
 
     /**
-     * @var string|null
-     */
-    public $longitude;
-
-    /**
-     * @var string|null
-     */
-    public $timeZone;
-
-    /**
-     * @var string|null
-     */
-    public $zipCode;
-
-    /**
-     * @param array $data
-     *
-     * @return LocationInfo
+     * @param array<string, string> $data
      */
     public static function createFromArray(array $data): LocationInfo
     {
@@ -76,7 +52,7 @@ class LocationInfo
         }
 
         $self = new self();
-        foreach (static::$properties as $property) {
+        foreach (self::$properties as $property) {
             $self->$property = $data[$property] ?? null;
         }
 

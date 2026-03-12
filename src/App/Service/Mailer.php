@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service;
 
 use App\DTO\EmailMessageDTO;
@@ -20,60 +22,18 @@ use Xelbot\Telegram\Robot;
 
 class Mailer
 {
-    private MailerInterface $mailer;
-
-    /**
-     * @var TwigEnvironment
-     */
-    private TwigEnvironment $twig;
-
-    /**
-     * @var string
-     */
-    private string $emailFrom;
-
-    /**
-     * @var Robot
-     */
-    private Robot $bot;
-
-    /**
-     * @var string
-     */
-    private string $frontendSite;
-
-    private EmailSubscriptionSettingsRepository $subscriptionRepository;
-
-    private LoggerInterface $logger;
-
-    /**
-     * @param MailerInterface $mailer
-     * @param TwigEnvironment $twig
-     * @param Robot $bot
-     * @param EmailSubscriptionSettingsRepository $subscriptionRepository
-     * @param LoggerInterface $logger
-     * @param string $frontendSite
-     * @param string $emailFrom
-     */
     public function __construct(
-        MailerInterface $mailer,
-        TwigEnvironment $twig,
-        Robot $bot,
-        EmailSubscriptionSettingsRepository $subscriptionRepository,
-        LoggerInterface $logger,
-        string $frontendSite,
-        string $emailFrom,
+        private MailerInterface $mailer,
+        private TwigEnvironment $twig,
+        private Robot $bot,
+        private EmailSubscriptionSettingsRepository $subscriptionRepository,
+        private LoggerInterface $logger,
+        private string $frontendSite,
+        private string $emailFrom,
     ) {
-        $this->mailer = $mailer;
-        $this->twig = $twig;
-        $this->emailFrom = $emailFrom;
-        $this->bot = $bot;
-        $this->subscriptionRepository = $subscriptionRepository;
-        $this->frontendSite = $frontendSite;
-        $this->logger = $logger;
     }
 
-    public function newComment(Comment $comment, string $emailTo, bool $spool = true)
+    public function newComment(Comment $comment, string $emailTo, bool $spool = true): void
     {
         $emailTo = VerifyEmail::normalize($emailTo);
         $context = $this->context($comment);
@@ -167,7 +127,7 @@ class Mailer
         fclose($fp);
     }
 
-    public function spoolSend($messageLimit = null, $timeLimit = null): int
+    public function spoolSend(?int $messageLimit = null, ?int $timeLimit = null): int
     {
         $count = 0;
         $time = time();
@@ -201,7 +161,7 @@ class Mailer
         return $count;
     }
 
-    public function replyComment(Comment $comment)
+    public function replyComment(Comment $comment): void
     {
         $parent = $comment->getParent();
         if ($parent) {
@@ -248,6 +208,9 @@ class Mailer
         return APP_VAR_DIR . '/spool';
     }
 
+    /**
+     * @return array<string, string>
+     */
     private function context(Comment $comment): array
     {
         $username = 'undefined';
@@ -289,7 +252,7 @@ class Mailer
     /**
      * @param string|array $recipient
      *
-     * @return Address
+     * @phpstan-ignore missingType.iterableValue
      */
     private function addressFrom($recipient): Address
     {
