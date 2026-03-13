@@ -20,6 +20,15 @@ else
     echo -e "\e[32mphpspec OK\e[0m\n"
 fi
 
+docker compose run --rm --remove-orphans -T rhinoceros bash -c "bin/phpstan analyse"
+retVal=$?
+if [ $retVal -ne 0 ]; then
+    echo -e "\e[31mPHPStan error\e[0m\n"
+    exit 1
+else
+    echo -e "\e[32mPHPStan OK\e[0m\n"
+fi
+
 docker compose run --rm --remove-orphans -T rhinoceros bash -c "php bin/console doctrine:schema:validate"
 retVal=$?
 if [ $retVal -ne 0 ]; then
