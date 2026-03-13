@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Created by PhpStorm.
  * User: morontt
@@ -17,7 +19,7 @@ use League\Fractal\Resource\ResourceInterface;
 class MediaFileTransformer extends BaseTransformer
 {
     /**
-     * @var array
+     * @var string[]
      */
     protected array $availableIncludes = [
         'post',
@@ -51,10 +53,9 @@ class MediaFileTransformer extends BaseTransformer
     }
 
     /**
-     * @param MediaFile $entity
-     * @param array $data
+     * @param array<string, mixed> $data
      */
-    public static function reverseTransform(MediaFile $entity, array $data)
+    public static function reverseTransform(MediaFile $entity, array $data): void
     {
         $entity
             ->setDescription($data['description'])

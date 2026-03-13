@@ -313,7 +313,7 @@ class ViewComment implements CommentInterface
      *
      * @return ViewComment
      */
-    public function getParent()
+    public function getParent(): ?ViewComment
     {
         return $this->parent;
     }

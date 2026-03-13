@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\API\Transformers;
 
 use App\Entity\TrackingAgent;
@@ -22,12 +24,9 @@ class UserAgentTransformer extends BaseTransformer
     }
 
     /**
-     * @param TrackingAgent $entity
-     * @param array $data
-     *
-     * @return void
+     * @param array<string, mixed> $data
      */
-    public static function reverseTransform(TrackingAgent $entity, array $data)
+    public static function reverseTransform(TrackingAgent $entity, array $data): void
     {
         $entity
             ->setBot($data['bot'])

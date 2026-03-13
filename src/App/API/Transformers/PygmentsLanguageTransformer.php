@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\API\Transformers;
 
 use App\DTO\PygmentsLanguageDTO;
@@ -21,11 +23,7 @@ class PygmentsLanguageTransformer extends BaseTransformer
         ];
     }
 
-    /**
-     * @param PygmentsLanguage $entity
-     * @param PygmentsLanguageDTO $data
-     */
-    public static function reverseTransform(PygmentsLanguage $entity, PygmentsLanguageDTO $data)
+    public static function reverseTransform(PygmentsLanguage $entity, PygmentsLanguageDTO $data): void
     {
         $entity
             ->setName($data['name'])

@@ -8,7 +8,7 @@ use ImagickPixel;
 
 trait DebugAnnotation
 {
-    private function annotate($width, $height, Imagick $image)
+    private function annotate(int $width, int $height, Imagick $image): void
     {
         /*
         $fontList = Imagick::queryFonts('*');
@@ -36,7 +36,11 @@ trait DebugAnnotation
         $draw->annotation(5, 2 + $metrics['ascender'], $text);
 
         $canvas = new Imagick();
-        $canvas->newImage(10 + $metrics['textWidth'], 4 + $metrics['textHeight'], new ImagickPixel('#000000'));
+        $canvas->newImage(
+            (int)(10 + $metrics['textWidth']),
+            (int)(4 + $metrics['textHeight']),
+            new ImagickPixel('#000000')
+        );
 
         $canvas->drawImage($draw);
         $image->compositeImage($canvas, Imagick::COMPOSITE_OVER, 5, 5);

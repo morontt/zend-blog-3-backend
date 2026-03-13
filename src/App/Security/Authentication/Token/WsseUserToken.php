@@ -7,7 +7,7 @@ use Symfony\Component\Security\Core\Authentication\Token\AbstractToken;
 class WsseUserToken extends AbstractToken
 {
     /**
-     * @param array $roles
+     * @param string[] $roles
      */
     public function __construct(array $roles = [])
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\API\Transformers;
 
 use App\DTO\UserDTO;
@@ -24,7 +26,7 @@ class UserTransformer extends BaseTransformer
         ];
     }
 
-    public static function reverseTransform(User $entity, UserDTO $data)
+    public static function reverseTransform(User $entity, UserDTO $data): void
     {
         $entity
             ->setUsername($data['username'])

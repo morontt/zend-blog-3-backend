@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\API\Transformers;
 
 use App\Entity\Tracking;
@@ -10,7 +12,7 @@ use League\Fractal\Resource\ResourceInterface;
 class TrackingTransformer extends BaseTransformer
 {
     /**
-     * @var array
+     * @var string[]
      */
     protected array $availableIncludes = [
         'trackingAgents',

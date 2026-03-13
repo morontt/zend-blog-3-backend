@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Created by PhpStorm.
  * User: morontt
@@ -20,7 +22,7 @@ use League\Fractal\Resource\ResourceInterface;
 class PostTransformer extends BaseTransformer
 {
     /**
-     * @var array
+     * @var string[]
      */
     protected array $availableIncludes = [
         'category',
@@ -57,11 +59,7 @@ class PostTransformer extends BaseTransformer
         ];
     }
 
-    /**
-     * @param Post $entity
-     * @param ArticleDTO $data
-     */
-    public static function reverseTransform(Post $entity, ArticleDTO $data)
+    public static function reverseTransform(Post $entity, ArticleDTO $data): void
     {
         if (empty($data['title'])) {
             $data['title'] = 'no subject';

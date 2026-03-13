@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Created by PhpStorm.
  * User: morontt
@@ -23,9 +25,9 @@ class Serializer extends ArraySerializer
      * Serialize an item.
      *
      * @param string|null $resourceKey
-     * @param array $data
+     * @param array<string, mixed> $data
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function item(?string $resourceKey, array $data): array
     {
@@ -36,9 +38,9 @@ class Serializer extends ArraySerializer
      * Serialize a collection.
      *
      * @param string|null $resourceKey
-     * @param array $data
+     * @param array<string, mixed> $data
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function collection(?string $resourceKey, array $data): array
     {
@@ -56,9 +58,9 @@ class Serializer extends ArraySerializer
      * Serialize the included data.
      *
      * @param ResourceInterface $resource
-     * @param array $data
+     * @param array<string, mixed> $data
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function includedData(ResourceInterface $resource, array $data): array
     {
@@ -89,7 +91,7 @@ class Serializer extends ArraySerializer
      *
      * @param PaginatorInterface $paginator
      *
-     * @return array[]
+     * @return array<string, mixed>
      */
     public function paginator(PaginatorInterface $paginator): array
     {
@@ -116,9 +118,9 @@ class Serializer extends ArraySerializer
     /**
      * Serialize the meta.
      *
-     * @param array $meta
+     * @param array<string, mixed> $meta
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function meta(array $meta): array
     {
@@ -130,6 +132,9 @@ class Serializer extends ArraySerializer
         return true;
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     private function isCollection(array $data): bool
     {
         $fk = array_key_first($data);

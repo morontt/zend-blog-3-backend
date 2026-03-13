@@ -17,6 +17,7 @@ use App\Model\Resizer\JpegResizer;
 use App\Model\Resizer\PngResizer;
 use App\Model\Resizer\WebpResizer;
 use App\Service\ImageManager;
+use BadMethodCallException;
 use DateTime;
 use Imagick;
 use ImagickException;
@@ -38,7 +39,7 @@ use RuntimeException;
 class Image
 {
     /**
-     * @var array
+     * @var array<string, array<string, int>>
      */
     protected $sizes = [
         'admin_list' => [
@@ -74,7 +75,7 @@ class Image
     /**
      * @param string|null $format
      *
-     * @return array
+     * @return list<array<string, mixed>>
      */
     public function getSrcSetData(?string $format = null): array
     {
@@ -104,6 +105,7 @@ class Image
                 $ext = pathinfo($this->media->getPath(), PATHINFO_EXTENSION);
                 $resizer = $this->getResizer($this->media->getPath(), $format);
                 if ($ext !== $format && method_exists($resizer, 'convert')) {
+                    /** @disregard P1013 Undefined method 'convert' */
                     $newPath = $resizer->convert($this->media->getPath(), ImageManager::getUploadsDir());
                     $data[] = [
                         'width' => $width,
@@ -237,14 +239,18 @@ class Image
     }
 
     /**
-     * @param $method
-     * @param $arguments
+     * @param string $method
+     * @param array<int, mixed> $arguments
      *
      * @return mixed
      */
     public function __call($method, $arguments)
     {
-        return call_user_func_array([$this->media, $method], $arguments);
+        if (method_exists($this->media, $method)) {
+            return call_user_func_array([$this->media, $method], $arguments);
+        }
+
+        throw new BadMethodCallException(sprintf('Undefined method: %s', $method));
     }
 
     private function getResizer(string $fsPath, ?string $format = null): ResizerInterface

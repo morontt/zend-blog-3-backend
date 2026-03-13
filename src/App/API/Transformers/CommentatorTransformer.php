@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Created by PhpStorm.
  * User: morontt
@@ -34,10 +36,9 @@ class CommentatorTransformer extends BaseTransformer
     }
 
     /**
-     * @param Commentator $entity
-     * @param array $data
+     * @param array<string, mixed> $data
      */
-    public static function reverseTransform(Commentator $entity, array $data)
+    public static function reverseTransform(Commentator $entity, array $data): void
     {
         $entity
             ->setName($data['name'])

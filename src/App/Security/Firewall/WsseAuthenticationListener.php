@@ -39,7 +39,7 @@ class WsseAuthenticationListener extends AbstractListener
         return $request->headers->has('X-WSSE');
     }
 
-    public function authenticate(RequestEvent $event)
+    public function authenticate(RequestEvent $event): void
     {
         $request = $event->getRequest();
 
@@ -49,7 +49,7 @@ class WsseAuthenticationListener extends AbstractListener
         }
 
         $token = new WsseUserToken();
-        $token->setUser($wsseInfo['username']);
+        $token->setUser($wsseInfo['username']); // @phpstan-ignore argument.type
         $token->setAttribute('digest', $wsseInfo['digest']);
         $token->setAttribute('nonce', $wsseInfo['nonce']);
         $token->setAttribute('created', $wsseInfo['created']);
@@ -74,7 +74,7 @@ class WsseAuthenticationListener extends AbstractListener
     /**
      * @param string $header
      *
-     * @return array|null
+     * @return array<string, string>|null
      */
     private function parseHeader(string $header): ?array
     {

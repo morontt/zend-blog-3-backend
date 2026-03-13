@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\API\Transformers;
 
 use App\DTO\PygmentsCodeDTO;
@@ -9,7 +11,7 @@ use League\Fractal\Resource\ResourceInterface;
 class PygmentsCodeTransformer extends BaseTransformer
 {
     /**
-     * @var array
+     * @var string[]
      */
     protected array $availableIncludes = [
         'language',
@@ -38,11 +40,7 @@ class PygmentsCodeTransformer extends BaseTransformer
         ];
     }
 
-    /**
-     * @param PygmentsCode $entity
-     * @param PygmentsCodeDTO $data
-     */
-    public static function reverseTransform(PygmentsCode $entity, PygmentsCodeDTO $data)
+    public static function reverseTransform(PygmentsCode $entity, PygmentsCodeDTO $data): void
     {
         $entity->setSourceCode($data['code']);
     }

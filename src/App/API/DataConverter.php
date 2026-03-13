@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Created by PhpStorm.
  * User: morontt
@@ -21,12 +23,12 @@ use App\Service\TextProcessor;
 use App\Utils\Inflector;
 use App\Utils\Pygment;
 use App\Utils\RuTransform;
+use BadMethodCallException;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Fractal\Manager;
 use League\Fractal\Resource\Item;
-use RuntimeException;
 
 /**
  * Class DataConverter
@@ -317,7 +319,7 @@ class DataConverter
 
             $scope = $this->fractal->createData($resource);
         } else {
-            throw new RuntimeException(sprintf('Undefined method: %s', $method));
+            throw new BadMethodCallException(sprintf('Undefined method: %s', $method));
         }
 
         return $scope->toArray();

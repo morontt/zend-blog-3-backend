@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Created by PhpStorm.
  * User: morontt
@@ -40,11 +42,7 @@ class CategoryTransformer extends BaseTransformer
         ];
     }
 
-    /**
-     * @param Category $entity
-     * @param CategoryDTO $data
-     */
-    public static function reverseTransform(Category $entity, CategoryDTO $data)
+    public static function reverseTransform(Category $entity, CategoryDTO $data): void
     {
         $entity->setName($data['name']);
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Model;
 
 use App\Service\ImageManager;
@@ -19,7 +21,7 @@ class SrcSet
     }
 
     /**
-     * @param array $items
+     * @param list<array<string, mixed>> $items
      *
      * @return SrcSet
      */
@@ -39,7 +41,7 @@ class SrcSet
     }
 
     /**
-     * @param array $items
+     * @param list<array<string, mixed>> $items
      *
      * @return SrcSet
      */
@@ -62,7 +64,7 @@ class SrcSet
     }
 
     /**
-     * @param array $items
+     * @param list<array<string, mixed>> $items
      *
      * @return SrcSet
      */
@@ -76,7 +78,10 @@ class SrcSet
         return $this;
     }
 
-    public function isSizeSmaller(array $items)
+    /**
+     * @param list<array<string, mixed>> $items
+     */
+    public function isSizeSmaller(array $items): bool
     {
         if (!$this->origin) {
             return true;
@@ -97,6 +102,9 @@ class SrcSet
         return $firstItemSize < $originItemSize;
     }
 
+    /**
+     * @return array<string, array<string, mixed>>
+     */
     public function toArray(): array
     {
         $data = [];

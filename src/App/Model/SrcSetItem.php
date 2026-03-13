@@ -1,16 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Model;
 
 class SrcSetItem
 {
+    /** @var list<array<string, mixed>> */
     private array $items;
 
+    /**
+     * @param list<array<string, mixed>> $items
+     */
     public function __construct(array $items)
     {
         $this->items = $items;
     }
 
+    /**
+     * @return list<array<string, mixed>>
+     */
     public function getItems(): array
     {
         return $this->items;
@@ -35,6 +44,9 @@ class SrcSetItem
         return null;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         return [

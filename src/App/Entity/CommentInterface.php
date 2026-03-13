@@ -15,4 +15,9 @@ interface CommentInterface
     public function isDeleted(): bool;
 
     public function getTimeCreated(): DateTime;
+
+    /**
+     * @return CommentInterface|null
+     */
+    public function getParent();
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Created by PhpStorm.
  * User: morontt
@@ -29,11 +31,7 @@ class TagTransformer extends BaseTransformer
         ];
     }
 
-    /**
-     * @param Tag $entity
-     * @param TagDTO $data
-     */
-    public static function reverseTransform(Tag $entity, TagDTO $data)
+    public static function reverseTransform(Tag $entity, TagDTO $data): void
     {
         $entity->setName($data['name']);
 
