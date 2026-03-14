@@ -48,7 +48,7 @@ class RottenLink
                 return false;
             }
 
-            return count($records) > 0;
+            return ($records !== false) && count($records) > 0;
         }
 
         return false;

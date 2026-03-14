@@ -41,9 +41,21 @@ abstract class CronCommand extends Command
                     );
                 }
             } catch (Throwable $e) {
-                $messages[] = sprintf('Error %s: %s', self::getJobName($cronJob), $e->getMessage());
+                $messages[] = sprintf(
+                    'Error %s: %s, file: %s, line: %d',
+                    self::getJobName($cronJob),
+                    $e->getMessage(),
+                    $e->getFile(),
+                    $e->getLine()
+                );
                 $output->writeln(
-                    sprintf('<error>%s Error:</error> %s', self::getJobName($cronJob), $e->getMessage())
+                    sprintf(
+                        '<error>%s Error:</error> %s, file: %s, line: %d',
+                        self::getJobName($cronJob),
+                        $e->getMessage(),
+                        $e->getFile(),
+                        $e->getLine()
+                    )
                 );
             }
         }

@@ -22,6 +22,7 @@ class LinksCheck implements HourlyCronServiceInterface
 
     public function run(): void
     {
+        /** @var \App\Repository\CommentatorRepository $repository */
         $repository = $this->em->getRepository(Commentator::class);
         foreach ($repository->getWithUncheckedLinks() as $commentator) {
             $commentator
