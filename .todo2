@@ -796,7 +796,8 @@
     {
       "text": "body element in email (by Mailpit)",
       "priority": "medium",
-      "creation": 1773127172
+      "creation": 1773127172,
+      "completion": 1773478888
     },
     {
       "text": "Send email to fake email address",

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\DTO\EmailMessageDTO;
 use App\Entity\Traits\ModifyEntityTrait;
 use App\Repository\EmailSubscriptionSettingsRepository;
 use DateTime;
@@ -14,8 +15,6 @@ use Doctrine\ORM\Mapping as ORM;
 class EmailSubscriptionSettings
 {
     use ModifyEntityTrait;
-
-    public const TYPE_COMMENT_REPLY = 1;
 
     /**
      * @var int
@@ -40,8 +39,8 @@ class EmailSubscriptionSettings
     /**
      * @var int
      */
-    #[ORM\Column(type: 'smallint', name: 'subs_type', options: ['default' => 1, 'comment' => '1: reply'])]
-    private $type = self::TYPE_COMMENT_REPLY;
+    #[ORM\Column(type: 'smallint', name: 'subs_type', options: ['default' => 1, 'comment' => '0: none, 1: reply'])]
+    private $type = EmailMessageDTO::TYPE_NONE;
 
     public function __construct()
     {

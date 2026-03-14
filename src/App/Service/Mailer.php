@@ -6,7 +6,6 @@ namespace App\Service;
 
 use App\DTO\EmailMessageDTO;
 use App\Entity\Comment;
-use App\Entity\EmailSubscriptionSettings;
 use App\Repository\EmailSubscriptionSettingsRepository;
 use App\Utils\HashId;
 use App\Utils\VerifyEmail;
@@ -177,7 +176,7 @@ class Mailer
 
             if ($emailTo) {
                 $emailTo = VerifyEmail::normalize($emailTo);
-                $unsubscribeLink = $this->unsubscribeLink($emailTo, EmailSubscriptionSettings::TYPE_COMMENT_REPLY);
+                $unsubscribeLink = $this->unsubscribeLink($emailTo, EmailMessageDTO::TYPE_COMMENT_REPLY);
 
                 $context = array_merge(
                     $this->context($comment),
@@ -192,6 +191,7 @@ class Mailer
                 $message = new EmailMessageDTO();
 
                 $message->subject = 'Ответ на комментарий';
+                $message->type = EmailMessageDTO::TYPE_COMMENT_REPLY;
                 $message->from = $this->emailFrom;
                 $message->to = [$emailTo => $recipient];
                 $message->messageHtml = $template->render($context);
@@ -231,7 +231,7 @@ class Mailer
 
     private function isBlocked(EmailMessageDTO $messageDTO): bool
     {
-        if ($messageDTO->type === 0) {
+        if ($messageDTO->type === EmailMessageDTO::TYPE_NONE) {
             return false;
         }
 

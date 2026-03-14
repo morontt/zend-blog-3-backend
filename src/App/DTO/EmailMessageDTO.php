@@ -4,6 +4,9 @@ namespace App\DTO;
 
 class EmailMessageDTO
 {
+    public const TYPE_NONE = 0;
+    public const TYPE_COMMENT_REPLY = 1;
+
     /**
      * @var string
      */
@@ -32,7 +35,7 @@ class EmailMessageDTO
     /**
      * @var int
      */
-    public $type = 0;
+    public $type = self::TYPE_NONE;
 
     /**
      * @var string|null
