@@ -13,12 +13,12 @@ class EmailMessageDTO
     public string $subject;
 
     /**
-     * @var string|array<string, string>
+     * @var string
      */
     public $from;
 
     /**
-     * @var string|array<string, string>
+     * @var string
      */
     public $to;
 
@@ -69,14 +69,5 @@ class EmailMessageDTO
             $this->messageText,
             $this->messageHtml,
         ] = $data;
-    }
-
-    public function getRecipientEmail(): string
-    {
-        if (is_array($this->to)) {
-            return array_key_first($this->to);
-        }
-
-        return $this->to;
     }
 }

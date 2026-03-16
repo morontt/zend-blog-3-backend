@@ -62,8 +62,8 @@ class Mailer
         try {
             $message = (new Email())
                 ->subject($messageDTO->subject)
-                ->from($this->addressFrom($messageDTO->from))
-                ->to($this->addressFrom($messageDTO->to))
+                ->from(new Address($messageDTO->from))
+                ->to(new Address($messageDTO->to))
             ;
 
             if ($messageDTO->messageHtml) {
@@ -165,13 +165,10 @@ class Mailer
         $parent = $comment->getParent();
         if ($parent) {
             $emailTo = null;
-            $recipient = 'undefined';
             if ($user = $parent->getUser()) {
                 $emailTo = $user->getEmail();
-                $recipient = $user->getUsername();
             } elseif ($commentator = $parent->getCommentator()) {
                 $emailTo = $commentator->isValidEmail() ? $commentator->getEmail() : null;
-                $recipient = $commentator->getName();
             }
 
             if ($emailTo) {
@@ -193,7 +190,7 @@ class Mailer
                 $message->subject = 'Ответ на комментарий';
                 $message->type = EmailMessageDTO::TYPE_COMMENT_REPLY;
                 $message->from = $this->emailFrom;
-                $message->to = [$emailTo => $recipient];
+                $message->to = $emailTo;
                 $message->messageHtml = $template->render($context);
                 $message->messageText = $textTemplate->render($context);
                 $message->unsubscribeLink = $unsubscribeLink;
@@ -235,8 +232,10 @@ class Mailer
             return false;
         }
 
-        $email = $messageDTO->getRecipientEmail();
-        $settings = $this->subscriptionRepository->findOneBy(['email' => $email, 'type' => $messageDTO->type]);
+        $settings = $this->subscriptionRepository->findOneBy([
+            'email' => $messageDTO->to,
+            'type' => $messageDTO->type,
+        ]);
 
         return $settings && $settings->isBlockSending();
     }
@@ -247,21 +246,5 @@ class Mailer
         $hash = HashId::hash($settings->getId(), mt_rand(1, 9999));
 
         return '/email-unsubscribe/' . $hash;
-    }
-
-    /**
-     * @param string|array $recipient
-     *
-     * @phpstan-ignore missingType.iterableValue
-     */
-    private function addressFrom($recipient): Address
-    {
-        if (is_array($recipient)) {
-            $email = array_key_first($recipient);
-
-            return new Address($email, $recipient[$email]);
-        }
-
-        return new Address($recipient);
     }
 }
