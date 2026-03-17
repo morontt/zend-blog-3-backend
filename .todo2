@@ -708,6 +708,7 @@
           "text": "Fix security deprecations",
           "priority": "medium",
           "creation": 1731171156,
+          "completion": 1773778104,
           "tasks": [
             {
               "text": "https://github.com/lexik/LexikJWTAuthenticationBundle",

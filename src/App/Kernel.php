@@ -3,7 +3,6 @@
 namespace App;
 
 use App\DependencyInjection\CronCompilerPass;
-use App\DependencyInjection\Security\Factory\WsseFactory;
 use App\DependencyInjection\TelegramCompilerPass;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -22,9 +21,5 @@ class Kernel extends BaseKernel
     {
         $container->addCompilerPass(new CronCompilerPass());
         $container->addCompilerPass(new TelegramCompilerPass());
-
-        /** @var \Symfony\Bundle\SecurityBundle\DependencyInjection\SecurityExtension $extension */
-        $extension = $container->getExtension('security');
-        $extension->addSecurityListenerFactory(new WsseFactory());
     }
 }

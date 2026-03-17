@@ -1,92 +1,109 @@
 <?php
 
-namespace App\Security\Authentication\Provider;
+declare(strict_types=1);
 
+namespace App\Security;
+
+use App\DTO\WsseTokenDTO;
 use App\Entity\User;
-use App\Security\Authentication\Token\WsseUserToken;
-use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\Exception\BadCredentialsException;
-use Symfony\Component\Security\Core\Exception\CredentialsExpiredException;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\CustomCredentials;
+use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
+use UnexpectedValueException;
 
-class WsseAuthenticationProvider implements AuthenticationProviderInterface
+class WsseAuthenticator extends AbstractAuthenticator
 {
-    /**
-     * @var UserProviderInterface
-     */
-    private $userProvider;
-
-    private int $lifetime;
-
-    /**
-     * @param UserProviderInterface $userProvider
-     * @param int $lifetime
-     */
-    public function __construct(UserProviderInterface $userProvider, int $lifetime = 300)
+    public function __construct(private int $lifetime)
     {
-        $this->userProvider = $userProvider;
         $this->lifetime = $lifetime;
     }
 
-    /**
-     * @param TokenInterface $token
-     *
-     * @return WsseUserToken
-     */
-    public function authenticate(TokenInterface $token)
+    public function authenticate(Request $request): Passport
     {
-        $user = $this->userProvider->loadUserByIdentifier($token->getUserIdentifier());
-
-        if ($user instanceof User
-            && $this->validateDigest($token, $user->getWsseKey())
-        ) {
-            $authenticatedToken = new WsseUserToken($user->getRoles());
-            $authenticatedToken->setUser($user);
-
-            return $authenticatedToken;
+        $wsseHeader = $request->headers->get('X-WSSE');
+        if ($wsseHeader === null) {
+            throw new CustomUserMessageAuthenticationException('No X-WSSE header provided');
         }
 
-        throw new AuthenticationException('The WSSE authentication failed.');
+        $wsseInfo = $this->parseHeader($wsseHeader);
+
+        return new Passport(
+            new UserBadge($wsseInfo['username']),
+            new CustomCredentials([$this, 'validateDigest'], $wsseInfo)
+        );
     }
 
-    /**
-     * @param TokenInterface $token
-     *
-     * @return bool
-     */
-    public function supports(TokenInterface $token)
+    public function supports(Request $request): ?bool
     {
-        return $token instanceof WsseUserToken
-            && $token->hasAttribute('nonce')
-            && $token->hasAttribute('digest')
-            && $token->hasAttribute('created');
+        return $request->headers->has('X-WSSE');
     }
 
-    /**
-     * @param TokenInterface $token
-     * @param string $wsseKey
-     *
-     * @return bool
-     */
-    private function validateDigest(TokenInterface $token, string $wsseKey): bool
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-        $nonce = $token->getAttribute('nonce');
-        $digest = $token->getAttribute('digest');
-        $createdAt = strtotime($token->getAttribute('created'));
-        if (!$createdAt) {
-            throw new BadCredentialsException('Incorrectly formatted "created" in token.');
-        }
+        return null;
+    }
 
-        if (abs($createdAt - time()) > $this->lifetime) {
-            throw new CredentialsExpiredException('Token has expired.');
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
+    {
+        $data = [
+            'message' => strtr($exception->getMessageKey(), $exception->getMessageData()),
+        ];
+
+        return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);
+    }
+
+    public function validateDigest(WsseTokenDTO $token, UserInterface $user): bool
+    {
+        if (!$user instanceof User) {
+            return false;
         }
 
         $expected = base64_encode(
-            sha1(base64_decode($nonce) . $token->getAttribute('created') . $wsseKey, true)
+            sha1(base64_decode($token->nonce) . $token->created . $user->getWsseKey(), true)
         );
 
-        return hash_equals($expected, $digest);
+        return hash_equals($expected, $token->digest);
+    }
+
+    private function parseHeader(string $header): WsseTokenDTO
+    {
+        $result = new WsseTokenDTO();
+
+        try {
+            $result->username = $this->parseValue('Username', $header);
+            $result->digest = $this->parseValue('PasswordDigest', $header);
+            $result->nonce = $this->parseValue('Nonce', $header);
+            $result->created = $this->parseValue('Created', $header);
+        } catch (UnexpectedValueException $e) {
+            throw new CustomUserMessageAuthenticationException('Invalid X-WSSE header', previous: $e);
+        }
+
+        $createdAt = strtotime($result->created);
+        if (!$createdAt) {
+            throw new CustomUserMessageAuthenticationException('Incorrectly formatted "created" in X-WSSE header.');
+        }
+
+        if (abs($createdAt - time()) > $this->lifetime) {
+            throw new CustomUserMessageAuthenticationException('X-WSSE header has expired.');
+        }
+
+        return $result;
+    }
+
+    private function parseValue(string $key, string $header): string
+    {
+        if (!preg_match('/' . $key . '="([^"]+)"/', $header, $matches)) {
+            throw new UnexpectedValueException("The \"{$key}\" was not found");
+        }
+
+        return (string)$matches[1];
     }
 }
