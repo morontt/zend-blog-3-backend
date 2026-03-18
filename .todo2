@@ -817,6 +817,11 @@
           "creation": 1773170357
         }
       ]
+    },
+    {
+      "text": "Add build info to dashboard",
+      "priority": "medium",
+      "creation": 1773806494
     }
   ]
 }
