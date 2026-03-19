@@ -34,7 +34,16 @@
     <td>
         <strong>{{commentator.name}}</strong>
     </td>
-    <td class="text-break-word">{{commentator.email}}</td>
+    <td class="text-break-word">
+        {{commentator.email}}
+        {{#if commentator.email}}
+            {{#if commentator.isValidEmail}}
+                <i class="glyphicon glyphicon-ok"></i>
+            {{else}}
+                <i class="glyphicon glyphicon-remove"></i>
+            {{/if}}
+        {{/if}}
+    </td>
     <td class="text-break-word">{{commentator.website}}</td>
     <td class="center-text text-gender">
         {{#if commentator.isMale}}

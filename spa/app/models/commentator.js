@@ -6,6 +6,7 @@ export default DS.Model.extend({
     email: DS.attr('string'),
     website: DS.attr('string'),
     isMale: DS.attr('boolean'),
+    isValidEmail: DS.attr('boolean'),
     imageHash: DS.attr('string'),
     createdAt: DS.attr('date'),
     avatarTitle: function () {

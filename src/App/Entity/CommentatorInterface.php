@@ -37,6 +37,11 @@ interface CommentatorInterface
     public function isFakeEmail(): ?bool;
 
     /**
+     * @return bool
+     */
+    public function isValidEmail(): bool;
+
+    /**
      * @return DateTime|null
      */
     public function getEmailCheck(): ?DateTime;

@@ -70,6 +70,14 @@ class ViewCommentator implements CommentatorInterface
     protected $timeCreated;
 
     /**
+     * @return bool
+     */
+    public function isValidEmail(): bool
+    {
+        return $this->getEmail() && !is_null($this->isFakeEmail()) && !$this->isFakeEmail();
+    }
+
+    /**
      * Get id
      *
      * @return int|null

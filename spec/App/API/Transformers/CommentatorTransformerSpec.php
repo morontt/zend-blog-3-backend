@@ -29,6 +29,7 @@ class CommentatorTransformerSpec extends ObjectBehavior
             ->setEmail('commentator@example.org')
             ->setWebsite('http://example.org')
             ->setTimeCreated(DateTime::createFromFormat('Y-m-d H:i:s', '2025-01-18 20:35:49'))
+            ->setFakeEmail(false)
         ;
 
         $reflectionProperty->setValue($commentator, 27);
@@ -40,6 +41,7 @@ class CommentatorTransformerSpec extends ObjectBehavior
             'website' => 'http://example.org',
             'imageHash' => 'ZQD5TM',
             'isMale' => true,
+            'isValidEmail' => true,
             'createdAt' => '2025-01-18T20:35:49+03:00',
         ]);
     }
@@ -68,6 +70,7 @@ class CommentatorTransformerSpec extends ObjectBehavior
             'website' => 'http://example.org',
             'imageHash' => '04RETW',
             'isMale' => false,
+            'isValidEmail' => false,
             'createdAt' => '2025-01-18T20:35:49+03:00',
         ]);
     }
@@ -98,6 +101,7 @@ class CommentatorTransformerSpec extends ObjectBehavior
             'website' => null,
             'imageHash' => 'ZQD5TM',
             'isMale' => true,
+            'isValidEmail' => false,
             'createdAt' => '2025-01-18T20:35:49+03:00',
         ]);
     }
@@ -128,6 +132,7 @@ class CommentatorTransformerSpec extends ObjectBehavior
             'website' => null,
             'imageHash' => '0WMMUN',
             'isMale' => true,
+            'isValidEmail' => false,
             'createdAt' => '2025-01-18T20:35:49+03:00',
         ]);
     }

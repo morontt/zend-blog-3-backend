@@ -42,7 +42,14 @@
         <strong>{{user.username}}</strong>
     </td>
     <td class="text-break-word">{{user.displayName}}</td>
-    <td class="text-break-word">{{user.email}}</td>
+    <td class="text-break-word">
+        {{user.email}}
+        {{#if user.isValidEmail}}
+            <i class="glyphicon glyphicon-ok"></i>
+        {{else}}
+            <i class="glyphicon glyphicon-remove"></i>
+        {{/if}}
+    </td>
     <td class="text-break-word">{{user.role}}</td>
     <td class="center-text text-gender">
         {{#if user.isMale}}
