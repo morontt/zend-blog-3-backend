@@ -82,9 +82,9 @@ services:
         tags:
             - { name: doctrine.event_listener, event: preUpdate }
 
-    App\EventListener\Doctrine\UserEmailCheckListener:
+    App\EventSubscriber\Doctrine\UserEmailCheckSubscriber:
         tags:
-            - { name: doctrine.event_listener, event: preUpdate }
+            - { name: doctrine.event_subscriber }
 
     App\EventListener\Comment\CommentatorCheckListener:
         tags:

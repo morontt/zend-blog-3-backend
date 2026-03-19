@@ -66,4 +66,18 @@ class UserRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getOneOrNullResult();
     }
+
+    /**
+     * @return User[]
+     */
+    public function getWithUncheckedEmails(): array
+    {
+        $qb = $this->createQueryBuilder('u');
+        $qb
+            ->andWhere($qb->expr()->isNull('u.emailCheck'))
+            ->setMaxResults(20)
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
 }
