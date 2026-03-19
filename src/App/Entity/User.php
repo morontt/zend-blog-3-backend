@@ -7,6 +7,7 @@ use App\Utils\HashId;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use RuntimeException;
@@ -29,6 +30,8 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface
 
     public const MALE = 1;
     public const FEMALE = 2;
+
+    public const FAKE_EMAIL = '@xelbot.fake';
 
     /**
      * @var int
@@ -104,6 +107,12 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface
      */
     #[ORM\Column(type: 'smallint', options: ['default' => 0, 'unsigned' => true])]
     private $avatarVariant = 0;
+
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true)]
+    private ?bool $fakeEmail = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?DateTime $emailCheck = null;
 
     public function __construct()
     {
@@ -209,7 +218,15 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface
 
     public static function fakeEmail(string $prefix): string
     {
-        return $prefix . '@xelbot.fake';
+        return $prefix . self::FAKE_EMAIL;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isValidEmail(): bool
+    {
+        return !is_null($this->isFakeEmail()) && !$this->isFakeEmail();
     }
 
     /**
@@ -438,6 +455,30 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface
     public function setAvatarVariant(int $avatarVariant): self
     {
         $this->avatarVariant = $avatarVariant;
+
+        return $this;
+    }
+
+    public function isFakeEmail(): ?bool
+    {
+        return $this->fakeEmail;
+    }
+
+    public function setFakeEmail(?bool $fakeEmail): self
+    {
+        $this->fakeEmail = $fakeEmail;
+
+        return $this;
+    }
+
+    public function getEmailCheck(): ?DateTime
+    {
+        return $this->emailCheck;
+    }
+
+    public function setEmailCheck(?DateTime $emailCheck): self
+    {
+        $this->emailCheck = $emailCheck;
 
         return $this;
     }

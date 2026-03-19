@@ -2,6 +2,8 @@
 
 namespace App\Utils;
 
+use App\Entity\User;
+
 /**
  * Only check MX records
  */
@@ -15,6 +17,10 @@ class VerifyEmail
         $domain = self::getDomain($email);
         if (isset(self::$domains[$domain])) {
             return self::$domains[$domain];
+        }
+
+        if (strpos($email, User::FAKE_EMAIL) !== false) {
+            return false;
         }
 
         $mxHosts = [];
