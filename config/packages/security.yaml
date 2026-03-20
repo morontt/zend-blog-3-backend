@@ -34,8 +34,8 @@ security:
         ROLE_ADMIN: ROLE_USER
 
     access_control:
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
-        - { path: ^/telegram, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
-        - { path: ^/webhook, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/login, roles: PUBLIC_ACCESS, requires_channel: https }
+        - { path: ^/telegram, roles: PUBLIC_ACCESS, requires_channel: https }
+        - { path: ^/webhook, roles: PUBLIC_ACCESS, requires_channel: https }
         - { path: ^/preview, roles: ROLE_USER, requires_channel: https }
         - { path: ^/, roles: ROLE_ADMIN, requires_channel: https }
