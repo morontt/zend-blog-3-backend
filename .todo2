@@ -803,7 +803,8 @@
     {
       "text": "Send email to fake email address",
       "priority": "medium",
-      "creation": 1773127516
+      "creation": 1773127516,
+      "completion": 1773951104
     },
     {
       "text": "Convert doctrine annotations to attributes",

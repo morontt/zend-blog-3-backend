@@ -7,6 +7,7 @@ use Generator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class EntityValueResolver implements ArgumentValueResolverInterface
 {
@@ -33,6 +34,11 @@ class EntityValueResolver implements ArgumentValueResolverInterface
         // @phpstan-ignore argument.templateType
         $repository = $objectManager->getRepository($argument->getType());
 
-        yield $repository->findOneBy(['id' => $request->attributes->get('id')]);
+        $entity = $repository->findOneBy(['id' => $request->attributes->get('id')]);
+        if (!$entity) {
+            throw new NotFoundHttpException('Not Found');
+        }
+
+        yield $entity;
     }
 }

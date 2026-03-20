@@ -26,6 +26,7 @@ class UserTransformerSpec extends ObjectBehavior
             ->setUsername('test-name')
             ->setEmail('user@example.org')
             ->setTimeCreated(DateTime::createFromFormat('Y-m-d H:i:s', '2024-08-11 11:30:28'))
+            ->setFakeEmail(false)
         ;
 
         $reflectionProperty->setValue($user, 175);
@@ -38,6 +39,7 @@ class UserTransformerSpec extends ObjectBehavior
             'role' => 'guest',
             'imageHash' => '037JC4',
             'isMale' => true,
+            'isValidEmail' => true,
             'createdAt' => '2024-08-11T11:30:28+03:00',
         ]);
     }
@@ -67,6 +69,7 @@ class UserTransformerSpec extends ObjectBehavior
             'role' => 'guest',
             'imageHash' => 'ZMXNUD',
             'isMale' => false,
+            'isValidEmail' => false,
             'createdAt' => '2024-08-11T11:28:39+03:00',
         ]);
 
@@ -79,6 +82,7 @@ class UserTransformerSpec extends ObjectBehavior
             'role' => 'guest',
             'imageHash' => 'R7WTVY',
             'isMale' => false,
+            'isValidEmail' => false,
             'createdAt' => '2024-08-11T11:28:39+03:00',
         ]);
     }

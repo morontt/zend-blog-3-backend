@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\EventListener\Doctrine;
 
 use App\Entity\Post;
@@ -8,9 +10,6 @@ use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 class ArticleUpdatedAtListener
 {
-    /**
-     * @param PreUpdateEventArgs $args
-     */
     public function preUpdate(PreUpdateEventArgs $args): void
     {
         $entity = $args->getObject();
@@ -27,7 +26,8 @@ class ArticleUpdatedAtListener
             }
 
             if ($changed) {
-                $em = $args->getEntityManager();
+                /** @var \Doctrine\ORM\EntityManagerInterface $em */
+                $em = $args->getObjectManager();
 
                 $meta = $em->getClassMetadata(Post::class);
                 $em->getUnitOfWork()->recomputeSingleEntityChangeSet($meta, $entity);

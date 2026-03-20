@@ -51,7 +51,81 @@ class Mailer
         $spool ? $this->queueMessage($message) : $this->send($message);
     }
 
-    public function send(EmailMessageDTO $messageDTO): bool
+    public function replyComment(Comment $comment): void
+    {
+        $parent = $comment->getParent();
+        if ($parent) {
+            $emailTo = null;
+            if ($user = $parent->getUser()) {
+                $emailTo = $user->isValidEmail() ? $user->getEmail() : null;
+            } elseif ($commentator = $parent->getCommentator()) {
+                $emailTo = $commentator->isValidEmail() ? $commentator->getEmail() : null;
+            }
+
+            if ($emailTo) {
+                $emailTo = VerifyEmail::normalize($emailTo);
+                $unsubscribeLink = $this->unsubscribeLink($emailTo, EmailMessageDTO::TYPE_COMMENT_REPLY);
+
+                $context = array_merge(
+                    $this->context($comment),
+                    [
+                        'unsubscribeLink' => $unsubscribeLink,
+                    ],
+                );
+
+                $template = $this->twig->load('mails/replyComment.html.twig');
+                $textTemplate = $this->twig->load('mails/replyComment.txt.twig');
+
+                $message = new EmailMessageDTO();
+
+                $message->subject = 'Ответ на комментарий';
+                $message->type = EmailMessageDTO::TYPE_COMMENT_REPLY;
+                $message->from = $this->emailFrom;
+                $message->to = $emailTo;
+                $message->messageHtml = $template->render($context);
+                $message->messageText = $textTemplate->render($context);
+                $message->unsubscribeLink = $unsubscribeLink;
+
+                $this->queueMessage($message);
+            }
+        }
+    }
+
+    public function spoolSend(?int $messageLimit = null, ?int $timeLimit = null): int
+    {
+        $count = 0;
+        $time = time();
+        foreach (new DirectoryIterator($this->spoolPath()) as $fileInfo) {
+            $file = $fileInfo->getRealPath();
+            if (substr($file, -8) !== '.message') {
+                continue;
+            }
+
+            if (rename($file, $file . '.sending')) {
+                $message = unserialize(
+                    file_get_contents($file . '.sending'),
+                    ['allowed_classes' => [EmailMessageDTO::class]]
+                );
+                if ($this->send($message)) {
+                    $count++;
+                    unlink($file . '.sending');
+                }
+            } else {
+                continue;
+            }
+
+            if ($messageLimit && $count >= $messageLimit) {
+                break;
+            }
+            if ($timeLimit && (time() - $time) >= $timeLimit) {
+                break;
+            }
+        }
+
+        return $count;
+    }
+
+    private function send(EmailMessageDTO $messageDTO): bool
     {
         if ($this->isBlocked($messageDTO)) {
             // successfully sent to black hole :)
@@ -99,10 +173,8 @@ class Mailer
 
     /**
      * Save message to spool
-     *
-     * @param EmailMessageDTO $messageDTO
      */
-    public function queueMessage(EmailMessageDTO $messageDTO): void
+    private function queueMessage(EmailMessageDTO $messageDTO): void
     {
         if ($this->isBlocked($messageDTO)) {
             return;
@@ -124,80 +196,6 @@ class Mailer
         $fp = fopen($fileName, 'wb');
         fwrite($fp, serialize($messageDTO));
         fclose($fp);
-    }
-
-    public function spoolSend(?int $messageLimit = null, ?int $timeLimit = null): int
-    {
-        $count = 0;
-        $time = time();
-        foreach (new DirectoryIterator($this->spoolPath()) as $fileInfo) {
-            $file = $fileInfo->getRealPath();
-            if (substr($file, -8) !== '.message') {
-                continue;
-            }
-
-            if (rename($file, $file . '.sending')) {
-                $message = unserialize(
-                    file_get_contents($file . '.sending'),
-                    ['allowed_classes' => [EmailMessageDTO::class]]
-                );
-                if ($this->send($message)) {
-                    $count++;
-                    unlink($file . '.sending');
-                }
-            } else {
-                continue;
-            }
-
-            if ($messageLimit && $count >= $messageLimit) {
-                break;
-            }
-            if ($timeLimit && (time() - $time) >= $timeLimit) {
-                break;
-            }
-        }
-
-        return $count;
-    }
-
-    public function replyComment(Comment $comment): void
-    {
-        $parent = $comment->getParent();
-        if ($parent) {
-            $emailTo = null;
-            if ($user = $parent->getUser()) {
-                $emailTo = $user->getEmail();
-            } elseif ($commentator = $parent->getCommentator()) {
-                $emailTo = $commentator->isValidEmail() ? $commentator->getEmail() : null;
-            }
-
-            if ($emailTo) {
-                $emailTo = VerifyEmail::normalize($emailTo);
-                $unsubscribeLink = $this->unsubscribeLink($emailTo, EmailMessageDTO::TYPE_COMMENT_REPLY);
-
-                $context = array_merge(
-                    $this->context($comment),
-                    [
-                        'unsubscribeLink' => $unsubscribeLink,
-                    ],
-                );
-
-                $template = $this->twig->load('mails/replyComment.html.twig');
-                $textTemplate = $this->twig->load('mails/replyComment.txt.twig');
-
-                $message = new EmailMessageDTO();
-
-                $message->subject = 'Ответ на комментарий';
-                $message->type = EmailMessageDTO::TYPE_COMMENT_REPLY;
-                $message->from = $this->emailFrom;
-                $message->to = $emailTo;
-                $message->messageHtml = $template->render($context);
-                $message->messageText = $textTemplate->render($context);
-                $message->unsubscribeLink = $unsubscribeLink;
-
-                $this->queueMessage($message);
-            }
-        }
     }
 
     private function spoolPath(): string

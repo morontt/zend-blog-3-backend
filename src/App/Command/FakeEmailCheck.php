@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Repository\CommentatorRepository;
+use App\Repository\UserRepository;
 use App\Utils\VerifyEmail;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,6 +16,7 @@ class FakeEmailCheck extends Command
 {
     public function __construct(
         private CommentatorRepository $repository,
+        private UserRepository $userRepository,
         private EntityManagerInterface $em,
     ) {
         parent::__construct();
@@ -34,6 +36,24 @@ class FakeEmailCheck extends Command
 
         $commentators = $this->repository->getWithUncheckedEmails();
         foreach ($commentators as $entity) {
+            $result = VerifyEmail::isValid($entity->getEmail());
+
+            $entity
+                ->setFakeEmail(!$result)
+                ->setEmailCheck(new DateTime())
+            ;
+
+            $rows[] = [
+                $entity->getId(),
+                $entity->getEmail(),
+                $result ? '<fg=green>true</>' : '<fg=red>false</>',
+            ];
+        }
+
+        $this->em->flush();
+
+        $users = $this->userRepository->getWithUncheckedEmails();
+        foreach ($users as $entity) {
             $result = VerifyEmail::isValid($entity->getEmail());
 
             $entity

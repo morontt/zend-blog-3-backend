@@ -22,6 +22,7 @@ class UserTransformer extends BaseTransformer
             'role' => $item->getUserType(),
             'imageHash' => $item->getAvatarHash(),
             'isMale' => $item->getGender() === User::MALE,
+            'isValidEmail' => $item->isValidEmail(),
             'createdAt' => $this->dateTimeToISO($item->getTimeCreated()),
         ];
     }

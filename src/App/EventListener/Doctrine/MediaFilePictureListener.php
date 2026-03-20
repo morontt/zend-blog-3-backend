@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\EventListener\Doctrine;
 
 use App\Entity\MediaFile;
@@ -10,19 +12,12 @@ use JsonException;
 
 class MediaFilePictureListener
 {
-    private PictureTagBuilder $ptb;
-
-    public function __construct(PictureTagBuilder $ptb)
+    public function __construct(private PictureTagBuilder $ptb)
     {
-        $this->ptb = $ptb;
     }
 
     /**
-     * @param PreUpdateEventArgs $args
-     *
      * @throws JsonException
-     *
-     * @return void
      */
     public function preUpdate(PreUpdateEventArgs $args): void
     {
@@ -41,7 +36,8 @@ class MediaFilePictureListener
                 $entity->setSrcSet(json_encode($srcSetData, JSON_THROW_ON_ERROR));
             }
 
-            $em = $args->getEntityManager();
+            /** @var \Doctrine\ORM\EntityManagerInterface $em */
+            $em = $args->getObjectManager();
             $meta = $em->getClassMetadata(MediaFile::class);
             $em->getUnitOfWork()->recomputeSingleEntityChangeSet($meta, $entity);
         }

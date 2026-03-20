@@ -153,6 +153,7 @@ class DataConverterSpec extends ObjectBehavior
                     'website' => 'http://example.org',
                     'imageHash' => 'A9GSDZ',
                     'isMale' => true,
+                    'isValidEmail' => false,
                     'createdAt' => '2025-01-18T20:05:49+03:00',
                 ],
             ]
@@ -179,6 +180,7 @@ class DataConverterSpec extends ObjectBehavior
                         'website' => 'http://example.org',
                         'imageHash' => 'A9GSDZ',
                         'isMale' => true,
+                        'isValidEmail' => false,
                         'createdAt' => '2025-01-18T20:05:49+03:00',
                     ],
                     [
@@ -188,6 +190,7 @@ class DataConverterSpec extends ObjectBehavior
                         'website' => 'http://example.com',
                         'imageHash' => '07XXUP',
                         'isMale' => false,
+                        'isValidEmail' => false,
                         'createdAt' => '2025-01-18T20:06:01+03:00',
                     ],
                 ],
@@ -361,6 +364,7 @@ class DataConverterSpec extends ObjectBehavior
                         'website' => 'http://example.org',
                         'imageHash' => 'ZJQ6CD',
                         'isMale' => true,
+                        'isValidEmail' => false,
                         'createdAt' => '2025-01-18T20:05:49+03:00',
                     ],
                 ],
