@@ -45,7 +45,7 @@ class PostsBatchUpdateCommand extends Command
      * @param InputInterface $input
      * @param OutputInterface $output
      *
-     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\Exception\ORMException
      * @throws JsonException
      *
      * @return int

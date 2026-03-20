@@ -27,7 +27,7 @@ class SystemParametersStorage
     }
 
     /**
-     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\Exception\ORMException
      */
     public function saveParameter(string $key, string $value, bool $encrypted = false): void
     {

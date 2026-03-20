@@ -12,7 +12,6 @@ namespace App\Command;
 use App\Entity\SystemParameters;
 use App\OAuth2\Client\DropboxProvider;
 use App\Service\SystemParametersStorage;
-use Doctrine\ORM\ORMException;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use RuntimeException;
 use Symfony\Component\Console\Command\Command;
@@ -63,7 +62,7 @@ class DropboxAuthCommand extends Command
      * @param OutputInterface $output
      *
      * @throws IdentityProviderException
-     * @throws ORMException
+     * @throws \Doctrine\ORM\Exception\ORMException
      *
      * @return int
      */
@@ -108,7 +107,7 @@ class DropboxAuthCommand extends Command
     /**
      * @param string $accessToken
      *
-     * @throws ORMException
+     * @throws \Doctrine\ORM\Exception\ORMException
      */
     protected function saveAccessToken(string $accessToken): void
     {
