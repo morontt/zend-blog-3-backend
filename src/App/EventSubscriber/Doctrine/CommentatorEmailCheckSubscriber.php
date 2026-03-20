@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\EventSubscriber\Doctrine;
 
+use App\Entity\Commentator;
 use App\Entity\User;
 use App\Utils\VerifyEmail;
 use DateTime;
@@ -12,7 +13,7 @@ use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Events;
 
-class UserEmailCheckSubscriber implements EventSubscriberInterface
+class CommentatorEmailCheckSubscriber implements EventSubscriberInterface
 {
     public function getSubscribedEvents(): array
     {
@@ -25,12 +26,19 @@ class UserEmailCheckSubscriber implements EventSubscriberInterface
     public function preUpdate(PreUpdateEventArgs $args): void
     {
         $entity = $args->getObject();
-        if ($entity instanceof User) {
+        if ($entity instanceof Commentator) {
             if ($args->hasChangedField('email')) {
-                $entity
-                    ->setFakeEmail(!VerifyEmail::isValid($entity->getEmail()))
-                    ->setEmailCheck(new DateTime())
-                ;
+                if ($entity->getEmail()) {
+                    $entity
+                        ->setFakeEmail(!VerifyEmail::isValid($entity->getEmail()))
+                        ->setEmailCheck(new DateTime())
+                    ;
+                } else {
+                    $entity
+                        ->setFakeEmail(null)
+                        ->setEmailCheck(null)
+                    ;
+                }
 
                 /** @var \Doctrine\ORM\EntityManagerInterface $em */
                 $em = $args->getObjectManager();
@@ -44,11 +52,13 @@ class UserEmailCheckSubscriber implements EventSubscriberInterface
     public function prePersist(PrePersistEventArgs $args): void
     {
         $entity = $args->getObject();
-        if ($entity instanceof User) {
-            $entity
-                ->setFakeEmail(!VerifyEmail::isValid($entity->getEmail()))
-                ->setEmailCheck(new DateTime())
-            ;
+        if ($entity instanceof Commentator) {
+            if ($entity->getEmail()) {
+                $entity
+                    ->setFakeEmail(!VerifyEmail::isValid($entity->getEmail()))
+                    ->setEmailCheck(new DateTime())
+                ;
+            }
         }
     }
 }
