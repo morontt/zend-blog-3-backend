@@ -4,27 +4,24 @@ namespace App\ArgumentResolver;
 
 use App\DTO\ExternalUserDTO;
 use App\Utils\VerifyEmail;
-use Generator;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
+use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 
-class ExternalUserValueResolver implements ArgumentValueResolverInterface
+class ExternalUserValueResolver implements ValueResolverInterface
 {
-    public function supports(Request $request, ArgumentMetadata $argument): bool
-    {
-        if (ExternalUserDTO::class !== $argument->getType()) {
-            return false;
-        }
-
-        return $request->request->has('userData');
-    }
-
     /**
-     * @return Generator
+     * @return ExternalUserDTO[]
      */
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
+        if (
+            ExternalUserDTO::class !== $argument->getType()
+            || !$request->request->has('userData')
+        ) {
+            return [];
+        }
+
         $data = $request->request->all('userData');
         $dto = new ExternalUserDTO();
 
@@ -44,6 +41,6 @@ class ExternalUserValueResolver implements ArgumentValueResolverInterface
         $dto->gender = $data['gender'] ?? null;
         $dto->avatar = $data['avatar'] ?? null;
 
-        yield $dto;
+        return [$dto];
     }
 }

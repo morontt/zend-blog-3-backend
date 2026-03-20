@@ -7,6 +7,7 @@ use App\Repository\ViewCommentRepository;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use JsonException;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -66,12 +67,11 @@ class DefaultController extends AbstractController
     }
 
     #[Route(path: '/preview/{slug}', name: 'post_preview', options: ['expose' => true])]
-    public function previewAction(ViewCommentRepository $repository, ?Post $post = null): Response
-    {
-        if (!$post) {
-            throw $this->createNotFoundException();
-        }
-
+    public function previewAction(
+        ViewCommentRepository $repository,
+        #[MapEntity(mapping: ['slug' => 'url'])]
+        Post $post,
+    ): Response {
         $comments = $repository->getCommentsByPost($post);
 
         return $this->render('default/preview.html.twig', compact('post', 'comments'));
