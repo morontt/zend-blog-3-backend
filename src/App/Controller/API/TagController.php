@@ -14,7 +14,6 @@ use App\Controller\BaseController;
 use App\Entity\Tag;
 use App\Form\TagFormType;
 use App\Repository\TagRepository;
-use Doctrine\ORM\ORMException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -129,7 +128,7 @@ class TagController extends BaseController
     /**
      * @param Tag $entity
      *
-     * @throws ORMException
+     * @throws \Doctrine\ORM\Exception\ORMException
      *
      * @return JsonResponse
      */
