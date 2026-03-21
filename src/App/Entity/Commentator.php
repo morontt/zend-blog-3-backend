@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Interfaces\EmailCheckInterface;
 use App\Entity\Traits\Gravatar;
 use App\Entity\Traits\ModifyEntityTrait;
 use App\Repository\CommentatorRepository;
@@ -14,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\UniqueConstraint(columns: ['name', 'mail', 'website'])]
 #[ORM\Entity(repositoryClass: CommentatorRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class Commentator implements CommentatorInterface
+class Commentator implements CommentatorInterface, EmailCheckInterface
 {
     use Gravatar;
     use ModifyEntityTrait;
@@ -241,12 +242,7 @@ class Commentator implements CommentatorInterface
         return $this->fakeEmail;
     }
 
-    /**
-     * @param bool|null $fakeEmail
-     *
-     * @return Commentator
-     */
-    public function setFakeEmail(?bool $fakeEmail): self
+    public function setFakeEmail(?bool $fakeEmail): static
     {
         $this->fakeEmail = $fakeEmail;
 
@@ -261,12 +257,7 @@ class Commentator implements CommentatorInterface
         return $this->emailCheck;
     }
 
-    /**
-     * @param DateTime|null $emailCheck
-     *
-     * @return Commentator
-     */
-    public function setEmailCheck(?DateTime $emailCheck): self
+    public function setEmailCheck(?DateTime $emailCheck): static
     {
         $this->emailCheck = $emailCheck;
 

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Interfaces\EmailCheckInterface;
 use App\Repository\UserRepository;
 use App\Utils\HashId;
 use DateTime;
@@ -20,7 +21,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[DoctrineAssert\UniqueEntity(fields: ['username'], message: 'This username is already used')]
 #[DoctrineAssert\UniqueEntity(fields: ['email'], message: 'This email is already used')]
-class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface
+class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface, EmailCheckInterface
 {
     public const ROLE_USER = 'ROLE_USER';
     public const ROLE_ADMIN = 'ROLE_ADMIN';
@@ -464,7 +465,7 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface
         return $this->fakeEmail;
     }
 
-    public function setFakeEmail(?bool $fakeEmail): self
+    public function setFakeEmail(?bool $fakeEmail): static
     {
         $this->fakeEmail = $fakeEmail;
 
@@ -476,7 +477,7 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface
         return $this->emailCheck;
     }
 
-    public function setEmailCheck(?DateTime $emailCheck): self
+    public function setEmailCheck(?DateTime $emailCheck): static
     {
         $this->emailCheck = $emailCheck;
 

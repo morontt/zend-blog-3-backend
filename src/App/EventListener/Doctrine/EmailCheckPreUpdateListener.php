@@ -2,31 +2,22 @@
 
 declare(strict_types=1);
 
-namespace App\EventSubscriber\Doctrine;
+namespace App\EventListener\Doctrine;
 
-use App\Entity\Commentator;
-use App\Entity\User;
+use App\Entity\Interfaces\EmailCheckInterface;
 use App\Utils\VerifyEmail;
 use DateTime;
-use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
-use Doctrine\ORM\Event\PrePersistEventArgs;
+use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Events;
 
-class CommentatorEmailCheckSubscriber implements EventSubscriberInterface
+#[AsDoctrineListener(event: Events::preUpdate)]
+class EmailCheckPreUpdateListener
 {
-    public function getSubscribedEvents(): array
-    {
-        return [
-            Events::preUpdate,
-            Events::prePersist,
-        ];
-    }
-
     public function preUpdate(PreUpdateEventArgs $args): void
     {
         $entity = $args->getObject();
-        if ($entity instanceof Commentator) {
+        if ($entity instanceof EmailCheckInterface) {
             if ($args->hasChangedField('email')) {
                 if ($entity->getEmail()) {
                     $entity
@@ -43,21 +34,8 @@ class CommentatorEmailCheckSubscriber implements EventSubscriberInterface
                 /** @var \Doctrine\ORM\EntityManagerInterface $em */
                 $em = $args->getObjectManager();
 
-                $meta = $em->getClassMetadata(User::class);
+                $meta = $em->getClassMetadata(get_class($entity));
                 $em->getUnitOfWork()->recomputeSingleEntityChangeSet($meta, $entity);
-            }
-        }
-    }
-
-    public function prePersist(PrePersistEventArgs $args): void
-    {
-        $entity = $args->getObject();
-        if ($entity instanceof Commentator) {
-            if ($entity->getEmail()) {
-                $entity
-                    ->setFakeEmail(!VerifyEmail::isValid($entity->getEmail()))
-                    ->setEmailCheck(new DateTime())
-                ;
             }
         }
     }
