@@ -214,12 +214,19 @@ class DataConverterSpec extends ObjectBehavior
 
         $reflectionProperty->setValue($commentator, 13);
 
+        $post = new Post();
+        $post
+            ->setTitle('Тестовая запись')
+            ->setUrl('testovaya-zapis')
+        ;
+
         $comment = new Comment();
         $comment
             ->setText('Тестовый комментарий')
             ->setIpAddress('94.231.112.91')
             ->setTimeCreated(DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-28 01:30:49'))
             ->setCommentator($commentator)
+            ->setPost($post)
         ;
 
         $this->getComment($comment)->shouldReturn(
@@ -242,16 +249,25 @@ class DataConverterSpec extends ObjectBehavior
                     'deleted' => false,
                     'userAgent' => null,
                     'bot' => false,
+                    'articleSlug' => 'testovaya-zapis',
+                    'articleTitle' => 'Тестовая запись',
                     'createdAt' => '2016-02-28T01:30:49+03:00',
                 ],
             ]
         );
+
+        $post2 = new Post();
+        $post2
+            ->setTitle('запись')
+            ->setUrl('zapis')
+        ;
 
         $comment2 = new Comment();
         $comment2
             ->setText('йцук фыва олдж')
             ->setIpAddress('62.72.188.111')
             ->setTimeCreated(DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-28 01:43:14'))
+            ->setPost($post2)
         ;
 
         $location = new GeoLocation();
@@ -306,6 +322,8 @@ class DataConverterSpec extends ObjectBehavior
                         'deleted' => false,
                         'userAgent' => null,
                         'bot' => false,
+                        'articleSlug' => 'testovaya-zapis',
+                        'articleTitle' => 'Тестовая запись',
                         'createdAt' => '2016-02-28T01:30:49+03:00',
                     ],
                     [
@@ -326,6 +344,8 @@ class DataConverterSpec extends ObjectBehavior
                         'deleted' => false,
                         'userAgent' => null,
                         'bot' => false,
+                        'articleSlug' => 'zapis',
+                        'articleTitle' => 'запись',
                         'createdAt' => '2016-02-28T01:43:14+03:00',
                     ],
                 ],
@@ -353,6 +373,8 @@ class DataConverterSpec extends ObjectBehavior
                         'deleted' => false,
                         'userAgent' => null,
                         'bot' => false,
+                        'articleSlug' => 'zapis',
+                        'articleTitle' => 'запись',
                         'createdAt' => '2016-02-28T01:43:14+03:00',
                     ],
                 ],

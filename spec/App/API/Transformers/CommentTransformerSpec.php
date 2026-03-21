@@ -5,6 +5,7 @@ namespace spec\App\API\Transformers;
 use App\API\Transformers\CommentTransformer;
 use App\Entity\Comment;
 use App\Entity\Commentator;
+use App\Entity\Post;
 use App\Entity\User;
 use App\Entity\ViewComment;
 use DateTime;
@@ -33,12 +34,19 @@ class CommentTransformerSpec extends ObjectBehavior
 
         $reflectionProperty->setValue($commentator, 27);
 
+        $post = new Post();
+        $post
+            ->setTitle('Тестовая запись')
+            ->setUrl('testovaya-zapis')
+        ;
+
         $comment = new Comment();
         $comment
             ->setText('Тестовый комментарий')
             ->setIpAddress('94.231.112.91')
             ->setTimeCreated(DateTime::createFromFormat('Y-m-d H:i:s', '2016-02-28 01:30:49'))
             ->setCommentator($commentator)
+            ->setPost($post)
         ;
 
         $this->transform($comment)->shouldReturn([
@@ -59,6 +67,8 @@ class CommentTransformerSpec extends ObjectBehavior
             'deleted' => false,
             'userAgent' => null,
             'bot' => false,
+            'articleSlug' => 'testovaya-zapis',
+            'articleTitle' => 'Тестовая запись',
             'createdAt' => '2016-02-28T01:30:49+03:00',
         ]);
     }
@@ -82,6 +92,16 @@ class CommentTransformerSpec extends ObjectBehavior
         $textProperty->setValue($comment, 'Lorem ipsum');
         $createdProperty->setValue($comment, DateTime::createFromFormat('Y-m-d H:i:s', '2023-06-27 14:21:09'));
 
+        $post = new Post();
+        $post
+            ->setTitle('Тестовая запись')
+            ->setUrl('testovaya-zapis')
+        ;
+
+        $postProperty = $reflectionClass->getProperty('post');
+        $postProperty->setAccessible(true);
+        $postProperty->setValue($comment, $post);
+
         $this->transform($comment)->shouldReturn([
             'id' => null,
             'text' => 'Lorem ipsum',
@@ -100,6 +120,8 @@ class CommentTransformerSpec extends ObjectBehavior
             'deleted' => false,
             'userAgent' => null,
             'bot' => false,
+            'articleSlug' => 'testovaya-zapis',
+            'articleTitle' => 'Тестовая запись',
             'createdAt' => '2023-06-27T14:21:09+03:00',
         ]);
     }
@@ -118,12 +140,19 @@ class CommentTransformerSpec extends ObjectBehavior
 
         $reflectionProperty->setValue($user, 48);
 
+        $post = new Post();
+        $post
+            ->setTitle('Тестовая запись')
+            ->setUrl('testovaya-zapis')
+        ;
+
         $comment = new Comment();
         $comment
             ->setText('Тестовый комментарий')
             ->setIpAddress('94.231.112.91')
             ->setTimeCreated(DateTime::createFromFormat('Y-m-d H:i:s', '2023-02-28 01:30:49'))
             ->setUser($user)
+            ->setPost($post)
         ;
 
         $this->transform($comment)->shouldReturn([
@@ -144,6 +173,8 @@ class CommentTransformerSpec extends ObjectBehavior
             'deleted' => false,
             'userAgent' => null,
             'bot' => false,
+            'articleSlug' => 'testovaya-zapis',
+            'articleTitle' => 'Тестовая запись',
             'createdAt' => '2023-02-28T01:30:49+03:00',
         ]);
     }

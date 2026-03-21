@@ -315,26 +315,14 @@ class Comment implements CommentInterface
         return $this->ipAddress;
     }
 
-    /**
-     * Set post
-     *
-     * @param Post $post
-     *
-     * @return Comment
-     */
-    public function setPost(?Post $post = null): self
+    public function setPost(Post $post): self
     {
         $this->post = $post;
 
         return $this;
     }
 
-    /**
-     * Get post
-     *
-     * @return Post
-     */
-    public function getPost()
+    public function getPost(): Post
     {
         return $this->post;
     }

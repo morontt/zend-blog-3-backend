@@ -1,9 +1,13 @@
 import Ember from 'ember';
+import config from 'mtt-blog/config/environment';
 
 export default Ember.Component.extend({
     tagName: 'tr',
     isEditing: false,
     actions: {
+        openTarget() {
+            window.open(config.appParameters.blogURL + '/article/' + this.get('comment.articleSlug'), '_blank');
+        },
         edit: function () {
             this.set('isEditing', true);
         },

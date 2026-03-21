@@ -318,12 +318,7 @@ class ViewComment implements CommentInterface
         return $this->parent;
     }
 
-    /**
-     * Get post
-     *
-     * @return Post
-     */
-    public function getPost()
+    public function getPost(): Post
     {
         return $this->post;
     }

@@ -19,6 +19,8 @@ export default DS.Model.extend({
     createdAt: DS.attr('date'),
     userAgent: DS.attr('string'),
     bot: DS.attr('boolean'),
+    articleSlug: DS.attr('string'),
+    articleTitle: DS.attr('string'),
     privateIP: function () {
         return this.get('city') === '-';
     }.property('city'),

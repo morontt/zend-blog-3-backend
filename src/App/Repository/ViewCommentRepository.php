@@ -6,6 +6,7 @@ use App\Entity\Post;
 use App\Entity\ViewComment;
 use App\Repository\Traits\ListQueryTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -40,5 +41,20 @@ class ViewCommentRepository extends ServiceEntityRepository
         ;
 
         return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return Query<null, ViewComment>
+     */
+    public function getListQuery(): Query
+    {
+        $qb = $this->createQueryBuilder('e');
+        $qb
+            ->select('e', 'p')
+            ->innerJoin('e.post', 'p')
+            ->orderBy('e.id', 'DESC')
+        ;
+
+        return $qb->getQuery();
     }
 }

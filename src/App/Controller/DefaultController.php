@@ -57,6 +57,7 @@ class DefaultController extends AbstractController
             'appParameters' => [
                 'apiURL' => $this->generateUrl('api_root'),
                 'cdnURL' => $this->cdnUrl,
+                'blogURL' => $this->frontendSite,
             ],
         ];
 

@@ -20,4 +20,6 @@ interface CommentInterface
      * @return CommentInterface|null
      */
     public function getParent();
+
+    public function getPost(): Post;
 }

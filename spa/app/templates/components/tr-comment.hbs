@@ -33,7 +33,13 @@
     <td>
         <img src="{{comment.avatarUrl}}" width="80" height="80" alt="{{comment.avatarTitle}}"/>
     </td>
-    <td>{{cut-string comment.text 120}}</td>
+    <td>
+        <a {{action "openTarget"}} class="force-pointer">
+            {{cut-string comment.articleTitle 30}}
+        </a>
+        <br><br>
+        {{cut-string comment.text 120}}
+    </td>
     <td>
         {{comment.ipAddr}}
         {{#if comment.city}}

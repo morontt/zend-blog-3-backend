@@ -125,6 +125,8 @@ class CommentTransformer extends BaseTransformer
             'deleted' => $item->isDeleted(),
             'userAgent' => $userAgent,
             'bot' => $bot,
+            'articleSlug' => $item->getPost()->getUrl(),
+            'articleTitle' => $item->getPost()->getTitle(),
             'createdAt' => $this->dateTimeToISO($item->getTimeCreated()),
         ];
     }
