@@ -14,7 +14,7 @@ class IpLongIdGenerator extends AbstractIdGenerator
      *
      * @return mixed
      */
-    public function generateId(EntityManagerInterface $em, $entity)
+    public function generateId(EntityManagerInterface $em, ?object $entity): mixed
     {
         if (!$entity || !method_exists($entity, 'getIpAddress')) {
             throw new RuntimeException('IpLongIdGenerator not supported for ' . $entity ? get_class($entity) : 'null');

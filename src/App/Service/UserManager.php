@@ -9,22 +9,17 @@ use App\Entity\UserExtraInfo;
 use App\Exception\ShortPasswordException;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserManager
 {
-    private EntityManagerInterface $em;
-    private UserPasswordHasherInterface $passwordHasher;
-    private Tracking $tracking;
-
     public function __construct(
-        EntityManagerInterface $em,
-        UserPasswordHasherInterface $passwordHasher,
-        Tracking $tracking,
+        private EntityManagerInterface $em,
+        private UserPasswordHasherInterface $passwordHasher,
+        private Tracking $tracking,
+        private LoggerInterface $logger,
     ) {
-        $this->em = $em;
-        $this->passwordHasher = $passwordHasher;
-        $this->tracking = $tracking;
     }
 
     public function findByExternalDTO(ExternalUserDTO $data): UserByExternalDTO
@@ -36,6 +31,12 @@ class UserManager
         ]);
 
         if ($userInfo) {
+            $this->logger->info('find by external ID', [
+                'external_id' => $data->id,
+                'provider' => $data->dataProvider,
+                'user' => $userInfo->getUser()->getId(),
+            ]);
+
             return new UserByExternalDTO($userInfo->getUser(), true);
         }
 
@@ -43,9 +44,20 @@ class UserManager
             $userRepository = $this->em->getRepository(User::class);
             $user = $userRepository->findOneBy(['email' => $data->email]);
             if ($user) {
+                $this->logger->info('find by email', [
+                    'email' => $data->email,
+                    'provider' => $data->dataProvider,
+                    'user' => $user->getId(),
+                ]);
+
                 return new UserByExternalDTO($user, false);
             }
         }
+
+        $this->logger->info('New user', [
+            'external_id' => $data->id,
+            'provider' => $data->dataProvider,
+        ]);
 
         return new UserByExternalDTO(null, false);
     }

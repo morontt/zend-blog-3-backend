@@ -82,14 +82,6 @@ services:
         tags:
             - { name: doctrine.event_listener, event: preUpdate }
 
-    App\EventSubscriber\Doctrine\CommentatorEmailCheckSubscriber:
-        tags:
-            - { name: doctrine.event_subscriber }
-
-    App\EventSubscriber\Doctrine\UserEmailCheckSubscriber:
-        tags:
-            - { name: doctrine.event_subscriber }
-
     App\EventListener\Comment\CommentatorCheckListener:
         tags:
             - { name: kernel.event_listener, event: App\Event\CommentEvent }
@@ -185,6 +177,7 @@ services:
         arguments:
             - "%telegram_token%"
             - "%telegram_admin_id%"
+            - "%env(bool:TELEGRAM_DRY_RUN)%"
         calls:
             - [ setLogger, [ "@monolog.logger.telegram" ]]
             - [ setUpdatesManager, [ '@App\Telegram\UpdatesManager' ]]

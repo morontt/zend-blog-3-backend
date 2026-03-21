@@ -8,7 +8,7 @@ use Twig\TwigFunction;
 
 class Assets extends AbstractExtension
 {
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction(
