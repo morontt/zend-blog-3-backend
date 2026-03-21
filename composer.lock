@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d9656f6faa91dfe1938b86ff9ddace3c",
+    "content-hash": "0ce12fdec7959d455b7fa3fceb1d8a9d",
     "packages": [
         {
             "name": "doctrine/cache",
@@ -9441,16 +9441,16 @@
         },
         {
             "name": "xelbot/lib-telegram",
-            "version": "1.1",
+            "version": "1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/xelbot/lib-telegram.git",
-                "reference": "3b392a2eb37d31cabe421f0a297eded873a6c665"
+                "reference": "d090eca5e5d7debd60ceee0a0ab1b8ada4107165"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xelbot/lib-telegram/zipball/3b392a2eb37d31cabe421f0a297eded873a6c665",
-                "reference": "3b392a2eb37d31cabe421f0a297eded873a6c665",
+                "url": "https://api.github.com/repos/xelbot/lib-telegram/zipball/d090eca5e5d7debd60ceee0a0ab1b8ada4107165",
+                "reference": "d090eca5e5d7debd60ceee0a0ab1b8ada4107165",
                 "shasum": ""
             },
             "require": {
@@ -9490,9 +9490,9 @@
             ],
             "support": {
                 "issues": "https://github.com/xelbot/lib-telegram/issues",
-                "source": "https://github.com/xelbot/lib-telegram/tree/1.1"
+                "source": "https://github.com/xelbot/lib-telegram/tree/1.2"
             },
-            "time": "2025-02-21T07:51:19+00:00"
+            "time": "2026-03-21T11:30:10+00:00"
         }
     ],
     "packages-dev": [

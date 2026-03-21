@@ -17,10 +17,6 @@ class NewCommentEmailListener
         private LoggerInterface $logger,
         private Robot $bot,
     ) {
-        $this->repository = $repository;
-        $this->mailer = $mailer;
-        $this->logger = $logger;
-        $this->bot = $bot;
     }
 
     /**

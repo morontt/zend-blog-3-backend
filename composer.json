@@ -66,7 +66,7 @@
         "symfony/yaml": "6.2.*",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0",
-        "xelbot/lib-telegram": "^1.0"
+        "xelbot/lib-telegram": "^1.2"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.0",

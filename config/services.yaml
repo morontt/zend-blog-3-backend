@@ -177,6 +177,7 @@ services:
         arguments:
             - "%telegram_token%"
             - "%telegram_admin_id%"
+            - "%env(bool:TELEGRAM_DRY_RUN)%"
         calls:
             - [ setLogger, [ "@monolog.logger.telegram" ]]
             - [ setUpdatesManager, [ '@App\Telegram\UpdatesManager' ]]

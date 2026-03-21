@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * User: morontt
  * Date: 22.04.2025
@@ -12,13 +14,10 @@ use App\Entity\User;
 
 class UserByExternalDTO
 {
-    private ?User $user;
-    private bool $found;
-
-    public function __construct(?User $user, bool $found)
-    {
-        $this->user = $user;
-        $this->found = $found;
+    public function __construct(
+        private ?User $user,
+        private bool $found,
+    ) {
     }
 
     public function getUser(): ?User
