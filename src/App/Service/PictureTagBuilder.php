@@ -143,8 +143,8 @@ class PictureTagBuilder
         $first = reset($files);
 
         $img->addAttribute('src', $this->imageBasepath . $first['path']);
-        $img->addAttribute('width', $first['width']);
-        $img->addAttribute('height', $first['height']);
+        $img->addAttribute('width', (string)$first['width']);
+        $img->addAttribute('height', (string)$first['height']);
         if ($alt) {
             $img->addAttribute('alt', $alt);
             if ($withTitle) {
