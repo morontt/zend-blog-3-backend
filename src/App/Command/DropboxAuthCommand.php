@@ -79,6 +79,7 @@ class DropboxAuthCommand extends Command
         $output->writeln('2. Click <comment>"Allow"</comment> (you might have to log in first).');
         $output->writeln("3. Copy the authorization code.\n");
 
+        /** @var \Symfony\Component\Console\Helper\QuestionHelper $dialog */
         $dialog = $this->getHelper('question');
         $question = new Question('Enter the authorization code here: ');
         $question->setValidator(function ($answer) {
