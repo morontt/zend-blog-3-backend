@@ -26,10 +26,6 @@ class NewCommentEmailListener
     {
         try {
             $admin = $this->repository->getAdmin();
-            if (!$admin->getEmail()) {
-                return;
-            }
-
             $comment = $event->getComment();
 
             $user = $comment->getUser();

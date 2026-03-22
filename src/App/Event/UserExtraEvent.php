@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Event;
 
 use App\Entity\UserExtraInfo;
@@ -7,18 +9,19 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class UserExtraEvent extends Event
 {
-    private UserExtraInfo $extraInfo;
-
-    /**
-     * @param UserExtraInfo $extraInfo
-     */
-    public function __construct(UserExtraInfo $extraInfo)
-    {
-        $this->extraInfo = $extraInfo;
+    public function __construct(
+        private UserExtraInfo $extraInfo,
+        private bool $newUser,
+    ) {
     }
 
     public function getExtraInfo(): UserExtraInfo
     {
         return $this->extraInfo;
+    }
+
+    public function isNewUser(): bool
+    {
+        return $this->newUser;
     }
 }

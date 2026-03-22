@@ -7,6 +7,7 @@ namespace App\Service;
 use App\DTO\EmailMessageDTO;
 use App\Entity\Comment;
 use App\Repository\EmailSubscriptionSettingsRepository;
+use App\Repository\UserRepository;
 use App\Utils\HashId;
 use App\Utils\VerifyEmail;
 use DirectoryIterator;
@@ -26,6 +27,7 @@ class Mailer
         private TwigEnvironment $twig,
         private Robot $bot,
         private EmailSubscriptionSettingsRepository $subscriptionRepository,
+        private UserRepository $userRepository,
         private LoggerInterface $logger,
         private string $frontendSite,
         private string $emailFrom,
@@ -91,6 +93,42 @@ class Mailer
         }
     }
 
+    /**
+     * @param string[] $messages
+     */
+    public function systemNotification(array $messages, bool $spool = false): void
+    {
+        $admin = $this->userRepository->getAdmin();
+
+        $emailTo = VerifyEmail::normalize($admin->getEmail());
+        $unsubscribeLink = $this->unsubscribeLink($emailTo, EmailMessageDTO::TYPE_SYSTEM);
+
+        $messages = $this->filteredSystemMessages($messages);
+        if (!count($messages)) {
+            return;
+        }
+
+        $context = [
+            'messages' => $messages,
+            'unsubscribeLink' => $unsubscribeLink,
+        ];
+
+        $template = $this->twig->load('mails/system.html.twig');
+        $textTemplate = $this->twig->load('mails/system.txt.twig');
+
+        $message = new EmailMessageDTO();
+
+        $message->subject = 'Системное уведомление';
+        $message->type = EmailMessageDTO::TYPE_SYSTEM;
+        $message->from = $this->emailFrom;
+        $message->to = $emailTo;
+        $message->messageHtml = $template->render($context);
+        $message->messageText = $textTemplate->render($context);
+        $message->unsubscribeLink = $unsubscribeLink;
+
+        $spool ? $this->queueMessage($message) : $this->send($message);
+    }
+
     public function spoolSend(?int $messageLimit = null, ?int $timeLimit = null): int
     {
         $count = 0;
@@ -123,6 +161,21 @@ class Mailer
         }
 
         return $count;
+    }
+
+    /**
+     * @param string[] $messages
+     *
+     * @return string[]
+     */
+    public function filteredSystemMessages(array $messages): array
+    {
+        return array_values(array_filter(
+            $messages,
+            function (string $str) {
+                return !(strpos($str, 'EmailSpoolSend') !== false && strpos($str, 'Error') === false);
+            }
+        ));
     }
 
     private function send(EmailMessageDTO $messageDTO): bool

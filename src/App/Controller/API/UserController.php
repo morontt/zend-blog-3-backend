@@ -143,7 +143,7 @@ class UserController extends BaseController
                 $request->request->get('userAgent')
             );
 
-            $dispatcher->dispatch(new UserExtraEvent($userInfo));
+            $dispatcher->dispatch(new UserExtraEvent($userInfo, !$findResult->getUser()));
         }
 
         return new JsonResponse(

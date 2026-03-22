@@ -6,6 +6,7 @@ namespace App\Command;
 
 use App\Cron\CronChain;
 use App\Cron\CronServiceInterface;
+use App\Service\Mailer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -23,6 +24,7 @@ abstract class CronCommand extends Command
     public function __construct(
         protected CronChain $chain,
         private Robot $bot,
+        private Mailer $mailer,
     ) {
         parent::__construct();
     }
@@ -79,7 +81,7 @@ abstract class CronCommand extends Command
                 );
                 $output->writeln(
                     sprintf(
-                        '<error>%s Error:</error> %s, file: %s, line: %d',
+                        '<error>Error %s:</error> %s, file: %s, line: %d',
                         self::getJobName($cronJob),
                         $e->getMessage(),
                         $e->getFile(),
@@ -98,6 +100,7 @@ abstract class CronCommand extends Command
         }
 
         if (count($messages)) {
+            $this->mailer->systemNotification($messages);
             $this->bot->sendMessage(implode("\n", $messages));
         }
 

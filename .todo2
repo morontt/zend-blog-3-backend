@@ -251,6 +251,7 @@
       "text": "Select default image #65",
       "priority": "medium",
       "creation": 1686425790,
+      "completion": 1774165747,
       "tasks": [
         {
           "text": "and unselect other images",
@@ -762,7 +763,7 @@
     },
     {
       "text": "Telegram",
-      "priority": "high",
+      "priority": "verylow",
       "creation": 1732225557,
       "tasks": [
         {
@@ -823,6 +824,11 @@
       "text": "Add build info to dashboard",
       "priority": "medium",
       "creation": 1773806494
+    },
+    {
+      "text": "Dashboard for logs",
+      "priority": "medium",
+      "creation": 1774165353
     }
   ]
 }

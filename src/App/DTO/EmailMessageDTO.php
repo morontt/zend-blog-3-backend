@@ -6,6 +6,7 @@ class EmailMessageDTO
 {
     public const TYPE_NONE = 0;
     public const TYPE_COMMENT_REPLY = 1;
+    public const TYPE_SYSTEM = 2;
 
     /**
      * @var string
