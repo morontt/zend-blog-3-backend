@@ -15,6 +15,34 @@
         </div>
         <h1><i class="glyphicon glyphicon-dashboard"></i> Панель управления <small>Для управления всего и всем.</small></h1>
     </div>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table table-bordered table-striped">
+                <tbody>
+                    <tr>
+                        <td>Версия сервера API</td>
+                        <td>{{ buildVersionPhp }}</td>
+                    </tr>
+                    <tr>
+                        <td>Время сборки сервера</td>
+                        <td>{{ buildTimePhp }}</td>
+                    </tr>
+                    <tr>
+                        <td>-</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Версия приложения JS</td>
+                        <td>{{ buildVersionJs }}</td>
+                    </tr>
+                    <tr>
+                        <td>Время сборки JS</td>
+                        <td>{{ buildTimeJs }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
     <div class="alert {{alertClass}}" role="alert">
         {{alertMessage}}
     </div>

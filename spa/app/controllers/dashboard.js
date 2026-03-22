@@ -1,9 +1,14 @@
 import Ember from 'ember';
+import config from 'mtt-blog/config/environment';
 
 export default Ember.Controller.extend({
     appController: Ember.inject.controller('application'),
     alertClass: 'hide',
     alertMessage: '',
+    buildVersionPhp: config.appParameters.build_info.build_version_php,
+    buildTimePhp: config.appParameters.build_info.build_time_php,
+    buildVersionJs: config.appParameters.build_info.build_version_js,
+    buildTimeJs: config.appParameters.build_info.build_time_js,
     actions: {
         purgeCache() {
             fetch(Routing.generate('purge_cache'), {
