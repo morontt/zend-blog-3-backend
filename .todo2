@@ -823,7 +823,8 @@
     {
       "text": "Add build info to dashboard",
       "priority": "medium",
-      "creation": 1773806494
+      "creation": 1773806494,
+      "completion": 1774188074
     },
     {
       "text": "Dashboard for logs",

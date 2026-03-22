@@ -40,6 +40,8 @@ http-client.env.json
 /.env.local
 /.env.local.php
 /.env.*.local
+/.env_js.bak
+/.env_php.bak
 /phpunit.xml
 .phpunit.result.cache
 .phpunit

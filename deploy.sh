@@ -5,6 +5,12 @@ rm -R ./web/bundles/*
 rm -R ./web/spa/*
 
 docker exec rhinoceros bash -c "./buildapp_php.sh"
+
+cp .env{,_php.bak}
+
+sed -i 's/BUILD_TIME_PHP=\([0-9]\+\)/BUILD_TIME_PHP='$(date +%s)'/' .env
+sed -i 's/BUILD_VERSION_PHP=\(.\+\)/BUILD_VERSION_PHP='$(git describe --tags)'/' .env
+
 docker compose run --rm nodejs bash -c "./buildapp_js.sh -i"
 docker exec rhinoceros bash -c "chown -R www-data:www-data ."
 
@@ -27,3 +33,8 @@ function replace_old_asset() {
 replace_old_asset web/dist/mttblog_tmp_main.min.css    web/dist/mttblog_main.min.css
 replace_old_asset web/dist/mttblog_tmp_preview.min.css web/dist/mttblog_preview.min.css
 replace_old_asset web/dist/mttblog_tmp.min.js          web/dist/mttblog.min.js
+
+cp .env{,_js.bak}
+
+sed -i 's/BUILD_TIME_JS=\([0-9]\+\)/BUILD_TIME_JS='$(date +%s)'/' .env
+sed -i 's/BUILD_VERSION_JS=\(.\+\)/BUILD_VERSION_JS='$(git describe --tags)'/' .env
