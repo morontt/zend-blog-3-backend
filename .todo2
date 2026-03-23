@@ -664,6 +664,7 @@
       "text": "Upgrade symfony",
       "priority": "high",
       "creation": 1726340929,
+      "completion": 1774242074,
       "tasks": [
         {
           "text": "https://symfony.com/doc/4.x/setup.html",
