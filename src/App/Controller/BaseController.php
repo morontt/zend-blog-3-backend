@@ -82,7 +82,7 @@ class BaseController extends AbstractController
                 $formData = $form->getData();
             } else {
                 $errors = ['errors' => []];
-                /* @var \Symfony\Component\Form\FormError $formError */
+                /** @var \Symfony\Component\Form\FormError $formError */
                 foreach ($form->getErrors(true) as $formError) {
                     $errors['errors'][] = [
                         'message' => $formError->getMessage(),

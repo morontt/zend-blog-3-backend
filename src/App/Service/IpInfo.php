@@ -33,7 +33,9 @@ class IpInfo
      */
     public function getLocationByIp(string $ip): ?GeoLocation
     {
-        $location = $this->em->getRepository(GeoLocation::class)->findOrCreateByIpAddress($ip);
+        /** @var \App\Repository\GeoLocationRepository */
+        $repository = $this->em->getRepository(GeoLocation::class);
+        $location = $repository->findOrCreateByIpAddress($ip);
         if ($location && !$location->getCity()) {
             $location->increaseCountOfCheck();
             $data = $this->getCityInfo($ip);

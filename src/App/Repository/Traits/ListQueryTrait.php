@@ -13,7 +13,7 @@ trait ListQueryTrait
      */
     public function getListQuery(bool $nameBased = false): Query
     {
-        /* @var \Doctrine\ORM\QueryBuilder $qb */
+        /** @var \Doctrine\ORM\QueryBuilder $qb */
         $qb = $this->createQueryBuilder('e');
 
         if ($nameBased) {

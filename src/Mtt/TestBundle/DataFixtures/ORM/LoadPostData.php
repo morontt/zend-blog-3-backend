@@ -35,7 +35,7 @@ class LoadPostData extends Fixture implements ContainerAwareInterface, Dependent
      */
     public function load(ObjectManagerInterface $manager)
     {
-        /* @var TextProcessor $textProcessor */
+        /** @var TextProcessor $textProcessor */
         $textProcessor = $this->container->get('mtt_blog.text_processor');
 
         $post = new Post();

@@ -9,11 +9,7 @@
                    value=comment.text}}
     </td>
     <td>
-        {{comment.ipAddr}}
-        {{#if comment.city}}
-            <br/><br/>
-            <small>{{comment.city}}, {{comment.region}}<br/>{{comment.country}}</small>
-        {{/if}}
+        {{input value=comment.ipAddr class="form-control"}}
     </td>
     <td>{{date-format comment.createdAt 'DD.MM.YYYY, HH:mm'}}</td>
     <td>

@@ -291,7 +291,7 @@ class ExportArticleCommand extends Command
             return;
         }
 
-        /* @var LjCommentMeta|null $meta */
+        /** @var LjCommentMeta|null $meta */
         $meta = $this->commentMetaRepo->findOneBy(['posterId' => $posterId]);
         if (!$meta) {
             $commentDTO->commentator = $this->postersMap[0];

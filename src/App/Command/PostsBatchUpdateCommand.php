@@ -83,7 +83,7 @@ class PostsBatchUpdateCommand extends Command
 
         $cnt = 0;
         foreach ($postGenerator() as $posts) {
-            /* @var Post $post */
+            /** @var Post $post */
             foreach ($posts as $post) {
                 $cnt++;
                 $this->textProcessor->processing($post);

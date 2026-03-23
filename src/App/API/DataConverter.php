@@ -127,6 +127,24 @@ class DataConverter
     public function saveComment(Entity\Comment $entity, array $data): array
     {
         Transformers\CommentTransformer::reverseTransform($entity, $data);
+
+        if (empty($data['ipAddr'])) {
+            $entity
+                ->setIpAddress(null)
+                ->setGeoLocation(null)
+            ;
+        } else {
+            $ip = trim((string)$data['ipAddr']);
+            if (filter_var($ip, FILTER_VALIDATE_IP)) {
+                /** @var \App\Repository\GeoLocationRepository */
+                $repository = $this->em->getRepository(Entity\GeoLocation::class);
+                $entity
+                    ->setIpAddress($ip)
+                    ->setGeoLocation($repository->findOneByIpAddress($ip))
+                ;
+            }
+        }
+
         $this->commentsRepository->save($entity);
 
         return $this->getComment($entity);

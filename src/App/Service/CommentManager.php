@@ -8,6 +8,7 @@ use App\Event\CommentEvent;
 use App\Exception\NotAllowedCommentException;
 use App\Repository\CommentatorRepository;
 use App\Repository\CommentRepository;
+use App\Repository\GeoLocationRepository;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
 use DateTime;
@@ -18,43 +19,14 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class CommentManager
 {
-    /**
-     * @var Tracking
-     */
-    private $tracking;
-
-    /**
-     * @var EventDispatcherInterface
-     */
-    private $dispatcher;
-
-    /**
-     * @var CommentatorRepository
-     */
-    private $commentatorRepo;
-
-    /**
-     * @var CommentRepository
-     */
-    private $commentRepo;
-
-    /**
-     * @var PostRepository
-     */
-    private $postRepo;
-
-    /**
-     * @var UserRepository
-     */
-    private $userRepository;
-
     public function __construct(
-        Tracking $tracking,
-        EventDispatcherInterface $dispatcher,
-        CommentatorRepository $commentatorRepo,
-        CommentRepository $commentRepo,
-        UserRepository $userRepository,
-        PostRepository $postRepo,
+        private Tracking $tracking,
+        private EventDispatcherInterface $dispatcher,
+        private CommentatorRepository $commentatorRepo,
+        private CommentRepository $commentRepo,
+        private UserRepository $userRepository,
+        private PostRepository $postRepo,
+        private GeoLocationRepository $geoRepository,
     ) {
         $this->tracking = $tracking;
         $this->dispatcher = $dispatcher;
@@ -88,10 +60,16 @@ class CommentManager
         $comment = new Comment();
         $comment
             ->setTrackingAgent($agent)
-            ->setIpAddress($commentData->ipAddress)
             ->setText($filter->filter($commentData->text))
             ->setPost($post)
         ;
+
+        if (filter_var($commentData->ipAddress, FILTER_VALIDATE_IP)) {
+            $comment
+                ->setIpAddress($commentData->ipAddress)
+                ->setGeoLocation($this->geoRepository->findOneByIpAddress($commentData->ipAddress))
+            ;
+        }
 
         if ($commentData->parentId > 0) {
             $parent = $this->commentRepo->find($commentData->parentId);

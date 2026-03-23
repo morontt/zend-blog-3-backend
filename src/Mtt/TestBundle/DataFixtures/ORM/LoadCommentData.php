@@ -109,7 +109,7 @@ class LoadCommentData extends Fixture implements DependentFixtureInterface, Cont
 
         $repository->save($comment2);
 
-        /* @var \Doctrine\ORM\EntityManager $em */
+        /** @var \Doctrine\ORM\EntityManager $em */
         $em = $this->container->get('doctrine.orm.entity_manager');
         $conn = $em->getConnection();
 

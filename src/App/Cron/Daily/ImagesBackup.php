@@ -29,7 +29,7 @@ class ImagesBackup implements DailyCronServiceInterface
 
     public function run(): void
     {
-        /* @var MediaFile[] $images */
+        /** @var MediaFile[] $images */
         $images = $this->em->getRepository(MediaFile::class)->getNotBackedUp();
         if (count($images)) {
             foreach ($images as $image) {

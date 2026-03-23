@@ -291,25 +291,13 @@ class Comment implements CommentInterface
         return $this->deleted;
     }
 
-    /**
-     * Set ipAddress
-     *
-     * @param string|null $ipAddress
-     *
-     * @return Comment
-     */
-    public function setIpAddress($ipAddress): self
+    public function setIpAddress(?string $ipAddress): self
     {
         $this->ipAddress = $ipAddress;
 
         return $this;
     }
 
-    /**
-     * Get ipAddress
-     *
-     * @return string|null
-     */
     public function getIpAddress(): ?string
     {
         return $this->ipAddress;

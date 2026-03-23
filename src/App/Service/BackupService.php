@@ -78,7 +78,7 @@ class BackupService
             ->listContents($dir)
             ->filter(fn (StorageAttributes $attributes) => $attributes->isFile())
         ;
-        /* @var StorageAttributes $item */
+        /** @var StorageAttributes $item */
         foreach ($listing as $item) {
             $files[] = $item->path();
         }

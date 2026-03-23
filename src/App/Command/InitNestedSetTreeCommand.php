@@ -52,7 +52,7 @@ class InitNestedSetTreeCommand extends Command
     {
         $handled = [];
 
-        /* @var \App\Repository\CategoryRepository $categoryRepo */
+        /** @var \App\Repository\CategoryRepository $categoryRepo */
         $categoryRepo = $this->em->getRepository(Category::class);
 
         $qb = $categoryRepo->createQueryBuilder('c');
@@ -68,7 +68,7 @@ class InitNestedSetTreeCommand extends Command
         $qb = $categoryRepo->createQueryBuilder('c');
         $qb->orderBy('c.name');
 
-        /* @var Category[] $categories */
+        /** @var Category[] $categories */
         $categories = $qb->getQuery()->getResult();
         $idx = 0;
         foreach ($categories as $category) {
@@ -112,7 +112,7 @@ class InitNestedSetTreeCommand extends Command
      */
     private function handlePosts(OutputInterface $output): void
     {
-        /* @var \App\Repository\CommentRepository $commentsRepo */
+        /** @var \App\Repository\CommentRepository $commentsRepo */
         $commentsRepo = $this->em->getRepository(Comment::class);
 
         $qb = $commentsRepo->createQueryBuilder('c');
@@ -144,7 +144,7 @@ class InitNestedSetTreeCommand extends Command
                 ->setParameter('postId', $postId)
                 ->orderBy('c.id');
 
-            /* @var Comment[] $comments */
+            /** @var Comment[] $comments */
             $comments = $qb->getQuery()->getResult();
             $idx = 0;
             foreach ($comments as $comment) {
