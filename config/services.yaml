@@ -151,10 +151,7 @@ services:
 
     App\Cron\Daily\DatabaseBackup:
         arguments:
-            - '%env(DB_HOST)%'
-            - '%env(DB_NAME)%'
-            - '%env(DB_USER)%'
-            - '%env(DB_PASSWORD)%'
+            - '%env(DATABASE_URL)%'
 
     mtt_blog.text_processor:
         alias: App\Service\TextProcessor
