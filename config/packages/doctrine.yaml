@@ -1,14 +1,10 @@
 doctrine:
     dbal:
-        dbname:   '%env(DB_NAME)%'
-        host:     '%env(DB_HOST)%'
-        port:     '%env(DB_PORT)%'
-        user:     '%env(DB_USER)%'
-        password: '%env(DB_PASSWORD)%'
+        url: '%env(DATABASE_URL)%'
         driver: pdo_mysql
 
         # IMPORTANT: You MUST configure your server version,
-        server_version: '8.0'
+        server_version: '8.0.45'
 
         # only needed for MySQL
         charset: utf8mb4

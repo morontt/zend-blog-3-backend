@@ -12,6 +12,7 @@ namespace App\Cron\Daily;
 use App\Cron\DailyCronServiceInterface;
 use App\Service\BackupService;
 use DateTime;
+use Doctrine\DBAL\Tools\DsnParser;
 use RuntimeException;
 use Symfony\Component\Process\Process;
 
@@ -42,29 +43,16 @@ class DatabaseBackup implements DailyCronServiceInterface
      */
     protected int $dumpSize = 0;
 
-    /**
-     * @var BackupService
-     */
-    protected BackupService $backupService;
-
-    /**
-     * @param string $dbHost
-     * @param string $dbName
-     * @param string $dbUser
-     * @param string $dbPassword
-     * @param BackupService $backupService
-     */
     public function __construct(
-        string $dbHost,
-        string $dbName,
-        string $dbUser,
-        string $dbPassword,
-        BackupService $backupService,
+        string $dbURL,
+        private BackupService $backupService,
     ) {
-        $this->dbHost = $dbHost;
-        $this->dbName = $dbName;
-        $this->dbUser = $dbUser;
-        $this->dbPassword = $dbPassword;
+        $connectionParams = (new DsnParser())->parse($dbURL);
+
+        $this->dbHost = $connectionParams['host'];
+        $this->dbName = $connectionParams['dbname'];
+        $this->dbUser = $connectionParams['user'];
+        $this->dbPassword = $connectionParams['password'];
 
         $this->backupService = $backupService;
     }

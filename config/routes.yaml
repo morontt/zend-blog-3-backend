@@ -5,7 +5,7 @@ api_root:
         template: "default/api.html.twig"
 
 fos_js_routing:
-    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing-sf4.xml"
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.php"
 
 logout:
     path: /logout
