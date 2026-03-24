@@ -6,9 +6,9 @@ export default Ember.Controller.extend({
     alertClass: 'hide',
     alertMessage: '',
     buildVersionPhp: config.appParameters.build_info.build_version_php,
-    buildTimePhp: config.appParameters.build_info.build_time_php,
+    buildTimePhp: '',
     buildVersionJs: config.appParameters.build_info.build_version_js,
-    buildTimeJs: config.appParameters.build_info.build_time_js,
+    buildTimeJs: '',
     actions: {
         purgeCache() {
             fetch(Routing.generate('purge_cache'), {

@@ -64,9 +64,9 @@ class DefaultController extends AbstractController
                 'blogURL' => $this->frontendSite,
                 'build_info' => [
                     'build_version_php' => $_ENV['BUILD_VERSION_PHP'] ?? '-',
-                    'build_time_php' => $this->dateTimeStringFromEnv('BUILD_TIME_PHP'),
+                    'build_time_php' => (int)($_ENV['BUILD_TIME_PHP'] ?? 0),
                     'build_version_js' => $_ENV['BUILD_VERSION_JS'] ?? '-',
-                    'build_time_js' => $this->dateTimeStringFromEnv('BUILD_TIME_JS'),
+                    'build_time_js' => (int)($_ENV['BUILD_TIME_JS'] ?? 0),
                 ],
             ],
         ];
@@ -108,15 +108,5 @@ class DefaultController extends AbstractController
         }
 
         return new JsonResponse([], $status);
-    }
-
-    private function dateTimeStringFromEnv(string $key): string
-    {
-        return empty($_ENV[$key])
-            ? '-'
-            : DateTime::createFromFormat('U', $_ENV[$key])
-                ->setTimezone(new DateTimeZone(date_default_timezone_get()))
-                ->format(DateTimeInterface::RFC3339)
-        ;
     }
 }
