@@ -4,9 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Repository\ViewCommentRepository;
-use DateTime;
-use DateTimeInterface;
-use DateTimeZone;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use JsonException;
