@@ -4,27 +4,12 @@ namespace Application\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20170831214559 extends AbstractMigration implements ContainerAwareInterface
+class Version20170831214559 extends AbstractMigration
 {
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
-
-    /**
-     * @param ContainerInterface|null $container
-     */
-    public function setContainer(?ContainerInterface $container = null)
-    {
-        $this->container = $container;
-    }
-
     /**
      * @param Schema $schema
      */
@@ -52,9 +37,8 @@ class Version20170831214559 extends AbstractMigration implements ContainerAwareI
 
         $sql = file_get_contents(__DIR__ . '/sql/tracking_to_archive_01.sql');
 
-        $em = $this->container->get('doctrine.orm.entity_manager');
-        $stmt = $em->getConnection()->prepare($sql);
-        $stmt->execute();
+        $stmt = $this->connection->prepare($sql);
+        $stmt->executeQuery();
 
         $this->write('     <comment>-></comment> CREATE PROCEDURE `tracking_to_archive`');
     }

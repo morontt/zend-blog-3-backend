@@ -4,27 +4,12 @@ namespace Application\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20170724193800 extends AbstractMigration implements ContainerAwareInterface
+class Version20170724193800 extends AbstractMigration
 {
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
-
-    /**
-     * @param ContainerInterface|null $container
-     */
-    public function setContainer(?ContainerInterface $container = null)
-    {
-        $this->container = $container;
-    }
-
     /**
      * @param Schema $schema
      */
@@ -54,14 +39,13 @@ class Version20170724193800 extends AbstractMigration implements ContainerAwareI
         $sql1 = file_get_contents(__DIR__ . '/sql/view_comments_01.sql');
         $sql2 = file_get_contents(__DIR__ . '/sql/view_commentators_01.sql');
 
-        $em = $this->container->get('doctrine.orm.entity_manager');
-        $stmt = $em->getConnection()->prepare($sql1);
-        $stmt->execute();
+        $stmt = $this->connection->prepare($sql1);
+        $stmt->executeQuery();
 
         $this->write('     <comment>-></comment> CREATE VIEW `v_comments`');
 
-        $stmt = $em->getConnection()->prepare($sql2);
-        $stmt->execute();
+        $stmt = $this->connection->prepare($sql2);
+        $stmt->executeQuery();
 
         $this->write('     <comment>-></comment> CREATE VIEW `v_commentators`');
     }
