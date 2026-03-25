@@ -21,7 +21,7 @@
         "ext-xml": "*",
         "doctrine/dbal": "^3.8",
         "doctrine/doctrine-bundle": "^2.18",
-        "doctrine/doctrine-migrations-bundle": "^3.7",
+        "doctrine/doctrine-migrations-bundle": "^3.8",
         "doctrine/orm": "^3.6",
         "friendsofsymfony/jsrouting-bundle": "~3.5",
         "guzzlehttp/guzzle": "^7.10",
