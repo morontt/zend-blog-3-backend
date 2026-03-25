@@ -134,6 +134,7 @@ services:
         arguments:
             $spaceLogin: '%space_login%'
             $spacePassword: '%space_password%'
+            $adapterName: 'dropbox'
 
     App\Service\IpInfo\IpInfoDbClient:
         arguments:
@@ -178,9 +179,5 @@ services:
         calls:
             - [ setLogger, [ "@monolog.logger.telegram" ]]
             - [ setUpdatesManager, [ '@App\Telegram\UpdatesManager' ]]
-
-    League\Flysystem\FilesystemOperator:
-        factory: [ '@App\Service\BackUp\FlysystemFactory', createFlysystem ]
-        arguments: [ 'dropbox' ]
 
     Xelbot\Telegram\Robot: '@mtt_blog.telegram_bot'

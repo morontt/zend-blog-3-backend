@@ -20,13 +20,15 @@ final class Version20240918062620 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql("INSERT INTO doctrine_migrations (version) SELECT CONCAT('Application\\\\Migrations\\\\Version', version) FROM migration_versions");
-        $this->addSql('DROP TABLE migration_versions');
+        // $this->addSql("INSERT INTO doctrine_migrations (version) SELECT CONCAT('Application\\\\Migrations\\\\Version', version) FROM migration_versions");
+        // $this->addSql('DROP TABLE migration_versions');
+        $this->addSql('SELECT NOW()');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE migration_versions (version VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8_unicode_ci`, PRIMARY KEY(version)) DEFAULT CHARACTER SET utf8 COLLATE `utf8_unicode_ci` ENGINE = InnoDB');
+        // $this->addSql('CREATE TABLE migration_versions (version VARCHAR(255) CHARACTER SET utf8mb4 NOT NULL COLLATE `utf8_unicode_ci`, PRIMARY KEY(version)) DEFAULT CHARACTER SET utf8 COLLATE `utf8_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('SELECT NOW()');
     }
 }

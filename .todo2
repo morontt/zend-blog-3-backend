@@ -101,7 +101,7 @@
     },
     {
       "text": "CI integration restart #79",
-      "priority": "verylow",
+      "priority": "low",
       "creation": 1686425284,
       "tasks": [
         {
@@ -114,6 +114,11 @@
           "priority": "medium",
           "creation": 1686551315,
           "completion": 1687344354
+        },
+        {
+          "text": "doctrine-fixtures",
+          "priority": "medium",
+          "creation": 1774375904
         }
       ]
     },

@@ -9,6 +9,7 @@
 
 namespace App\Service;
 
+use App\Service\BackUp\FlysystemFactory;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\StorageAttributes;
 
@@ -18,11 +19,10 @@ class BackupService
     public const DUMPS_COUNT = 14;
     public const IMAGES_PATH = '/blog_images';
 
-    private FilesystemOperator $flySystem;
+    private ?FilesystemOperator $flySystem = null;
 
-    public function __construct(FilesystemOperator $flySystem)
+    public function __construct(private FlysystemFactory $flysystemFactory)
     {
-        $this->flySystem = $flySystem;
     }
 
     /**
@@ -34,7 +34,7 @@ class BackupService
      */
     public function fileExists(string $remotePath): bool
     {
-        return $this->flySystem->fileExists($remotePath);
+        return $this->getFlySystem()->fileExists($remotePath);
     }
 
     /**
@@ -48,7 +48,7 @@ class BackupService
     public function upload(string $localPath, string $remotePath): void
     {
         $fp = fopen($localPath, 'rb');
-        $this->flySystem->writeStream($remotePath, $fp);
+        $this->getFlySystem()->writeStream($remotePath, $fp);
     }
 
     /**
@@ -60,7 +60,7 @@ class BackupService
      */
     public function delete(string $path): void
     {
-        $this->flySystem->delete($path);
+        $this->getFlySystem()->delete($path);
     }
 
     /**
@@ -74,7 +74,7 @@ class BackupService
     {
         $files = [];
         $listing = $this
-            ->flySystem
+            ->getFlySystem()
             ->listContents($dir)
             ->filter(fn (StorageAttributes $attributes) => $attributes->isFile())
         ;
@@ -84,5 +84,14 @@ class BackupService
         }
 
         return $files;
+    }
+
+    private function getFlySystem(): FilesystemOperator
+    {
+        if (is_null($this->flySystem)) {
+            $this->flySystem = $this->flysystemFactory->createFlysystem();
+        }
+
+        return $this->flySystem;
     }
 }
