@@ -15,8 +15,6 @@ final class Version20230616135557 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('ALTER TABLE geo_location ADD ip_long INT UNSIGNED NOT NULL AFTER id, CHANGE city_id city_id INT DEFAULT NULL');
         $this->addSql('UPDATE geo_location SET ip_long = INET_ATON(ip_addr)');
         $this->addSql('ALTER TABLE comments DROP FOREIGN KEY FK_5F9E962AC34F22E');
@@ -32,8 +30,6 @@ final class Version20230616135557 extends AbstractMigration
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('ALTER TABLE geo_location ADD id INT NOT NULL');
         $this->addSql('ALTER TABLE geo_location DROP PRIMARY KEY');
         $this->addSql('ALTER TABLE geo_location ADD PRIMARY KEY (id)');

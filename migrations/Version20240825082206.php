@@ -30,8 +30,6 @@ final class Version20240825082206 extends AbstractMigration implements Container
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('ALTER TABLE users ADD avatar_variant SMALLINT UNSIGNED DEFAULT 0 NOT NULL');
         $this->addSql('DROP VIEW IF EXISTS `v_commentators`');
         $this->addSql('DROP VIEW IF EXISTS `v_comments`');
@@ -40,8 +38,6 @@ final class Version20240825082206 extends AbstractMigration implements Container
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('ALTER TABLE users DROP avatar_variant');
         $this->addSql('DROP VIEW IF EXISTS `v_commentators`');
         $this->addSql('DROP VIEW IF EXISTS `v_comments`');

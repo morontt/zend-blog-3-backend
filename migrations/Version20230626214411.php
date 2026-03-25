@@ -30,8 +30,6 @@ final class Version20230626214411 extends AbstractMigration implements Container
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('ALTER TABLE commentators ADD gender SMALLINT DEFAULT 1 NOT NULL COMMENT \'1: male, 2: female\', DROP force_image');
         $this->addSql('DROP VIEW IF EXISTS `v_commentators`');
         $this->addSql('DROP VIEW IF EXISTS `v_comments`');
@@ -40,8 +38,6 @@ final class Version20230626214411 extends AbstractMigration implements Container
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('ALTER TABLE commentators ADD force_image TINYINT(1) DEFAULT 0 NOT NULL, DROP gender');
         $this->addSql('DROP VIEW IF EXISTS `v_commentators`');
         $this->addSql('DROP VIEW IF EXISTS `v_comments`');

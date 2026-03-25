@@ -15,8 +15,6 @@ final class Version20200411070036 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('ALTER TABLE tracking CHANGE time_created time_created DATETIME(3) NOT NULL COMMENT \'(DC2Type:milliseconds_dt)\'');
         $this->addSql('ALTER TABLE geo_location CHANGE time_created time_created DATETIME(3) NOT NULL COMMENT \'(DC2Type:milliseconds_dt)\'');
         $this->addSql('ALTER TABLE tracking_agent CHANGE created_at created_at DATETIME(3) DEFAULT NULL COMMENT \'(DC2Type:milliseconds_dt)\'');
@@ -29,8 +27,6 @@ final class Version20200411070036 extends AbstractMigration
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('ALTER TABLE geo_location CHANGE time_created time_created DATETIME NOT NULL');
         $this->addSql('ALTER TABLE geo_location_city CHANGE time_created time_created DATETIME NOT NULL');
         $this->addSql('ALTER TABLE geo_location_country CHANGE time_created time_created DATETIME NOT NULL');

@@ -15,8 +15,6 @@ final class Version20230617072331 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('ALTER TABLE tracking ADD ip_long INT UNSIGNED DEFAULT NULL AFTER ip_addr');
         $this->addSql('ALTER TABLE tracking_archive ADD ip_long INT UNSIGNED DEFAULT NULL AFTER ip_addr');
         $this->addSql('UPDATE tracking AS t, geo_location AS g SET t.ip_long = g.ip_long WHERE t.ip_addr IS NOT NULL AND g.ip_long = INET_ATON(t.ip_addr)');
@@ -28,8 +26,6 @@ final class Version20230617072331 extends AbstractMigration
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('ALTER TABLE tracking DROP FOREIGN KEY FK_A87C621C28F0F5E7');
         $this->addSql('DROP INDEX IDX_A87C621C28F0F5E7 ON tracking');
         $this->addSql('ALTER TABLE tracking DROP ip_long');
