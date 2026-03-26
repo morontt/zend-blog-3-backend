@@ -29,6 +29,10 @@ when@test:
                 handler: nested
                 excluded_http_codes: [ 404, 405 ]
                 channels: [ "!event" ]
+            deprecation:
+                type: stream
+                channels: [ deprecation ]
+                path: "%kernel.logs_dir%/%kernel.environment%.deprecations.log"
             nested:
                 type: stream
                 path: "%kernel.logs_dir%/%kernel.environment%.log"
