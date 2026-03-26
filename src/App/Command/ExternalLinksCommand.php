@@ -20,8 +20,6 @@ class ExternalLinksCommand extends Command
 {
     public function __construct(private EntityManagerInterface $em)
     {
-        $this->em->getConfiguration()->setSQLLogger(null);
-
         parent::__construct();
     }
 
