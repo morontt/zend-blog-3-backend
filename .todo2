@@ -69,6 +69,18 @@
           "text": "Migrate to Ember.js 3.*",
           "priority": "medium",
           "creation": 1688211065
+        },
+        {
+          "text": "Vue.js",
+          "priority": "medium",
+          "creation": 1774244606,
+          "tasks": [
+            {
+              "text": "https://coreui.io/answers/how-to-use-vue-with-rest-api/",
+              "priority": "low",
+              "creation": 1774244636
+            }
+          ]
         }
       ]
     },
