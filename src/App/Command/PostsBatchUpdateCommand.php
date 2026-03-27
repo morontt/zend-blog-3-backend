@@ -28,8 +28,6 @@ class PostsBatchUpdateCommand extends Command
         private PictureTagBuilder $ptb,
     ) {
         parent::__construct();
-
-        $this->em->getConfiguration()->setSQLLogger(null);
     }
 
     protected function configure(): void

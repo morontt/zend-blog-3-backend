@@ -34,7 +34,5 @@ replace_old_asset web/dist/mttblog_tmp_main.min.css    web/dist/mttblog_main.min
 replace_old_asset web/dist/mttblog_tmp_preview.min.css web/dist/mttblog_preview.min.css
 replace_old_asset web/dist/mttblog_tmp.min.js          web/dist/mttblog.min.js
 
-cp .env{,_js.bak}
-
 sed -i 's/BUILD_TIME_JS=\([0-9]\+\)/BUILD_TIME_JS='$(date +%s)'/' .env
 sed -i 's/BUILD_VERSION_JS=\(.\+\)/BUILD_VERSION_JS='$(git describe --tags)'/' .env
