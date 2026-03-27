@@ -35,7 +35,7 @@ class PostsBatchUpdateCommand extends Command
         $this
             ->setName('mtt:posts:update')
             ->setDescription('Batch update all posts')
-            ->addArgument('articleId', InputArgument::OPTIONAL, 'article ID')
+            ->addArgument('article-id', InputArgument::OPTIONAL, 'article ID')
         ;
     }
 
@@ -52,7 +52,8 @@ class PostsBatchUpdateCommand extends Command
     {
         $startTime = microtime(true);
 
-        $postId = $input->getArgument('articleId');
+        $postId = $input->getArgument('article-id');
+        /** @var \App\Repository\PostRepository */
         $repo = $this->em->getRepository(Post::class);
         if ($postId) {
             $postGenerator = function () use ($repo, $postId) {

@@ -7,6 +7,7 @@ use App\Entity\Post;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class InitCommentsTreeCommand extends Command
@@ -21,6 +22,7 @@ class InitCommentsTreeCommand extends Command
         $this
             ->setName('mtt:init-tree:comments')
             ->setDescription('Init nested-set tree for comments')
+            ->addOption('article-ids', null, InputOption::VALUE_REQUIRED, 'article IDs')
         ;
     }
 
@@ -28,7 +30,16 @@ class InitCommentsTreeCommand extends Command
     {
         $startTime = microtime(true);
 
-        $this->handlePosts($output);
+        $articleIds = $input->getOption('article-ids');
+        $ids = [];
+        if ($articleIds) {
+            $ids = array_map(
+                fn ($el) => (int)$el,
+                explode(',', $articleIds)
+            );
+        }
+
+        $this->handlePosts($output, $ids);
 
         $endTime = microtime(true);
 
@@ -41,29 +52,46 @@ class InitCommentsTreeCommand extends Command
     }
 
     /**
-     * @param OutputInterface $output
+     * @param int[] $articleIds
      */
-    private function handlePosts(OutputInterface $output): void
+    private function handlePosts(OutputInterface $output, array $articleIds): void
     {
-        /** @var \App\Repository\CommentRepository $commentsRepo */
+        /** @var \App\Repository\CommentRepository */
         $commentsRepo = $this->em->getRepository(Comment::class);
 
         $qb = $commentsRepo->createQueryBuilder('c');
         $qb->update()
-            ->set('c.nestedSet.leftKey', ':null')
-            ->set('c.nestedSet.rightKey', ':null')
+            ->set('c.nestedSet.leftKey', 'NULL')
+            ->set('c.nestedSet.rightKey', 'NULL')
             ->set('c.nestedSet.depth', 1)
-            ->setParameter('null', null)
-            ->getQuery()
-            ->execute()
         ;
 
+        if ($articleIds) {
+            $qb
+                ->where($qb->expr()->in('c.post', ':ids'))
+                ->setParameter('ids', $articleIds)
+            ;
+        }
+
+        $qb->getQuery()->execute();
+
+        /** @var \App\Repository\PostRepository */
         $postRepo = $this->em->getRepository(Post::class);
-        $posts = $postRepo
+        $postsQb = $postRepo
             ->createQueryBuilder('p')
             ->select('p.id', 'p.url')
             ->innerJoin('p.comments', 'c')
             ->groupBy('p.id')
+        ;
+
+        if ($articleIds) {
+            $postsQb
+                ->where($postsQb->expr()->in('p.id', ':ids'))
+                ->setParameter('ids', $articleIds)
+            ;
+        }
+
+        $posts = $postsQb
             ->getQuery()
             ->getArrayResult()
         ;
