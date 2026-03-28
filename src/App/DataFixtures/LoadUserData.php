@@ -1,48 +1,31 @@
 <?php
 
-namespace Mtt\TestBundle\DataFixtures\ORM;
+namespace App\DataFixtures;
 
 use App\Entity\User;
 use App\Utils\RuTransform;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Persistence\ObjectManager as ObjectManagerInterface;
+use Doctrine\Persistence\ObjectManager;
 use Faker\Factory as FakerFactory;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class LoadUserData extends Fixture implements ContainerAwareInterface
+class LoadUserData extends Fixture
 {
-    public const COUNT_USERS = 10;
+    public const COUNT_USERS = 7;
 
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setContainer(?ContainerInterface $container = null)
-    {
-        $this->container = $container;
+    public function __construct(
+        private UserPasswordHasherInterface $passwordHasher,
+    ) {
     }
 
-    /**
-     * @param ObjectManager $manager
-     */
-    public function load(ObjectManagerInterface $manager)
+    public function load(ObjectManager $manager): void
     {
         $user = new User();
-        $encoder = $this->container
-            ->get('security.encoder_factory')
-            ->getEncoder($user);
-
         $user
             ->setUsername('admin')
-            ->setEmail('morontt@gmail.com')
-            ->setPassword($encoder->encodePassword('test', $user->getSalt()))
-            ->setWsseKey('WSSE-KEY')
+            ->setEmail('admin@example.org')
+            ->setUserType(User::TYPE_ADMIN)
+            ->setPassword($this->passwordHasher->hashPassword($user, 'test'))
         ;
 
         $manager->persist($user);
@@ -58,8 +41,12 @@ class LoadUserData extends Fixture implements ContainerAwareInterface
             $user
                 ->setUsername(RuTransform::ruTransform($faker->lastName))
                 ->setEmail($faker->email)
-                ->setPassword($encoder->encodePassword('test', $user->getSalt()))
+                ->setPassword($this->passwordHasher->hashPassword($user, 'test'))
             ;
+
+            if (substr($user->getUsername(), -1) === 'a') {
+                $user->setGender(User::FEMALE);
+            }
 
             $manager->persist($user);
             $this->addReference('user-' . (string)($i + 1), $user);

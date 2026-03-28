@@ -7,24 +7,20 @@
  * Time: 21:56
  */
 
-namespace Mtt\TestBundle\DataFixtures\ORM;
+namespace App\DataFixtures;
 
 use App\Entity\MediaFile;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Persistence\ObjectManager as ObjectManagerInterface;
+use Doctrine\Persistence\ObjectManager;
 
 class LoadMediaFileData extends Fixture
 {
-    /**
-     * @param ObjectManager $manager
-     */
-    public function load(ObjectManagerInterface $manager)
+    public function load(ObjectManager $manager): void
     {
         $file = new MediaFile();
 
         $file
-            ->setPath('gravatar.png')
+            ->setPath('vintage_robot.jpg')
             ->setDescription('file for testing')
             ->setFileSize(189764)
             ->setDefaultImage(true)

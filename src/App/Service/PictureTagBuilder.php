@@ -13,16 +13,13 @@ namespace App\Service;
 use App\Entity\MediaFile;
 use App\Model\Image;
 use App\Model\SrcSet;
-use Psr\Log\LoggerInterface;
 use SimpleXMLElement;
-use Throwable;
 
 class PictureTagBuilder
 {
     private string $imageBasepath;
 
     public function __construct(
-        private LoggerInterface $logger,
         string $cdnUrl,
     ) {
         $this->imageBasepath = $cdnUrl . ImageManager::getImageBasePath() . '/';
@@ -64,26 +61,11 @@ class PictureTagBuilder
     {
         $srcSet = new SrcSet();
 
-        try {
-            $data = $image->getSrcSetData();
-            $srcSet->setOrigin($data);
-        } catch (Throwable $e) {
-            $this->logger->critical($e->getMessage());
-        }
-
-        try {
-            $data = $image->getSrcSetData('webp');
-            $srcSet->setWebp($data);
-        } catch (Throwable $e) {
-            $this->logger->critical($e->getMessage());
-        }
-
-        try {
-            $data = $image->getSrcSetData('avif');
-            $srcSet->setAvif($data);
-        } catch (Throwable $e) {
-            $this->logger->critical($e->getMessage());
-        }
+        $srcSet
+            ->setOrigin($image->getSrcSetData())
+            ->setWebp($image->getSrcSetData('webp'))
+            ->setAvif($image->getSrcSetData('avif'))
+        ;
 
         return $srcSet;
     }

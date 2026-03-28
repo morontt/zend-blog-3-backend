@@ -1,51 +1,37 @@
 <?php
 
-namespace Mtt\TestBundle\DataFixtures\ORM;
+namespace App\DataFixtures;
 
+use App\Entity\Category;
+use App\Entity\MediaFile;
 use App\Entity\Post;
+use App\Entity\Tag;
 use App\Service\TextProcessor;
 use App\Utils\RuTransform;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Persistence\ObjectManager as ObjectManagerInterface;
+use Doctrine\Persistence\ObjectManager;
 use Faker\Factory as FakerFactory;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadPostData extends Fixture implements ContainerAwareInterface, DependentFixtureInterface
+class LoadPostData extends Fixture implements DependentFixtureInterface
 {
-    public const COUNT_POSTS = 50;
+    public const COUNT_POSTS = 32;
 
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setContainer(?ContainerInterface $container = null)
-    {
-        $this->container = $container;
+    public function __construct(
+        private TextProcessor $textProcessor,
+    ) {
     }
 
-    /**
-     * @param ObjectManager $manager
-     */
-    public function load(ObjectManagerInterface $manager)
+    public function load(ObjectManager $manager): void
     {
-        /** @var TextProcessor $textProcessor */
-        $textProcessor = $this->container->get('mtt_blog.text_processor');
-
         $post = new Post();
         $post->setTitle('Тестовая запись')
             ->setUrl(RuTransform::ruTransform('Тестовая запись'))
-            ->setCategory($manager->merge($this->getReference('category-2')))
+            ->setCategory($this->getReference('category-2', Category::class))
             ->setDescription('метатег description тестовй записи')
             ->setRawText('<p>Тестовая запись, собственно...</p>')
-            ->addTag($manager->merge($this->getReference('tag-test')));
-        $textProcessor->processing($post);
+            ->addTag($this->getReference('tag-test', Tag::class));
+        $this->textProcessor->processing($post);
         $manager->persist($post);
         $manager->flush();
 
@@ -56,11 +42,11 @@ class LoadPostData extends Fixture implements ContainerAwareInterface, Dependent
         $post2 = new Post();
         $post2->setTitle('запись про PHP')
             ->setUrl(RuTransform::ruTransform('запись про PHP'))
-            ->setCategory($manager->merge($this->getReference('category-4')))
+            ->setCategory($this->getReference('category-4', Category::class))
             ->setDescription('метатег description тестовой записи про ПХП')
             ->setRawText('<p>PHP (рекурсивный акроним словосочетания PHP: Hypertext Preprocessor) - это распространенный язык программирования общего назначения с открытым исходным кодом. PHP сконструирован специально для ведения Web-разработок и его код может внедряться непосредственно в HTML.</p>')
-            ->addTag($manager->merge($this->getReference('tag-php')));
-        $textProcessor->processing($post2);
+            ->addTag($this->getReference('tag-php', Tag::class));
+        $this->textProcessor->processing($post2);
         $manager->persist($post2);
         $manager->flush();
 
@@ -69,27 +55,27 @@ class LoadPostData extends Fixture implements ContainerAwareInterface, Dependent
         $post3 = new Post();
         $post3->setTitle('ещё о PHP')
             ->setUrl(RuTransform::ruTransform('ещё о PHP'))
-            ->setCategory($manager->merge($this->getReference('category-4')))
+            ->setCategory($this->getReference('category-4', Category::class))
             ->setDescription('description PHP')
             ->setRawText('<p>Ещё одна запись о PHP</p>')
-            ->addTag($manager->merge($this->getReference('tag-php')));
-        $textProcessor->processing($post3);
+            ->addTag($this->getReference('tag-php', Tag::class));
+        $this->textProcessor->processing($post3);
         $manager->persist($post3);
         $manager->flush();
 
         $this->addReference('post-3', $post3);
 
-        $file = $manager->merge($this->getReference('file-1'));
+        $file = $this->getReference('file-1', MediaFile::class);
 
         $post4 = new Post();
         $post4->setTitle('JavaScript, хоть и jQuery')
             ->setUrl(RuTransform::ruTransform('JavaScript, хоть и jQuery'))
-            ->setCategory($manager->merge($this->getReference('category-5')))
+            ->setCategory($this->getReference('category-5', Category::class))
             ->setDescription('description-JavaScript')
             ->setRawText('<p>JavaScript - прототипно-ориентированный сценарный язык программирования. Является диалектом языка ECMAScript</p><p>!'
                 . $file->getId() . '!</p><!-- cut --><p>Параграф под катом</p>')
-            ->addTag($manager->merge($this->getReference('tag-javascript')));
-        $textProcessor->processing($post4);
+            ->addTag($this->getReference('tag-javascript', Tag::class));
+        $this->textProcessor->processing($post4);
         $manager->persist($post4);
         $manager->flush();
 
@@ -108,16 +94,17 @@ class LoadPostData extends Fixture implements ContainerAwareInterface, Dependent
             $post
                 ->setTitle($title)
                 ->setUrl(RuTransform::ruTransform($title))
-                ->setCategory($manager->merge($this->getReference('category-' . $faker->numberBetween(1, 9))))
+                ->setCategory($this->getReference('category-' . $faker->numberBetween(1, 9), Category::class))
                 ->setDescription($title)
                 ->setRawText($faker->text($faker->numberBetween(100, 300)))
             ;
-            $textProcessor->processing($post);
+            $this->textProcessor->processing($post);
 
-            for ($j = 0; $j < $faker->numberBetween(0, 7); $j++) {
+            for ($j = 0; $j < $faker->numberBetween(0, 4); $j++) {
                 $post->addTag(
-                    $manager->merge(
-                        $this->getReference('tag-' . $faker->numberBetween(1, LoadTagData::COUNT_TAGS - 1))
+                    $this->getReference(
+                        'tag-' . $faker->numberBetween(1, LoadTagData::COUNT_TAGS - 1),
+                        Tag::class
                     )
                 );
             }
@@ -129,10 +116,7 @@ class LoadPostData extends Fixture implements ContainerAwareInterface, Dependent
         }
     }
 
-    /**
-     * @return array
-     */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             LoadCategoryData::class,

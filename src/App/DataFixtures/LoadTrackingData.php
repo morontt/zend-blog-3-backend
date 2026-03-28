@@ -1,44 +1,40 @@
 <?php
 
-namespace Mtt\TestBundle\DataFixtures\ORM;
+namespace App\DataFixtures;
 
+use App\Entity\Post;
 use App\Entity\Tracking;
+use App\Entity\TrackingAgent;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Persistence\ObjectManager as ObjectManagerInterface;
+use Doctrine\Persistence\ObjectManager;
 
 class LoadTrackingData extends Fixture implements DependentFixtureInterface
 {
-    /**
-     * @param ObjectManager $manager
-     */
-    public function load(ObjectManagerInterface $manager)
+    public function load(ObjectManager $manager): void
     {
         $tracking = new Tracking();
-        $tracking->setTrackingAgent($manager->merge($this->getReference('safari')))
+        $tracking->setTrackingAgent($this->getReference('safari', TrackingAgent::class))
             ->setIpAddress('127.0.0.1')
-            ->setPost($manager->merge($this->getReference('post-1')));
+            ->setPost($this->getReference('post-1', Post::class));
 
         $manager->persist($tracking);
         $manager->flush();
 
         $tracking2 = new Tracking();
-        $tracking2->setTrackingAgent($manager->merge($this->getReference('twitterbot')))
+        $tracking2->setTrackingAgent($this->getReference('twitterbot', TrackingAgent::class))
             ->setIpAddress('173.199.116.91')
-            ->setPost($manager->merge($this->getReference('post-1')));
+            ->setPost($this->getReference('post-1', Post::class));
 
         $manager->persist($tracking2);
         $manager->flush();
     }
 
-    /**
-     * @return array
-     */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             LoadTrackingAgentData::class,
+            LoadPostData::class,
         ];
     }
 }

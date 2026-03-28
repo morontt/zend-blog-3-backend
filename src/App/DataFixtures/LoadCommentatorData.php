@@ -1,21 +1,17 @@
 <?php
 
-namespace Mtt\TestBundle\DataFixtures\ORM;
+namespace App\DataFixtures;
 
 use App\Entity\Commentator;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Persistence\ObjectManager as ObjectManagerInterface;
+use Doctrine\Persistence\ObjectManager;
 use Faker\Factory as FakerFactory;
 
 class LoadCommentatorData extends Fixture
 {
     public const COUNT_COMMENTATORS = 24;
 
-    /**
-     * @param ObjectManager $manager
-     */
-    public function load(ObjectManagerInterface $manager)
+    public function load(ObjectManager $manager): void
     {
         $commentator = new Commentator();
         $commentator
