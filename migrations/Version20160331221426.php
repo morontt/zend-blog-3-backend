@@ -16,8 +16,6 @@ class Version20160331221426 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('ALTER TABLE posts_counts DROP FOREIGN KEY FK_D23531924B89032C');
         $this->addSql('ALTER TABLE posts_counts ADD CONSTRAINT FK_D23531924B89032C FOREIGN KEY (post_id) REFERENCES posts (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE posts DROP FOREIGN KEY FK_885DBAFAA76ED395');
@@ -31,8 +29,6 @@ class Version20160331221426 extends AbstractMigration
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('ALTER TABLE posts ADD user_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE posts ADD CONSTRAINT FK_885DBAFAA76ED395 FOREIGN KEY (user_id) REFERENCES users (id)');
         $this->addSql('CREATE INDEX IDX_885DBAFAA76ED395 ON posts (user_id)');

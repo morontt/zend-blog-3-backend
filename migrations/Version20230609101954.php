@@ -15,8 +15,6 @@ final class Version20230609101954 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql(<<<SQL
 CREATE TABLE `tracking_agent_temp` (
   `id` int unsigned NOT NULL,
@@ -55,8 +53,6 @@ SQL
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('ALTER TABLE comments ADD last_update_copy DATETIME(3) DEFAULT NULL COMMENT \'(DC2Type:milliseconds_dt)\'');
         $this->addSql('ALTER TABLE tracking_agent CHANGE created_at created_at DATETIME(3) DEFAULT NULL COMMENT \'(DC2Type:milliseconds_dt)\'');
     }

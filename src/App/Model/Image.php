@@ -104,8 +104,7 @@ class Image
             if ($format) {
                 $ext = pathinfo($this->media->getPath(), PATHINFO_EXTENSION);
                 $resizer = $this->getResizer($this->media->getPath(), $format);
-                if ($ext !== $format && method_exists($resizer, 'convert')) {
-                    /** @disregard P1013 Undefined method 'convert' */
+                if ($ext !== $format && $resizer instanceof ImageConverterInterface) {
                     $newPath = $resizer->convert($this->media->getPath(), ImageManager::getUploadsDir());
                     $data[] = [
                         'width' => $width,
@@ -129,11 +128,10 @@ class Image
         }, $data);
 
         usort($data, function ($a, $b) {
-            if ($a['width'] === $b['width']) {
-                return 0;
-            }
+            $bw = $b['width'] ?? 0;
+            $aw = $a['width'] ?? 0;
 
-            return ($a['width'] < $b['width']) ? 1 : -1;
+            return $bw <=> $aw;
         });
 
         return $data;
@@ -204,35 +202,34 @@ class Image
         return $dirNamePrefix . $res;
     }
 
+    /**
+     * @throws ImagickException
+     */
     public function getImageGeometry(): ImageGeometry
     {
         $fsPath = ImageManager::getUploadsDir() . '/' . $this->media->getPath();
         $obj = new ImageGeometry();
 
-        try {
-            $image = new Imagick($fsPath);
-            $geometry = $image->getImageGeometry();
-            $orientation = $image->getImageOrientation();
-            $image->clear();
+        $image = new Imagick($fsPath);
+        $geometry = $image->getImageGeometry();
+        $orientation = $image->getImageOrientation();
+        $image->clear();
 
-            if (in_array(
-                $orientation,
-                [
-                    Imagick::ORIENTATION_LEFTTOP,
-                    Imagick::ORIENTATION_RIGHTTOP,
-                    Imagick::ORIENTATION_RIGHTBOTTOM,
-                    Imagick::ORIENTATION_LEFTBOTTOM,
-                ],
-                true
-            )) {
-                $obj->width = $geometry['height'];
-                $obj->height = $geometry['width'];
-            } else {
-                $obj->width = $geometry['width'];
-                $obj->height = $geometry['height'];
-            }
-        } catch (ImagickException $e) {
-            // TODO add error to logger
+        if (in_array(
+            $orientation,
+            [
+                Imagick::ORIENTATION_LEFTTOP,
+                Imagick::ORIENTATION_RIGHTTOP,
+                Imagick::ORIENTATION_RIGHTBOTTOM,
+                Imagick::ORIENTATION_LEFTBOTTOM,
+            ],
+            true
+        )) {
+            $obj->width = $geometry['height'];
+            $obj->height = $geometry['width'];
+        } else {
+            $obj->width = $geometry['width'];
+            $obj->height = $geometry['height'];
         }
 
         return $obj;

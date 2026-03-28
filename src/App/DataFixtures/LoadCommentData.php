@@ -1,49 +1,30 @@
 <?php
 
-namespace Mtt\TestBundle\DataFixtures\ORM;
+namespace App\DataFixtures;
 
 use App\Entity\Comment;
+use App\Entity\Commentator;
+use App\Entity\Post;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\DBAL\DBALException;
-use Doctrine\Persistence\ObjectManager as ObjectManagerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectManager;
 use Faker\Factory as FakerFactory;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class LoadCommentData extends Fixture implements DependentFixtureInterface, ContainerAwareInterface
+class LoadCommentData extends Fixture implements DependentFixtureInterface
 {
     public const COUNT_COMMENTS = 450;
 
-    /**
-     * @var array
-     */
+    /** @var array<string, string> */
     protected $commentPostRelation = [];
 
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
-
-    /**
-     * @param ContainerInterface $container
-     */
-    public function setContainer(?ContainerInterface $container = null)
-    {
-        $this->container = $container;
-    }
-
-    /**
-     * @param ObjectManager $manager
-     *
-     * @throws DBALException
-     */
-    public function load(ObjectManagerInterface $manager)
+    public function load(ObjectManager $manager): void
     {
         $faker = FakerFactory::create('ru_RU');
         $faker->seed(618230);
 
+        /** @var \App\Repository\CommentRepository */
         $repository = $manager->getRepository(Comment::class);
         for ($i = 0; $i < self::COUNT_COMMENTS; $i++) {
             $comment = new Comment();
@@ -58,16 +39,13 @@ class LoadCommentData extends Fixture implements DependentFixtureInterface, Cont
 
             if ($faker->numberBetween(0, 100) < 25) {
                 $comment->setUser(
-                    $manager->merge(
-                        $this->getReference('user-' . $faker->numberBetween(1, LoadUserData::COUNT_USERS))
-                    )
+                    $this->getReference('user-' . $faker->numberBetween(1, LoadUserData::COUNT_USERS), User::class)
                 );
             } else {
                 $comment->setCommentator(
-                    $manager->merge(
-                        $this->getReference(
-                            'commentator-' . $faker->numberBetween(1, 1 + LoadCommentatorData::COUNT_COMMENTATORS)
-                        )
+                    $this->getReference(
+                        'commentator-' . $faker->numberBetween(1, 1 + LoadCommentatorData::COUNT_COMMENTATORS),
+                        Commentator::class
                     )
                 );
             }
@@ -75,9 +53,9 @@ class LoadCommentData extends Fixture implements DependentFixtureInterface, Cont
             $commentKey = 'comment-' . (string)($i + 1);
             if ($i > 20 && $faker->numberBetween(0, 100) < 25) {
                 $parentCommentKey = 'comment-' . $faker->numberBetween(1, $i);
-                $parent = $this->getReference($parentCommentKey);
+                $parent = $this->getReference($parentCommentKey, Comment::class);
                 $manager->refresh($parent);
-                $comment->setParent($manager->merge($parent));
+                $comment->setParent($parent);
 
                 $postKey = $this->commentPostRelation[$parentCommentKey];
             } else {
@@ -85,7 +63,7 @@ class LoadCommentData extends Fixture implements DependentFixtureInterface, Cont
             }
 
             $this->commentPostRelation[$commentKey] = $postKey;
-            $comment->setPost($manager->merge($this->getReference($postKey)));
+            $comment->setPost($this->getReference($postKey, Post::class));
 
             $repository->save($comment);
 
@@ -95,32 +73,29 @@ class LoadCommentData extends Fixture implements DependentFixtureInterface, Cont
         $comment = new Comment();
         $comment->setText('Тестовый комментарий')
             ->setIpAddress('94.231.112.91')
-            ->setPost($manager->merge($this->getReference('post-1')))
-            ->setCommentator($manager->merge($this->getReference('commentator-1')));
+            ->setPost($this->getReference('post-1', Post::class))
+            ->setCommentator($this->getReference('commentator-1', Commentator::class));
 
         $repository->save($comment);
 
         $comment2 = new Comment();
         $comment2->setText('Ответ на тестовый комментарий')
             ->setIpAddress('62.72.188.111')
-            ->setPost($manager->merge($this->getReference('post-1')))
-            ->setUser($manager->merge($this->getReference('admin-user')))
+            ->setPost($this->getReference('post-1', Post::class))
+            ->setUser($this->getReference('admin-user', User::class))
             ->setParent($comment);
 
         $repository->save($comment2);
 
-        /** @var \Doctrine\ORM\EntityManager $em */
-        $em = $this->container->get('doctrine.orm.entity_manager');
-        $conn = $em->getConnection();
+        if ($manager instanceof EntityManagerInterface) {
+            $conn = $manager->getConnection();
 
-        $stmt = $conn->prepare('CALL update_all_comments_count()');
-        $stmt->executeQuery();
+            $stmt = $conn->prepare('CALL update_all_comments_count()');
+            $stmt->executeQuery();
+        }
     }
 
-    /**
-     * @return array
-     */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             LoadCommentatorData::class,

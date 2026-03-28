@@ -1,22 +1,18 @@
 <?php
 
-namespace Mtt\TestBundle\DataFixtures\ORM;
+namespace App\DataFixtures;
 
 use App\Entity\Tag;
 use App\Utils\RuTransform;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Persistence\ObjectManager as ObjectManagerInterface;
+use Doctrine\Persistence\ObjectManager;
 use Faker\Factory as FakerFactory;
 
 class LoadTagData extends Fixture
 {
-    public const COUNT_TAGS = 60;
+    public const COUNT_TAGS = 30;
 
-    /**
-     * @param ObjectManager $manager
-     */
-    public function load(ObjectManagerInterface $manager)
+    public function load(ObjectManager $manager): void
     {
         $faker = FakerFactory::create('ru_RU');
         $faker->seed(1022);

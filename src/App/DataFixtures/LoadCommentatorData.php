@@ -1,21 +1,19 @@
 <?php
 
-namespace Mtt\TestBundle\DataFixtures\ORM;
+namespace App\DataFixtures;
 
 use App\Entity\Commentator;
+use App\Entity\User;
+use App\Utils\RuTransform;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
-use Doctrine\Persistence\ObjectManager as ObjectManagerInterface;
+use Doctrine\Persistence\ObjectManager;
 use Faker\Factory as FakerFactory;
 
 class LoadCommentatorData extends Fixture
 {
     public const COUNT_COMMENTATORS = 24;
 
-    /**
-     * @param ObjectManager $manager
-     */
-    public function load(ObjectManagerInterface $manager)
+    public function load(ObjectManager $manager): void
     {
         $commentator = new Commentator();
         $commentator
@@ -40,7 +38,11 @@ class LoadCommentatorData extends Fixture
                 $commentator->setEmail($faker->email);
             }
             if ($faker->numberBetween(0, 100) < 30) {
-                $commentator->setWebsite($faker->domainName);
+                $commentator->setWebsite('https://' . $faker->domainName);
+            }
+
+            if (substr(RuTransform::ruTransform($commentator->getName()), -1) === 'a') {
+                $commentator->setGender(User::FEMALE);
             }
 
             $manager->persist($commentator);

@@ -4,35 +4,18 @@ namespace Application\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20150620132229 extends AbstractMigration implements ContainerAwareInterface
+class Version20150620132229 extends AbstractMigration
 {
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
-
-    /**
-     * @param ContainerInterface|null $container
-     */
-    public function setContainer(?ContainerInterface $container = null)
-    {
-        $this->container = $container;
-    }
-
     /**
      * @param Schema $schema
      */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('DROP TABLE avatar');
         $this->addSql('DROP PROCEDURE IF EXISTS `update_comments_count`');
     }
@@ -57,9 +40,8 @@ class Version20150620132229 extends AbstractMigration implements ContainerAwareI
             SELECT count_comments;
         END';
 
-        $em = $this->container->get('doctrine.orm.entity_manager');
-        $stmt = $em->getConnection()->prepare($sql);
-        $stmt->execute();
+        $stmt = $this->connection->prepare($sql);
+        $stmt->executeQuery();
 
         $this->write('     <comment>-></comment> CREATE PROCEDURE `update_comments_count`');
     }
@@ -70,8 +52,6 @@ class Version20150620132229 extends AbstractMigration implements ContainerAwareI
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
-        $this->abortIf($this->connection->getDatabasePlatform()->getName() != 'mysql', 'Migration can only be executed safely on \'mysql\'.');
-
         $this->addSql('DROP PROCEDURE IF EXISTS `update_comments_count`');
         $this->addSql('CREATE TABLE avatar (id INT AUTO_INCREMENT NOT NULL, hash VARCHAR(32) NOT NULL, `default` SMALLINT NOT NULL, src VARCHAR(48) NOT NULL, last_modified DATETIME NOT NULL, UNIQUE INDEX UNIQ_1677722FD1B862B8 (hash), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
     }
