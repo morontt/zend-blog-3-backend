@@ -2,11 +2,12 @@
 
 namespace App\Model\Resizer;
 
+use App\Model\ImageConverterInterface;
 use Imagick;
 use ImagickException;
 use RuntimeException;
 
-class WebpResizer extends CommonResizer
+class WebpResizer extends CommonResizer implements ImageConverterInterface
 {
     use DebugAnnotation;
 

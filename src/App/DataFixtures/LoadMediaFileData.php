@@ -10,6 +10,8 @@
 namespace App\DataFixtures;
 
 use App\Entity\MediaFile;
+use App\Model\Image;
+use App\Service\ImageManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -19,11 +21,21 @@ class LoadMediaFileData extends Fixture
     {
         $file = new MediaFile();
 
+        $fileName = 'vintage_robot.jpg';
+
         $file
-            ->setPath('vintage_robot.jpg')
+            ->setPath($fileName)
             ->setDescription('file for testing')
-            ->setFileSize(189764)
+            ->setFileSize(filesize(ImageManager::getUploadsDir() . '/' . $fileName))
             ->setDefaultImage(true)
+        ;
+
+        $image = new Image($file);
+        $geometry = $image->getImageGeometry();
+
+        $file
+            ->setWidth($geometry->width)
+            ->setHeight($geometry->height)
         ;
 
         $manager->persist($file);

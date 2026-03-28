@@ -2,12 +2,13 @@
 
 namespace App\Model\Resizer;
 
+use App\Model\ImageConverterInterface;
 use Imagick;
 use ImagickException;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
-class AvifResizer extends CommonResizer
+class AvifResizer extends CommonResizer implements ImageConverterInterface
 {
     use DebugAnnotation;
 
