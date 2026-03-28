@@ -364,7 +364,7 @@ class Post
 
     public function getDefaultImage(): ?MediaFile
     {
-        $criteria = Criteria::create()
+        $criteria = Criteria::create(true)
             ->andWhere(Criteria::expr()->eq('defaultImage', true))
         ;
 
