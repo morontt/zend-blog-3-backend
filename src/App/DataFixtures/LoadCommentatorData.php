@@ -3,6 +3,8 @@
 namespace App\DataFixtures;
 
 use App\Entity\Commentator;
+use App\Entity\User;
+use App\Utils\RuTransform;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory as FakerFactory;
@@ -36,7 +38,11 @@ class LoadCommentatorData extends Fixture
                 $commentator->setEmail($faker->email);
             }
             if ($faker->numberBetween(0, 100) < 30) {
-                $commentator->setWebsite($faker->domainName);
+                $commentator->setWebsite('https://' . $faker->domainName);
+            }
+
+            if (substr(RuTransform::ruTransform($commentator->getName()), -1) === 'a') {
+                $commentator->setGender(User::FEMALE);
             }
 
             $manager->persist($commentator);

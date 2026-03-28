@@ -33,6 +33,18 @@ class LoadUserData extends Fixture
 
         $this->addReference('admin-user', $user);
 
+        $user = new User();
+        $user
+            ->setUsername('techbot')
+            ->setEmail('techbot@example.org')
+            ->setUserType(User::TYPE_ADMIN)
+            ->setPassword($this->passwordHasher->hashPassword($user, 'test'))
+            ->setWsseKey('SNTUd8sd2Xtf58')
+        ;
+
+        $manager->persist($user);
+        $manager->flush();
+
         $faker = FakerFactory::create('ru_RU');
         $faker->seed(8466);
 

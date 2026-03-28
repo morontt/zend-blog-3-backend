@@ -118,7 +118,8 @@
         {
           "text": "doctrine-fixtures",
           "priority": "medium",
-          "creation": 1774375904
+          "creation": 1774375904,
+          "completion": 1774691691
         }
       ]
     },
