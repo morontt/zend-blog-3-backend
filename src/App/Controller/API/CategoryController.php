@@ -78,8 +78,6 @@ class CategoryController extends BaseController
     }
 
     /**
-     * TODO update nested-set tree
-     *
      * @param Request $request
      * @param Category $entity
      *
@@ -114,8 +112,6 @@ class CategoryController extends BaseController
     }
 
     /**
-     * TODO update nested-set tree
-     *
      * @param Category $entity
      *
      * @throws \Doctrine\ORM\Exception\ORMException
@@ -126,7 +122,13 @@ class CategoryController extends BaseController
     public function deleteAction(
         Category $entity,
         TaskService $taskService,
+        ViewCategoryRepository $repository,
     ): JsonResponse {
+        $viewEntity = $repository->find($entity->getId());
+        if ($viewEntity && $viewEntity->getPostsCount() > 0) {
+            return new JsonResponse([], Response::HTTP_BAD_REQUEST);
+        }
+
         $this->getEm()->remove($entity);
         $this->getEm()->flush();
 
