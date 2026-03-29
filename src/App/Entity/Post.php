@@ -23,87 +23,87 @@ class Post
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    protected $id;
+    private $id;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'string', length: 128)]
-    protected $title;
+    private $title;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'string', length: 255, unique: true)]
-    protected $url;
+    private $url;
 
     /**
      * @var bool
      */
-    #[ORM\Column(type: 'boolean')]
-    protected $hide = false;
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    private $hide = false;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'text', name: 'text_post')]
-    protected $text;
+    private $text;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'text')]
-    protected $preview;
+    private $preview;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'text')]
-    protected $rawText;
+    private $rawText;
 
     /**
      * @var string|null
      */
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    protected $description;
+    private $description;
 
     /**
      * @var Category
      */
     #[ORM\JoinColumn(nullable: false)]
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'posts')]
-    protected $category;
+    private $category;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, Tag>
      */
     #[ORM\JoinTable(name: 'relation_topictag')]
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'posts')]
-    protected $tags;
+    private $tags;
 
     /**
      * @var int
      */
-    #[ORM\Column(type: 'integer')]
-    protected $commentsCount = 0;
+    #[ORM\Column(type: 'integer', options: ['default' => 0])]
+    private $commentsCount = 0;
 
     /**
      * @var int
      */
-    #[ORM\Column(type: 'integer')]
-    protected $viewsCount = 0;
+    #[ORM\Column(type: 'integer', options: ['default' => 0])]
+    private $viewsCount = 0;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, Comment>
      */
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'post')]
-    protected $comments;
+    private $comments;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, MediaFile>|ArrayCollection
      */
     #[ORM\OneToMany(targetEntity: MediaFile::class, mappedBy: 'post')]
-    protected $mediaFiles;
+    private $mediaFiles;
 
     /**
      * @var DateTime

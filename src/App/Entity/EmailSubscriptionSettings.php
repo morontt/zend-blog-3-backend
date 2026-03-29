@@ -40,7 +40,7 @@ class EmailSubscriptionSettings
      * @var int
      */
     #[ORM\Column(type: 'smallint', name: 'subs_type', options: [
-        'default' => 1,
+        'default' => EmailMessageDTO::TYPE_NONE,
         'comment' => '0: none, 1: reply, 2: system',
     ])]
     private $type = EmailMessageDTO::TYPE_NONE;

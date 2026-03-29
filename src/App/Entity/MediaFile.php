@@ -27,44 +27,44 @@ class MediaFile
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    protected $id;
+    private $id;
 
     /**
      * @var Post|null
      */
     #[ORM\JoinColumn(onDelete: 'SET NULL', nullable: true)]
     #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'mediaFiles')]
-    protected $post;
+    private $post;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'string', unique: true)]
-    protected $path;
+    private $path;
 
     /**
      * @var string|null
      */
     #[ORM\Column(type: 'string', nullable: true)]
-    protected $description;
+    private $description;
 
     /**
      * @var int
      */
     #[ORM\Column(type: 'integer')]
-    protected $fileSize;
+    private $fileSize;
 
     /**
      * @var bool
      */
-    #[ORM\Column(type: 'boolean')]
-    protected $defaultImage = false;
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    private $defaultImage = false;
 
     /**
      * @var bool
      */
-    #[ORM\Column(type: 'boolean')]
-    protected $backedUp = false;
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    private $backedUp = false;
 
     /**
      * @var int|null

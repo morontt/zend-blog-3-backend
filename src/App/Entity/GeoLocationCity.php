@@ -24,56 +24,56 @@ class GeoLocationCity
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    protected $id;
+    private $id;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'string', length: 128)]
-    protected $city;
+    private $city;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'string', length: 128)]
-    protected $region;
+    private $region;
 
     /**
      * @var float|null
      */
     #[ORM\Column(type: 'float', nullable: true)]
-    protected $latitude;
+    private $latitude;
 
     /**
      * @var float|null
      */
     #[ORM\Column(type: 'float', nullable: true)]
-    protected $longitude;
+    private $longitude;
 
     /**
      * @var string|null
      */
     #[ORM\Column(type: 'string', length: 30, nullable: true)]
-    protected $zip;
+    private $zip;
 
     /**
      * @var string|null
      */
     #[ORM\Column(type: 'string', length: 8, nullable: true)]
-    protected $timeZone;
+    private $timeZone;
 
     /**
      * @var GeoLocationCountry
      */
     #[ORM\JoinColumn(nullable: false, onDelete: 'RESTRICT')]
     #[ORM\ManyToOne(targetEntity: GeoLocationCountry::class)]
-    protected $country;
+    private $country;
 
     /**
      * @var DateTime
      */
     #[ORM\Column(type: 'milliseconds_dt')]
-    protected $timeCreated;
+    private $timeCreated;
 
     public function __construct()
     {

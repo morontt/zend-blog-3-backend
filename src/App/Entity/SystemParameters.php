@@ -39,7 +39,7 @@ class SystemParameters
     /**
      * @var bool
      */
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
     protected $encrypted = false;
 
     /**

@@ -67,7 +67,7 @@ class Commentator implements CommentatorInterface, EmailCheckInterface
     /**
      * @var int
      */
-    #[ORM\Column(type: 'smallint', options: ['default' => 1, 'comment' => '1: male, 2: female'])]
+    #[ORM\Column(type: 'smallint', options: ['default' => User::MALE, 'comment' => '1: male, 2: female'])]
     private $gender = User::MALE;
 
     /**

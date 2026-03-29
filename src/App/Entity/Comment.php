@@ -25,13 +25,13 @@ class Comment implements CommentInterface
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    protected $id;
+    private $id;
 
     /**
      * @var Collection<int, Comment>
      **/
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'parent')]
-    protected $children;
+    private $children;
 
     /**
      * @var Comment|null
@@ -40,51 +40,51 @@ class Comment implements CommentInterface
      **/
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
     #[ORM\ManyToOne(targetEntity: Comment::class, inversedBy: 'children')]
-    protected $parent;
+    private $parent;
 
     /**
      * @var Post
      */
     #[ORM\JoinColumn(nullable: false)]
     #[ORM\ManyToOne(targetEntity: Post::class, inversedBy: 'comments')]
-    protected $post;
+    private $post;
 
     /**
      * @var Commentator|null
      */
     #[ORM\ManyToOne(targetEntity: Commentator::class, inversedBy: 'comments')]
-    protected $commentator;
+    private $commentator;
 
     /**
      * @var User|null
      */
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'comments')]
-    protected $user;
+    private $user;
 
     /**
      * @var string
      */
     #[ORM\Column(type: 'text')]
-    protected $text;
+    private $text;
 
     /**
      * @var bool
      */
     #[ORM\Column(type: 'boolean', options: ['default' => false])]
-    protected $deleted = false;
+    private $deleted = false;
 
     /**
      * @var TrackingAgent|null
      */
     #[ORM\JoinColumn(name: 'user_agent_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     #[ORM\ManyToOne(targetEntity: TrackingAgent::class)]
-    protected $trackingAgent;
+    private $trackingAgent;
 
     /**
      * @var string|null
      */
     #[ORM\Column(name: 'ip_addr', type: 'string', length: 15, nullable: true)]
-    protected $ipAddress;
+    private $ipAddress;
 
     /**
      * @var GeoLocation|null

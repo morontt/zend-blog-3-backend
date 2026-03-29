@@ -16,27 +16,27 @@ class Tracking
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    protected $id;
+    private $id;
 
     /**
      * @var Post|null
      */
     #[ORM\JoinColumn(onDelete: 'CASCADE')]
     #[ORM\ManyToOne(targetEntity: Post::class)]
-    protected $post;
+    private $post;
 
     /**
      * @var TrackingAgent|null
      */
     #[ORM\JoinColumn(name: 'user_agent_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
     #[ORM\ManyToOne(targetEntity: TrackingAgent::class, inversedBy: 'trackings')]
-    protected $trackingAgent;
+    private $trackingAgent;
 
     /**
      * @var string|null
      */
     #[ORM\Column(name: 'ip_addr', type: 'string', length: 15, nullable: true)]
-    protected $ipAddress;
+    private $ipAddress;
 
     /**
      * @var GeoLocation|null
@@ -49,13 +49,13 @@ class Tracking
      * @var DateTime
      */
     #[ORM\Column(type: 'milliseconds_dt')]
-    protected $timeCreated;
+    private $timeCreated;
 
     /**
      * @var bool
      */
     #[ORM\Column(name: 'is_cdn', type: 'boolean', options: ['default' => false])]
-    private $cdn;
+    private $cdn = false;
 
     /**
      * @var string|null
@@ -83,8 +83,6 @@ class Tracking
 
     public function __construct()
     {
-        $this->cdn = false;
-
         $this->setTimeCreated(new DateTime());
     }
 

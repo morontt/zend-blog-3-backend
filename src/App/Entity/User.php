@@ -100,7 +100,7 @@ class User implements UserInterface, LegacyPasswordAuthenticatedUserInterface, E
     /**
      * @var int
      */
-    #[ORM\Column(type: 'smallint', options: ['default' => 1, 'comment' => '1: male, 2: female'])]
+    #[ORM\Column(type: 'smallint', options: ['default' => self::MALE, 'comment' => '1: male, 2: female'])]
     private $gender = self::MALE;
 
     /**

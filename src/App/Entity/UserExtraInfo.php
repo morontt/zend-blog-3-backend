@@ -69,7 +69,7 @@ class UserExtraInfo
     /**
      * @var int
      */
-    #[ORM\Column(type: 'smallint', options: ['default' => 3, 'comment' => '1: male, 2: female, 3: n/a'])]
+    #[ORM\Column(type: 'smallint', options: ['default' => self::UNKNOWN, 'comment' => '1: male, 2: female, 3: n/a'])]
     private $gender = self::UNKNOWN;
 
     /**

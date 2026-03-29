@@ -23,7 +23,7 @@ class GeoLocationCountry
     #[ORM\Id]
     #[ORM\Column(type: 'integer')]
     #[ORM\GeneratedValue(strategy: 'AUTO')]
-    protected $id;
+    private $id;
 
     /**
      * Two-character country code based on ISO 3166.
@@ -31,7 +31,7 @@ class GeoLocationCountry
      * @var string
      */
     #[ORM\Column(name: 'country_code', type: 'string', length: 2, unique: true)]
-    protected $code;
+    private $code;
 
     /**
      * Country name based on ISO 3166.
@@ -39,13 +39,13 @@ class GeoLocationCountry
      * @var string
      */
     #[ORM\Column(name: 'country_name', type: 'string', length: 64)]
-    protected $name;
+    private $name;
 
     /**
      * @var DateTime
      */
     #[ORM\Column(type: 'milliseconds_dt')]
-    protected $timeCreated;
+    private $timeCreated;
 
     public function __construct()
     {
