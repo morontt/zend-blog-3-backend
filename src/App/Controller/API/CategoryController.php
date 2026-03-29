@@ -9,11 +9,13 @@
 
 namespace App\Controller\API;
 
+use App\Command\InitCategoriesTreeCommand;
 use App\Controller\BaseController;
 use App\Entity\Category;
 use App\Form\CategoryFormType;
 use App\Repository\CategoryRepository;
 use App\Repository\ViewCategoryRepository;
+use App\Service\TaskService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -87,8 +89,11 @@ class CategoryController extends BaseController
      * @return JsonResponse
      */
     #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['PUT'])]
-    public function updateAction(Request $request, Category $entity): JsonResponse
-    {
+    public function updateAction(
+        Request $request,
+        Category $entity,
+        TaskService $taskService,
+    ): JsonResponse {
         $form = $this->createObjectForm('category', CategoryFormType::class, true);
         $form->handleRequest($request);
 
@@ -97,7 +102,13 @@ class CategoryController extends BaseController
             return new JsonResponse($errors, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $result = $this->getDataConverter()->saveCategory($entity, $formData['category']);
+        $this->getDataConverter()->saveCategory($entity, $formData['category']);
+
+        $this->getEm()->clear();
+        $taskService->runCommand(InitCategoriesTreeCommand::class);
+
+        $entity = $this->getEm()->getRepository(Category::class)->find($entity->getId());
+        $result = $this->getDataConverter()->getCategory($entity);
 
         return new JsonResponse($result);
     }
@@ -112,10 +123,15 @@ class CategoryController extends BaseController
      * @return JsonResponse
      */
     #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['DELETE'])]
-    public function deleteAction(Category $entity): JsonResponse
-    {
+    public function deleteAction(
+        Category $entity,
+        TaskService $taskService,
+    ): JsonResponse {
         $this->getEm()->remove($entity);
         $this->getEm()->flush();
+
+        $this->getEm()->clear();
+        $taskService->runCommand(InitCategoriesTreeCommand::class);
 
         return new JsonResponse(true);
     }

@@ -389,7 +389,6 @@
       "text": "Category page",
       "priority": "medium",
       "creation": 1687519031,
-      "completion": 1746682834,
       "tasks": [
         {
           "text": "Work counters",
@@ -402,6 +401,11 @@
           "priority": "medium",
           "creation": 1687519084,
           "completion": 1729236430
+        },
+        {
+          "text": "If the category cannot be deleted, return 400 error",
+          "priority": "medium",
+          "creation": 1774779092
         }
       ]
     },

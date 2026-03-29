@@ -41,6 +41,9 @@ export default Ember.Controller.extend({
         },
         closeModal() {
             $('#modal_new_category').modal('hide');
+        },
+        refresh() {
+            this.get('target.router').refresh();
         }
     },
     parentChoices: []

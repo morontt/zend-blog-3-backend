@@ -8,6 +8,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Throwable;
 
 #[AsCommand(
     name: 'mtt:init-tree:category',
@@ -24,7 +25,15 @@ class InitCategoriesTreeCommand extends Command
     {
         $startTime = microtime(true);
 
-        $this->handleCategory();
+        $this->em->getConnection()->beginTransaction();
+        try {
+            $this->handleCategory();
+            $this->em->getConnection()->commit();
+        } catch (Throwable $e) {
+            $this->em->getConnection()->rollBack();
+
+            throw $e;
+        }
 
         $output->writeln('');
         $output->writeln('<info>Update category tree</info>');
@@ -36,7 +45,7 @@ class InitCategoriesTreeCommand extends Command
             sprintf('<info>Total time: <comment>%s</comment> sec</info>', round($endTime - $startTime, 3))
         );
 
-        return 0;
+        return self::SUCCESS;
     }
 
     private function handleCategory(): void
@@ -48,10 +57,9 @@ class InitCategoriesTreeCommand extends Command
 
         $qb = $categoryRepo->createQueryBuilder('c');
         $qb->update()
-            ->set('c.nestedSet.leftKey', ':null')
-            ->set('c.nestedSet.rightKey', ':null')
+            ->set('c.nestedSet.leftKey', 'NULL')
+            ->set('c.nestedSet.rightKey', 'NULL')
             ->set('c.nestedSet.depth', 1)
-            ->setParameter('null', null)
             ->getQuery()
             ->execute()
         ;

@@ -10,6 +10,7 @@ export default Ember.Component.extend({
         save() {
             this.get('category').save().then(() => {
                 this.set('isEditing', false);
+                this.sendAction();
             });
         },
         reset() {

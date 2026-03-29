@@ -30,7 +30,7 @@
         </thead>
         <tbody>
         {{#each model as |category|}}
-            {{tr-category category=category parentChoices=parentChoices}}
+            {{tr-category category=category parentChoices=parentChoices action="refresh"}}
         {{/each}}
         </tbody>
     </table>

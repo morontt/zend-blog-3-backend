@@ -50,10 +50,17 @@
                 <i class="glyphicon glyphicon-pencil"></i>
                 <span>edit</span>
             </a>
-            <button class="btn btn-danger btn-confirm" {{action "remove"}}>
-                <i class="glyphicon glyphicon-trash"></i>
-                <span>delete</span>
-            </button>
+            {{#if category.postsCount}}
+                <button class="btn btn-danger btn-confirm" disabled>
+                    <i class="glyphicon glyphicon-trash"></i>
+                    <span>delete</span>
+                </button>
+            {{else}}
+                <button class="btn btn-danger btn-confirm" {{action "remove"}}>
+                    <i class="glyphicon glyphicon-trash"></i>
+                    <span>delete</span>
+                </button>
+            {{/if}}
         </div>
     </td>
 {{/if}}
