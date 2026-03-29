@@ -24,7 +24,15 @@
 {{else}}
     <td class="center-text">{{tag.id}}</td>
     <td>{{tag.name}}</td>
-    <td>{{tag.url}}</td>
+    <td>
+        {{#if tag.postsCount}}
+            <a {{action "openTarget"}} class="force-pointer">
+                {{tag.url}}
+            </a>
+        {{else}}
+            {{tag.url}}
+        {{/if}}
+    </td>
     <td class="text-right">
         {{#if tag.postsCount}}
             {{tag.postsCount}}
