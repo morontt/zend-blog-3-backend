@@ -5,11 +5,16 @@ namespace App\Command;
 use App\Entity\Comment;
 use App\Entity\Post;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'mtt:init-tree:comments',
+    description: 'Init nested-set tree for comments',
+)]
 class InitCommentsTreeCommand extends Command
 {
     public function __construct(private EntityManagerInterface $em)
@@ -20,8 +25,6 @@ class InitCommentsTreeCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setName('mtt:init-tree:comments')
-            ->setDescription('Init nested-set tree for comments')
             ->addOption('article-ids', null, InputOption::VALUE_REQUIRED, 'article IDs')
         ;
     }

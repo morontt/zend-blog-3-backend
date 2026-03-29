@@ -4,23 +4,20 @@ namespace App\Command;
 
 use App\Entity\Category;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'mtt:init-tree:category',
+    description: 'Init nested-set tree for category',
+)]
 class InitCategoriesTreeCommand extends Command
 {
     public function __construct(private EntityManagerInterface $em)
     {
         parent::__construct();
-    }
-
-    protected function configure(): void
-    {
-        $this
-            ->setName('mtt:init-tree:category')
-            ->setDescription('Init nested-set tree for category')
-        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

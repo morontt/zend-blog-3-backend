@@ -2,8 +2,6 @@
 
 namespace App\Exception;
 
-use Exception;
-
-class ShortPasswordException extends Exception
+class ShortPasswordException extends AppException
 {
 }

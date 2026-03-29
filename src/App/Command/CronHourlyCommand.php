@@ -5,19 +5,14 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Cron\CronServiceInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 
+#[AsCommand(
+    name: 'mtt:cron:hourly',
+    description: 'Start hourly crons',
+)]
 class CronHourlyCommand extends CronCommand
 {
-    protected function configure(): void
-    {
-        parent::configure();
-
-        $this
-            ->setName('mtt:cron:hourly')
-            ->setDescription('Start hourly crons')
-        ;
-    }
-
     /**
      * @return CronServiceInterface[]
      */

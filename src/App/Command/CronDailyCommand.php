@@ -12,19 +12,14 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Cron\CronServiceInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 
+#[AsCommand(
+    name: 'mtt:cron:daily',
+    description: 'Start daily crons',
+)]
 class CronDailyCommand extends CronCommand
 {
-    protected function configure(): void
-    {
-        parent::configure();
-
-        $this
-            ->setName('mtt:cron:daily')
-            ->setDescription('Start daily crons')
-        ;
-    }
-
     /**
      * @return CronServiceInterface[]
      */

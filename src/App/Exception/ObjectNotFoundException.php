@@ -8,8 +8,6 @@
 
 namespace App\Exception;
 
-use Exception;
-
-class ObjectNotFoundException extends Exception
+class ObjectNotFoundException extends AppException
 {
 }

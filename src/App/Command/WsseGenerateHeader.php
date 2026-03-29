@@ -5,11 +5,16 @@ namespace App\Command;
 use App\Repository\UserRepository;
 use Exception;
 use RuntimeException;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+    name: 'mtt:wsse:generate-header',
+    description: 'Generate WSSE header by user',
+)]
 class WsseGenerateHeader extends Command
 {
     /**
@@ -27,8 +32,6 @@ class WsseGenerateHeader extends Command
     protected function configure(): void
     {
         $this
-            ->setName('mtt:wsse:generate-header')
-            ->setDescription('Generate WSSE header by user')
             ->addArgument('username', InputArgument::REQUIRED, 'The username of the user.')
         ;
     }

@@ -2,8 +2,6 @@
 
 namespace App\Exception;
 
-use Exception;
-
-class NotAllowedCommentException extends Exception
+class NotAllowedCommentException extends AppException
 {
 }
