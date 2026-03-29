@@ -13,21 +13,21 @@ namespace App\API\Transformers;
 
 use App\DTO\TagDTO;
 use App\Entity\Tag;
+use App\Entity\TagInterface;
 use App\Utils\RuTransform;
 
 class TagTransformer extends BaseTransformer
 {
     /**
-     * @param Tag $item
-     *
      * @return array<string, mixed>
      */
-    public function transform(Tag $item): array
+    public function transform(TagInterface $item): array
     {
         return [
             'id' => $item->getId(),
             'name' => $item->getName(),
             'url' => $item->getUrl(),
+            'postsCount' => $item->getPostsCount(),
         ];
     }
 

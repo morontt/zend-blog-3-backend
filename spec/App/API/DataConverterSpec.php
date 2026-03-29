@@ -46,6 +46,7 @@ class DataConverterSpec extends ObjectBehavior
                     'id' => null,
                     'name' => 'test-name',
                     'url' => 'test-url',
+                    'postsCount' => 0,
                 ],
             ]
         );
@@ -63,11 +64,13 @@ class DataConverterSpec extends ObjectBehavior
                         'id' => null,
                         'name' => 'test-name',
                         'url' => 'test-url',
+                        'postsCount' => 0,
                     ],
                     [
                         'id' => null,
                         'name' => 'test2-name',
                         'url' => 'test2-url',
+                        'postsCount' => 0,
                     ],
                 ],
             ]

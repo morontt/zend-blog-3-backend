@@ -46,6 +46,7 @@ class TagFormType extends AbstractType
     {
         $resolver->setDefaults([
             'csrf_protection' => false,
+            'allow_extra_fields' => true,
             'data_class' => TagDTO::class,
         ]);
     }

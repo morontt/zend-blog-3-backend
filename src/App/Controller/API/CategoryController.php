@@ -24,14 +24,8 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/api/categories')]
 class CategoryController extends BaseController
 {
-    /**
-     * @param Request $request
-     * @param ViewCategoryRepository $repository
-     *
-     * @return JsonResponse
-     */
     #[Route(path: '', methods: ['GET'])]
-    public function findAllAction(Request $request, ViewCategoryRepository $repository): JsonResponse
+    public function findAllAction(ViewCategoryRepository $repository): JsonResponse
     {
         $result = $this->getDataConverter()
             ->getCategoryArray($repository->getListQuery()->getResult());
@@ -39,11 +33,6 @@ class CategoryController extends BaseController
         return new JsonResponse($result);
     }
 
-    /**
-     * @param Category $entity
-     *
-     * @return JsonResponse
-     */
     #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function findAction(Category $entity): JsonResponse
     {
@@ -53,14 +42,6 @@ class CategoryController extends BaseController
         return new JsonResponse($result);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @throws \Psr\Container\ContainerExceptionInterface
-     * @throws \Psr\Container\NotFoundExceptionInterface
-     *
-     * @return JsonResponse
-     */
     #[Route(path: '', methods: ['POST'])]
     public function createAction(Request $request): JsonResponse
     {
@@ -77,15 +58,6 @@ class CategoryController extends BaseController
         return new JsonResponse($result, Response::HTTP_CREATED);
     }
 
-    /**
-     * @param Request $request
-     * @param Category $entity
-     *
-     * @throws \Psr\Container\ContainerExceptionInterface
-     * @throws \Psr\Container\NotFoundExceptionInterface
-     *
-     * @return JsonResponse
-     */
     #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['PUT'])]
     public function updateAction(
         Request $request,
@@ -111,13 +83,6 @@ class CategoryController extends BaseController
         return new JsonResponse($result);
     }
 
-    /**
-     * @param Category $entity
-     *
-     * @throws \Doctrine\ORM\Exception\ORMException
-     *
-     * @return JsonResponse
-     */
     #[Route(path: '/{id}', requirements: ['id' => '\d+'], methods: ['DELETE'])]
     public function deleteAction(
         Category $entity,
@@ -138,11 +103,6 @@ class CategoryController extends BaseController
         return new JsonResponse(true);
     }
 
-    /**
-     * @param CategoryRepository $repository
-     *
-     * @return JsonResponse
-     */
     #[Route(path: '/list', name: 'category_choices', options: ['expose' => true], methods: ['GET'])]
     public function ajaxCategoryListAction(CategoryRepository $repository): JsonResponse
     {
