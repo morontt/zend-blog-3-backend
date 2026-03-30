@@ -46,9 +46,13 @@ class CommentGeoLocation implements DailyCronServiceInterface
                 sleep(1);
             }
             $first = false;
-            $location = $this->ipInfo->getLocationByIp($ip);
-            if ($location) {
-                $commentRepo->updateLocation($location, $ip);
+            try {
+                $location = $this->ipInfo->getLocationByIp($ip);
+                if ($location) {
+                    $commentRepo->updateLocation($location, $ip);
+                }
+            } catch (\Throwable $e) {
+                break;
             }
         }
 

@@ -31,12 +31,20 @@ class TrackingGeoLocation implements HourlyCronServiceInterface
     public function run(): void
     {
         $ips = $this->repository->getUncheckedIps();
+        $first = true;
         foreach ($ips as $ip) {
-            $location = $this->ipInfo->getLocationByIp($ip);
-            if ($location) {
-                $this->repository->updateLocation($location, $ip);
+            if (!$first) {
+                sleep(1);
             }
-            sleep(1);
+            $first = false;
+            try {
+                $location = $this->ipInfo->getLocationByIp($ip);
+                if ($location) {
+                    $this->repository->updateLocation($location, $ip);
+                }
+            } catch (\Throwable $e) {
+                break;
+            }
         }
     }
 

@@ -2,34 +2,33 @@
 
 namespace App\Service\IpInfo;
 
+use App\Exception\AppException;
+use App\LogTrait;
 use Psr\Log\LoggerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Throwable;
 
 class IpInfoDbClient implements IpInfoClientInterface
 {
-    private string $key;
+    use LogTrait;
 
-    private HttpClientInterface $client;
-
-    private LoggerInterface $logger;
-
-    /**
-     * @param HttpClientInterface $client
-     * @param LoggerInterface $logger
-     * @param string $key
-     */
-    public function __construct(HttpClientInterface $client, LoggerInterface $logger, string $key)
-    {
-        $this->key = $key;
-        $this->client = $client;
-        $this->logger = $logger;
+    public function __construct(
+        private HttpClientInterface $client,
+        LoggerInterface $logger,
+        private string $key,
+    ) {
+        $this->setLogger($logger);
     }
 
     public function getLocationInfo(string $ip): ?LocationInfo
     {
         if (filter_var($ip, FILTER_VALIDATE_IP)) {
             try {
+                $this->info(
+                    'Request location by IP address',
+                    ['ip' => $ip]
+                );
+
                 $response = $this->client->request('GET', 'https://api.ipinfodb.com/v3/ip-city/', [
                     'query' => [
                         'key' => $this->key,
@@ -43,19 +42,26 @@ class IpInfoDbClient implements IpInfoClientInterface
                     return LocationInfo::createFromArray(json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR));
                 }
 
-                $this->logger->error(
-                    'IpInfoDbClient error',
+                $this->error(
+                    'HTTP status error',
                     ['code' => $response->getStatusCode(), 'message' => $response->getContent()]
                 );
+
+                throw new AppException('HTTP status error');
             } catch (Throwable $e) {
-                $this->logger->critical(
-                    'IpInfoDbClient error',
+                $this->critical(
+                    'An error occurred',
                     ['exception' => $e]
                 );
 
-                return null;
+                throw $e;
             }
         }
+
+        $this->error(
+            'Invalid IP address',
+            ['ip' => $ip]
+        );
 
         return null;
     }
