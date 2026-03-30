@@ -1,6 +1,8 @@
 <?php
 
-namespace Mtt\TestBundle\Service\IpInfo;
+declare(strict_types=1);
+
+namespace App\Service\IpInfo;
 
 use App\Service\IpInfo\IpInfoClientInterface;
 use App\Service\IpInfo\LocationInfo;
