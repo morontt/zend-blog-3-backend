@@ -20,12 +20,13 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class IpInfo
 {
+    private bool $isLimited;
+
     public function __construct(
         private EntityManagerInterface $em,
         private IpInfoClientInterface $ipInfoClient,
     ) {
-        $this->em = $em;
-        $this->ipInfoClient = $ipInfoClient;
+        $this->isLimited = $ipInfoClient->isLimitedRequests();
     }
 
     /**
@@ -67,6 +68,11 @@ class IpInfo
         return $ip4[0] === 10
             || ($ip4[0] === 172 && ($ip4[1] & 0xF0) === 16)
             || ($ip4[0] === 192 && $ip4[1] === 168);
+    }
+
+    public function isLimitedRequests(): bool
+    {
+        return $this->isLimited;
     }
 
     protected function getCity(LocationInfo $data): ?GeoLocationCity

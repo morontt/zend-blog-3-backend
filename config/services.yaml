@@ -140,8 +140,6 @@ services:
         arguments:
             $key: "%ipinfo_db_key%"
 
-    App\Service\IpInfo\IpInfoClientInterface: '@App\Service\IpInfo\IpInfoDbClient'
-
     App\Service\Mailer:
         arguments:
             $emailFrom: "%mailer_user%"

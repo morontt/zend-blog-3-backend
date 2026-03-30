@@ -19,6 +19,7 @@ use App\Service\SystemParametersStorage;
 use DateInterval;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Throwable;
 
 class CommentGeoLocation implements DailyCronServiceInterface
 {
@@ -42,7 +43,7 @@ class CommentGeoLocation implements DailyCronServiceInterface
         $ips = $commentRepo->getUncheckedIps();
         $first = true;
         foreach ($ips as $ip) {
-            if (!$first) {
+            if (!$first && $this->ipInfo->isLimitedRequests()) {
                 sleep(1);
             }
             $first = false;
@@ -51,7 +52,7 @@ class CommentGeoLocation implements DailyCronServiceInterface
                 if ($location) {
                     $commentRepo->updateLocation($location, $ip);
                 }
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 break;
             }
         }

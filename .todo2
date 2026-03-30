@@ -854,7 +854,14 @@
     {
       "text": "Dashboard for logs",
       "priority": "medium",
-      "creation": 1774165353
+      "creation": 1774165353,
+      "tasks": [
+        {
+          "text": "Hide sensitive information in logs (for example IpInfoDbClient)",
+          "priority": "medium",
+          "creation": 1774858411
+        }
+      ]
     }
   ]
 }

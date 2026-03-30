@@ -5,6 +5,7 @@ namespace App\Cron\Hourly;
 use App\Cron\HourlyCronServiceInterface;
 use App\Repository\TrackingRepository;
 use App\Service\IpInfo;
+use Throwable;
 
 class TrackingGeoLocation implements HourlyCronServiceInterface
 {
@@ -33,7 +34,7 @@ class TrackingGeoLocation implements HourlyCronServiceInterface
         $ips = $this->repository->getUncheckedIps();
         $first = true;
         foreach ($ips as $ip) {
-            if (!$first) {
+            if (!$first && $this->ipInfo->isLimitedRequests()) {
                 sleep(1);
             }
             $first = false;
@@ -42,7 +43,7 @@ class TrackingGeoLocation implements HourlyCronServiceInterface
                 if ($location) {
                     $this->repository->updateLocation($location, $ip);
                 }
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 break;
             }
         }
