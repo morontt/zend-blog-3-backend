@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\EventSubscriber;
 
 use App\Event\CommentEvent;
 use App\Event\DeleteCommentEvent;
+use App\LogTrait;
 use Doctrine\DBAL\Driver\Exception as DriverException;
 use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,18 +15,13 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class CountCommentsSubscriber implements EventSubscriberInterface
 {
-    private EntityManagerInterface $em;
+    use LogTrait;
 
-    private LoggerInterface $logger;
-
-    /**
-     * @param EntityManagerInterface $em
-     * @param LoggerInterface $logger
-     */
-    public function __construct(EntityManagerInterface $em, LoggerInterface $logger)
-    {
-        $this->em = $em;
-        $this->logger = $logger;
+    public function __construct(
+        private EntityManagerInterface $em,
+        LoggerInterface $logger,
+    ) {
+        $this->setLogger($logger);
     }
 
     /**
@@ -31,16 +29,13 @@ class CountCommentsSubscriber implements EventSubscriberInterface
      */
     public function updateCount(CommentEvent $event): void
     {
-        $comment = $event->getComment();
-
-        $conn = $this->em->getConnection();
-
+        $connection = $this->em->getConnection();
         try {
-            $stmt = $conn->prepare('CALL update_comments_count(:postId)');
-            $stmt->bindValue('postId', $comment->getPost()->getId());
+            $stmt = $connection->prepare('CALL update_comments_count(:postId)');
+            $stmt->bindValue('postId', $event->getComment()->getPost()->getId());
             $stmt->executeQuery();
         } catch (DriverException|DBALException $e) {
-            $this->logger->error('update comment count error', ['exception' => $e]);
+            $this->error('update comment count error', ['exception' => $e]);
         }
     }
 
