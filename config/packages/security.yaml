@@ -36,5 +36,6 @@ security:
         - { path: ^/admin/login, roles: PUBLIC_ACCESS, requires_channel: https }
         - { path: ^/telegram, roles: PUBLIC_ACCESS, requires_channel: https }
         - { path: ^/webhook, roles: PUBLIC_ACCESS, requires_channel: https }
+        - { path: ^/api, roles: ROLE_ADMIN, requires_channel: https }
         - { path: ^/admin/preview, roles: ROLE_USER, requires_channel: https }
         - { path: ^/admin, roles: ROLE_ADMIN, requires_channel: https }
