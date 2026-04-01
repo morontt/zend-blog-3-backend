@@ -102,6 +102,7 @@ module.exports = function (grunt) {
                     'bower_components/jquery-ui/ui/autocomplete.js',
                     'bower_components/jquery-ui/ui/menu.js',
                     'web/bundles/fosjsrouting/js/router.js',
+                    'web/dist/fos_js_routes.js',
                     'web/spa/assets/mtt-blog.js'
                 ],
                 dest: 'web/dist/<%= pkg.name %>.js'

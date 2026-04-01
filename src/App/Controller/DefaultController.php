@@ -6,7 +6,6 @@ use App\Entity\Post;
 use App\Repository\ViewCommentRepository;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use JsonException;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,15 +14,21 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
 {
-    public function __construct(private string $kernelEnv, private string $cdnUrl, private string $frontendSite)
-    {
+    public function __construct(
+        private string $kernelEnv,
+        private string $cdnUrl,
+        private string $frontendSite,
+    ) {
     }
 
-    /**
-     * @throws JsonException
-     */
     #[Route(path: '/')]
     public function indexAction(): Response
+    {
+        return new Response('Welcome', headers: ['Content-Type' => 'text/plain']);
+    }
+
+    #[Route(path: '/admin')]
+    public function dashboardAction(): Response
     {
         $isDev = $this->kernelEnv === 'dev';
 
@@ -73,7 +78,7 @@ class DefaultController extends AbstractController
         ]);
     }
 
-    #[Route(path: '/preview/{slug}', name: 'post_preview', options: ['expose' => true])]
+    #[Route(path: '/admin/preview/{slug}', name: 'post_preview', options: ['expose' => true])]
     public function previewAction(
         ViewCommentRepository $repository,
         #[MapEntity(mapping: ['slug' => 'url'])]
@@ -84,10 +89,7 @@ class DefaultController extends AbstractController
         return $this->render('default/preview.html.twig', compact('post', 'comments'));
     }
 
-    /**
-     * @return JsonResponse
-     */
-    #[Route(path: '/purge-cache', name: 'purge_cache', options: ['expose' => true], methods: ['POST'])]
+    #[Route(path: '/admin/purge-cache', name: 'purge_cache', options: ['expose' => true], methods: ['POST'])]
     public function purgeBlogCacheAction(): JsonResponse
     {
         $httpClient = new Client(['base_uri' => $this->frontendSite]);

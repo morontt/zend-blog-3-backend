@@ -1,6 +1,7 @@
 #!/bin/bash
 
 docker exec rhinoceros bash -c "php bin/console assets:install web"
+docker exec rhinoceros bash -c "php bin/console fos:js-routing:dump --pretty-print --target=web/dist/fos_js_routes.js"
 docker compose run --rm nodejs bash -c "./buildapp_js.sh"
 docker exec rhinoceros bash -c "chown -R www-data:www-data ."
 

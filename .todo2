@@ -874,6 +874,18 @@
           "creation": 1774956741
         }
       ]
+    },
+    {
+      "text": "Single domain",
+      "priority": "high",
+      "creation": 1775039572,
+      "tasks": [
+        {
+          "text": "secure-cookie support",
+          "priority": "medium",
+          "creation": 1775039635
+        }
+      ]
     }
   ]
 }
