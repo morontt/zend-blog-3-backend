@@ -1,0 +1,2 @@
+fos_js_routing:
+    request_context_base_url: '%frontend_site%'

@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TestEmailController extends AbstractController
 {
-    #[Route(path: '/test-emails', methods: ['GET'])]
+    #[Route(path: '/admin/test-emails', methods: ['GET'], name: 'test_emails')]
     public function indexAction(): Response
     {
         return $this->render('test_email/index.html.twig');
@@ -25,7 +25,7 @@ class TestEmailController extends AbstractController
      *
      * @return RedirectResponse
      */
-    #[Route(path: '/test-emails', methods: ['POST'])]
+    #[Route(path: '/admin/test-emails', methods: ['POST'])]
     public function sendAction(Mailer $mailer, CommentRepository $repository, Request $request): RedirectResponse
     {
         $mailTo = $request->request->get('_receiver');
@@ -43,6 +43,6 @@ class TestEmailController extends AbstractController
             $mailer->newComment($comment, $request->request->get('_receiver'), false);
         }
 
-        return new RedirectResponse('/test-emails');
+        return $this->redirectToRoute('test_emails');
     }
 }

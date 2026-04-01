@@ -41,7 +41,6 @@
 
 {% block javascripts %}
     {{- assets("/dist/mttblog.min.js") }}
-    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
     <script>
         moment.locale('{{ app.request.locale }}');
     </script>

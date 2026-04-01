@@ -13,7 +13,7 @@ class SecurityController extends AbstractController
     {
     }
 
-    #[Route(path: '/login', name: 'app_login')]
+    #[Route(path: '/admin/login', name: 'app_login')]
     public function loginAction(): Response
     {
         $error = $this->authUtils->getLastAuthenticationError();
