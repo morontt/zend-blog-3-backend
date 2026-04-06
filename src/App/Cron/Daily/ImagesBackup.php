@@ -13,20 +13,26 @@ namespace App\Cron\Daily;
 
 use App\Cron\DailyCronServiceInterface;
 use App\Entity\MediaFile;
+use App\LogTrait;
 use App\Service\BackupService;
 use App\Service\ImageManager;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemException;
+use Psr\Log\LoggerInterface;
 
 class ImagesBackup implements DailyCronServiceInterface
 {
+    use LogTrait;
+
     private int $countImported = 0;
     private int $countError = 0;
 
     public function __construct(
         private EntityManagerInterface $em,
         private BackupService $backupService,
+        LoggerInterface $logger,
     ) {
+        $this->setLogger($logger);
     }
 
     public function run(): void
@@ -47,6 +53,7 @@ class ImagesBackup implements DailyCronServiceInterface
                         $image->setBackedUp(true);
                         $this->em->flush();
                     } catch (FilesystemException $e) {
+                        $this->error('FilesystemException', ['exception' => $e->getMessage()]);
                         $this->countError++;
                     }
                 } else {

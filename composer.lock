@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4d7ea821987642c4c44b31a8d7a02579",
+    "content-hash": "bc389a264e6c2ce715375c9f4c73a8f9",
     "packages": [
         {
             "name": "doctrine/collections",
@@ -2525,6 +2525,54 @@
             ],
             "support": {
                 "source": "https://github.com/thephpleague/flysystem-local/tree/3.31.0"
+            },
+            "time": "2026-01-23T15:30:45+00:00"
+        },
+        {
+            "name": "league/flysystem-webdav",
+            "version": "3.31.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/flysystem-webdav.git",
+                "reference": "1705b5d4aab6d755a78ea850e523dda9c58ad20f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-webdav/zipball/1705b5d4aab6d755a78ea850e523dda9c58ad20f",
+                "reference": "1705b5d4aab6d755a78ea850e523dda9c58ad20f",
+                "shasum": ""
+            },
+            "require": {
+                "league/flysystem": "^3.6.0",
+                "php": "^8.0.2",
+                "sabre/dav": "^4.6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "League\\Flysystem\\WebDAV\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frankdejonge.nl"
+                }
+            ],
+            "description": "WebDAV filesystem adapter for Flysystem.",
+            "keywords": [
+                "Flysystem",
+                "WebDAV",
+                "file",
+                "files",
+                "filesystem"
+            ],
+            "support": {
+                "source": "https://github.com/thephpleague/flysystem-webdav/tree/3.31.0"
             },
             "time": "2026-01-23T15:30:45+00:00"
         },

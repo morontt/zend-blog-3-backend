@@ -31,6 +31,7 @@
         "laminas/laminas-uri": "*",
         "laminas/laminas-zendframework-bridge": "~1.4",
         "league/flysystem": "^3.33",
+        "league/flysystem-webdav": "^3.31",
         "league/fractal": "~0.12",
         "league/oauth2-client": "~2.2",
         "phpdocumentor/reflection-docblock": "^5.4",

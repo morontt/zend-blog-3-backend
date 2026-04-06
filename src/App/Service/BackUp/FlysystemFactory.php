@@ -12,8 +12,8 @@ namespace App\Service\BackUp;
 
 use App\Entity\SystemParameters;
 use App\Service\SystemParametersStorage;
-use App\Utils\Flysystem\WebDAVAdapter;
 use League\Flysystem\Filesystem;
+use League\Flysystem\WebDAV\WebDAVAdapter;
 use LogicException;
 use Sabre\DAV\Client as SabreClient;
 use Spatie\Dropbox\Client as DropboxClient;
