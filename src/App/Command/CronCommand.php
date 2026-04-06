@@ -58,6 +58,7 @@ abstract class CronCommand extends Command
                     continue;
                 }
 
+                $cronFound = true;
                 $cronJob->run();
                 if ($cronJob->getMessage()) {
                     $messages[] = sprintf('%s: %s', self::getJobName($cronJob), $cronJob->getMessage());
@@ -69,8 +70,6 @@ abstract class CronCommand extends Command
                         sprintf('<comment>%s:</comment> without message', self::getJobName($cronJob))
                     );
                 }
-
-                $cronFound = true;
             } catch (Throwable $e) {
                 $messages[] = sprintf(
                     'Error %s: %s, file: %s, line: %d',
