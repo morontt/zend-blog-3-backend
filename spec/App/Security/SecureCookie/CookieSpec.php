@@ -3,10 +3,14 @@
 namespace spec\App\Security\SecureCookie;
 
 use App\Security\SecureCookie\Cookie;
+
+use function App\Utils\base64url_decode;
+
 use PhpSpec\ObjectBehavior;
 
 /**
  * @method \PhpSpec\Wrapper\Subject verifyMac(string)
+ * @method \PhpSpec\Wrapper\Subject decrypt(string)
  */
 class CookieSpec extends ObjectBehavior
 {
@@ -28,7 +32,7 @@ class CookieSpec extends ObjectBehavior
         ];
 
         foreach ($cases as $case) {
-            $data = base64_decode(str_replace(['-', '_'], ['+', '/'], $case));
+            $data = base64url_decode($case);
             $this->verifyMac($data)->shouldReturn(true);
         }
     }
@@ -41,8 +45,16 @@ class CookieSpec extends ObjectBehavior
         ];
 
         foreach ($cases as $case) {
-            $data = base64_decode(str_replace(['-', '_'], ['+', '/'], $case));
+            $data = base64url_decode($case);
             $this->verifyMac($data)->shouldReturn(false);
         }
+    }
+
+    public function it_is_decrypt()
+    {
+        $encrypted = 'wEPUU6shbiZPQe7-xKHIAPfQvOVE5XkWP5NxaAaokGxpZbjL2OG5PpxIjSxt8BpwHcQHfiY1GxU6dDrAsHyr61KQpw6jAnwZ8OK0L_JjIPtYfkl5dCyzuXpMNDM_4IlHWYz-OkBbDL5KXOs0PI_hxwGoqOM=';
+
+        $data = base64url_decode($encrypted);
+        $this->decrypt($data)->shouldReturn('{"a":{"i":160,"u":"admin","r":"admin"},"d":"2026-04-21T10:02:40+03:00"}' . PHP_EOL);
     }
 }

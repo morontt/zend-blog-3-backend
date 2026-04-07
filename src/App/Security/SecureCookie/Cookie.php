@@ -12,10 +12,15 @@ namespace App\Security\SecureCookie;
 
 class Cookie
 {
+    private const CIPHER = 'DES-EDE3-CBC';
+
+    private string $cipherKey;
+
     public function __construct(
         private string $hashKey,
         string $blockKey,
     ) {
+        $this->cipherKey = substr(hash('sha224', $blockKey, true), 0, 24);
     }
 
     public function createMac(string $data): string
@@ -33,5 +38,13 @@ class Cookie
             substr($data, -28),
             $this->createMac(substr($data, 0, -28))
         );
+    }
+
+    public function decrypt(string $str): string
+    {
+        $iv = substr($str, 0, openssl_cipher_iv_length(self::CIPHER));
+        $data = substr($str, openssl_cipher_iv_length(self::CIPHER));
+
+        return openssl_decrypt(substr($data, 0, -28), self::CIPHER, $this->cipherKey, OPENSSL_RAW_DATA, $iv);
     }
 }
