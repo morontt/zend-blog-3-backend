@@ -3,10 +3,9 @@
 namespace spec\App\Security\SecureCookie;
 
 use App\Security\SecureCookie\Cookie;
+use PhpSpec\ObjectBehavior;
 
 use function App\Utils\base64url_decode;
-
-use PhpSpec\ObjectBehavior;
 
 /**
  * @method \PhpSpec\Wrapper\Subject verifyMac(string)
