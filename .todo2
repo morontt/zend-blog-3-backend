@@ -883,7 +883,19 @@
         {
           "text": "secure-cookie support",
           "priority": "medium",
-          "creation": 1775039635
+          "creation": 1775039635,
+          "tasks": [
+            {
+              "text": "Remove cookie for logout",
+              "priority": "medium",
+              "creation": 1775593208
+            },
+            {
+              "text": "Set cookie for login",
+              "priority": "medium",
+              "creation": 1775593245
+            }
+          ]
         }
       ]
     }
