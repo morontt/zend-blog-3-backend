@@ -12,6 +12,7 @@ namespace App\Security;
 
 use App\LogTrait;
 use App\Security\SecureCookie\Cookie;
+use DateTime;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,18 +37,27 @@ class SecureCookieAuthenticator extends AbstractAuthenticator
 
     public function authenticate(Request $request): Passport
     {
-        $sessionData = $request->cookies->get('session');
+        $sessionData = $request->cookies->get(Cookie::SESSION_KEY);
         if ($sessionData === null) {
-            $this->error('No "session" cookie provided');
+            $error = 'No "' . Cookie::SESSION_KEY . '" cookie provided';
+            $this->error($error);
 
-            throw new CustomUserMessageAuthenticationException('No "session" cookie provided');
+            throw new CustomUserMessageAuthenticationException($error);
         }
 
         $sessionDTO = $this->cookie->decode($sessionData);
         if (!$sessionDTO || empty($sessionDTO->userName)) {
-            $this->error('Invalid "session" cookie data');
+            $error = 'Invalid "' . Cookie::SESSION_KEY . '" cookie data';
+            $this->error($error);
 
-            throw new CustomUserMessageAuthenticationException('Invalid "session" cookie data');
+            throw new CustomUserMessageAuthenticationException($error);
+        }
+
+        if ($sessionDTO->deadLine && $sessionDTO->deadLine < (new DateTime())) {
+            $error = 'Session expired';
+            $this->error($error);
+
+            throw new CustomUserMessageAuthenticationException($error);
         }
 
         return new SelfValidatingPassport(new UserBadge($sessionDTO->userName));
@@ -55,7 +65,7 @@ class SecureCookieAuthenticator extends AbstractAuthenticator
 
     public function supports(Request $request): ?bool
     {
-        return $request->cookies->has('session');
+        return $request->cookies->has(Cookie::SESSION_KEY);
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response

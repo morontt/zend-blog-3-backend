@@ -21,6 +21,7 @@ class Cookie
 {
     use LogTrait;
 
+    public const SESSION_KEY = 'session';
     private const CIPHER = 'DES-EDE3-CBC';
 
     private string $cipherKey;

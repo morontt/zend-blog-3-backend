@@ -222,11 +222,6 @@
       "completion": 1687013924
     },
     {
-      "text": "Move boilerplate code in API controllers to BaseController #69",
-      "priority": "verylow",
-      "creation": 1686425580
-    },
-    {
       "text": "Flutter Desktop for UI #68",
       "priority": "verylow",
       "creation": 1686425605,
@@ -888,7 +883,8 @@
             {
               "text": "Remove cookie for logout",
               "priority": "medium",
-              "creation": 1775593208
+              "creation": 1775593208,
+              "completion": 1775628688
             },
             {
               "text": "Set cookie for login",
