@@ -222,11 +222,6 @@
       "completion": 1687013924
     },
     {
-      "text": "Move boilerplate code in API controllers to BaseController #69",
-      "priority": "verylow",
-      "creation": 1686425580
-    },
-    {
       "text": "Flutter Desktop for UI #68",
       "priority": "verylow",
       "creation": 1686425605,
@@ -877,13 +872,26 @@
     },
     {
       "text": "Single domain",
-      "priority": "high",
+      "priority": "low",
       "creation": 1775039572,
       "tasks": [
         {
           "text": "secure-cookie support",
           "priority": "medium",
-          "creation": 1775039635
+          "creation": 1775039635,
+          "tasks": [
+            {
+              "text": "Remove cookie for logout",
+              "priority": "medium",
+              "creation": 1775593208,
+              "completion": 1775628688
+            },
+            {
+              "text": "Set cookie for login",
+              "priority": "medium",
+              "creation": 1775593245
+            }
+          ]
         }
       ]
     }

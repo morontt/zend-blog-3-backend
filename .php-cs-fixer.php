@@ -22,7 +22,6 @@ return (new PhpCsFixer\Config())
         'yoda_style' => false,
         'phpdoc_order' => true,
         'no_unused_imports' => true,
-        'ordered_imports' => true,
         'no_superfluous_phpdoc_tags' => false,
         'global_namespace_import' => ['import_classes' => true],
     ])

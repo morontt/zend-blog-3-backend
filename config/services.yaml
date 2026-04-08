@@ -160,6 +160,11 @@ services:
         arguments:
             $dsn: '%push_gateway_dsn%'
 
+    App\Security\SecureCookie\Cookie:
+        arguments:
+            $hashKey: '%env(SC_HASH_KEY)%'
+            $blockKey: '%env(SC_BLOCK_KEY)%'
+
     App\Security\WsseAuthenticator:
         arguments:
             $lifetime: '%wsse_token_lifetime%'

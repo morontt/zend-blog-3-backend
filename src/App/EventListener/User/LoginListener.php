@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Created by PhpStorm.
  * User: morontt
@@ -17,19 +19,10 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class LoginListener
 {
-    protected EntityManagerInterface $em;
-
-    /**
-     * @param EntityManagerInterface $em
-     */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(private EntityManagerInterface $em)
     {
-        $this->em = $em;
     }
 
-    /**
-     * @param InteractiveLoginEvent $event
-     */
     public function onLogin(InteractiveLoginEvent $event): void
     {
         $user = $event->getAuthenticationToken()->getUser();

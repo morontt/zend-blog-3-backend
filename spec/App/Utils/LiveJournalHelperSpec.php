@@ -5,6 +5,10 @@ namespace spec\App\Utils;
 use App\Utils\LiveJournalHelper;
 use PhpSpec\ObjectBehavior;
 
+/**
+ * @method static \PhpSpec\Wrapper\Subject replaceUserTag(string)
+ * @method static \PhpSpec\Wrapper\Subject clearLjCutTag(string)
+ */
 class LiveJournalHelperSpec extends ObjectBehavior
 {
     public function it_is_initializable()
