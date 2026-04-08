@@ -4,6 +4,8 @@ namespace spec\App\Security\SecureCookie;
 
 use App\Security\SecureCookie\Cookie;
 use PhpSpec\ObjectBehavior;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 
 use function App\Utils\base64url_decode;
 
@@ -13,9 +15,11 @@ use function App\Utils\base64url_decode;
  */
 class CookieSpec extends ObjectBehavior
 {
-    public function let()
-    {
-        $this->beConstructedWith('hash key', 'block key');
+    public function let(
+        SerializerInterface $serializer,
+        LoggerInterface $logger,
+    ) {
+        $this->beConstructedWith($serializer, 'hash key', 'block key', $logger);
     }
 
     public function it_is_initializable()
