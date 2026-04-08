@@ -21,11 +21,16 @@ class SystemParametersStorageSpec extends ObjectBehavior
 
     public function it_encrypt()
     {
-        $this->encrypt('Hello world :)')->shouldReturn('cC9sc1Z0LzVablNJTEtoa3FScz0=');
+        $this->encrypt('Hello world :)')->shouldReturn('KI574IXs4QUjIcGXSfg=');
     }
 
     public function it_decrypt()
     {
-        $this->decrypt('dVBSdkd0bXFNVytTSmI0aHJBPT0=')->shouldReturn('Who is there?');
+        $plainText = 'Who is there?';
+
+        $this
+            ->decrypt($this->getWrappedObject()->encrypt($plainText))
+            ->shouldReturn($plainText)
+        ;
     }
 }

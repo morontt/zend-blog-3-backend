@@ -70,7 +70,7 @@ class SystemParametersStorage
      */
     public function encrypt(string $value): string
     {
-        return base64_encode(openssl_encrypt($value, self::CIPHER, $this->secret, 0, $this->getVector()));
+        return base64_encode(openssl_encrypt($value, self::CIPHER, $this->secret, OPENSSL_RAW_DATA, $this->getVector()));
     }
 
     /**
@@ -80,7 +80,7 @@ class SystemParametersStorage
      */
     public function decrypt(string $value): string
     {
-        return openssl_decrypt(base64_decode($value), self::CIPHER, $this->secret, 0, $this->getVector());
+        return openssl_decrypt(base64_decode($value), self::CIPHER, $this->secret, OPENSSL_RAW_DATA, $this->getVector());
     }
 
     /**
@@ -88,6 +88,6 @@ class SystemParametersStorage
      */
     protected function getVector(): string
     {
-        return substr(sha1($this->secret), 0, openssl_cipher_iv_length(self::CIPHER));
+        return substr(hash('sha1', $this->secret, true), 0, openssl_cipher_iv_length(self::CIPHER));
     }
 }
