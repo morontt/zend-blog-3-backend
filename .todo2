@@ -872,7 +872,7 @@
     },
     {
       "text": "Single domain",
-      "priority": "high",
+      "priority": "low",
       "creation": 1775039572,
       "tasks": [
         {
