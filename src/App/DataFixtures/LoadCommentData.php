@@ -22,11 +22,11 @@ class LoadCommentData extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $faker = FakerFactory::create('ru_RU');
-        $faker->seed(618230);
 
         /** @var \App\Repository\CommentRepository */
         $repository = $manager->getRepository(Comment::class);
         for ($i = 0; $i < self::COUNT_COMMENTS; $i++) {
+            $faker->seed(618230 + $i);
             $comment = new Comment();
 
             $text = $faker->realText($faker->numberBetween(30, 200));
