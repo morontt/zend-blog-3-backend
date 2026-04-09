@@ -96,7 +96,7 @@ class LoadPostData extends Fixture implements DependentFixtureInterface
                 ->setUrl(RuTransform::ruTransform($title))
                 ->setCategory($this->getReference('category-' . $faker->numberBetween(1, 9), Category::class))
                 ->setDescription($title)
-                ->setRawText($faker->text($faker->numberBetween(100, 300)))
+                ->setRawText($faker->text($faker->numberBetween(100, 200)))
             ;
             $this->textProcessor->processing($post);
 

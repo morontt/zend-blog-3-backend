@@ -54,7 +54,6 @@ class LoadCommentData extends Fixture implements DependentFixtureInterface
             if ($i > 20 && $faker->numberBetween(0, 100) < 25) {
                 $parentCommentKey = 'comment-' . $faker->numberBetween(1, $i);
                 $parent = $this->getReference($parentCommentKey, Comment::class);
-                $manager->refresh($parent);
                 $comment->setParent($parent);
 
                 $postKey = $this->commentPostRelation[$parentCommentKey];
