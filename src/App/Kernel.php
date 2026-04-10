@@ -3,7 +3,6 @@
 namespace App;
 
 use App\DependencyInjection\CronCompilerPass;
-use App\DependencyInjection\TasksCompilerPass;
 use App\DependencyInjection\TelegramCompilerPass;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -22,6 +21,5 @@ class Kernel extends BaseKernel
     {
         $container->addCompilerPass(new CronCompilerPass());
         $container->addCompilerPass(new TelegramCompilerPass());
-        $container->addCompilerPass(new TasksCompilerPass());
     }
 }

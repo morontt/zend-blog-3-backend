@@ -5,66 +5,70 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Exception\AppException;
-use App\Exception\ObjectNotFoundException;
+use App\LogTrait;
 use Psr\Log\LoggerInterface;
+use ReflectionClass;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\NullOutput;
+use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class TaskService
 {
-    /** @var array<string, Command> */
-    private array $commands = [];
+    use LogTrait;
 
     public function __construct(
-        private LoggerInterface $logger,
+        private KernelInterface $kernel,
+        LoggerInterface $logger,
     ) {
+        $this->setLogger($logger);
     }
 
     /**
      * @param array<string, mixed> $params
      *
      * @throws AppException
-     * @throws ObjectNotFoundException
      */
-    public function runCommand(string $commandClassName, array $params = []): void
+    public function runCommand(string $commandName, array $params = []): void
     {
-        $this->logger->info('Run command', [
-            'command' => $commandClassName,
+        if (
+            class_exists($commandName)
+            && $attribute = (new ReflectionClass($commandName))->getAttributes(AsCommand::class)
+        ) {
+            $commandName = $attribute[0]->newInstance()->name;
+        }
+
+        $this->info('Run command', [
+            'command' => $commandName,
             'params' => $params,
         ]);
 
-        $command = $this->find($commandClassName);
+        $application = new Application($this->kernel);
+        $application->setAutoExit(false);
 
-        $input = new ArrayInput($params);
+        $input = new ArrayInput(array_merge(
+            ['command' => $commandName],
+            $params
+        ));
         $input->setInteractive(false);
 
-        $exitCode = $command->run($input, new NullOutput());
+        $output = new BufferedOutput();
+        $exitCode = $application->run($input, $output);
         if ($exitCode !== Command::SUCCESS) {
-            $this->logger->info('Error executing command', [
-                'command' => $commandClassName,
+            $this->error('Error executing command', [
+                'command' => $commandName,
                 'params' => $params,
                 'exit_code' => $exitCode,
             ]);
 
-            throw new AppException("Error executing {$commandClassName} command");
-        }
-    }
-
-    public function add(Command $command): void
-    {
-        $this->commands[get_class($command)] = $command;
-    }
-
-    /**
-     * @throws ObjectNotFoundException
-     */
-    private function find(string $className): Command
-    {
-        if (!isset($this->commands[$className])) {
-            throw new ObjectNotFoundException("Command {$className} not found");
+            throw new AppException("Error executing {$commandName} command");
         }
 
-        return $this->commands[$className];
+        $this->info('Command complete', [
+            'command' => $commandName,
+            'output' => $output->fetch(),
+        ]);
     }
 }
