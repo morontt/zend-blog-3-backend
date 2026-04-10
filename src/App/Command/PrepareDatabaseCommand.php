@@ -18,6 +18,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Process\Process;
 
 #[AsCommand(
@@ -26,10 +27,14 @@ use Symfony\Component\Process\Process;
 )]
 class PrepareDatabaseCommand extends Command
 {
+    private Connection $connection;
+
     public function __construct(
-        private EntityManagerInterface $em,
+        EntityManagerInterface $em,
     ) {
         parent::__construct();
+
+        $this->connection = $em->getConnection();
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -41,44 +46,61 @@ class PrepareDatabaseCommand extends Command
             substr($hash, 0, 14)
         );
 
-        $connection = $this->em->getConnection();
+        if ($input->isInteractive()) {
+            /** @var \Symfony\Component\Console\Helper\QuestionHelper */
+            $helper = $this->getHelper('question');
+            $question = new ConfirmationQuestion(
+                'This action will erase <comment>' . $this->connection->getDatabase()
+                . '</comment> database. Continue? (y/n) ',
+                false
+            );
 
-        $input = new ArrayInput(['--force' => true]);
-        $input->setInteractive(false);
+            if (!$helper->ask($input, $output, $question)) {
+                return Command::SUCCESS;
+            }
+        }
+
+        $dbDropInput = new ArrayInput([
+            'command' => 'doctrine:database:drop',
+            '--force' => true,
+        ]);
+        $dbDropInput->setInteractive(false);
 
         $output->writeln(sprintf('<comment>Drop database</comment>'));
-        $command = $this->getApplication()->find('doctrine:database:drop');
-        $command->run($input, $output);
+        $this->getApplication()->doRun($dbDropInput, $output);
 
-        $input = new ArrayInput([]);
-        $input->setInteractive(false);
+        $dbCreateInput = new ArrayInput([
+            'command' => 'doctrine:database:create',
+        ]);
+        $dbCreateInput->setInteractive(false);
 
         $output->writeln(sprintf('<comment>Create database</comment>'));
-        $command = $this->getApplication()->find('doctrine:database:create');
-        $command->run($input, $output);
+        $this->getApplication()->doRun($dbCreateInput, $output);
+
+        $migrationInput = new ArrayInput([
+            'command' => 'doctrine:migrations:migrate',
+        ]);
+        $migrationInput->setInteractive(false);
 
         if (file_exists($dump) && is_file($dump)) {
-            $this->restoreBackUp($connection, $dump);
+            $this->restoreBackUp($dump);
             $output->writeln(sprintf('<info>Dump was restored:</info> <comment>%s</comment>', $dump));
 
             $this->runDBCommand(
-                $connection,
                 realpath(__DIR__ . '/../../../migrations/sql/drop_migrations.sql'),
                 '/usr/bin/mysql %s < %s'
             );
 
             $output->writeln(sprintf('<comment>Apply migrations</comment>'));
-            $command = $this->getApplication()->find('doctrine:migrations:migrate');
-            $command->run($input, $output);
+            $this->getApplication()->doRun($migrationInput, $output);
         } else {
             $output->writeln(sprintf('<comment>Apply migrations</comment>'));
-            $command = $this->getApplication()->find('doctrine:migrations:migrate');
-            $command->run($input, $output);
+            $this->getApplication()->doRun($migrationInput, $output);
 
             $output->writeln(sprintf('<comment>Load fixtures</comment>'));
             $this->runCommand('php bin/console doctrine:fixtures:load --append --no-interaction');
 
-            $this->createBackUp($connection, $dump);
+            $this->createBackUp($dump);
             $output->writeln(sprintf('<info>Dump was created:</info> <comment>%s</comment>', $dump));
         }
 
@@ -107,20 +129,20 @@ class PrepareDatabaseCommand extends Command
         return $hash;
     }
 
-    private function createBackUp(Connection $connection, string $file): void
+    private function createBackUp(string $file): void
     {
-        $this->runDBCommand($connection, $file, '/usr/bin/mysqldump %s > %s');
+        $this->runDBCommand($file, '/usr/bin/mysqldump %s > %s');
     }
 
-    private function restoreBackUp(Connection $connection, string $file): void
+    private function restoreBackUp(string $file): void
     {
-        $this->runDBCommand($connection, $file, '/usr/bin/mysql %s < %s');
+        $this->runDBCommand($file, '/usr/bin/mysql %s < %s');
     }
 
-    private function runDBCommand(Connection $connection, string $file, string $formatCommand): void
+    private function runDBCommand(string $file, string $formatCommand): void
     {
-        $database = $connection->getDatabase();
-        $params = $connection->getParams();
+        $database = $this->connection->getDatabase();
+        $params = $this->connection->getParams();
 
         $command = sprintf(
             $formatCommand,
