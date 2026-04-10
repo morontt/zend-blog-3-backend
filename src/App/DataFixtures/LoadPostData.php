@@ -85,10 +85,14 @@ class LoadPostData extends Fixture implements DependentFixtureInterface
         $manager->flush();
 
         $faker = FakerFactory::create('ru_RU');
-        $faker->seed(303975);
-
         for ($i = 0; $i < self::COUNT_POSTS; $i++) {
+            $faker->seed(303975 + $i);
             $title = sprintf('%s %s %s', $faker->word, $faker->word, $faker->word);
+
+            $rawText = '';
+            for ($j = 0; $j < $faker->numberBetween(1, 3); $j++) {
+                $rawText .= '<p>' . $faker->text($faker->numberBetween(100, 200)) . "</p>\n";
+            }
 
             $post = new Post();
             $post
@@ -96,7 +100,7 @@ class LoadPostData extends Fixture implements DependentFixtureInterface
                 ->setUrl(RuTransform::ruTransform($title))
                 ->setCategory($this->getReference('category-' . $faker->numberBetween(1, 9), Category::class))
                 ->setDescription($title)
-                ->setRawText($faker->text($faker->numberBetween(100, 300)))
+                ->setRawText($rawText)
             ;
             $this->textProcessor->processing($post);
 
