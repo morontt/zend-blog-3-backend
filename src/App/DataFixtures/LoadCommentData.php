@@ -29,11 +29,8 @@ class LoadCommentData extends Fixture implements DependentFixtureInterface
             $faker->seed(618230 + $i);
             $comment = new Comment();
 
-            $text = $faker->realText($faker->numberBetween(30, 200));
-            $text = iconv('UTF-8', 'UTF-8//IGNORE', $text);
-
             $comment
-                ->setText($text)
+                ->setText($faker->realText($faker->numberBetween(30, 200)))
                 ->setIpAddress($faker->ipv4)
             ;
 
