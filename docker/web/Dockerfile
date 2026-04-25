@@ -1,4 +1,4 @@
-FROM xelbot/docker-zendblog-admin:1.0.2
+FROM xelbot/docker-zendblog-admin:1.0.3
 
 VOLUME ["/var/www/html", "/var/www/resources"]
 

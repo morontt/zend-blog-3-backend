@@ -47,7 +47,6 @@ class CommentFormType extends AbstractType
                     'required' => false,
                 ]
             )
-
             ->add(
                 'topicId',
                 IntegerType::class
