@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types=1);
+<?php declare(strict_types=1);
 
 /**
  * Created by PhpStorm.
@@ -37,8 +35,9 @@ class ImagesBackup implements DailyCronServiceInterface
 
     public function run(): void
     {
-        /** @var MediaFile[] $images */
-        $images = $this->em->getRepository(MediaFile::class)->getNotBackedUp();
+        /** @var \App\Repository\MediaFileRepository */
+        $mediaRepository = $this->em->getRepository(MediaFile::class);
+        $images = $mediaRepository->getNotBackedUp();
         if (count($images)) {
             foreach ($images as $image) {
                 $remotePath = BackupService::IMAGES_PATH . '/' . $image->getPath();
