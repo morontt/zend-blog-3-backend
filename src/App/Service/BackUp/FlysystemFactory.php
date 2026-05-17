@@ -12,6 +12,8 @@ namespace App\Service\BackUp;
 
 use App\Entity\SystemParameters;
 use App\Service\SystemParametersStorage;
+use Aws\S3\S3Client;
+use League\Flysystem\AwsS3V3\AwsS3V3Adapter;
 use League\Flysystem\Filesystem;
 use League\Flysystem\WebDAV\WebDAVAdapter;
 use LogicException;
@@ -25,6 +27,11 @@ class FlysystemFactory
         private SystemParametersStorage $storage,
         private string $spaceLogin,
         private string $spacePassword,
+        private string $s3Region,
+        private string $s3Endpoint,
+        private string $s3BacketName,
+        private string $s3AccessKey,
+        private string $s3Secret,
         private string $adapterName,
     ) {
         $this->spaceLogin = $spaceLogin;
@@ -57,6 +64,22 @@ class FlysystemFactory
 
             $adapter = new DropboxAdapter($client);
             $options['case_sensitive'] = false;
+        } elseif ($this->adapterName === 's3') {
+            $client = new S3Client([
+                'region' => $this->s3Region,
+                'use_path_style_endpoint' => false,
+                'credentials' => [
+                    'key' => $this->s3AccessKey,
+                    'secret' => $this->s3Secret,
+                ],
+                'endpoint' => 'https://' . $this->s3Endpoint,
+            ]);
+
+            $adapter = new AwsS3V3Adapter(
+                $client,
+                $this->s3BacketName,
+                'reprogl'
+            );
         } else {
             throw new LogicException('invalid flysystem name: ' . $this->adapterName);
         }

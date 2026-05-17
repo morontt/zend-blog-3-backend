@@ -20,6 +20,11 @@ parameters:
     space_login: '%env(SPACE_LOGIN)%'
     space_password: '%env(SPACE_PASSWORD)%'
     push_gateway_dsn: '%env(PROM_PUSH_GATEWAY_DSN)%'
+    s3_region: '%env(S3_REGION)%'
+    s3_endpoint: '%env(S3_ENDPOINT)%'
+    s3_backet: '%env(S3_BACKET)%'
+    s3_access_key: '%env(S3_ACCESS_KEY)%'
+    s3_secret: '%env(S3_SECRET)%'
 
 services:
     # default configuration for services in *this* file
@@ -134,7 +139,12 @@ services:
         arguments:
             $spaceLogin: '%space_login%'
             $spacePassword: '%space_password%'
-            $adapterName: 'dropbox'
+            $s3Region: '%s3_region%'
+            $s3Endpoint: '%s3_endpoint%'
+            $s3BacketName: '%s3_backet%'
+            $s3AccessKey: '%s3_access_key%'
+            $s3Secret: '%s3_secret%'
+            $adapterName: 's3'
 
     App\Service\IpInfo\IpInfoDbClient:
         arguments:
