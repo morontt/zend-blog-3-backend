@@ -81,14 +81,18 @@ class Tracking
     #[ORM\Column(type: 'string', length: 8, nullable: true)]
     private $method;
 
+    /**
+     * @var bool
+     */
+    #[ORM\Column(name: 'is_js', type: 'boolean', options: ['default' => false])]
+    private $js = false;
+
     public function __construct()
     {
         $this->setTimeCreated(new DateTime());
     }
 
     /**
-     * Get id
-     *
      * @return int
      */
     public function getId()
@@ -96,35 +100,18 @@ class Tracking
         return $this->id;
     }
 
-    /**
-     * Set ipAddress
-     *
-     * @param string $ipAddress
-     *
-     * @return Tracking
-     */
-    public function setIpAddress($ipAddress): self
+    public function setIpAddress(?string $ipAddress): self
     {
         $this->ipAddress = $ipAddress;
 
         return $this;
     }
 
-    /**
-     * Get ipAddress
-     */
     public function getIpAddress(): ?string
     {
         return $this->ipAddress;
     }
 
-    /**
-     * Set timeCreated
-     *
-     * @param DateTime $timeCreated
-     *
-     * @return Tracking
-     */
     public function setTimeCreated(DateTime $timeCreated): self
     {
         $this->timeCreated = $timeCreated;
@@ -132,23 +119,11 @@ class Tracking
         return $this;
     }
 
-    /**
-     * Get timeCreated
-     *
-     * @return DateTime
-     */
-    public function getTimeCreated()
+    public function getTimeCreated(): DateTime
     {
         return $this->timeCreated;
     }
 
-    /**
-     * Set trackingAgent
-     *
-     * @param TrackingAgent $trackingAgent
-     *
-     * @return Tracking
-     */
     public function setTrackingAgent(?TrackingAgent $trackingAgent = null): self
     {
         $this->trackingAgent = $trackingAgent;
@@ -156,21 +131,11 @@ class Tracking
         return $this;
     }
 
-    /**
-     * Get trackingAgent
-     */
     public function getTrackingAgent(): ?TrackingAgent
     {
         return $this->trackingAgent;
     }
 
-    /**
-     * Set post
-     *
-     * @param Post $post
-     *
-     * @return Tracking
-     */
     public function setPost(?Post $post = null): self
     {
         $this->post = $post;
@@ -178,27 +143,16 @@ class Tracking
         return $this;
     }
 
-    /**
-     * Get post
-     */
     public function getPost(): ?Post
     {
         return $this->post;
     }
 
-    /**
-     * @return bool
-     */
     public function isCdn(): bool
     {
         return $this->cdn;
     }
 
-    /**
-     * @param bool $cdn
-     *
-     * @return Tracking
-     */
     public function setCdn(bool $cdn): self
     {
         $this->cdn = $cdn;
@@ -206,19 +160,11 @@ class Tracking
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getRequestURI(): ?string
     {
         return $this->requestURI;
     }
 
-    /**
-     * @param string|null $requestURI
-     *
-     * @return Tracking
-     */
     public function setRequestURI(?string $requestURI = null): self
     {
         $this->requestURI = $requestURI;
@@ -226,19 +172,11 @@ class Tracking
         return $this;
     }
 
-    /**
-     * @return int|null
-     */
     public function getStatusCode(): ?int
     {
         return $this->statusCode;
     }
 
-    /**
-     * @param int|null $statusCode
-     *
-     * @return Tracking
-     */
     public function setStatusCode(?int $statusCode = null): self
     {
         $this->statusCode = $statusCode;
@@ -246,21 +184,11 @@ class Tracking
         return $this;
     }
 
-    /**
-     * Get geoLocation
-     *
-     * @return GeoLocation|null
-     */
     public function getGeoLocation(): ?GeoLocation
     {
         return $this->geoLocation;
     }
 
-    /**
-     * @param GeoLocation|null $location
-     *
-     * @return $this
-     */
     public function setGeoLocation(?GeoLocation $location = null): self
     {
         $this->geoLocation = $location;
@@ -288,6 +216,18 @@ class Tracking
     public function setMethod(?string $method = null): self
     {
         $this->method = $method;
+
+        return $this;
+    }
+
+    public function isJs(): bool
+    {
+        return $this->js;
+    }
+
+    public function setJs(bool $js): self
+    {
+        $this->js = $js;
 
         return $this;
     }
