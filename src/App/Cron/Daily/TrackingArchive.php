@@ -136,6 +136,7 @@ class TrackingArchive implements DailyCronServiceInterface
             $item->getMethod() ?? '',
             $item->isCdn() ? '+' : '',
             $item->getTrackingAgent()?->getUserAgent() ?? '',
+            $item->isJs() ? '+' : '',
         ];
     }
 
@@ -154,6 +155,7 @@ class TrackingArchive implements DailyCronServiceInterface
             'Method',
             'CDN',
             'User Agent',
+            'AJAX',
         ];
     }
 }
