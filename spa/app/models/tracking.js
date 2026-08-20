@@ -28,6 +28,7 @@ export default DS.Model.extend({
     isCDN: DS.attr('boolean'),
     duration: DS.attr('string'),
     method: DS.attr('string'),
+    isJs: DS.attr('boolean'),
     createdAt: DS.attr('date'),
     privateIP: function () {
         let ipLong = net.ip2long(this.get('ipAddr'));

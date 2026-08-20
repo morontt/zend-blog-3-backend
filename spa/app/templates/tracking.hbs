@@ -45,6 +45,7 @@
                 <td>{{#if track.isCDN}}CDN:{{/if}} {{track.requestUri}}</td>
                 <td>
                     {{#if track.articleSlug}}
+                        {{#if track.isJs}}<span class="is_js">JS:</span>{{/if}}
                         <a {{action "openTarget" track}} class="force-pointer">
                             {{track.articleTitle}}
                         </a>

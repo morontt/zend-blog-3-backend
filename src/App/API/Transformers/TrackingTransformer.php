@@ -66,6 +66,7 @@ class TrackingTransformer extends BaseTransformer
             'countryFlag' => $flag,
             'method' => (string)$item->getMethod(),
             'duration' => $durationString,
+            'isJs' => $item->isJs(),
             'createdAt' => $this->dateTimeToISO($item->getTimeCreated()),
         ];
     }

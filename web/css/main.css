@@ -656,7 +656,8 @@ table td.column-status-code {
     font-weight: bolder;
 }
 
-table td[data-status-code^="2"] {
+table td[data-status-code^="2"],
+table td span.is_js {
     color: #4e9a06;
 }
 table td[data-status-code^="3"] {
