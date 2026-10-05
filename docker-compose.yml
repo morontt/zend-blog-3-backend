@@ -81,6 +81,15 @@ services:
         networks:
             - blognet
 
+    gearmand:
+        image: artefactual/gearmand:2.1.0
+        container_name: "gearmand"
+        platform: linux/amd64
+        ports:
+            - "4730:4730"
+        networks:
+            - blognet
+
 networks:
     blognet:
         external: true
