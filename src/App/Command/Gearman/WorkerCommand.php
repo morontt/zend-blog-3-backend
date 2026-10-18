@@ -35,7 +35,7 @@ class WorkerCommand extends Command
     public function __construct(
         string $host,
         string $port,
-        LoggerInterface $logger
+        LoggerInterface $logger,
     ) {
         parent::__construct();
 
@@ -61,7 +61,7 @@ class WorkerCommand extends Command
 
         $output->writeln('<info>Waiting for job...</info>');
 
-        while($worker->work()) {
+        while ($worker->work()) {
             if ($worker->returnCode() != GEARMAN_SUCCESS) {
                 $output->writeln('<info>return_code:</info> ' . $worker->returnCode());
                 break;

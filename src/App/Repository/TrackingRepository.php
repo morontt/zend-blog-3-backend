@@ -61,6 +61,7 @@ class TrackingRepository extends ServiceEntityRepository
             ->andWhere($qb->expr()->gt('t.timeCreated', ':from'))
             ->andWhere($qb->expr()->lte('t.timeCreated', ':to'))
             ->andWhere($qb->expr()->eq('ta.bot', $qb->expr()->literal(false)))
+            ->andWhere($qb->expr()->eq('t.js', $qb->expr()->literal(true)))
             ->groupBy('p.id')
             ->setParameter('from', $from)
             ->setParameter('to', $to)
