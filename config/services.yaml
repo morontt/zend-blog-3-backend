@@ -25,6 +25,8 @@ parameters:
     s3_backet: '%env(S3_BACKET)%'
     s3_access_key: '%env(S3_ACCESS_KEY)%'
     s3_secret: '%env(S3_SECRET)%'
+    gearman_host: '%env(GEARMAN_HOST)%'
+    gearman_port: '%env(GEARMAN_PORT)%'
 
 services:
     # default configuration for services in *this* file
@@ -68,6 +70,11 @@ services:
         arguments:
             $dropboxKey: '%dropbox_key%'
             $dropboxSecret: '%dropbox_secret%'
+
+    App\Command\Gearman\WorkerCommand:
+        arguments:
+            $host: '%gearman_host%'
+            $port: '%gearman_port%'
 
     App\EventListener\Doctrine\IgnoreTablesListener:
         tags:
