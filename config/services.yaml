@@ -62,6 +62,9 @@ services:
         Xelbot\Telegram\Command\TelegramCommandInterface:
             tags:
                 - { name: telegram-command }
+        App\Worker\TaskExecutorInterface:
+            tags:
+                - { name: worker-task }
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

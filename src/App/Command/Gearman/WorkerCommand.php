@@ -11,9 +11,8 @@ declare(strict_types=1);
 namespace App\Command\Gearman;
 
 use App\LogTrait;
-use GearmanJob;
+use App\Worker\TaskChain;
 use GearmanWorker;
-use JsonException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -35,6 +34,7 @@ class WorkerCommand extends Command
     public function __construct(
         string $host,
         string $port,
+        private TaskChain $chain,
         LoggerInterface $logger,
     ) {
         parent::__construct();
@@ -57,7 +57,14 @@ class WorkerCommand extends Command
         $worker = new GearmanWorker();
         $worker->addServer($this->host, $this->port);
 
-        $worker->addFunction('tracking_activity', [$this, 'saveTrackingActivity'], null, 10);
+        foreach ($this->chain->getTaskExecutors() as $executor) {
+            $worker->addFunction(
+                $executor->getTaskName(),
+                [$executor, 'execute'],
+                null,
+                $executor->getTimeout(),
+            );
+        }
 
         $output->writeln('<info>Waiting for job...</info>');
 
@@ -69,21 +76,5 @@ class WorkerCommand extends Command
         }
 
         return Command::SUCCESS;
-    }
-
-    public function saveTrackingActivity(GearmanJob $job): void
-    {
-        try {
-            $data = json_decode($job->workload(), true, 512, JSON_THROW_ON_ERROR);
-        } catch (JsonException $e) {
-            $this->error('decode error', [$e->getMessage()]);
-            $job->sendFail();
-
-            return;
-        }
-
-        $this->debug('tracking data', $data);
-
-        $job->sendComplete('');
     }
 }
