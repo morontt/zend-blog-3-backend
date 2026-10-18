@@ -76,7 +76,10 @@ class WorkerCommand extends Command
         try {
             $data = json_decode($job->workload(), true, 512, JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
+            $this->error('decode error', [$e->getMessage()]);
             $job->sendFail();
+
+            return;
         }
 
         $this->debug('tracking data', $data);
