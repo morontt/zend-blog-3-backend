@@ -35,7 +35,7 @@ abstract class BaseExecutor implements TaskExecutorInterface
     }
 
     /**
-     * @return null|array<string, mixed>
+     * @return array<string, mixed>|null
      */
     protected function workload(GearmanJob $job): ?array
     {

@@ -66,11 +66,17 @@ class WorkerCommand extends Command
             );
         }
 
+        $stop = time() + (int)$input->getOption('max-time');
         $output->writeln('<info>Waiting for job...</info>');
 
         while ($worker->work()) {
             if ($worker->returnCode() != GEARMAN_SUCCESS) {
                 $output->writeln('<info>return_code:</info> ' . $worker->returnCode());
+                break;
+            }
+
+            if (time() > $stop) {
+                $output->writeln('<info>Stop by timeout</info>');
                 break;
             }
         }
