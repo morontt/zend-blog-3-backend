@@ -69,6 +69,7 @@ class DefaultController extends AbstractController
                     'build_time_php' => (int)($_ENV['BUILD_TIME_PHP'] ?? 0),
                     'build_version_js' => $_ENV['BUILD_VERSION_JS'] ?? '-',
                     'build_time_js' => (int)($_ENV['BUILD_TIME_JS'] ?? 0),
+                    'php_version' => PHP_VERSION,
                 ],
             ],
         ];
