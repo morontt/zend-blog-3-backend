@@ -1,10 +1,10 @@
-FROM xelbot/docker-zendblog-admin:1.0.3
+FROM xelbot/docker-zendblog-admin:1.0.5
 
 VOLUME ["/var/www/html", "/var/www/resources"]
 
 ARG HOST_UID=1000
 
-RUN yes | pecl install xdebug-3.4.2 \
+RUN yes | pecl install xdebug-3.5.3 \
     && docker-php-ext-enable xdebug \
     && cp ${PHP_INI_DIR}/php.ini-development ${PHP_INI_DIR}/php.ini \
     && sed -i 's/;date.timezone =/date.timezone = Europe\/Moscow/' ${PHP_INI_DIR}/php.ini \

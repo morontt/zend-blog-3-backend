@@ -25,5 +25,6 @@ export default Ember.Route.extend({
 
         controller.set('buildTimePhp', to_time_string(config.appParameters.build_info.build_time_php));
         controller.set('buildTimeJs', to_time_string(config.appParameters.build_info.build_time_js));
+        controller.set('phpVersion', config.appParameters.build_info.php_version);
     }
 });
