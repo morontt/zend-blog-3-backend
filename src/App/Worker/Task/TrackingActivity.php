@@ -54,7 +54,7 @@ class TrackingActivity extends BaseExecutor
             ->setTrackingAgent($trackingAgent)
             ->setCdn($dto->isCDN)
             ->setIpAddress($dto->addr)
-            ->setTimeCreated($dto->time)
+            ->setEventTime($dto->time)
             ->setDuration((int)(0.5 + 0.001 * $dto->duration))
             ->setJs($dto->isJS)
             ->setStatusCode($dto->statusCode)

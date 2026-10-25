@@ -67,7 +67,7 @@ class TrackingTransformer extends BaseTransformer
             'method' => (string)$item->getMethod(),
             'duration' => $durationString,
             'isJs' => $item->isJs(),
-            'createdAt' => $this->dateTimeToISO($item->getTimeCreated()),
+            'createdAt' => $this->dateTimeToISO($item->getEventTime()),
         ];
     }
 
