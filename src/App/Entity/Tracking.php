@@ -52,6 +52,12 @@ class Tracking
     private $timeCreated;
 
     /**
+     * @var DateTime|null
+     */
+    #[ORM\Column(type: 'milliseconds_dt', nullable: true)]
+    private $eventTime;
+
+    /**
      * @var bool
      */
     #[ORM\Column(name: 'is_cdn', type: 'boolean', options: ['default' => false])]
@@ -230,5 +236,17 @@ class Tracking
         $this->js = $js;
 
         return $this;
+    }
+
+    public function setEventTime(DateTime $time): self
+    {
+        $this->eventTime = $time;
+
+        return $this;
+    }
+
+    public function getEventTime(): DateTime
+    {
+        return $this->eventTime ?: $this->timeCreated;
     }
 }

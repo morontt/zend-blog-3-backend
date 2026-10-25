@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -91,5 +92,23 @@ class PostRepository extends ServiceEntityRepository
         ;
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function getArticleIdBySlug(string $slug): int
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb
+            ->select('p.id')
+            ->andWhere($qb->expr()->eq('p.url', ':slug'))
+            ->setParameter('slug', $slug)
+        ;
+
+        try {
+            $result = (int)$qb->getQuery()->getSingleScalarResult();
+        } catch (NoResultException $e) {
+            $result = 0;
+        }
+
+        return $result;
     }
 }
