@@ -15,15 +15,16 @@ use App\Entity\GeoLocation;
 use App\Entity\Post;
 use App\Entity\Tracking;
 use App\Entity\TrackingAgent;
+use App\Repository\PostRepository;
 use App\Repository\TrackingAgentRepository;
 use App\Worker\BaseExecutor;
 use Doctrine\ORM\EntityManagerInterface;
-use GearmanJob;
 use Psr\Log\LoggerInterface;
 
 class TrackingActivity extends BaseExecutor
 {
     private TrackingAgentRepository $agentRepo;
+    private PostRepository $articleRepo;
 
     public function __construct(
         private EntityManagerInterface $em,
@@ -32,22 +33,7 @@ class TrackingActivity extends BaseExecutor
         parent::__construct($logger);
 
         $this->agentRepo = $em->getRepository(TrackingAgent::class);
-    }
-
-    public function execute(GearmanJob $job): void
-    {
-        $data = $this->workload($job);
-        if (!$data) {
-            $job->sendFail();
-
-            return;
-        }
-
-        $this->debug('tracking data', $data);
-
-        $this->saveActivity(TrackingActivityDTO::fromArray($data));
-
-        $job->sendComplete('');
+        $this->articleRepo = $em->getRepository(Post::class);
     }
 
     public function getTaskName(): string
@@ -55,8 +41,12 @@ class TrackingActivity extends BaseExecutor
         return 'tracking_activity';
     }
 
-    private function saveActivity(TrackingActivityDTO $dto): void
+    /**
+     * @param array<string, mixed> $data
+     */
+    public function handle(array $data): void
     {
+        $dto = TrackingActivityDTO::fromArray($data);
         $trackingAgent = $this->getUserAgent($dto);
 
         $activity = new Tracking();
@@ -65,13 +55,18 @@ class TrackingActivity extends BaseExecutor
             ->setCdn($dto->isCDN)
             ->setIpAddress($dto->addr)
             ->setTimeCreated($dto->time)
-            ->setDuration((int)(0.001 * $dto->duration))
-            ->setJs($dto->isJS)
+            ->setDuration((int)(0.5 + 0.001 * $dto->duration))
             ->setStatusCode($dto->statusCode)
         ;
 
-        if ($dto->articleId) {
-            $activity->setPost($this->em->getReference(Post::class, $dto->articleId));
+        $articleId = null;
+        $matches = [];
+        if (preg_match('/^\/(?:trk|article)\/(?P<slug>[^\/?#]+)/', $dto->requestedURI, $matches)) {
+            $articleId = $this->articleRepo->getArticleIdBySlug($matches['slug']);
+        }
+
+        if ($articleId) {
+            $activity->setPost($this->em->getReference(Post::class, $articleId));
         } else {
             $activity->setRequestURI($dto->requestedURI);
         }
@@ -80,6 +75,10 @@ class TrackingActivity extends BaseExecutor
         }
         if ($dto->method && $dto->method !== 'GET') {
             $activity->setMethod($dto->method);
+        }
+
+        if (strpos($dto->requestedURI, '/trk/') === 0) {
+            $activity->setJs(true);
         }
 
         $this->em->persist($activity);

@@ -23,8 +23,6 @@ class TrackingActivityDTO
     public ?int $locationID;
     public int $duration;
     public ?string $method;
-    public ?int $articleId;
-    public bool $isJS;
     public bool $isBot;
 
     /**
@@ -43,8 +41,6 @@ class TrackingActivityDTO
         $dto->locationID = $data['location_id'] ?? null;
         $dto->duration = $data['duration'] ?? 0;
         $dto->method = $data['method'] ?? null;
-        $dto->articleId = $data['article_id'] ?? null;
-        $dto->isJS = (bool)($data['is_js'] ?? false);
         $dto->isBot = (bool)($data['is_bot'] ?? false);
 
         return $dto;

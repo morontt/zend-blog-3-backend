@@ -92,4 +92,16 @@ class PostRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    public function getArticleIdBySlug(string $slug): int
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb
+            ->select('p.id')
+            ->andWhere($qb->expr()->eq('p.url', ':slug'))
+            ->setParameter('slug', $slug)
+        ;
+
+        return (int)$qb->getQuery()->getSingleScalarResult();
+    }
 }

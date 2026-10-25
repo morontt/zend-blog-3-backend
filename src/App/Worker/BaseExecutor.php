@@ -14,6 +14,7 @@ use App\LogTrait;
 use GearmanJob;
 use JsonException;
 use Psr\Log\LoggerInterface;
+use Throwable;
 
 abstract class BaseExecutor implements TaskExecutorInterface
 {
@@ -25,13 +26,42 @@ abstract class BaseExecutor implements TaskExecutorInterface
         $this->setLogger($logger);
     }
 
-    abstract public function execute(GearmanJob $job): void;
+    /**
+     * @param array<string, mixed> $data
+     */
+    abstract public function handle(array $data): void;
 
     abstract public function getTaskName(): string;
 
     public function getTimeout(): int
     {
         return 10;
+    }
+
+    public function execute(GearmanJob $job): void
+    {
+        $data = $this->workload($job);
+        if (!$data) {
+            $job->sendFail();
+
+            return;
+        }
+
+        $this->debug('job data', $data);
+        try {
+            $this->handle($data);
+        } catch (Throwable $e) {
+            $this->critical('an error occurred', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            $job->sendException($e->getMessage());
+
+            return;
+        }
+
+        $job->sendComplete('');
     }
 
     /**
