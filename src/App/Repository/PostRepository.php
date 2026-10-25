@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -102,6 +103,12 @@ class PostRepository extends ServiceEntityRepository
             ->setParameter('slug', $slug)
         ;
 
-        return (int)$qb->getQuery()->getSingleScalarResult();
+        try {
+            $result = (int)$qb->getQuery()->getSingleScalarResult();
+        } catch (NoResultException $e) {
+            $result = 0;
+        }
+
+        return $result;
     }
 }
