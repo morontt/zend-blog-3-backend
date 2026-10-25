@@ -56,6 +56,7 @@ class TrackingActivity extends BaseExecutor
             ->setIpAddress($dto->addr)
             ->setTimeCreated($dto->time)
             ->setDuration((int)(0.5 + 0.001 * $dto->duration))
+            ->setJs($dto->isJS)
             ->setStatusCode($dto->statusCode)
         ;
 
@@ -75,10 +76,6 @@ class TrackingActivity extends BaseExecutor
         }
         if ($dto->method && $dto->method !== 'GET') {
             $activity->setMethod($dto->method);
-        }
-
-        if (strpos($dto->requestedURI, '/trk/') === 0) {
-            $activity->setJs(true);
         }
 
         $this->em->persist($activity);

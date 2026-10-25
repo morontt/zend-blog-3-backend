@@ -25,6 +25,7 @@ class TrackingActivityDTO
     public int $duration;
     public ?string $method;
     public bool $isBot;
+    public bool $isJS;
 
     /**
      * @param array<string, mixed> $data
@@ -42,6 +43,7 @@ class TrackingActivityDTO
         $dto->duration = (int)($data['duration'] ?? 0);
         $dto->method = $data['method'] ?? null;
         $dto->isBot = (bool)($data['is_bot'] ?? false);
+        $dto->isJS = (bool)($data['is_js'] ?? false);
 
         $time = DateTime::createFromFormat('Y-m-d\TH:i:s.uP', $data['time'] ?? '');
         if ($time === false) {
