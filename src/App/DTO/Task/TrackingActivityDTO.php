@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace App\DTO\Task;
 
 use DateTime;
+use InvalidArgumentException;
 
 class TrackingActivityDTO
 {
@@ -35,13 +36,18 @@ class TrackingActivityDTO
         $dto->addr = $data['ip_addr'];
         $dto->userAgent = $data['user_agent'];
         $dto->requestedURI = $data['url'];
-        $dto->time = DateTime::createFromFormat('Y-m-d\TH:i:s.uP', $data['time']);
         $dto->isCDN = (bool)$data['is_cdn'];
         $dto->statusCode = (int)$data['status'];
         $dto->locationID = $data['location_id'] ?? null;
-        $dto->duration = $data['duration'] ?? 0;
+        $dto->duration = (int)($data['duration'] ?? 0);
         $dto->method = $data['method'] ?? null;
         $dto->isBot = (bool)($data['is_bot'] ?? false);
+
+        $time = DateTime::createFromFormat('Y-m-d\TH:i:s.uP', $data['time'] ?? '');
+        if ($time === false) {
+            throw new InvalidArgumentException('Incorrect time');
+        }
+        $dto->time = $time;
 
         return $dto;
     }
