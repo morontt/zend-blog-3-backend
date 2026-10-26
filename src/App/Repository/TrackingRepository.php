@@ -9,6 +9,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use SortDirection;
 
 /**
  * TrackingRepository
@@ -39,7 +40,7 @@ class TrackingRepository extends ServiceEntityRepository
             ->leftJoin('e.trackingAgent', 'ta')
             ->leftJoin('e.post', 'ar')
             ->leftJoin('e.geoLocation', 'g')
-            ->orderBy('e.id', 'DESC')
+            ->orderBy('e.id', SortDirection::Descending)
         ;
 
         return $qb->getQuery();
@@ -109,7 +110,7 @@ class TrackingRepository extends ServiceEntityRepository
             ))
             ->andWhere($qb->expr()->isNotNull('t.ipAddress'))
             ->groupBy('t.ipAddress')
-            ->orderBy('last_access', 'DESC')
+            ->orderBy('last_access', SortDirection::Descending)
             ->setMaxResults(60)
         ;
 
