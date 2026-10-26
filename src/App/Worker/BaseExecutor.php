@@ -69,10 +69,14 @@ abstract class BaseExecutor implements TaskExecutorInterface
      */
     protected function workload(GearmanJob $job): ?array
     {
+        $workload = $job->workload();
         try {
-            return json_decode($job->workload(), true, 512, JSON_THROW_ON_ERROR);
+            return json_decode($workload, true, 512, JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
-            $this->error('decode error', [$e->getMessage()]);
+            $this->error('decode error', [
+                'error' => $e->getMessage(),
+                'workload' => $workload,
+            ]);
 
             return null;
         }

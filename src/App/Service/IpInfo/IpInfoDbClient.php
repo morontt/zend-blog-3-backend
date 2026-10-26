@@ -51,13 +51,19 @@ class IpInfoDbClient implements IpInfoClientInterface
                 'timeout' => 5,
             ]);
 
+            $responseContent = $response->getContent();
+            $this->debug('Response', [
+                'ip' => $ip,
+                'response' => $responseContent,
+            ]);
+
             if ($response->getStatusCode() === 200) {
-                return LocationInfo::createFromArray(json_decode($response->getContent(), true, 512, JSON_THROW_ON_ERROR));
+                return LocationInfo::createFromArray(json_decode($responseContent, true, 512, JSON_THROW_ON_ERROR));
             }
 
             $this->error(
                 'HTTP status error',
-                ['code' => $response->getStatusCode(), 'message' => $response->getContent()]
+                ['code' => $response->getStatusCode(), 'message' => $responseContent]
             );
 
             throw new AppException('HTTP status error');

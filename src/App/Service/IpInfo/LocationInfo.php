@@ -11,11 +11,17 @@ class LocationInfo
     /**
      * @var string[]
      */
-    private static array $properties = [
+    private static array $stringProperties = [
         'countryCode',
         'countryName',
         'regionName',
         'cityName',
+    ];
+
+    /**
+     * @var string[]
+     */
+    private static array $nullStringProperties = [
         'zipCode',
         'latitude',
         'longitude',
@@ -52,8 +58,11 @@ class LocationInfo
         }
 
         $self = new self();
-        foreach (self::$properties as $property) {
-            $self->$property = $data[$property] ?? null;
+        foreach (self::$stringProperties as $property) {
+            $self->$property = (string)($data[$property] ?? '-');
+        }
+        foreach (self::$nullStringProperties as $property) {
+            $self->$property = !empty($data[$property]) ? (string)($data[$property]) : null;
         }
 
         return $self;
