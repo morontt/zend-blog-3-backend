@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\CommentRepository;
 use App\Service\Mailer;
+use SortDirection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,7 +34,7 @@ class TestEmailController extends AbstractController
             $qb = $repository->createQueryBuilder('c');
             $qb
                 ->select()
-                ->orderBy('c.id', 'DESC')
+                ->orderBy('c.id', SortDirection::Descending)
                 ->setMaxResults(1)
                 ->setFirstResult(mt_rand(0, 500))
             ;

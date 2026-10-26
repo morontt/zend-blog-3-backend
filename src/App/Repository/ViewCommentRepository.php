@@ -8,6 +8,7 @@ use App\Repository\Traits\ListQueryTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use SortDirection;
 
 /**
  * @extends ServiceEntityRepository<ViewComment>
@@ -52,7 +53,7 @@ class ViewCommentRepository extends ServiceEntityRepository
         $qb
             ->select('e', 'p')
             ->innerJoin('e.post', 'p')
-            ->orderBy('e.id', 'DESC')
+            ->orderBy('e.id', SortDirection::Descending)
         ;
 
         return $qb->getQuery();

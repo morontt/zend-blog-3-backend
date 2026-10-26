@@ -12,6 +12,7 @@ use App\Entity\ViewCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use SortDirection;
 
 /**
  * @extends ServiceEntityRepository<ViewCategory>
@@ -33,7 +34,7 @@ class ViewCategoryRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('e');
 
-        return $qb->orderBy('e.nestedSet.leftKey', 'ASC')
+        return $qb->orderBy('e.nestedSet.leftKey', SortDirection::Ascending)
             ->getQuery();
     }
 }

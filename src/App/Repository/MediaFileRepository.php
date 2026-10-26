@@ -6,6 +6,7 @@ use App\Entity\MediaFile;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
+use SortDirection;
 
 /**
  * MediaFileRepository
@@ -34,7 +35,7 @@ class MediaFileRepository extends ServiceEntityRepository
             ->select('e', 'p', 't')
             ->leftJoin('e.post', 'p')
             ->leftJoin('p.tags', 't')
-            ->orderBy('e.id', 'DESC')
+            ->orderBy('e.id', SortDirection::Descending)
         ;
 
         return $qb->getQuery();
