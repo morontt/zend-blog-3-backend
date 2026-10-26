@@ -175,7 +175,7 @@ class DataConverter
 
         /** @var \App\Repository\TagRepository $tagRepository */
         $tagRepository = $this->em->getRepository(Entity\Tag::class);
-        $tagsArray = array_map('trim', explode(',', $data['tagsString']));
+        $tagsArray = array_map('trim', explode(',', $data['tagsString'] ?? ''));
         foreach ($tagsArray as $tagName) {
             if ($tagName) {
                 $tag = $tagRepository->getTagForPost($tagName);
