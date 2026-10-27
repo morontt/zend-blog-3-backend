@@ -6,7 +6,6 @@ use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
-use SortDirection;
 
 /**
  * CategoryRepository
@@ -35,7 +34,7 @@ class CategoryRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('e');
 
-        return $qb->orderBy('e.nestedSet.leftKey', SortDirection::Ascending)
+        return $qb->orderBy('e.nestedSet.leftKey', 'ASC')
             ->getQuery();
     }
 
@@ -46,7 +45,7 @@ class CategoryRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('c')
             ->select('c.id', 'c.name', 'c.nestedSet.depth AS depth')
-            ->orderBy('c.nestedSet.leftKey', SortDirection::Ascending);
+            ->orderBy('c.nestedSet.leftKey', 'ASC');
 
         return array_map(
             function ($el) {

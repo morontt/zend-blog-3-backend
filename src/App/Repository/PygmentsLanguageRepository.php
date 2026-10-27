@@ -6,7 +6,6 @@ use App\Entity\PygmentsLanguage;
 use App\Repository\Traits\ListQueryTrait;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use SortDirection;
 
 /**
  * @extends ServiceEntityRepository<PygmentsLanguage>
@@ -30,7 +29,7 @@ class PygmentsLanguageRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('lang')
             ->select('lang.id', 'lang.name')
-            ->orderBy('lang.name', SortDirection::Ascending);
+            ->orderBy('lang.name', 'ASC');
 
         return $qb->getQuery()->getArrayResult();
     }

@@ -3,7 +3,6 @@
 namespace App\Repository\Traits;
 
 use Doctrine\ORM\Query;
-use SortDirection;
 
 trait ListQueryTrait
 {
@@ -18,9 +17,9 @@ trait ListQueryTrait
         $qb = $this->createQueryBuilder('e');
 
         if ($nameBased) {
-            $qb->orderBy('e.name', SortDirection::Ascending);
+            $qb->orderBy('e.name', 'ASC');
         } else {
-            $qb->orderBy('e.id', SortDirection::Descending);
+            $qb->orderBy('e.id', 'DESC');
         }
 
         /* @phpstan-ignore doctrine.dql */

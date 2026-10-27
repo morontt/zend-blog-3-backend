@@ -7,7 +7,6 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
-use SortDirection;
 
 /**
  * PostRepository
@@ -41,7 +40,7 @@ class PostRepository extends ServiceEntityRepository
             ->select('e', 'c', 't')
             ->innerJoin('e.category', 'c')
             ->leftJoin('e.tags', 't')
-            ->orderBy('e.id', SortDirection::Descending)
+            ->orderBy('e.id', 'DESC')
         ;
 
         return $qb->getQuery();

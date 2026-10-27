@@ -6,7 +6,6 @@ use App\Entity\PygmentsCode;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
-use SortDirection;
 
 /**
  * @method PygmentsCode|null find($id, $lockMode = null, $lockVersion = null)
@@ -32,7 +31,7 @@ class PygmentsCodeRepository extends ServiceEntityRepository
         $qb
             ->select('e', 'l')
             ->leftJoin('e.language', 'l')
-            ->orderBy('e.id', SortDirection::Descending)
+            ->orderBy('e.id', 'DESC')
         ;
 
         return $qb->getQuery();

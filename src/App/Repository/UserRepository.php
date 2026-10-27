@@ -7,7 +7,6 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 use LogicException;
-use SortDirection;
 
 /**
  * UserRepository
@@ -34,7 +33,7 @@ class UserRepository extends ServiceEntityRepository
     {
         return $this
             ->createQueryBuilder('e')
-            ->orderBy('e.id', SortDirection::Ascending)
+            ->orderBy('e.id', 'ASC')
             ->getQuery();
     }
 
@@ -43,7 +42,7 @@ class UserRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('u');
         $qb
             ->andWhere($qb->expr()->eq('u.userType', $qb->expr()->literal('admin')))
-            ->orderBy('u.id', SortDirection::Ascending)
+            ->orderBy('u.id', 'ASC')
             ->setMaxResults(1)
         ;
 
