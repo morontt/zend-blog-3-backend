@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7511022301f5726fcf9d8482fb0f0368",
+    "content-hash": "fa2b047a7af4ab47fbb2f613a3713d87",
     "packages": [
         {
             "name": "aws/aws-crt-php",
@@ -4389,30 +4389,33 @@
         },
         {
             "name": "silarhi/cursor-pagination",
-            "version": "1.2.0",
+            "version": "2.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/silarhi/cursor-pagination.git",
-                "reference": "ffc83cd2c541c224faf3b026e01a18874aaeebea"
+                "reference": "b7bc71b076140efd647bd491d0b639954627f2f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silarhi/cursor-pagination/zipball/ffc83cd2c541c224faf3b026e01a18874aaeebea",
-                "reference": "ffc83cd2c541c224faf3b026e01a18874aaeebea",
+                "url": "https://api.github.com/repos/silarhi/cursor-pagination/zipball/b7bc71b076140efd647bd491d0b639954627f2f2",
+                "reference": "b7bc71b076140efd647bd491d0b639954627f2f2",
                 "shasum": ""
             },
             "require": {
-                "doctrine/orm": "^2.5|^3.0",
-                "php": ">=8.0"
+                "doctrine/orm": "^3.0",
+                "php": ">=8.2"
             },
             "require-dev": {
-                "doctrine/data-fixtures": "^1.7",
-                "friendsofphp/php-cs-fixer": "^3.58",
-                "phpstan/phpstan": "^1.11.3",
-                "phpunit/phpunit": "^9.6.15|^10.5.20|^11.1.3",
-                "rector/rector": "^1.1",
-                "symfony/cache": "^6.0|^7.0",
-                "vimeo/psalm": "^5.24"
+                "doctrine/data-fixtures": "^2.2.1",
+                "ergebnis/composer-normalize": "^2.54.0",
+                "friendsofphp/php-cs-fixer": "^3.95.27",
+                "phpstan/extension-installer": "^1.4.3",
+                "phpstan/phpstan": "^2.3.1",
+                "phpstan/phpstan-strict-rules": "^2.1.0",
+                "phpunit/phpunit": "^11.5.57 || ^12.5.38 || ^13.4.1",
+                "rector/rector": "^2.7.0",
+                "symfony/cache": "^7.4.20 || ^8.0",
+                "vimeo/psalm": "^5.26.1 || ^6.20.0"
             },
             "type": "library",
             "autoload": {
@@ -4435,14 +4438,15 @@
                 "cursor",
                 "cursor-pagination",
                 "doctrine",
+                "keyset",
                 "orm",
                 "pagination"
             ],
             "support": {
                 "issues": "https://github.com/silarhi/cursor-pagination/issues",
-                "source": "https://github.com/silarhi/cursor-pagination/tree/1.2.0"
+                "source": "https://github.com/silarhi/cursor-pagination/tree/2.4.0"
             },
-            "time": "2024-06-05T16:52:50+00:00"
+            "time": "2026-10-14T09:01:38+00:00"
         },
         {
             "name": "spatie/dropbox-api",

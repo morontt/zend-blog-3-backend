@@ -42,7 +42,7 @@
         "phpstan/phpdoc-parser": "^2.3",
         "promphp/prometheus_push_gateway_php": "^1.1",
         "sabre/dav": "^4.7",
-        "silarhi/cursor-pagination": "^1.2",
+        "silarhi/cursor-pagination": "^2.4",
         "spatie/flysystem-dropbox": "^3.1",
         "symfony/asset": "6.4.*",
         "symfony/console": "6.4.*",
