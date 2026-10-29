@@ -5,6 +5,7 @@ namespace spec\App\Service;
 use App\Repository\EmailSubscriptionSettingsRepository;
 use App\Repository\UserRepository;
 use App\Service\Mailer;
+use App\Service\QueueClient;
 use PhpSpec\ObjectBehavior;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Mailer\MailerInterface;
@@ -20,6 +21,7 @@ class MailerSpec extends ObjectBehavior
         EmailSubscriptionSettingsRepository $subscriptionRepository,
         UserRepository $userRepository,
         LoggerInterface $logger,
+        QueueClient $queueClient,
     ) {
         $this->beConstructedWith(
             $mailer,
@@ -28,6 +30,7 @@ class MailerSpec extends ObjectBehavior
             $subscriptionRepository,
             $userRepository,
             $logger,
+            $queueClient,
             'https://example.com',
             'noreply@example.org',
         );
