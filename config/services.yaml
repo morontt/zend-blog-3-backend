@@ -156,6 +156,11 @@ services:
             $s3Secret: '%s3_secret%'
             $adapterName: 's3'
 
+    App\Service\QueueClient:
+        arguments:
+            $host: '%gearman_host%'
+            $port: '%gearman_port%'
+
     App\Service\IpInfo\IpInfoDbClient:
         arguments:
             $key: "%ipinfo_db_key%"

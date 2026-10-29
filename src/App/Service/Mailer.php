@@ -10,6 +10,7 @@ use App\Repository\EmailSubscriptionSettingsRepository;
 use App\Repository\UserRepository;
 use App\Utils\HashId;
 use App\Utils\VerifyEmail;
+use App\Worker\Task\SpoolSend;
 use DirectoryIterator;
 use Exception;
 use Psr\Log\LoggerInterface;
@@ -29,6 +30,7 @@ class Mailer
         private EmailSubscriptionSettingsRepository $subscriptionRepository,
         private UserRepository $userRepository,
         private LoggerInterface $logger,
+        private QueueClient $queueClient,
         private string $frontendSite,
         private string $emailFrom,
     ) {
@@ -132,22 +134,10 @@ class Mailer
     public function spoolSend(?int $messageLimit = null, ?int $timeLimit = null): int
     {
         $count = 0;
-        $time = time();
+        $maxTime = $timeLimit + time();
         foreach (new DirectoryIterator($this->spoolPath()) as $fileInfo) {
-            $file = $fileInfo->getRealPath();
-            if (substr($file, -8) !== '.message') {
-                continue;
-            }
-
-            if (rename($file, $file . '.sending')) {
-                $message = unserialize(
-                    file_get_contents($file . '.sending'),
-                    ['allowed_classes' => [EmailMessageDTO::class]]
-                );
-                if ($this->send($message)) {
-                    $count++;
-                    unlink($file . '.sending');
-                }
+            if ($this->spoolSendFile($fileInfo->getRealPath())) {
+                $count++;
             } else {
                 continue;
             }
@@ -155,12 +145,37 @@ class Mailer
             if ($messageLimit && $count >= $messageLimit) {
                 break;
             }
-            if ($timeLimit && (time() - $time) >= $timeLimit) {
+            if ($timeLimit && time() > $maxTime) {
                 break;
             }
         }
 
         return $count;
+    }
+
+    public function spoolSendFile(string $file): bool
+    {
+        if (!file_exists($file)) {
+            return false;
+        }
+
+        if (substr($file, -8) !== '.message') {
+            return false;
+        }
+
+        $result = false;
+        if (rename($file, $file . '.sending')) {
+            $message = unserialize(
+                file_get_contents($file . '.sending'),
+                ['allowed_classes' => [EmailMessageDTO::class]]
+            );
+            if ($this->send($message)) {
+                $result = true;
+                unlink($file . '.sending');
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -249,6 +264,8 @@ class Mailer
         $fp = fopen($fileName, 'wb');
         fwrite($fp, serialize($messageDTO));
         fclose($fp);
+
+        $this->queueClient->put(SpoolSend::TASK_NAME, ['file' => $fileName]);
     }
 
     private function spoolPath(): string
